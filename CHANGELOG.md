@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 Nothing has been released from this repository yet beyond the crates.io name
-placeholder `irig106-tmats` 0.0.1. The original implementation was a
+placeholders `irig106-tmats` 0.0.1 and 0.0.2 (0.0.2, published 2026-09-25,
+corrects the placeholder's repository link). The original implementation was a
 prototype, preserved at the git tag `prototype-0`; the project is being
 rebuilt documentation first (`docs/ROADMAP.md`).
 

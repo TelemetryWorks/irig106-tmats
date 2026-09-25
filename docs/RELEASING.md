@@ -16,22 +16,20 @@ in `irig106-tmats-cli/`). Prebuilt `tmats` binaries for Windows, Linux, and
 macOS are attached to each GitHub release for users without a Rust toolchain
 (the way `idmptmat.exe` is distributed today).
 
-Name notes (checked on crates.io, 2026-09-25): `irig106-tmats` is ours (a
-0.0.1 placeholder whose `repository` link wrongly points at `irig106-write`).
+Name notes (checked on crates.io, 2026-09-25): `irig106-tmats` is ours
+(placeholders 0.0.1, whose `repository` link wrongly pointed at
+`irig106-write`, and 0.0.2, which corrects it).
 `irig106-tmats-cli` is free. `tmats` is also free; we do not claim it,
 because the ecosystem uses the `irig106-` prefix and a bare `tmats` crate
 would suggest an official or neutral package. Decided names: crate
 `irig106-tmats-cli`, binary and command `tmats`.
 
-**Placeholder fix (pending).** Published crate metadata cannot be edited, so
-the wrong link is fixed by publishing a new placeholder, **0.0.2**: no code,
-a README pointing at this repository, `repository` and `homepage` set to
-`https://github.com/TelemetryWorks/irig106-tmats`, `rust-version = "1.85"`.
-The package was built and passed `cargo publish --dry-run` on 2026-09-25;
-the upload was refused (`403 Forbidden: authentication failed`) because the
-local crates.io token had expired. It is published once the owner refreshes
-the token (`cargo login`). crates.io shows the latest version's metadata, so
-0.0.1 does not need to be yanked.
+**Placeholder fix (done 2026-09-25).** Published crate metadata cannot be
+edited, so the wrong link was fixed by publishing a new placeholder,
+**0.0.2**: no code, a README pointing at this repository, `repository` and
+`homepage` set to `https://github.com/TelemetryWorks/irig106-tmats`,
+`rust-version = "1.85"`. crates.io shows the latest version's metadata, so
+0.0.1 was not yanked. The first real release is 0.1.0.
 
 ## Lockstep versioning
 
