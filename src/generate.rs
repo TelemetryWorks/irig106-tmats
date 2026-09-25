@@ -8,7 +8,6 @@
 //   L1-GEN → L2-GEN-001..007 → L3-GEN-001..008
 
 use std::borrow::Cow;
-use indexmap::IndexMap;
 
 use crate::error::TmatsError;
 use crate::model::*;
@@ -115,11 +114,9 @@ mod builder {
 
             // L3-GEN-004: Generate G-group
             doc.general.program_name = Some(Cow::Owned(
-                self.program_name.unwrap_or_else(|| "UNKNOWN".to_string())
+                self.program_name.unwrap_or_else(|| "UNKNOWN".to_string()),
             ));
-            doc.general.irig106_version = Some(Cow::Owned(
-                self.version.as_g106_str().to_string()
-            ));
+            doc.general.irig106_version = Some(Cow::Owned(self.version.as_g106_str().to_string()));
             if let Some(tn) = self.test_number {
                 doc.general.test_number = Some(Cow::Owned(tn));
             }
@@ -128,51 +125,63 @@ mod builder {
             doc.general.num_data_sources = Some(self.channels.len() as u32);
             for (i, ch) in self.channels.iter().enumerate() {
                 let idx = (i + 1) as u32;
-                doc.general.data_sources.insert(idx, DataSourceDecl {
-                    data_source_id: Some(Cow::Owned(format!("CHAN_{}", ch.channel_id))),
-                    data_source_type: Some(Cow::Owned("REC".to_string())),
-                    classification: Some(Cow::Owned("U".to_string())),
-                    extra: Vec::new(),
-                });
+                doc.general.data_sources.insert(
+                    idx,
+                    DataSourceDecl {
+                        data_source_id: Some(Cow::Owned(format!("CHAN_{}", ch.channel_id))),
+                        data_source_type: Some(Cow::Owned("REC".to_string())),
+                        classification: Some(Cow::Owned("U".to_string())),
+                        extra: Vec::new(),
+                    },
+                );
             }
 
             // L3-GEN-005: Generate R-group
-            let mut r_group = RGroup::default();
-            r_group.recorder_id = Some(Cow::Owned("GENERATED".to_string()));
-            r_group.num_channels = Some(self.channels.len() as u32);
+            let mut r_group = RGroup {
+                recorder_id: Some(Cow::Owned("GENERATED".to_string())),
+                num_channels: Some(self.channels.len() as u32),
+                ..RGroup::default()
+            };
 
             for (i, ch) in self.channels.iter().enumerate() {
                 let ch_idx = (i + 1) as u32;
                 let dln = format!("LINK_{}", ch.channel_id);
 
-                r_group.channels.insert(ch_idx, RChannel {
-                    channel_id: Some(ch.channel_id),
-                    data_type: Some(Cow::Owned(format!("{:02X}", ch.data_type as u8))),
-                    data_source_id: Some(Cow::Owned(format!("CHAN_{}", ch.channel_id))),
-                    data_link_name: Some(Cow::Owned(dln.clone())),
-                    data_packing_option: Some(Cow::Owned("UN".to_string())),
-                    channel_enabled: Some(true),
-                    extra: Vec::new(),
-                });
+                r_group.channels.insert(
+                    ch_idx,
+                    RChannel {
+                        channel_id: Some(ch.channel_id),
+                        data_type: Some(Cow::Owned(format!("{:02X}", ch.data_type.to_u8()))),
+                        data_source_id: Some(Cow::Owned(format!("CHAN_{}", ch.channel_id))),
+                        data_link_name: Some(Cow::Owned(dln.clone())),
+                        data_packing_option: Some(Cow::Owned("UN".to_string())),
+                        channel_enabled: Some(true),
+                        extra: Vec::new(),
+                    },
+                );
 
                 // L3-GEN-006: Generate format group stubs
                 match ch.data_type.tmats_group() {
                     Some(crate::types_bridge::GroupPrefix::P) => {
-                        let mut p = PGroup::default();
-                        p.data_link_name = Some(Cow::Owned(dln));
-                        if let Some(br) = ch.observed_bit_rate {
-                            p.bit_rate = Some(br);
-                        }
+                        let p = PGroup {
+                            data_link_name: Some(Cow::Owned(dln)),
+                            bit_rate: ch.observed_bit_rate,
+                            ..PGroup::default()
+                        };
                         doc.pcm_formats.insert(ch_idx, p);
                     }
                     Some(crate::types_bridge::GroupPrefix::B) => {
-                        let mut b = BGroup::default();
-                        b.data_link_name = Some(Cow::Owned(dln));
+                        let b = BGroup {
+                            data_link_name: Some(Cow::Owned(dln)),
+                            ..BGroup::default()
+                        };
                         doc.bus_data.insert(ch_idx, b);
                     }
                     Some(crate::types_bridge::GroupPrefix::S) => {
-                        let mut s = SGroup::default();
-                        s.data_link_name = Some(Cow::Owned(dln));
+                        let s = SGroup {
+                            data_link_name: Some(Cow::Owned(dln)),
+                            ..SGroup::default()
+                        };
                         doc.message_data.insert(ch_idx, s);
                     }
                     _ => {}

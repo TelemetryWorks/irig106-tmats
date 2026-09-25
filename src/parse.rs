@@ -12,7 +12,7 @@ use std::borrow::Cow;
 use indexmap::IndexMap;
 use smallvec::SmallVec;
 
-use crate::error::{ParseError, ParseErrorKind, TmatsErrors, TmatsError};
+use crate::error::{ParseError, ParseErrorKind, TmatsError, TmatsErrors};
 use crate::model::*;
 use crate::types_bridge::{GroupPrefix, Irig106Version};
 
@@ -110,7 +110,10 @@ fn tokenize<'a>(
                 byte_offset: pos,
                 line,
                 code_name: None,
-                message: format!("exceeded maximum attribute count of {}", opts.max_attributes),
+                message: format!(
+                    "exceeded maximum attribute count of {}",
+                    opts.max_attributes
+                ),
             });
             break;
         }
@@ -179,7 +182,10 @@ fn tokenize<'a>(
                 byte_offset: value_start,
                 line: attr_line,
                 code_name: Some(code_name_str.to_string()),
-                message: format!("value size {value_len} exceeds maximum {}", opts.max_value_size),
+                message: format!(
+                    "value size {value_len} exceeds maximum {}",
+                    opts.max_value_size
+                ),
             });
             pos = semi_pos + 1;
             continue;
@@ -226,7 +232,10 @@ fn tokenize<'a>(
 }
 
 fn find_byte(input: &[u8], start: usize, target: u8) -> Option<usize> {
-    input[start..].iter().position(|&b| b == target).map(|p| start + p)
+    input[start..]
+        .iter()
+        .position(|&b| b == target)
+        .map(|p| start + p)
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
@@ -242,7 +251,7 @@ fn find_byte(input: &[u8], start: usize, target: u8) -> Option<usize> {
 ///
 /// **Requirements:** L2-PARSE-003, L3-PARSE-005, L2-PARSE-004
 fn parse_code_name<'a>(raw: &'a str) -> Result<CodeName<'a>, ParseError> {
-    let raw_upper = raw; // We preserve original case (L3-PARSE-008)
+    let _raw_upper = raw; // We preserve original case (L3-PARSE-008)
 
     // Split by backslash to get group-prefix and path segments
     let parts: Vec<&'a str> = raw.split('\\').collect();
@@ -265,7 +274,11 @@ fn parse_code_name<'a>(raw: &'a str) -> Result<CodeName<'a>, ParseError> {
         path.push(parse_path_segment(part));
     }
 
-    Ok(CodeName { group, occurrence, path })
+    Ok(CodeName {
+        group,
+        occurrence,
+        path,
+    })
 }
 
 /// Parse "R-1" → (R, Some(1)) or "G" → (G, None)
@@ -352,7 +365,10 @@ fn structure_document<'a>(
                 byte_offset: token.byte_offset,
                 line: token.line,
                 code_name: Some(token.code_name_str.to_string()),
-                message: format!("duplicate attribute '{}' (keeping last)", token.code_name_str),
+                message: format!(
+                    "duplicate attribute '{}' (keeping last)",
+                    token.code_name_str
+                ),
             };
             match opts.mode {
                 ParseMode::Strict => return Err(vec![dup_err]),
@@ -384,35 +400,51 @@ fn structure_document<'a>(
         match code_name.group {
             GroupPrefix::G => route_g_attribute(&mut doc.general, &raw_attr),
             GroupPrefix::T => route_indexed_attribute(
-                &mut doc.transmission, &raw_attr, TGroup::default,
+                &mut doc.transmission,
+                &raw_attr,
+                TGroup::default,
                 route_t_attribute,
             ),
             GroupPrefix::R => route_indexed_attribute(
-                &mut doc.recorders, &raw_attr, RGroup::default,
+                &mut doc.recorders,
+                &raw_attr,
+                RGroup::default,
                 route_r_attribute,
             ),
             GroupPrefix::M => route_indexed_attribute(
-                &mut doc.multiplex, &raw_attr, MGroup::default,
+                &mut doc.multiplex,
+                &raw_attr,
+                MGroup::default,
                 route_m_attribute,
             ),
             GroupPrefix::P => route_indexed_attribute(
-                &mut doc.pcm_formats, &raw_attr, PGroup::default,
+                &mut doc.pcm_formats,
+                &raw_attr,
+                PGroup::default,
                 route_p_attribute,
             ),
             GroupPrefix::D => route_indexed_attribute(
-                &mut doc.pcm_measurements, &raw_attr, DGroup::default,
+                &mut doc.pcm_measurements,
+                &raw_attr,
+                DGroup::default,
                 route_d_attribute,
             ),
             GroupPrefix::B => route_indexed_attribute(
-                &mut doc.bus_data, &raw_attr, BGroup::default,
+                &mut doc.bus_data,
+                &raw_attr,
+                BGroup::default,
                 route_b_attribute,
             ),
             GroupPrefix::S => route_indexed_attribute(
-                &mut doc.message_data, &raw_attr, SGroup::default,
+                &mut doc.message_data,
+                &raw_attr,
+                SGroup::default,
                 route_s_attribute,
             ),
             GroupPrefix::C => route_indexed_attribute(
-                &mut doc.data_conversion, &raw_attr, CGroup::default,
+                &mut doc.data_conversion,
+                &raw_attr,
+                CGroup::default,
                 route_c_attribute,
             ),
             GroupPrefix::Unknown(_) => {
@@ -677,7 +709,9 @@ fn first_path_index(cn: &CodeName<'_>) -> Option<u32> {
 }
 
 fn is_counter_attr(cn: &CodeName<'_>) -> bool {
-    cn.path.last().map_or(false, |seg| seg.name.eq_ignore_ascii_case("N"))
+    cn.path
+        .last()
+        .is_some_and(|seg| seg.name.eq_ignore_ascii_case("N"))
 }
 
 fn parse_bool(s: &str) -> Option<bool> {

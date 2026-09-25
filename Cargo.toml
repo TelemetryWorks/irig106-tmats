@@ -1,8 +1,8 @@
 [package]
 name = "irig106-tmats"
 version = "0.1.0"
-edition = "2021"
-rust-version = "1.75"
+edition = "2024"
+rust-version = "1.85"
 license = "Apache-2.0"
 description = "TMATS (Telemetry Attributes Transfer Standard) parser, validator, and generator for the IRIG 106 ecosystem"
 repository = "https://github.com/TelemetryWorks/irig106-tmats"
@@ -13,7 +13,7 @@ categories = ["aerospace", "parser-implementations", "encoding"]
 default = ["std"]
 std = []
 xml = ["dep:quick-xml"]
-serde = ["dep:serde", "dep:serde_json", "indexmap/serde"]
+serde = ["dep:serde", "dep:serde_json", "indexmap/serde", "smallvec/serde"]
 wasm = ["dep:wasm-bindgen", "dep:serde-wasm-bindgen", "serde"]
 rich-errors = ["dep:miette"]
 generate = []

@@ -10,12 +10,13 @@
 //
 // Run: cargo bench --bench parse_bench
 
-use criterion::{black_box, criterion_group, criterion_main, Criterion, BenchmarkId};
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 
 fn small_tmats() -> Vec<u8> {
     b"G\\PN:BENCH_SMALL;G\\106:17;G\\OD:01-15-2024;\
       R-1\\ID:REC;R-1\\N:1;R-1\\TK1-1:1;R-1\\CDT-1:09;R-1\\CDLN-1:PCM1;\
-      P-1\\DLN:PCM1;P-1\\D1:1000000;P-1\\D2:NRZ-L;".to_vec()
+      P-1\\DLN:PCM1;P-1\\D1:1000000;P-1\\D2:NRZ-L;"
+        .to_vec()
 }
 
 fn medium_tmats() -> Vec<u8> {
@@ -25,21 +26,27 @@ fn medium_tmats() -> Vec<u8> {
     let num_channels = 64;
     buf.extend_from_slice(format!("G\\DSI\\N:{num_channels};").as_bytes());
     for i in 1..=num_channels {
-        buf.extend_from_slice(format!("G\\DSI-{i}:SRC_{i};G\\DST-{i}:REC;G\\DSC-{i}:U;").as_bytes());
+        buf.extend_from_slice(
+            format!("G\\DSI-{i}:SRC_{i};G\\DST-{i}:REC;G\\DSC-{i}:U;").as_bytes(),
+        );
     }
 
     buf.extend_from_slice(format!("R-1\\ID:MDR_1;R-1\\N:{num_channels};").as_bytes());
     for i in 1..=num_channels {
-        buf.extend_from_slice(format!(
-            "R-1\\TK1-{i}:{i};R-1\\CDT-{i}:09;R-1\\CDLN-{i}:LINK_{i};R-1\\PDP-{i}:UN;"
-        ).as_bytes());
+        buf.extend_from_slice(
+            format!("R-1\\TK1-{i}:{i};R-1\\CDT-{i}:09;R-1\\CDLN-{i}:LINK_{i};R-1\\PDP-{i}:UN;")
+                .as_bytes(),
+        );
     }
 
     for i in 1..=num_channels {
-        buf.extend_from_slice(format!(
-            "P-{i}\\DLN:LINK_{i};P-{i}\\D1:{};P-{i}\\D2:NRZ-L;P-{i}\\F1:256;P-{i}\\F2:16;",
-            1_000_000 + i * 100_000
-        ).as_bytes());
+        buf.extend_from_slice(
+            format!(
+                "P-{i}\\DLN:LINK_{i};P-{i}\\D1:{};P-{i}\\D2:NRZ-L;P-{i}\\F1:256;P-{i}\\F2:16;",
+                1_000_000 + i * 100_000
+            )
+            .as_bytes(),
+        );
     }
 
     buf
@@ -54,17 +61,13 @@ fn bench_parse(c: &mut Criterion) {
     group.bench_with_input(
         BenchmarkId::new("small", small.len()),
         &small,
-        |b, input| {
-            b.iter(|| irig106_tmats::parse::parse(black_box(input)).unwrap())
-        },
+        |b, input| b.iter(|| irig106_tmats::parse::parse(black_box(input)).unwrap()),
     );
 
     group.bench_with_input(
         BenchmarkId::new("medium", medium.len()),
         &medium,
-        |b, input| {
-            b.iter(|| irig106_tmats::parse::parse(black_box(input)).unwrap())
-        },
+        |b, input| b.iter(|| irig106_tmats::parse::parse(black_box(input)).unwrap()),
     );
 
     group.finish();
@@ -76,9 +79,7 @@ fn bench_parse_owned(c: &mut Criterion) {
     c.bench_with_input(
         BenchmarkId::new("parse_owned/medium", medium.len()),
         &medium,
-        |b, input| {
-            b.iter(|| irig106_tmats::parse::parse_owned(black_box(input)).unwrap())
-        },
+        |b, input| b.iter(|| irig106_tmats::parse::parse_owned(black_box(input)).unwrap()),
     );
 }
 
@@ -124,9 +125,7 @@ fn bench_ch10_payload(c: &mut Criterion) {
     );
 
     c.bench_function("encode_payload/medium", |b| {
-        b.iter(|| {
-            irig106_tmats::ch10::encode_setup_payload(black_box(&doc), &csdw).unwrap()
-        })
+        b.iter(|| irig106_tmats::ch10::encode_setup_payload(black_box(&doc), &csdw).unwrap())
     });
 
     let payload = irig106_tmats::ch10::encode_setup_payload(&doc, &csdw).unwrap();
@@ -135,9 +134,7 @@ fn bench_ch10_payload(c: &mut Criterion) {
     c.bench_with_input(
         BenchmarkId::new("decode_payload/medium", bytes.len()),
         &bytes,
-        |b, input| {
-            b.iter(|| irig106_tmats::ch10::decode_setup_payload(black_box(input)).unwrap())
-        },
+        |b, input| b.iter(|| irig106_tmats::ch10::decode_setup_payload(black_box(input)).unwrap()),
     );
 }
 

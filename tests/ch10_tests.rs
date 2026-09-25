@@ -22,19 +22,28 @@ fn csdw_round_trip() {
     let decoded = SetupRecordCsdw::decode(&bytes).expect("decode failed");
 
     assert_eq!(decoded.ch10_version, 12);
-    assert_eq!(decoded.config_change, true);
+    assert!(decoded.config_change);
 }
 
 #[test]
 fn csdw_version_mapping() {
-    let csdw = SetupRecordCsdw { ch10_version: 12, config_change: false };
+    let csdw = SetupRecordCsdw {
+        ch10_version: 12,
+        config_change: false,
+    };
     assert_eq!(csdw.irig_version(), Some(Irig106Version::V106_17));
 
-    let csdw = SetupRecordCsdw { ch10_version: 7, config_change: false };
+    let csdw = SetupRecordCsdw {
+        ch10_version: 7,
+        config_change: false,
+    };
     assert_eq!(csdw.irig_version(), Some(Irig106Version::V106_07));
 
     // Pre-106-07: version field is zero/undefined (L2-CH10-006)
-    let csdw = SetupRecordCsdw { ch10_version: 0, config_change: false };
+    let csdw = SetupRecordCsdw {
+        ch10_version: 0,
+        config_change: false,
+    };
     assert_eq!(csdw.irig_version(), None);
 }
 
@@ -42,12 +51,15 @@ fn csdw_version_mapping() {
 fn csdw_from_version() {
     let csdw = SetupRecordCsdw::from_version(Irig106Version::V106_17, false);
     assert_eq!(csdw.ch10_version, 12);
-    assert_eq!(csdw.config_change, false);
+    assert!(!csdw.config_change);
 }
 
 #[test]
 fn csdw_reserved_bits_zero() {
-    let csdw = SetupRecordCsdw { ch10_version: 12, config_change: true };
+    let csdw = SetupRecordCsdw {
+        ch10_version: 12,
+        config_change: true,
+    };
     let bytes = csdw.encode();
     let word = u32::from_le_bytes(bytes);
     // Bits 9-31 should all be zero
@@ -68,8 +80,7 @@ fn decode_setup_payload_basic() {
     payload.extend_from_slice(&csdw.encode());
     payload.extend_from_slice(tmats_bytes);
 
-    let (decoded_csdw, doc) = decode_setup_payload(&payload)
-        .expect("decode failed");
+    let (decoded_csdw, doc) = decode_setup_payload(&payload).expect("decode failed");
 
     assert_eq!(decoded_csdw.ch10_version, 12);
     assert_eq!(doc.general.program_name.as_deref(), Some("PAYLOAD_TEST"));
@@ -106,8 +117,8 @@ fn encode_setup_payload_round_trip() {
 
     // Decode the payload back
     let bytes = payload.to_bytes();
-    let (decoded_csdw, decoded_doc) = decode_setup_payload(&bytes)
-        .expect("decode round-trip failed");
+    let (decoded_csdw, decoded_doc) =
+        decode_setup_payload(&bytes).expect("decode round-trip failed");
 
     assert_eq!(decoded_csdw.ch10_version, csdw.ch10_version);
     assert_eq!(

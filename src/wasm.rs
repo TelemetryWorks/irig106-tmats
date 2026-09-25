@@ -63,20 +63,32 @@ pub fn validate_tmats(input: &[u8]) -> Result<JsValue, JsError> {
 /// JSON object with channel configuration, or null if not found.
 #[wasm_bindgen]
 pub fn get_channel_config(input: &[u8], channel_id: u16) -> Result<JsValue, JsError> {
-    let doc = crate::parse::parse(input)
-        .map_err(|e| JsError::new(&format!("parse failed: {e}")))?;
+    let doc =
+        crate::parse::parse(input).map_err(|e| JsError::new(&format!("parse failed: {e}")))?;
 
     match crate::query::resolve_channel(&doc, channel_id) {
         Some(config) => {
             // Build a serializable summary since ChannelConfig has references
             let summary = ChannelConfigSummary {
                 channel_id: config.channel_id,
-                recorder_id: config.recorder.recorder_id.as_deref()
-                    .unwrap_or("unknown").to_string(),
-                data_type: config.recorder_channel.data_type.as_deref()
-                    .unwrap_or("unknown").to_string(),
-                data_link_name: config.recorder_channel.data_link_name.as_deref()
-                    .unwrap_or("none").to_string(),
+                recorder_id: config
+                    .recorder
+                    .recorder_id
+                    .as_deref()
+                    .unwrap_or("unknown")
+                    .to_string(),
+                data_type: config
+                    .recorder_channel
+                    .data_type
+                    .as_deref()
+                    .unwrap_or("unknown")
+                    .to_string(),
+                data_link_name: config
+                    .recorder_channel
+                    .data_link_name
+                    .as_deref()
+                    .unwrap_or("none")
+                    .to_string(),
                 format_type: match &config.format {
                     Some(crate::query::FormatRef::Pcm(_)) => "PCM".to_string(),
                     Some(crate::query::FormatRef::Bus(_)) => "Bus".to_string(),
@@ -103,8 +115,8 @@ pub fn get_channel_config(input: &[u8], channel_id: u16) -> Result<JsValue, JsEr
 /// ASCII TMATS bytes.
 #[wasm_bindgen]
 pub fn serialize_tmats_ascii(input: &[u8]) -> Result<Vec<u8>, JsError> {
-    let doc = crate::parse::parse(input)
-        .map_err(|e| JsError::new(&format!("parse failed: {e}")))?;
+    let doc =
+        crate::parse::parse(input).map_err(|e| JsError::new(&format!("parse failed: {e}")))?;
 
     crate::serial::serialize_to_vec(&doc)
         .map_err(|e| JsError::new(&format!("serialize failed: {e}")))
@@ -114,8 +126,7 @@ pub fn serialize_tmats_ascii(input: &[u8]) -> Result<Vec<u8>, JsError> {
 #[cfg(feature = "xml")]
 #[wasm_bindgen]
 pub fn convert_ascii_to_xml(input: &[u8]) -> Result<Vec<u8>, JsError> {
-    crate::xml::ascii_to_xml(input)
-        .map_err(|e| JsError::new(&format!("conversion failed: {e}")))
+    crate::xml::ascii_to_xml(input).map_err(|e| JsError::new(&format!("conversion failed: {e}")))
 }
 
 // ─── Internal types for WASM serialization ───────────────────────────────────

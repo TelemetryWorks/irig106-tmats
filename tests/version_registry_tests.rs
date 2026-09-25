@@ -19,7 +19,7 @@ use irig106_tmats::prelude::*;
 #[test]
 fn registry_has_entries() {
     let reg = registry();
-    assert!(reg.len() > 0, "registry should not be empty");
+    assert!(!reg.is_empty(), "registry should not be empty");
 }
 
 #[test]
@@ -34,7 +34,9 @@ fn registry_lookup_g_pn() {
 #[test]
 fn registry_lookup_r_group() {
     let reg = registry();
-    let meta = reg.get("R-x\\PDP-n").expect("R-x\\PDP-n should be in registry");
+    let meta = reg
+        .get("R-x\\PDP-n")
+        .expect("R-x\\PDP-n should be in registry");
     assert_eq!(meta.display_name, "Data Packing Option");
     assert!(meta.keywords.contains(&"UN"));
     assert!(meta.keywords.contains(&"TM"));
@@ -45,7 +47,10 @@ fn registry_lookup_r_group() {
 fn registry_group_filter() {
     let reg = registry();
     let g_attrs = reg.group(GroupPrefix::G);
-    assert!(g_attrs.len() >= 5, "G-group should have at least 5 registered attributes");
+    assert!(
+        g_attrs.len() >= 5,
+        "G-group should have at least 5 registered attributes"
+    );
     for meta in g_attrs {
         assert_eq!(meta.group, GroupPrefix::G);
     }
@@ -128,12 +133,18 @@ fn migration_diff_04_to_07() {
     let diff = reg.migration_diff(Irig106Version::V106_04, Irig106Version::V106_07);
 
     // G\106 was added in 106-07
-    assert!(diff.added.iter().any(|m| m.code_name_pattern == "G\\106"),
-        "G\\106 should appear as added in 04→07 migration");
+    assert!(
+        diff.added.iter().any(|m| m.code_name_pattern == "G\\106"),
+        "G\\106 should appear as added in 04→07 migration"
+    );
 
     // R-x\CDT-n was added in 106-07
-    assert!(diff.added.iter().any(|m| m.code_name_pattern == "R-x\\CDT-n"),
-        "R-x\\CDT-n should appear as added in 04→07 migration");
+    assert!(
+        diff.added
+            .iter()
+            .any(|m| m.code_name_pattern == "R-x\\CDT-n"),
+        "R-x\\CDT-n should appear as added in 04→07 migration"
+    );
 
     assert!(diff.has_changes());
 }
@@ -156,8 +167,10 @@ fn validate_invalid_data_source_type() {
     let doc = parse(input).expect("parse failed");
     let report = validate(&doc);
 
-    assert!(report.diagnostics.iter().any(|d| d.rule_id == "TMATS-V030"),
-        "should flag invalid keyword for G\\DST-1");
+    assert!(
+        report.diagnostics.iter().any(|d| d.rule_id == "TMATS-V030"),
+        "should flag invalid keyword for G\\DST-1"
+    );
 }
 
 #[test]
@@ -166,8 +179,10 @@ fn validate_valid_data_source_type() {
     let doc = parse(input).expect("parse failed");
     let report = validate(&doc);
 
-    assert!(!report.diagnostics.iter().any(|d| d.rule_id == "TMATS-V030"),
-        "REC is a valid keyword, should not be flagged");
+    assert!(
+        !report.diagnostics.iter().any(|d| d.rule_id == "TMATS-V030"),
+        "REC is a valid keyword, should not be flagged"
+    );
 }
 
 #[test]
@@ -178,8 +193,10 @@ fn validate_invalid_packing_option() {
     let doc = parse(input).expect("parse failed");
     let report = validate(&doc);
 
-    assert!(report.diagnostics.iter().any(|d| d.rule_id == "TMATS-V031"),
-        "should flag invalid packing keyword");
+    assert!(
+        report.diagnostics.iter().any(|d| d.rule_id == "TMATS-V031"),
+        "should flag invalid packing keyword"
+    );
 }
 
 #[test]
@@ -189,8 +206,10 @@ fn validate_invalid_pcm_encoding() {
     let doc = parse(input).expect("parse failed");
     let report = validate(&doc);
 
-    assert!(report.diagnostics.iter().any(|d| d.rule_id == "TMATS-V032"),
-        "should flag invalid PCM encoding");
+    assert!(
+        report.diagnostics.iter().any(|d| d.rule_id == "TMATS-V032"),
+        "should flag invalid PCM encoding"
+    );
 }
 
 #[test]
@@ -200,8 +219,10 @@ fn validate_valid_pcm_encoding() {
     let doc = parse(input).expect("parse failed");
     let report = validate(&doc);
 
-    assert!(!report.diagnostics.iter().any(|d| d.rule_id == "TMATS-V032"),
-        "NRZ-L is valid");
+    assert!(
+        !report.diagnostics.iter().any(|d| d.rule_id == "TMATS-V032"),
+        "NRZ-L is valid"
+    );
 }
 
 #[test]
@@ -210,8 +231,10 @@ fn validate_invalid_bus_type() {
     let doc = parse(input).expect("parse failed");
     let report = validate(&doc);
 
-    assert!(report.diagnostics.iter().any(|d| d.rule_id == "TMATS-V033"),
-        "CAN is not a valid B\\BT keyword (should be 1553 or A429)");
+    assert!(
+        report.diagnostics.iter().any(|d| d.rule_id == "TMATS-V033"),
+        "CAN is not a valid B\\BT keyword (should be 1553 or A429)"
+    );
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
@@ -225,8 +248,10 @@ fn validate_mfs_exceeded_program_name() {
     let doc = parse(input.as_bytes()).expect("parse failed");
     let report = validate(&doc);
 
-    assert!(report.diagnostics.iter().any(|d| d.rule_id == "TMATS-V050"),
-        "should flag program name exceeding 32 char MFS");
+    assert!(
+        report.diagnostics.iter().any(|d| d.rule_id == "TMATS-V050"),
+        "should flag program name exceeding 32 char MFS"
+    );
 }
 
 #[test]
@@ -235,8 +260,10 @@ fn validate_mfs_ok_program_name() {
     let doc = parse(input).expect("parse failed");
     let report = validate(&doc);
 
-    assert!(!report.diagnostics.iter().any(|d| d.rule_id == "TMATS-V050"),
-        "should not flag short program name");
+    assert!(
+        !report.diagnostics.iter().any(|d| d.rule_id == "TMATS-V050"),
+        "should not flag short program name"
+    );
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
@@ -249,8 +276,10 @@ fn validate_invalid_date_month() {
     let doc = parse(input).expect("parse failed");
     let report = validate(&doc);
 
-    assert!(report.diagnostics.iter().any(|d| d.rule_id == "TMATS-V040"),
-        "month 13 is invalid");
+    assert!(
+        report.diagnostics.iter().any(|d| d.rule_id == "TMATS-V040"),
+        "month 13 is invalid"
+    );
 }
 
 #[test]
@@ -273,11 +302,16 @@ fn validate_p_group_missing_required() {
     let doc = parse(input).expect("parse failed");
     let report = validate(&doc);
 
-    let p_errors: Vec<_> = report.diagnostics.iter()
+    let p_errors: Vec<_> = report
+        .diagnostics
+        .iter()
         .filter(|d| d.rule_id == "TMATS-V060")
         .collect();
-    assert!(p_errors.len() >= 4,
-        "should flag missing D1, D2, F1, F2, F3: found {} errors", p_errors.len());
+    assert!(
+        p_errors.len() >= 4,
+        "should flag missing D1, D2, F1, F2, F3: found {} errors",
+        p_errors.len()
+    );
 }
 
 #[test]
@@ -287,8 +321,10 @@ fn validate_p_group_complete() {
     let doc = parse(input).expect("parse failed");
     let report = validate(&doc);
 
-    assert!(!report.diagnostics.iter().any(|d| d.rule_id == "TMATS-V060"),
-        "complete P-group should pass");
+    assert!(
+        !report.diagnostics.iter().any(|d| d.rule_id == "TMATS-V060"),
+        "complete P-group should pass"
+    );
 }
 
 #[test]
@@ -297,6 +333,8 @@ fn validate_b_group_missing_required() {
     let doc = parse(input).expect("parse failed");
     let report = validate(&doc);
 
-    assert!(report.diagnostics.iter().any(|d| d.rule_id == "TMATS-V061"),
-        "should flag missing B\\BT");
+    assert!(
+        report.diagnostics.iter().any(|d| d.rule_id == "TMATS-V061"),
+        "should flag missing B\\BT"
+    );
 }

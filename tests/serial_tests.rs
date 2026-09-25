@@ -43,7 +43,9 @@ fn round_trip_with_r_group() {
     assert_eq!(reparsed.recorders.len(), 1);
     assert_eq!(reparsed.recorders[&1].channels[&1].channel_id, Some(5));
     assert_eq!(
-        reparsed.recorders[&1].channels[&1].data_link_name.as_deref(),
+        reparsed.recorders[&1].channels[&1]
+            .data_link_name
+            .as_deref(),
         Some("PCM1"),
     );
 }
@@ -63,7 +65,10 @@ fn round_trip_multi_group() {
 
     assert_eq!(reparsed.general.data_sources.len(), 1);
     assert_eq!(reparsed.pcm_formats[&1].bit_rate, Some(1_000_000.0));
-    assert_eq!(reparsed.data_conversion[&1].eu_units.as_deref(), Some("DEGF"));
+    assert_eq!(
+        reparsed.data_conversion[&1].eu_units.as_deref(),
+        Some("DEGF")
+    );
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
@@ -114,8 +119,7 @@ fn serialize_compact_no_newlines() {
     };
 
     let mut buf = Vec::new();
-    irig106_tmats::serial::serialize_with_options(&doc, &mut buf, &opts)
-        .expect("serialize failed");
+    irig106_tmats::serial::serialize_with_options(&doc, &mut buf, &opts).expect("serialize failed");
     let output = String::from_utf8(buf).unwrap();
 
     assert!(!output.contains('\n'));
@@ -133,8 +137,7 @@ fn serialize_pretty_has_newlines() {
     };
 
     let mut buf = Vec::new();
-    irig106_tmats::serial::serialize_with_options(&doc, &mut buf, &opts)
-        .expect("serialize failed");
+    irig106_tmats::serial::serialize_with_options(&doc, &mut buf, &opts).expect("serialize failed");
     let output = String::from_utf8(buf).unwrap();
 
     assert!(output.contains('\n'));

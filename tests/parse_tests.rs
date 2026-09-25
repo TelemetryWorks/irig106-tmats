@@ -125,12 +125,18 @@ fn parse_order_independence() {
     let doc_fwd = parse(input_forward).expect("forward parse failed");
     let doc_rev = parse(input_reverse).expect("reverse parse failed");
 
-    assert_eq!(doc_fwd.general.program_name.as_deref(),
-               doc_rev.general.program_name.as_deref());
-    assert_eq!(doc_fwd.recorders[&1].recorder_id.as_deref(),
-               doc_rev.recorders[&1].recorder_id.as_deref());
-    assert_eq!(doc_fwd.recorders[&1].channels[&1].channel_id,
-               doc_rev.recorders[&1].channels[&1].channel_id);
+    assert_eq!(
+        doc_fwd.general.program_name.as_deref(),
+        doc_rev.general.program_name.as_deref()
+    );
+    assert_eq!(
+        doc_fwd.recorders[&1].recorder_id.as_deref(),
+        doc_rev.recorders[&1].recorder_id.as_deref()
+    );
+    assert_eq!(
+        doc_fwd.recorders[&1].channels[&1].channel_id,
+        doc_rev.recorders[&1].channels[&1].channel_id
+    );
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
@@ -286,7 +292,10 @@ fn parse_strict_rejects_duplicates() {
     };
 
     let result = irig106_tmats::parse::parse_with_options(input, &opts);
-    assert!(result.is_err(), "strict mode should reject duplicate attributes");
+    assert!(
+        result.is_err(),
+        "strict mode should reject duplicate attributes"
+    );
 }
 
 #[test]
@@ -305,10 +314,16 @@ fn parse_lenient_keeps_last_duplicate() {
     assert_eq!(doc.general.program_name.as_deref(), Some("SECOND"));
 
     // Should have a diagnostic about the duplicate
-    assert!(!doc.parse_diagnostics.is_empty(),
-        "should record duplicate as a parse diagnostic");
-    assert!(doc.parse_diagnostics.iter().any(|d| d.rule_id == "TMATS-P004"),
-        "should have TMATS-P004 diagnostic for duplicate");
+    assert!(
+        !doc.parse_diagnostics.is_empty(),
+        "should record duplicate as a parse diagnostic"
+    );
+    assert!(
+        doc.parse_diagnostics
+            .iter()
+            .any(|d| d.rule_id == "TMATS-P004"),
+        "should have TMATS-P004 diagnostic for duplicate"
+    );
 }
 
 #[test]

@@ -16,20 +16,15 @@ use crate::types_bridge::Irig106Version;
 /// Selects which rules to apply.
 ///
 /// **Requirement:** L2-VALID-010, L3-VALID-007
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub enum ValidationProfile {
     /// All rules.
+    #[default]
     Full,
     /// Only R-CH10 and RO-CH10 tagged requirements.
     Ch10Required,
     /// Custom set of rule IDs.
     Custom(Vec<String>),
-}
-
-impl Default for ValidationProfile {
-    fn default() -> Self {
-        Self::Full
-    }
 }
 
 // ─── Validation Context (L3-VALID-004) ───────────────────────────────────────
@@ -117,11 +112,21 @@ impl ValidationReport {
 struct RequiredGProgramName;
 
 impl ValidationRule for RequiredGProgramName {
-    fn id(&self) -> &str { "TMATS-V001" }
-    fn description(&self) -> &str { "G\\PN (Program Name) is required" }
-    fn severity(&self) -> Severity { Severity::Error }
-    fn spec_ref(&self) -> &str { "Ch9 §9.5.2 Table 9-1" }
-    fn applicable_versions(&self) -> &[Irig106Version] { &[] } // All versions
+    fn id(&self) -> &str {
+        "TMATS-V001"
+    }
+    fn description(&self) -> &str {
+        "G\\PN (Program Name) is required"
+    }
+    fn severity(&self) -> Severity {
+        Severity::Error
+    }
+    fn spec_ref(&self) -> &str {
+        "Ch9 §9.5.2 Table 9-1"
+    }
+    fn applicable_versions(&self) -> &[Irig106Version] {
+        &[]
+    } // All versions
 
     fn check(&self, doc: &TmatsDocument<'_>, _ctx: &ValidationContext) -> Vec<Diagnostic> {
         if doc.general.program_name.is_none() {
@@ -145,11 +150,21 @@ impl ValidationRule for RequiredGProgramName {
 struct RequiredGVersion;
 
 impl ValidationRule for RequiredGVersion {
-    fn id(&self) -> &str { "TMATS-V002" }
-    fn description(&self) -> &str { "G\\106 (IRIG 106 Version) is required" }
-    fn severity(&self) -> Severity { Severity::Error }
-    fn spec_ref(&self) -> &str { "Ch9 §9.5.2 Table 9-1" }
-    fn applicable_versions(&self) -> &[Irig106Version] { &[] }
+    fn id(&self) -> &str {
+        "TMATS-V002"
+    }
+    fn description(&self) -> &str {
+        "G\\106 (IRIG 106 Version) is required"
+    }
+    fn severity(&self) -> Severity {
+        Severity::Error
+    }
+    fn spec_ref(&self) -> &str {
+        "Ch9 §9.5.2 Table 9-1"
+    }
+    fn applicable_versions(&self) -> &[Irig106Version] {
+        &[]
+    }
 
     fn check(&self, doc: &TmatsDocument<'_>, _ctx: &ValidationContext) -> Vec<Diagnostic> {
         if doc.general.irig106_version.is_none() {
@@ -175,11 +190,21 @@ impl ValidationRule for RequiredGVersion {
 struct CounterConsistencyGDsi;
 
 impl ValidationRule for CounterConsistencyGDsi {
-    fn id(&self) -> &str { "TMATS-V010" }
-    fn description(&self) -> &str { "G\\DSI\\N counter matches data source count" }
-    fn severity(&self) -> Severity { Severity::Error }
-    fn spec_ref(&self) -> &str { "Ch9 §9.5.2 Table 9-1" }
-    fn applicable_versions(&self) -> &[Irig106Version] { &[] }
+    fn id(&self) -> &str {
+        "TMATS-V010"
+    }
+    fn description(&self) -> &str {
+        "G\\DSI\\N counter matches data source count"
+    }
+    fn severity(&self) -> Severity {
+        Severity::Error
+    }
+    fn spec_ref(&self) -> &str {
+        "Ch9 §9.5.2 Table 9-1"
+    }
+    fn applicable_versions(&self) -> &[Irig106Version] {
+        &[]
+    }
 
     fn check(&self, doc: &TmatsDocument<'_>, _ctx: &ValidationContext) -> Vec<Diagnostic> {
         if let Some(declared) = doc.general.num_data_sources {
@@ -207,11 +232,21 @@ impl ValidationRule for CounterConsistencyGDsi {
 struct CounterConsistencyRN;
 
 impl ValidationRule for CounterConsistencyRN {
-    fn id(&self) -> &str { "TMATS-V011" }
-    fn description(&self) -> &str { "R-x\\N counter matches channel count" }
-    fn severity(&self) -> Severity { Severity::Error }
-    fn spec_ref(&self) -> &str { "Ch9 §9.5.4" }
-    fn applicable_versions(&self) -> &[Irig106Version] { &[] }
+    fn id(&self) -> &str {
+        "TMATS-V011"
+    }
+    fn description(&self) -> &str {
+        "R-x\\N counter matches channel count"
+    }
+    fn severity(&self) -> Severity {
+        Severity::Error
+    }
+    fn spec_ref(&self) -> &str {
+        "Ch9 §9.5.4"
+    }
+    fn applicable_versions(&self) -> &[Irig106Version] {
+        &[]
+    }
 
     fn check(&self, doc: &TmatsDocument<'_>, _ctx: &ValidationContext) -> Vec<Diagnostic> {
         let mut diags = Vec::new();
@@ -244,11 +279,21 @@ impl ValidationRule for CounterConsistencyRN {
 struct CrossGroupRefCdln;
 
 impl ValidationRule for CrossGroupRefCdln {
-    fn id(&self) -> &str { "TMATS-V020" }
-    fn description(&self) -> &str { "R-x\\CDLN-n references a valid P/B/S data link name" }
-    fn severity(&self) -> Severity { Severity::Warning }
-    fn spec_ref(&self) -> &str { "Ch9 §9.5.1 Figure 9-1" }
-    fn applicable_versions(&self) -> &[Irig106Version] { &[] }
+    fn id(&self) -> &str {
+        "TMATS-V020"
+    }
+    fn description(&self) -> &str {
+        "R-x\\CDLN-n references a valid P/B/S data link name"
+    }
+    fn severity(&self) -> Severity {
+        Severity::Warning
+    }
+    fn spec_ref(&self) -> &str {
+        "Ch9 §9.5.1 Figure 9-1"
+    }
+    fn applicable_versions(&self) -> &[Irig106Version] {
+        &[]
+    }
 
     fn check(&self, doc: &TmatsDocument<'_>, _ctx: &ValidationContext) -> Vec<Diagnostic> {
         let mut diags = Vec::new();
@@ -306,11 +351,21 @@ impl ValidationRule for CrossGroupRefCdln {
 struct KeywordValidationGDst;
 
 impl ValidationRule for KeywordValidationGDst {
-    fn id(&self) -> &str { "TMATS-V030" }
-    fn description(&self) -> &str { "G\\DST-n value must be a valid keyword" }
-    fn severity(&self) -> Severity { Severity::Error }
-    fn spec_ref(&self) -> &str { "Ch9 §9.5.2 Table 9-1" }
-    fn applicable_versions(&self) -> &[Irig106Version] { &[] }
+    fn id(&self) -> &str {
+        "TMATS-V030"
+    }
+    fn description(&self) -> &str {
+        "G\\DST-n value must be a valid keyword"
+    }
+    fn severity(&self) -> Severity {
+        Severity::Error
+    }
+    fn spec_ref(&self) -> &str {
+        "Ch9 §9.5.2 Table 9-1"
+    }
+    fn applicable_versions(&self) -> &[Irig106Version] {
+        &[]
+    }
 
     fn check(&self, doc: &TmatsDocument<'_>, _ctx: &ValidationContext) -> Vec<Diagnostic> {
         let reg = crate::version::registry();
@@ -326,18 +381,12 @@ impl ValidationRule for KeywordValidationGDst {
                     diags.push(Diagnostic {
                         severity: Severity::Error,
                         rule_id: self.id().to_string(),
-                        message: format!(
-                            "G\\DST-{idx} value '{}' is not a valid keyword",
-                            val
-                        ),
+                        message: format!("G\\DST-{idx} value '{}' is not a valid keyword", val),
                         spec_reference: self.spec_ref().to_string(),
                         attribute_path: Some(format!("G\\DST-{idx}")),
                         expected: Some(meta.keywords.join(", ")),
                         actual: Some(val.to_string()),
-                        suggested_fix: Some(format!(
-                            "use one of: {}",
-                            meta.keywords.join(", ")
-                        )),
+                        suggested_fix: Some(format!("use one of: {}", meta.keywords.join(", "))),
                     });
                 }
             }
@@ -352,11 +401,21 @@ impl ValidationRule for KeywordValidationGDst {
 struct KeywordValidationRPdp;
 
 impl ValidationRule for KeywordValidationRPdp {
-    fn id(&self) -> &str { "TMATS-V031" }
-    fn description(&self) -> &str { "R-x\\PDP-n must be a valid packing keyword" }
-    fn severity(&self) -> Severity { Severity::Error }
-    fn spec_ref(&self) -> &str { "Ch9 §9.5.4" }
-    fn applicable_versions(&self) -> &[Irig106Version] { &[] }
+    fn id(&self) -> &str {
+        "TMATS-V031"
+    }
+    fn description(&self) -> &str {
+        "R-x\\PDP-n must be a valid packing keyword"
+    }
+    fn severity(&self) -> Severity {
+        Severity::Error
+    }
+    fn spec_ref(&self) -> &str {
+        "Ch9 §9.5.4"
+    }
+    fn applicable_versions(&self) -> &[Irig106Version] {
+        &[]
+    }
 
     fn check(&self, doc: &TmatsDocument<'_>, _ctx: &ValidationContext) -> Vec<Diagnostic> {
         let reg = crate::version::registry();
@@ -381,7 +440,10 @@ impl ValidationRule for KeywordValidationRPdp {
                             attribute_path: Some(format!("R-{r_idx}\\PDP-{ch_idx}")),
                             expected: Some(meta.keywords.join(", ")),
                             actual: Some(val.to_string()),
-                            suggested_fix: Some(format!("use one of: {}", meta.keywords.join(", "))),
+                            suggested_fix: Some(format!(
+                                "use one of: {}",
+                                meta.keywords.join(", ")
+                            )),
                         });
                     }
                 }
@@ -397,11 +459,21 @@ impl ValidationRule for KeywordValidationRPdp {
 struct KeywordValidationPEncoding;
 
 impl ValidationRule for KeywordValidationPEncoding {
-    fn id(&self) -> &str { "TMATS-V032" }
-    fn description(&self) -> &str { "P-n\\D2 must be a valid PCM encoding keyword" }
-    fn severity(&self) -> Severity { Severity::Error }
-    fn spec_ref(&self) -> &str { "Ch9 §9.5.6.1" }
-    fn applicable_versions(&self) -> &[Irig106Version] { &[] }
+    fn id(&self) -> &str {
+        "TMATS-V032"
+    }
+    fn description(&self) -> &str {
+        "P-n\\D2 must be a valid PCM encoding keyword"
+    }
+    fn severity(&self) -> Severity {
+        Severity::Error
+    }
+    fn spec_ref(&self) -> &str {
+        "Ch9 §9.5.6.1"
+    }
+    fn applicable_versions(&self) -> &[Irig106Version] {
+        &[]
+    }
 
     fn check(&self, doc: &TmatsDocument<'_>, _ctx: &ValidationContext) -> Vec<Diagnostic> {
         let reg = crate::version::registry();
@@ -437,11 +509,21 @@ impl ValidationRule for KeywordValidationPEncoding {
 struct KeywordValidationBBusType;
 
 impl ValidationRule for KeywordValidationBBusType {
-    fn id(&self) -> &str { "TMATS-V033" }
-    fn description(&self) -> &str { "B-n\\BT must be a valid bus type keyword" }
-    fn severity(&self) -> Severity { Severity::Error }
-    fn spec_ref(&self) -> &str { "Ch9 §9.5.6.3" }
-    fn applicable_versions(&self) -> &[Irig106Version] { &[] }
+    fn id(&self) -> &str {
+        "TMATS-V033"
+    }
+    fn description(&self) -> &str {
+        "B-n\\BT must be a valid bus type keyword"
+    }
+    fn severity(&self) -> Severity {
+        Severity::Error
+    }
+    fn spec_ref(&self) -> &str {
+        "Ch9 §9.5.6.3"
+    }
+    fn applicable_versions(&self) -> &[Irig106Version] {
+        &[]
+    }
 
     fn check(&self, doc: &TmatsDocument<'_>, _ctx: &ValidationContext) -> Vec<Diagnostic> {
         let reg = crate::version::registry();
@@ -477,11 +559,21 @@ impl ValidationRule for KeywordValidationBBusType {
 struct DateFormatValidation;
 
 impl ValidationRule for DateFormatValidation {
-    fn id(&self) -> &str { "TMATS-V040" }
-    fn description(&self) -> &str { "Date attributes must be valid MM-DD-YYYY" }
-    fn severity(&self) -> Severity { Severity::Warning }
-    fn spec_ref(&self) -> &str { "Ch9 §9.5.2 Table 9-1" }
-    fn applicable_versions(&self) -> &[Irig106Version] { &[] }
+    fn id(&self) -> &str {
+        "TMATS-V040"
+    }
+    fn description(&self) -> &str {
+        "Date attributes must be valid MM-DD-YYYY"
+    }
+    fn severity(&self) -> Severity {
+        Severity::Warning
+    }
+    fn spec_ref(&self) -> &str {
+        "Ch9 §9.5.2 Table 9-1"
+    }
+    fn applicable_versions(&self) -> &[Irig106Version] {
+        &[]
+    }
 
     fn check(&self, doc: &TmatsDocument<'_>, _ctx: &ValidationContext) -> Vec<Diagnostic> {
         let mut diags = Vec::new();
@@ -526,11 +618,21 @@ impl ValidationRule for DateFormatValidation {
 struct MfsValidationGPn;
 
 impl ValidationRule for MfsValidationGPn {
-    fn id(&self) -> &str { "TMATS-V050" }
-    fn description(&self) -> &str { "G\\PN must not exceed 32 characters (MFS)" }
-    fn severity(&self) -> Severity { Severity::Warning }
-    fn spec_ref(&self) -> &str { "Ch9 §9.5.2 Table 9-1" }
-    fn applicable_versions(&self) -> &[Irig106Version] { &[] }
+    fn id(&self) -> &str {
+        "TMATS-V050"
+    }
+    fn description(&self) -> &str {
+        "G\\PN must not exceed 32 characters (MFS)"
+    }
+    fn severity(&self) -> Severity {
+        Severity::Warning
+    }
+    fn spec_ref(&self) -> &str {
+        "Ch9 §9.5.2 Table 9-1"
+    }
+    fn applicable_versions(&self) -> &[Irig106Version] {
+        &[]
+    }
 
     fn check(&self, doc: &TmatsDocument<'_>, _ctx: &ValidationContext) -> Vec<Diagnostic> {
         let reg = crate::version::registry();
@@ -546,7 +648,9 @@ impl ValidationRule for MfsValidationGPn {
                     rule_id: self.id().to_string(),
                     message: format!(
                         "G\\PN '{}' exceeds MFS of {} characters (actual: {})",
-                        pn, meta.max_field_size.unwrap_or(0), pn.len()
+                        pn,
+                        meta.max_field_size.unwrap_or(0),
+                        pn.len()
                     ),
                     spec_reference: self.spec_ref().to_string(),
                     attribute_path: Some("G\\PN".into()),
@@ -566,11 +670,21 @@ impl ValidationRule for MfsValidationGPn {
 struct RequiredPGroupAttrs;
 
 impl ValidationRule for RequiredPGroupAttrs {
-    fn id(&self) -> &str { "TMATS-V060" }
-    fn description(&self) -> &str { "P-group required attributes (DLN, D1, D2, F1, F2, F3)" }
-    fn severity(&self) -> Severity { Severity::Error }
-    fn spec_ref(&self) -> &str { "Ch9 §9.5.6.1" }
-    fn applicable_versions(&self) -> &[Irig106Version] { &[] }
+    fn id(&self) -> &str {
+        "TMATS-V060"
+    }
+    fn description(&self) -> &str {
+        "P-group required attributes (DLN, D1, D2, F1, F2, F3)"
+    }
+    fn severity(&self) -> Severity {
+        Severity::Error
+    }
+    fn spec_ref(&self) -> &str {
+        "Ch9 §9.5.6.1"
+    }
+    fn applicable_versions(&self) -> &[Irig106Version] {
+        &[]
+    }
 
     fn check(&self, doc: &TmatsDocument<'_>, _ctx: &ValidationContext) -> Vec<Diagnostic> {
         let mut diags = Vec::new();
@@ -578,22 +692,46 @@ impl ValidationRule for RequiredPGroupAttrs {
         for (&idx, p) in &doc.pcm_formats {
             let pfx = format!("P-{idx}");
             if p.data_link_name.is_none() {
-                diags.push(missing_required_diag(self, &format!("{pfx}\\DLN"), "Data Link Name"));
+                diags.push(missing_required_diag(
+                    self,
+                    &format!("{pfx}\\DLN"),
+                    "Data Link Name",
+                ));
             }
             if p.bit_rate.is_none() {
-                diags.push(missing_required_diag(self, &format!("{pfx}\\D1"), "Bit Rate"));
+                diags.push(missing_required_diag(
+                    self,
+                    &format!("{pfx}\\D1"),
+                    "Bit Rate",
+                ));
             }
             if p.encoding.is_none() {
-                diags.push(missing_required_diag(self, &format!("{pfx}\\D2"), "Encoding"));
+                diags.push(missing_required_diag(
+                    self,
+                    &format!("{pfx}\\D2"),
+                    "Encoding",
+                ));
             }
             if p.num_words_per_frame.is_none() {
-                diags.push(missing_required_diag(self, &format!("{pfx}\\F1"), "Words per Frame"));
+                diags.push(missing_required_diag(
+                    self,
+                    &format!("{pfx}\\F1"),
+                    "Words per Frame",
+                ));
             }
             if p.num_bits_per_word.is_none() {
-                diags.push(missing_required_diag(self, &format!("{pfx}\\F2"), "Bits per Word"));
+                diags.push(missing_required_diag(
+                    self,
+                    &format!("{pfx}\\F2"),
+                    "Bits per Word",
+                ));
             }
             if p.sync_pattern.is_none() {
-                diags.push(missing_required_diag(self, &format!("{pfx}\\F3"), "Sync Pattern"));
+                diags.push(missing_required_diag(
+                    self,
+                    &format!("{pfx}\\F3"),
+                    "Sync Pattern",
+                ));
             }
         }
 
@@ -607,21 +745,39 @@ impl ValidationRule for RequiredPGroupAttrs {
 struct RequiredBGroupAttrs;
 
 impl ValidationRule for RequiredBGroupAttrs {
-    fn id(&self) -> &str { "TMATS-V061" }
-    fn description(&self) -> &str { "B-group required attributes (DLN, BT)" }
-    fn severity(&self) -> Severity { Severity::Error }
-    fn spec_ref(&self) -> &str { "Ch9 §9.5.6.3" }
-    fn applicable_versions(&self) -> &[Irig106Version] { &[] }
+    fn id(&self) -> &str {
+        "TMATS-V061"
+    }
+    fn description(&self) -> &str {
+        "B-group required attributes (DLN, BT)"
+    }
+    fn severity(&self) -> Severity {
+        Severity::Error
+    }
+    fn spec_ref(&self) -> &str {
+        "Ch9 §9.5.6.3"
+    }
+    fn applicable_versions(&self) -> &[Irig106Version] {
+        &[]
+    }
 
     fn check(&self, doc: &TmatsDocument<'_>, _ctx: &ValidationContext) -> Vec<Diagnostic> {
         let mut diags = Vec::new();
         for (&idx, b) in &doc.bus_data {
             let pfx = format!("B-{idx}");
             if b.data_link_name.is_none() {
-                diags.push(missing_required_diag(self, &format!("{pfx}\\DLN"), "Data Link Name"));
+                diags.push(missing_required_diag(
+                    self,
+                    &format!("{pfx}\\DLN"),
+                    "Data Link Name",
+                ));
             }
             if b.bus_type.is_none() {
-                diags.push(missing_required_diag(self, &format!("{pfx}\\BT"), "Bus Type"));
+                diags.push(missing_required_diag(
+                    self,
+                    &format!("{pfx}\\BT"),
+                    "Bus Type",
+                ));
             }
         }
         diags
@@ -629,11 +785,18 @@ impl ValidationRule for RequiredBGroupAttrs {
 }
 
 /// Helper for creating a missing-required-attribute diagnostic.
-fn missing_required_diag(rule: &dyn ValidationRule, attr_path: &str, display_name: &str) -> Diagnostic {
+fn missing_required_diag(
+    rule: &dyn ValidationRule,
+    attr_path: &str,
+    display_name: &str,
+) -> Diagnostic {
     Diagnostic {
         severity: Severity::Error,
         rule_id: rule.id().to_string(),
-        message: format!("missing required attribute {} ({})", attr_path, display_name),
+        message: format!(
+            "missing required attribute {} ({})",
+            attr_path, display_name
+        ),
         spec_reference: rule.spec_ref().to_string(),
         attribute_path: Some(attr_path.to_string()),
         expected: Some("non-empty value".into()),
@@ -683,10 +846,7 @@ pub fn validate(doc: &TmatsDocument<'_>) -> ValidationReport {
 /// Validate with explicit context.
 ///
 /// **Requirements:** L3-INTEROP-004, L3-VALID-008
-pub fn validate_with_options(
-    doc: &TmatsDocument<'_>,
-    ctx: &ValidationContext,
-) -> ValidationReport {
+pub fn validate_with_options(doc: &TmatsDocument<'_>, ctx: &ValidationContext) -> ValidationReport {
     let rules = default_rules();
     let mut diagnostics = Vec::new();
 
@@ -721,9 +881,18 @@ pub fn validate_with_options(
         diagnostics.extend(findings);
     }
 
-    let errors = diagnostics.iter().filter(|d| d.severity == Severity::Error).count();
-    let warnings = diagnostics.iter().filter(|d| d.severity == Severity::Warning).count();
-    let info = diagnostics.iter().filter(|d| d.severity == Severity::Info).count();
+    let errors = diagnostics
+        .iter()
+        .filter(|d| d.severity == Severity::Error)
+        .count();
+    let warnings = diagnostics
+        .iter()
+        .filter(|d| d.severity == Severity::Warning)
+        .count();
+    let info = diagnostics
+        .iter()
+        .filter(|d| d.severity == Severity::Info)
+        .count();
 
     ValidationReport {
         diagnostics,

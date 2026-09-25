@@ -11,7 +11,6 @@
 use std::collections::HashMap;
 
 use crate::model::*;
-use crate::types_bridge::GroupPrefix;
 
 // ─── Channel Configuration Resolution (L3-QUERY-003) ────────────────────────
 
@@ -91,20 +90,23 @@ pub fn resolve_channel<'d, 'a: 'd>(
                 // Resolve D-groups via data link name
                 let measurements: Vec<&DGroup<'a>> = data_link_name
                     .map(|dln| {
-                        doc.pcm_measurements.values()
+                        doc.pcm_measurements
+                            .values()
                             .filter(|d| d.data_link_name.as_deref() == Some(dln))
                             .collect()
                     })
                     .unwrap_or_default();
 
                 // Resolve C-groups via measurement names from D-groups
-                let conversions: Vec<&CGroup<'a>> = doc.data_conversion.values()
+                let conversions: Vec<&CGroup<'a>> = doc
+                    .data_conversion
+                    .values()
                     .filter(|c| {
                         // Link C-group if its measurement_name matches any D-group measurement
-                        c.measurement_name.as_deref().map_or(false, |mn| {
-                            measurements.iter().any(|d| {
-                                d.measurement_list_name.as_deref() == Some(mn)
-                            })
+                        c.measurement_name.as_deref().is_some_and(|mn| {
+                            measurements
+                                .iter()
+                                .any(|d| d.measurement_list_name.as_deref() == Some(mn))
                         })
                     })
                     .collect();
@@ -131,7 +133,11 @@ pub fn resolve_channel<'d, 'a: 'd>(
 pub fn enumerate_data_sources<'d, 'a: 'd>(
     doc: &'d TmatsDocument<'a>,
 ) -> Vec<(u32, &'d DataSourceDecl<'a>)> {
-    doc.general.data_sources.iter().map(|(&idx, ds)| (idx, ds)).collect()
+    doc.general
+        .data_sources
+        .iter()
+        .map(|(&idx, ds)| (idx, ds))
+        .collect()
 }
 
 /// Enumerate all channels across all R-groups.
@@ -182,7 +188,9 @@ pub fn diff<'a>(
     for (key, val) in &a_map {
         match b_map.get(key.as_str()) {
             Some(b_val) if b_val != val => {
-                result.modified.push((key.clone(), val.clone(), b_val.clone()));
+                result
+                    .modified
+                    .push((key.clone(), val.clone(), b_val.clone()));
             }
             None => {
                 result.removed.push((key.clone(), val.clone()));

@@ -14,16 +14,16 @@
 // ## Traceability:
 //   L1-XML → L2-XML-001..005 → L3-XML-001..008
 
-use quick_xml::events::{Event, BytesStart, BytesEnd, BytesText};
 use quick_xml::Reader;
 use quick_xml::Writer;
+use quick_xml::events::{BytesEnd, BytesStart, BytesText, Event};
 
 use std::borrow::Cow;
-use std::io::{BufRead, Write};
+use std::io::Write;
 
 use crate::error::{TmatsError, XmlError};
 use crate::model::*;
-use crate::types_bridge::{GroupPrefix, Irig106Version};
+use crate::types_bridge::Irig106Version;
 
 // ─── Keyword Expansion Registry (L3-XML-005) ────────────────────────────────
 
@@ -130,14 +130,27 @@ pub fn serialize_xml(doc: &TmatsDocument<'_>, writer: &mut dyn Write) -> Result<
     let mut xml_writer = Writer::new_with_indent(writer, b' ', 2);
 
     // XML declaration
-    xml_writer.write_event(Event::Decl(
-        quick_xml::events::BytesDecl::new("1.0", Some("UTF-8"), None)
-    )).map_err(|e| TmatsError::Xml(XmlError { message: e.to_string() }))?;
+    xml_writer
+        .write_event(Event::Decl(quick_xml::events::BytesDecl::new(
+            "1.0",
+            Some("UTF-8"),
+            None,
+        )))
+        .map_err(|e| {
+            TmatsError::Xml(XmlError {
+                message: e.to_string(),
+            })
+        })?;
 
     // Root element
     let root_start = BytesStart::new("Tmats");
-    xml_writer.write_event(Event::Start(root_start.clone()))
-        .map_err(|e| TmatsError::Xml(XmlError { message: e.to_string() }))?;
+    xml_writer
+        .write_event(Event::Start(root_start.clone()))
+        .map_err(|e| {
+            TmatsError::Xml(XmlError {
+                message: e.to_string(),
+            })
+        })?;
 
     // G-Group
     write_xml_g_group(&mut xml_writer, &doc.general)?;
@@ -183,8 +196,13 @@ pub fn serialize_xml(doc: &TmatsDocument<'_>, writer: &mut dyn Write) -> Result<
     }
 
     // Close root
-    xml_writer.write_event(Event::End(BytesEnd::new("Tmats")))
-        .map_err(|e| TmatsError::Xml(XmlError { message: e.to_string() }))?;
+    xml_writer
+        .write_event(Event::End(BytesEnd::new("Tmats")))
+        .map_err(|e| {
+            TmatsError::Xml(XmlError {
+                message: e.to_string(),
+            })
+        })?;
 
     Ok(())
 }
@@ -222,133 +240,217 @@ fn write_xml_element_expanded<W: Write>(
 }
 
 fn xml_err(e: quick_xml::Error) -> TmatsError {
-    TmatsError::Xml(XmlError { message: e.to_string() })
+    TmatsError::Xml(XmlError {
+        message: e.to_string(),
+    })
 }
 
 // ─── Group-specific XML writers ──────────────────────────────────────────────
 // Note: \N counter attributes are NOT emitted per L3-XML-003
 
 fn write_xml_g_group<W: Write>(w: &mut Writer<W>, g: &GGroup<'_>) -> Result<(), TmatsError> {
-    w.write_event(Event::Start(BytesStart::new("GeneralInformation"))).map_err(xml_err)?;
+    w.write_event(Event::Start(BytesStart::new("GeneralInformation")))
+        .map_err(xml_err)?;
 
-    if let Some(ref v) = g.program_name { write_xml_element(w, "ProgramName", v)?; }
-    if let Some(ref v) = g.irig106_version { write_xml_element(w, "Irig106Version", v)?; }
+    if let Some(ref v) = g.program_name {
+        write_xml_element(w, "ProgramName", v)?;
+    }
+    if let Some(ref v) = g.irig106_version {
+        write_xml_element(w, "Irig106Version", v)?;
+    }
     if let Some(d) = &g.origination_date {
         write_xml_element(w, "OriginationDate", &tmats_date_to_xml(d))?;
     }
-    if let Some(ref v) = g.revision_number { write_xml_element(w, "RevisionNumber", v)?; }
+    if let Some(ref v) = g.revision_number {
+        write_xml_element(w, "RevisionNumber", v)?;
+    }
     if let Some(d) = &g.revision_date {
         write_xml_element(w, "RevisionDate", &tmats_date_to_xml(d))?;
     }
-    if let Some(ref v) = g.test_number { write_xml_element(w, "TestNumber", v)?; }
+    if let Some(ref v) = g.test_number {
+        write_xml_element(w, "TestNumber", v)?;
+    }
 
     // Data sources — no \N counter (L3-XML-003)
     for (_, ds) in &g.data_sources {
-        w.write_event(Event::Start(BytesStart::new("DataSource"))).map_err(xml_err)?;
-        if let Some(ref v) = ds.data_source_id { write_xml_element(w, "DataSourceID", v)?; }
+        w.write_event(Event::Start(BytesStart::new("DataSource")))
+            .map_err(xml_err)?;
+        if let Some(ref v) = ds.data_source_id {
+            write_xml_element(w, "DataSourceID", v)?;
+        }
         if let Some(ref v) = ds.data_source_type {
             write_xml_element_expanded(w, "DataSourceType", v)?;
         }
         if let Some(ref v) = ds.classification {
             write_xml_element_expanded(w, "Classification", v)?;
         }
-        w.write_event(Event::End(BytesEnd::new("DataSource"))).map_err(xml_err)?;
+        w.write_event(Event::End(BytesEnd::new("DataSource")))
+            .map_err(xml_err)?;
     }
 
     for comment in &g.comments {
         write_xml_element(w, "Comment", comment)?;
     }
 
-    w.write_event(Event::End(BytesEnd::new("GeneralInformation"))).map_err(xml_err)?;
+    w.write_event(Event::End(BytesEnd::new("GeneralInformation")))
+        .map_err(xml_err)?;
     Ok(())
 }
 
 fn write_xml_t_group<W: Write>(w: &mut Writer<W>, t: &TGroup<'_>) -> Result<(), TmatsError> {
-    w.write_event(Event::Start(BytesStart::new("TransmissionAttributes"))).map_err(xml_err)?;
-    if let Some(ref v) = t.transmitter_id { write_xml_element(w, "TransmitterID", v)?; }
-    if let Some(v) = t.carrier_frequency_mhz { write_xml_element(w, "CarrierFrequency", &v.to_string())?; }
-    if let Some(ref v) = t.modulation_type { write_xml_element_expanded(w, "ModulationType", v)?; }
-    w.write_event(Event::End(BytesEnd::new("TransmissionAttributes"))).map_err(xml_err)?;
+    w.write_event(Event::Start(BytesStart::new("TransmissionAttributes")))
+        .map_err(xml_err)?;
+    if let Some(ref v) = t.transmitter_id {
+        write_xml_element(w, "TransmitterID", v)?;
+    }
+    if let Some(v) = t.carrier_frequency_mhz {
+        write_xml_element(w, "CarrierFrequency", &v.to_string())?;
+    }
+    if let Some(ref v) = t.modulation_type {
+        write_xml_element_expanded(w, "ModulationType", v)?;
+    }
+    w.write_event(Event::End(BytesEnd::new("TransmissionAttributes")))
+        .map_err(xml_err)?;
     Ok(())
 }
 
 fn write_xml_r_group<W: Write>(w: &mut Writer<W>, r: &RGroup<'_>) -> Result<(), TmatsError> {
-    w.write_event(Event::Start(BytesStart::new("RecorderAttributes"))).map_err(xml_err)?;
-    if let Some(ref v) = r.recorder_id { write_xml_element(w, "RecorderID", v)?; }
-    if let Some(ref v) = r.recorder_description { write_xml_element(w, "Description", v)?; }
+    w.write_event(Event::Start(BytesStart::new("RecorderAttributes")))
+        .map_err(xml_err)?;
+    if let Some(ref v) = r.recorder_id {
+        write_xml_element(w, "RecorderID", v)?;
+    }
+    if let Some(ref v) = r.recorder_description {
+        write_xml_element(w, "Description", v)?;
+    }
 
     for (_, ch) in &r.channels {
-        w.write_event(Event::Start(BytesStart::new("Channel"))).map_err(xml_err)?;
-        if let Some(v) = ch.channel_id { write_xml_element(w, "ChannelID", &v.to_string())?; }
-        if let Some(ref v) = ch.data_type { write_xml_element(w, "DataType", v)?; }
-        if let Some(ref v) = ch.data_link_name { write_xml_element(w, "DataLinkName", v)?; }
+        w.write_event(Event::Start(BytesStart::new("Channel")))
+            .map_err(xml_err)?;
+        if let Some(v) = ch.channel_id {
+            write_xml_element(w, "ChannelID", &v.to_string())?;
+        }
+        if let Some(ref v) = ch.data_type {
+            write_xml_element(w, "DataType", v)?;
+        }
+        if let Some(ref v) = ch.data_link_name {
+            write_xml_element(w, "DataLinkName", v)?;
+        }
         if let Some(ref v) = ch.data_packing_option {
             write_xml_element_expanded(w, "DataPacking", v)?;
         }
         if let Some(v) = ch.channel_enabled {
             write_xml_element(w, "Enabled", if v { "True" } else { "False" })?;
         }
-        w.write_event(Event::End(BytesEnd::new("Channel"))).map_err(xml_err)?;
+        w.write_event(Event::End(BytesEnd::new("Channel")))
+            .map_err(xml_err)?;
     }
 
     if let Some(v) = r.index_enabled {
         write_xml_element(w, "IndexEnabled", if v { "True" } else { "False" })?;
     }
 
-    w.write_event(Event::End(BytesEnd::new("RecorderAttributes"))).map_err(xml_err)?;
+    w.write_event(Event::End(BytesEnd::new("RecorderAttributes")))
+        .map_err(xml_err)?;
     Ok(())
 }
 
 fn write_xml_m_group<W: Write>(w: &mut Writer<W>, m: &MGroup<'_>) -> Result<(), TmatsError> {
-    w.write_event(Event::Start(BytesStart::new("MultiplexAttributes"))).map_err(xml_err)?;
-    if let Some(ref v) = m.baseband_signal_type { write_xml_element(w, "BasebandSignalType", v)?; }
-    w.write_event(Event::End(BytesEnd::new("MultiplexAttributes"))).map_err(xml_err)?;
+    w.write_event(Event::Start(BytesStart::new("MultiplexAttributes")))
+        .map_err(xml_err)?;
+    if let Some(ref v) = m.baseband_signal_type {
+        write_xml_element(w, "BasebandSignalType", v)?;
+    }
+    w.write_event(Event::End(BytesEnd::new("MultiplexAttributes")))
+        .map_err(xml_err)?;
     Ok(())
 }
 
 fn write_xml_p_group<W: Write>(w: &mut Writer<W>, p: &PGroup<'_>) -> Result<(), TmatsError> {
-    w.write_event(Event::Start(BytesStart::new("PCMFormatAttributes"))).map_err(xml_err)?;
-    if let Some(ref v) = p.data_link_name { write_xml_element(w, "DataLinkName", v)?; }
-    if let Some(v) = p.bit_rate { write_xml_element(w, "BitRate", &v.to_string())?; }
-    if let Some(ref v) = p.encoding { write_xml_element_expanded(w, "Encoding", v)?; }
-    if let Some(ref v) = p.polarity { write_xml_element_expanded(w, "Polarity", v)?; }
-    if let Some(v) = p.num_words_per_frame { write_xml_element(w, "WordsPerFrame", &v.to_string())?; }
-    if let Some(v) = p.num_bits_per_word { write_xml_element(w, "BitsPerWord", &v.to_string())?; }
-    if let Some(ref v) = p.sync_pattern { write_xml_element(w, "SyncPattern", v)?; }
-    if let Some(v) = p.sync_pattern_length { write_xml_element(w, "SyncPatternLength", &v.to_string())?; }
-    w.write_event(Event::End(BytesEnd::new("PCMFormatAttributes"))).map_err(xml_err)?;
+    w.write_event(Event::Start(BytesStart::new("PCMFormatAttributes")))
+        .map_err(xml_err)?;
+    if let Some(ref v) = p.data_link_name {
+        write_xml_element(w, "DataLinkName", v)?;
+    }
+    if let Some(v) = p.bit_rate {
+        write_xml_element(w, "BitRate", &v.to_string())?;
+    }
+    if let Some(ref v) = p.encoding {
+        write_xml_element_expanded(w, "Encoding", v)?;
+    }
+    if let Some(ref v) = p.polarity {
+        write_xml_element_expanded(w, "Polarity", v)?;
+    }
+    if let Some(v) = p.num_words_per_frame {
+        write_xml_element(w, "WordsPerFrame", &v.to_string())?;
+    }
+    if let Some(v) = p.num_bits_per_word {
+        write_xml_element(w, "BitsPerWord", &v.to_string())?;
+    }
+    if let Some(ref v) = p.sync_pattern {
+        write_xml_element(w, "SyncPattern", v)?;
+    }
+    if let Some(v) = p.sync_pattern_length {
+        write_xml_element(w, "SyncPatternLength", &v.to_string())?;
+    }
+    w.write_event(Event::End(BytesEnd::new("PCMFormatAttributes")))
+        .map_err(xml_err)?;
     Ok(())
 }
 
 fn write_xml_d_group<W: Write>(w: &mut Writer<W>, d: &DGroup<'_>) -> Result<(), TmatsError> {
-    w.write_event(Event::Start(BytesStart::new("PCMMeasurementDescription"))).map_err(xml_err)?;
-    if let Some(ref v) = d.measurement_list_name { write_xml_element(w, "MeasurementListName", v)?; }
-    if let Some(ref v) = d.data_link_name { write_xml_element(w, "DataLinkName", v)?; }
-    w.write_event(Event::End(BytesEnd::new("PCMMeasurementDescription"))).map_err(xml_err)?;
+    w.write_event(Event::Start(BytesStart::new("PCMMeasurementDescription")))
+        .map_err(xml_err)?;
+    if let Some(ref v) = d.measurement_list_name {
+        write_xml_element(w, "MeasurementListName", v)?;
+    }
+    if let Some(ref v) = d.data_link_name {
+        write_xml_element(w, "DataLinkName", v)?;
+    }
+    w.write_event(Event::End(BytesEnd::new("PCMMeasurementDescription")))
+        .map_err(xml_err)?;
     Ok(())
 }
 
 fn write_xml_b_group<W: Write>(w: &mut Writer<W>, b: &BGroup<'_>) -> Result<(), TmatsError> {
-    w.write_event(Event::Start(BytesStart::new("BusDataAttributes"))).map_err(xml_err)?;
-    if let Some(ref v) = b.data_link_name { write_xml_element(w, "DataLinkName", v)?; }
-    if let Some(ref v) = b.bus_type { write_xml_element_expanded(w, "BusType", v)?; }
-    w.write_event(Event::End(BytesEnd::new("BusDataAttributes"))).map_err(xml_err)?;
+    w.write_event(Event::Start(BytesStart::new("BusDataAttributes")))
+        .map_err(xml_err)?;
+    if let Some(ref v) = b.data_link_name {
+        write_xml_element(w, "DataLinkName", v)?;
+    }
+    if let Some(ref v) = b.bus_type {
+        write_xml_element_expanded(w, "BusType", v)?;
+    }
+    w.write_event(Event::End(BytesEnd::new("BusDataAttributes")))
+        .map_err(xml_err)?;
     Ok(())
 }
 
 fn write_xml_s_group<W: Write>(w: &mut Writer<W>, s: &SGroup<'_>) -> Result<(), TmatsError> {
-    w.write_event(Event::Start(BytesStart::new("MessageDataAttributes"))).map_err(xml_err)?;
-    if let Some(ref v) = s.data_link_name { write_xml_element(w, "DataLinkName", v)?; }
-    w.write_event(Event::End(BytesEnd::new("MessageDataAttributes"))).map_err(xml_err)?;
+    w.write_event(Event::Start(BytesStart::new("MessageDataAttributes")))
+        .map_err(xml_err)?;
+    if let Some(ref v) = s.data_link_name {
+        write_xml_element(w, "DataLinkName", v)?;
+    }
+    w.write_event(Event::End(BytesEnd::new("MessageDataAttributes")))
+        .map_err(xml_err)?;
     Ok(())
 }
 
 fn write_xml_c_group<W: Write>(w: &mut Writer<W>, c: &CGroup<'_>) -> Result<(), TmatsError> {
-    w.write_event(Event::Start(BytesStart::new("DataConversionAttributes"))).map_err(xml_err)?;
-    if let Some(ref v) = c.measurement_name { write_xml_element(w, "MeasurementName", v)?; }
-    if let Some(ref v) = c.conversion_type { write_xml_element_expanded(w, "ConversionType", v)?; }
-    if let Some(ref v) = c.eu_units { write_xml_element(w, "EngineeringUnits", v)?; }
-    w.write_event(Event::End(BytesEnd::new("DataConversionAttributes"))).map_err(xml_err)?;
+    w.write_event(Event::Start(BytesStart::new("DataConversionAttributes")))
+        .map_err(xml_err)?;
+    if let Some(ref v) = c.measurement_name {
+        write_xml_element(w, "MeasurementName", v)?;
+    }
+    if let Some(ref v) = c.conversion_type {
+        write_xml_element_expanded(w, "ConversionType", v)?;
+    }
+    if let Some(ref v) = c.eu_units {
+        write_xml_element(w, "EngineeringUnits", v)?;
+    }
+    w.write_event(Event::End(BytesEnd::new("DataConversionAttributes")))
+        .map_err(xml_err)?;
     Ok(())
 }
 
@@ -416,16 +518,22 @@ pub fn parse_xml(input: &[u8]) -> Result<OwnedTmatsDocument, TmatsError> {
 
                     // Data source elements
                     (Some("DataSource"), "DataSourceID") => {
-                        if current_ds.is_none() { current_ds = Some(DataSourceDecl::default()); }
+                        if current_ds.is_none() {
+                            current_ds = Some(DataSourceDecl::default());
+                        }
                         current_ds.as_mut().unwrap().data_source_id = Some(Cow::Owned(text));
                     }
                     (Some("DataSource"), "DataSourceType") => {
-                        if current_ds.is_none() { current_ds = Some(DataSourceDecl::default()); }
+                        if current_ds.is_none() {
+                            current_ds = Some(DataSourceDecl::default());
+                        }
                         current_ds.as_mut().unwrap().data_source_type =
                             Some(Cow::Owned(collapse_keyword(&text).to_string()));
                     }
                     (Some("DataSource"), "Classification") => {
-                        if current_ds.is_none() { current_ds = Some(DataSourceDecl::default()); }
+                        if current_ds.is_none() {
+                            current_ds = Some(DataSourceDecl::default());
+                        }
                         current_ds.as_mut().unwrap().classification =
                             Some(Cow::Owned(collapse_keyword(&text).to_string()));
                     }
@@ -438,23 +546,33 @@ pub fn parse_xml(input: &[u8]) -> Result<OwnedTmatsDocument, TmatsError> {
 
                     // R-Group / Channel
                     (Some("RecorderAttributes"), "RecorderID") => {
-                        if r_group.is_none() { r_group = Some(RGroup::default()); }
+                        if r_group.is_none() {
+                            r_group = Some(RGroup::default());
+                        }
                         r_group.as_mut().unwrap().recorder_id = Some(Cow::Owned(text));
                     }
                     (Some("Channel"), "ChannelID") => {
-                        if current_ch.is_none() { current_ch = Some(RChannel::default()); }
+                        if current_ch.is_none() {
+                            current_ch = Some(RChannel::default());
+                        }
                         current_ch.as_mut().unwrap().channel_id = text.parse().ok();
                     }
                     (Some("Channel"), "DataType") => {
-                        if current_ch.is_none() { current_ch = Some(RChannel::default()); }
+                        if current_ch.is_none() {
+                            current_ch = Some(RChannel::default());
+                        }
                         current_ch.as_mut().unwrap().data_type = Some(Cow::Owned(text));
                     }
                     (Some("Channel"), "DataLinkName") => {
-                        if current_ch.is_none() { current_ch = Some(RChannel::default()); }
+                        if current_ch.is_none() {
+                            current_ch = Some(RChannel::default());
+                        }
                         current_ch.as_mut().unwrap().data_link_name = Some(Cow::Owned(text));
                     }
                     (Some("Channel"), "DataPacking") => {
-                        if current_ch.is_none() { current_ch = Some(RChannel::default()); }
+                        if current_ch.is_none() {
+                            current_ch = Some(RChannel::default());
+                        }
                         current_ch.as_mut().unwrap().data_packing_option =
                             Some(Cow::Owned(collapse_keyword(&text).to_string()));
                     }
@@ -516,7 +634,8 @@ pub fn parse_xml(input: &[u8]) -> Result<OwnedTmatsDocument, TmatsError> {
                     (Some("DataConversionAttributes"), "ConversionType") => {
                         let idx = doc.data_conversion.len() as u32;
                         if let Some(c) = doc.data_conversion.get_mut(&idx) {
-                            c.conversion_type = Some(Cow::Owned(collapse_keyword(&text).to_string()));
+                            c.conversion_type =
+                                Some(Cow::Owned(collapse_keyword(&text).to_string()));
                         }
                     }
                     (Some("DataConversionAttributes"), "EngineeringUnits") => {
@@ -561,7 +680,9 @@ pub fn parse_xml(input: &[u8]) -> Result<OwnedTmatsDocument, TmatsError> {
 /// **Requirement:** L2-XML-004
 pub fn ascii_to_xml(ascii_input: &[u8]) -> Result<Vec<u8>, TmatsError> {
     let doc = crate::parse::parse(ascii_input).map_err(|e| {
-        TmatsError::Xml(XmlError { message: format!("ASCII parse failed: {e}") })
+        TmatsError::Xml(XmlError {
+            message: format!("ASCII parse failed: {e}"),
+        })
     })?;
     serialize_xml_to_vec(&doc)
 }
@@ -571,5 +692,5 @@ pub fn ascii_to_xml(ascii_input: &[u8]) -> Result<Vec<u8>, TmatsError> {
 /// **Requirement:** L2-XML-004
 pub fn xml_to_ascii(xml_input: &[u8]) -> Result<Vec<u8>, TmatsError> {
     let doc = parse_xml(xml_input)?;
-    crate::serial::serialize_to_vec(&doc).map_err(|e| TmatsError::from(e))
+    crate::serial::serialize_to_vec(&doc).map_err(TmatsError::from)
 }

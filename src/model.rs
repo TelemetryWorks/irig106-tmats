@@ -14,8 +14,8 @@
 // ## Traceability:
 //   L1-MODEL → L2-MODEL-001..014 → L3-MODEL-001..020
 
-use std::borrow::Cow;
 use indexmap::IndexMap;
+use std::borrow::Cow;
 
 use crate::error::Diagnostic;
 use crate::types_bridge::{GroupPrefix, Irig106Version};
@@ -252,24 +252,47 @@ impl<'a> TmatsDocument<'a> {
     pub fn into_owned(self) -> TmatsDocument<'static> {
         TmatsDocument {
             general: self.general.into_owned(),
-            transmission: self.transmission.into_iter()
-                .map(|(k, v)| (k, v.into_owned())).collect(),
-            recorders: self.recorders.into_iter()
-                .map(|(k, v)| (k, v.into_owned())).collect(),
-            multiplex: self.multiplex.into_iter()
-                .map(|(k, v)| (k, v.into_owned())).collect(),
-            pcm_formats: self.pcm_formats.into_iter()
-                .map(|(k, v)| (k, v.into_owned())).collect(),
-            pcm_measurements: self.pcm_measurements.into_iter()
-                .map(|(k, v)| (k, v.into_owned())).collect(),
-            bus_data: self.bus_data.into_iter()
-                .map(|(k, v)| (k, v.into_owned())).collect(),
-            message_data: self.message_data.into_iter()
-                .map(|(k, v)| (k, v.into_owned())).collect(),
-            data_conversion: self.data_conversion.into_iter()
-                .map(|(k, v)| (k, v.into_owned())).collect(),
-            unknown: self.unknown.into_iter()
-                .map(|a| a.into_owned()).collect(),
+            transmission: self
+                .transmission
+                .into_iter()
+                .map(|(k, v)| (k, v.into_owned()))
+                .collect(),
+            recorders: self
+                .recorders
+                .into_iter()
+                .map(|(k, v)| (k, v.into_owned()))
+                .collect(),
+            multiplex: self
+                .multiplex
+                .into_iter()
+                .map(|(k, v)| (k, v.into_owned()))
+                .collect(),
+            pcm_formats: self
+                .pcm_formats
+                .into_iter()
+                .map(|(k, v)| (k, v.into_owned()))
+                .collect(),
+            pcm_measurements: self
+                .pcm_measurements
+                .into_iter()
+                .map(|(k, v)| (k, v.into_owned()))
+                .collect(),
+            bus_data: self
+                .bus_data
+                .into_iter()
+                .map(|(k, v)| (k, v.into_owned()))
+                .collect(),
+            message_data: self
+                .message_data
+                .into_iter()
+                .map(|(k, v)| (k, v.into_owned()))
+                .collect(),
+            data_conversion: self
+                .data_conversion
+                .into_iter()
+                .map(|(k, v)| (k, v.into_owned()))
+                .collect(),
+            unknown: self.unknown.into_iter().map(|a| a.into_owned()).collect(),
             source_version: self.source_version,
             parse_diagnostics: self.parse_diagnostics,
         }
@@ -346,13 +369,22 @@ impl<'a> GGroup<'a> {
             update_date: self.update_date,
             test_number: self.test_number.map(|c| Cow::Owned(c.into_owned())),
             num_data_sources: self.num_data_sources,
-            data_sources: self.data_sources.into_iter()
-                .map(|(k, v)| (k, v.into_owned())).collect(),
+            data_sources: self
+                .data_sources
+                .into_iter()
+                .map(|(k, v)| (k, v.into_owned()))
+                .collect(),
             num_points_of_contact: self.num_points_of_contact,
-            points_of_contact: self.points_of_contact.into_iter()
-                .map(|(k, v)| (k, v.into_owned())).collect(),
-            comments: self.comments.into_iter()
-                .map(|c| Cow::Owned(c.into_owned())).collect(),
+            points_of_contact: self
+                .points_of_contact
+                .into_iter()
+                .map(|(k, v)| (k, v.into_owned()))
+                .collect(),
+            comments: self
+                .comments
+                .into_iter()
+                .map(|c| Cow::Owned(c.into_owned()))
+                .collect(),
             extra: self.extra.into_iter().map(|a| a.into_owned()).collect(),
         }
     }
@@ -443,8 +475,14 @@ impl<'a> TGroup<'a> {
             modulation_type: self.modulation_type.map(|c| Cow::Owned(c.into_owned())),
             power_watts: self.power_watts,
             antenna_type: self.antenna_type.map(|c| Cow::Owned(c.into_owned())),
-            antenna_polarization: self.antenna_polarization.map(|c| Cow::Owned(c.into_owned())),
-            comments: self.comments.into_iter().map(|c| Cow::Owned(c.into_owned())).collect(),
+            antenna_polarization: self
+                .antenna_polarization
+                .map(|c| Cow::Owned(c.into_owned())),
+            comments: self
+                .comments
+                .into_iter()
+                .map(|c| Cow::Owned(c.into_owned()))
+                .collect(),
             extra: self.extra.into_iter().map(|a| a.into_owned()).collect(),
         }
     }
@@ -485,16 +523,28 @@ impl<'a> RGroup<'a> {
     pub fn into_owned(self) -> RGroup<'static> {
         RGroup {
             recorder_id: self.recorder_id.map(|c| Cow::Owned(c.into_owned())),
-            recorder_description: self.recorder_description.map(|c| Cow::Owned(c.into_owned())),
+            recorder_description: self
+                .recorder_description
+                .map(|c| Cow::Owned(c.into_owned())),
             media_type: self.media_type.map(|c| Cow::Owned(c.into_owned())),
             num_channels: self.num_channels,
-            channels: self.channels.into_iter()
-                .map(|(k, v)| (k, v.into_owned())).collect(),
-            drives: self.drives.into_iter()
-                .map(|(k, v)| (k, v.into_owned())).collect(),
+            channels: self
+                .channels
+                .into_iter()
+                .map(|(k, v)| (k, v.into_owned()))
+                .collect(),
+            drives: self
+                .drives
+                .into_iter()
+                .map(|(k, v)| (k, v.into_owned()))
+                .collect(),
             index_enabled: self.index_enabled,
             events_enabled: self.events_enabled,
-            comments: self.comments.into_iter().map(|c| Cow::Owned(c.into_owned())).collect(),
+            comments: self
+                .comments
+                .into_iter()
+                .map(|c| Cow::Owned(c.into_owned()))
+                .collect(),
             extra: self.extra.into_iter().map(|a| a.into_owned()).collect(),
         }
     }
@@ -578,11 +628,20 @@ pub struct MGroup<'a> {
 impl<'a> MGroup<'a> {
     pub fn into_owned(self) -> MGroup<'static> {
         MGroup {
-            baseband_signal_type: self.baseband_signal_type.map(|c| Cow::Owned(c.into_owned())),
+            baseband_signal_type: self
+                .baseband_signal_type
+                .map(|c| Cow::Owned(c.into_owned())),
             modulation_sense: self.modulation_sense.map(|c| Cow::Owned(c.into_owned())),
-            subcarriers: self.subcarriers.into_iter()
-                .map(|(k, v)| (k, v.into_owned())).collect(),
-            comments: self.comments.into_iter().map(|c| Cow::Owned(c.into_owned())).collect(),
+            subcarriers: self
+                .subcarriers
+                .into_iter()
+                .map(|(k, v)| (k, v.into_owned()))
+                .collect(),
+            comments: self
+                .comments
+                .into_iter()
+                .map(|c| Cow::Owned(c.into_owned()))
+                .collect(),
             extra: self.extra.into_iter().map(|a| a.into_owned()).collect(),
         }
     }
@@ -656,13 +715,26 @@ impl<'a> PGroup<'a> {
             num_bits_per_word: self.num_bits_per_word,
             sync_pattern: self.sync_pattern.map(|c| Cow::Owned(c.into_owned())),
             sync_pattern_length: self.sync_pattern_length,
-            subframes: self.subframes.into_iter()
-                .map(|(k, v)| (k, v.into_owned())).collect(),
-            word_definitions: self.word_definitions.into_iter()
-                .map(|(k, v)| (k, v.into_owned())).collect(),
-            embedded_formats: self.embedded_formats.into_iter()
-                .map(|(k, v)| (k, v.into_owned())).collect(),
-            comments: self.comments.into_iter().map(|c| Cow::Owned(c.into_owned())).collect(),
+            subframes: self
+                .subframes
+                .into_iter()
+                .map(|(k, v)| (k, v.into_owned()))
+                .collect(),
+            word_definitions: self
+                .word_definitions
+                .into_iter()
+                .map(|(k, v)| (k, v.into_owned()))
+                .collect(),
+            embedded_formats: self
+                .embedded_formats
+                .into_iter()
+                .map(|(k, v)| (k, v.into_owned()))
+                .collect(),
+            comments: self
+                .comments
+                .into_iter()
+                .map(|c| Cow::Owned(c.into_owned()))
+                .collect(),
             extra: self.extra.into_iter().map(|a| a.into_owned()).collect(),
         }
     }
@@ -670,31 +742,43 @@ impl<'a> PGroup<'a> {
 
 #[derive(Debug, Clone, Default)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct PSubframe<'a> { pub extra: Vec<RawAttribute<'a>> }
+pub struct PSubframe<'a> {
+    pub extra: Vec<RawAttribute<'a>>,
+}
 
 impl<'a> PSubframe<'a> {
     pub fn into_owned(self) -> PSubframe<'static> {
-        PSubframe { extra: self.extra.into_iter().map(|a| a.into_owned()).collect() }
+        PSubframe {
+            extra: self.extra.into_iter().map(|a| a.into_owned()).collect(),
+        }
     }
 }
 
 #[derive(Debug, Clone, Default)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct PWordDef<'a> { pub extra: Vec<RawAttribute<'a>> }
+pub struct PWordDef<'a> {
+    pub extra: Vec<RawAttribute<'a>>,
+}
 
 impl<'a> PWordDef<'a> {
     pub fn into_owned(self) -> PWordDef<'static> {
-        PWordDef { extra: self.extra.into_iter().map(|a| a.into_owned()).collect() }
+        PWordDef {
+            extra: self.extra.into_iter().map(|a| a.into_owned()).collect(),
+        }
     }
 }
 
 #[derive(Debug, Clone, Default)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct PEmbeddedFormat<'a> { pub extra: Vec<RawAttribute<'a>> }
+pub struct PEmbeddedFormat<'a> {
+    pub extra: Vec<RawAttribute<'a>>,
+}
 
 impl<'a> PEmbeddedFormat<'a> {
     pub fn into_owned(self) -> PEmbeddedFormat<'static> {
-        PEmbeddedFormat { extra: self.extra.into_iter().map(|a| a.into_owned()).collect() }
+        PEmbeddedFormat {
+            extra: self.extra.into_iter().map(|a| a.into_owned()).collect(),
+        }
     }
 }
 
@@ -722,12 +806,21 @@ pub struct DGroup<'a> {
 impl<'a> DGroup<'a> {
     pub fn into_owned(self) -> DGroup<'static> {
         DGroup {
-            measurement_list_name: self.measurement_list_name.map(|c| Cow::Owned(c.into_owned())),
+            measurement_list_name: self
+                .measurement_list_name
+                .map(|c| Cow::Owned(c.into_owned())),
             data_link_name: self.data_link_name.map(|c| Cow::Owned(c.into_owned())),
             num_measurements: self.num_measurements,
-            measurements: self.measurements.into_iter()
-                .map(|(k, v)| (k, v.into_owned())).collect(),
-            comments: self.comments.into_iter().map(|c| Cow::Owned(c.into_owned())).collect(),
+            measurements: self
+                .measurements
+                .into_iter()
+                .map(|(k, v)| (k, v.into_owned()))
+                .collect(),
+            comments: self
+                .comments
+                .into_iter()
+                .map(|c| Cow::Owned(c.into_owned()))
+                .collect(),
             extra: self.extra.into_iter().map(|a| a.into_owned()).collect(),
         }
     }
@@ -789,9 +882,16 @@ impl<'a> BGroup<'a> {
             data_link_name: self.data_link_name.map(|c| Cow::Owned(c.into_owned())),
             bus_type: self.bus_type.map(|c| Cow::Owned(c.into_owned())),
             num_buses: self.num_buses,
-            messages: self.messages.into_iter()
-                .map(|(k, v)| (k, v.into_owned())).collect(),
-            comments: self.comments.into_iter().map(|c| Cow::Owned(c.into_owned())).collect(),
+            messages: self
+                .messages
+                .into_iter()
+                .map(|(k, v)| (k, v.into_owned()))
+                .collect(),
+            comments: self
+                .comments
+                .into_iter()
+                .map(|c| Cow::Owned(c.into_owned()))
+                .collect(),
             extra: self.extra.into_iter().map(|a| a.into_owned()).collect(),
         }
     }
@@ -834,9 +934,16 @@ impl<'a> SGroup<'a> {
     pub fn into_owned(self) -> SGroup<'static> {
         SGroup {
             data_link_name: self.data_link_name.map(|c| Cow::Owned(c.into_owned())),
-            message_definitions: self.message_definitions.into_iter()
-                .map(|(k, v)| (k, v.into_owned())).collect(),
-            comments: self.comments.into_iter().map(|c| Cow::Owned(c.into_owned())).collect(),
+            message_definitions: self
+                .message_definitions
+                .into_iter()
+                .map(|(k, v)| (k, v.into_owned()))
+                .collect(),
+            comments: self
+                .comments
+                .into_iter()
+                .map(|c| Cow::Owned(c.into_owned()))
+                .collect(),
             extra: self.extra.into_iter().map(|a| a.into_owned()).collect(),
         }
     }
@@ -850,7 +957,9 @@ pub struct SMessageDef<'a> {
 
 impl<'a> SMessageDef<'a> {
     pub fn into_owned(self) -> SMessageDef<'static> {
-        SMessageDef { extra: self.extra.into_iter().map(|a| a.into_owned()).collect() }
+        SMessageDef {
+            extra: self.extra.into_iter().map(|a| a.into_owned()).collect(),
+        }
     }
 }
 
@@ -883,7 +992,11 @@ impl<'a> CGroup<'a> {
             conversion_type: self.conversion_type.map(|c| Cow::Owned(c.into_owned())),
             eu_units: self.eu_units.map(|c| Cow::Owned(c.into_owned())),
             pair_sets: self.pair_sets,
-            comments: self.comments.into_iter().map(|c| Cow::Owned(c.into_owned())).collect(),
+            comments: self
+                .comments
+                .into_iter()
+                .map(|c| Cow::Owned(c.into_owned()))
+                .collect(),
             extra: self.extra.into_iter().map(|a| a.into_owned()).collect(),
         }
     }
@@ -908,15 +1021,51 @@ pub trait TmatsGroup {
     fn group_prefix() -> GroupPrefix;
 }
 
-impl<'a> TmatsGroup for GGroup<'a> { fn group_prefix() -> GroupPrefix { GroupPrefix::G } }
-impl<'a> TmatsGroup for TGroup<'a> { fn group_prefix() -> GroupPrefix { GroupPrefix::T } }
-impl<'a> TmatsGroup for RGroup<'a> { fn group_prefix() -> GroupPrefix { GroupPrefix::R } }
-impl<'a> TmatsGroup for MGroup<'a> { fn group_prefix() -> GroupPrefix { GroupPrefix::M } }
-impl<'a> TmatsGroup for PGroup<'a> { fn group_prefix() -> GroupPrefix { GroupPrefix::P } }
-impl<'a> TmatsGroup for DGroup<'a> { fn group_prefix() -> GroupPrefix { GroupPrefix::D } }
-impl<'a> TmatsGroup for BGroup<'a> { fn group_prefix() -> GroupPrefix { GroupPrefix::B } }
-impl<'a> TmatsGroup for SGroup<'a> { fn group_prefix() -> GroupPrefix { GroupPrefix::S } }
-impl<'a> TmatsGroup for CGroup<'a> { fn group_prefix() -> GroupPrefix { GroupPrefix::C } }
+impl<'a> TmatsGroup for GGroup<'a> {
+    fn group_prefix() -> GroupPrefix {
+        GroupPrefix::G
+    }
+}
+impl<'a> TmatsGroup for TGroup<'a> {
+    fn group_prefix() -> GroupPrefix {
+        GroupPrefix::T
+    }
+}
+impl<'a> TmatsGroup for RGroup<'a> {
+    fn group_prefix() -> GroupPrefix {
+        GroupPrefix::R
+    }
+}
+impl<'a> TmatsGroup for MGroup<'a> {
+    fn group_prefix() -> GroupPrefix {
+        GroupPrefix::M
+    }
+}
+impl<'a> TmatsGroup for PGroup<'a> {
+    fn group_prefix() -> GroupPrefix {
+        GroupPrefix::P
+    }
+}
+impl<'a> TmatsGroup for DGroup<'a> {
+    fn group_prefix() -> GroupPrefix {
+        GroupPrefix::D
+    }
+}
+impl<'a> TmatsGroup for BGroup<'a> {
+    fn group_prefix() -> GroupPrefix {
+        GroupPrefix::B
+    }
+}
+impl<'a> TmatsGroup for SGroup<'a> {
+    fn group_prefix() -> GroupPrefix {
+        GroupPrefix::S
+    }
+}
+impl<'a> TmatsGroup for CGroup<'a> {
+    fn group_prefix() -> GroupPrefix {
+        GroupPrefix::C
+    }
+}
 
 // ─── RawAttribute into_owned ─────────────────────────────────────────────────
 
@@ -937,10 +1086,14 @@ impl<'a> CodeName<'a> {
         CodeName {
             group: self.group,
             occurrence: self.occurrence,
-            path: self.path.into_iter().map(|s| PathSegment {
-                name: Cow::Owned(s.name.into_owned()),
-                index: s.index,
-            }).collect(),
+            path: self
+                .path
+                .into_iter()
+                .map(|s| PathSegment {
+                    name: Cow::Owned(s.name.into_owned()),
+                    index: s.index,
+                })
+                .collect(),
         }
     }
 }

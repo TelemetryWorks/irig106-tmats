@@ -69,15 +69,15 @@
 
 // ─── Module declarations (L3-ARCH-001) ───────────────────────────────────────
 
+pub mod ch10;
 pub mod error;
 pub mod model;
 pub mod parse;
-pub mod serial;
-pub mod ch10;
 pub mod query;
+pub mod serial;
+pub mod types_bridge;
 pub mod validate;
 pub mod version;
-pub mod types_bridge;
 
 #[cfg(feature = "generate")]
 pub mod generate;
@@ -103,40 +103,45 @@ pub mod wasm;
 pub mod prelude {
     // Core types
     pub use crate::model::{
-        TmatsDocument, OwnedTmatsDocument,
-        GGroup, TGroup, RGroup, MGroup, PGroup, DGroup, BGroup, SGroup, CGroup,
-        RChannel, DataSourceDecl, TmatsDate, DataLinkName,
-        RawAttribute, CodeName, AttrValue, TmatsGroup,
+        AttrValue, BGroup, CGroup, CodeName, DGroup, DataLinkName, DataSourceDecl, GGroup, MGroup,
+        OwnedTmatsDocument, PGroup, RChannel, RGroup, RawAttribute, SGroup, TGroup, TmatsDate,
+        TmatsDocument, TmatsGroup,
     };
 
     // Type bridge (→ irig106-types)
-    pub use crate::types_bridge::{
-        Irig106Version, DataTypeCode, ChannelId, GroupPrefix,
-    };
+    pub use crate::types_bridge::{ChannelId, DataTypeCode, GroupPrefix, Irig106Version};
 
     // Parse API (L3-INTEROP-001)
-    pub use crate::parse::{parse, parse_owned, parse_with_options, ParseOptions, ParseMode};
+    pub use crate::parse::{ParseMode, ParseOptions, parse, parse_owned, parse_with_options};
 
     // Serialize API (L3-INTEROP-002)
-    pub use crate::serial::{serialize, serialize_to_vec, serialize_with_options, SerializeOptions};
+    pub use crate::serial::{
+        SerializeOptions, serialize, serialize_to_vec, serialize_with_options,
+    };
 
     // Ch10 API (L3-INTEROP-003)
     pub use crate::ch10::{
-        SetupRecordCsdw, SetupRecordPayload,
-        decode_setup_payload, encode_setup_payload, detect_config_change,
+        SetupRecordCsdw, SetupRecordPayload, decode_setup_payload, detect_config_change,
+        encode_setup_payload,
     };
 
     // Query API
-    pub use crate::query::{resolve_channel, enumerate_data_sources, enumerate_channels, ChannelConfig};
+    pub use crate::query::{
+        ChannelConfig, enumerate_channels, enumerate_data_sources, resolve_channel,
+    };
 
     // Validation API (L3-INTEROP-004)
-    pub use crate::validate::{validate, validate_with_options, ValidationReport, ValidationContext};
+    pub use crate::validate::{
+        ValidationContext, ValidationReport, validate, validate_with_options,
+    };
 
     // Error types
-    pub use crate::error::{TmatsError, TmatsErrors, ParseError, Diagnostic, Severity};
+    pub use crate::error::{Diagnostic, ParseError, Severity, TmatsError, TmatsErrors};
 
     // Version registry (L3-VERSION-005)
-    pub use crate::version::{registry, AttrMetaRegistry, AttrMeta, RequiredTag, ValueType, MigrationDiff};
+    pub use crate::version::{
+        AttrMeta, AttrMetaRegistry, MigrationDiff, RequiredTag, ValueType, registry,
+    };
 
     // Generate API (L3-INTEROP-005)
     #[cfg(feature = "generate")]
@@ -144,16 +149,18 @@ pub mod prelude {
 
     // Repair API (L3-INTEROP-006)
     #[cfg(feature = "repair")]
-    pub use crate::repair::{repair, repair_dry_run, RepairOptions, RepairReport};
+    pub use crate::repair::{RepairOptions, RepairReport, repair, repair_dry_run};
 
     // XML API (L2-XML-001..004)
     #[cfg(feature = "xml")]
-    pub use crate::xml::{parse_xml, serialize_xml, serialize_xml_to_vec, ascii_to_xml, xml_to_ascii};
+    pub use crate::xml::{
+        ascii_to_xml, parse_xml, serialize_xml, serialize_xml_to_vec, xml_to_ascii,
+    };
 }
 
 // ─── Re-exports for top-level access (L3-ARCH-004) ──────────────────────────
 
+pub use ch10::{decode_setup_payload, encode_setup_payload};
 pub use parse::{parse, parse_owned};
 pub use serial::{serialize, serialize_to_vec};
 pub use validate::validate;
-pub use ch10::{decode_setup_payload, encode_setup_payload};

@@ -51,8 +51,14 @@ impl Irig106Version {
     pub fn from_g106_str(s: &str) -> Option<Self> {
         let s = s.trim();
         // Try to extract the two-digit version number
-        let digits: String = s.chars().rev().take_while(|c| c.is_ascii_digit()).collect::<String>()
-            .chars().rev().collect();
+        let digits: String = s
+            .chars()
+            .rev()
+            .take_while(|c| c.is_ascii_digit())
+            .collect::<String>()
+            .chars()
+            .rev()
+            .collect();
         match digits.as_str() {
             "04" => Some(Self::V106_04),
             "05" => Some(Self::V106_05),
@@ -155,6 +161,36 @@ pub enum DataTypeCode {
 }
 
 impl DataTypeCode {
+    /// The raw 8-bit Chapter 10 data type code.
+    pub fn to_u8(self) -> u8 {
+        match self {
+            Self::ComputerGeneratedFormat0 => 0x00,
+            Self::ComputerGeneratedFormat1 => 0x01,
+            Self::ComputerGeneratedFormat2 => 0x02,
+            Self::ComputerGeneratedFormat3 => 0x03,
+            Self::Pcm => 0x09,
+            Self::TimeDataFormat1 => 0x11,
+            Self::Mil1553Format1 => 0x19,
+            Self::Mil1553Format2 => 0x1A,
+            Self::AnalogFormat1 => 0x21,
+            Self::DiscreteFormat1 => 0x29,
+            Self::MessageData => 0x30,
+            Self::Arinc429Format0 => 0x38,
+            Self::VideoFormat0 => 0x40,
+            Self::VideoFormat1 => 0x41,
+            Self::VideoFormat2 => 0x42,
+            Self::ImageFormat0 => 0x48,
+            Self::ImageFormat1 => 0x49,
+            Self::UartFormat0 => 0x50,
+            Self::Ieee1394Format0 => 0x58,
+            Self::ParallelFormat0 => 0x60,
+            Self::EthernetFormat0 => 0x68,
+            Self::CanBusFormat0 => 0x78,
+            Self::FibreChannelFormat0 => 0x79,
+            Self::Other(v) => v,
+        }
+    }
+
     pub fn from_u8(v: u8) -> Self {
         match v {
             0x00 => Self::ComputerGeneratedFormat0,
@@ -193,9 +229,7 @@ impl DataTypeCode {
             Self::Mil1553Format1 | Self::Mil1553Format2 | Self::Arinc429Format0 => {
                 Some(GroupPrefix::B)
             }
-            Self::MessageData | Self::UartFormat0 | Self::EthernetFormat0 => {
-                Some(GroupPrefix::S)
-            }
+            Self::MessageData | Self::UartFormat0 | Self::EthernetFormat0 => Some(GroupPrefix::S),
             _ => None,
         }
     }

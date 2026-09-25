@@ -142,11 +142,23 @@ fn xml_parse_with_data_sources() {
 
     let doc = parse_xml(xml).expect("xml parse failed");
     assert_eq!(doc.general.data_sources.len(), 2);
-    assert_eq!(doc.general.data_sources[&1].data_source_id.as_deref(), Some("SRC_A"));
+    assert_eq!(
+        doc.general.data_sources[&1].data_source_id.as_deref(),
+        Some("SRC_A")
+    );
     // Keyword should be collapsed from expanded XML form
-    assert_eq!(doc.general.data_sources[&1].data_source_type.as_deref(), Some("REC"));
-    assert_eq!(doc.general.data_sources[&1].classification.as_deref(), Some("U"));
-    assert_eq!(doc.general.data_sources[&2].data_source_type.as_deref(), Some("TEL"));
+    assert_eq!(
+        doc.general.data_sources[&1].data_source_type.as_deref(),
+        Some("REC")
+    );
+    assert_eq!(
+        doc.general.data_sources[&1].classification.as_deref(),
+        Some("U")
+    );
+    assert_eq!(
+        doc.general.data_sources[&2].data_source_type.as_deref(),
+        Some("TEL")
+    );
 }
 
 #[test]
@@ -248,7 +260,7 @@ fn xml_to_ascii_preserves_structure() {
 
 #[test]
 fn keyword_expand_collapse_round_trip() {
-    use irig106_tmats::xml::{expand_keyword, collapse_keyword};
+    use irig106_tmats::xml::{collapse_keyword, expand_keyword};
 
     let test_cases = &[
         ("UN", "Unpacked"),
@@ -264,9 +276,15 @@ fn keyword_expand_collapse_round_trip() {
     ];
 
     for &(abbrev, expanded) in test_cases {
-        assert_eq!(expand_keyword(abbrev), expanded,
-            "expand failed for '{abbrev}'");
-        assert_eq!(collapse_keyword(expanded), abbrev,
-            "collapse failed for '{expanded}'");
+        assert_eq!(
+            expand_keyword(abbrev),
+            expanded,
+            "expand failed for '{abbrev}'"
+        );
+        assert_eq!(
+            collapse_keyword(expanded),
+            abbrev,
+            "collapse failed for '{expanded}'"
+        );
     }
 }

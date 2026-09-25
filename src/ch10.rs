@@ -9,8 +9,8 @@
 // ## Traceability:
 //   L1-CH10 → L2-CH10-001..007 → L3-CH10-001..008
 
-use crate::error::{Ch10Error, TmatsError, TmatsErrors};
-use crate::model::{TmatsDocument, OwnedTmatsDocument};
+use crate::error::{Ch10Error, TmatsError};
+use crate::model::TmatsDocument;
 use crate::parse::{self, ParseOptions};
 use crate::serial;
 use crate::types_bridge::Irig106Version;
@@ -45,11 +45,7 @@ impl SetupRecordCsdw {
     pub fn decode(bytes: &[u8]) -> Result<Self, Ch10Error> {
         if bytes.len() < CSDW_SIZE {
             return Err(Ch10Error {
-                message: format!(
-                    "CSDW requires {} bytes, got {}",
-                    CSDW_SIZE,
-                    bytes.len()
-                ),
+                message: format!("CSDW requires {} bytes, got {}", CSDW_SIZE, bytes.len()),
             });
         }
 
@@ -145,7 +141,9 @@ pub enum PayloadEncoding {
 ///
 /// **Requirements:** L2-CH10-001, L2-CH10-003, L3-INTEROP-003
 /// **Spec:** RCC 123-20 §5.5.2
-pub fn decode_setup_payload(payload: &[u8]) -> Result<(SetupRecordCsdw, TmatsDocument<'_>), TmatsError> {
+pub fn decode_setup_payload(
+    payload: &[u8],
+) -> Result<(SetupRecordCsdw, TmatsDocument<'_>), TmatsError> {
     // Decode CSDW from first 4 bytes
     let csdw = SetupRecordCsdw::decode(payload)?;
 
@@ -166,9 +164,12 @@ pub fn decode_setup_payload(payload: &[u8]) -> Result<(SetupRecordCsdw, TmatsDoc
 
     let doc = parse::parse_with_options(tmats_bytes, &opts).map_err(|errs| {
         // Take the first error for the top-level TmatsError
-        errs.errors.into_iter().next().unwrap_or(
-            TmatsError::Ch10(Ch10Error { message: "TMATS parse failed".into() })
-        )
+        errs.errors
+            .into_iter()
+            .next()
+            .unwrap_or(TmatsError::Ch10(Ch10Error {
+                message: "TMATS parse failed".into(),
+            }))
     })?;
 
     Ok((csdw, doc))

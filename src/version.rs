@@ -34,18 +34,22 @@ pub enum RequiredTag {
     Optional,
 }
 
-impl RequiredTag {
-    pub fn from_str(s: &str) -> Self {
-        match s.trim() {
+impl core::str::FromStr for RequiredTag {
+    type Err = core::convert::Infallible;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Ok(match s.trim() {
             "R" => Self::Required,
             "RO" => Self::RequiredOptional,
             "R_CH10" => Self::RequiredCh10,
             "RO_CH10" => Self::RequiredOptionalCh10,
             "RO_PAK" => Self::RequiredPak,
             _ => Self::Optional,
-        }
+        })
     }
+}
 
+impl RequiredTag {
     /// True if this attribute is mandatory in a Chapter 10 context.
     pub fn is_required_ch10(&self) -> bool {
         matches!(self, Self::Required | Self::RequiredCh10)
@@ -74,9 +78,11 @@ pub enum ValueType {
     FreeForm,
 }
 
-impl ValueType {
-    pub fn from_str(s: &str) -> Self {
-        match s.trim() {
+impl core::str::FromStr for ValueType {
+    type Err = core::convert::Infallible;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Ok(match s.trim() {
             "Keyword" => Self::Keyword,
             "Text" => Self::Text,
             "Integer" => Self::Integer,
@@ -85,9 +91,11 @@ impl ValueType {
             "Date" => Self::Date,
             "Boolean" => Self::Boolean,
             _ => Self::FreeForm,
-        }
+        })
     }
 }
+
+impl ValueType {}
 
 // ─── Attribute Metadata (L3-VERSION-002) ─────────────────────────────────────
 
@@ -335,9 +343,10 @@ static ATTR_REGISTRY: &[AttrMeta] = &[
         required_tag: RequiredTag::RequiredCh10,
         max_field_size: Some(7),
         value_type: ValueType::Keyword,
-        keywords: &["PCMIN", "TIMEIN", "VIDIN", "ANAIN", "IMAIN", "UARIN",
-                     "1553IN", "16PP", "A429IN", "MSGIN", "DISIN", "CANIN",
-                     "FC", "ETHIN"],
+        keywords: &[
+            "PCMIN", "TIMEIN", "VIDIN", "ANAIN", "IMAIN", "UARIN", "1553IN", "16PP", "A429IN",
+            "MSGIN", "DISIN", "CANIN", "FC", "ETHIN",
+        ],
         description: "Channel data type",
     },
     AttrMeta {
@@ -394,8 +403,10 @@ static ATTR_REGISTRY: &[AttrMeta] = &[
         required_tag: RequiredTag::Required,
         max_field_size: Some(5),
         value_type: ValueType::Keyword,
-        keywords: &["NRZ-L", "NRZ-M", "NRZ-S", "RNRZ-L", "BIO-L", "BIO-M",
-                     "BIO-S", "DBP-M", "DBP-S", "DBP-L", "FSKM"],
+        keywords: &[
+            "NRZ-L", "NRZ-M", "NRZ-S", "RNRZ-L", "BIO-L", "BIO-M", "BIO-S", "DBP-M", "DBP-S",
+            "DBP-L", "FSKM",
+        ],
         description: "PCM encoding type",
     },
     AttrMeta {
@@ -514,6 +525,12 @@ pub struct AttrMetaRegistry {
     by_group: HashMap<GroupPrefix, Vec<&'static AttrMeta>>,
 }
 
+impl Default for AttrMetaRegistry {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl AttrMetaRegistry {
     /// Build the registry from the static data.
     pub fn new() -> Self {
@@ -539,26 +556,32 @@ impl AttrMetaRegistry {
 
     /// Get all attributes for a given group.
     pub fn group(&self, prefix: GroupPrefix) -> &[&'static AttrMeta] {
-        self.by_group.get(&prefix).map(|v| v.as_slice()).unwrap_or(&[])
+        self.by_group
+            .get(&prefix)
+            .map(|v| v.as_slice())
+            .unwrap_or(&[])
     }
 
     /// Get all attributes valid for a given version.
     pub fn for_version(&self, version: Irig106Version) -> Vec<&'static AttrMeta> {
-        self.entries.iter()
+        self.entries
+            .iter()
             .filter(|m| m.is_valid_for(version))
             .collect()
     }
 
     /// Get all required attributes for a given version.
     pub fn required_for_version(&self, version: Irig106Version) -> Vec<&'static AttrMeta> {
-        self.entries.iter()
+        self.entries
+            .iter()
             .filter(|m| m.is_valid_for(version) && m.required_tag.is_required())
             .collect()
     }
 
     /// Get all required attributes for Ch10 context.
     pub fn required_for_ch10(&self, version: Irig106Version) -> Vec<&'static AttrMeta> {
-        self.entries.iter()
+        self.entries
+            .iter()
             .filter(|m| m.is_valid_for(version) && m.required_tag.is_required_ch10())
             .collect()
     }
@@ -566,32 +589,47 @@ impl AttrMetaRegistry {
     /// Compute migration diff between two versions.
     ///
     /// **Requirement:** L2-VERSION-004, L3-VERSION-010
-    pub fn migration_diff(
-        &self,
-        from: Irig106Version,
-        to: Irig106Version,
-    ) -> MigrationDiff {
-        let from_set: Vec<&str> = self.for_version(from).iter()
-            .map(|m| m.code_name_pattern).collect();
-        let to_set: Vec<&str> = self.for_version(to).iter()
-            .map(|m| m.code_name_pattern).collect();
-
-        let added: Vec<&'static AttrMeta> = self.entries.iter()
-            .filter(|m| !from_set.contains(&m.code_name_pattern)
-                       && to_set.contains(&m.code_name_pattern))
+    pub fn migration_diff(&self, from: Irig106Version, to: Irig106Version) -> MigrationDiff {
+        let from_set: Vec<&str> = self
+            .for_version(from)
+            .iter()
+            .map(|m| m.code_name_pattern)
+            .collect();
+        let to_set: Vec<&str> = self
+            .for_version(to)
+            .iter()
+            .map(|m| m.code_name_pattern)
             .collect();
 
-        let removed: Vec<&'static AttrMeta> = self.entries.iter()
-            .filter(|m| from_set.contains(&m.code_name_pattern)
-                       && !to_set.contains(&m.code_name_pattern))
+        let added: Vec<&'static AttrMeta> = self
+            .entries
+            .iter()
+            .filter(|m| {
+                !from_set.contains(&m.code_name_pattern) && to_set.contains(&m.code_name_pattern)
+            })
             .collect();
 
-        let deprecated: Vec<&'static AttrMeta> = self.entries.iter()
-            .filter(|m| m.is_valid_for(to) && m.is_deprecated_for(to)
-                       && !m.is_deprecated_for(from))
+        let removed: Vec<&'static AttrMeta> = self
+            .entries
+            .iter()
+            .filter(|m| {
+                from_set.contains(&m.code_name_pattern) && !to_set.contains(&m.code_name_pattern)
+            })
             .collect();
 
-        MigrationDiff { from, to, added, removed, deprecated }
+        let deprecated: Vec<&'static AttrMeta> = self
+            .entries
+            .iter()
+            .filter(|m| m.is_valid_for(to) && m.is_deprecated_for(to) && !m.is_deprecated_for(from))
+            .collect();
+
+        MigrationDiff {
+            from,
+            to,
+            added,
+            removed,
+            deprecated,
+        }
     }
 
     /// All registered entries.
@@ -602,6 +640,11 @@ impl AttrMetaRegistry {
     /// Total number of registered attributes.
     pub fn len(&self) -> usize {
         self.entries.len()
+    }
+
+    /// Whether the registry has no entries.
+    pub fn is_empty(&self) -> bool {
+        self.entries.is_empty()
     }
 }
 

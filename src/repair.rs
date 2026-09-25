@@ -7,7 +7,6 @@
 // ## Traceability:
 //   L1-REPAIR → L2-REPAIR-001..007 → L3-REPAIR-001..008
 
-use crate::error::Diagnostic;
 use crate::model::TmatsDocument;
 use crate::validate;
 
@@ -125,9 +124,15 @@ pub struct RepairReport {
 struct CounterRepairGDsi;
 
 impl RepairRule for CounterRepairGDsi {
-    fn id(&self) -> &str { "TMATS-R001" }
-    fn description(&self) -> &str { "Recompute G\\DSI\\N counter" }
-    fn can_auto_fix(&self) -> bool { true }
+    fn id(&self) -> &str {
+        "TMATS-R001"
+    }
+    fn description(&self) -> &str {
+        "Recompute G\\DSI\\N counter"
+    }
+    fn can_auto_fix(&self) -> bool {
+        true
+    }
 
     fn detect(&self, doc: &TmatsDocument<'_>) -> Vec<RepairFinding> {
         let actual = doc.general.data_sources.len() as u32;
@@ -170,9 +175,15 @@ impl RepairRule for CounterRepairGDsi {
 struct CounterRepairRN;
 
 impl RepairRule for CounterRepairRN {
-    fn id(&self) -> &str { "TMATS-R002" }
-    fn description(&self) -> &str { "Recompute R-x\\N counters" }
-    fn can_auto_fix(&self) -> bool { true }
+    fn id(&self) -> &str {
+        "TMATS-R002"
+    }
+    fn description(&self) -> &str {
+        "Recompute R-x\\N counters"
+    }
+    fn can_auto_fix(&self) -> bool {
+        true
+    }
 
     fn detect(&self, doc: &TmatsDocument<'_>) -> Vec<RepairFinding> {
         let mut findings = Vec::new();
@@ -220,9 +231,15 @@ impl RepairRule for CounterRepairRN {
 struct CaseNormalizationRepair;
 
 impl RepairRule for CaseNormalizationRepair {
-    fn id(&self) -> &str { "TMATS-R003" }
-    fn description(&self) -> &str { "Normalize keyword values to canonical case" }
-    fn can_auto_fix(&self) -> bool { true }
+    fn id(&self) -> &str {
+        "TMATS-R003"
+    }
+    fn description(&self) -> &str {
+        "Normalize keyword values to canonical case"
+    }
+    fn can_auto_fix(&self) -> bool {
+        true
+    }
 
     fn detect(&self, doc: &TmatsDocument<'_>) -> Vec<RepairFinding> {
         let mut findings = Vec::new();
@@ -236,7 +253,8 @@ impl RepairRule for CaseNormalizationRepair {
                         findings.push(RepairFinding {
                             rule_id: self.id().to_string(),
                             description: format!(
-                                "R-{r_idx}\\PDP-{ch_idx} '{}' should be '{}'", val, upper
+                                "R-{r_idx}\\PDP-{ch_idx} '{}' should be '{}'",
+                                val, upper
                             ),
                             attribute_path: Some(format!("R-{r_idx}\\PDP-{ch_idx}")),
                             current_value: Some(val.to_string()),
@@ -352,9 +370,15 @@ impl RepairRule for CaseNormalizationRepair {
 struct OrphanDetectionRepair;
 
 impl RepairRule for OrphanDetectionRepair {
-    fn id(&self) -> &str { "TMATS-R005" }
-    fn description(&self) -> &str { "Detect orphan channel references to missing format groups" }
-    fn can_auto_fix(&self) -> bool { false } // detection only, not auto-fixable
+    fn id(&self) -> &str {
+        "TMATS-R005"
+    }
+    fn description(&self) -> &str {
+        "Detect orphan channel references to missing format groups"
+    }
+    fn can_auto_fix(&self) -> bool {
+        false
+    } // detection only, not auto-fixable
 
     fn detect(&self, doc: &TmatsDocument<'_>) -> Vec<RepairFinding> {
         let mut findings = Vec::new();
@@ -471,8 +495,11 @@ pub fn repair(doc: &mut TmatsDocument<'_>, opts: &RepairOptions) -> RepairReport
 /// **Requirement:** L2-REPAIR-007, L3-INTEROP-006
 pub fn repair_dry_run(doc: &TmatsDocument<'_>) -> RepairReport {
     // Clone to run through the pipeline without mutating the original
-    let mut clone = doc.clone();
-    let opts = RepairOptions { dry_run: true, ..Default::default() };
+    let _clone = doc.clone();
+    let _opts = RepairOptions {
+        dry_run: true,
+        ..Default::default()
+    };
 
     let rules = default_repair_rules();
     let pre_report = validate::validate(doc);

@@ -7,7 +7,6 @@
 // ## Traceability:
 //   L1-ERR → L2-ERR-001..005 → L3-ERR-001..007
 
-use crate::types_bridge::GroupPrefix;
 use core::fmt;
 
 // ─── Error Code Convention (L3-ERR-007) ──────────────────────────────────────
@@ -48,7 +47,10 @@ impl fmt::Display for TmatsError {
         match self {
             Self::Parse(e) => write!(f, "{e}"),
             Self::Validate(diags) => {
-                let errors = diags.iter().filter(|d| d.severity == Severity::Error).count();
+                let errors = diags
+                    .iter()
+                    .filter(|d| d.severity == Severity::Error)
+                    .count();
                 write!(f, "validation failed with {errors} error(s)")
             }
             Self::Serialize(e) => write!(f, "{e}"),
@@ -173,10 +175,7 @@ impl fmt::Display for ParseError {
         write!(
             f,
             "[ERROR] TMATS-P{:03}: {} (at byte {}, line {})",
-            self.kind as u8,
-            self.message,
-            self.byte_offset,
-            self.line,
+            self.kind as u8, self.message, self.byte_offset, self.line,
         )?;
         if let Some(ref cn) = self.code_name {
             write!(f, " [code-name: {cn}]")?;
