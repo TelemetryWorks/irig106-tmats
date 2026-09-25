@@ -74,6 +74,9 @@ decisions already taken, which the architecture must honour:
 - `docs/ROADMAP.md` — forward-looking plan, decisions to record, planned
   releases, and deferred features (XML, WASM, `no_std`, rich diagnostics).
   Completed work is not tracked there.
+- `docs/USE-CASES.md` — actors, library boundary, and use cases (design draft).
+- `docs/TEST-DATA.md` — real sample recordings and test oracles (local use
+  only; CI uses synthesized fixtures and fuzzing).
 - `docs/PROJECT_STRUCTURE.md` — what every file and directory is for. Keep it
   current in the same commit that adds, moves, or removes a file.
 - `docs/adr/` — architecture decision records (MADR format), once written.

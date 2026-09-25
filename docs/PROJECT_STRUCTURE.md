@@ -27,6 +27,7 @@ irig106-tmats/
 │   ├── PROJECT_STRUCTURE.md   This file
 │   ├── ROADMAP.md             Forward-looking plan, decisions to record, releases, deferred features
 │   ├── USE-CASES.md           Actors, library boundary, use cases UC-01..UC-14 (design draft)
+│   ├── TEST-DATA.md           Where real data and test oracles come from; local-only policy
 │   ├── ARCHITECTURE.md        prototype: module layout of the prototype
 │   ├── API_GUIDE.md           prototype: usage examples for the prototype API
 │   ├── REQUIREMENTS.md        prototype: single-file requirements; replaced by L1/L2/L3-REQ.md
