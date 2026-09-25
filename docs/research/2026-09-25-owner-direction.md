@@ -103,3 +103,14 @@ Recorded in: this directory (`docs/research/`) and `docs/diagrams/`.
 > Go with hand-rolled argument parsing like mie-decoder
 
 Recorded in: `docs/CLI.md` (section 3), `docs/ROADMAP.md`, `CLAUDE.md`.
+
+## 10. Opening files and writing TMATS
+
+> a. Should the library ever open whole Chapter 10 files itself? The library should not, the simple test CLI should be able to open the file enought to read the tmats packet or a tmats file. I am guessing we need to write a TMATS file as well, but that will be a much later release I assume. What do you think?
+
+Answer given: agreed that the library never opens files; writing TMATS *text*
+is in 0.1 (the library produces bytes, the CLI writes the file); creating or
+modifying content is 0.5; putting TMATS into a Chapter 10 recording is a
+setup-record payload from the library plus packet writing in `irig106-write`.
+Recorded in: `docs/USE-CASES.md` (section 3, "The filesystem boundary";
+open question 1 resolved).

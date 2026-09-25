@@ -65,6 +65,23 @@ Format 1, data type `0x01`) at the start of the file.
 - Serialized TMATS: byte-faithful by default, normalized on request.
 - A setup-record payload for writing into a Chapter 10 file.
 
+**The filesystem boundary**
+
+The library never opens, maps, or writes a file. It reads from bytes and
+writes to bytes or to any writer the caller supplies. Files belong to the
+callers:
+
+| Direction | What | Who does it | Release |
+|-----------|------|-------------|---------|
+| In | Open a Chapter 10 recording far enough to find its setup-record (`0x01`) packets, or read a TMATS text file | the `tmats` CLI (later `irig106-core`) | 0.1 |
+| Out | Write TMATS text: byte-for-byte as read, or with edits applied | library produces the bytes; the CLI writes the file (`tmats extract -o`, `tmats stamp -o`) | 0.1 |
+| Out | Create or modify TMATS content: edits, suggested fixes, a new document from a channel inventory | library (edit API, builder) | 0.5 |
+| Out | Put TMATS into a Chapter 10 recording as a setup-record packet | library builds the setup-record payload (CSDW + text); `irig106-write` builds the packet and writes the file | payload builder with 0.5; packets in `irig106-write` |
+
+Keeping the library free of I/O means the same calls work in the CLI, in
+`irig106-studio`, in tests, and on data that never touches a disk, such as a
+network stream.
+
 **Outside the library's responsibility**
 
 - Finding packets in a Chapter 10 file, reading packet headers, checksums,
@@ -373,11 +390,12 @@ calls.
 
 ## 7. Open questions for review
 
-1. Should one library call accept a whole Chapter 10 file and find the setup
-   record itself, or should that stay in `irig106-core` / readers? Current
-   position: the library stays payload-level; the `tmats` CLI (UC-17) needs to
-   open Chapter 10 files, so it carries a minimal packet reader until
-   `irig106-core` provides one.
+1. ~~Should one library call accept a whole Chapter 10 file and find the setup
+   record itself?~~ **Resolved (owner, 2026-09-25): no.** "The library should
+   not, the simple test CLI should be able to open the file enought to read
+   the tmats packet or a tmats file." The library never touches the
+   filesystem in either direction; see "The filesystem boundary" in
+   section 3.
 2. Chapter 9 marks some ranges as a *recommended* maximum length. Should
    exceeding them be a warning by default?
 3. For UC-11, is a mid-recording setup-record change something `irig106-ch10-reader`
