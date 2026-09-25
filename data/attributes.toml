@@ -1,0 +1,532 @@
+# irig106-tmats/data/attributes.toml
+#
+# TMATS Attribute Metadata Registry — Source of Truth
+#
+# Derived from IRIG 106 Ch9 §9.5 tables across versions 106-04 through 106-17.
+# Each entry maps to an AttrMeta record used by the validation engine,
+# version migration advisor, and keyword/MFS enforcement.
+#
+# Fields:
+#   code_name    — Code-name pattern (e.g., "G\\PN", "R-x\\TK1-n")
+#   display_name — Human-readable name
+#   group        — Group prefix letter
+#   section      — Spec section reference
+#   introduced   — First IRIG 106 version containing this attribute
+#   deprecated   — Version where attribute was deprecated (optional)
+#   removed      — Version where attribute was removed (optional)
+#   required     — Requirement tag: R, RO, R_CH10, RO_CH10, RO_PAK, OPT
+#   mfs          — Maximum Field Size in characters (optional)
+#   value_type   — Keyword, Text, Integer, Decimal, Scientific, Date, Boolean, FreeForm
+#   keywords     — Comma-separated list of valid keyword values (optional)
+#   description  — Brief description
+#
+# Traceability: L3-VERSION-006, L3-VERSION-007
+# =============================================================================
+
+# ─── G-Group: General Information (§9.5.2, Table 9-1) ────────────────────────
+
+[[attributes]]
+code_name = "G\\PN"
+display_name = "Program Name"
+group = "G"
+section = "§9.5.2 Table 9-1"
+introduced = "04"
+required = "R"
+mfs = 32
+value_type = "Text"
+description = "Name of the test program"
+
+[[attributes]]
+code_name = "G\\106"
+display_name = "IRIG 106 Version"
+group = "G"
+section = "§9.5.2 Table 9-1"
+introduced = "07"
+required = "R"
+mfs = 2
+value_type = "Keyword"
+keywords = "04,05,07,08,09,11,13,15,17"
+description = "Version of IRIG 106 standard used to generate this TMATS file"
+
+[[attributes]]
+code_name = "G\\OD"
+display_name = "Origination Date"
+group = "G"
+section = "§9.5.2 Table 9-1"
+introduced = "04"
+required = "R"
+mfs = 10
+value_type = "Date"
+description = "Date of origination of this mission configuration (MM-DD-YYYY)"
+
+[[attributes]]
+code_name = "G\\RN"
+display_name = "Revision Number"
+group = "G"
+section = "§9.5.2 Table 9-1"
+introduced = "04"
+required = "OPT"
+mfs = 4
+value_type = "Integer"
+description = "Revision number associated with this mission configuration"
+
+[[attributes]]
+code_name = "G\\RD"
+display_name = "Revision Date"
+group = "G"
+section = "§9.5.2 Table 9-1"
+introduced = "04"
+required = "OPT"
+mfs = 10
+value_type = "Date"
+description = "Date of revision (MM-DD-YYYY)"
+
+[[attributes]]
+code_name = "G\\UN"
+display_name = "Update Number"
+group = "G"
+section = "§9.5.2 Table 9-1"
+introduced = "04"
+required = "OPT"
+mfs = 2
+value_type = "Integer"
+description = "Update number of current change not yet incorporated as revision"
+
+[[attributes]]
+code_name = "G\\UD"
+display_name = "Update Date"
+group = "G"
+section = "§9.5.2 Table 9-1"
+introduced = "04"
+required = "OPT"
+mfs = 10
+value_type = "Date"
+description = "Date of update (MM-DD-YYYY)"
+
+[[attributes]]
+code_name = "G\\TN"
+display_name = "Test Number"
+group = "G"
+section = "§9.5.2 Table 9-1"
+introduced = "04"
+required = "OPT"
+mfs = 16
+value_type = "Text"
+description = "Test identification"
+
+[[attributes]]
+code_name = "G\\POC\\N"
+display_name = "Number of Points of Contact"
+group = "G"
+section = "§9.5.2 Table 9-1"
+introduced = "04"
+required = "OPT"
+mfs = 1
+value_type = "Integer"
+description = "Number of points of contact to be given"
+
+[[attributes]]
+code_name = "G\\DSI\\N"
+display_name = "Number of Data Sources"
+group = "G"
+section = "§9.5.2 Table 9-1"
+introduced = "04"
+required = "R"
+mfs = 4
+value_type = "Integer"
+description = "Number of data sources in this configuration"
+
+[[attributes]]
+code_name = "G\\DSI-n"
+display_name = "Data Source Identifier"
+group = "G"
+section = "§9.5.2 Table 9-1"
+introduced = "04"
+required = "R"
+mfs = 32
+value_type = "Text"
+description = "Provide a descriptive name for this source"
+
+[[attributes]]
+code_name = "G\\DST-n"
+display_name = "Data Source Type"
+group = "G"
+section = "§9.5.2 Table 9-1"
+introduced = "04"
+required = "R"
+mfs = 3
+value_type = "Keyword"
+keywords = "REC,TEL,MUL,PRE"
+description = "Specify the type of source"
+
+[[attributes]]
+code_name = "G\\DSC-n"
+display_name = "Data Source Classification"
+group = "G"
+section = "§9.5.2 Table 9-1"
+introduced = "04"
+required = "OPT"
+mfs = 1
+value_type = "Keyword"
+keywords = "U,C,S"
+description = "Classification of the data for this source"
+
+# ─── R-Group: Recorder-Reproducer (§9.5.4) ───────────────────────────────────
+
+[[attributes]]
+code_name = "R-x\\ID"
+display_name = "Recorder Identification"
+group = "R"
+section = "§9.5.4"
+introduced = "04"
+required = "R_CH10"
+mfs = 32
+value_type = "Text"
+description = "Recorder-reproducer identification"
+
+[[attributes]]
+code_name = "R-x\\RI1"
+display_name = "Recorder Description"
+group = "R"
+section = "§9.5.4"
+introduced = "04"
+required = "OPT"
+mfs = 32
+value_type = "Text"
+description = "Recorder-reproducer description"
+
+[[attributes]]
+code_name = "R-x\\N"
+display_name = "Number of Channels"
+group = "R"
+section = "§9.5.4"
+introduced = "04"
+required = "R_CH10"
+mfs = 4
+value_type = "Integer"
+description = "Number of data sources (tracks/channels)"
+
+[[attributes]]
+code_name = "R-x\\TK1-n"
+display_name = "Channel/Track Number"
+group = "R"
+section = "§9.5.4"
+introduced = "04"
+required = "R_CH10"
+mfs = 5
+value_type = "Integer"
+description = "Track number or Channel ID"
+
+[[attributes]]
+code_name = "R-x\\CDT-n"
+display_name = "Channel Data Type"
+group = "R"
+section = "§9.5.4"
+introduced = "07"
+required = "R_CH10"
+mfs = 7
+value_type = "Keyword"
+keywords = "PCMIN,TIMEIN,VIDIN,ANAIN,IMAIN,UARIN,1553IN,16PP,A429IN,MSGIN,DISIN,CANIN,FC,ETHIN"
+description = "Channel data type"
+
+[[attributes]]
+code_name = "R-x\\DSI-n"
+display_name = "Data Source ID"
+group = "R"
+section = "§9.5.4"
+introduced = "04"
+required = "RO_CH10"
+mfs = 32
+value_type = "Text"
+description = "Data source identifier for this channel"
+
+[[attributes]]
+code_name = "R-x\\CDLN-n"
+display_name = "Channel Data Link Name"
+group = "R"
+section = "§9.5.4"
+introduced = "04"
+required = "RO_CH10"
+mfs = 32
+value_type = "Text"
+description = "Data link name linking this channel to format groups (P/B/S)"
+
+[[attributes]]
+code_name = "R-x\\PDP-n"
+display_name = "Data Packing Option"
+group = "R"
+section = "§9.5.4"
+introduced = "07"
+required = "R_CH10"
+mfs = 3
+value_type = "Keyword"
+keywords = "UN,PFS,TM"
+description = "Data packing option: Unpacked, Packed, Throughput"
+
+[[attributes]]
+code_name = "R-x\\CHE-n"
+display_name = "Channel Enabled"
+group = "R"
+section = "§9.5.4"
+introduced = "07"
+required = "RO_CH10"
+mfs = 1
+value_type = "Boolean"
+description = "Indicates if channel is enabled"
+
+[[attributes]]
+code_name = "R-x\\IDX\\E"
+display_name = "Index Enabled"
+group = "R"
+section = "§9.5.4"
+introduced = "07"
+required = "RO_CH10"
+mfs = 1
+value_type = "Boolean"
+description = "Indicates if indexing is enabled for this recorder"
+
+[[attributes]]
+code_name = "R-x\\EV\\E"
+display_name = "Events Enabled"
+group = "R"
+section = "§9.5.4"
+introduced = "07"
+required = "RO_CH10"
+mfs = 1
+value_type = "Boolean"
+description = "Indicates if events are enabled"
+
+# ─── P-Group: PCM Format (§9.5.6.1) ──────────────────────────────────────────
+
+[[attributes]]
+code_name = "P-n\\DLN"
+display_name = "Data Link Name"
+group = "P"
+section = "§9.5.6.1"
+introduced = "04"
+required = "R"
+mfs = 32
+value_type = "Text"
+description = "Data link name for this PCM format"
+
+[[attributes]]
+code_name = "P-n\\D1"
+display_name = "Bit Rate"
+group = "P"
+section = "§9.5.6.1"
+introduced = "04"
+required = "R"
+mfs = 20
+value_type = "Decimal"
+description = "Data rate in bits per second"
+
+[[attributes]]
+code_name = "P-n\\D2"
+display_name = "Encoding"
+group = "P"
+section = "§9.5.6.1"
+introduced = "04"
+required = "R"
+mfs = 5
+value_type = "Keyword"
+keywords = "NRZ-L,NRZ-M,NRZ-S,RNRZ-L,BIO-L,BIO-M,BIO-S,DBP-M,DBP-S,DBP-L,FSKM"
+description = "Encoding (NRZ-L, NRZ-M, NRZ-S, BiPhase, etc.)"
+
+[[attributes]]
+code_name = "P-n\\D3"
+display_name = "Polarity"
+group = "P"
+section = "§9.5.6.1"
+introduced = "04"
+required = "OPT"
+mfs = 1
+value_type = "Keyword"
+keywords = "N,R"
+description = "Polarity: Normal or Reversed"
+
+[[attributes]]
+code_name = "P-n\\D4"
+display_name = "Auto-Polarity Correction"
+group = "P"
+section = "§9.5.6.1"
+introduced = "04"
+required = "OPT"
+mfs = 1
+value_type = "Boolean"
+description = "Automatic polarity correction enabled"
+
+[[attributes]]
+code_name = "P-n\\F1"
+display_name = "Words per Minor Frame"
+group = "P"
+section = "§9.5.6.1"
+introduced = "04"
+required = "R"
+mfs = 5
+value_type = "Integer"
+description = "Number of words per minor frame"
+
+[[attributes]]
+code_name = "P-n\\F2"
+display_name = "Bits per Word"
+group = "P"
+section = "§9.5.6.1"
+introduced = "04"
+required = "R"
+mfs = 2
+value_type = "Integer"
+description = "Common word length in number of bits"
+
+[[attributes]]
+code_name = "P-n\\F3"
+display_name = "Sync Pattern"
+group = "P"
+section = "§9.5.6.1"
+introduced = "04"
+required = "R"
+mfs = 64
+value_type = "Text"
+description = "Frame synchronization pattern (hex)"
+
+[[attributes]]
+code_name = "P-n\\F3\\L"
+display_name = "Sync Pattern Length"
+group = "P"
+section = "§9.5.6.1"
+introduced = "04"
+required = "R"
+mfs = 2
+value_type = "Integer"
+description = "Sync pattern length in bits"
+
+[[attributes]]
+code_name = "P-n\\MF\\N"
+display_name = "Number of Minor Frames"
+group = "P"
+section = "§9.5.6.1"
+introduced = "04"
+required = "OPT"
+mfs = 5
+value_type = "Integer"
+description = "Number of minor frames per major frame"
+
+# ─── B-Group: Bus Data (§9.5.6.3) ────────────────────────────────────────────
+
+[[attributes]]
+code_name = "B-n\\DLN"
+display_name = "Data Link Name"
+group = "B"
+section = "§9.5.6.3"
+introduced = "04"
+required = "R"
+mfs = 32
+value_type = "Text"
+description = "Data link name for this bus definition"
+
+[[attributes]]
+code_name = "B-n\\BT"
+display_name = "Bus Type"
+group = "B"
+section = "§9.5.6.3"
+introduced = "04"
+required = "R"
+mfs = 4
+value_type = "Keyword"
+keywords = "1553,A429"
+description = "Bus type: MIL-STD-1553 or ARINC-429"
+
+[[attributes]]
+code_name = "B-n\\NBS\\N"
+display_name = "Number of Buses"
+group = "B"
+section = "§9.5.6.3"
+introduced = "04"
+required = "OPT"
+mfs = 3
+value_type = "Integer"
+description = "Number of buses"
+
+# ─── S-Group: Message Data (§9.5.7) ──────────────────────────────────────────
+
+[[attributes]]
+code_name = "S-n\\DLN"
+display_name = "Data Link Name"
+group = "S"
+section = "§9.5.7"
+introduced = "09"
+required = "R"
+mfs = 32
+value_type = "Text"
+description = "Data link name for this message data stream"
+
+# ─── C-Group: Data Conversion (§9.5.8) ───────────────────────────────────────
+
+[[attributes]]
+code_name = "C-n\\DCN"
+display_name = "Data Conversion Name"
+group = "C"
+section = "§9.5.8"
+introduced = "04"
+required = "R"
+mfs = 32
+value_type = "Text"
+description = "Measurement name for conversion"
+
+[[attributes]]
+code_name = "C-n\\DCT"
+display_name = "Data Conversion Type"
+group = "C"
+section = "§9.5.8"
+introduced = "04"
+required = "R"
+mfs = 4
+value_type = "Keyword"
+keywords = "PAIR,COEF,TABL,POLY,FORM"
+description = "Type of conversion: pair sets, coefficients, table, polynomial, formula"
+
+[[attributes]]
+code_name = "C-n\\EU"
+display_name = "Engineering Units"
+group = "C"
+section = "§9.5.8"
+introduced = "04"
+required = "OPT"
+mfs = 16
+value_type = "Text"
+description = "Engineering units label"
+
+# ─── T-Group: Transmission Attributes (§9.5.3) ───────────────────────────────
+
+[[attributes]]
+code_name = "T-n\\ID"
+display_name = "Transmitter Identification"
+group = "T"
+section = "§9.5.3"
+introduced = "04"
+required = "OPT"
+mfs = 32
+value_type = "Text"
+description = "Transmitter identification"
+
+[[attributes]]
+code_name = "T-n\\CF"
+display_name = "Carrier Frequency"
+group = "T"
+section = "§9.5.3"
+introduced = "04"
+required = "OPT"
+mfs = 12
+value_type = "Decimal"
+description = "Carrier frequency in MHz"
+
+[[attributes]]
+code_name = "T-n\\MT"
+display_name = "Modulation Type"
+group = "T"
+section = "§9.5.3"
+introduced = "04"
+required = "OPT"
+mfs = 5
+value_type = "Keyword"
+keywords = "FM,PM,AM,PCM/FM,PCM/PM,SOQPSK-TG,FQPSK-B,FQPSK-JR,MULTI-H"
+description = "Define the modulation type"

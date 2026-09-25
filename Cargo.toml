@@ -1,7 +1,49 @@
 [package]
 name = "irig106-tmats"
-version = "0.0.1"
-edition = "2024"
-description = "Spec-compliant TMATS parser, validator, and generator for IRIG 106 Chapter 9 — built in Rust."
-repository = "https://github.com/TelemetryWorks/irig106-write"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.75"
 license = "Apache-2.0"
+description = "TMATS (Telemetry Attributes Transfer Standard) parser, validator, and generator for the IRIG 106 ecosystem"
+repository = "https://github.com/TelemetryWorks/irig106-tmats"
+keywords = ["irig106", "tmats", "telemetry", "flight-test", "chapter9"]
+categories = ["aerospace", "parser-implementations", "encoding"]
+
+[features]
+default = ["std"]
+std = []
+xml = ["dep:quick-xml"]
+serde = ["dep:serde", "dep:serde_json", "indexmap/serde"]
+wasm = ["dep:wasm-bindgen", "dep:serde-wasm-bindgen", "serde"]
+rich-errors = ["dep:miette"]
+generate = []
+repair = []
+full = ["xml", "serde", "rich-errors", "generate", "repair"]
+
+[dependencies]
+# Core — always available
+indexmap = "2"
+smallvec = "1.13"
+# NOTE: irig106-types will be a path/registry dependency once published
+# irig106-types = { version = "0.1", default-features = false }
+
+# Optional
+quick-xml = { version = "0.36", optional = true }
+serde = { version = "1", features = ["derive"], optional = true }
+serde_json = { version = "1", optional = true }
+wasm-bindgen = { version = "0.2", optional = true }
+serde-wasm-bindgen = { version = "0.6", optional = true }
+miette = { version = "7", features = ["fancy"], optional = true }
+
+[dev-dependencies]
+pretty_assertions = "1"
+proptest = "1"
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[[bench]]
+name = "parse_bench"
+harness = false
+
+[profile.release]
+lto = true
+codegen-units = 1

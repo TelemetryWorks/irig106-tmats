@@ -1,0 +1,34 @@
+[package]
+name = "irig106-tmats-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+
+[dependencies.irig106-tmats]
+path = ".."
+features = ["generate", "repair"]
+
+# Prevent this from interfering with workspaces
+[workspace]
+members = ["."]
+
+[[bin]]
+name = "fuzz_parse"
+path = "fuzz_targets/fuzz_parse.rs"
+doc = false
+
+[[bin]]
+name = "fuzz_round_trip"
+path = "fuzz_targets/fuzz_round_trip.rs"
+doc = false
+
+[[bin]]
+name = "fuzz_ch10_decode"
+path = "fuzz_targets/fuzz_ch10_decode.rs"
+doc = false
