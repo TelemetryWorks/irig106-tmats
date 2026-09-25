@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 480" role="img" aria-label="Edits and the checksum: a chosen edit becomes a patch over the original bytes; the writer copies every other byte unchanged; the checksum over the output no longer matches the stored G\SHA, so the library suggests a stamp edit; only if the caller applies it is G\SHA updated.">
+  <style>
+    text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; fill: #1f2328; }
+    .t { font-size: 15px; font-weight: 600; }
+    .b { font-weight: 600; }
+    .m { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 12px; }
+    .l { font-size: 11px; fill: #57606a; }
+    .seg { fill: #f6f8fa; stroke: #57606a; stroke-width: 1.1; }
+    .chg { fill: #fff8c5; stroke: #9a6700; stroke-width: 1.6; }
+    .bad { fill: #ffebe9; stroke: #cf222e; stroke-width: 1.4; }
+    .box { fill: #f6f8fa; stroke: #57606a; stroke-width: 1.2; }
+    .usr { fill: #fff8c5; stroke: #9a6700; stroke-width: 1.2; }
+    .ln { stroke: #57606a; stroke-width: 1.3; fill: none; }
+    .cl { stroke: #9a6700; stroke-width: 1.6; fill: none; }
+    .rt { font-size: 11px; fill: #cf222e; }
+    .ah { fill: #57606a; } .ahc { fill: #9a6700; }
+    @media (prefers-color-scheme: dark) {
+      text { fill: #e6edf3; } .l { fill: #9198a1; } .rt { fill: #f85149; }
+      .seg, .box { fill: #161b22; stroke: #9198a1; } .chg, .usr { fill: #3b2e00; stroke: #d29922; }
+      .bad { fill: #3d1214; stroke: #f85149; } .ln { stroke: #9198a1; } .cl { stroke: #d29922; }
+      .ah { fill: #9198a1; } .ahc { fill: #d29922; }
+    }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ahc" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+
+  <text class="t" x="20" y="30">Edits are patches; the checksum is suggested, never silently rewritten</text>
+
+  <!-- original -->
+  <text class="b" x="20" y="72">original</text>
+  <rect class="seg" x="110" y="54" width="176" height="28"/><text class="m" x="198" y="73" text-anchor="middle">G\PN:ALPHA;</text>
+  <rect class="seg" x="286" y="54" width="208" height="28"/><text class="m" x="390" y="73" text-anchor="middle">G\SHA:2-9f3c;</text>
+  <rect class="seg" x="494" y="54" width="96"  height="28"/><text class="m" x="542" y="73" text-anchor="middle">R-1\N:</text>
+  <rect class="seg" x="590" y="54" width="16"  height="28"/><text class="m" x="598" y="73" text-anchor="middle">8</text>
+  <rect class="seg" x="606" y="54" width="16"  height="28"/><text class="m" x="614" y="73" text-anchor="middle">;</text>
+  <text class="l" x="640" y="73">stored G\SHA matches: verified</text>
+
+  <!-- caller + patch -->
+  <rect class="usr" x="110" y="120" width="210" height="50" rx="6"/>
+  <text class="b" x="215" y="141" text-anchor="middle">caller chooses an edit</text>
+  <text class="m" x="215" y="159" text-anchor="middle">set R-1\N = 6</text>
+  <rect class="box" x="380" y="120" width="226" height="50" rx="6"/>
+  <text class="b" x="493" y="141" text-anchor="middle">patch list</text>
+  <text class="m" x="493" y="159" text-anchor="middle">bytes 30..31: "8" → "6"</text>
+  <path class="cl" d="M320,145 L380,145" marker-end="url(#c)"/>
+  <path class="ln" d="M598,82 L598,120" marker-end="url(#a)"/>
+  <text class="l" x="606" y="104">locates the value span</text>
+
+  <!-- output -->
+  <text class="b" x="20" y="232">written</text>
+  <rect class="seg" x="110" y="214" width="176" height="28"/><text class="m" x="198" y="233" text-anchor="middle">G\PN:ALPHA;</text>
+  <rect class="seg" x="286" y="214" width="208" height="28"/><text class="m" x="390" y="233" text-anchor="middle">G\SHA:2-9f3c;</text>
+  <rect class="seg" x="494" y="214" width="96"  height="28"/><text class="m" x="542" y="233" text-anchor="middle">R-1\N:</text>
+  <rect class="chg" x="590" y="214" width="16"  height="28"/><text class="m" x="598" y="233" text-anchor="middle">6</text>
+  <rect class="seg" x="606" y="214" width="16"  height="28"/><text class="m" x="614" y="233" text-anchor="middle">;</text>
+  <path class="ln" d="M493,170 L493,214" marker-end="url(#a)"/>
+  <text class="l" x="640" y="226">every other byte copied unchanged:</text>
+  <text class="l" x="640" y="240">order, spelling, line endings, comments</text>
+
+  <!-- checksum check -->
+  <rect class="bad" x="110" y="290" width="300" height="56" rx="6"/>
+  <text class="b" x="260" y="313" text-anchor="middle">checksum of the output: 2-41aa</text>
+  <text class="rt" x="260" y="332" text-anchor="middle">≠ stored 2-9f3c → reported as stale</text>
+  <path class="ln" d="M390,242 L300,290" marker-end="url(#a)"/>
+  <text class="l" x="360" y="272">excludes G\SHA item</text>
+
+  <rect class="box" x="470" y="290" width="280" height="56" rx="6"/>
+  <text class="b" x="610" y="313" text-anchor="middle">suggested edit (not applied)</text>
+  <text class="m" x="610" y="332" text-anchor="middle">set G\SHA = 2-41aa</text>
+  <path class="ln" d="M410,318 L470,318" marker-end="url(#a)"/>
+  <text class="l" x="440" y="310" text-anchor="middle">offers</text>
+
+  <!-- caller applies stamp -->
+  <rect class="usr" x="470" y="392" width="280" height="50" rx="6"/>
+  <text class="b" x="610" y="413" text-anchor="middle">caller applies it, or keeps the old value</text>
+  <text class="l" x="610" y="430" text-anchor="middle">tmats stamp does this on request</text>
+  <path class="cl" d="M610,346 L610,392" marker-end="url(#c)"/>
+  <path class="cl" d="M750,417 L890,417 L890,145 L606,145" marker-end="url(#c)"/>
+  <text class="l" x="882" y="378" text-anchor="end">becomes another patch</text>
+
+  <text class="l" x="20" y="470">Amber: the caller's decisions. The library reports that G\SHA is stale; it never changes it without being asked.</text>
+</svg>

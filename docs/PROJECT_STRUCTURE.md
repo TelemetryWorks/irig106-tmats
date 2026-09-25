@@ -29,7 +29,9 @@ irig106-tmats/
 │   ├── USE-CASES.md           Actors, library boundary, use cases UC-01..UC-14 (design draft)
 │   ├── TEST-DATA.md           Real data and test oracles (local-only policy); reference-tool defects
 │   ├── RELEASING.md           Lockstep versioning, crates.io publishing, release binaries (design draft)
-│   ├── ARCHITECTURE.md        prototype: module layout of the prototype
+│   ├── ARCHITECTURE.md        Architecture proposal (verbatim), diagrams, decisions to honour (design draft)
+│   ├── diagrams/              Hand-authored SVGs of the architecture, one mechanism each (see its README)
+│   ├── research/              Dated, verbatim records of reviews and discussions (history, not specification)
 │   ├── API_GUIDE.md           prototype: usage examples for the prototype API
 │   ├── REQUIREMENTS.md        prototype: single-file requirements; replaced by L1/L2/L3-REQ.md
 │   └── FOR_IRIG106_DOCS_REPO.md  prototype: cross-crate contract notes intended for irig106-docs

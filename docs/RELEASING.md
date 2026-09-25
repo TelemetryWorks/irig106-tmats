@@ -17,10 +17,21 @@ macOS are attached to each GitHub release for users without a Rust toolchain
 (the way `idmptmat.exe` is distributed today).
 
 Name notes (checked on crates.io, 2026-09-25): `irig106-tmats` is ours (a
-0.0.1 placeholder whose `repository` link wrongly points at `irig106-write`;
-the next publish corrects it). `irig106-tmats-cli` is free. `tmats` is also
-free; we do not claim it, because the ecosystem uses the `irig106-` prefix
-and a bare `tmats` crate would suggest an official or neutral package.
+0.0.1 placeholder whose `repository` link wrongly points at `irig106-write`).
+`irig106-tmats-cli` is free. `tmats` is also free; we do not claim it,
+because the ecosystem uses the `irig106-` prefix and a bare `tmats` crate
+would suggest an official or neutral package. Decided names: crate
+`irig106-tmats-cli`, binary and command `tmats`.
+
+**Placeholder fix (pending).** Published crate metadata cannot be edited, so
+the wrong link is fixed by publishing a new placeholder, **0.0.2**: no code,
+a README pointing at this repository, `repository` and `homepage` set to
+`https://github.com/TelemetryWorks/irig106-tmats`, `rust-version = "1.85"`.
+The package was built and passed `cargo publish --dry-run` on 2026-09-25;
+the upload was refused (`403 Forbidden: authentication failed`) because the
+local crates.io token had expired. It is published once the owner refreshes
+the token (`cargo login`). crates.io shows the latest version's metadata, so
+0.0.1 does not need to be yanked.
 
 ## Lockstep versioning
 

@@ -58,8 +58,9 @@ the design phase.)
 
 ## Architecture
 
-To be written in `docs/ARCHITECTURE.md` during the design phase. The
-decisions already taken, which the architecture must honour:
+Proposed in `docs/ARCHITECTURE.md` (with diagrams in `docs/diagrams/`); being
+refined during the design phase. The decisions already taken, which the
+architecture must honour:
 
 - **Lossless by default.** The ordered list of attributes as read is the single
   source of truth. Typed accessors are views over it. Parse followed by
@@ -88,6 +89,12 @@ decisions already taken, which the architecture must honour:
   `idmptmat` / `irig106lib`, each guarded by a named regression test.
 - `docs/RELEASING.md` — lockstep versioning, crates.io publishing (trusted
   publishing), release binaries, yanking.
+- `docs/ARCHITECTURE.md` — the architecture proposal and its diagrams
+  (`docs/diagrams/`), design draft.
+- `docs/research/` — dated, word-for-word records of the reviews and
+  discussions behind the design. Write important decisions and findings
+  there and into the governing docs; never leave them only in chat or in an
+  assistant's memory.
 - `docs/PROJECT_STRUCTURE.md` — what every file and directory is for. Keep it
   current in the same commit that adds, moves, or removes a file.
 - `docs/adr/` — architecture decision records (MADR format), once written.
@@ -98,7 +105,7 @@ decisions already taken, which the architecture must honour:
   is the governing document for this crate; the RCC 124 TMATS Handbook is the
   companion guide.
 
-Documents from the prototype (`docs/REQUIREMENTS.md`, `docs/ARCHITECTURE.md`,
+Documents from the prototype (`docs/REQUIREMENTS.md`,
 `docs/API_GUIDE.md`, `docs/FOR_IRIG106_DOCS_REPO.md`) describe the prototype,
 not the redesign. They are replaced during the design phase; do not treat them
 as specifications.

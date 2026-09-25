@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 470" role="img" aria-label="Legacy idmptmat and irig106lib pipeline compared with the irig106-tmats pipeline: the legacy path copies text several times, drops unknown fields in hand-written decoders, walks linked lists, and re-reads the text for the checksum; the new path scans once into a lossless document, computes the checksum in the same pass, and derives views, validation, and edits from the spec registry.">
+  <style>
+    text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; fill: #1f2328; }
+    .t { font-size: 15px; font-weight: 600; }
+    .h { font-size: 13px; font-weight: 600; }
+    .l { font-size: 11px; fill: #57606a; }
+    .bad { font-size: 11px; fill: #cf222e; }
+    .good { font-size: 11px; fill: #1a7f37; }
+    .box { fill: #f6f8fa; stroke: #57606a; stroke-width: 1.2; }
+    .badbox { fill: #ffebe9; stroke: #cf222e; stroke-width: 1.2; }
+    .hl { fill: #ddf4ff; stroke: #0969da; stroke-width: 1.6; }
+    .ln { stroke: #57606a; stroke-width: 1.3; fill: none; }
+    .dl { stroke: #cf222e; stroke-width: 1.2; fill: none; stroke-dasharray: 4 3; }
+    .sep { stroke: #d0d7de; stroke-width: 1; }
+    .ah { fill: #57606a; } .ahr { fill: #cf222e; }
+    @media (prefers-color-scheme: dark) {
+      text { fill: #e6edf3; } .l { fill: #9198a1; } .bad { fill: #f85149; } .good { fill: #3fb950; }
+      .box { fill: #161b22; stroke: #9198a1; } .badbox { fill: #3d1214; stroke: #f85149; }
+      .hl { fill: #0c2d6b; stroke: #4493f8; } .ln { stroke: #9198a1; } .dl { stroke: #f85149; }
+      .sep { stroke: #30363d; } .ah { fill: #9198a1; } .ahr { fill: #f85149; }
+    }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ahr" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+
+  <text class="t" x="20" y="30">Legacy pipeline vs. irig106-tmats</text>
+
+  <!-- Legacy lane -->
+  <text class="h" x="20" y="64">Legacy: idmptmat / irig106lib</text>
+  <rect class="box" x="20"  y="80" width="118" height="56" rx="6"/><text x="79"  y="104" text-anchor="middle">first packet</text><text x="79" y="122" text-anchor="middle">only</text>
+  <rect class="box" x="166" y="80" width="118" height="56" rx="6"/><text x="225" y="104" text-anchor="middle">copy the</text><text x="225" y="122" text-anchor="middle">TMATS text</text>
+  <rect class="box" x="312" y="80" width="118" height="56" rx="6"/><text x="371" y="104" text-anchor="middle">strtok lines</text><text x="371" y="122" text-anchor="middle">(2 KB buffers)</text>
+  <rect class="box" x="458" y="80" width="118" height="56" rx="6"/><text x="517" y="104" text-anchor="middle">upper-case</text><text x="517" y="122" text-anchor="middle">copy per line</text>
+  <rect class="badbox" x="604" y="80" width="130" height="56" rx="6"/><text x="669" y="104" text-anchor="middle">hand-written</text><text x="669" y="122" text-anchor="middle">per-group decoders</text>
+  <rect class="box" x="762" y="80" width="118" height="56" rx="6"/><text x="821" y="104" text-anchor="middle">linked lists of</text><text x="821" y="122" text-anchor="middle">known fields</text>
+  <rect class="badbox" x="908" y="80" width="112" height="56" rx="6"/><text x="964" y="104" text-anchor="middle">walk the lists</text><text x="964" y="122" text-anchor="middle">and print</text>
+  <path class="ln" d="M138,108 L166,108" marker-end="url(#a)"/>
+  <path class="ln" d="M284,108 L312,108" marker-end="url(#a)"/>
+  <path class="ln" d="M430,108 L458,108" marker-end="url(#a)"/>
+  <path class="ln" d="M576,108 L604,108" marker-end="url(#a)"/>
+  <path class="ln" d="M734,108 L762,108" marker-end="url(#a)"/>
+  <path class="ln" d="M880,108 L908,108" marker-end="url(#a)"/>
+
+  <!-- legacy side path: checksum re-read -->
+  <rect class="badbox" x="166" y="176" width="264" height="44" rx="6"/>
+  <text x="298" y="203" text-anchor="middle">checksum: second read of the text</text>
+  <path class="dl" d="M225,136 L225,176" marker-end="url(#r)"/>
+
+  <!-- legacy defects -->
+  <text class="bad" x="20"  y="156">later setup records ignored (D2)</text>
+  <text class="bad" x="444" y="203">wrong byte range, matches text inside values (D5, D6)</text>
+  <text class="bad" x="604" y="156">unknown fields dropped</text>
+  <text class="bad" x="604" y="171">mislabelled codes (D4)</text>
+  <text class="bad" x="908" y="156">hangs on 2+ data</text>
+  <text class="bad" x="908" y="171">sources (D1)</text>
+
+  <line class="sep" x1="20" y1="250" x2="1020" y2="250"/>
+
+  <!-- New lane -->
+  <text class="h" x="20" y="284">irig106-tmats</text>
+  <rect class="box" x="20"  y="300" width="118" height="56" rx="6"/><text x="79" y="324" text-anchor="middle">every setup</text><text x="79" y="342" text-anchor="middle">record</text>
+  <rect class="hl"  x="166" y="300" width="160" height="56" rx="6"/><text x="246" y="324" text-anchor="middle">one scan: spans</text><text x="246" y="342" text-anchor="middle">into one buffer</text>
+  <rect class="hl"  x="354" y="300" width="230" height="56" rx="6"/><text x="469" y="324" text-anchor="middle">Document: items · keys · index</text><text x="469" y="342" text-anchor="middle">G\SHA digest · diagnostics</text>
+  <rect class="box" x="612" y="300" width="200" height="56" rx="6"/><text x="712" y="324" text-anchor="middle">views · validation · edits</text><text x="712" y="342" text-anchor="middle">derived from spec registry</text>
+  <rect class="box" x="840" y="300" width="180" height="56" rx="6"/><text x="930" y="324" text-anchor="middle">writer: original</text><text x="930" y="342" text-anchor="middle">bytes + patches</text>
+  <path class="ln" d="M138,328 L166,328" marker-end="url(#a)"/>
+  <path class="ln" d="M326,328 L354,328" marker-end="url(#a)"/>
+  <path class="ln" d="M584,328 L612,328" marker-end="url(#a)"/>
+  <path class="ln" d="M812,328 L840,328" marker-end="url(#a)"/>
+
+  <text class="good" x="20"  y="376">all records, any file</text>
+  <text class="good" x="166" y="376">no copies, no upper-casing</text>
+  <text class="good" x="354" y="376">nothing dropped; checksum in the same pass</text>
+  <text class="good" x="612" y="376">no hand-written decoders; no lists</text>
+  <text class="good" x="840" y="376">byte-faithful by construction</text>
+
+  <text class="l" x="20" y="440">Red: where the legacy pipeline loses data or has a defect (D1–D7, docs/TEST-DATA.md). Blue: the stages that replace them.</text>
+</svg>
