@@ -1,11 +1,27 @@
-[package]
-name = "irig106-tmats"
+[workspace]
+members = [".", "irig106-tmats-cli"]
+# The prototype's cargo-fuzz crate declares its own workspace.
+exclude = ["fuzz"]
+
+# One version for every crate in this repository: the library and the `tmats`
+# CLI are released in lockstep (docs/RELEASING.md). Bump it here only.
+[workspace.package]
 version = "0.1.0"
 edition = "2024"
 rust-version = "1.85"
 license = "Apache-2.0"
-description = "TMATS (Telemetry Attributes Transfer Standard) parser, validator, and generator for the IRIG 106 ecosystem"
 repository = "https://github.com/TelemetryWorks/irig106-tmats"
+homepage = "https://github.com/TelemetryWorks/irig106-tmats"
+
+[package]
+name = "irig106-tmats"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "TMATS (Telemetry Attributes Transfer Standard) parser, validator, and generator for the IRIG 106 ecosystem"
 keywords = ["irig106", "tmats", "telemetry", "flight-test", "chapter9"]
 categories = ["aerospace", "parser-implementations", "encoding"]
 
@@ -44,6 +60,8 @@ criterion = { version = "0.5", features = ["html_reports"] }
 name = "parse_bench"
 harness = false
 
+# Profiles apply to the whole workspace; they shape the `tmats` binary's
+# release build (a library's own profile has no effect on its dependents).
 [profile.release]
 lto = true
 codegen-units = 1

@@ -69,6 +69,12 @@
 
 // ─── Module declarations (L3-ARCH-001) ───────────────────────────────────────
 
+/// This crate's version, from `Cargo.toml`.
+///
+/// The `tmats` CLI (crate `irig106-tmats-cli`) is released in lockstep with
+/// this library and reports both versions; its tests assert they are equal.
+pub const VERSION: &str = env!("CARGO_PKG_VERSION");
+
 pub mod ch10;
 pub mod error;
 pub mod model;

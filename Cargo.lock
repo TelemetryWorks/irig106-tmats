@@ -383,6 +383,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "irig106-tmats-cli"
+version = "0.1.0"
+dependencies = [
+ "irig106-tmats",
+]
+
+[[package]]
 name = "is-terminal"
 version = "0.4.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"

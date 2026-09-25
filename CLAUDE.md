@@ -41,13 +41,15 @@ ecosystem CLI is `irig106-cli`, a separate repository. See
 ## Common Commands
 
 ```bash
-cargo build
-cargo test                                   # all tests
-cargo test --all-features                    # every feature
-cargo clippy --all-targets --all-features -- -D warnings
+cargo build --workspace
+cargo test --workspace --all-features        # library + CLI, every feature
+cargo test -p irig106-tmats-cli              # CLI only (includes the lockstep guard)
+cargo run -p irig106-tmats-cli -- --version  # run `tmats`
+cargo clippy --workspace --all-targets --all-features -- -D warnings
 cargo fmt --all -- --check
-RUSTDOCFLAGS="-D warnings" cargo doc --no-deps --all-features
-cargo +1.85 check --all-targets              # MSRV floor
+RUSTDOCFLAGS="-D warnings" cargo doc --workspace --no-deps --all-features
+cargo +1.85 check --workspace --all-features # MSRV floor
+cargo publish --workspace --dry-run          # package both crates, library first
 
 python scripts/build-trace-matrix.py         # regenerate docs/TRACE-MATRIX.md
 python scripts/build-trace-matrix.py --check # fail if it has drifted (CI)
@@ -87,6 +89,9 @@ architecture must honour:
 - `docs/TEST-DATA.md` — real sample recordings and test oracles (local use
   only; CI uses synthesized fixtures and fuzzing), and the defects found in
   `idmptmat` / `irig106lib`, each guarded by a named regression test.
+- `docs/CLI.md` — the `tmats` command design (draft); the CLI crate is a
+  scaffold until it is reviewed.
+- `CHANGELOG.md` — one changelog for both crates.
 - `docs/RELEASING.md` — lockstep versioning, crates.io publishing (trusted
   publishing), release binaries, yanking.
 - `docs/ARCHITECTURE.md` — the architecture proposal and its diagrams

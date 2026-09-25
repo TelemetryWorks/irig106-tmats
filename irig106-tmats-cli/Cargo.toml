@@ -1,0 +1,22 @@
+[package]
+name = "irig106-tmats-cli"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "tmats: view, extract, and check IRIG 106 Chapter 9 TMATS from Chapter 10 recordings and TMATS files"
+keywords = ["irig106", "tmats", "telemetry", "chapter10", "cli"]
+categories = ["command-line-utilities", "aerospace"]
+readme = "README.md"
+
+[[bin]]
+name = "tmats"
+path = "src/main.rs"
+
+[dependencies]
+# Exact pin: the CLI is only ever built against the library version released
+# with it (docs/RELEASING.md). `tests/lockstep.rs` fails if this drifts from
+# the workspace version.
+irig106-tmats = { path = "..", version = "=0.1.0" }
