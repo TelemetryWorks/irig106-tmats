@@ -30,6 +30,14 @@ until the design documents for that area exist and have been reviewed.** Read
 Edition 2024, MSRV 1.85 (the edition-2024 floor). Raise the MSRV only for a
 concrete language or library feature, and record why here.
 
+The repository becomes a Cargo workspace of two crates released **in
+lockstep**: the library `irig106-tmats` and the focused CLI
+`irig106-tmats-cli` (binary `tmats`, the Rust successor to irig106.org's
+`idmptmat`). One version, one tag, one changelog; the CLI pins the library
+with `=X.Y.Z`. Never bump one crate's version without the other. The complete
+ecosystem CLI is `irig106-cli`, a separate repository. See
+`docs/RELEASING.md`.
+
 ## Common Commands
 
 ```bash
@@ -76,7 +84,10 @@ decisions already taken, which the architecture must honour:
   Completed work is not tracked there.
 - `docs/USE-CASES.md` — actors, library boundary, and use cases (design draft).
 - `docs/TEST-DATA.md` — real sample recordings and test oracles (local use
-  only; CI uses synthesized fixtures and fuzzing).
+  only; CI uses synthesized fixtures and fuzzing), and the defects found in
+  `idmptmat` / `irig106lib`, each guarded by a named regression test.
+- `docs/RELEASING.md` — lockstep versioning, crates.io publishing (trusted
+  publishing), release binaries, yanking.
 - `docs/PROJECT_STRUCTURE.md` — what every file and directory is for. Keep it
   current in the same commit that adds, moves, or removes a file.
 - `docs/adr/` — architecture decision records (MADR format), once written.
@@ -110,6 +121,10 @@ as specifications.
 - **TMATS is not case sensitive, and attribute order is free** (Chapter 9
   §9.4.2). Blanks inside values are intentional. Semicolons never appear in a
   data item.
+- **Reference tools are not authorities.** `idmptmat` and `irig106lib` are
+  useful oracles with known defects; every defect found in them gets a named
+  regression test here (`docs/TEST-DATA.md`), and a disagreement is settled by
+  the standard.
 - **The roadmap is forward-looking only** and never mints requirement IDs or
   records counts.
 - **Requirement markers on tests** use a `/// Requirements: L2-XXX-NNN, ...`

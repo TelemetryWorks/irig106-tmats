@@ -256,6 +256,86 @@ Reading always succeeds as far as the bytes allow (UC-01). Validation reports
 problems without stopping. Views (UC-05) return what can be resolved and
 say what cannot. The caller decides what is fatal.
 
+### UC-15 Compute and verify the TMATS checksum (`G\SHA`) — *0.1*
+
+**Actor:** recorder setup author, validator/QA, recording reader.
+**Trigger:** the caller wants to know whether TMATS is intact, or to stamp it.
+
+Chapter 9 Table 9-2 defines `G\SHA`, "Message Digest / Checksum" (present from
+106-15 onward): an algorithm designator, a hyphen, and hex digits, with SHA2-256
+written as `2-` followed by 64 hex characters. Chapter 6 §6.2.3.11 f (the
+recorder `.TMATS CHECKSUM` command) fixes the calculation: SHA-256 per FIPS
+180-4 over the entire TMATS, discarding only the text from `G\SHA` through the
+following semicolon, reported as `2-` plus 64 lower-case hex characters.
+
+1. **Compute:** the library hashes the original bytes (UC-01 keeps them
+   exactly), excluding the `G\SHA` item if present.
+2. **Verify:** it compares the result with the embedded `G\SHA` value and
+   reports match, mismatch, absent, unknown algorithm designator, or
+   malformed value.
+3. **Stamp:** on request it produces a *suggested edit* that inserts or updates
+   `G\SHA` (UC-10/UC-12); it never rewrites the checksum on its own.
+
+**Why the lossless design matters here:** the digest covers raw bytes, so any
+normalization (reordering, case changes, line endings) invalidates it. After
+an edit (UC-10), the report says the stored checksum no longer matches and
+offers the stamp edit.
+
+These are integrity checks, not cryptographic signatures: there is no key, so
+they detect accidental change, not tampering.
+
+### UC-16 Compute the irig106.org "flex signature" — *0.1, opt-in*
+
+**Actor:** analysts comparing configurations; users of irig106.org tools.
+**Trigger:** the caller needs a signature compatible with `igDisplayTMATS` /
+`irig106lib`.
+
+This is **not** part of IRIG 106. `irig106lib` (`enI106_Tmats_Signature`,
+BSD-3-Clause) defines it: a Fletcher-32 checksum of each upper-cased
+`code:value;` line, **summed** over lines (so attribute order does not matter),
+excluding by default comments, V-group attributes, G-group attributes, and a
+fixed list of R-group recorder-identity and point-of-contact attributes; flags
+include each class, and the result is written `OO-SSSSSSSS` (opcode = flags and
+algorithm version, then the signature). Its purpose is a stable fingerprint of
+the *data-describing* content that ignores comments, contacts, and recorder
+identity. The library reproduces it exactly, including its exclusion list, and
+labels it non-standard everywhere it appears.
+
+### UC-17 Inspect TMATS from the command line (`tmats`) — *0.1 onward*
+
+**Actor:** every human actor; CI scripts. **Trigger:** someone has a Chapter 10
+file or a TMATS text file and wants to look at it.
+
+A command-line tool, `tmats`, built on this library, replaces and extends
+irig106.org's `idmptmat` (whose source is published in the RCC 123 Chapter 10
+Programmers' Handbook) and the viewing parts of `igDisplayTMATS`:
+
+| Command | Does | Delivered |
+|---------|------|-----------|
+| `tmats show FILE` | Channel summary (default): channel ID, data type, enabled, data source — `idmptmat -c` | 0.1 from R-group items; 0.2 with resolved links (UC-05) |
+| `tmats show --tree FILE` | Hierarchy: data sources → recorders → channels, then every group by occurrence and code path — `idmptmat -t` | 0.1 |
+| `tmats show --raw FILE` | The TMATS text exactly as stored — `idmptmat -r` | 0.1 |
+| `tmats extract FILE.ch10 -o OUT` | Write the setup-record TMATS bytes to a file | 0.1 |
+| `tmats checksum FILE` | Print the `G\SHA` value (UC-15) | 0.1 |
+| `tmats verify FILE` | Check the embedded `G\SHA`; exit status reflects the result | 0.1 |
+| `tmats stamp FILE -o OUT` | Write a copy with `G\SHA` inserted or updated | 0.1 |
+| `tmats checksum --flex [--include ...] FILE` | irig106.org flex signature (UC-16) | 0.1 |
+| `tmats validate FILE` | Validation report (UC-06/07) | 0.3 |
+| `tmats diff A B` | Compare two documents (UC-11) | 0.5 |
+
+Input is detected by content (a Chapter 10 file starts with the packet sync
+pattern; anything else is treated as TMATS text). Unlike `idmptmat`, which
+reads only the first packet, `tmats` reports every setup record in a
+recording. Output is plain text by default and machine-readable (JSON) on
+request, with documented exit codes so scripts can rely on it.
+
+The tool ships from this repository as a second crate, `irig106-tmats-cli`
+(binary `tmats`), at **the same version as the library, always**. It is a
+focused TMATS tool: the complete, ecosystem-wide command-line tool is
+`irig106-cli`, which uses this library (and may mount `tmats`' commands as a
+subcommand). A GUI view belongs in `irig106-studio`, using the same library
+calls.
+
 ## 5. Consumer notes
 
 - **`irig106-ch10-reader`** reports only TMATS presence and payload size
@@ -270,6 +350,11 @@ say what cannot. The caller decides what is fatal.
 - **`irig106-decode`** needs UC-05's full chain (format, measurements,
   conversions) for PCM, analog, and discrete data.
 - **`irig106-write`** needs UC-09/UC-13 and the setup-record payload builder.
+- **`irig106-ch10-reader`**'s Windows guide currently tells users to extract
+  TMATS bytes with other tools; `tmats extract` (UC-17) replaces that advice.
+- **irig106.org tools** (`idmptmat`, `igDisplayTMATS`, `irig106lib`) are
+  reference points, not authorities: see `docs/TEST-DATA.md` for the defects
+  found in them.
 
 ## 6. Quality attributes
 
@@ -289,8 +374,10 @@ say what cannot. The caller decides what is fatal.
 ## 7. Open questions for review
 
 1. Should one library call accept a whole Chapter 10 file and find the setup
-   record itself, or should that stay in `irig106-core` / readers (current
-   position: stays outside)?
+   record itself, or should that stay in `irig106-core` / readers? Current
+   position: the library stays payload-level; the `tmats` CLI (UC-17) needs to
+   open Chapter 10 files, so it carries a minimal packet reader until
+   `irig106-core` provides one.
 2. Chapter 9 marks some ranges as a *recommended* maximum length. Should
    exceeding them be a warning by default?
 3. For UC-11, is a mid-recording setup-record change something `irig106-ch10-reader`
