@@ -82,6 +82,9 @@ Produced in this order, each reviewed before the next begins:
 - Both crates are published to crates.io together, library first; the CLI is
   also shipped as prebuilt binaries on each GitHub release. Publishing
   mechanics are in `docs/RELEASING.md`.
+- The CLI's argument parsing is hand-rolled with no dependency (no `clap`),
+  as in `mie-decoder`: table-driven, with a test for every flag and usage
+  error.
 - The CLI opens Chapter 10 files with a minimal internal packet reader (sync
   pattern, header, data type `0x01` payloads) until `irig106-core` provides
   one; the library itself stays payload-level.

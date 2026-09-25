@@ -53,6 +53,15 @@ a command computes, the library can compute for other callers.
 - **Every reference-tool defect is a regression test** (D1–D7,
   `docs/TEST-DATA.md`), for example summary and tree output over one, two,
   three, and many data sources (D1).
+- **Argument parsing is hand-rolled, with no dependency** (owner decision,
+  2026-09-25: "Go with hand-rolled argument parsing like mie-decoder"). The
+  CLI adds no argument-parsing crate such as `clap`. What this buys: no
+  dependency or its MSRV and semver churn, a small binary, and full control
+  of every help and error message (which the ASCII-only rule below needs).
+  What it costs: no generated shell completions and more parsing code to
+  own; that code is kept table-driven and every flag, value, and usage error
+  has a test. The scaffold's `--version` / `--help` handling already follows
+  this approach.
 
 ## 4. Proposed rules (to confirm)
 
@@ -70,15 +79,12 @@ a command computes, the library can compute for other callers.
 
 ## 5. Decisions still to make
 
-1. **Argument parsing:** a crate such as `clap`, or hand-rolled with no
-   dependency (the `mie-decoder` approach). Affects binary size, help
-   quality, and shell completions.
-2. **Selecting a setup record:** `--record N` to pick one; default all.
-3. **Flex signature flags:** how `--include comments,vendor,g,all` maps to
+1. **Selecting a setup record:** `--record N` to pick one; default all.
+2. **Flex signature flags:** how `--include comments,vendor,g,all` maps to
    `irig106lib`'s flags, and whether its output keeps the `OO-SSSSSSSS` form.
-4. **An `idmptmat`-compatible text mode** for side-by-side comparison with the
+3. **An `idmptmat`-compatible text mode** for side-by-side comparison with the
    oracle, or semantic comparison only (`docs/TEST-DATA.md` currently says
    semantic).
-5. **JSON schema** location and versioning policy.
-6. **Release binaries:** hand-written workflow or a tool such as `cargo-dist`
+4. **JSON schema** location and versioning policy.
+5. **Release binaries:** hand-written workflow or a tool such as `cargo-dist`
    (also open in `docs/RELEASING.md`).

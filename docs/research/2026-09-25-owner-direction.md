@@ -96,3 +96,10 @@ Recorded in: `docs/ARCHITECTURE.md` (sections 1–2), `docs/RELEASING.md`
 > Are there any SVGs we can generate representing the diffent aspects of this architecture? A picture is worth a 1000 words remember.
 
 Recorded in: this directory (`docs/research/`) and `docs/diagrams/`.
+
+## 9. The CLI's argument parsing
+
+> Give me a Token reminder for the irig106-tmats 0.0.2 placeholder. I will be away from my keyboard for a while.
+> Go with hand-rolled argument parsing like mie-decoder
+
+Recorded in: `docs/CLI.md` (section 3), `docs/ROADMAP.md`, `CLAUDE.md`.

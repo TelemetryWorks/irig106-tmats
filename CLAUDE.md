@@ -137,6 +137,9 @@ as specifications.
   useful oracles with known defects; every defect found in them gets a named
   regression test here (`docs/TEST-DATA.md`), and a disagreement is settled by
   the standard.
+- **The CLI hand-rolls its argument parsing** (owner decision, as in
+  `mie-decoder`). Do not add `clap` or any other argument-parsing crate;
+  keep the parser table-driven and test every flag and usage error.
 - **The roadmap is forward-looking only** and never mints requirement IDs or
   records counts.
 - **Requirement markers on tests** use a `/// Requirements: L2-XXX-NNN, ...`
