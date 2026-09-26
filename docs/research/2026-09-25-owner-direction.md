@@ -125,3 +125,14 @@ reports a mid-recording setup-record change by default, in one line naming
 what changed; (4) the test corpus reproduces the irig106.org vendor samples
 first, then the owner's program files. Recorded in: `docs/USE-CASES.md`
 (section 7, UC-06, consumer notes) and `docs/TEST-DATA.md`.
+
+## 12. The CLI design decisions
+
+> go with your suggestions for all five
+
+Accepted: all setup records by default with `--record N`; flex `--include`
+flags mapped one-to-one onto `irig106lib`'s and its `OO-SSSSSSSS` output;
+no `idmptmat`-compatible mode (semantic comparison only); JSON schema in
+`docs/schema/` with a `schema_version` field, breaking changes are breaking
+releases; `cargo-dist` for release binaries. Recorded in: `docs/CLI.md`
+(section 5), `docs/RELEASING.md`, `docs/PROJECT_STRUCTURE.md`.

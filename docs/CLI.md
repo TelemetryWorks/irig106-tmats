@@ -77,14 +77,26 @@ a command computes, the library can compute for other callers.
 - **Streams:** results on stdout, diagnostics on stderr; `-o FILE` writes the
   result to a file instead of stdout.
 
-## 5. Decisions still to make
+## 5. Decisions made on 2026-09-25
 
-1. **Selecting a setup record:** `--record N` to pick one; default all.
-2. **Flex signature flags:** how `--include comments,vendor,g,all` maps to
-   `irig106lib`'s flags, and whether its output keeps the `OO-SSSSSSSS` form.
-3. **An `idmptmat`-compatible text mode** for side-by-side comparison with the
-   oracle, or semantic comparison only (`docs/TEST-DATA.md` currently says
-   semantic).
-4. **JSON schema** location and versioning policy.
-5. **Release binaries:** hand-written workflow or a tool such as `cargo-dist`
-   (also open in `docs/RELEASING.md`).
+The owner accepted all five proposals ("go with your suggestions for all
+five"):
+
+1. **Selecting a setup record:** every setup record in a recording is shown
+   by default; `--record N` (1-based, file order) shows only the N-th.
+2. **Flex signature flags:** `--include` takes a comma-separated list of
+   `comments`, `vendor`, and `g`, or `all`, mapping one-to-one onto
+   `irig106lib`'s `TMATS_SIGFLAG_INC_COMMENT`, `_INC_VENDOR`, `_INC_G`, and
+   `_INC_ALL`. Output keeps `irig106lib`'s `OO-SSSSSSSS` form (opcode, then
+   signature, in hex) so values compare directly with `igDisplayTMATS`.
+3. **No `idmptmat`-compatible text mode.** The test harness compares with
+   `idmptmat` semantically (channels, types, data sources, hierarchy), so
+   `tmats` inherits neither its layout nor its defects.
+4. **JSON schema:** kept in `docs/schema/`, versioned independently of the
+   crates; every JSON document carries a `schema_version` field. A breaking
+   schema change is a breaking release of both crates (docs/RELEASING.md).
+5. **Release binaries:** built and uploaded by `cargo-dist` (Windows, Linux,
+   macOS binaries and SHA-256 checksums from one tag), set up before 0.1.
+
+No CLI design decisions remain open; the command-by-command reference
+(flags, output layouts, exit codes) is written with the L2/L3 requirements.

@@ -69,9 +69,10 @@ Before 1.0, a breaking change bumps the minor version (0.1 → 0.2).
    dependency order, library first, verifying the set together). Publishing
    is **not atomic**: if the CLI upload fails after the library succeeded,
    re-run for the CLI only.
-6. The workflow builds `tmats` for each target, attaches the binaries and
-   their SHA-256 checksums to the GitHub release, and copies the changelog
-   section into the release notes.
+6. `cargo-dist` builds `tmats` for Windows, Linux, and macOS, attaches the
+   binaries and their SHA-256 checksums to the GitHub release, and copies the
+   changelog section into the release notes (decided 2026-09-25; configured
+   before 0.1).
 
 ## Credentials
 
@@ -94,9 +95,6 @@ dependency resolution but does not delete anything.
 
 ## Open questions
 
-- Which tool builds and uploads the release binaries (a hand-written
-  workflow or a release tool such as `cargo-dist`)? Decided in an ADR before
-  0.1.
 - Should `tmats` binaries be signed, beyond the published SHA-256
   checksums?
 - `irig106-cli` is the complete ecosystem tool and is released from its own
