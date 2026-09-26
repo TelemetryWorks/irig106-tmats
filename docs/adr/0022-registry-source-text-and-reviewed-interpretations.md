@@ -1,5 +1,5 @@
 ---
-status: accepted; counter and link declarations added by 0026
+status: accepted; counter and link declarations added by 0026; interpretation register added by 0027
 date: 2026-09-26
 decision-makers: Joey
 ---

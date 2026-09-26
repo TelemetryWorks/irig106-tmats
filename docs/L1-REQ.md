@@ -296,7 +296,31 @@ requirements are added. The requirement entries below and the generated
 
 **Statement**: Each counter in the registry SHALL declare the code pattern and index position it governs, its parent scope, and whether its indices must run from 1 to N or carry a cited exception; each link SHALL declare its source, its target attributes, a selector where targets overlap, and its cardinality, built from both the "Links to:" and "Links from:" fields, with any disagreement between them settled in a reviewed interpretation.
 
-**Rationale**: X-group occurrences "are not necessarily contiguous" (§9.5.14); nested counters such as `D-x\MNF\N-y-n` count within one parent combination; `B-x\DLN` is linked from both `R-x\CDLN` and `P-d\DLN`; `R-x\CDLN-n` omits `Q-d\DLN` from its "Links to:" while `Q-d\DLN` lists it under "Links from:" (106-24R1 Chapter 9; team review T4; ADR-0026). Delivered from 0.2.
+**Rationale**: X-group occurrences "are not necessarily contiguous" (§9.5.14); nested counters such as `D-x\MNF\N-y-n-m` count within one parent combination; `B-x\DLN` is linked from both `R-x\CDLN` and `P-d\DLN`; `R-x\CDLN-n` omits `Q-d\DLN` from its "Links to:" while `Q-d\DLN` lists it under "Links from:" (106-24R1 Chapter 9; team review T4; ADR-0026). Delivered from 0.2.
+
+**Verification Method**: Test (T)
+
+### L1-REG-006
+
+**Statement**: The project SHALL keep an interpretation register with one entry for every place where the standard is inconsistent, incomplete, or silent and the design chose a behaviour, each entry recording the sources quoted verbatim, the chosen behaviour and its reason, its design status, its author and reviewer, and at least one test that names it; the library SHALL rely on no interpretation that the register does not list.
+
+**Rationale**: The tables are not mechanically complete — for example `R-x\CDLN-n` omits Q from its "Links to:" while `Q-d\DLN` lists it (Tables 9-4 and 9-10) — and interpretations must be reviewable and tested in one place (team review T5; ADR-0022, ADR-0027). Delivered from 0.1 (`docs/INTERPRETATIONS.md`, generated from the registry from 0.2).
+
+**Verification Method**: Inspection (I)
+
+### L1-REG-007
+
+**Statement**: The registry SHALL generate relationships between attributes from the "Links to:" fields, the "Links from:" fields, and the ties of Chapter 9 §9.5.1 b, using reviewed definitions only, and its generation SHALL fail when a relationship stated by only some of those sources has no interpretation-register entry.
+
+**Rationale**: §9.5.1 b claims "All valid paths are documented in "Links to:" and "Links from:" attributes", but the R group's sub-channel and network names have no "Links" field although §9.5.1 b (g, h) names them as tie sources (team review T5; ADR-0027). Delivered from 0.2.
+
+**Verification Method**: Test (T)
+
+### L1-REG-008
+
+**Statement**: The table extractor SHALL report every link that names a code name no table defines, every condition that names an unknown attribute or keyword, and every attribute defined only in prose.
+
+**Rationale**: The Q group's condition names the channel type `FBCIN`, which Table 9-4 does not define; `H\TA` and `H\ST-n` are defined only in §9.5.12's prose (team review T5; ADR-0027). Delivered from 0.2.
 
 **Verification Method**: Test (T)
 
@@ -473,6 +497,14 @@ requirements are added. The requirement entries below and the generated
 **Statement**: The library SHALL group V-group attributes by data source and vendor acronym (§9.5.13) and SHALL link each X-group attribute to the attribute it extends by group, code, and leading indices (§9.5.14).
 
 **Rationale**: The standard's own extension mechanisms (UC-08; ADR-0008). Delivered in 0.1.
+
+**Verification Method**: Test (T)
+
+### L1-EXT-004
+
+**Statement**: The library SHALL define `H\TA` and `H\ST-n` as built-in attributes, SHALL link `H\TA` to `G\TA`, and SHALL treat every other H-group attribute as organisation-defined: defined through user definitions when supplied, and otherwise preserved and reported as undefined.
+
+**Rationale**: "The only H group attributes defined in this standard are" `H\TA`, which "ties the H group to the G group", and `H\ST-n`; the rest is reserved "for those instrumentation organizations that choose to use the TMATS standard in this way" (§9.5.12) (team review T5; coverage item 2; ADR-0008, ADR-0027; INT-006). Delivered in 0.3.
 
 **Verification Method**: Test (T)
 

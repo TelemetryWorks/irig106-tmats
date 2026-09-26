@@ -32,6 +32,8 @@ irig106-tmats/
 │   ├── USE-CASES.md           Actors, library boundary, use cases UC-01..UC-17 (design draft)
 │   ├── CLI.md                 `tmats` command design: commands, decided behaviour, open decisions (draft)
 │   ├── TEST-DATA.md           Real data and test oracles (local-only policy); reference-tool defects
+│   ├── INTERPRETATIONS.md     Interpretation register: where the standard is inconsistent or silent, the
+│                              behaviour chosen, and its test (hand-written until the registry generates it)
 │   ├── RELEASING.md           Lockstep versioning, crates.io publishing, release binaries (design draft)
 │   ├── adr/                   Architecture decision records (MADR), index in adr/README.md
 │   ├── L1-REQ.md              Level 1 SHALL requirements (design draft)
@@ -41,7 +43,7 @@ irig106-tmats/
 │   ├── ARCHITECTURE.md        Architecture proposal (verbatim), diagrams, decisions to honour (design draft)
 │   ├── diagrams/              Hand-authored SVGs of the architecture, one mechanism each (see its README);
 │                              includes the registry pipeline (team review T1), derived parameters (T2),
-│                              and setup-record assembly (T3)
+│                              setup-record assembly (T3), and link resolution (T4)
 │   ├── research/              Dated, verbatim records of reviews and discussions (history, not specification)
 │   ├── API_GUIDE.md           prototype: usage examples for the prototype API
 │   ├── REQUIREMENTS.md        prototype: single-file requirements; replaced by L1/L2/L3-REQ.md

@@ -66,6 +66,9 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-REG-003 | _(none)_ | _(none)_ | Draft |
 | L1-REG-004 | _(none)_ | _(none)_ | Draft |
 | L1-REG-005 | _(none)_ | _(none)_ | Draft |
+| L1-REG-006 | _(none)_ | _(none)_ | Draft |
+| L1-REG-007 | _(none)_ | _(none)_ | Draft |
+| L1-REG-008 | _(none)_ | _(none)_ | Draft |
 
 ### L1-VIEW: Lookup, structured views, and links
 
@@ -114,6 +117,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-EXT-001 | _(none)_ | _(none)_ | Draft |
 | L1-EXT-002 | _(none)_ | _(none)_ | Draft |
 | L1-EXT-003 | _(none)_ | _(none)_ | Draft |
+| L1-EXT-004 | _(none)_ | _(none)_ | Draft |
 
 ### L1-WRT: Writing, editing, comparing, and generating
 
@@ -198,11 +202,11 @@ This matrix is the single source of truth for live status; the requirement docum
 | READ | 7 | 0 | 0 | 0 | 0 | 0 | 0 |
 | CH10 | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EDN | 4 | 0 | 0 | 0 | 0 | 0 | 0 |
-| REG | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
+| REG | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
 | VIEW | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
 | VAL | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
 | DER | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
-| EXT | 3 | 0 | 0 | 0 | 0 | 0 | 0 |
+| EXT | 4 | 0 | 0 | 0 | 0 | 0 | 0 |
 | WRT | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SUM | 3 | 0 | 0 | 0 | 0 | 0 | 0 |
 | IO | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -210,19 +214,41 @@ This matrix is the single source of truth for live status; the requirement docum
 | ROB | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 2 | 0 | 0 | 0 | 0 | 0 | 0 |
-| **Total** | **64** | **0** | **0** | **0** | **0** | **0** | **0** |
+| **Total** | **68** | **0** | **0** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 64 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 68 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 1 of 64 (1.6%).
+**Tested by at least one test marker**: 1 of 68 (1.5%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 64 (3.1%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 68 (2.9%).
 
 ### Orphan check
 
 * Orphan L2s (parent L1 not found): **0**
 * Orphan L3s (parent L2 not found): **0**
 
+### Interpretation register
+
+Every entry of `docs/INTERPRETATIONS.md` with the tests that name it (`/// Interpretations: INT-NNN`). An entry without a test is not yet pinned.
+
+| Entry | Title | Design | Tests |
+|-------|-------|--------|-------|
+| INT-001 | The R group's data-link names reach the Q group, although R's "Links to:" omits Q | accepted (owner, 2026-09-26) | _(none)_ |
+| INT-002 | Sub-channel and network names tie to B, S, and Q, although no "Links" field says so | accepted (owner, 2026-09-26) | _(none)_ |
+| INT-003 | "All valid paths are documented" in the Links fields — they are not | accepted (owner, 2026-09-26) | _(none)_ |
+| INT-004 | Index letters in code-name references are placeholders | accepted (owner, 2026-09-26) | _(none)_ |
+| INT-005 | The channel data type selects among overlapping link targets | accepted (owner, 2026-09-26) | _(none)_ |
+| INT-006 | `H\TA` ties the H group to the G group by test item | accepted (owner, 2026-09-26) | _(none)_ |
+| INT-007 | The Q group's condition names `FBCIN`, which is not a channel type | accepted (owner, 2026-09-26) | _(none)_ |
+| INT-008 | `C-d\DPNO`'s condition names `C\DCT` without an index | accepted (owner, 2026-09-26) | _(none)_ |
+| INT-009 | Counters named without indices in conditions | accepted (owner, 2026-09-26) | _(none)_ |
+| INT-010 | Equality is `==`, although Table E-3 prints `= =` | accepted (owner, 2026-09-26) | _(none)_ |
+| INT-011 | Where one multi-packet setup record ends | accepted (owner, 2026-09-26) | _(none)_ |
+| INT-012 | RCCVER `0x0E` means "106-22 or later" | accepted (owner, 2026-09-26) | _(none)_ |
+| INT-013 | Appendix 9-C ends 18 attributes with `:` instead of `;` | suspect (owner, 2026-09-26; `docs/ROADMAP.md`, S1) | _(none)_ |
+
+* Entries without a test: **13** of 13
+
 ### Marker reference check
 
-* Markers referencing unknown requirement ids: **0**
+* Markers referencing unknown requirement or interpretation ids: **0**

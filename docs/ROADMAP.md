@@ -84,7 +84,8 @@ stands.
    output with the registry: every code name is either defined or explicitly
    excluded with a reason. This check is the standing proof of coverage and
    keeps it current when a new edition is published.
-2. **Treat the H group as an extension mechanism.** §9.5.12 reserves H for
+2. **Treat the H group as an extension mechanism.** *Applied with T5
+   (ADR-0027, L1-EXT-004, INT-006).* §9.5.12 reserves H for
    user-defined airborne-hardware attributes, tied to G by `H\TA`, with
    `H\ST-n` determining how the rest are interpreted — the same pattern as
    the V group. Extend ADR-0008 and the extensibility requirement to cover H
@@ -565,6 +566,18 @@ all three sources, ADR-0008 and L1-EXT for H (coverage item 2),
 document that the registry later generates, or waits for the registry.
 Recommendation: start it now, seeded with the entries in step 5, so the
 findings of T1–T5 are gathered in one place before any code.
+**Decided (owner, 2026-09-26): start the register now.** Two more
+inconsistencies were found while writing it and entered: the Q group's
+condition names the channel type `FBCIN`, which Table 9-4 does not define
+(`FBCHIN`; every edition since 106-22), and no B, S, or Q group accepts CAN
+data (`CANIN`), so CAN sub-channel names tie to nothing.
+*Applied 2026-09-26: `docs/INTERPRETATIONS.md` (INT-001 to INT-013),
+`docs/ARCHITECTURE.md` section 8 and the section 3 caption, the
+link-graph (H) and registry-pipeline (register, check 5) diagrams, ADR-0027
+(with status pointers on ADR-0008, 0022, 0026), L1-REG-006 to 008,
+L1-EXT-004, and the register report in `scripts/build-trace-matrix.py`.
+Also corrected: the T4 documents gave the D-group fragment counter as
+`D-x\MNF\N-y-n`; it is `D-x\MNF\N-y-n-m` (Table 9-7).*
 
 ### Suspect findings to confirm against real data
 

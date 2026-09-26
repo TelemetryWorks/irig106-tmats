@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-label="Chapter 9 group relationships (106-23 section 9.5.1 b): T, R, M, and V tie to G by Data Source ID; R ties to P, B, S, and Q by Channel Data Link Name; M ties to P, and P to embedded P, D, and B, by Data Link Name; R, D, B, and S tie to C by Measurement Name, and M does for analog measurements; X attributes extend any attribute with matching indices.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 530" role="img" aria-label="Chapter 9 group relationships (106-23 section 9.5.1 b): T, R, M, and V tie to G by Data Source ID; R ties to P, B, S, and Q by Channel Data Link Name; M ties to P, and P to embedded P, D, and B, by Data Link Name; R, D, B, and S tie to C by Measurement Name, and M does for analog measurements; X attributes extend any attribute with matching indices; the H group ties to G only through its test item (section 9.5.12), the rest of H being organisation-defined.">
   <style>
     text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; fill: #1f2328; }
     .t { font-size: 15px; font-weight: 600; }
@@ -24,11 +24,12 @@
     <marker id="x" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ahx" d="M0,0 L10,5 L0,10 z"/></marker>
   </defs>
 
-  <text class="t" x="20" y="30">How TMATS groups link by value (Chapter 9 §9.5.1 b)</text>
+  <text class="t" x="20" y="30">How TMATS groups link by value (Chapter 9 §9.5.1 b, §9.5.12)</text>
   <text class="l" x="20" y="50">Arrow = "this group refers to that one"; label = the attribute value that carries the link. A link's target is a key, unique among that attribute's values (ADR-0026).</text>
 
   <!-- nodes: letter and name inside each box -->
   <rect class="hub" x="415" y="66"  width="110" height="48" rx="6"/><text class="g" x="470" y="87" text-anchor="middle">G</text><text class="n" x="470" y="104" text-anchor="middle">General Information</text>
+  <rect class="ext" x="845" y="66"  width="110" height="48" rx="6"/><text class="g" x="900" y="87" text-anchor="middle">H</text><text class="n" x="900" y="104" text-anchor="middle">Airborne Hardware</text>
   <rect class="ext" x="65"  y="176" width="110" height="48" rx="6"/><text class="g" x="120" y="197" text-anchor="middle">V</text><text class="n" x="120" y="214" text-anchor="middle">Vendor-Specific</text>
   <rect class="box" x="265" y="176" width="110" height="48" rx="6"/><text class="g" x="320" y="197" text-anchor="middle">T</text><text class="n" x="320" y="214" text-anchor="middle">Transmission</text>
   <rect class="box" x="465" y="176" width="110" height="48" rx="6"/><text class="g" x="520" y="197" text-anchor="middle">R</text><text class="n" x="520" y="214" text-anchor="middle">Recorder-Reproducer</text>
@@ -50,6 +51,10 @@
   <text class="e" x="358" y="142">DSI</text>
   <text class="e" x="506" y="150">DSI</text>
   <text class="e" x="624" y="130">DSI</text>
+
+  <!-- H to G: Test Item (§9.5.12) -->
+  <path class="ln" d="M845,90 L525,90" marker-end="url(#a)"/>
+  <text class="e" x="690" y="84" text-anchor="middle">TA</text>
 
   <!-- R to Q, S, B, P: Channel Data Link Name -->
   <path class="ln" d="M480,224 L160,306" marker-end="url(#a)"/>
@@ -93,4 +98,6 @@
   <text class="e" x="20" y="450">DLN</text><text class="l" x="62" y="450">Data Link Name</text>
   <text class="e" x="20" y="468">MN</text><text class="l" x="62" y="468">Measurement Name (also M → C,</text>
   <text class="l" x="62" y="482">for analog measurements)</text>
+  <text class="e" x="20" y="500">TA</text><text class="l" x="62" y="500">Test Item: H\TA to G\TA; other H</text>
+  <text class="l" x="62" y="514">attributes are organisation-defined</text>
 </svg>

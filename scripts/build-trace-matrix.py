@@ -12,10 +12,13 @@ Sources:
 2. ``docs/L2-REQ.md`` — L2 ids (``#### L2-XXX-NNN``) with ``**Parent**:`` lines
 3. ``docs/L3-REQ.md`` — L3 one-liners
    ``**L3-XXX-NNN** · Parent: L2-XXX-NNN · Verification: T[ · Evidence: ...]``
-4. Rust sources of both crates (``src/``, ``tests/``,
+4. ``docs/INTERPRETATIONS.md`` — the interpretation register
+   (``### INT-NNN`` headings with ``**Title**`` and ``**Design**`` lines)
+5. Rust sources of both crates (``src/``, ``tests/``,
    ``irig106-tmats-cli/src/``, ``irig106-tmats-cli/tests/``) — every
-   ``/// Requirements: ...`` doc-comment line directly preceding a ``#[test]``
-   item, collected by a stateful line scan and emitted as ``path::name``
+   ``/// Requirements: ...`` or ``/// Interpretations: ...`` doc-comment line
+   directly preceding a ``#[test]`` item, collected by a stateful line scan
+   and emitted as ``path::name``
 
 The coverage denominator is every L2 and L3 requirement plus the
 Test-verifiable L1 *leaves* (L1s with no L2 decomposition, where markers
@@ -39,6 +42,7 @@ ROOT = Path(__file__).resolve().parent.parent
 L1_DOC = ROOT / "docs" / "L1-REQ.md"
 L2_DOC = ROOT / "docs" / "L2-REQ.md"
 L3_DOC = ROOT / "docs" / "L3-REQ.md"
+INT_DOC = ROOT / "docs" / "INTERPRETATIONS.md"
 TRACE_DOC = ROOT / "docs" / "TRACE-MATRIX.md"
 RUST_SOURCE_ROOTS = [
     ROOT / "src",
@@ -48,6 +52,9 @@ RUST_SOURCE_ROOTS = [
 ]
 
 REQ_ID_PATTERN = re.compile(r"L(?P<level>[123])-(?P<cat>[A-Z0-9]+)-(?P<num>\d+)")
+INT_ID_PATTERN = re.compile(r"INT-\d{3}")
+INT_TITLE = re.compile(r"^\*\*Title\*\*:\s+([^\n]+)$", re.MULTILINE)
+INT_DESIGN = re.compile(r"^\*\*Design\*\*:\s+([^·\n]+)", re.MULTILINE)
 L1_HEADER = re.compile(r"^###\s+(L1-[A-Z0-9]+-\d+)\s*$", re.MULTILINE)
 L2_PARENT_LINE = re.compile(r"^\*\*Parent\*\*:\s+(L1-[A-Z0-9]+-\d+)\s*$", re.MULTILINE)
 L3_LINE = re.compile(
@@ -145,11 +152,24 @@ def parse_l3(doc: str) -> tuple[dict[str, str], dict[str, set[str]], dict[str, l
     return parent, methods, evidence
 
 
+def parse_interpretations(doc: str) -> list[tuple[str, str, str]]:
+    """Return (id, title, design status) for each register entry, in order."""
+    parts = re.split(r"^###\s+(INT-\d{3})\s*$", doc, flags=re.MULTILINE)
+    entries = []
+    for i in range(1, len(parts), 2):
+        body = parts[i + 1] if i + 1 < len(parts) else ""
+        title = m.group(1).strip() if (m := INT_TITLE.search(body)) else ""
+        design = m.group(1).replace("*", "").strip() if (m := INT_DESIGN.search(body)) else ""
+        entries.append((parts[i], title, design))
+    return entries
+
+
 _FN_DECL = re.compile(r"^\s*(?:pub\s+)?(?:async\s+)?fn\s+(\w+)\s*[(<]")
 
 
 def collect_rust_markers(source_roots: list[Path]) -> dict[str, list[str]]:
-    """Collect ``/// Requirements:`` markers that precede ``#[test]`` items.
+    """Collect ``/// Requirements:`` and ``/// Interpretations:`` markers that
+    precede ``#[test]`` items.
 
     A marker pairs with the next ``fn name(`` declaration only if a test
     attribute appears between them; any other code line resets the pending
@@ -179,6 +199,10 @@ def collect_rust_markers(source_roots: list[Path]) -> dict[str, list[str]]:
                     _, _, after = stripped.partition("Requirements:")
                     for m in REQ_ID_PATTERN.finditer(after):
                         pending.append(f"L{m.group('level')}-{m.group('cat')}-{m.group('num')}")
+                    continue
+                if stripped.startswith("///") and "Interpretations:" in stripped:
+                    _, _, after = stripped.partition("Interpretations:")
+                    pending.extend(INT_ID_PATTERN.findall(after))
                     continue
                 if stripped.startswith("#["):
                     if stripped.startswith(("#[test", "#[tokio::test", "#[rstest")) or "::test]" in stripped:
@@ -244,6 +268,9 @@ def build_matrix() -> str:
     l2_parent, l2_methods, l2_evidence = parse_l2(L2_DOC.read_text(encoding="utf-8"))
     l3_parent, l3_methods, l3_evidence = parse_l3(L3_DOC.read_text(encoding="utf-8"))
     markers = collect_rust_markers(RUST_SOURCE_ROOTS)
+    interpretations = (
+        parse_interpretations(INT_DOC.read_text(encoding="utf-8")) if INT_DOC.is_file() else []
+    )
 
     l1_to_l2: dict[str, list[str]] = defaultdict(list)
     for l2, l1 in l2_parent.items():
@@ -401,10 +428,20 @@ def build_matrix() -> str:
     out += [f"* {r} -> parent {l3_parent[r]} not in L2-REQ.md" for r in orphan_l3]
     out.append("")
 
-    known = set(l1_ids) | set(l2_parent) | set(l3_parent)
+    untested = [i for i, _, _ in interpretations if not markers.get(i)]
+    out += ["### Interpretation register", "",
+            "Every entry of `docs/INTERPRETATIONS.md` with the tests that name it "
+            "(`/// Interpretations: INT-NNN`). An entry without a test is not yet pinned.", "",
+            "| Entry | Title | Design | Tests |",
+            "|-------|-------|--------|-------|"]
+    for int_id, title, design in interpretations:
+        out.append(f"| {int_id} | {title} | {design} | {artifacts_cell(markers.get(int_id, []))} |")
+    out += ["", f"* Entries without a test: **{len(untested)}** of {len(interpretations)}", ""]
+
+    known = set(l1_ids) | set(l2_parent) | set(l3_parent) | {i for i, _, _ in interpretations}
     unknown = sorted(set(markers) - known, key=_sort_key)
     out += ["### Marker reference check", "",
-            f"* Markers referencing unknown requirement ids: **{len(unknown)}**"]
+            f"* Markers referencing unknown requirement or interpretation ids: **{len(unknown)}**"]
     out += [f"* `{r}` — referenced by {len(markers[r])} test(s)" for r in unknown]
     return "\n".join(out) + "\n"
 

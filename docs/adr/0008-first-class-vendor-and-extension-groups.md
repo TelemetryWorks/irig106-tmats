@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: accepted; extended to the H group by 0027
 date: 2026-09-25
 decision-makers: Joey
 ---

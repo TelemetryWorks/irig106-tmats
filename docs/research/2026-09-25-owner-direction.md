@@ -234,3 +234,27 @@ Owner decision: apply T4, and keep the erratum and the diagnostic that
 depends on it marked **suspect** until checked against real recordings.
 Recorded in: `docs/ROADMAP.md` (T4, and "Suspect findings to confirm against
 real data"), `docs/TEST-DATA.md`, ADR-0026, `docs/L1-REQ.md` (L1-READ-007).
+
+## 19. The interpretation register starts now (2026-09-26)
+
+> Apply T5 with the recommendation
+
+Recommendation adopted: the interpretation register starts now as a
+hand-written document, `docs/INTERPRETATIONS.md`, seeded with every
+interpretation found in T1–T5, and becomes generated from the registry's
+interpretation files once they exist. Two further inconsistencies found
+while writing it are entered: the Q group's condition names the channel
+type `FBCIN`, which Table 9-4 does not define (it defines `FBCHIN`; every
+edition since 106-22), and no group accepts CAN data (`CANIN`), so CAN
+sub-channel names tie to nothing. Recorded in: `docs/ROADMAP.md` (T5),
+`docs/INTERPRETATIONS.md`, `docs/ARCHITECTURE.md` section 8, ADR-0027,
+`docs/L1-REQ.md`.
+
+Correction made while applying T5: the T4 documents (ARCHITECTURE section
+7.1, ADR-0026, L1-REG-005) gave the D-group fragment counter as
+`D-x\MNF\N-y-n` and the location counter as `D-x\MML\N-y`. Table 9-7 defines
+`D-x\MN\N-y` (measurands in list `y`), `D-x\MML\N-y-n` (locations of
+measurand `n`), and `D-x\MNF\N-y-n-m` (fragments of location `m`), and the
+fragment attributes are `D-x\WFT-y-n-m-e` and `D-x\WFP-y-n-m-e`. The three
+documents were corrected in place, as a factual error in an example rather
+than a change of decision.

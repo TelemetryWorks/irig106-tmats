@@ -160,10 +160,12 @@ parsed, case-folded key; an index maps keys and patterns to items; the
 
 *Link graph.* The ties between groups that Chapter 9 §9.5.1 b defines, each
 labelled with the attribute value that carries it. The link graph and the
-channel views (UC-05) are built from these, as recorded per attribute in the
-registry's "Links to / Links from" fields; X attributes attach to the
-attribute they extend (§9.5.14). The H (airborne hardware) group's ties are
-not listed in §9.5.1 b and are added when its tables are transcribed.
+channel views (UC-05) are built from these, as recorded in the registry from
+three sources — the "Links to:" and "Links from:" fields and the ties of
+§9.5.1 b (section 8); X attributes attach to the attribute they extend
+(§9.5.14). The H group has no table to transcribe: the standard defines only
+`H\TA`, which "ties the H group to the G group", and `H\ST-n`, and reserves
+the rest for organisations (§9.5.12).
 
 ![Edits are patches; the checksum is suggested](diagrams/edits-and-checksum.svg)
 
@@ -210,7 +212,7 @@ supplies entries of the same shape.
 *Building the registry.* The extractor produces the source layer from the
 archived edition; people author interpretations and a second person reviews
 each; the generator compiles both into checked-in tables. Four CI checks
-guard it: every table code name and prose default is in the registry
+guard it (a fifth, on relationships, was added by T5 — section 8.2): every table code name and prose default is in the registry
 (completeness); every source row is interpreted or explicitly marked "not
 yet interpreted"; an interpretation whose source text hash changed is
 flagged for re-review; and every interpretation names two different people.
@@ -450,10 +452,12 @@ architecture is unchanged.
 
 Every `\N` counter in the registry declares:
 
-- the **code pattern and index position it governs** — `D-x\MML\N-y` governs
-  the `n` of `D-x\MNF\N-y-n` and of the other `-y-n` attributes;
-- its **parent scope**, the indices held fixed — `D-x\MNF\N-y-n` counts
-  fragments within one measurement `y` and one location `n`, so contiguity
+- the **code pattern and index position it governs** — `D-x\MML\N-y-n`
+  governs the location index `m` of `D-x\MNF\N-y-n-m` and of the other
+  `-y-n-m` attributes;
+- its **parent scope**, the indices held fixed — `D-x\MNF\N-y-n-m` counts
+  the fragments `e` of one location `m` of one measurand `n` in measurement
+  list `y` (as in `D-x\WFP-y-n-m-e`), so contiguity
   is checked separately for every parent-index combination (106-24R1
   Chapter 9 has 49 such nested counters, for example `Q-d\NSF\N-i-n-m-o`);
 - whether its indices run **from 1 to N "with no missing values"**
@@ -533,9 +537,68 @@ expression (`C-1\DPA:A?B:C;`) is not followed by a code name and is not
 reported. The owner holds this finding **suspect** until it is checked
 against real recordings (`docs/ROADMAP.md`, "Suspect findings", S1).
 
-## 8. Decisions this architecture must honour
+## 8. Refinement T5: the interpretation register and three-source relationships
 
-Recorded as ADRs in `docs/adr/` (0001–0019, 0022–0026 accepted): the lossless ordered attribute store as the
+From the team design review, priority T5 (`docs/ROADMAP.md`). Applied
+2026-09-26 with the owner's decision to start the register now; recorded in
+ADR-0027. It adds a register beside the registry and a third input to the
+registry generator.
+
+### 8.1 The interpretation register
+
+`docs/INTERPRETATIONS.md` lists every place where the standard is
+inconsistent, incomplete, or silent and the design had to choose: the
+sources quoted verbatim, the behaviour, the reason, the design status
+(accepted or suspect), the two-person review (ADR-0022), and a focused test.
+Tests name their entry (`/// Interpretations: INT-NNN`), and the trace
+matrix lists each entry with its tests. Code relies only on listed
+interpretations. When the registry's interpretation files exist, the
+register is generated from them.
+
+The registry pipeline diagram (section 4.1) shows where the register sits:
+interpretations are written and reviewed in the interpretation layer, the
+register is their human-readable index, and CI check 5 requires a register
+entry for every relationship that only some of its sources state.
+
+### 8.2 Relationships from three sources
+
+Chapter 9 claims that "All valid paths are documented in "Links to:" and
+"Links from:" attributes" (§9.5.1 b). They are not:
+
+| Relationship | "Links to:" | "Links from:" | §9.5.1 b | Register |
+|--------------|-------------|---------------|----------|----------|
+| `R-x\CDLN-n` → `Q-d\DLN` | omits Q | lists R | (h) states it | INT-001 |
+| sub-channel and network names → B, S, Q | no field | not listed | (g), (h) state it | INT-002 |
+| `P-d\DLN` → `B-x\DLN` | "B-d\DLN" | lists P | (e) states it | INT-004 |
+| `H\TA` → `G\TA` | no table | no table | not listed; §9.5.12 states it | INT-006 |
+
+The registry generator takes the union of the three sources as candidates,
+uses only reviewed definitions, and fails when a relationship that only some
+sources state has no register entry. The resulting declarations feed the
+link resolution of section 7.2 unchanged.
+
+### 8.3 What the extractor reports
+
+The table extractor never assumes the tables are complete. Besides the
+coverage count (ROADMAP coverage item 1) it reports: links naming code names
+no table defines; conditions naming unknown attributes or keywords (the Q
+group's `FBCIN`, INT-007); and attributes defined only in prose (`H\TA`,
+`H\ST-n`).
+
+### 8.4 The H group
+
+"The only H group attributes defined in this standard are" `H\TA` and
+`H\ST-n`; the rest is reserved "for those instrumentation organizations that
+choose to use the TMATS standard in this way" (§9.5.12), and §9.7 says the
+group "has never been implemented", IHAL having taken its purpose. `H\TA`
+and `H\ST-n` are built in, `H\TA` links to `G\TA`, and every other H
+attribute is organisation-defined: supplied through the user overlay like
+the V group (ADR-0008) and preserved, reported as undefined, when no
+definition is given.
+
+## 9. Decisions this architecture must honour
+
+Recorded as ADRs in `docs/adr/` (0001–0019, 0022–0027 accepted): the lossless ordered attribute store as the
 single source of truth; owned storage instead of borrowed lifetimes; the
 layered, spec-cited registry generated by a script (no `build.rs`);
 registry-driven validation with severity policy and user rules; no automatic
@@ -552,10 +615,12 @@ parameters parsed, validated, and described here and evaluated in
 fragments in the library, with packet slicing in the CLI's reader
 (ADR-0025); counters with declared scopes, links with declared namespaces,
 selectors, and cardinality, keys unique per attribute, and case-insensitive
-comparison of code names, keywords, and link values (ADR-0026). The original
+comparison of code names, keywords, and link values (ADR-0026); an
+interpretation register, relationships generated from three sources, and the
+H group's two built-in attributes (ADR-0027). The original
 proposal is captured in ADR-0020 and ADR-0021 (proposed).
 
-## 9. To be written
+## 10. To be written
 
 - Module structure and public API sketch (document, scanner, keys and
   index, registry and overlay, link graph, condition evaluator,

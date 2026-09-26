@@ -122,6 +122,7 @@ architecture must honour:
 - `docs/L1-REQ.md`, `docs/L2-REQ.md`, `docs/L3-REQ.md` — requirements (L1
   drafted; L2/L3 conventions only); `docs/TRACE-MATRIX.md` — generated live
   status, never edited by hand.
+- `docs/INTERPRETATIONS.md` — the interpretation register (ADR-0027).
 - The RCC 106 standards themselves are mirrored, with their original URLs and
   checksums, in the `TelemetryWorks/rcc-106-standards` repository. Chapter 9
   is the governing document for this crate; the RCC 124 TMATS Handbook is the
@@ -169,7 +170,12 @@ as specifications.
   records counts.
 - **Requirement markers on tests** use a `/// Requirements: L2-XXX-NNN, ...`
   doc comment directly above the `#[test]` item, which the trace-matrix script
-  collects.
+  collects. A test that pins an interpretation also carries
+  `/// Interpretations: INT-NNN`.
+- **Record every interpretation.** Where the standard is inconsistent,
+  incomplete, or silent, add an entry to `docs/INTERPRETATIONS.md` (sources
+  quoted verbatim, behaviour, reason, test) before relying on it; never
+  assume the Chapter 9 tables are complete (ADR-0027).
 - **Keep `docs/PROJECT_STRUCTURE.md` current** in the same commit as any
   structural change.
 

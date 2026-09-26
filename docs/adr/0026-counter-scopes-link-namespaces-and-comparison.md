@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: accepted; relationships from a third source added by 0027
 date: 2026-09-26
 decision-makers: Joey
 ---
@@ -14,7 +14,7 @@ pass 4 check that "links resolve and key values are unique" (Chapter 9
 coarse. Checked against 106-24R1 Chapter 9:
 
 - "The values of "x" in "X-x" are not necessarily contiguous" (§9.5.14).
-- 49 counters carry parent indices (for example `D-x\MNF\N-y-n`,
+- 49 counters carry parent indices (for example `D-x\MNF\N-y-n-m`,
   `Q-d\NSF\N-i-n-m-o`) and count only within one parent combination.
 - `P-d\DLN` "Links to: D-x\DLN, B-d\DLN", and `D-x\DLN` has "Links from:
   P-d\DLN". Both are keys ("Any attribute with a Links from: is a key and

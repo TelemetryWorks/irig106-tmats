@@ -11,9 +11,9 @@ Hand-authored SVG diagrams of the architecture, embedded in
 | `data-flow.svg` | Scanner → Document; Document and registry meet in the read-through layer (link graph, effective-value resolver, condition evaluator); views and the four-pass validator read through it; suggested edits → caller → patch list → writer |
 | `derived-parameters.svg` | Appendix 9-E: function and formula styles → binder and Table E-6 parser → description, derivation graph, validation; evaluation in `irig106-decode`; the test-only reference evaluator |
 | `setup-record-assembly.svg` | One setup record across three consecutive packets: slicing (header, secondary header, Data Length, filler, checksum), the library's assembler, provenance, the boundary rule, `G\SHA` over the assembled body |
-| `registry-pipeline.svg` | Extractor → source layer → author and independent reviewer → interpretation layer → generator, with the four CI checks and the re-review loop |
+| `registry-pipeline.svg` | Extractor → source layer → author and independent reviewer → interpretation layer (indexed in the interpretation register) → generator, with the five CI checks and the re-review loop |
 | `document-model.svg` | One buffer, spans, keys, index, and the byte range the `G\SHA` digest covers |
-| `link-graph.svg` | The Chapter 9 §9.5.1 b ties between groups, labelled with the value that carries each |
+| `link-graph.svg` | The Chapter 9 §9.5.1 b ties between groups, labelled with the value that carries each, and the H group's one tie to G (§9.5.12) |
 | `link-resolution.svg` | How one link resolves: case-folded match, the channel-type selector, resolved / ambiguous (all candidates listed) / unresolved, and keys unique per attribute (P and D data-link names equal by design) |
 | `edits-and-checksum.svg` | An edit as a patch, byte-faithful output, and `G\SHA` reported stale and stamped only on request |
 
