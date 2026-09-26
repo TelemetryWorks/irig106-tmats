@@ -31,3 +31,16 @@ arrive.
 > I recommend a registry containing both the original cited text and reviewed executable rules, with separate validation passes for existing attributes, missing required attributes, counters, and
 > relationships. Effective values should distinguish explicit, defaulted, missing, invalid, and ambiguous, without inserting defaults into the stored document. This strengthens L1-REG-002 and L1-VAL
 > (/C:/Users/Joey/Documents/GIT-GitHub/telemetryworks/irig106-tmats/docs/L1-REQ.md:230). Sources: Chapter 9 §9.5.1(a), Tables 9-2 and 9-11 (https://www.irig106.org/docs/106-24R1/chapter9.pdf).
+
+## Priority 2 (verbatim)
+
+> 2. Add explicit Appendix 9-E support.
+>
+> Derived parameters need more than a string-valued C-d\DPA attribute. Appendix 9-E defines function and formula forms, operator precedence, quoted measurement names, dependencies on other derived
+> measurements, and triggering information. These are not addressed explicitly in the current architecture or L1 requirements.
+>
+> Add requirements for parsing and validating expressions, exposing their measurement dependencies, and representing trigger semantics. Runtime evaluation can remain with irig106-decode; this library should
+> supply an interpretable description.
+>
+> This also affects the scanner: C-1\DPA:A?B:C; contains a legitimate colon inside the value. Only the first colon separates the code from its value. The expression parser must follow the appendix’s
+> precedence rules, which explicitly differ from C. Source: Chapter 9 Table 9-11, Appendix 9-E §§E.1–E.7 (https://www.irig106.org/docs/106-24R1/chapter9.pdf).

@@ -199,6 +199,86 @@ from step 1 enforces it: an interpretation whose author and reviewer are
 missing or identical fails, and a re-review after a source change needs both
 again.
 
+**T2. Add explicit Appendix 9-E (derived parameter) support.** Verified
+against 106-24R1 Appendix 9-E and Table 9-11:
+
+- *Two forms* (§E.1): function style (`C-d\DPAT` = `N`; `C-d\DPA` names an
+  operator, a function, or a custom algorithm such as `NEWALG` in §E.9.d, with
+  ordered inputs `C-d\DP-n` and constants `C-d\DPC-n`; order carries meaning —
+  "the division algorithm assigns the first input measurement as the
+  dividend") and formula style (`C-d\DPAT` = `A`; `C-d\DPA` holds an
+  expression; inputs and constants are not used).
+- *Precedence differs from C*: §E.7 says the grammar "strictly speaking, does
+  not match the C language". Table E-6 binds `& ^ |` tighter than `* / %`,
+  and `+ -` tighter than `<< >>`. Checked: Table E-6 and the Yacc `%left`
+  declarations (Figures E-2/E-3) agree, lowest to highest `,` `?:` `||` `&&`
+  `== !=` relational `<< >>` `+ -` `* / %` `|` `^` `&` `**` `! ~` unary minus.
+- *Lexical rules* (§E.4–E.5, Lex figures): measurement names of
+  alphanumerics plus `$ _ .` (for example `A00.1`); names quoted with `"` or
+  `'` (for example `'Air Speed'`); names such as `00A1` versus hexadecimal
+  `0x…`; decimal and scientific constants; case-insensitive throughout.
+  Table E-9 lists "selected" functions (`sin`, `atan2`, `pow`, …), so other
+  names are allowed (custom algorithms).
+- *Dependencies*: derived measurements may use other derived measurements
+  (§E.5; §E.9.d chains `XA` → `XB` → `XC` → `DMD`), and appear only in the C
+  group (§E.1).
+- *Triggers*: `C-d\DPTM` (trigger measurand) and `C-d\DPNO` (occurrences,
+  default 1 in prose); with a single input and no trigger, "there is only one
+  input, which must trigger the calculation" (§E.9.c).
+- *Scanner*: a colon is legitimate inside a value — §E.6.b example h is
+  `A<B || B<<C ? D : E`, so `C-1\DPA:A?B:C;` is valid. Only the first colon
+  of an attribute separates code name from value. Also found: the standard's
+  own example `C-6\DCN :DMC;` (§E.9.c) has a blank before the colon, so blanks
+  around the code name must be tolerated for interpretation (while kept in
+  the bytes).
+- *Errata to interpret (two-person review)*: Table E-3 prints the equality
+  operator as `= =` while the Lex grammar recognises `==`; the figure numbers
+  in the body differ from the List of Figures.
+
+Mapping: not covered today (ARCHITECTURE and L1 treat `C-d\DPA` as a plain
+string); it answers coverage item 3's open question about Appendix 9-E with a
+recommendation; the scanner rule refines ARCHITECTURE point 1 and ADR-0021;
+no conflict with any decision. Plan:
+
+1. *A derived-expression component* in the library: a lexer and parser for
+   formula style implementing Table E-6 exactly (with the verified Yacc
+   declarations as the cross-check), and a binder for function style
+   (operator or function name, ordered inputs, constants). Output is an
+   interpretable description — an expression tree or a bound function call —
+   with spans back to the `C-d\DPA` bytes.
+2. *Validation*: syntax errors with locations; arity of known Table E-9
+   functions; unknown function names reported as custom algorithms (a
+   warning, not an error); inputs and constants used only in the style that
+   allows them; unresolved measurement names; and cycles among derived
+   measurements.
+3. *Dependencies*: for each derived measurement, the measurements it reads,
+   resolved to telemetry measurements (R, M, D, B, S groups) or other derived
+   measurements (C group), as a graph in the link-graph layer, with cycle
+   detection.
+4. *Trigger semantics*: the trigger measurand (explicit, or implied by a
+   single input), occurrences with its prose default of 1 (an effective value,
+   T1), reported with each derived measurement.
+5. *No evaluation*: computing values stays with `irig106-decode`, which
+   consumes the description; stated as a non-requirement, together with
+   engineering-unit conversion (coverage item 3).
+6. *Scanner rule*: the first `:` in an attribute ends the code name; every
+   later `:` belongs to the value, which ends at `;` (semicolons are not
+   allowed in data items, §9.4.2). Blanks around the code name are ignored for
+   interpretation and kept in the bytes.
+7. *Tests*: every expression and TMATS example in Appendix 9-E (§E.6.b e–h,
+   §E.9.a–d, function and formula styles) as fixtures; a precedence test per
+   level of Table E-6, including the cases where C would differ; the
+   colon-in-value and blank-before-colon cases.
+
+Documents affected: ARCHITECTURE (the derived-expression component, the
+dependency graph, the scanner rule), a new ADR (Appendix 9-E: parse,
+validate, and describe; no evaluation), ADR-0021 (status pointer for the
+scanner rule), L1 (derived-parameter parsing, validation, dependencies,
+triggers; the scanner rule; a non-requirement for evaluation).
+**Owner decision needed:** adopt the team's recommended scope — the library
+parses, validates, and describes derived parameters, and `irig106-decode`
+evaluates them. This also resolves coverage item 3's Appendix 9-E question.
+
 ## Planned releases
 
 | Version | Theme | Scope |
