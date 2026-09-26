@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" role="img" aria-label="Where TMATS can fail and what follows: setup-record fragments that cannot be assembled, or an XML setup record, are reported and govern nothing; a record that is readable but has malformed attributes, or whose G\SHA does not verify, still governs, with its findings; a data packet with no governing description is reported, not decoded; a packet on an unknown or disabled channel, or with the wrong data type, is reported and decoding is the consumer's choice.">
+  <style>
+    text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; fill: #1f2328; }
+    .t { font-size: 15px; font-weight: 600; }
+    .h { font-size: 13px; font-weight: 600; }
+    .b { font-weight: 600; }
+    .l { font-size: 11px; fill: #57606a; }
+    .box { fill: #f6f8fa; stroke: #57606a; stroke-width: 1.2; }
+    .ok { fill: #ddf4ff; stroke: #0969da; stroke-width: 1.6; }
+    .bad { fill: #ffebe9; stroke: #cf222e; stroke-width: 1.3; }
+    .warn { fill: #fff8c5; stroke: #9a6700; stroke-width: 1.3; }
+    .ln { stroke: #57606a; stroke-width: 1.3; fill: none; }
+    .fl { stroke: #57606a; stroke-width: 1.1; fill: none; stroke-dasharray: 4 3; }
+    .ah { fill: #57606a; }
+    @media (prefers-color-scheme: dark) {
+      text { fill: #e6edf3; } .l { fill: #9198a1; }
+      .box { fill: #161b22; stroke: #9198a1; } .ok { fill: #0c2d6b; stroke: #4493f8; }
+      .bad { fill: #3d1214; stroke: #f85149; } .warn { fill: #3b2e00; stroke: #d29922; }
+      .ln, .fl { stroke: #9198a1; } .ah { fill: #9198a1; }
+    }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+
+  <text class="t" x="20" y="30">Where TMATS can fail, and what follows</text>
+  <text class="h" x="20" y="60">A setup record on its way to governing packets</text>
+
+  <rect class="box" x="20"  y="74" width="140" height="50" rx="6"/><text class="b" x="90"  y="96" text-anchor="middle">Fragments</text><text class="l" x="90" y="113" text-anchor="middle">data type 0x01</text>
+  <rect class="box" x="195" y="74" width="140" height="50" rx="6"/><text class="b" x="265" y="96" text-anchor="middle">Assembled?</text><text class="l" x="265" y="113" text-anchor="middle">complete, trusted</text>
+  <rect class="box" x="370" y="74" width="140" height="50" rx="6"/><text class="b" x="440" y="96" text-anchor="middle">ASCII?</text><text class="l" x="440" y="113" text-anchor="middle">CSDW FRMT = 0</text>
+  <rect class="box" x="545" y="74" width="140" height="50" rx="6"/><text class="b" x="615" y="96" text-anchor="middle">Read</text><text class="l" x="615" y="113" text-anchor="middle">every attribute kept</text>
+  <rect class="box" x="720" y="74" width="120" height="50" rx="6"/><text class="b" x="780" y="96" text-anchor="middle">G\SHA</text><text class="l" x="780" y="113" text-anchor="middle">if present</text>
+  <rect class="ok"  x="870" y="74" width="110" height="50" rx="25"/><text class="b" x="925" y="96" text-anchor="middle">Governs</text><text class="l" x="925" y="113" text-anchor="middle">with findings</text>
+
+  <path class="ln" d="M160,99 L195,99" marker-end="url(#a)"/>
+  <path class="ln" d="M335,99 L370,99" marker-end="url(#a)"/>
+  <path class="ln" d="M510,99 L545,99" marker-end="url(#a)"/>
+  <path class="ln" d="M685,99 L720,99" marker-end="url(#a)"/>
+  <path class="ln" d="M840,99 L870,99" marker-end="url(#a)"/>
+
+  <rect class="bad" x="195" y="150" width="160" height="92" rx="6"/>
+  <text class="b" x="205" y="169">No: incomplete</text>
+  <text class="l" x="205" y="186">sequence gap, missing or</text>
+  <text class="l" x="205" y="200">untrusted fragment: reported;</text>
+  <text class="l" x="205" y="214">governs nothing, and nothing</text>
+  <text class="l" x="205" y="228">governs after it (INT-031)</text>
+  <rect class="bad" x="370" y="150" width="160" height="92" rx="6"/>
+  <text class="b" x="380" y="169">No: XML</text>
+  <text class="l" x="380" y="186">reported as unsupported</text>
+  <text class="l" x="380" y="200">(NR-001); governs nothing</text>
+  <rect class="warn" x="545" y="150" width="160" height="92" rx="6"/>
+  <text class="b" x="555" y="169">Faults inside</text>
+  <text class="l" x="555" y="186">malformed attributes,</text>
+  <text class="l" x="555" y="200">odd bytes: diagnostics;</text>
+  <text class="l" x="555" y="214">still governs (UC-14)</text>
+  <rect class="warn" x="720" y="150" width="160" height="92" rx="6"/>
+  <text class="b" x="730" y="169">Does not verify</text>
+  <text class="l" x="730" y="186">mismatch or malformed:</text>
+  <text class="l" x="730" y="200">integrity finding;</text>
+  <text class="l" x="730" y="214">still governs</text>
+  <path class="fl" d="M265,124 L265,150"/>
+  <path class="fl" d="M440,124 L440,150"/>
+  <path class="fl" d="M615,124 L615,150"/>
+  <path class="fl" d="M780,124 L780,150"/>
+
+  <line x1="20" y1="268" x2="980" y2="268" stroke="#d0d7de"/>
+  <text class="h" x="20" y="294">A data packet on its way to a decoder</text>
+
+  <rect class="box" x="20"  y="308" width="140" height="50" rx="6"/><text class="b" x="90"  y="330" text-anchor="middle">Data packet</text><text class="l" x="90" y="347" text-anchor="middle">any other type</text>
+  <rect class="box" x="195" y="308" width="180" height="50" rx="6"/><text class="b" x="285" y="330" text-anchor="middle">Governed?</text><text class="l" x="285" y="347" text-anchor="middle">a description applies</text>
+  <rect class="box" x="410" y="308" width="180" height="50" rx="6"/><text class="b" x="500" y="330" text-anchor="middle">Matches its channel?</text><text class="l" x="500" y="347" text-anchor="middle">L1-CH10-007</text>
+  <rect class="ok"  x="625" y="308" width="160" height="50" rx="6"/><text class="b" x="705" y="330" text-anchor="middle">Decode</text><text class="l" x="705" y="347" text-anchor="middle">irig106-decode</text>
+  <path class="ln" d="M160,333 L195,333" marker-end="url(#a)"/>
+  <path class="ln" d="M375,333 L410,333" marker-end="url(#a)"/>
+  <path class="ln" d="M590,333 L625,333" marker-end="url(#a)"/>
+
+  <rect class="bad" x="195" y="384" width="180" height="92" rx="6"/>
+  <text class="b" x="205" y="403">No description</text>
+  <text class="l" x="205" y="420">before the first record, after</text>
+  <text class="l" x="205" y="434">an incomplete or XML record:</text>
+  <text class="l" x="205" y="448">reported, not decoded</text>
+  <text class="l" x="205" y="462">(INT-032)</text>
+  <rect class="warn" x="410" y="384" width="180" height="92" rx="6"/>
+  <text class="b" x="420" y="403">Does not match</text>
+  <text class="l" x="420" y="420">unknown or disabled channel,</text>
+  <text class="l" x="420" y="434">data type differs: reported;</text>
+  <text class="l" x="420" y="448">decoding is the consumer's</text>
+  <text class="l" x="420" y="462">choice</text>
+  <path class="fl" d="M285,358 L285,384"/>
+  <path class="fl" d="M500,358 L500,384"/>
+
+  <text class="l" x="810" y="400">Red: nothing governs.</text>
+  <text class="l" x="810" y="416">Amber: reported, and the</text>
+  <text class="l" x="810" y="430">work continues.</text>
+</svg>

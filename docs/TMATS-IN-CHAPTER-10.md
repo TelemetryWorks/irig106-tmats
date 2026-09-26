@@ -16,7 +16,7 @@
 | 3. What the description answers, question by question | **draft for review** |
 | 4. Contracts per consumer | **draft for review** |
 | 5. Configuration over a recording | **draft for review** |
-| 6. When TMATS is missing, wrong, or disagrees with the data | to be written |
+| 6. When TMATS is missing, wrong, or disagrees with the data | **draft for review** |
 | 7. A worked example: Appendix 9-C from channel to engineering units | to be written |
 | 8. What changes as a result | to be written |
 
@@ -837,3 +837,124 @@ hands it, in order, with their provenance; it opens no file (ADR-0010).
 | `irig106-studio` | show each setup record, what changed between them, and which one a displayed packet belongs to |
 | `irig106-ch10-reader` | report a configuration change in one line by default (ROADMAP X4) |
 | `irig106-time` | know when the time channels or their formats change |
+
+---
+
+## 6. When TMATS is missing, wrong, or disagrees with the data
+
+Real recordings break the rules. The library's part is to say exactly what
+is wrong, keep everything it can, and never fill a gap with a guess;
+whether a problem is fatal is the caller's decision (UC-14). Every case
+below is a finding with a stable rule identifier and a default severity
+that the caller's policy can change (ADR-0006, L1-VAL-001).
+
+![Where TMATS can fail, and what follows](diagrams/degraded-cases.svg)
+
+*Two paths.* A setup record that cannot be assembled, or is XML, governs
+nothing (red); one that is readable but faulty, or whose checksum does not
+verify, still governs, and its findings travel with it (amber). A data
+packet with no governing description is reported and not decoded; one that
+does not match its channel is reported, and decoding it is the consumer's
+choice.
+
+### 6.1 No setup record at all
+
+A recording file must begin with its setup record (Chapter 10 §10.5.1;
+Table 10-9, "Required: Yes"). With none, the recording has no
+configuration timeline: the library reports "no setup record", and every
+packet is ungoverned (6.2). Structural reading (`irig106-core`,
+`irig106-ch10-reader`) still works; decoding anything that needs TMATS —
+PCM frames, bus measurements, conversions — does not.
+
+### 6.2 Packets that no setup record governs
+
+Packets before the first complete setup record, and packets after a record
+that cannot govern (6.3, 6.4), have no governing description. The library
+reports them, with the range of packets affected. By default they are not
+decoded. A caller that knows better may assign a description to them
+explicitly — for example the first complete record — and every report then
+says the description was assumed, not declared (register entry INT-032,
+proposed).
+
+### 6.3 A setup record that cannot be assembled
+
+A sequence gap between fragments, a missing fragment, a fragment with a
+different CSDW, a header checksum that fails before a length can be
+trusted, or a file that ends mid-record: the assembler reports an
+incomplete record and does not build a description from it (ADR-0025).
+Because a new record means the configuration may have changed, the
+previous description is **not** carried forward: packets after an
+incomplete record are ungoverned until the next complete record (6.2;
+INT-031, proposed). The fragment bytes are kept, so a caller can still
+extract and inspect them.
+
+### 6.4 An XML setup record
+
+A record whose CSDW says "Setup record IAW Chapter 9 XML Format" is reported
+as unsupported and governs nothing (L1-CH10-002; NR-001). A recording that
+mixes ASCII and XML records breaks "It is not permissible to have both
+ASCII and XML Chapter 9 TMATS attributes in the same session"
+(§11.2.7.2) and is reported (L1-CH10-005).
+
+### 6.5 A readable setup record with faults inside
+
+Malformed attributes, a missing delimiter, non-ASCII bytes, unknown code
+names, duplicates, a colon typed for a semicolon (L1-READ-003, L1-READ-007),
+or validation findings — a missing required attribute, a counter that
+disagrees, an unresolved link: the record is read without loss, and its
+description governs, carrying its findings. Consumers see the state of
+every value they ask for (section 4.1, rule 5).
+
+### 6.6 A `G\SHA` that does not verify
+
+A mismatch, an unknown algorithm, or a malformed value is an integrity
+finding (L1-SUM-002). The description still governs: a stale checksum
+often means an edited file, not a wrong one. Whether to trust it is the
+caller's decision; a tool may refuse files that do not verify.
+
+### 6.7 Packets that do not match their channel
+
+With a governing description, the packet check (L1-CH10-007) reports:
+
+| Case | How it is recognised | Default meaning |
+|------|----------------------|-----------------|
+| Unknown channel | the packet's channel ID is no `R-x\TK1-n` of the governing record | data the setup record does not describe |
+| Disabled channel carries data | `R-x\CHE-n` is `F` ("Source must be enabled to generate data packets") | the configuration and the data disagree |
+| Data type differs | the packet's data type is not the one the channel's `R-x\CDT-n` and format attribute give (section 3.3; INT-024) | the channel was recorded as something else |
+| Enabled channel carries nothing | an `R-x\CHE-n` = `T` channel with no packet in the governed range | information only: a source may be silent |
+| Other data on channel `0x0000` | from 106-17, a packet on channel `0x0000` that is neither a setup record nor a Format 4 streaming configuration record (§11.2.1.1 b) | the reserved channel is misused |
+
+Decoding a mismatched packet is the consumer's choice: `irig106-decode` may
+still decode a self-describing packet type, but never with a format the
+description does not give for that channel.
+
+### 6.8 Answers a decoder cannot use
+
+Within a governing description, a channel's format link may be unresolved
+or ambiguous, or a value the decoder needs — a bit rate, a word length, a
+measurement's location — may be missing or invalid. The view says so
+(L1-VIEW-003, L1-VIEW-004, L1-VIEW-006). `irig106-decode` then reports that
+channel or measurement as not decodable and names the reason; it never
+substitutes a default the library did not give, or picks a candidate
+(section 4.1, rule 5).
+
+### 6.9 A recording in several files
+
+"A data recording can contain a single file … or multiple files, in which
+one or more types of data are recorded simultaneously in separate files",
+and each "recording file" must begin with its setup record (Chapter 10
+§10.5.1). Each file therefore has its own configuration timeline; joining
+the files of one recording is the caller's work.
+
+### 6.10 Summary
+
+| Case | Governs? | Decoded by default? | Reported by |
+|------|----------|---------------------|-------------|
+| No setup record | — | no | the library (6.1) |
+| Packet before the first record | nothing | no | the packet check |
+| Incomplete record | no; nothing after it until the next complete record | no | the assembler |
+| XML record | no | no | the library |
+| Readable record with faults | yes, with its findings | yes | reading and validation |
+| `G\SHA` does not verify | yes | yes | checksum verification |
+| Packet does not match its channel | yes | the consumer's choice | the packet check |
+| Needed value missing, link unresolved or ambiguous | yes | not that channel or measurement | the view, then `irig106-decode` |

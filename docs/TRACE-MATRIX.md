@@ -270,9 +270,11 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-028 | Which setup record governs a packet | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
 | INT-029 | Repeated, changed, and inconsistent setup records | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
 | INT-030 | The "setup record configuration change event packet" is not defined | open (follow-up F7, 2026-09-26) | not yet written | _(none)_ |
+| INT-031 | After a setup record that cannot be assembled, nothing governs | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
+| INT-032 | Packets that no setup record governs | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
 
-* Entries without a written analysis: **30** of 30
-* Entries without a test: **30** of 30
+* Entries without a written analysis: **32** of 32
+* Entries without a test: **32** of 32
 * Entries missing the development mark: **0**
 
 ### Marker reference check

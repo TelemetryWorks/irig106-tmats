@@ -619,3 +619,39 @@ listed here.
 **Test**: `configuration_change_event_packet` (written once F7 is decided)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+### INT-031
+
+**Title**: After a setup record that cannot be assembled, nothing governs
+
+**Sources**:
+- Chapter 11 §11.2.7.2: "A single setup record may span multiple consecutive packets. When spanning multiple packets, the sequence counter shall increment in the order of segmentation of the setup record, n+1"; "the new setup record packet will be committed to the stream prior to any new or changed data packets".
+- The standard does not say what applies after a record that cannot be read.
+
+**Behaviour**: An incomplete setup record (sequence gap, missing or untrusted fragment, a CSDW change within it, or the end of the file) is reported and builds no description; the previous description is not carried forward, and packets after it are ungoverned until the next complete record. The fragment bytes are kept.
+
+**Reason**: A new setup record means the configuration may have changed; applying the old description to data the new one describes would decode it wrongly without a word.
+
+**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: pending · **Origin**: F4 section 6
+
+**Test**: `nothing_governs_after_an_incomplete_setup_record`
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+### INT-032
+
+**Title**: Packets that no setup record governs
+
+**Sources**:
+- Chapter 10 §10.5.1 and Table 10-9: the setup record is "the first packets in the recording".
+- Chapter 11: "Only static Computer-Generated Data, Format 1 packets may precede the first time data packet."
+
+**Behaviour**: Packets before the first complete setup record, or after one that cannot govern (INT-031, an XML record), are reported with the range affected and are not decoded by default. A caller may assign a description to them explicitly; every report then says the description was assumed, not declared.
+
+**Reason**: The standard forbids such packets but real recordings may contain them; decoding them silently with a guessed configuration would hide the problem.
+
+**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: pending · **Origin**: F4 section 6
+
+**Test**: `ungoverned_packets_are_reported_and_assumptions_labelled`
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
