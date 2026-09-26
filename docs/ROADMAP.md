@@ -378,6 +378,23 @@ section 6, the system-context and data-flow diagrams, ADR-0025 (with a status
 pointer on ADR-0019), L1-CH10-001 and L1-CLI-003 revised, L1-CH10-004 to 006,
 L1-CLI-008, L1-VIEW-005.*
 
+## Work for other repositories
+
+Findings and decisions made here that require changes in sibling
+repositories. This repository does not change them; each item is carried to
+its repository as a tracked issue (link added when filed) and removed from
+this list once that repository has it.
+
+| # | Repository | Item | Source here |
+|---|------------|------|-------------|
+| X1 | `irig106-time` | Edition code `0x0F` is mapped to 106-23 (`src/version.rs`), but 106-24R1 Chapter 11 Figure 11-34 defines RCCVER `0x07`–`0x0E` (106-07 to 106-22) and reserves `0x0F`–`0xFF`; `0x0E` means "106-22 or later", and 106-20 has no code. The version table in its `docs/ROADMAP.md` also omits 106-20 and 106-24. | ROADMAP T3; ADR-0025 |
+| X2 | `irig106-types` | Define `Irig106Version` (`#[non_exhaustive]`, with an unknown value, RCCVER mapping per Figure 11-34), the Chapter 10/11 data-type codes and data-type-version field (Table 11-4, §11.2.1.1 e), and the Computer-Generated Format 1 CSDW (bits 31–10 reserved, bit 9 FRMT, bit 8 SRCC, bits 7–0 RCCVER); then remove the duplicate enum from `irig106-time` (fixes X1). | ADR-0009; ADR-0025 |
+| X3 | `irig106-core` | When its packet reader exists, it takes over slicing from the `tmats` CLI (header, optional secondary header, Data Length, filler and checksums, header-checksum verification) and supplies setup-record fragments with provenance to this library's assembler. | ADR-0019; ADR-0025 |
+| X4 | `irig106-ch10-reader` | Report a mid-recording setup-record change by default, in one line naming what changed; assemble setup records that span several packets before reporting TMATS presence or size; replace the Windows guide's external extraction advice with `tmats extract`. | USE-CASES §5 and §7 (question 3); ADR-0025 |
+| X5 | `irig106-studio` | Revise the TMATS contract in `docs/INTEGRATION.md`: the edition comes from `G\106` (not `R-1\ID`), `R-1\NSS` does not exist in Chapter 9, and channel data comes from UC-05 views (including `R-x\NSB` multiplexer source bits). | USE-CASES §5; L1-VIEW-005 |
+| X6 | `irig106-decode` | Evaluate derived parameters from this library's description (expression tree or bound call, derivation graph, trigger and occurrences), and own engineering-unit conversion and floating-point formats (Appendix 9-D). | ADR-0024; NR-007 |
+| X7 | `irig106-types`, `irig106-time` | Push the local P6-01 commits and publish `irig106-types` 0.1.0 so `irig106-time` can drop its path dependency (from the earlier ecosystem work). | Owner direction log |
+
 ## Planned releases
 
 | Version | Theme | Scope |
