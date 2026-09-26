@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" role="img" aria-label="Transactional edits and checksum stamping (ADR-0029): an edit set is validated, applied atomically as a new revision, the affected derived state is rebuilt, and the emitted bytes are re-read and verified; any rejection refuses the whole set and leaves the document unchanged. A stamp is the last step: the final bytes are emitted with the G\SHA item in place, SHA-256 covers every byte outside the item including the line break the insertion added, the value is written inside the item, and the result is verified. Three decisions remain open for the owner.">
+  <style>
+    text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; fill: #1f2328; }
+    .t { font-size: 15px; font-weight: 600; }
+    .h { font-size: 13px; font-weight: 600; }
+    .b { font-weight: 600; }
+    .m { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: 12px; }
+    .l { font-size: 11px; fill: #57606a; }
+    .box { fill: #f6f8fa; stroke: #57606a; stroke-width: 1.2; }
+    .ok { fill: #ddf4ff; stroke: #0969da; stroke-width: 1.6; }
+    .bad { fill: #ffebe9; stroke: #cf222e; stroke-width: 1.4; }
+    .usr { fill: #fff8c5; stroke: #9a6700; stroke-width: 1.2; }
+    .seg { fill: #f6f8fa; stroke: #57606a; stroke-width: 1.1; }
+    .exc { fill: #eaeef2; stroke: #57606a; stroke-width: 1.1; stroke-dasharray: 4 3; }
+    .hash { fill: #ddf4ff; stroke: #0969da; stroke-width: 1.1; }
+    .ln { stroke: #57606a; stroke-width: 1.3; fill: none; }
+    .rl { stroke: #cf222e; stroke-width: 1.3; fill: none; stroke-dasharray: 5 3; }
+    .br { stroke: #0969da; stroke-width: 1.4; fill: none; }
+    .brx { stroke: #57606a; stroke-width: 1.4; fill: none; }
+    .rt { font-size: 11px; fill: #cf222e; }
+    .bt { font-size: 11px; fill: #0969da; }
+    .ah { fill: #57606a; } .ahr { fill: #cf222e; }
+    @media (prefers-color-scheme: dark) {
+      text { fill: #e6edf3; } .l { fill: #9198a1; } .rt { fill: #f85149; } .bt { fill: #4493f8; }
+      .box, .seg { fill: #161b22; stroke: #9198a1; } .ok, .hash { fill: #0c2d6b; stroke: #4493f8; }
+      .bad { fill: #3d1214; stroke: #f85149; } .usr { fill: #3b2e00; stroke: #d29922; }
+      .exc { fill: #21262d; stroke: #9198a1; } .ln, .brx { stroke: #9198a1; } .rl { stroke: #f85149; }
+      .br { stroke: #4493f8; } .ah { fill: #9198a1; } .ahr { fill: #f85149; }
+    }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ahr" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+
+  <text class="t" x="20" y="30">An edit set is one transaction; the stamp is its last step (ADR-0029)</text>
+
+  <!-- transaction stages -->
+  <rect class="box" x="20" y="54" width="220" height="104" rx="6"/>
+  <text class="h" x="34" y="76">1  Validate the set</text>
+  <text class="l" x="34" y="96">targets exist in this revision</text>
+  <text class="l" x="34" y="111">no two edits touch the same bytes</text>
+  <text class="l" x="34" y="126">duplicates named, not guessed</text>
+  <text class="l" x="34" y="141">renumbering onto a free index</text>
+
+  <rect class="box" x="270" y="54" width="220" height="104" rx="6"/>
+  <text class="h" x="284" y="76">2  Apply atomically</text>
+  <text class="l" x="284" y="96">a new revision of the document</text>
+  <text class="l" x="284" y="111">the original is untouched</text>
+  <text class="l" x="284" y="126">all edits take effect, or none</text>
+
+  <rect class="box" x="520" y="54" width="220" height="104" rx="6"/>
+  <text class="h" x="534" y="76">3  Rebuild what changed</text>
+  <text class="l" x="534" y="96">index, link graph,</text>
+  <text class="l" x="534" y="111">derivation graph,</text>
+  <text class="l" x="534" y="126">effective values</text>
+
+  <rect class="ok" x="770" y="54" width="210" height="104" rx="6"/>
+  <text class="h" x="784" y="76">4  Verify</text>
+  <text class="l" x="784" y="96">re-read the emitted bytes:</text>
+  <text class="l" x="784" y="111">exactly the intended attributes</text>
+  <text class="l" x="784" y="126">a stamped checksum verifies</text>
+
+  <path class="ln" d="M240,106 L270,106" marker-end="url(#a)"/>
+  <path class="ln" d="M490,106 L520,106" marker-end="url(#a)"/>
+  <path class="ln" d="M740,106 L770,106" marker-end="url(#a)"/>
+
+  <rect class="bad" x="20" y="182" width="470" height="44" rx="6"/>
+  <text class="b" x="34" y="201">Any rejection: the whole set is refused</text>
+  <text class="rt" x="34" y="217">a finding names the edits and items involved; the document is unchanged</text>
+  <path class="rl" d="M130,158 L130,182" marker-end="url(#r)"/>
+
+  <!-- stamp -->
+  <line x1="20" y1="248" x2="980" y2="248" stroke="#d0d7de"/>
+  <text class="h" x="20" y="274">The stamp, when requested: hash the final bytes, not the bytes before insertion</text>
+
+  <rect class="hash" x="20"  y="316" width="170" height="30"/><text class="m" x="105" y="336" text-anchor="middle">G\PN:ALPHA;</text>
+  <rect class="hash" x="190" y="316" width="36"  height="30"/><text class="m" x="208" y="336" text-anchor="middle">⏎</text>
+  <rect class="exc"  x="226" y="316" width="300" height="30"/><text class="m" x="376" y="336" text-anchor="middle">G\SHA:2-&lt;64 lower-case hex&gt;;</text>
+  <rect class="hash" x="526" y="316" width="36"  height="30"/><text class="m" x="544" y="336" text-anchor="middle">⏎</text>
+  <rect class="hash" x="562" y="316" width="130" height="30"/><text class="m" x="627" y="336" text-anchor="middle">R-1\N:6;</text>
+
+  <path class="brx" d="M226,310 L226,300 L526,300 L526,310"/>
+  <text class="l" x="376" y="294" text-anchor="middle">excluded: "G\SHA" through the following ";" (Table 9-2; Ch 6 §6.2.3.11 f)</text>
+  <path class="br" d="M20,352 L20,362 L692,362 L692,352"/>
+  <text class="bt" x="356" y="378" text-anchor="middle">hashed: every other byte, including the line break the insertion added</text>
+
+  <text class="l" x="720" y="300">a. emit the final bytes, item in place</text>
+  <text class="l" x="720" y="316">b. SHA-256 over bytes outside the item</text>
+  <text class="l" x="720" y="332">c. write the value inside the item —</text>
+  <text class="l" x="734" y="346">it cannot change the digest</text>
+  <text class="l" x="720" y="362">d. re-read and verify (stage 4)</text>
+
+  <!-- open decisions -->
+  <rect class="usr" x="20" y="404" width="960" height="76" rx="6"/>
+  <text class="b" x="34" y="426">Open for the owner (ROADMAP "Follow-ups for the owner"); no behaviour chosen yet</text>
+  <text class="l" x="34" y="446">F1  two or more G\SHA items in one document</text>
+  <text class="l" x="34" y="462">F2  removing an attribute that X extensions point to</text>
+  <text class="l" x="500" y="446">F3  suggesting ":" where "=" was typed (Chapter 6 example)</text>
+</svg>

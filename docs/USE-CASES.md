@@ -255,6 +255,15 @@ The caller sets, inserts, removes, or renumbers attributes. The document keeps
 everything else untouched, keeps X-group links intact (UC-08), and can
 re-validate the result.
 
+A set of edits is one **transaction**: it is validated as a whole, applied
+atomically as a new revision (or not at all), the derived state is rebuilt,
+and the emitted bytes are re-read and verified. Each edit names its target
+by an item ID from the current revision or by code name; overlapping edits,
+IDs from another revision, ambiguous duplicates, and renumbering onto an
+index in use are rejected with a finding, and the document is unchanged.
+Removing an attribute that X extensions point to is an open question
+(follow-up F2) (team review T7; ADR-0029; `docs/diagrams/edit-transaction.svg`).
+
 ### UC-11 Compare two documents — *0.5*
 
 **Actor:** archivist/analyst, recording reader. **Trigger:** two revisions of
@@ -283,8 +292,10 @@ channels (IDs, data types, and what is known about each).
 The library produces a minimal document with G and R groups and format-group
 stubs whose content satisfies the Chapter 10 recorder rules for the chosen
 edition, using the correct keywords (for example `R-x\CDT-n` data type
-mnemonics, not numeric codes). The output passes UC-06, and anything the
-caller must still supply is reported as a finding rather than invented.
+mnemonics, not numeric codes). When the inventory supplies everything the
+edition requires, the output passes UC-06. Otherwise the result is an
+**incomplete draft** with a finding for each missing input — never
+presented as valid, never filled with invented values (team review T7).
 
 ### UC-14 Handle non-conforming TMATS gracefully — *0.1 onward*
 
@@ -313,7 +324,14 @@ following semicolon, reported as `2-` plus 64 lower-case hex characters.
    reports match, mismatch, absent, unknown algorithm designator, or
    malformed value.
 3. **Stamp:** on request it produces a *suggested edit* that inserts or updates
-   `G\SHA` (UC-10/UC-12); it never rewrites the checksum on its own.
+   `G\SHA` (UC-10/UC-12); it never rewrites the checksum on its own. The
+   stamp is the last step of the edit transaction and hashes the **final**
+   bytes outside the item, so a line break written with the item is
+   included; the result is verified (ADR-0029).
+4. **Policy:** `G\SHA` is recognised in any letter case, never inside a
+   value; an item with no following semicolon is malformed; upper-case hex
+   that matches is a match with a warning. Two or more `G\SHA` items are an
+   open question (follow-up F1).
 
 **Why the lossless design matters here:** the digest covers raw bytes, so any
 normalization (reordering, case changes, line endings) invalidates it. After

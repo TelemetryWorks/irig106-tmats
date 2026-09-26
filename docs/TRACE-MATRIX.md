@@ -133,6 +133,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-WRT-004 | _(none)_ | _(none)_ | Draft |
 | L1-WRT-005 | _(none)_ | _(none)_ | Draft |
 | L1-WRT-006 | _(none)_ | _(none)_ | Draft |
+| L1-WRT-007 | _(none)_ | _(none)_ | Draft |
 
 ### L1-SUM: TMATS checksums
 
@@ -143,6 +144,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-SUM-001 | _(none)_ | _(none)_ | Draft |
 | L1-SUM-002 | _(none)_ | _(none)_ | Draft |
 | L1-SUM-003 | _(none)_ | _(none)_ | Draft |
+| L1-SUM-004 | _(none)_ | _(none)_ | Draft |
 
 ### L1-IO: Input/output boundary
 
@@ -209,20 +211,20 @@ This matrix is the single source of truth for live status; the requirement docum
 | VAL | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
 | DER | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EXT | 4 | 0 | 0 | 0 | 0 | 0 | 0 |
-| WRT | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
-| SUM | 3 | 0 | 0 | 0 | 0 | 0 | 0 |
+| WRT | 7 | 0 | 0 | 0 | 0 | 0 | 0 |
+| SUM | 4 | 0 | 0 | 0 | 0 | 0 | 0 |
 | IO | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | CLI | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
 | ROB | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 2 | 0 | 0 | 0 | 0 | 0 | 0 |
-| **Total** | **70** | **0** | **0** | **0** | **0** | **0** | **0** |
+| **Total** | **72** | **0** | **0** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 70 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 72 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 1 of 70 (1.4%).
+**Tested by at least one test marker**: 1 of 72 (1.4%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 70 (2.9%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 72 (2.8%).
 
 ### Orphan check
 
@@ -252,9 +254,15 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-015 | `G\106` had no defined format before 106-17 | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-016 | What the setup record's version byte declares, and when it did not exist | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-017 | The fallback edition taken from RCCVER | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-018 | `G\SHA` is recognised in any letter case, and never inside a value | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-019 | A `G\SHA` item with no following semicolon | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-020 | Upper-case hexadecimal in a `G\SHA` value | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-021 | Two or more `G\SHA` items in one document | open (follow-up F1, 2026-09-26) | not yet written | _(none)_ |
+| INT-022 | Removing an attribute that X extensions point to | open (follow-up F2, 2026-09-26) | not yet written | _(none)_ |
+| INT-023 | `=` typed where `:` belongs, as in Chapter 6's own example | open (follow-up F3, 2026-09-26) | not yet written | _(none)_ |
 
-* Entries without a written analysis: **17** of 17
-* Entries without a test: **17** of 17
+* Entries without a written analysis: **23** of 23
+* Entries without a test: **23** of 23
 * Entries missing the development mark: **0**
 
 ### Marker reference check

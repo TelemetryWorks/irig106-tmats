@@ -19,14 +19,14 @@ status line points to the later record.
 | [0004](0004-layered-spec-cited-registry.md) | A layered, spec-cited, edition-tagged attribute registry | accepted; refined by 0022 |
 | [0005](0005-generated-registry-without-build-rs.md) | Generate the registry into checked-in source with a script; no `build.rs` | accepted; extended by 0022 |
 | [0006](0006-registry-driven-validation-with-policy.md) | Registry-driven validation with severity policy and user rules | accepted; mechanism superseded by 0023 |
-| [0007](0007-suggested-edits-not-automatic-repair.md) | No automatic repair: suggested edits, applied only by the caller | accepted |
+| [0007](0007-suggested-edits-not-automatic-repair.md) | No automatic repair: suggested edits, applied only by the caller | accepted; refined by 0029 |
 | [0008](0008-first-class-vendor-and-extension-groups.md) | Vendor (V) and extension (X) groups are first-class | accepted; extended to H by 0027 |
 | [0009](0009-shared-types-from-irig106-types.md) | Shared IRIG 106 types come from `irig106-types` | accepted |
 | [0010](0010-library-performs-no-io.md) | The library performs no I/O | accepted |
 | [0011](0011-lockstep-library-and-cli-workspace.md) | One workspace; library and `tmats` CLI released in lockstep | accepted |
 | [0012](0012-publishing-and-release-binaries.md) | Publish both crates together; `tmats` binaries via `cargo-dist` | accepted |
 | [0013](0013-hand-rolled-cli-argument-parsing.md) | Hand-rolled argument parsing for the CLI | accepted |
-| [0014](0014-tmats-checksums.md) | `G\SHA` over the original bytes; flex signature as a labelled compatibility option | accepted |
+| [0014](0014-tmats-checksums.md) | `G\SHA` over the original bytes; flex signature as a labelled compatibility option | accepted; refined by 0029 |
 | [0015](0015-remove-xml-wasm-and-unused-features.md) | Remove XML, WASM, and the unused features until done properly | accepted |
 | [0016](0016-edition-strategy.md) | Parse every edition; baseline 106-24R1; validate 106-04 … 106-24R1 | accepted; partly superseded by 0028 |
 | [0017](0017-standards-archive-repository.md) | Mirror the RCC 106 standards in a separate repository, as release assets | accepted |
@@ -41,6 +41,7 @@ status line points to the later record.
 | [0026](0026-counter-scopes-link-namespaces-and-comparison.md) | Counters declare their scope, links their namespace, selector, and cardinality; keys unique per attribute; case-insensitive comparison | accepted; extended by 0027 |
 | [0027](0027-interpretation-register-and-three-source-relationships.md) | An interpretation register; relationships from Links to, Links from, and §9.5.1 b; the H group | accepted |
 | [0028](0028-edition-declarations-and-validation-basis.md) | TMATS edition and recording-format version kept apart; validation basis labelled; fallback and compatibility checks named | accepted |
+| [0029](0029-transactional-edits-and-checksum-stamping.md) | Edits are transactions over defined targets; a stamp hashes the final bytes (F1–F3 open) | accepted; F1–F3 open |
 
 New records take the next number and use the same front matter
 (`status`, `date`, `decision-makers`).

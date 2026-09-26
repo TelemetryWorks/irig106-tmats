@@ -48,6 +48,11 @@ a command computes, the library can compute for other callers.
   another code name (defect D4).
 - **Nothing is changed in place.** Commands that produce modified TMATS
   (`stamp`, and later fix application) write to a new output file.
+- **`stamp` is a verified transaction.** It hashes the final output bytes
+  outside the `G\SHA` item (a line break it inserts is included), writes
+  lower-case hex, re-reads the output, and fails without writing if the
+  result does not verify (ADR-0029). What it does with a document holding
+  two or more `G\SHA` items waits on follow-up F1.
 - **Editions shown as the file declares them.** `show` and `validate` print
   the TMATS edition declared (`G\106`, raw and read), each setup record's
   recording-format version (CSDW, raw and read), and — for `validate` — the

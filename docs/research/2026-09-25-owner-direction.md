@@ -281,3 +281,19 @@ and deep analysis during development, defined in the register's conventions
 focused test. The trace matrix reports each entry's analysis and tests.
 Recorded in: `docs/INTERPRETATIONS.md`, `docs/ROADMAP.md`,
 `scripts/build-trace-matrix.py`, `CLAUDE.md`.
+
+## 22. Apply T7; the three decisions become follow-ups; the purpose question (2026-09-26)
+
+> After you apply seven I would like to understand what the intent of the irig106-tmats project is really about. When I am processing a CH.10 file what do I expect processing the TMATS packet to provide to the other parts of the processing like irig106-core and irig106-decode. We need to document this in great detail.   Three decisions I need way more information to understand what those mean and the concequences of our decision. So mark those as follow up after you apply and provide an answer and plan for my question.
+
+Applied: T7 without the three decisions it raised. Each is recorded as an
+open follow-up for the owner — F1 (two or more `G\SHA` items), F2 (removing
+an attribute that X extensions point to), F3 (a suggested fix for `=` typed
+where `:` belongs) — with no behaviour chosen until the owner has the
+explanation of what each means and what each choice leads to. The question
+of what processing the TMATS setup record provides to the rest of Chapter 10
+processing (`irig106-core`, `irig106-decode`, and the other consumers) is
+answered with a plan for a detailed document. Recorded in:
+`docs/ROADMAP.md` (T7; "Follow-ups for the owner"), ADR-0029,
+`docs/ARCHITECTURE.md` section 10, `docs/L1-REQ.md`, `docs/USE-CASES.md`,
+`docs/INTERPRETATIONS.md`, `docs/TEST-DATA.md`, `docs/CLI.md`.

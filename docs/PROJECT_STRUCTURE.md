@@ -43,7 +43,8 @@ irig106-tmats/
 │   ├── ARCHITECTURE.md        Architecture proposal (verbatim), diagrams, decisions to honour (design draft)
 │   ├── diagrams/              Hand-authored SVGs of the architecture, one mechanism each (see its README);
 │                              includes the registry pipeline (team review T1), derived parameters (T2),
-│                              setup-record assembly (T3), link resolution (T4), and edition basis (T6)
+│                              setup-record assembly (T3), link resolution (T4), edition basis (T6),
+│                              and edit transactions (T7)
 │   ├── research/              Dated, verbatim records of reviews and discussions (history, not specification)
 │   ├── API_GUIDE.md           prototype: usage examples for the prototype API
 │   ├── REQUIREMENTS.md        prototype: single-file requirements; replaced by L1/L2/L3-REQ.md

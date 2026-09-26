@@ -774,6 +774,15 @@ an error, "ambiguous", never "match", stamping refused until one remains;
 handles them or the caller explicitly keeps orphans; (3) the Chapter 6 `=`
 suggestion — recommended: offer it, marked **suspect** like S1 until real
 data shows whether writers produce it.
+**Owner direction (2026-09-26): apply T7, and hold the three decisions** as
+follow-ups F1–F3 (below) until their meaning and consequences are explained
+in detail; the recommendations above are not adopted.
+*Applied 2026-09-26 without F1–F3: ADR-0029 (with status pointers on
+ADR-0007 and ADR-0014), `docs/ARCHITECTURE.md` section 10, a new diagram
+`docs/diagrams/edit-transaction.svg`, L1-WRT-003, L1-WRT-006, and L1-SUM-002
+revised, L1-WRT-007 and L1-SUM-004, `docs/USE-CASES.md` (UC-10, UC-13,
+UC-15), INT-018 to INT-020 (decided) and INT-021 to INT-023 (open),
+`docs/TEST-DATA.md` (errata E3, E4), and `docs/CLI.md`.*
 
 ### Suspect findings to confirm against real data
 
@@ -785,6 +794,20 @@ its result recorded in `docs/research/`.
 | # | Finding | Owner's concern | Check against real data |
 |---|---------|-----------------|-------------------------|
 | S1 | Appendix 9-C erratum: 18 attributes ended with `:` instead of `;` (106-17 onward), and the "possible `;` typed as `:`" diagnostic built on it (L1-READ-007, ADR-0026). | "Lets still mark this as suspect so when we run against real data we dont forget I have some concerns." (2026-09-26) | Run the reader over every local sample; count and review each "possible `;` typed as `:`" diagnostic and each value containing `: ` followed by a code name; record whether real TMATS writers produce the pattern, whether any legitimate value triggers it (false positive), and whether the default severity (warning) is right. |
+
+### Follow-ups for the owner
+
+Questions the owner has asked to understand in depth before deciding. Each
+stays open — and the implementation chooses no behaviour for it — until the
+owner decides; the decision is then recorded in
+`docs/research/2026-09-25-owner-direction.md` and applied here.
+
+| # | Question | Why it is open | Where it lands |
+|---|----------|----------------|----------------|
+| F1 | What should happen when a document holds two or more `G\SHA` items? | "Three decisions I need way more information to understand what those mean and the concequences of our decision." (2026-09-26) — needs a detailed explanation of each possible policy and its consequences for verification, stamping, and recordings already in the field. | INT-021; L1-SUM-002; ADR-0029 |
+| F2 | What should happen when an edit removes an attribute that X extensions point to? | As F1: needs the options and their consequences for editing, for vendors' extensions, and for §9.5.14's "preserve it". | INT-022; L1-WRT-003; ADR-0029 |
+| F3 | Should the reader suggest `:` where `=` was typed, as in Chapter 6's own `G\DSI\N=18;`? | As F1: needs the options and the risk of a suggestion that is wrong. | INT-023; `docs/TEST-DATA.md` E3 |
+| F4 | What does processing the TMATS setup record give the rest of Chapter 10 processing — `irig106-core`, `irig106-decode`, and the other consumers? | "When I am processing a CH.10 file what do I expect processing the TMATS packet to provide to the other parts of the processing … We need to document this in great detail." (2026-09-26) | A new detailed document (plan pending the owner's review) |
 
 ## Work for other repositories
 

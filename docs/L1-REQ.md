@@ -546,9 +546,9 @@ requirements are added. The requirement entries below and the generated
 
 ### L1-WRT-003
 
-**Statement**: The library SHALL provide edits — set, insert, remove, and renumber — that leave every byte outside the edited attributes unchanged and that keep X-group links intact through renumbering.
+**Statement**: The library SHALL provide edits — set, insert, remove, and renumber — that leave every byte outside the edited attributes unchanged and that keep X-group links intact through renumbering; each edit SHALL name its target by an item ID bound to one document revision or by code name, and a set of edits SHALL be rejected as a whole, with a finding naming the edits and items involved, when two edits touch the same bytes or item, an item ID belongs to another revision, a code name matches several items and the edit names neither one of them nor every occurrence, or a renumbering targets an index in use that the same set does not vacate.
 
-**Rationale**: UC-10; ADR-0007, ADR-0008. Delivered in 0.5.
+**Rationale**: UC-10; ADR-0007, ADR-0008. The target rules make every edit's effect defined (team review T7; ADR-0029). The case of removing an attribute that X extensions point to is open (follow-up F2). Delivered in 0.5.
 
 **Verification Method**: Test (T)
 
@@ -570,9 +570,17 @@ requirements are added. The requirement entries below and the generated
 
 ### L1-WRT-006
 
-**Statement**: The library SHALL generate a document from a channel inventory whose content passes validation for the selected edition, reporting what the caller must still supply rather than inventing it.
+**Statement**: The library SHALL generate a document from a channel inventory; when the inventory supplies every input the selected edition requires, the document SHALL pass validation for that edition, and otherwise the library SHALL return an incomplete draft together with a finding for each missing input, SHALL NOT present the draft as valid, and SHALL NOT invent values.
 
-**Rationale**: UC-13; the prototype's generator produced output that failed its own validator and wrote numeric codes where Chapter 9 requires keywords. Delivered in 0.5.
+**Rationale**: UC-13; the prototype's generator produced output that failed its own validator and wrote numeric codes where Chapter 9 requires keywords. Output cannot both be valid and leave required information unspecified (team review T7; ADR-0029). Delivered in 0.5.
+
+**Verification Method**: Test (T)
+
+### L1-WRT-007
+
+**Statement**: The library SHALL apply a set of edits as one transaction: it SHALL validate the whole set, including that new code names parse and new values contain no semicolon; apply it atomically as a new revision, leaving the original unchanged and changing nothing if any part fails; rebuild the derived state the edits affect; and verify the result by re-reading the emitted bytes.
+
+**Rationale**: Partial or unverified edits would leave documents in states no one chose (team review T7; ADR-0029). Delivered in 0.5.
 
 **Verification Method**: Test (T)
 
@@ -590,9 +598,9 @@ requirements are added. The requirement entries below and the generated
 
 ### L1-SUM-002
 
-**Statement**: The library SHALL verify an embedded `G\SHA` value and report whether it matches, does not match, is absent, names an unknown algorithm, or is malformed.
+**Statement**: The library SHALL verify an embedded `G\SHA` value and report whether it matches, does not match, is absent, names an unknown algorithm, or is malformed; it SHALL recognise the `G\SHA` code name in any letter case and never inside another item's value, SHALL report an item with no following semicolon as an error with the status malformed, and SHALL report upper-case hexadecimal digits that otherwise match as a match with a warning.
 
-**Rationale**: UC-15; ADR-0014. Delivered in 0.1.
+**Rationale**: UC-15; ADR-0014. The excluded range ends at "the following semicolon" (Table 9-2), TMATS is not case sensitive (§9.4.2), and the digest is "64 lower-case hexadecimal characters" (Chapter 6 §6.2.3.11 f) (team review T7; ADR-0029; INT-018 to INT-020). Two or more `G\SHA` items are open (follow-up F1). Delivered in 0.1.
 
 **Verification Method**: Test (T)
 
@@ -601,6 +609,14 @@ requirements are added. The requirement entries below and the generated
 **Statement**: The library SHALL compute the irig106.org flex signature exactly as `irig106lib` defines it, and SHALL identify it as non-standard wherever it is presented.
 
 **Rationale**: Compatibility with `igDisplayTMATS`; not part of IRIG 106 (UC-16; ADR-0014). Delivered in 0.1.
+
+**Verification Method**: Test (T)
+
+### L1-SUM-004
+
+**Statement**: The library SHALL stamp `G\SHA` only as the last step of an edit transaction, computing the digest over the final emitted bytes outside the `G\SHA` item — including any separator or line break written with the item — and SHALL verify the stamped result.
+
+**Rationale**: Only the text from `G\SHA` through the following semicolon is excluded (Table 9-2; Chapter 6 §6.2.3.11 f), so a digest computed before a line break is inserted would not verify (team review T7; ADR-0029). Delivered in 0.1.
 
 **Verification Method**: Test (T)
 

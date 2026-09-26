@@ -16,6 +16,7 @@ Hand-authored SVG diagrams of the architecture, embedded in
 | `document-model.svg` | One buffer, spans, keys, index, and the byte range the `G\SHA` digest covers |
 | `link-graph.svg` | The Chapter 9 §9.5.1 b ties between groups, labelled with the value that carries each, and the H group's one tie to G (§9.5.12) |
 | `link-resolution.svg` | How one link resolves: case-folded match, the channel-type selector, resolved / ambiguous (all candidates listed) / unresolved, and keys unique per attribute (P and D data-link names equal by design) |
+| `edit-transaction.svg` | An edit set as one transaction (validate, apply atomically, rebuild, verify; any rejection refuses the whole set) and the stamp hashing the final bytes outside the `G\SHA` item; open follow-ups F1–F3 |
 | `edits-and-checksum.svg` | An edit as a patch, byte-faithful output, and `G\SHA` reported stale and stamped only on request |
 
 ## Conventions

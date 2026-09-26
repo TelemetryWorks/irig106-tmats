@@ -17,9 +17,11 @@ listed here.
 - **Sources** are quoted verbatim from the archived standard
   (`TelemetryWorks/rcc-106-standards`), with edition, table or section, and
   page where it helps. Baseline: 106-24R1 unless stated.
-- **Design** is the owner's decision on the behaviour: `accepted` or
+- **Design** is the owner's decision on the behaviour: `accepted`,
   `suspect` (accepted but held in doubt until checked against real data —
-  `docs/ROADMAP.md`, "Suspect findings").
+  `docs/ROADMAP.md`, "Suspect findings"), or `open` (no behaviour chosen;
+  an owner follow-up in `docs/ROADMAP.md`, "Follow-ups for the owner" — the
+  implementation must not choose one).
 - **Review** is ADR-0022's two-person rule for the executable
   interpretation: an author and a different reviewer, both people; tooling
   or AI drafting counts as neither. Until both are recorded the review is
@@ -374,5 +376,115 @@ listed here.
 **Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T6
 
 **Test**: `missing_g106_falls_back_to_rccver_edition_labelled`
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+## Edits and the checksum
+
+### INT-018
+
+**Title**: `G\SHA` is recognised in any letter case, and never inside a value
+
+**Sources**:
+- §9.4.2: "For alphanumeric data items, including keywords, either upper or lower case is allowed; TMATS is not case sensitive."
+- Chapter 6 §6.2.3.11 f: "If the TMATS includes a G\SHA code name, all text between the "G\SHA" and the following semicolon, inclusive, shall be discarded for the purposes of digest calculation."
+
+**Behaviour**: The excluded range starts at a `G\SHA` **code name** — the start of an attribute, in any letter case (`g\sha`, `G\sha`) — and never at the same characters inside another attribute's value, such as a comment.
+
+**Reason**: The standard speaks of the code name; `irig106lib`'s substring search treats text in a value as the item (defect D6).
+
+**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T7
+
+**Test**: `g_sha_code_name_in_any_case_and_not_in_values`
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+### INT-019
+
+**Title**: A `G\SHA` item with no following semicolon
+
+**Sources**:
+- Table 9-2: "except the characters from "G\SHA:" to the following ";" (inclusive)".
+- Chapter 6 §6.2.3.11 f: "all text between the "G\SHA" and the following semicolon, inclusive".
+
+**Behaviour**: An error. Verification reports "malformed" and never "match"; a suggested edit adds the terminator. No digest is presented as the document's checksum.
+
+**Reason**: Without a following semicolon the excluded range is undefined, so any digest would rest on a guess.
+
+**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T7
+
+**Test**: `unterminated_g_sha_is_malformed`
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+### INT-020
+
+**Title**: Upper-case hexadecimal in a `G\SHA` value
+
+**Sources**:
+- Chapter 6 §6.2.3.11 f: "The message digest is a string of 64 lower-case hexadecimal characters, prefixed with the constant string "2-"".
+- Table 9-2: "SHA2-256 shall be represented as "2-" followed by 64 hex characters." "Range: integer followed by "-" followed by hex characters".
+
+**Behaviour**: A value whose digits match the computed digest except for letter case is reported as a match with a warning that Chapter 6 requires lower case. A stamp always writes lower case.
+
+**Reason**: Table 9-2 allows hex characters without a case; Chapter 6 fixes lower case; §9.4.2 makes letter case insignificant.
+
+**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T7
+
+**Test**: `upper_case_g_sha_matches_with_warning`
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+### INT-021
+
+**Title**: Two or more `G\SHA` items in one document
+
+**Sources**:
+- Table 9-2 and Chapter 6 §6.2.3.11 f (quoted in INT-018 and INT-019) speak of one item: "If the TMATS includes a G\SHA code name".
+- Table 9-2: the code name `G\SHA` carries no index.
+
+**Behaviour**: **Open — owner follow-up F1.** No behaviour is chosen until the owner decides; the implementation must not pick one.
+
+**Reason**: The standard does not say which item, if any, holds the checksum, or which text is excluded, when there are several.
+
+**Design**: open (follow-up F1, 2026-09-26) · **Review**: pending · **Origin**: T7
+
+**Test**: `duplicate_g_sha_items` (written once F1 is decided)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+### INT-022
+
+**Title**: Removing an attribute that X extensions point to
+
+**Sources**:
+- §9.5.14: "If the file is being edited by a TMATS editor, it would notice the association and preserve it even if the editor doesn't know what the code means. Thus if the measurements were re-numbered and the index was 1-5 instead of 1-2, the extension code could be updated to preserve the link."
+- §9.5.14: "The "x" values must match the index of the original code word therefore no new values may be added."
+
+**Behaviour**: **Open — owner follow-up F2.** No behaviour is chosen until the owner decides.
+
+**Reason**: The standard covers renumbering the original, not removing it.
+
+**Design**: open (follow-up F2, 2026-09-26) · **Review**: pending · **Origin**: T7
+
+**Test**: `removing_an_extended_attribute` (written once F2 is decided)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+### INT-023
+
+**Title**: `=` typed where `:` belongs, as in Chapter 6's own example
+
+**Sources**:
+- Chapter 6 §6.2.3.11 (106-24R1), `.TMATS WRITE` and `.TMATS READ` examples: "G\DSI\N=18;".
+- §9.4.2: attributes are written "CODE:value;".
+
+**Behaviour**: **Open — owner follow-up F3.** Reading follows §9.4.2 regardless: with no colon the item is reported as a missing delimiter (L1-READ-003) and kept exactly. Whether to also offer a suggested edit replacing `=` by `:` is not decided.
+
+**Reason**: The standard's own example uses the form, so real files may too; a suggestion could help or could mislead.
+
+**Design**: open (follow-up F3, 2026-09-26) · **Review**: pending · **Origin**: T7
+
+**Test**: `chapter_6_example_equals_sign_is_missing_delimiter`
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
