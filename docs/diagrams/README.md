@@ -1,8 +1,8 @@
 # Diagrams
 
 Hand-authored SVG diagrams of the architecture, embedded in
-`docs/ARCHITECTURE.md`. Each one shows one mechanism; the caption beside it in
-`ARCHITECTURE.md` states the claim.
+`docs/ARCHITECTURE.md` and `docs/TMATS-IN-CHAPTER-10.md`. Each one shows one mechanism; the caption beside it
+states the claim.
 
 | File | Shows |
 |------|-------|
