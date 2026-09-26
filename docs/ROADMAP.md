@@ -127,6 +127,70 @@ regular expression, line breaks as insignificant between attributes, one
 mission configuration per document, and the D-group location types and
 subframes removed as of 106-11 as an edition delta.
 
+### Team design review (in progress)
+
+The team reviewed `docs/ARCHITECTURE.md`, the ADRs, and `docs/L1-REQ.md`
+against 106-24R1 Chapter 9 (Appendices 9-A to 9-F) and Chapters 6 and 11.
+Their summary: keep the lossless document, owned byte buffer, generated
+registry, explicit edits, and library/CLI separation; the main gaps are in
+semantic validation, appendix coverage, and setup-record handling. They
+raised seven priorities plus further comments; the text is recorded verbatim
+in `docs/research/2026-09-26-team-design-review.md`. Each priority is
+checked against the archived standard, mapped to the existing documents and
+the coverage items above, and planned here. Items are added as they arrive.
+
+**T1. Make the registry an executable specification, with reviewed
+interpretations.** Confirmed against 106-24R1: `C-d\DPNO` has its default
+only in prose ("Default is 1.", Table 9-11; the chapter has 107 `Default:`
+fields and further prose-only defaults), and `G\106` is "Required when:
+Always" (Table 9-2), which a pass over present attributes cannot report
+missing. Also found: `C-d\DPNO`'s condition names `C\DCT` without an index,
+so the occurrence it refers to needs an explicit interpretation. Mapping:
+strengthens ADR-0004, ADR-0006, the registry requirement (L1-REG-002), and
+the validation requirements (L1-VAL-001/002); overlaps coverage item 1;
+nothing conflicts. Plan:
+
+1. *Two layers per registry entry.* A **source layer** holding the table row
+   exactly as printed (parameter, code name, usage-attribute text, definition
+   prose) with its citation, produced by the table extractor and never edited
+   by hand; and an **interpretation layer** holding reviewed, executable
+   rules — conditions in a small defined condition language, the default and
+   where it came from (Default field or prose), typed ranges, links — with
+   reviewer, review date, and a note wherever the interpretation is not
+   literal. A CI check requires every source row to have an interpretation or
+   an explicit "not yet interpreted" status; each interpretation stores a
+   hash of its source text so a changed row (for example in a new edition) is
+   flagged for re-review.
+2. *Condition semantics, defined once in a new ADR:* occurrence scope (same
+   occurrence, linked occurrence, or document-wide, declared per rule);
+   whether a condition follows a link; a missing or invalid dependency makes
+   the condition "cannot evaluate", reported as its own finding, never
+   silently true or false; whether conditions see defaulted values, declared
+   per rule.
+3. *Four validation passes* replacing ADR-0006's single pass: present
+   attributes (known, allowed, range and type); presence (Required-when and
+   R/R Ch 10 Status per applicable occurrence — this detects a missing
+   `G\106`); counters and index contiguity; relationships (links resolve,
+   keys unique). Each finding names its pass.
+4. *Effective values* without changing the document: explicit (value and
+   location), defaulted (value and citation), missing, invalid (raw text and
+   reason), or ambiguous (for example, conflicting duplicates). Defaults are
+   never inserted into the stored bytes (ADR-0002).
+5. *Proof and tests:* the completeness check (coverage item 1) also covers
+   prose defaults; every reviewed interpretation has tests; the first
+   regression tests are "`G\106` absent is reported" and "`C-d\DPNO` absent
+   is defaulted to 1".
+
+Documents affected: two new ADRs (two-layer registry with condition
+semantics; validation passes and effective values). ADR-0006 keeps its
+decision — registry-driven validation with severity policy and user rules —
+and its status line becomes "mechanism superseded by" the new validation
+ADR, following the rule that records are superseded, not rewritten;
+ADR-0004 gains a similar pointer. L1-REG-002 is strengthened, and new L1
+requirements cover missing-required detection and effective values.
+**Owner decision needed:** who reviews interpretations (the owner, the team,
+or a two-person rule) — this review is the registry's quality gate.
+
 ## Planned releases
 
 | Version | Theme | Scope |

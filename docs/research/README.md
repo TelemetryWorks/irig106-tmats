@@ -18,3 +18,4 @@ dated record.
 | [2026-09-25-prototype-review.md](2026-09-25-prototype-review.md) | The three-reviewer audit of the prototype (tag `prototype-0`), verbatim, and what was confirmed independently |
 | [2026-09-25-editions-and-extensibility.md](2026-09-25-editions-and-extensibility.md) | IRIG 106 editions and Chapter 9 changes, multi-edition support, extensibility, performance, repair-as-suggestions; the Chapter 9 text relied on |
 | [2026-09-25-irig106org-tools.md](2026-09-25-irig106org-tools.md) | `igDisplayTMATS`, `idmptmat`, `irig106lib`: the owner's `CONVERSATION.md` verbatim, what was verified, what "TMATS signatures" are, defects found |
+| [2026-09-26-team-design-review.md](2026-09-26-team-design-review.md) | The team's design review of the architecture, ADRs, and L1, verbatim (items appended as they arrive) |
