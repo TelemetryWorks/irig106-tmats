@@ -14,7 +14,7 @@
 | 1. What `irig106-tmats` is for | **draft for review** |
 | 2. Where TMATS sits in Chapter 10 processing | **draft for review** |
 | 3. What the description answers, question by question | **draft for review** |
-| 4. Contracts per consumer | to be written |
+| 4. Contracts per consumer | **draft for review** |
 | 5. Configuration over a recording | to be written |
 | 6. When TMATS is missing, wrong, or disagrees with the data | to be written |
 | 7. A worked example: Appendix 9-C from channel to engineering units | to be written |
@@ -542,3 +542,151 @@ of a recording has asked for them yet; section 4 notes where they matter
 (for example, the M group's baseband and subcarrier measurement names). V
 and X attributes attach to their groups (ADR-0008); H attributes other than
 `H\TA` and `H\ST-n` are organisation-defined (ADR-0027).
+
+---
+
+## 4. Contracts per consumer
+
+A contract here says what a consumer **gives** the library, what it **gets**
+back (by the questions of section 3), what it **must not do** itself, and
+**from which release** each part is available (the release named in each
+L1 requirement). The contracts name data, not Rust signatures: the API is
+designed with the L2 requirements. Changes a consumer's own code needs are
+recorded in that consumer's repository, not here (owner direction,
+2026-09-26).
+
+### 4.1 Rules for every consumer
+
+1. **Do not parse TMATS yourself.** Hand the bytes to the library and use its
+   answers; every interpretation the standard leaves open is decided once,
+   in `docs/INTERPRETATIONS.md`.
+2. **Find setup records by data type `0x01`, never by channel ID alone.**
+   Channel `0x0000` also carries Format 4 streaming configuration records
+   from 106-17 (Chapter 11 §11.2.1.1 b).
+3. **Keep bytes as bytes.** Do not decode TMATS to text lossily or change
+   line endings: `G\SHA` covers the exact bytes (Table 9-2; Chapter 6
+   §6.2.3.11 f).
+4. **Do not take the edition from the wrong field.** `G\106`, the setup
+   record's RCCVER, and the packet header's data type version say different
+   things, and the last two use different code lists (section 3.9).
+5. **Respect every state.** Never pick one candidate of an ambiguous link,
+   never treat a missing value as its default unless the library says it is
+   defaulted, and pass "cannot evaluate" on rather than guessing
+   (ADR-0023, ADR-0026).
+6. **Use the description that governs the packet.** A recording can hold
+   several setup records; each packet is read with the one before it
+   (section 5).
+7. **Change TMATS only through the library's edits**, as verified
+   transactions (ADR-0007, ADR-0029).
+
+### 4.2 The joining loop
+
+Because `irig106-core` does not depend on `irig106-tmats` (ADR-0030), each
+tool that reads a recording joins them in a short loop:
+
+![The joining loop each tool writes](diagrams/joining-loop.svg)
+
+*The joining loop.* The core yields each packet as plain `irig106-types`
+data. A setup-record fragment goes to the library's assembler; when a record
+is complete its description becomes the governing one, and session findings
+(configuration changes, the event packet that must precede them, the
+channel setup records use) are reported. Every other packet is checked
+against the governing description (L1-CH10-007) and decoded with it; the
+tool then shows, indexes, or reports it. If the same loop keeps appearing in
+several tools, it moves into a crate of its own (ADR-0030, option C).
+
+### 4.3 `irig106-types` — the shared vocabulary
+
+| | |
+|---|---|
+| **Holds** | The edition (with an "unknown" value); the packet data-type codes (Table 11-4); the packet header's data-type-version codes and the setup record's RCCVER codes, as **two separate mappings**; the Format 1 CSDW layout (FRMT, SRCC, RCCVER); the setup-record fragment with its provenance; the packet summary (channel ID, data type, offset, sequence number, relative time counter) |
+| **Gets from the library** | nothing |
+| **Must not** | hold behaviour; anything beyond plain data stays in the crate that owns it (ADR-0030) |
+| **When** | before the library's 0.1 (ROADMAP X2, X7) |
+
+### 4.4 `irig106-core` — the packet reader
+
+| | |
+|---|---|
+| **Gives** | setup-record fragments with provenance, and packet summaries, as `irig106-types` data |
+| **Gets from the library** | nothing: it does not depend on `irig106-tmats` (ADR-0030) |
+| **Must** | slice each packet as ADR-0025 sets out: verify the header (and secondary-header) checksums before trusting any length; skip the 12-byte secondary header when packet-flags bit 7 is set; take the TMATS fragment as the body after the 4-byte CSDW up to Data Length, excluding filler and the data checksum |
+| **Must not** | interpret TMATS |
+| **When** | when `irig106-core` exists; until then the `tmats` CLI's minimal reader does this (ADR-0019; ROADMAP X3) |
+
+### 4.5 `irig106-decode` — values from packets
+
+| | |
+|---|---|
+| **Gives** | nothing to the library |
+| **Gets** | for each channel it decodes, from the governing description: the channel view (3.2) and its packet data type and format (3.3) — 0.2; the recorder's packing settings (3.4) — 0.2; the format definition with embedded formats (3.5) — 0.2; every measurement's locations and fragments (3.6) — 0.2; each measurement's conversion definition (3.7) — 0.2 (L1-VIEW-002); derived-parameter descriptions and the derivation graph (3.7) — 0.3 (L1-DER-001 to 005); the recording-format version (3.9) — 0.1 |
+| **Owns** | extracting values, applying conversions, evaluating derived parameters, interpreting floating-point formats (Appendix 9-D) (ADR-0024; NR-007; ROADMAP X6) |
+| **Must not** | re-resolve links or re-read attributes from the TMATS text; decode a channel whose format link is unresolved or ambiguous without saying so |
+
+### 4.6 `irig106-time` — time correlation
+
+| | |
+|---|---|
+| **Gives** | nothing to the library |
+| **Gets** | the time channels with `R-x\TTF-n`, `R-x\TFMT-n`, `R-x\TSRC-n` (3.8) — 0.2; each channel's secondary-header time format `R-x\SHTF-n` (3.2) — 0.2; the measurements that are PCM, network, or 1553 time words (3.7, 3.8) — 0.2; each setup record's recording-format version as declared (3.9) — 0.1 (L1-EDN-005) |
+| **Must not** | map RCCVER to an edition itself (the mapping lives in `irig106-types`; ROADMAP X1, X2); read an edition from the packet header's data type version as if it were RCCVER |
+
+### 4.7 `irig106-ch10-reader` — structural summary of a recording
+
+| | |
+|---|---|
+| **Gives** | setup-record fragments (from its own reader, or from `irig106-core` when it exists) |
+| **Gets** | per setup record: the CSDW summary — format, configuration-change bit, version (L1-CH10-002) — and the assembly and session findings (L1-CH10-004, 005) — 0.1; the edition declarations (L1-EDN-005) and `G\SHA` status (L1-SUM-002) — 0.1; the channel summary (L1-VIEW-002) and the packet check (L1-CH10-007) — 0.2 |
+| **Must not** | decide that TMATS is present, or how large it is, from the first channel-0 packet alone (ROADMAP X4) |
+
+### 4.8 `irig106-studio` — visualisation
+
+| | |
+|---|---|
+| **Gives** | setup-record fragments, as the joining loop's first step |
+| **Gets** | each setup record's raw bytes, unchanged (L1-WRT-001) — 0.1; the edition declarations and checksum status (3.9) — 0.1; channel labels and data-source grouping from the channel views (3.1, 3.2) — 0.2; format, measurement, and conversion views for display (3.5–3.7) — 0.2; validation findings — 0.3; values through `irig106-decode` |
+| **Can rely on** | a library that performs no I/O (L1-IO-001) |
+| **Open** | whether the library is guaranteed to build for WebAssembly, which studio's browser build needs (ROADMAP follow-up F6) |
+| **Its changes** | recorded in `irig106-studio`, `docs/TMATS-ISSUES.md` |
+
+### 4.9 `irig106-index` — catalogues for search
+
+| | |
+|---|---|
+| **Gets** | per setup record: the channel catalogue (3.2) and the measurement-name catalogue with each name's channel, format, and conversion (3.6, 3.7), each with the provenance of the setup record — 0.2; which packets each setup record governs (section 5) |
+| **Must** | key every catalogue by setup record: a recording's configuration can change (section 5) |
+
+### 4.10 `irig106-cli` — the ecosystem's command line
+
+| | |
+|---|---|
+| **Gets** | the `tmats` commands, by mounting `irig106-tmats-cli`'s library — the whole command set through its `run` entry point, or individual commands and renderers (ROADMAP "Workspace layout and a reusable CLI library", W3) |
+| **Writes** | the joining loop for commands that span several crates (4.2) |
+| **Must not** | re-implement a `tmats` command |
+
+### 4.11 `irig106-write` — producing recordings
+
+| | |
+|---|---|
+| **Gives** | a channel inventory, or edits to an existing document |
+| **Gets** | TMATS that validates for the selected edition, or an incomplete draft with a finding for each missing input (L1-WRT-006); the stamped setup-record payload — CSDW and body (L1-CH10-003, L1-SUM-004) — 0.5 |
+| **Must** | split a record larger than one packet across consecutive packets whose "sequence counter shall increment in the order of segmentation of the setup record, n+1"; on a configuration change, set SRCC and insert the configuration-change event packet first; put setup records on channel `0x0000` from 106-17 (Chapter 11 §11.2.1.1, §11.2.7.2) |
+| **Must not** | edit TMATS text or compute `G\SHA` itself |
+
+### 4.12 The `tmats` CLI in this repository
+
+It is a consumer like the others: it reads files, slices packets with its
+minimal reader until `irig106-core` exists (ADR-0019), writes the joining
+loop for the commands that need it, and presents the library's answers
+(`docs/CLI.md`). It is organised as a reusable library so that
+`irig106-cli` can mount it (4.10).
+
+### 4.13 Open points from this section
+
+- **F6 — WebAssembly.** Studio's browser build compiles its Rust core to
+  WebAssembly. ADR-0015 moved WASM *bindings* out of the library; whether
+  the plain library must also **build** for a WebAssembly target — kept true
+  by a CI check — is for the owner (ROADMAP follow-up F6).
+- **Release order against need.** Decoding needs the 0.2 views; studio and
+  ch10-reader get useful answers from 0.1. Section 8 checks the release plan
+  against these contracts.
