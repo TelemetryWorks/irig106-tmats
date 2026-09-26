@@ -136,3 +136,10 @@ no `idmptmat`-compatible mode (semantic comparison only); JSON schema in
 `docs/schema/` with a `schema_version` field, breaking changes are breaking
 releases; `cargo-dist` for release binaries. Recorded in: `docs/CLI.md`
 (section 5), `docs/RELEASING.md`, `docs/PROJECT_STRUCTURE.md`.
+
+## 13. Who reviews registry interpretations (2026-09-26)
+
+> Two-person rule for interpretation reviews
+
+Recorded in: `docs/ROADMAP.md` ("Team design review", T1): an author and an
+independent reviewer, both people, enforced by the registry CI check.

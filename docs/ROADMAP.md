@@ -188,8 +188,13 @@ and its status line becomes "mechanism superseded by" the new validation
 ADR, following the rule that records are superseded, not rewritten;
 ADR-0004 gains a similar pointer. L1-REG-002 is strengthened, and new L1
 requirements cover missing-required detection and effective values.
-**Owner decision needed:** who reviews interpretations (the owner, the team,
-or a two-person rule) — this review is the registry's quality gate.
+**Decided (owner, 2026-09-26): a two-person rule for interpretation
+reviews.** Every interpretation records two different people: its author and
+an independent reviewer. An interpretation drafted with tooling or an AI
+assistant still needs both people; the tool counts as neither. The CI check
+from step 1 enforces it: an interpretation whose author and reviewer are
+missing or identical fails, and a re-review after a source change needs both
+again.
 
 ## Planned releases
 
