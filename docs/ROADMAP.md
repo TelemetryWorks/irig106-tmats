@@ -55,10 +55,93 @@ Produced in this order, each reviewed before the next begins:
 ### Decisions
 
 Decisions taken so far are recorded in `docs/adr/` (index in
-`docs/adr/README.md`). Still to decide: whether `irig106-cli` mounts the
-`tmats` commands directly, which would mean `irig106-tmats-cli` also exposes
-its command implementations as a library under the same lockstep and semver
-rules (ADR-0011).
+`docs/adr/README.md`). `irig106-cli` will mount the `tmats` commands through
+a library in `irig106-tmats-cli` rather than duplicating them (owner
+direction, 2026-09-26); how that crate and the repository are organised is
+proposed in the next section.
+
+### Workspace layout and a reusable CLI library (proposal)
+
+**Owner direction (2026-09-26):** "make the irig106-tmats-cli code to be a
+library we will be able to pull into the greater irig106-cli so we are not
+dumplicating code … we need to make sure we architect and organize the
+irig106-tmats-cli correctly … we should not have a src folder and a
+irig106-tmats-cli folder. This should be structured differently."
+
+**Today.** The repository root is both the workspace and the library
+package: the prototype's `src/`, `tests/`, `benches/`, `data/`, and
+`build.rs` sit beside `irig106-tmats-cli/`, a binary-only crate whose
+`src/main.rs` is a scaffold. One crate is nested inside the other's
+directory, the prototype and the new work share the root, and nothing in
+the CLI can be reused.
+
+**Proposed layout** — a virtual workspace with every crate under `crates/`:
+
+```
+irig106-tmats/                  repository and workspace root (no package)
+├── Cargo.toml                  [workspace] members = ["crates/*"]; [workspace.package] (one version)
+├── Cargo.lock
+├── crates/
+│   ├── irig106-tmats/          the library: src/, tests/, benches/, README.md
+│   └── irig106-tmats-cli/      the CLI library and the `tmats` binary
+│       ├── src/lib.rs          reusable: commands, report models, renderers, argument table
+│       ├── src/main.rs         `tmats`: parse argv, run, print, exit — a few lines
+│       └── tests/
+├── fuzz/                       excluded from the workspace
+├── docs/  scripts/  .github/   shared by both crates
+├── README.md  CHANGELOG.md  CLAUDE.md  AGENTS.md  LICENSE
+```
+
+Why: each crate is a sibling with its own directory and README; the root
+holds only what the repository shares (the workspace manifest, docs,
+scripts, CI, the changelog); `cargo publish --workspace` and lockstep
+versioning (ADR-0011) work unchanged; and it is the layout `irig106-cli` and
+the other `irig106-*` repositories can copy.
+
+**Proposed shape of `irig106-tmats-cli`** — one crate with a library target
+and a binary target, so `cargo install irig106-tmats-cli` still installs
+`tmats` and `irig106-cli` depends on the same crate for the library:
+
+| Module | Holds | Reused by `irig106-cli` |
+|--------|-------|-------------------------|
+| `args` | the table-driven parser (ADR-0013) and a public table of the `tmats` commands and flags, so a host CLI can mount them under its own prefix (for example `irig106 tmats show`) | yes |
+| `input` | reading files, detecting a recording or TMATS text by content, and the minimal packet reader (ADR-0019) until `irig106-core` exists — the only module that touches the file system | yes |
+| `commands` | one function per command (`show`, `extract`, `checksum`, `verify`, `stamp`, `validate`, `diff`), taking options and input and returning a report; no printing | yes |
+| `report` | the typed report models — the source of the versioned JSON schema (`docs/CLI.md`) | yes |
+| `render` | plain-text and JSON renderers writing to any `std::io::Write` | yes |
+| `run` | one entry point, `run(args, stdout, stderr) -> exit code`, that ties the above together | yes, for mounting the whole command set |
+| `main.rs` | calls `run` with the process's arguments and streams | no |
+
+Rules that keep it reusable: no `std::process::exit` or direct printing
+outside `main.rs`; every command testable without a process; exit codes and
+usage errors as values; the library API is public and follows semver in
+lockstep with `irig106-tmats` (ADR-0011).
+
+**What the move touches:** the root and crate manifests (paths, `readme`,
+`include`), `irig106-tmats-cli`'s path dependency, `scripts/build-trace-matrix.py`
+(source roots), CI (paths, the lockstep and publish dry-run jobs), cargo-dist
+configuration, `fuzz/` (its path dependency), `docs/PROJECT_STRUCTURE.md`,
+`CLAUDE.md` (commands), `docs/CLI.md`, `docs/RELEASING.md`, and a new ADR.
+The published crate names and the `tmats` binary name do not change.
+
+**Decisions needed from the owner:**
+
+- W1. The layout above — a virtual workspace with `crates/irig106-tmats` and
+  `crates/irig106-tmats-cli`. Alternative: a separate `tmats` binary crate
+  (three crates) instead of one crate with both targets; not recommended,
+  because it adds a published crate without adding reuse.
+- W2. The prototype. Moving it into `crates/irig106-tmats` carries code the
+  redesign replaces; removing it now (it stays at tag `prototype-0`, and
+  ADR-0001 already decided the rebuild) leaves the library crate a clean
+  placeholder until its first code. Recommended: remove it in the same
+  change.
+- W3. How `irig106-cli` mounts the commands: through `run` (the whole
+  `tmats` command set as a subcommand) or through `commands` and `render`
+  (picking commands into its own structure). Recommended: offer both, as
+  the table above does, and let `irig106-cli`'s design choose.
+
+**When:** a single change of its own, after `docs/TMATS-IN-CHAPTER-10.md`
+and before the first new library code, with CI green before and after.
 
 ## Specification coverage plan
 
@@ -809,6 +892,64 @@ owner decides; the decision is then recorded in
 | F3 | Should the reader suggest `:` where `=` was typed, as in Chapter 6's own `G\DSI\N=18;`? | As F1: needs the options and the risk of a suggestion that is wrong. | INT-023; `docs/TEST-DATA.md` E3 |
 | F5 | Does `irig106-core` depend on `irig106-tmats`, or do the tools join them? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 1.6; proposal in section 2.4 (core stays structural and independent; checking packets against TMATS belongs to the layer holding both) awaits the owner. | `docs/TMATS-IN-CHAPTER-10.md` section 2.4; ROADMAP X3 |
 | F4 | What does processing the TMATS setup record give the rest of Chapter 10 processing — `irig106-core`, `irig106-decode`, and the other consumers? | "When I am processing a CH.10 file what do I expect processing the TMATS packet to provide to the other parts of the processing … We need to document this in great detail." (2026-09-26) | `docs/TMATS-IN-CHAPTER-10.md` — outline approved 2026-09-26; sections 1 and 2 drafted for review |
+
+**F5 broken down** (owner direction, 2026-09-26: "break down F5 so I can
+answer").
+
+*What `irig106-core` is.* Its crate description is "structural traversal and
+packet parsing": walk a recording packet by packet, check headers and
+checksums, and hand out each packet's header and body. It is a placeholder
+today.
+
+*The work in question.* Reading a recording well needs a check that no one
+has placed yet: comparing the packets against the setup record that governs
+them. For example — a packet on a channel the setup record does not list; a
+packet whose data type differs from its channel's `R-x\CDT-n`; data on a
+channel marked disabled (`R-x\CHE-n`); data packets before any setup record;
+a configuration change (SRCC) without the event packet that must precede it
+(Chapter 11 §11.2.7.2). The question is where that check lives, and
+therefore whether `irig106-core` must be built with `irig106-tmats` inside
+it.
+
+*Option A — `irig106-core` does not depend on `irig106-tmats`* (proposed in
+`docs/TMATS-IN-CHAPTER-10.md` section 2.4).
+- Core stays a fast structural reader, usable when the TMATS is missing,
+  damaged, or not wanted, and quick to build.
+- Core still serves `irig106-tmats`: it produces the setup-record fragments
+  (ROADMAP X3) as plain data.
+- The check lives in `irig106-tmats` as a function that takes a plain
+  summary of the packets (channel ID, data type, offset, sequence) and the
+  description, and returns findings. The tools (`irig106-cli`, studio,
+  ch10-reader, index) call it.
+- Consequence: every tool must remember to call the check; a shared helper
+  reduces that to one line.
+
+*Option B — `irig106-core` depends on `irig106-tmats`.*
+- Core builds the description while it reads and checks each packet as it
+  goes: one call gives a checked stream.
+- Consequence: core cannot be built or used without the TMATS library and
+  its registry tables; every user of core pays for them; core's releases
+  wait on `irig106-tmats`'s; and a structural reader starts making
+  configuration judgements, which blurs the line between the two crates.
+
+*Option C — a third crate joins them.* A small crate (for example a
+"recording session" crate) depends on `irig106-core` and `irig106-tmats`
+(and later `irig106-decode`) and offers one API: packets paired with the
+description that governs them, already checked.
+- One place for the check and for "which setup record governs this packet"
+  (`docs/TMATS-IN-CHAPTER-10.md` section 5), with core and the TMATS library
+  both independent.
+- Consequence: one more crate to design, version, and publish.
+
+*What each answer changes.* A: X3 as written; a checking function and its
+L1 requirement here; section 4 contracts say which tool calls it. B: X3
+grows (core takes a dependency and the check); `irig106-core`'s placeholder
+design changes; this library must keep its API stable for core. C: a new
+repository or crate enters the ecosystem plan; sections 4 and 5 point to
+it.
+
+*Recommendation:* A now — it decides nothing that C cannot build on later —
+and revisit C if the tools start repeating the same joining code.
 
 **Plan for F4.** Input: the survey of the other repositories
 (`docs/research/2026-09-26-consumer-survey.md`) — no repository yet states

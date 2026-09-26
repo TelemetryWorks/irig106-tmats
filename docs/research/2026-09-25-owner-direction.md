@@ -317,3 +317,14 @@ committed in that repository locally, not pushed. In this repository the
 studio details were replaced by pointers (the consumer survey, UC notes,
 ROADMAP X5, the F4 plan, `docs/TMATS-IN-CHAPTER-10.md`). This supersedes
 entry 17's "Don't touch the other projects" for notes the owner directs.
+
+## 25. The CLI as a reusable library; the workspace layout; F5 explained (2026-09-26)
+
+> Do not push studio chnage. break down F5 so I can answer. Also, I am thinking we should make the irig106-tmats-cli code to be a library we will be able to pull into the greater irig106-cli so we are not dumplicating code. This means however that we need to make sure we architect and organize the irig106-tmats-cli correctly.  Also in irig106-tmats we should not have a src folder and a irig106-tmats-cli folder. This should be structured differently. Make a suggestion for this. Add all this to the roadmap since we do not want to interfer with the documentation you are currently working on.
+
+The studio commit stays local. Recorded in `docs/ROADMAP.md` only, so the
+work on `docs/TMATS-IN-CHAPTER-10.md` is not disturbed: "Workspace layout and
+a reusable CLI library" (a proposal with the decisions it needs) and the
+breakdown of follow-up F5. The earlier open question in the ROADMAP's
+"Decisions" — whether `irig106-cli` mounts the `tmats` commands — is answered
+by this direction: it does, through `irig106-tmats-cli`'s library.
