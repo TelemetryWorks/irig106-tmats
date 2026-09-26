@@ -73,3 +73,16 @@ arrive.
 >
 > Sources: Chapter 9 §§9.4.2, 9.5.1, 9.5.14; Tables 9-6 and 9-7 (https://www.irig106.org/docs/106-24R1/chapter9.pdf). Affected requirement: L1-VAL-002
 > (/C:/Users/Joey/Documents/GIT-GitHub/telemetryworks/irig106-tmats/docs/L1-REQ.md:278).
+
+## Priority 5 (verbatim)
+
+> 5. Record standards inconsistencies instead of assuming tables are mechanically complete.
+>
+> There is a concrete example in the baseline: Table 9-4’s R-x\CDLN-n target list omits Q, but Table 9-10’s Q-d\DLN explicitly links from R-x\CDLN; §9.5.1(b) also describes the R-to-Q relationship.
+> Generating links from only the recorder-side list would miss valid Q links.
+>
+> Keep an interpretation register containing the conflicting citations, the chosen behavior, and a focused test. Generate relationships from reviewed definitions considering both directions.
+>
+> Also correct the architecture’s statement that H-group relationships will be added when its tables are transcribed: §9.5.12 defines only H\TA and H\ST-n, reserving the remaining structure for
+> organizations. There is no comprehensive standard H table waiting to be imported. Sources: Chapter 9 Tables 9-4/9-10 and §9.5.12 (https://www.irig106.org/docs/106-24R1/chapter9.pdf); architecture
+> link-graph description (/C:/Users/Joey/Documents/GIT-GitHub/telemetryworks/irig106-tmats/docs/ARCHITECTURE.md:156).

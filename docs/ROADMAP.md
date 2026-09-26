@@ -477,6 +477,95 @@ and ADR-0023), L1-READ-004 and L1-VAL-002 revised, L1-REG-005, L1-VIEW-006,
 L1-READ-007, and `docs/TEST-DATA.md`. The erratum and L1-READ-007 stay
 suspect (below).*
 
+**T5. Record standards inconsistencies instead of assuming tables are
+mechanically complete.** Verified against 106-24R1 Chapter 9:
+
+- *R to Q*: `R-x\CDLN-n` (Table 9-4) lists "Links to: P-d\DLN, B-x\DLN,
+  S-d\DLN"; `Q-d\DLN` (Table 9-10) lists "Links from: R-x\CDLN,
+  R-x\EV\DLN-n"; §9.5.1 b (h) says "The tie from the R group to the Message
+  Data group (S) or Message Structure Definition Group (Q) is from the
+  Channel Data Link Name, Sub-Channel Name, or Network Name (R) to the Data
+  Link Name (S) or Data Link Name (Q)". `R-x\EV\DLN-n` omits Q the same way.
+- *Also found — ties that exist only in prose*: §9.5.1 b (g) and (h) name
+  the R group's sub-channel and network names as sources of ties to B, S,
+  and Q, yet `R-x\ANM-n-m` (ARINC 429), `R-x\UCNM-n-m` (UART),
+  `R-x\MCNM-n-m` (message), `R-x\ENAM-n-m` (Ethernet), and `R-x\CBM-n-m`
+  (CAN) have **no "Links" field**, and the B, S, and Q data-link names do not
+  list them under "Links from:". Reading both directions of the fields still
+  misses these ties.
+- *The standard's completeness claim does not hold*: §9.5.1 b says "All valid
+  paths are documented in "Links to:" and "Links from:" attributes"; the two
+  items above contradict it.
+- *H group*: "The only H group attributes defined in this standard are …
+  Test Item (code name H\TA) - specifies the item under test and ties the H
+  group to the G group" and "Airborne System Type (code name H\ST-n)"; the
+  rest is reserved "for those instrumentation organizations that choose to
+  use the TMATS standard in this way" (§9.5.12). §9.7 adds that IHAL was
+  adopted "to serve the purpose originally intended for the Airborne Hardware
+  Attributes (H) group …, which has never been implemented". So H has one
+  defined tie (`H\TA` to G) and no table to transcribe. The caption in
+  `docs/ARCHITECTURE.md` section 3 is wrong; coverage item 2 already has it
+  right.
+
+Mapping: extends ADR-0022 (the interpretation layer gains a register of
+inconsistencies) and ADR-0026 (link declarations gain a third source, the
+§9.5.1 b prose); corrects `docs/ARCHITECTURE.md` section 3 and the link-graph
+diagram; carries out coverage item 2 for H; no conflict. Plan:
+
+1. *An interpretation register* — one entry per place where the standard is
+   inconsistent, incomplete, or silent and the design had to choose. Each
+   entry has a permanent identifier, the conflicting citations quoted
+   verbatim, the chosen behaviour, the reason, the author and reviewer
+   (ADR-0022's two-person rule), a status (accepted, or suspect as in S1),
+   and **a focused test** that pins the behaviour. A test names its entry
+   with a doc-comment marker, and the trace-matrix script reports any entry
+   without a test.
+2. *Relationships from three sources*: "Links to:", "Links from:", and the
+   ties of §9.5.1 b. The registry generator takes the union as candidates;
+   every relationship that appears in only one source must have a register
+   entry, or the generator's CI check fails. Relationships are generated
+   only from reviewed definitions.
+3. *Extraction never assumes completeness*: the table extractor also
+   reports links that name code names not defined in any table, conditions
+   that name unknown attributes, and prose that defines an attribute outside
+   the tables (`H\TA`, `H\ST-n`). The coverage check (coverage item 1) counts
+   these, so nothing is silently dropped.
+4. *H group*: `H\TA` and `H\ST-n` are built-in, with the `H\TA` → G tie
+   (read as matching `G\TA`, a register entry); every other H attribute is
+   organisation-defined, supplied through the user overlay like V (coverage
+   item 2, ADR-0008), and preserved when no definition is given. Fix the
+   architecture caption, and add H with its one tie to the link-graph
+   diagram.
+5. *First register entries* — the inconsistencies and interpretations
+   already found, so the register starts complete:
+   R → Q from both link sources; sub-channel and network names → B, S, Q
+   (prose only, including which name reaches which group); the §9.5.1 b
+   completeness claim; `B-x\DLN` printed as "B-d\DLN" in `P-d\DLN`; the
+   channel-type selector for overlapping targets (T4); `H\TA` → G;
+   `C-d\DPNO`'s unindexed `C\DCT` (T1); unindexed counters in conditions
+   such as "D\MNF\N > 1" (T1, T4); `==` against `= =` (T2); the setup-record
+   boundary rule and RCCVER `0x0E` as "106-22 or later" (T3); the
+   Appendix 9-C colons (T4, suspect S1).
+6. *Tests*: an R channel whose data-link name matches only a Q group
+   resolves; a message sub-channel name resolves to its S group; `H\TA`
+   ties to G; an H attribute with no user definition is preserved and
+   reported as organisation-defined; a relationship present in one source
+   only is reported by the generator check.
+
+Documents affected: a new register document (for example
+`docs/INTERPRETATIONS.md`, becoming generated from the registry's
+interpretation files once they exist), a new ADR (the register and
+three-source relationship generation), ADR-0022 and ADR-0026 (status
+pointers), ARCHITECTURE (section 3 caption; a section for T5), the link-graph
+diagram (H), L1 requirements for the register and for relationships from
+all three sources, ADR-0008 and L1-EXT for H (coverage item 2),
+`scripts/build-trace-matrix.py` (register markers), and
+`docs/PROJECT_STRUCTURE.md`.
+**Owner decision needed:** whether the register starts now as a hand-written
+document that the registry later generates, or waits for the registry.
+Recommendation: start it now, seeded with the entries in step 5, so the
+findings of T1–T5 are gathered in one place before any code.
+
 ### Suspect findings to confirm against real data
 
 Findings accepted into the design but held in doubt by the owner until they
