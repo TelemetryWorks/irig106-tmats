@@ -152,6 +152,57 @@ packet between fragments 1 and 2 ends the record; a corrupted header
 checksum on fragment 2 is reported and the record is not assembled from
 untrusted lengths.
 
+### `appendix_9c_example_reports_suspected_semicolons`
+
+Verifies that the standard's own code-name example (106-24R1 Appendix 9-C) is
+read without loss and that its 18 colon-for-semicolon errata are each
+reported. Requirements: L1-READ-001, L1-READ-006, L1-READ-007. **Suspect**
+(owner, 2026-09-26): the finding and the diagnostic are held in doubt until
+checked against real recordings (`docs/ROADMAP.md`, S1).
+
+*Input* — the Appendix 9-C code-name example transcribed verbatim from the
+archived 106-24R1 Chapter 9 (Distribution A), including page C-8.
+
+*Expected*:
+
+- Exactly 18 "possible `;` typed as `:`" warnings, one at each of these
+  attributes, each with a suggested edit replacing the colon after the value
+  by `;`:
+  `D-1\MML\N-1-1`, `D-1\MNF\N-1-1-1`, `D-1\MNF\N-1-1-2`, `D-1\MML\N-1-2`,
+  `D-1\MNF\N-1-2-1`, `D-1\MML\N-1-3`, `D-1\MNF\N-1-3-1` to
+  `D-1\MNF\N-1-3-6`, `D-1\MML\N-1-4`, `D-1\MNF\N-1-4-1`, `D-2\MML\N-1-1`,
+  `D-2\MNF\N-1-1-1`, `D-2\MML\N-1-2`, `D-2\MNF\N-1-2-1`.
+- No other reading diagnostic; D-3 and D-4 (correctly delimited) produce
+  none.
+- Writing the document back reproduces the input bytes exactly.
+- Applying all 18 suggestions yields a document in which each of those
+  counters is a separate attribute with a numeric value.
+
+*Companion cases*: `C-1\DPA:A?B:C;` and the Appendix 9-E expressions
+produce no such warning; a value ending `: G\COM:x;` is reported (the G group
+has no occurrence index).
+
+## Errata in the standard's own examples
+
+Found while checking the design against the archived standard. Each is kept
+verbatim in fixtures and handled by a diagnostic, never corrected silently.
+
+| # | Where | Erratum | Handling |
+|---|-------|---------|----------|
+| E1 | Chapter 9 Appendix 9-C, page C-8 (106-24R1); the same 18 in 106-17, 106-19, 106-20, 106-22, 106-23, 106-24 | 18 attributes after D-group counters end with `:` instead of `;`, for example `D-1\MML\N-1-1:2: D-1\MNF\N-1-1-1:1: D-1\WP-1-1-1-1:14;` | L1-READ-007; `appendix_9c_example_reports_suspected_semicolons`. **Suspect** (ROADMAP S1). |
+| E2 | Chapter 9 Appendix 9-E, Table E-3 | The equality operator printed `= =`; the grammar gives `==` | ARCHITECTURE section 5.2 (T2): `==` is the operator, `= =` accepted with a warning. |
+
+## Checks to run against real data
+
+The owner's doubts to settle when the local sample recordings are read
+(`docs/ROADMAP.md`, "Suspect findings to confirm against real data"):
+
+- **S1** — count every "possible `;` typed as `:`" warning and every value
+  containing `: ` followed by a code name across all samples; review each
+  one; record whether real TMATS writers produce the pattern, whether any
+  legitimate value triggers it, and whether a warning is the right default.
+  Record the result in `docs/research/` and update the ROADMAP entry.
+
 ## Standards
 
 The RCC 106 standards and handbooks are mirrored, with original URLs and

@@ -25,7 +25,7 @@
   </defs>
 
   <text class="t" x="20" y="30">How TMATS groups link by value (Chapter 9 §9.5.1 b)</text>
-  <text class="l" x="20" y="50">Arrow = "this group refers to that one"; label = the attribute value that carries the link. A link's target is a key and must be unique.</text>
+  <text class="l" x="20" y="50">Arrow = "this group refers to that one"; label = the attribute value that carries the link. A link's target is a key, unique among that attribute's values (ADR-0026).</text>
 
   <!-- nodes: letter and name inside each box -->
   <rect class="hub" x="415" y="66"  width="110" height="48" rx="6"/><text class="g" x="470" y="87" text-anchor="middle">G</text><text class="n" x="470" y="104" text-anchor="middle">General Information</text>

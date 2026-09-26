@@ -399,14 +399,30 @@ precisely.** Verified against 106-24R1 Chapter 9:
   lower case is allowed; TMATS is not case sensitive" (§9.4.2) — so keywords
   and link values compare case-insensitively, not only code names
   (L1-READ-004 names only code names).
-- *Also found — an erratum in the standard's own example*: Appendix 9-C,
-  page C-8 of 106-24R1, prints `D-1\MML\N-1-1:2: D-1\MNF\N-1-1-1:1:
-  D-1\WP-1-1-1-1:14;` — colons where semicolons are meant, confirmed on the
-  rendered page. At least 12 such places, all after D-group counters. A
-  scanner following §9.4.2 reads each as one attribute whose value contains
-  the next ones. (A first reading that some counters appear with two index
-  depths was an artefact of PDF line wrapping, not the standard; the table
-  extractor must join wrapped code names.)
+- *The two ends of a link can disagree*: `R-x\CDLN-n` and `R-x\EV\DLN-n`
+  list "Links to: P-d\DLN, B-x\DLN, S-d\DLN", yet `Q-d\DLN` lists "Links
+  from: R-x\CDLN, R-x\EV\DLN-n" — Q appears only on the receiving side. The
+  B group's own table names the attribute `B-x\DLN`, while `P-d\DLN` points
+  to "B-d\DLN".
+- *Link targets overlap*: `B-x\DLN` is linked from both `R-x\CDLN` and
+  `P-d\DLN` ("Links from: R-x\CDLN, P-d\DLN, …"), and `P-d\DLN` "Links to:
+  D-x\DLN, B-d\DLN". Bus data carried in a PCM stream therefore shares the P
+  group's data-link name, and a recorder channel naming that stream matches
+  both a P and a B group. What distinguishes them is the channel data type
+  (`R-x\CDT-n`); the S and Q groups' own conditions ("Allowed when: R\CDT is
+  either …") point the same way.
+- *Also found — an erratum in the standard's own example* (**suspect**, see
+  below): Appendix 9-C, page C-8 of 106-24R1, prints `D-1\MML\N-1-1:2:
+  D-1\MNF\N-1-1-1:1: D-1\WP-1-1-1-1:14;` — colons where semicolons are meant.
+  Re-verified at the owner's request: **18** places (a first count of 12 came
+  from a scan that skipped every second one), all after a D-group counter in
+  D-1 and D-2; D-3 and D-4 are correct; no other delimiter anomaly in the
+  appendix; the page image agrees with the text layer; and the same 18 occur
+  in every edition since the example appeared in 106-17. A scanner following
+  §9.4.2 reads each as one attribute whose value contains the next ones.
+  (A first reading that some counters appear with two index depths was an
+  artefact of PDF line wrapping, not the standard; the table extractor must
+  join wrapped code names.)
 
 Mapping: refines L1-VAL-002 and L1-READ-004, ADR-0022 (the interpretation
 layer), ADR-0023 (passes 3 and 4), and the "ambiguous" effective-value state
@@ -417,10 +433,15 @@ of T1; affects the Appendix 9-C spec fixture; no conflict. Plan:
    indices held fixed). Contiguity from 1 to N applies per parent-index
    combination unless the registry records a cited exception (the X group).
 2. *Link declarations*: each linking attribute names its target attribute(s)
-   — its namespace, for example `R-x\CDLN` → `P-d\DLN`, `B-d\DLN`, `S-d\DLN`,
-   `Q-d\DLN` — and its cardinality (exactly one, at most one, or many).
-   Resolution returns **resolved**, **unresolved**, or **ambiguous** (several
-   candidates, all listed); the library never picks one.
+   — its namespace, for example `R-x\CDLN-n` → `P-d\DLN`, `B-x\DLN`,
+   `S-d\DLN`, `Q-d\DLN` — a **selector** where the targets overlap (for
+   `R-x\CDLN-n`, the channel data type `R-x\CDT-n` of the same channel), and
+   its cardinality (exactly one, at most one, or many). The declarations are
+   built from both the "Links to:" and the "Links from:" fields; where the two
+   sides disagree (Q above) the interpretation records how it was resolved,
+   under the two-person review. Resolution returns **resolved**,
+   **unresolved**, or **ambiguous** (several candidates after the selector,
+   all listed); the library never picks one.
 3. *Key uniqueness per namespace*: a key must be unique among the values of
    the same attribute, in the scope the registry declares (whole document or
    within a parent occurrence); equal values across linked attributes are the
@@ -428,16 +449,20 @@ of T1; affects the Appendix 9-C spec fixture; no conflict. Plan:
 4. *Comparison rules*: code names, keywords, and link values compare
    case-insensitively (ASCII case folding); original spelling is kept. Blanks
    in link values are compared as written and reported (coverage item 7).
-5. *Suspected missing semicolon*: when a value contains `: ` followed by
-   something shaped like a code name, report "possible `;` typed as `:`" with
-   a suggested edit (ADR-0007) — never split silently (lossless). The
-   Appendix 9-C fixture keeps the standard's text verbatim and its test
-   expects exactly these diagnostics.
+5. *Suspected missing semicolon* (**suspect**): when a value contains a
+   colon followed, after optional blanks, by a complete code name and its own
+   colon, report "possible `;` typed as `:`" as a warning with a suggested
+   edit (ADR-0007) — never split silently (lossless). A colon inside a value
+   is otherwise legitimate (`C-1\DPA:A?B:C;`, section 5.4 of the
+   architecture), so only a following code name triggers it. The Appendix 9-C
+   fixture keeps the standard's text verbatim and its test expects exactly
+   the 18 diagnostics.
 6. *Tests*: X-group occurrences 1 and 5 (no gap reported); nested counters
    across several parent combinations; `P-d\DLN` equal to `D-x\DLN` (no
    conflict); two P groups with the same data-link name (ambiguous link, both
-   candidates); keyword and link-value case variants; the Appendix 9-C
-   errata.
+   candidates); a PCM channel whose stream carries bus data (P and B share the
+   name; the selector resolves to P); keyword and link-value case variants;
+   the Appendix 9-C errata; a derived expression with colons (no diagnostic).
 
 Documents affected: ARCHITECTURE (a section on counters, keys, links, and
 comparison), a new ADR (counter scope, link namespace and cardinality, key
@@ -446,6 +471,22 @@ L1-VAL-002 and L1-READ-004 revised, new L1 requirements for ambiguous links
 and the suspected-missing-semicolon diagnostic, the link-graph diagram
 (cardinality and ambiguity), and `docs/TEST-DATA.md` (the Appendix 9-C
 errata).
+*Applied 2026-09-26 at the owner's direction: `docs/ARCHITECTURE.md` section
+7, `docs/diagrams/link-resolution.svg` (new) and `link-graph.svg`, ADR-0026 (with status pointers on ADR-0022
+and ADR-0023), L1-READ-004 and L1-VAL-002 revised, L1-REG-005, L1-VIEW-006,
+L1-READ-007, and `docs/TEST-DATA.md`. The erratum and L1-READ-007 stay
+suspect (below).*
+
+### Suspect findings to confirm against real data
+
+Findings accepted into the design but held in doubt by the owner until they
+are checked against real recordings (the local-only sample data of
+`docs/TEST-DATA.md`). Each stays listed here until that check is done and
+its result recorded in `docs/research/`.
+
+| # | Finding | Owner's concern | Check against real data |
+|---|---------|-----------------|-------------------------|
+| S1 | Appendix 9-C erratum: 18 attributes ended with `:` instead of `;` (106-17 onward), and the "possible `;` typed as `:`" diagnostic built on it (L1-READ-007, ADR-0026). | "Lets still mark this as suspect so when we run against real data we dont forget I have some concerns." (2026-09-26) | Run the reader over every local sample; count and review each "possible `;` typed as `:`" diagnostic and each value containing `: ` followed by a code name; record whether real TMATS writers produce the pattern, whether any legitimate value triggers it (false positive), and whether the default severity (warning) is right. |
 
 ## Work for other repositories
 

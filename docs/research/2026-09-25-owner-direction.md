@@ -199,3 +199,38 @@ target; neither applies.
 
 The cross-repository items stay in `docs/ROADMAP.md`, "Work for other
 repositories" (X1–X7); no issues are filed in the other repositories yet.
+
+## 18. Applying T4, and the Appendix 9-C erratum kept suspect (2026-09-26)
+
+> Apply T4 now but,
+> Can you confirm this? I have doubts that you found so many errors.
+> - The standard's own example has an error. On page C-8 of Appendix 9-C, colons are printed where semicolons belong, e.g. D-1\MML\N-1-1:2: D-1\MNF\N-1-1-1:1: …. There are at least 12 of these, all after
+> D-group counters, and I confirmed them on the page image. Read strictly by the rules, each one turns several attributes into one attribute whose value contains the rest.
+> Which will affect this
+> 5. Suspected missing semicolon: when that pattern appears, the library reports "possible ; typed as :" and suggests an edit. It never splits the text silently. The Appendix 9-C test fixture keeps the
+>  standard's text exactly and checks for these reports.
+
+> Lets still mark this as suspect so when we run against real data we dont forget I have some concerns.
+
+Re-verification, from scratch:
+
+- **The count was wrong; the finding stands.** The first scan's pattern
+  consumed the start of each following attribute and so skipped every second
+  occurrence. A non-overlapping scan finds **18** places in 106-24R1
+  Appendix 9-C where an attribute ends with `:` instead of `;`, all after a
+  D-group counter (`D-1\MML\N-…`, `D-1\MNF\N-…`, `D-2\MML\N-…`,
+  `D-2\MNF\N-…`), all in D-1 and D-2. D-3 and D-4 use `;` correctly.
+- **The text layer and the page agree.** The same lines extract `;` correctly
+  after other attributes in the same font, and the rendered page C-8 shows
+  `:2:` and `:1:` beside correctly printed `;`.
+- **No other delimiter anomaly.** Of the 364 attribute starts in the
+  appendix's code-name example, every one follows a `;` or a line break
+  except these.
+- **Every edition since the example appeared.** The same 18 occur in 106-17,
+  106-19, 106-20, 106-22, 106-23, 106-24, and 106-24R1; 106-05 to 106-15 do
+  not contain this example at all.
+
+Owner decision: apply T4, and keep the erratum and the diagnostic that
+depends on it marked **suspect** until checked against real recordings.
+Recorded in: `docs/ROADMAP.md` (T4, and "Suspect findings to confirm against
+real data"), `docs/TEST-DATA.md`, ADR-0026, `docs/L1-REQ.md` (L1-READ-007).

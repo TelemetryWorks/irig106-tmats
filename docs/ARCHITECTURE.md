@@ -438,9 +438,104 @@ rest, so `0x0E` reads as "106-22 or later" and reserved values as unknown;
 multiplexer source (Chapter 11 §11.2.1.1 b). Channel views (UC-05) split
 channel IDs accordingly.
 
-## 7. Decisions this architecture must honour
+## 7. Refinement T4: counters, keys, links, and comparison
 
-Recorded as ADRs in `docs/adr/` (0001–0019, 0022–0025 accepted): the lossless ordered attribute store as the
+From the team design review, priority T4 (`docs/ROADMAP.md`). Applied
+2026-09-26 at the owner's direction; recorded in ADR-0026. It makes the
+interpretation layer (section 4.1) declare counters and links precisely, and
+gives passes 3 and 4 of section 4.4 exact rules. The shape of the
+architecture is unchanged.
+
+### 7.1 Counter declarations
+
+Every `\N` counter in the registry declares:
+
+- the **code pattern and index position it governs** — `D-x\MML\N-y` governs
+  the `n` of `D-x\MNF\N-y-n` and of the other `-y-n` attributes;
+- its **parent scope**, the indices held fixed — `D-x\MNF\N-y-n` counts
+  fragments within one measurement `y` and one location `n`, so contiguity
+  is checked separately for every parent-index combination (106-24R1
+  Chapter 9 has 49 such nested counters, for example `Q-d\NSF\N-i-n-m-o`);
+- whether its indices run **from 1 to N "with no missing values"**
+  (§9.5.1 a), or carry a cited exception. The one exception found is the X
+  group: "The values of "x" in "X-x" are not necessarily contiguous"
+  (§9.5.14).
+
+Pass 3 checks each counter against its entries per parent combination. A
+condition naming a counter without indices ("Allowed when: D\MNF\N > 1") uses
+the occurrence scope of section 4.2.
+
+### 7.2 Link declarations and resolution
+
+Every link in the registry declares:
+
+- its **source** attribute and its **target namespace** — the key
+  attributes it may resolve to, built from both the "Links to:" and the
+  "Links from:" fields of Chapter 9. The two sides do not always agree:
+  `R-x\CDLN-n` lists "Links to: P-d\DLN, B-x\DLN, S-d\DLN", while
+  `Q-d\DLN` lists "Links from: R-x\CDLN". Each disagreement is settled in a
+  reviewed interpretation (ADR-0022), never by the code;
+- a **selector** where targets overlap. `B-x\DLN` is linked from both
+  `R-x\CDLN` and `P-d\DLN`, so bus data carried in a PCM stream shares the P
+  group's data-link name, and a recorder channel naming it matches both. The
+  channel data type (`R-x\CDT-n`) of the same channel selects the group;
+- its **cardinality** — exactly one, at most one, or many.
+
+The link graph (section 4.2) resolves every link to one of three results, and
+no link is silently dropped or silently chosen:
+
+| Result | Meaning |
+|--------|---------|
+| Resolved | exactly one candidate remains after the selector |
+| Unresolved | no candidate (L1-VIEW-003) |
+| Ambiguous | several candidates remain; all are listed, none is chosen |
+
+An ambiguous link makes every value read through it ambiguous (section 4.3).
+
+![How a link resolves](diagrams/link-resolution.svg)
+
+*Link resolution.* A recorder channel's data-link name matches a P group and,
+ignoring case, the B group of bus data carried in that PCM stream; the
+channel-type selector keeps P, so the link resolves. Two P groups with the
+same name leave two candidates: the link is ambiguous, both are listed, and
+pass 4 reports the duplicate key. A name with no key is unresolved. `P-1\DLN`
+and `D-1\DLN` holding the same value is the link itself, not a conflict.
+
+### 7.3 Key uniqueness
+
+"Any attribute with a Links from: is a key and must be unique in the TMATS
+file" (§9.5.1 a) cannot mean that every key differs from every other:
+`P-d\DLN` and `D-x\DLN` are both keys and are linked **because** they hold the
+same value. A key is unique **among the values of the same attribute**, in
+the scope the registry declares — the whole document for `P-d\DLN`, one
+parent occurrence for a nested key. Equal values across linked attributes
+are the link, not a conflict. Pass 4 reports duplicate keys, and links into
+a duplicated key are ambiguous rather than resolved to the first match.
+
+### 7.4 Comparison rules
+
+"For alphanumeric data items, including keywords, either upper or lower case
+is allowed; TMATS is not case sensitive" (§9.4.2). Code names, keywords, and
+link values are compared with **ASCII case folding**; the stored bytes keep
+the original spelling. Blanks inside values are significant (they are
+compared as written).
+
+### 7.5 A colon where a semicolon is meant (suspect)
+
+The standard's own example contains 18 attributes ended with `:` instead of
+`;` (Appendix 9-C, page C-8, 106-17 onward), for example
+`D-1\MML\N-1-1:2: D-1\MNF\N-1-1-1:1: D-1\WP-1-1-1-1:14;`. Under the rule of
+section 5.4 this is one attribute whose value holds the next two. The scanner
+keeps it exactly so and, when a colon inside a value is followed by a
+complete code name and its own colon, reports **"possible `;` typed as `:`"**
+as a warning with a suggested edit (ADR-0007). A colon in a derived
+expression (`C-1\DPA:A?B:C;`) is not followed by a code name and is not
+reported. The owner holds this finding **suspect** until it is checked
+against real recordings (`docs/ROADMAP.md`, "Suspect findings", S1).
+
+## 8. Decisions this architecture must honour
+
+Recorded as ADRs in `docs/adr/` (0001–0019, 0022–0026 accepted): the lossless ordered attribute store as the
 single source of truth; owned storage instead of borrowed lifetimes; the
 layered, spec-cited registry generated by a script (no `build.rs`);
 registry-driven validation with severity policy and user rules; no automatic
@@ -455,10 +550,12 @@ validation in four passes over effective values (ADR-0023); derived
 parameters parsed, validated, and described here and evaluated in
 `irig106-decode` (ADR-0024); setup records assembled from their packet
 fragments in the library, with packet slicing in the CLI's reader
-(ADR-0025). The original
+(ADR-0025); counters with declared scopes, links with declared namespaces,
+selectors, and cardinality, keys unique per attribute, and case-insensitive
+comparison of code names, keywords, and link values (ADR-0026). The original
 proposal is captured in ADR-0020 and ADR-0021 (proposed).
 
-## 8. To be written
+## 9. To be written
 
 - Module structure and public API sketch (document, scanner, keys and
   index, registry and overlay, link graph, condition evaluator,

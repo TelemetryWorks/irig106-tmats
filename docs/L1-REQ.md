@@ -138,9 +138,9 @@ requirements are added. The requirement entries below and the generated
 
 ### L1-READ-004
 
-**Statement**: The library SHALL treat code names case-insensitively and independently of attribute order, while preserving each attribute's original spelling.
+**Statement**: The library SHALL compare code names, keywords, and link values case-insensitively, using ASCII case folding, and SHALL treat attributes independently of their order, while preserving each attribute's original spelling.
 
-**Rationale**: "TMATS is not case sensitive" and "Attributes may appear in any order" (Chapter 9 §9.4.2). Delivered in 0.1.
+**Rationale**: "For alphanumeric data items, including keywords, either upper or lower case is allowed; TMATS is not case sensitive" and "Attributes may appear in any order" (Chapter 9 §9.4.2). The first draft named only code names (team review T4; ADR-0026). Delivered in 0.1.
 
 **Verification Method**: Test (T)
 
@@ -157,6 +157,14 @@ requirements are added. The requirement entries below and the generated
 **Statement**: The library SHALL take the first colon of an attribute as the end of its code name and every later colon as part of the value, which ends at the next semicolon, and SHALL ignore blanks around the code name when interpreting it while keeping them in the stored bytes.
 
 **Rationale**: Values may contain colons — Appendix 9-E's own expression `A<B || B<<C ? D : E` (§E.6.b) — and the standard's own example `C-6\DCN :DMC;` (§E.9.c) has a blank before the colon; semicolons are not allowed in data items (§9.4.2) (team review T2; ADR-0024). Delivered in 0.1.
+
+**Verification Method**: Test (T)
+
+### L1-READ-007
+
+**Statement**: When a colon inside a value is followed, after optional blanks, by a complete code name and its own colon, the library SHALL keep the attribute exactly as read and SHALL report a warning, "possible `;` typed as `:`", with a suggested edit replacing that colon by a semicolon.
+
+**Rationale**: The standard's own example ends 18 attributes with `:` instead of `;` (Appendix 9-C, page C-8, every edition since 106-17), for example `D-1\MML\N-1-1:2: D-1\MNF\N-1-1-1:1: D-1\WP-1-1-1-1:14;`; read by §9.4.2 each is one attribute holding the next ones. Nothing is split silently (ADR-0002, ADR-0007); a colon in a derived expression is not followed by a code name and is not reported (team review T4; ADR-0026). **Suspect** (owner, 2026-09-26): to be confirmed against real recordings (`docs/ROADMAP.md`, S1). Delivered in 0.1.
 
 **Verification Method**: Test (T)
 
@@ -284,6 +292,14 @@ requirements are added. The requirement entries below and the generated
 
 **Verification Method**: Test (T)
 
+### L1-REG-005
+
+**Statement**: Each counter in the registry SHALL declare the code pattern and index position it governs, its parent scope, and whether its indices must run from 1 to N or carry a cited exception; each link SHALL declare its source, its target attributes, a selector where targets overlap, and its cardinality, built from both the "Links to:" and "Links from:" fields, with any disagreement between them settled in a reviewed interpretation.
+
+**Rationale**: X-group occurrences "are not necessarily contiguous" (§9.5.14); nested counters such as `D-x\MNF\N-y-n` count within one parent combination; `B-x\DLN` is linked from both `R-x\CDLN` and `P-d\DLN`; `R-x\CDLN-n` omits `Q-d\DLN` from its "Links to:" while `Q-d\DLN` lists it under "Links from:" (106-24R1 Chapter 9; team review T4; ADR-0026). Delivered from 0.2.
+
+**Verification Method**: Test (T)
+
 ---
 
 ## L1-VIEW: Lookup, structured views, and links
@@ -328,6 +344,14 @@ requirements are added. The requirement entries below and the generated
 
 **Verification Method**: Test (T)
 
+### L1-VIEW-006
+
+**Statement**: The library SHALL resolve each link to exactly one of resolved (one candidate after the link's selector), unresolved (no candidate), or ambiguous (several candidates, all reported), and SHALL NOT choose among several candidates.
+
+**Rationale**: Duplicates are preserved (L1-READ-001), so resolving to the first match would hide a real conflict; a PCM stream carrying bus data gives a P and a B group the same data-link name, which the channel data type distinguishes (team review T4; ADR-0026). Delivered in 0.2.
+
+**Verification Method**: Test (T)
+
 ---
 
 ## L1-VAL: Validation
@@ -342,9 +366,9 @@ requirements are added. The requirement entries below and the generated
 
 ### L1-VAL-002
 
-**Statement**: Validation SHALL check each attribute against its usage attributes, that multiple-entry indices run from 1 to their counter "with no missing values", that every link resolves, and that every key value is unique.
+**Statement**: Validation SHALL check each attribute against its usage attributes; that the indices each counter governs run from 1 to the counter "with no missing values" within each combination of its parent indices, except where the registry cites an exception; that every link resolves; and that every key value is unique among the values of the same attribute in its declared scope, equal values across linked attributes not being a conflict.
 
-**Rationale**: Chapter 9 §9.5.1 a defines the usage attributes, index contiguity, and key uniqueness ("Any attribute with a Links from: is a key and must be unique"). Delivered in 0.3.
+**Rationale**: Chapter 9 §9.5.1 a defines the usage attributes, index contiguity, and key uniqueness ("Any attribute with a Links from: is a key and must be unique"); X-group occurrences are exempt (§9.5.14); `P-d\DLN` and `D-x\DLN` are both keys and hold the same value by design (team review T4; ADR-0026). Delivered in 0.3.
 
 **Verification Method**: Test (T)
 

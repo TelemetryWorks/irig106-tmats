@@ -14,6 +14,7 @@ Hand-authored SVG diagrams of the architecture, embedded in
 | `registry-pipeline.svg` | Extractor → source layer → author and independent reviewer → interpretation layer → generator, with the four CI checks and the re-review loop |
 | `document-model.svg` | One buffer, spans, keys, index, and the byte range the `G\SHA` digest covers |
 | `link-graph.svg` | The Chapter 9 §9.5.1 b ties between groups, labelled with the value that carries each |
+| `link-resolution.svg` | How one link resolves: case-folded match, the channel-type selector, resolved / ambiguous (all candidates listed) / unresolved, and keys unique per attribute (P and D data-link names equal by design) |
 | `edits-and-checksum.svg` | An edit as a patch, byte-faithful output, and `G\SHA` reported stale and stamped only on request |
 
 ## Conventions

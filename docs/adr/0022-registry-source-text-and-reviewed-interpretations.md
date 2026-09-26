@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: accepted; counter and link declarations added by 0026
 date: 2026-09-26
 decision-makers: Joey
 ---

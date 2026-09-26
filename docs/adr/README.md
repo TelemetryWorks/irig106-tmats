@@ -34,10 +34,11 @@ status line points to the later record.
 | [0019](0019-cli-minimal-chapter-10-reader.md) | The CLI carries a minimal Chapter 10 packet reader until `irig106-core` | accepted; refined by 0025 |
 | [0020](0020-correctness-guard-rails.md) | Correctness guard rails in the code and the tests | proposed |
 | [0021](0021-single-pass-scanner.md) | A single-pass scanner that indexes, checksums, and reports as it reads | proposed; scanner rule added by 0024 |
-| [0022](0022-registry-source-text-and-reviewed-interpretations.md) | The registry holds source text and reviewed, executable interpretations (two-person rule) | accepted |
-| [0023](0023-validation-passes-and-effective-values.md) | Validate in four passes over effective values | accepted |
+| [0022](0022-registry-source-text-and-reviewed-interpretations.md) | The registry holds source text and reviewed, executable interpretations (two-person rule) | accepted; extended by 0026 |
+| [0023](0023-validation-passes-and-effective-values.md) | Validate in four passes over effective values | accepted; refined by 0026 |
 | [0024](0024-derived-parameters-parsed-not-evaluated.md) | Derived parameters parsed, validated, and described here; evaluated in `irig106-decode` | accepted |
 | [0025](0025-setup-record-assembly-contract.md) | Setup records assembled from packet fragments in the library; packets sliced by the CLI's reader | accepted |
+| [0026](0026-counter-scopes-link-namespaces-and-comparison.md) | Counters declare their scope, links their namespace, selector, and cardinality; keys unique per attribute; case-insensitive comparison | accepted |
 
 New records take the next number and use the same front matter
 (`status`, `date`, `decision-makers`).

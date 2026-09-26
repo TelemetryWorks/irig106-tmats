@@ -148,8 +148,16 @@ as specifications.
   recovers per attribute; it never returns an empty document in place of
   diagnostics.
 - **TMATS is not case sensitive, and attribute order is free** (Chapter 9
-  §9.4.2). Blanks inside values are intentional. Semicolons never appear in a
+  §9.4.2): code names, keywords, and link values compare with ASCII case
+  folding. Blanks inside values are intentional. Semicolons never appear in a
   data item.
+- **Links never pick a winner.** A link resolves, is unresolved, or is
+  ambiguous with every candidate listed; keys are unique per attribute, so
+  equal `P-d\DLN` and `D-x\DLN` values are the link, not a conflict
+  (ADR-0026).
+- **Suspect findings stay visible.** A finding the owner holds in doubt is
+  listed in the ROADMAP's "Suspect findings to confirm against real data"
+  until real recordings settle it; do not drop the mark without that check.
 - **Reference tools are not authorities.** `idmptmat` and `irig106lib` are
   useful oracles with known defects; every defect found in them gets a named
   regression test here (`docs/TEST-DATA.md`), and a disagreement is settled by
