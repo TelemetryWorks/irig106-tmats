@@ -304,3 +304,16 @@ answered with a plan for a detailed document. Recorded in:
 
 Recorded in: `docs/ROADMAP.md` (F4); `docs/TMATS-IN-CHAPTER-10.md` is written
 one section at a time for the owner's review, starting with section 1.
+
+## 24. Other repositories' issues are recorded in those repositories (2026-09-26)
+
+> I think you can start section 2. I am not sure I would documnent the issues with studio in this projects documentation. I think we all know at this point that studio needs to be refactored as well as other repos in this greater project. Maybe we write to the studio repo which you should have access to locally here. Make the notes there to document the issues and changes we need to make.
+
+Done: the studio's TMATS issues and the changes it needs are written in
+`irig106-studio/docs/TMATS-ISSUES.md` (TI-1 to TI-10, each re-checked against
+the studio code and cited from 106-24R1), with a pointer from its
+`docs/INTEGRATION.md` and an entry in its `docs/PROJECT_STRUCTURE.md`;
+committed in that repository locally, not pushed. In this repository the
+studio details were replaced by pointers (the consumer survey, UC notes,
+ROADMAP X5, the F4 plan, `docs/TMATS-IN-CHAPTER-10.md`). This supersedes
+entry 17's "Don't touch the other projects" for notes the owner directs.

@@ -110,7 +110,7 @@ the way.
 | `irig106-decode` | For each channel: the format its data follow, where each measurement is, how each converts, how derived parameters are defined | Placeholder; needs stated nowhere yet |
 | `irig106-core` | What each channel ID is (data type, enabled) to check packets against the configuration; setup-record fragments to hand over | Placeholder |
 | `irig106-time` | Which channels carry time, in what format; the recording-format version | Reads the CSDW version byte only |
-| `irig106-studio` | Channel labels, data-source grouping, the edition, the raw text, findings | Real code; parses nothing yet; extraction defects |
+| `irig106-studio` | Channel labels, data-source grouping, the edition, the raw text, findings | Real code; parses nothing yet (its TMATS changes: studio `docs/TMATS-ISSUES.md`) |
 | `irig106-ch10-reader` | Presence, size, configuration changes, a summary | Presence check only |
 | `irig106-index`, `irig106-cli` | Channel and measurement catalogues per setup record | Placeholders |
 | `irig106-write` | Generated or edited TMATS, stamped, as a setup-record payload | Placeholder |

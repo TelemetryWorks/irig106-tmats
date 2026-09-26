@@ -834,8 +834,9 @@ most of what a decoder needs from TMATS. The document
    edition and recording version the file declares; is the TMATS intact.
 4. *Contracts per consumer* — for each repository: what it gives
    `irig106-tmats`, what it gets back, what it must not do itself (for
-   example, parse TMATS text, or extract it by channel ID alone as studio
-   does today).
+   example, parse TMATS text, or find setup records by channel ID alone).
+   Issues in a consumer's current code are recorded in that consumer's
+   repository, not here.
 5. *Configuration over a recording* — several setup records, the
    configuration-change bit, and how a consumer learns which setup record
    governs which packets.
@@ -847,9 +848,8 @@ most of what a decoder needs from TMATS. The document
    its conversion: exactly what `irig106-decode` would receive.
 8. *What changes as a result* — new use cases (time source, configuration
    over a recording, checking packets against TMATS), new or revised L1
-   requirements, register entries, and new rows for "Work for other
-   repositories" (studio's extraction and group names, the time
-   repository's diagram, `irig106-rust`'s "Format 0") — proposed for the
+   requirements, register entries, and notes for the other repositories,
+   written in those repositories where the owner directs — proposed for the
    owner's review, with no issues filed elsewhere.
 
 Method: every attribute and rule cited is verified against the archived
@@ -870,7 +870,7 @@ this list once that repository has it.
 | X2 | `irig106-types` | Define `Irig106Version` (`#[non_exhaustive]`, with an unknown value, RCCVER mapping per Figure 11-34), the Chapter 10/11 data-type codes and data-type-version field (Table 11-4, §11.2.1.1 e), and the Computer-Generated Format 1 CSDW (bits 31–10 reserved, bit 9 FRMT, bit 8 SRCC, bits 7–0 RCCVER); then remove the duplicate enum from `irig106-time` (fixes X1). | ADR-0009; ADR-0025 |
 | X3 | `irig106-core` | When its packet reader exists, it takes over slicing from the `tmats` CLI (header, optional secondary header, Data Length, filler and checksums, header-checksum verification) and supplies setup-record fragments with provenance to this library's assembler. | ADR-0019; ADR-0025 |
 | X4 | `irig106-ch10-reader` | Report a mid-recording setup-record change by default, in one line naming what changed; assemble setup records that span several packets before reporting TMATS presence or size; replace the Windows guide's external extraction advice with `tmats extract`. | USE-CASES §5 and §7 (question 3); ADR-0025 |
-| X5 | `irig106-studio` | Revise the TMATS contract in `docs/INTEGRATION.md`: the edition comes from `G\106` (not `R-1\ID`), `R-1\NSS` does not exist in Chapter 9, and channel data comes from UC-05 views (including `R-x\NSB` multiplexer source bits). | USE-CASES §5; L1-VIEW-005 |
+| X5 | `irig106-studio` | Recorded in that repository: `docs/TMATS-ISSUES.md` (TI-1 to TI-10, committed locally 2026-09-26). | owner-direction entry 24 |
 | X6 | `irig106-decode` | Evaluate derived parameters from this library's description (expression tree or bound call, derivation graph, trigger and occurrences), and own engineering-unit conversion and floating-point formats (Appendix 9-D). | ADR-0024; NR-007 |
 | X7 | `irig106-types`, `irig106-time` | Push the local P6-01 commits and publish `irig106-types` 0.1.0 so `irig106-time` can drop its path dependency (from the earlier ecosystem work). | Owner direction log |
 

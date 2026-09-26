@@ -34,17 +34,9 @@ planned interface (`docs/INTEGRATION.md`) and its TMATS extraction
 
 ## Problems found in consumers (not yet in ROADMAP X1–X7)
 
-- Studio's TMATS extraction joins **every channel-0 payload whatever its
-  data type** (events `0x02`, index `0x03`, and others mixed in), starts
-  right after the 24-byte header so each **CSDW is included**, keeps any
-  filler, and decodes with `from_utf8_lossy`.
-- Studio's planned contract reads the edition "from R-1\ID or R-1\RI1" and a
-  recorder field `R-1\NSS`; the edition is `G\106` (ADR-0028), and USE-CASES
-  §5 already records that no `NSS` code name exists.
-- Studio's TMATS syntax highlighter names groups wrongly ("D = Data",
-  "B = Bus", "M = Multiplexer", "S = Spacecraft"; Chapter 9 Tables 9-7, 9-8, 9-5, and 9-9 name
-  them PCM Measurement Description, Bus Data, Multiplex/Modulation, and
-  Message Data).
+- `irig106-studio`: its TMATS issues are recorded in that repository,
+  `docs/TMATS-ISSUES.md` (TI-1 to TI-10), at the owner's direction
+  (owner-direction entry 24), not here.
 - `irig106-time`'s ecosystem diagram shows `irig106-tmats` feeding only the
   reader and the CLI, not decode, studio, or write.
 - `irig106-rust` REQ-L1-014: "Format 0" for the setup record.

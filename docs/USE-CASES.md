@@ -400,12 +400,9 @@ calls.
   TMATS findings in a detail mode.
   By default it should also report, in one line, when a later setup record
   changes the configuration (open question 3, resolved).
-- **`irig106-studio`** (`docs/INTEGRATION.md` in that repo) wants channel
-  labels, data-source grouping, and the standard version. Its sketched
-  contract takes the version from `R-1\ID` and uses an `R-1\NSS` attribute;
-  the edition belongs to `G\106` (UC-04), and no `NSS` code name exists
-  anywhere in 106-23 Chapter 9. The studio contract should be revised against
-  UC-04 and UC-05 when this library's API exists.
+- **`irig106-studio`** wants channel labels, data-source grouping, and the
+  edition (UC-04, UC-05). The changes it needs are recorded in that
+  repository, `docs/TMATS-ISSUES.md`.
 - **`irig106-decode`** needs UC-05's full chain (format, measurements,
   conversions) for PCM, analog, and discrete data.
 - **`irig106-write`** needs UC-09/UC-13 and the setup-record payload builder.
