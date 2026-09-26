@@ -20,6 +20,10 @@ locally; CI runs on synthesized examples and fuzzing only.
 
 ## Real Chapter 10 recordings (local use only)
 
+Order of work (owner decision, 2026-09-25): the irig106.org vendor sample
+recordings first, because they cover the widest spread of vendor quirks,
+then the owner's program files as they become available.
+
 - **IRIG 106 sample data files** — laboratory recordings from recorder vendors,
   each with a TMATS setup record:
   <https://www.irig106.org/wiki/sample_data_files>.

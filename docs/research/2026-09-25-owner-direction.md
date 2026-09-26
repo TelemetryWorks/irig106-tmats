@@ -114,3 +114,14 @@ modifying content is 0.5; putting TMATS into a Chapter 10 recording is a
 setup-record payload from the library plus packet writing in `irig106-write`.
 Recorded in: `docs/USE-CASES.md` (section 3, "The filesystem boundary";
 open question 1 resolved).
+
+## 11. The remaining use-case questions
+
+> go with your suggestions for 2, 3, and 4
+
+The suggestions accepted: (2) a value over a *recommended* maximum length is a
+warning by default, adjustable by severity policy; (3) `irig106-ch10-reader`
+reports a mid-recording setup-record change by default, in one line naming
+what changed; (4) the test corpus reproduces the irig106.org vendor samples
+first, then the owner's program files. Recorded in: `docs/USE-CASES.md`
+(section 7, UC-06, consumer notes) and `docs/TEST-DATA.md`.

@@ -183,6 +183,8 @@ ranges, lengths, hexadecimal, binary patterns, IP addresses, dates), and
 *Default*. It also checks that multiple-entry indices run from 1 to their
 `\N` count "with no missing values" (§9.5.1 a) and that every link resolves.
 A "Chapter 10 recorder" profile applies the R/R Ch 10 Status rules on top.
+A value longer than a *recommended* maximum length (a Range given as a number
+of characters) is a warning by default, never an error.
 
 **Outcome:** a report of findings, each with a stable rule identifier, a
 severity, the attribute and its location, and the Chapter 9 citation.
@@ -358,6 +360,8 @@ calls.
 - **`irig106-ch10-reader`** reports only TMATS presence and payload size
   today. With UC-02/04/05 it can report the edition, channel labels, and
   TMATS findings in a detail mode.
+  By default it should also report, in one line, when a later setup record
+  changes the configuration (open question 3, resolved).
 - **`irig106-studio`** (`docs/INTEGRATION.md` in that repo) wants channel
   labels, data-source grouping, and the standard version. Its sketched
   contract takes the version from `R-1\ID` and uses an `R-1\NSS` attribute;
@@ -396,9 +400,19 @@ calls.
    the tmats packet or a tmats file." The library never touches the
    filesystem in either direction; see "The filesystem boundary" in
    section 3.
-2. Chapter 9 marks some ranges as a *recommended* maximum length. Should
-   exceeding them be a warning by default?
-3. For UC-11, is a mid-recording setup-record change something `irig106-ch10-reader`
-   should surface by default?
-4. Which real-world TMATS sources should the test corpus include first
-   (recorder vendors, ranges, synthetic files from editors)?
+2. ~~Chapter 9 marks some ranges as a *recommended* maximum length. Should
+   exceeding them be a warning by default?~~ **Resolved (owner,
+   2026-09-25): yes, a warning.** It is only a recommendation, so it never
+   fails validation by default; the severity policy (UC-07) can silence or
+   raise it (UC-06).
+3. ~~For UC-11, is a mid-recording setup-record change something
+   `irig106-ch10-reader` should surface by default?~~ **Resolved (owner,
+   2026-09-25): yes**, as one line naming what changed, because a change that
+   affects decoding matters for every packet after it. This library provides
+   the comparison (UC-11) and `tmats` reports every setup record (UC-17);
+   the default display is a request to `irig106-ch10-reader`, recorded there
+   when that repository is next worked on.
+4. ~~Which real-world TMATS sources should the test corpus include first?~~
+   **Resolved (owner, 2026-09-25):** the irig106.org vendor sample
+   recordings first (widest spread of vendor quirks), then the owner's
+   program files as they become available (`docs/TEST-DATA.md`).
