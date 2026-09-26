@@ -73,3 +73,13 @@ jobs:
       # Stable since Rust 1.90: packages and verifies the library and the CLI
       # together, library first, exactly as a release would.
       - run: cargo publish --workspace --dry-run
+
+  trace-matrix:
+    name: Trace matrix up to date
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python scripts/build-trace-matrix.py --check

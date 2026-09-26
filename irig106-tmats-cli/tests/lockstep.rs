@@ -5,6 +5,8 @@
 use std::process::Command;
 
 /// The CLI crate and the library report the same version.
+///
+/// Requirements: L1-REL-001
 #[test]
 fn cli_and_library_versions_match() {
     assert_eq!(env!("CARGO_PKG_VERSION"), irig106_tmats::VERSION);
@@ -12,6 +14,8 @@ fn cli_and_library_versions_match() {
 
 /// The CLI's dependency on the library is an exact `=X.Y.Z` pin at the
 /// workspace version, so a mismatched pair can never be published.
+///
+/// Requirements: L1-REL-001
 #[test]
 fn library_dependency_is_pinned_exactly() {
     let manifest = include_str!("../Cargo.toml");
@@ -27,6 +31,8 @@ fn library_dependency_is_pinned_exactly() {
 }
 
 /// `tmats --version` prints both versions and succeeds.
+///
+/// Requirements: L1-REL-001
 #[test]
 fn version_flag_reports_both_versions() {
     let out = Command::new(env!("CARGO_BIN_EXE_tmats"))

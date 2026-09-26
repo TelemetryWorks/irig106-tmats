@@ -55,8 +55,9 @@ python scripts/build-trace-matrix.py         # regenerate docs/TRACE-MATRIX.md
 python scripts/build-trace-matrix.py --check # fail if it has drifted (CI)
 ```
 
-(The trace-matrix script arrives with the L1/L2/L3 requirement documents in
-the design phase.)
+Requirements live in `docs/L1-REQ.md`, `docs/L2-REQ.md`, `docs/L3-REQ.md`;
+regenerate the matrix after changing them or any test marker (CI runs
+`--check`).
 
 ## Architecture
 
@@ -105,8 +106,9 @@ architecture must honour:
 - `docs/adr/` — architecture decision records (MADR format); read the
   index (`docs/adr/README.md`) before changing anything they cover, and
   supersede a record with a new one rather than editing it.
-- `docs/L1-REQ.md`, `docs/L2-REQ.md`, `docs/L3-REQ.md`, `docs/TRACE-MATRIX.md`
-  — requirements and the generated trace matrix, once written.
+- `docs/L1-REQ.md`, `docs/L2-REQ.md`, `docs/L3-REQ.md` — requirements (L1
+  drafted; L2/L3 conventions only); `docs/TRACE-MATRIX.md` — generated live
+  status, never edited by hand.
 - The RCC 106 standards themselves are mirrored, with their original URLs and
   checksums, in the `TelemetryWorks/rcc-106-standards` repository. Chapter 9
   is the governing document for this crate; the RCC 124 TMATS Handbook is the

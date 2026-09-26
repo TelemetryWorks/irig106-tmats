@@ -46,8 +46,9 @@ Produced in this order, each reviewed before the next begins:
 3. **ADRs** — written for the decisions taken so far (`docs/adr/`); two
    architecture ADRs (0020, 0021) are proposed pending the architecture
    review.
-4. **L1 → L2 → L3 requirements**, the trace-matrix script, and test-marker
-   conventions.
+4. **L1 → L2 → L3 requirements** — L1 drafted, the trace-matrix script and
+   test-marker convention in place (CI-checked); L2 and L3 follow the
+   architecture review.
 5. **Standards baseline** — the RCC 106 archive (`TelemetryWorks/rcc-106-standards`)
    in place, so every registry entry can cite an edition, table, and row.
 
