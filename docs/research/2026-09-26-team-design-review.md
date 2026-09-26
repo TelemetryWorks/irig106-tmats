@@ -86,3 +86,17 @@ arrive.
 > Also correct the architecture’s statement that H-group relationships will be added when its tables are transcribed: §9.5.12 defines only H\TA and H\ST-n, reserving the remaining structure for
 > organizations. There is no comprehensive standard H table waiting to be imported. Sources: Chapter 9 Tables 9-4/9-10 and §9.5.12 (https://www.irig106.org/docs/106-24R1/chapter9.pdf); architecture
 > link-graph description (/C:/Users/Joey/Documents/GIT-GitHub/telemetryworks/irig106-tmats/docs/ARCHITECTURE.md:156).
+
+## Priority 6 (verbatim)
+
+> 6. Separate TMATS edition, recording-format version, and selected validation rules.
+>
+> G\106 identifies the edition used to generate the TMATS file and contains only two year digits. It cannot distinguish 106-24 from 106-24R1. The setup CSDW identifies recording-data compliance, and the
+> 106-24R1 table still lists its latest assigned RCCVER value as 0x0E = 106-22.
+>
+> Therefore, differing labels should not automatically become an edition-conflict finding. Preserve both declarations and their meanings, then report the selected validation edition and any explicit
+> fallback separately.
+>
+> ADR-0016 (/C:/Users/Joey/Documents/GIT-GitHub/telemetryworks/irig106-tmats/docs/adr/0016-edition-strategy.md:36) also needs to reconcile “unknown editions are not guessed” with automatically validating
+> pre-2004 files against 106-04. That can be useful compatibility checking, but should not be presented as validation against the file’s actual edition. Sources: Chapter 9 Table 9-2
+> (https://www.irig106.org/docs/106-24R1/chapter9.pdf), Chapter 11 §11.2.7.2 (https://www.irig106.org/docs/106-24R1/chapter11.pdf).

@@ -579,6 +579,87 @@ L1-EXT-004, and the register report in `scripts/build-trace-matrix.py`.
 Also corrected: the T4 documents gave the D-group fragment counter as
 `D-x\MNF\N-y-n`; it is `D-x\MNF\N-y-n-m` (Table 9-7).*
 
+**T6. Separate the TMATS edition, the recording-format version, and the
+validation rules selected.** Verified against the archived editions:
+
+- *`G\106` declares the edition that generated the TMATS file, as two
+  digits*: "Version of RCC IRIG 106 standard used to generate this TMATS
+  file. The last 2 digits of the year should be used. Use a leading 0 if
+  necessary." "Range: 0 to 99" (Table 9-2, 106-24R1). `24` cannot tell 106-24
+  from 106-24R1 (their Chapter 9 is identical, ADR-0016); "should" makes the
+  two-digit form a recommendation, and "0 to 99" admits `4` for `04`.
+- *Also found — the format is recent*: the year rule first appears in 106-17.
+  106-05 and 106-07 say only "VERSION OF IRIG 106 STANDARD USED TO GENERATE
+  THIS TMATS FILE"; 106-13 adds a maximum field size of 2. Files written to
+  earlier editions may hold other forms.
+- *RCCVER declares what the recorded data complies with, not the TMATS
+  edition*: "Bits 7-0 specify which RCC release version applies and to which
+  the following recorded data complies with" (Chapter 11, 106-24R1), whose
+  newest code is still "0x0E = RCC 106-22". In 106-07 the same byte was
+  CH10VER: "which IRIG-106 Chapter 10 release version the recorder
+  requirements and following recorded data are applicable to and comply
+  with", with only `0x07` defined.
+- *Also found — older recordings declare nothing*: in 106-05 the setup
+  record's channel-specific data word is "Reserved. (Bits 31-0)". A 106-04 or
+  106-05 recording carries no version, so a reserved or zero value there is
+  "not declared", not an error.
+- *Therefore the two declarations answer different questions*, and differing
+  labels are normal: `G\106` = `24` with RCCVER `0x0E` is consistent (0x0E
+  means "106-22 or later"). L1-EDN-002 currently reports "any disagreement
+  between sources", and ADR-0016 validates pre-2004 files "against the oldest
+  known edition" while saying unknown editions are "not guessed".
+
+Mapping: revises ADR-0016 (a new ADR partly superseding it), L1-EDN-002, and
+UC-04; refines INT-012 and ARCHITECTURE section 6.5; touches `docs/CLI.md`
+(what `tmats` shows); no conflict with T1–T5. Plan:
+
+1. *Two declarations, kept apart and preserved*:
+   - **TMATS edition declared** — `G\106`'s raw value and its reading: the
+     candidate editions (`24` → 106-24 or 106-24R1), or "unrecognised" for a
+     value that is not a year of an edition (kept verbatim, never guessed).
+   - **Recording-format version declared** — per setup record, the CSDW's
+     RCCVER/CH10VER raw value and its reading for the recording's era
+     (`0x0E` → "106-22 or later"; reserved in 106-07's table; "not declared"
+     where the field did not exist).
+   Neither is rewritten from the other.
+2. *No automatic conflict finding*: differing declarations are shown side by
+   side and are not a finding by default — TMATS written to one edition may
+   legitimately describe a recording that complies with another. A user who
+   wants them flagged adds a rule (ADR-0006).
+3. *The validation edition, selected and labelled*: the report states the
+   edition whose rules were applied and **its basis** — caller override;
+   declared by `G\106`; or an explicit **fallback** with its reason (for
+   example "`G\106` missing: rules of 106-22 or later taken from RCCVER" or
+   "baseline 106-24R1"). When `G\106` has two candidates with identical
+   Chapter 9 rules, either may be named; when their rules differ, the choice
+   is a reviewed interpretation.
+4. *Compatibility checking is not validation*: for pre-2004, unrecognised,
+   or future editions, the library does not claim to validate against the
+   file's edition. It may run a **compatibility check** against a named
+   edition (106-04, or the baseline) when the caller or the default policy
+   asks, and every report calls it that. This reconciles ADR-0016's two
+   statements.
+5. *Register entries*: `G\106`'s two digits and the 106-24/106-24R1 pair;
+   `G\106` forms before 106-17; RCCVER meaning and "not declared" before
+   106-07 (refining INT-012).
+6. *Tests*: `24` with `0x0E` gives no finding and names 106-24R1 as the
+   rules applied, declared by `G\106`; `4` is read as 106-04 with a note;
+   `G\106` missing gives a labelled fallback; `96` gives a compatibility
+   check against 106-04 and never "validated against 106-96"; a 106-05
+   recording's zero CSDW is "not declared"; `2024` is unrecognised and
+   preserved.
+
+Documents affected: a new ADR (partly superseding ADR-0016), ADR-0016
+(status pointer), L1-EDN-002 revised and new L1 requirements for the
+declarations and the labelled validation basis, `docs/USE-CASES.md`
+(UC-04, UC-06), ARCHITECTURE (section 6.5 and a section for T6),
+`docs/INTERPRETATIONS.md`, and `docs/CLI.md`.
+**Owner decision needed:** the default when `G\106` is missing or
+unrecognised and no override is given — (a) apply a labelled fallback
+(RCCVER's edition, else the baseline) and continue, or (b) validate nothing
+edition-specific and ask for an override. Recommendation: (a), because a
+labelled fallback is still useful and says plainly what it is.
+
 ### Suspect findings to confirm against real data
 
 Findings accepted into the design but held in doubt by the owner until they
