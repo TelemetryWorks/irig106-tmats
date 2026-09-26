@@ -378,6 +378,75 @@ section 6, the system-context and data-flow diagrams, ADR-0025 (with a status
 pointer on ADR-0019), L1-CH10-001 and L1-CLI-003 revised, L1-CH10-004 to 006,
 L1-CLI-008, L1-VIEW-005.*
 
+**T4. Define counter scopes, key namespaces, and ambiguous links
+precisely.** Verified against 106-24R1 Chapter 9:
+
+- *X-group occurrences*: "The values of "x" in "X-x" are not necessarily
+  contiguous" (§9.5.14) — an exception to "have no missing values"
+  (§9.5.1 a).
+- *Nested counters*: 49 distinct counters carry parent indices (for example
+  `D-x\MN\N-y`, `B-x\NML\N-i-n-p`, `Q-d\NSF\N-i-n-m-o`) and count items only
+  within one parent-index combination; 37 more carry only the group
+  occurrence index. Some conditions name counters with no index at all
+  ("Allowed when: D\MNF\N > 1"), which is T1's occurrence-scope question.
+- *Keys are per attribute, not per file*: `P-d\DLN` lists "Links from: …
+  R-x\CDLN …" and "Links to: D-x\DLN, B-d\DLN", and `D-x\DLN` lists "Links
+  from: P-d\DLN". Both are keys under "Any attribute with a Links from: is a
+  key and must be unique in the TMATS file" (§9.5.1 a), yet they carry the
+  same value by design — uniqueness can only mean among the values of the
+  same attribute.
+- *Case*: "For alphanumeric data items, including keywords, either upper or
+  lower case is allowed; TMATS is not case sensitive" (§9.4.2) — so keywords
+  and link values compare case-insensitively, not only code names
+  (L1-READ-004 names only code names).
+- *Also found — an erratum in the standard's own example*: Appendix 9-C,
+  page C-8 of 106-24R1, prints `D-1\MML\N-1-1:2: D-1\MNF\N-1-1-1:1:
+  D-1\WP-1-1-1-1:14;` — colons where semicolons are meant, confirmed on the
+  rendered page. At least 12 such places, all after D-group counters. A
+  scanner following §9.4.2 reads each as one attribute whose value contains
+  the next ones. (A first reading that some counters appear with two index
+  depths was an artefact of PDF line wrapping, not the standard; the table
+  extractor must join wrapped code names.)
+
+Mapping: refines L1-VAL-002 and L1-READ-004, ADR-0022 (the interpretation
+layer), ADR-0023 (passes 3 and 4), and the "ambiguous" effective-value state
+of T1; affects the Appendix 9-C spec fixture; no conflict. Plan:
+
+1. *Counter declarations* in the interpretation layer: which code pattern
+   and which index position a counter governs, and its parent scope (the
+   indices held fixed). Contiguity from 1 to N applies per parent-index
+   combination unless the registry records a cited exception (the X group).
+2. *Link declarations*: each linking attribute names its target attribute(s)
+   — its namespace, for example `R-x\CDLN` → `P-d\DLN`, `B-d\DLN`, `S-d\DLN`,
+   `Q-d\DLN` — and its cardinality (exactly one, at most one, or many).
+   Resolution returns **resolved**, **unresolved**, or **ambiguous** (several
+   candidates, all listed); the library never picks one.
+3. *Key uniqueness per namespace*: a key must be unique among the values of
+   the same attribute, in the scope the registry declares (whole document or
+   within a parent occurrence); equal values across linked attributes are the
+   link, not a conflict.
+4. *Comparison rules*: code names, keywords, and link values compare
+   case-insensitively (ASCII case folding); original spelling is kept. Blanks
+   in link values are compared as written and reported (coverage item 7).
+5. *Suspected missing semicolon*: when a value contains `: ` followed by
+   something shaped like a code name, report "possible `;` typed as `:`" with
+   a suggested edit (ADR-0007) — never split silently (lossless). The
+   Appendix 9-C fixture keeps the standard's text verbatim and its test
+   expects exactly these diagnostics.
+6. *Tests*: X-group occurrences 1 and 5 (no gap reported); nested counters
+   across several parent combinations; `P-d\DLN` equal to `D-x\DLN` (no
+   conflict); two P groups with the same data-link name (ambiguous link, both
+   candidates); keyword and link-value case variants; the Appendix 9-C
+   errata.
+
+Documents affected: ARCHITECTURE (a section on counters, keys, links, and
+comparison), a new ADR (counter scope, link namespace and cardinality, key
+uniqueness, comparison rules), ADR-0022 and ADR-0023 (status pointers),
+L1-VAL-002 and L1-READ-004 revised, new L1 requirements for ambiguous links
+and the suspected-missing-semicolon diagnostic, the link-graph diagram
+(cardinality and ambiguity), and `docs/TEST-DATA.md` (the Appendix 9-C
+errata).
+
 ## Work for other repositories
 
 Findings and decisions made here that require changes in sibling

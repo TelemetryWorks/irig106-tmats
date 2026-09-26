@@ -57,3 +57,19 @@ arrive.
 >
 > Also specify payload slicing using data length, excluding packet filler/checksum and handling the optional secondary header. This belongs in the derivation of L1-CH10-001 and L1-CLI-003
 > (/C:/Users/Joey/Documents/GIT-GitHub/telemetryworks/irig106-tmats/docs/L1-REQ.md:158). Source: Chapter 11 §11.2.7.2 and §11.2.1.1 (https://www.irig106.org/docs/106-24R1/chapter11.pdf).
+
+## Priority 4 (verbatim)
+
+> 4. Define counter scopes, key namespaces, and ambiguous links precisely.
+>
+> The blanket wording in L1-VAL-002 is too broad:
+> - X-group occurrence indices are explicitly permitted to be noncontiguous.
+> - Nested counters apply within particular parent-index combinations.
+> - Key uniqueness cannot mean that every key-bearing attribute across all groups has a different value: linked P and D data-link names intentionally match.
+> - Duplicate link targets need an “ambiguous” result; preserving duplicates but silently choosing one would undermine the lossless design.
+>
+> Make each counter declare its governed index and parent scope, and each link declare its target namespace and cardinality. Apply case-insensitive comparison to keywords and link values, as well as code
+> names; L1-READ-004 currently specifies only code names.
+>
+> Sources: Chapter 9 §§9.4.2, 9.5.1, 9.5.14; Tables 9-6 and 9-7 (https://www.irig106.org/docs/106-24R1/chapter9.pdf). Affected requirement: L1-VAL-002
+> (/C:/Users/Joey/Documents/GIT-GitHub/telemetryworks/irig106-tmats/docs/L1-REQ.md:278).
