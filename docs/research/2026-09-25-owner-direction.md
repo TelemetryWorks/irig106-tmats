@@ -269,3 +269,15 @@ from the setup record's RCCVER, else the baseline 106-24R1 — and continues;
 the report names the fallback and its reason. Recorded in: `docs/ROADMAP.md`
 (T6), ADR-0028, `docs/ARCHITECTURE.md` section 9, `docs/L1-REQ.md`,
 `docs/USE-CASES.md` (UC-04, UC-06), `docs/INTERPRETATIONS.md`, `docs/CLI.md`.
+
+## 21. Interpretations need intensive testing and deep analysis (2026-09-26)
+
+> Lets mark each one requiring intensive testing and deep analysis during development
+
+Applied to every entry of the interpretation register (INT-001 to INT-017,
+and every entry added later): each is marked as requiring intensive testing
+and deep analysis during development, defined in the register's conventions
+— a written analysis before implementation, and tests beyond the single
+focused test. The trace matrix reports each entry's analysis and tests.
+Recorded in: `docs/INTERPRETATIONS.md`, `docs/ROADMAP.md`,
+`scripts/build-trace-matrix.py`, `CLAUDE.md`.

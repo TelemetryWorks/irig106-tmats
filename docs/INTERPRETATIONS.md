@@ -30,6 +30,27 @@ listed here.
   it, and reports entries without one.
 - **Origin** is the team-review item or finding that raised it
   (`docs/ROADMAP.md`).
+- **Development** — every entry is marked **intensive testing and deep
+  analysis required** (owner direction, 2026-09-26). An interpretation is
+  where the design departs from a literal reading of the standard, so it is
+  where a mistake is most likely and least visible. Before its code is
+  written and before its status can change, the entry needs:
+  1. **A written analysis** — a dated record in `docs/research/`, linked
+     from the entry's **Analysis** field, that re-reads every cited source in
+     every archived edition the entry touches (not only the baseline), looks
+     for further sources that bear on it (other tables, appendices, examples,
+     the RCC 123 and 124 handbooks), lists the edge cases, and states whether
+     the chosen behaviour still holds.
+  2. **Intensive tests** — beyond the focused test: one test per edge case
+     the analysis lists; a property or fuzz test wherever inputs can be
+     generated (values, case, ordering, indices, editions); a fixture from
+     each archived edition the entry touches; and, where local sample
+     recordings exercise it, a check against real data (`docs/TEST-DATA.md`;
+     local only, never in CI). All carry the entry's marker.
+  3. **Both reviewers** (Review) read the analysis as well as the rule.
+  The trace matrix shows each entry's analysis and tests; an entry with
+  either missing is not ready.
+- **Analysis** links the written analysis, or says `not yet written`.
 
 ---
 
@@ -52,6 +73,8 @@ listed here.
 
 **Test**: `r_channel_data_link_name_resolves_to_q_group`
 
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
 ### INT-002
 
 **Title**: Sub-channel and network names tie to B, S, and Q, although no "Links" field says so
@@ -73,6 +96,8 @@ listed here.
 
 **Test**: `sub_channel_and_network_names_resolve_to_their_groups`
 
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
 ### INT-003
 
 **Title**: "All valid paths are documented" in the Links fields — they are not
@@ -89,6 +114,8 @@ listed here.
 
 **Test**: `one_sided_relationship_without_register_entry_fails_generation`
 
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
 ### INT-004
 
 **Title**: Index letters in code-name references are placeholders
@@ -104,6 +131,8 @@ listed here.
 **Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T4
 
 **Test**: `pcm_data_link_name_links_to_bus_data_link_name`
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
 ### INT-005
 
@@ -123,6 +152,8 @@ listed here.
 
 **Test**: `pcm_channel_carrying_bus_data_resolves_to_p_group`
 
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
 ### INT-006
 
 **Title**: `H\TA` ties the H group to the G group by test item
@@ -138,6 +169,8 @@ listed here.
 **Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T5
 
 **Test**: `h_group_test_item_ties_to_g_group`
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
 ## Conditions and keywords
 
@@ -158,6 +191,8 @@ listed here.
 
 **Test**: `q_group_allowed_for_fibre_channel`
 
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
 ### INT-008
 
 **Title**: `C-d\DPNO`'s condition names `C\DCT` without an index
@@ -172,6 +207,8 @@ listed here.
 **Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T1
 
 **Test**: `derived_occurrences_default_to_one_in_same_occurrence`
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
 ### INT-009
 
@@ -188,6 +225,8 @@ listed here.
 
 **Test**: `fragment_position_allowed_only_when_its_own_location_has_fragments`
 
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
 ### INT-010
 
 **Title**: Equality is `==`, although Table E-3 prints `= =`
@@ -203,6 +242,8 @@ listed here.
 **Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T2
 
 **Test**: `spaced_equality_operator_is_accepted_with_warning`
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
 ## Chapter 10 setup records
 
@@ -221,6 +262,8 @@ listed here.
 
 **Test**: `multi_packet_setup_record_is_assembled` (`docs/TEST-DATA.md`)
 
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
 ### INT-012
 
 **Title**: RCCVER `0x0E` means "106-22 or later"
@@ -235,6 +278,8 @@ listed here.
 **Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T3
 
 **Test**: `rccver_0x0e_reads_as_106_22_or_later`
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
 ## Errata in the standard's own examples
 
@@ -254,6 +299,8 @@ listed here.
 
 **Test**: `appendix_9c_example_reports_suspected_semicolons` (`docs/TEST-DATA.md`)
 
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
 ## Editions and versions
 
 ### INT-014
@@ -272,6 +319,8 @@ listed here.
 
 **Test**: `g106_24_names_106_24_and_106_24r1`
 
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
 ### INT-015
 
 **Title**: `G\106` had no defined format before 106-17
@@ -288,6 +337,8 @@ listed here.
 **Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T6
 
 **Test**: `g106_other_forms_are_unrecognised_and_preserved`
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
 ### INT-016
 
@@ -306,6 +357,8 @@ listed here.
 
 **Test**: `zero_csdw_version_is_not_declared`
 
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
 ### INT-017
 
 **Title**: The fallback edition taken from RCCVER
@@ -321,3 +374,5 @@ listed here.
 **Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T6
 
 **Test**: `missing_g106_falls_back_to_rccver_edition_labelled`
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written

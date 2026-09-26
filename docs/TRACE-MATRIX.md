@@ -231,29 +231,31 @@ The countable requirement set is every L2 and L3 requirement plus the 70 L1 *lea
 
 ### Interpretation register
 
-Every entry of `docs/INTERPRETATIONS.md` with the tests that name it (`/// Interpretations: INT-NNN`). An entry without a test is not yet pinned.
+Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests that name it (`/// Interpretations: INT-NNN`). Every entry requires intensive testing and deep analysis during development (the register's conventions); an entry missing either is not ready.
 
-| Entry | Title | Design | Tests |
-|-------|-------|--------|-------|
-| INT-001 | The R group's data-link names reach the Q group, although R's "Links to:" omits Q | accepted (owner, 2026-09-26) | _(none)_ |
-| INT-002 | Sub-channel and network names tie to B, S, and Q, although no "Links" field says so | accepted (owner, 2026-09-26) | _(none)_ |
-| INT-003 | "All valid paths are documented" in the Links fields — they are not | accepted (owner, 2026-09-26) | _(none)_ |
-| INT-004 | Index letters in code-name references are placeholders | accepted (owner, 2026-09-26) | _(none)_ |
-| INT-005 | The channel data type selects among overlapping link targets | accepted (owner, 2026-09-26) | _(none)_ |
-| INT-006 | `H\TA` ties the H group to the G group by test item | accepted (owner, 2026-09-26) | _(none)_ |
-| INT-007 | The Q group's condition names `FBCIN`, which is not a channel type | accepted (owner, 2026-09-26) | _(none)_ |
-| INT-008 | `C-d\DPNO`'s condition names `C\DCT` without an index | accepted (owner, 2026-09-26) | _(none)_ |
-| INT-009 | Counters named without indices in conditions | accepted (owner, 2026-09-26) | _(none)_ |
-| INT-010 | Equality is `==`, although Table E-3 prints `= =` | accepted (owner, 2026-09-26) | _(none)_ |
-| INT-011 | Where one multi-packet setup record ends | accepted (owner, 2026-09-26) | _(none)_ |
-| INT-012 | RCCVER `0x0E` means "106-22 or later" | accepted (owner, 2026-09-26) | _(none)_ |
-| INT-013 | Appendix 9-C ends 18 attributes with `:` instead of `;` | suspect (owner, 2026-09-26; `docs/ROADMAP.md`, S1) | _(none)_ |
-| INT-014 | `G\106` gives two year digits, so one value can name two editions | accepted (owner, 2026-09-26) | _(none)_ |
-| INT-015 | `G\106` had no defined format before 106-17 | accepted (owner, 2026-09-26) | _(none)_ |
-| INT-016 | What the setup record's version byte declares, and when it did not exist | accepted (owner, 2026-09-26) | _(none)_ |
-| INT-017 | The fallback edition taken from RCCVER | accepted (owner, 2026-09-26) | _(none)_ |
+| Entry | Title | Design | Analysis | Tests |
+|-------|-------|--------|----------|-------|
+| INT-001 | The R group's data-link names reach the Q group, although R's "Links to:" omits Q | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-002 | Sub-channel and network names tie to B, S, and Q, although no "Links" field says so | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-003 | "All valid paths are documented" in the Links fields — they are not | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-004 | Index letters in code-name references are placeholders | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-005 | The channel data type selects among overlapping link targets | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-006 | `H\TA` ties the H group to the G group by test item | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-007 | The Q group's condition names `FBCIN`, which is not a channel type | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-008 | `C-d\DPNO`'s condition names `C\DCT` without an index | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-009 | Counters named without indices in conditions | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-010 | Equality is `==`, although Table E-3 prints `= =` | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-011 | Where one multi-packet setup record ends | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-012 | RCCVER `0x0E` means "106-22 or later" | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-013 | Appendix 9-C ends 18 attributes with `:` instead of `;` | suspect (owner, 2026-09-26; `docs/ROADMAP.md`, S1) | not yet written | _(none)_ |
+| INT-014 | `G\106` gives two year digits, so one value can name two editions | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-015 | `G\106` had no defined format before 106-17 | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-016 | What the setup record's version byte declares, and when it did not exist | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-017 | The fallback edition taken from RCCVER | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 
+* Entries without a written analysis: **17** of 17
 * Entries without a test: **17** of 17
+* Entries missing the development mark: **0**
 
 ### Marker reference check
 

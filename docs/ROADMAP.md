@@ -140,6 +140,11 @@ raised seven priorities plus further comments; the text is recorded verbatim
 in `docs/research/2026-09-26-team-design-review.md`. Each priority is
 checked against the archived standard, mapped to the existing documents and
 the coverage items above, and planned here. Items are added as they arrive.
+Every interpretation the review produces goes into `docs/INTERPRETATIONS.md`,
+and **every entry there requires intensive testing and deep analysis during
+development** (owner, 2026-09-26): a written analysis across every archived
+edition it touches, and tests beyond the focused one, before its code is
+written.
 
 **T1. Make the registry an executable specification, with reviewed
 interpretations.** *Applied 2026-09-26: `docs/ARCHITECTURE.md` section 4,

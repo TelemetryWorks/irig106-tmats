@@ -181,7 +181,10 @@ as specifications.
 - **Record every interpretation.** Where the standard is inconsistent,
   incomplete, or silent, add an entry to `docs/INTERPRETATIONS.md` (sources
   quoted verbatim, behaviour, reason, test) before relying on it; never
-  assume the Chapter 9 tables are complete (ADR-0027).
+  assume the Chapter 9 tables are complete (ADR-0027). Every entry requires
+  intensive testing and deep analysis during development — a written
+  analysis in `docs/research/` and tests beyond the focused one, as the
+  register's conventions define — before its code is written.
 - **Keep `docs/PROJECT_STRUCTURE.md` current** in the same commit as any
   structural change.
 

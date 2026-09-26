@@ -55,6 +55,8 @@ REQ_ID_PATTERN = re.compile(r"L(?P<level>[123])-(?P<cat>[A-Z0-9]+)-(?P<num>\d+)"
 INT_ID_PATTERN = re.compile(r"INT-\d{3}")
 INT_TITLE = re.compile(r"^\*\*Title\*\*:\s+([^\n]+)$", re.MULTILINE)
 INT_DESIGN = re.compile(r"^\*\*Design\*\*:\s+([^·\n]+)", re.MULTILINE)
+INT_DEVELOPMENT = re.compile(r"^\*\*Development\*\*:\s+([^·\n]+)", re.MULTILINE)
+INT_ANALYSIS = re.compile(r"\*\*Analysis\*\*:\s+([^·\n]+)")
 L1_HEADER = re.compile(r"^###\s+(L1-[A-Z0-9]+-\d+)\s*$", re.MULTILINE)
 L2_PARENT_LINE = re.compile(r"^\*\*Parent\*\*:\s+(L1-[A-Z0-9]+-\d+)\s*$", re.MULTILINE)
 L3_LINE = re.compile(
@@ -152,16 +154,24 @@ def parse_l3(doc: str) -> tuple[dict[str, str], dict[str, set[str]], dict[str, l
     return parent, methods, evidence
 
 
-def parse_interpretations(doc: str) -> list[tuple[str, str, str]]:
-    """Return (id, title, design status) for each register entry, in order."""
+def parse_interpretations(doc: str) -> list[tuple[str, str, str, str, str]]:
+    """Return (id, title, design status, development mark, analysis) for each
+    register entry, in order. An empty analysis or ``not yet written`` means
+    the entry's written analysis does not exist yet."""
     parts = re.split(r"^###\s+(INT-\d{3})\s*$", doc, flags=re.MULTILINE)
     entries = []
     for i in range(1, len(parts), 2):
         body = parts[i + 1] if i + 1 < len(parts) else ""
         title = m.group(1).strip() if (m := INT_TITLE.search(body)) else ""
         design = m.group(1).replace("*", "").strip() if (m := INT_DESIGN.search(body)) else ""
-        entries.append((parts[i], title, design))
+        development = m.group(1).strip() if (m := INT_DEVELOPMENT.search(body)) else ""
+        analysis = m.group(1).strip() if (m := INT_ANALYSIS.search(body)) else ""
+        entries.append((parts[i], title, design, development, analysis))
     return entries
+
+
+def _analysis_written(analysis: str) -> bool:
+    return bool(analysis) and analysis.lower() != "not yet written"
 
 
 _FN_DECL = re.compile(r"^\s*(?:pub\s+)?(?:async\s+)?fn\s+(\w+)\s*[(<]")
@@ -428,17 +438,29 @@ def build_matrix() -> str:
     out += [f"* {r} -> parent {l3_parent[r]} not in L2-REQ.md" for r in orphan_l3]
     out.append("")
 
-    untested = [i for i, _, _ in interpretations if not markers.get(i)]
+    untested = [e[0] for e in interpretations if not markers.get(e[0])]
+    unanalysed = [e[0] for e in interpretations if not _analysis_written(e[4])]
+    unmarked = [e[0] for e in interpretations if not e[3]]
     out += ["### Interpretation register", "",
-            "Every entry of `docs/INTERPRETATIONS.md` with the tests that name it "
-            "(`/// Interpretations: INT-NNN`). An entry without a test is not yet pinned.", "",
-            "| Entry | Title | Design | Tests |",
-            "|-------|-------|--------|-------|"]
-    for int_id, title, design in interpretations:
-        out.append(f"| {int_id} | {title} | {design} | {artifacts_cell(markers.get(int_id, []))} |")
-    out += ["", f"* Entries without a test: **{len(untested)}** of {len(interpretations)}", ""]
+            "Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests "
+            "that name it (`/// Interpretations: INT-NNN`). Every entry requires intensive "
+            "testing and deep analysis during development (the register's conventions); an "
+            "entry missing either is not ready.", "",
+            "| Entry | Title | Design | Analysis | Tests |",
+            "|-------|-------|--------|----------|-------|"]
+    for int_id, title, design, _, analysis in interpretations:
+        out.append(
+            f"| {int_id} | {title} | {design} | {analysis or '_(missing)_'} | "
+            f"{artifacts_cell(markers.get(int_id, []))} |"
+        )
+    out += ["",
+            f"* Entries without a written analysis: **{len(unanalysed)}** of {len(interpretations)}",
+            f"* Entries without a test: **{len(untested)}** of {len(interpretations)}",
+            f"* Entries missing the development mark: **{len(unmarked)}**"]
+    out += [f"* {i} has no **Development** line" for i in unmarked]
+    out.append("")
 
-    known = set(l1_ids) | set(l2_parent) | set(l3_parent) | {i for i, _, _ in interpretations}
+    known = set(l1_ids) | set(l2_parent) | set(l3_parent) | {e[0] for e in interpretations}
     unknown = sorted(set(markers) - known, key=_sort_key)
     out += ["### Marker reference check", "",
             f"* Markers referencing unknown requirement or interpretation ids: **{len(unknown)}**"]
