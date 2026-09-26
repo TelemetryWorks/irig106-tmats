@@ -19,3 +19,4 @@ dated record.
 | [2026-09-25-editions-and-extensibility.md](2026-09-25-editions-and-extensibility.md) | IRIG 106 editions and Chapter 9 changes, multi-edition support, extensibility, performance, repair-as-suggestions; the Chapter 9 text relied on |
 | [2026-09-25-irig106org-tools.md](2026-09-25-irig106org-tools.md) | `igDisplayTMATS`, `idmptmat`, `irig106lib`: the owner's `CONVERSATION.md` verbatim, what was verified, what "TMATS signatures" are, defects found |
 | [2026-09-26-team-design-review.md](2026-09-26-team-design-review.md) | The team's design review of the architecture, ADRs, and L1, verbatim (items appended as they arrive) |
+| [2026-09-26-consumer-survey.md](2026-09-26-consumer-survey.md) | What the other `irig106-*` repositories expect from TMATS today, problems in their current use, and the needs none states yet (input to follow-up F4) |

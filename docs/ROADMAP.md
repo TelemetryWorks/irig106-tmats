@@ -807,7 +807,55 @@ owner decides; the decision is then recorded in
 | F1 | What should happen when a document holds two or more `G\SHA` items? | "Three decisions I need way more information to understand what those mean and the concequences of our decision." (2026-09-26) — needs a detailed explanation of each possible policy and its consequences for verification, stamping, and recordings already in the field. | INT-021; L1-SUM-002; ADR-0029 |
 | F2 | What should happen when an edit removes an attribute that X extensions point to? | As F1: needs the options and their consequences for editing, for vendors' extensions, and for §9.5.14's "preserve it". | INT-022; L1-WRT-003; ADR-0029 |
 | F3 | Should the reader suggest `:` where `=` was typed, as in Chapter 6's own `G\DSI\N=18;`? | As F1: needs the options and the risk of a suggestion that is wrong. | INT-023; `docs/TEST-DATA.md` E3 |
-| F4 | What does processing the TMATS setup record give the rest of Chapter 10 processing — `irig106-core`, `irig106-decode`, and the other consumers? | "When I am processing a CH.10 file what do I expect processing the TMATS packet to provide to the other parts of the processing … We need to document this in great detail." (2026-09-26) | A new detailed document (plan pending the owner's review) |
+| F4 | What does processing the TMATS setup record give the rest of Chapter 10 processing — `irig106-core`, `irig106-decode`, and the other consumers? | "When I am processing a CH.10 file what do I expect processing the TMATS packet to provide to the other parts of the processing … We need to document this in great detail." (2026-09-26) | `docs/TMATS-IN-CHAPTER-10.md` (plan below, pending the owner's review) |
+
+**Plan for F4.** Input: the survey of the other repositories
+(`docs/research/2026-09-26-consumer-survey.md`) — no repository yet states
+most of what a decoder needs from TMATS. The document
+`docs/TMATS-IN-CHAPTER-10.md` answers the question in these sections:
+
+1. *What `irig106-tmats` is for* — its purpose in one page: turn the setup
+   records of a recording (or a TMATS file) into a verified, queryable
+   description of the recording; what it deliberately does not do (read
+   files, decode data, evaluate conversions).
+2. *Where TMATS sits in Chapter 10 processing* — a diagram: file →
+   `irig106-core` (packets) → setup-record fragments → `irig106-tmats` →
+   the description → `irig106-decode`, `irig106-time`, `irig106-index`,
+   `irig106-studio`, `irig106-ch10-reader`, `irig106-cli`; and
+   `irig106-write` in the other direction.
+3. *What the description answers*, one question at a time, each with the
+   Chapter 9 attributes that answer it (verified and cited from 106-24R1),
+   what the library returns (views, effective values, link results), and
+   which consumer needs it: what is channel N, and is it enabled; how are its
+   packets packed; what format do its data follow (PCM frame, bus messages,
+   message data); where is each measurement in that format; how is each
+   measurement converted to engineering units, and how are derived
+   parameters defined; which channel carries time, in what format; which
+   edition and recording version the file declares; is the TMATS intact.
+4. *Contracts per consumer* — for each repository: what it gives
+   `irig106-tmats`, what it gets back, what it must not do itself (for
+   example, parse TMATS text, or extract it by channel ID alone as studio
+   does today).
+5. *Configuration over a recording* — several setup records, the
+   configuration-change bit, and how a consumer learns which setup record
+   governs which packets.
+6. *When TMATS is missing, wrong, or disagrees with the data* — no setup
+   record, XML, a damaged record, channels in the data but not in TMATS and
+   the reverse, disabled channels, data types that differ.
+7. *A worked example* — the standard's own Appendix 9-C recording traced
+   from a recorder channel to its PCM format, a measurement's location, and
+   its conversion: exactly what `irig106-decode` would receive.
+8. *What changes as a result* — new use cases (time source, configuration
+   over a recording, checking packets against TMATS), new or revised L1
+   requirements, register entries, and new rows for "Work for other
+   repositories" (studio's extraction and group names, the time
+   repository's diagram, `irig106-rust`'s "Format 0") — proposed for the
+   owner's review, with no issues filed elsewhere.
+
+Method: every attribute and rule cited is verified against the archived
+standard first, the findings recorded in `docs/research/`; sections are
+written one at a time for the owner's review, each with a diagram where it
+helps.
 
 ## Work for other repositories
 
