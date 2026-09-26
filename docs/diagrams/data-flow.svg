@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 470" role="img" aria-label="Data flow: bytes are scanned once into an immutable Document; the Document feeds views and the validator from one side while the spec-cited registry, with a user overlay on top, feeds them from the other; validation produces findings with suggested edits; only the caller applies chosen edits as a patch list; the writer emits the original bytes with the patches.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 650" role="img" aria-label="Data flow: bytes are scanned once into an immutable Document; the Document's values and the registry's reviewed interpretations meet in a read-through layer of link graph, effective-value resolver, and condition evaluator; views and a four-pass validator read only through that layer; validation offers suggested edits; only the caller applies chosen edits as a patch list; the writer emits the original bytes with the patches.">
   <style>
     text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; fill: #1f2328; }
     .t { font-size: 15px; font-weight: 600; }
@@ -7,13 +7,15 @@
     .box { fill: #f6f8fa; stroke: #57606a; stroke-width: 1.2; }
     .hl { fill: #ddf4ff; stroke: #0969da; stroke-width: 1.6; }
     .usr { fill: #fff8c5; stroke: #9a6700; stroke-width: 1.2; }
+    .grp { fill: none; stroke: #0969da; stroke-width: 1.2; stroke-dasharray: 6 4; }
     .ln { stroke: #57606a; stroke-width: 1.3; fill: none; }
     .cl { stroke: #9a6700; stroke-width: 1.6; fill: none; }
     .ah { fill: #57606a; } .ahc { fill: #9a6700; }
     @media (prefers-color-scheme: dark) {
       text { fill: #e6edf3; } .l { fill: #9198a1; }
       .box { fill: #161b22; stroke: #9198a1; } .hl { fill: #0c2d6b; stroke: #4493f8; }
-      .usr { fill: #3b2e00; stroke: #d29922; } .ln { stroke: #9198a1; } .cl { stroke: #d29922; }
+      .usr { fill: #3b2e00; stroke: #d29922; } .grp { stroke: #4493f8; }
+      .ln { stroke: #9198a1; } .cl { stroke: #d29922; }
       .ah { fill: #9198a1; } .ahc { fill: #d29922; }
     }
   </style>
@@ -24,86 +26,92 @@
 
   <text class="t" x="20" y="30">Data flow through irig106-tmats</text>
 
-  <!-- input and scanner -->
-  <rect class="box" x="20" y="100" width="120" height="56" rx="6"/>
-  <text class="b" x="80" y="124" text-anchor="middle">TMATS bytes</text>
-  <text class="l" x="80" y="142" text-anchor="middle">file or 0x01 payload</text>
-  <rect class="hl" x="180" y="100" width="130" height="56" rx="6"/>
-  <text class="b" x="245" y="124" text-anchor="middle">Scanner</text>
-  <text class="l" x="245" y="142" text-anchor="middle">one pass over bytes</text>
-  <path class="ln" d="M140,128 L180,128" marker-end="url(#a)"/>
-
-  <!-- document -->
-  <rect class="hl" x="350" y="56" width="230" height="210" rx="8"/>
-  <text class="b" x="465" y="80" text-anchor="middle">Document (immutable)</text>
-  <text x="368" y="106">owned byte buffer</text>
-  <text x="368" y="128">items: code span, value span, key</text>
-  <text x="368" y="150">keys: interned, case-folded</text>
-  <text x="368" y="172">index: key → item ids</text>
-  <text x="368" y="194">G\SHA digest (same pass)</text>
-  <text x="368" y="216">diagnostics with spans</text>
-  <text class="l" x="368" y="244">never aborts · Send + Sync</text>
-  <path class="ln" d="M310,128 L350,128" marker-end="url(#a)"/>
-  <text class="l" x="330" y="120" text-anchor="middle">builds</text>
-
-  <!-- middle column -->
-  <rect class="box" x="640" y="56" width="170" height="64" rx="6"/>
-  <text class="b" x="725" y="80" text-anchor="middle">Views and links</text>
-  <text class="l" x="725" y="98" text-anchor="middle">Recorder · Channel · PCM…</text>
-  <text class="l" x="725" y="112" text-anchor="middle">values parsed lazily</text>
-  <rect class="box" x="640" y="140" width="170" height="56" rx="6"/>
-  <text class="b" x="725" y="164" text-anchor="middle">Validator</text>
-  <text class="l" x="725" y="182" text-anchor="middle">rules from registry + policy</text>
-  <rect class="box" x="640" y="240" width="170" height="56" rx="6"/>
-  <text class="b" x="725" y="264" text-anchor="middle">Report</text>
-  <text class="l" x="725" y="282" text-anchor="middle">findings + suggested edits</text>
-
-  <path class="ln" d="M580,88 L640,88" marker-end="url(#a)"/>
-  <text class="l" x="610" y="80" text-anchor="middle">reads</text>
-  <path class="ln" d="M580,168 L640,168" marker-end="url(#a)"/>
-  <text class="l" x="610" y="160" text-anchor="middle">checks</text>
-  <path class="ln" d="M725,196 L725,240" marker-end="url(#a)"/>
+  <!-- band 1: bytes, scanner, document -->
+  <rect class="box" x="20" y="70" width="120" height="56" rx="6"/>
+  <text class="b" x="80" y="94" text-anchor="middle">TMATS bytes</text>
+  <text class="l" x="80" y="112" text-anchor="middle">file or 0x01 payload</text>
+  <rect class="hl" x="180" y="70" width="130" height="56" rx="6"/>
+  <text class="b" x="245" y="94" text-anchor="middle">Scanner</text>
+  <text class="l" x="245" y="112" text-anchor="middle">one pass over bytes</text>
+  <path class="ln" d="M140,98 L180,98" marker-end="url(#a)"/>
+  <rect class="hl" x="350" y="56" width="300" height="84" rx="8"/>
+  <text class="b" x="500" y="80" text-anchor="middle">Document (immutable)</text>
+  <text x="500" y="102" text-anchor="middle">bytes · items · keys · index</text>
+  <text x="500" y="122" text-anchor="middle">G\SHA digest · diagnostics</text>
+  <path class="ln" d="M310,98 L350,98" marker-end="url(#a)"/>
+  <text class="l" x="330" y="90" text-anchor="middle">builds</text>
 
   <!-- registry and overlay -->
-  <rect class="box" x="850" y="56" width="130" height="140" rx="6"/>
-  <text class="b" x="915" y="80" text-anchor="middle">Registry</text>
-  <text class="l" x="915" y="100" text-anchor="middle">spec-cited tables</text>
-  <text class="l" x="915" y="116" text-anchor="middle">edition-tagged</text>
-  <text class="l" x="915" y="132" text-anchor="middle">Allowed/Required</text>
-  <text class="l" x="915" y="148" text-anchor="middle">Links to/from · Range</text>
-  <text class="l" x="915" y="164" text-anchor="middle">generated, static</text>
-  <path class="ln" d="M850,88 L810,88" marker-end="url(#a)"/>
-  <text class="l" x="830" y="80" text-anchor="middle">defs</text>
-  <path class="ln" d="M850,168 L810,168" marker-end="url(#a)"/>
-  <text class="l" x="830" y="160" text-anchor="middle">rules</text>
+  <rect class="box" x="20" y="190" width="290" height="116" rx="6"/>
+  <text class="b" x="165" y="214" text-anchor="middle">Registry (generated, static)</text>
+  <text x="36" y="238">source layer: cited table text</text>
+  <text x="36" y="258">interpretation layer: reviewed rules</text>
+  <text class="l" x="36" y="278">two reviewers · source-text hash</text>
+  <text class="l" x="36" y="294">built as in registry-pipeline.svg</text>
+  <rect class="usr" x="20" y="340" width="290" height="56" rx="6"/>
+  <text class="b" x="165" y="364" text-anchor="middle">User overlay (checked first)</text>
+  <text class="l" x="165" y="382" text-anchor="middle">own definitions · overrides · policy · rules</text>
+  <path class="ln" d="M165,340 L165,306" marker-end="url(#a)"/>
 
-  <rect class="usr" x="1010" y="76" width="130" height="100" rx="6"/>
-  <text class="b" x="1075" y="100" text-anchor="middle">User overlay</text>
-  <text class="l" x="1075" y="120" text-anchor="middle">own definitions</text>
-  <text class="l" x="1075" y="136" text-anchor="middle">overrides · V/X</text>
-  <text class="l" x="1075" y="152" text-anchor="middle">severity policy · rules</text>
-  <path class="ln" d="M1010,126 L980,126" marker-end="url(#a)"/>
-  <text class="l" x="1075" y="194" text-anchor="middle">checked first</text>
+  <!-- read-through layer -->
+  <rect class="grp" x="350" y="180" width="660" height="150" rx="10"/>
+  <text class="l" x="366" y="198">read-through layer — the stored bytes are never changed</text>
+  <rect class="box" x="366" y="212" width="190" height="100" rx="6"/>
+  <text class="b" x="461" y="236" text-anchor="middle">Link graph</text>
+  <text class="l" x="461" y="256" text-anchor="middle">every Links to / from</text>
+  <text class="l" x="461" y="272" text-anchor="middle">built first</text>
+  <rect class="box" x="576" y="212" width="200" height="100" rx="6"/>
+  <text class="b" x="676" y="236" text-anchor="middle">Effective-value resolver</text>
+  <text class="l" x="676" y="256" text-anchor="middle">explicit · defaulted · missing</text>
+  <text class="l" x="676" y="272" text-anchor="middle">invalid · ambiguous</text>
+  <rect class="box" x="796" y="212" width="198" height="100" rx="6"/>
+  <text class="b" x="895" y="236" text-anchor="middle">Condition evaluator</text>
+  <text class="l" x="895" y="256" text-anchor="middle">occurrence scope · links</text>
+  <text class="l" x="895" y="272" text-anchor="middle">true · false · cannot evaluate</text>
 
-  <!-- caller, patch list, writer -->
-  <rect class="usr" x="850" y="240" width="130" height="56" rx="6"/>
-  <text class="b" x="915" y="264" text-anchor="middle">Caller</text>
-  <text class="l" x="915" y="282" text-anchor="middle">chooses edits</text>
-  <path class="cl" d="M810,268 L850,268" marker-end="url(#c)"/>
-  <text class="l" x="830" y="260" text-anchor="middle">offers</text>
+  <path class="ln" d="M500,140 L500,180" marker-end="url(#a)"/>
+  <text class="l" x="508" y="166">values</text>
+  <path class="ln" d="M310,250 L350,250" marker-end="url(#a)"/>
+  <text class="l" x="330" y="242" text-anchor="middle">rules</text>
 
-  <rect class="box" x="850" y="360" width="130" height="56" rx="6"/>
-  <text class="b" x="915" y="384" text-anchor="middle">Patch list</text>
-  <text class="l" x="915" y="402" text-anchor="middle">set · insert · remove</text>
-  <path class="cl" d="M915,296 L915,360" marker-end="url(#c)"/>
-  <text class="l" x="923" y="332">applies</text>
+  <!-- consumers -->
+  <rect class="box" x="366" y="380" width="190" height="60" rx="6"/>
+  <text class="b" x="461" y="404" text-anchor="middle">Views and links</text>
+  <text class="l" x="461" y="422" text-anchor="middle">Recorder · Channel · PCM…</text>
+  <rect class="box" x="576" y="380" width="250" height="110" rx="6"/>
+  <text class="b" x="701" y="402" text-anchor="middle">Validator</text>
+  <text x="592" y="424">1 present attributes</text>
+  <text x="592" y="442">2 presence (catches missing G\106)</text>
+  <text x="592" y="460">3 counters and indices</text>
+  <text x="592" y="478">4 relationships</text>
+  <path class="ln" d="M461,330 L461,380" marker-end="url(#a)"/>
+  <path class="ln" d="M701,330 L701,380" marker-end="url(#a)"/>
+  <text class="l" x="709" y="360">reads through</text>
 
-  <rect class="hl" x="640" y="360" width="170" height="56" rx="6"/>
-  <text class="b" x="725" y="384" text-anchor="middle">Writer</text>
-  <text class="l" x="725" y="402" text-anchor="middle">original bytes + patches</text>
-  <path class="ln" d="M850,388 L810,388" marker-end="url(#a)"/>
-  <path class="ln" d="M465,266 L465,388 L640,388" marker-end="url(#a)"/>
-  <text class="l" x="552" y="380" text-anchor="middle">original bytes</text>
+  <rect class="box" x="866" y="380" width="200" height="60" rx="6"/>
+  <text class="b" x="966" y="404" text-anchor="middle">Report</text>
+  <text class="l" x="966" y="422" text-anchor="middle">findings + suggested edits</text>
+  <path class="ln" d="M826,410 L866,410" marker-end="url(#a)"/>
 
-  <text class="l" x="20" y="452">Amber marks what the user controls: the overlay on the spec registry, and which suggested edits are applied. Nothing in the library edits a document on its own.</text>
+  <rect class="usr" x="866" y="468" width="200" height="50" rx="6"/>
+  <text class="b" x="966" y="490" text-anchor="middle">Caller</text>
+  <text class="l" x="966" y="507" text-anchor="middle">chooses edits</text>
+  <path class="cl" d="M966,440 L966,468" marker-end="url(#c)"/>
+  <text class="l" x="974" y="458">offers</text>
+
+  <!-- patch list and writer -->
+  <rect class="box" x="576" y="550" width="250" height="50" rx="6"/>
+  <text class="b" x="701" y="572" text-anchor="middle">Patch list</text>
+  <text class="l" x="701" y="589" text-anchor="middle">set · insert · remove</text>
+  <path class="cl" d="M966,518 L966,534 L701,534 L701,550" marker-end="url(#c)"/>
+  <text class="l" x="840" y="528" text-anchor="middle">applies</text>
+
+  <rect class="hl" x="866" y="550" width="200" height="50" rx="6"/>
+  <text class="b" x="966" y="572" text-anchor="middle">Writer</text>
+  <text class="l" x="966" y="589" text-anchor="middle">original bytes + patches</text>
+  <path class="ln" d="M826,575 L866,575" marker-end="url(#a)"/>
+  <path class="ln" d="M650,98 L1100,98 L1100,575 L1066,575" marker-end="url(#a)"/>
+  <text class="l" x="880" y="90" text-anchor="middle">original bytes</text>
+
+  <text class="l" x="20" y="636">Amber marks what the user controls: the overlay on the registry, and which suggested edits are applied. Nothing in the library edits a document on its own.</text>
 </svg>

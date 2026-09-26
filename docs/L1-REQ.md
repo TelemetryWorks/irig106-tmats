@@ -229,9 +229,25 @@ requirements are added. The requirement entries below and the generated
 
 ### L1-REG-002
 
-**Statement**: For each attribute, the library SHALL hold the Chapter 9 usage attributes — R/R Ch 10 Status, Allowed when, Required when, Links to, Links from, Range, and Default — and the editions in which the definition was introduced, changed, or removed.
+**Statement**: For each attribute, the library SHALL hold both the Chapter 9 source text — the table row as printed, including the usage-attribute text and the definition prose, with its citation — and a reviewed, executable interpretation of it: the Allowed-when and Required-when conditions, the default and whether it comes from a Default field or the prose, the range, the links, and the editions in which the definition was introduced, changed, or removed.
 
-**Rationale**: These seven fields are Chapter 9's own definition of each attribute (§9.5.1 a); views, links, and validation derive from them (ADR-0004, ADR-0006). Delivered from 0.2.
+**Rationale**: The seven usage-attribute fields (§9.5.1 a) are necessary but not sufficient: some facts exist only in prose (`C-d\DPNO`: "Default is 1.", Table 9-11), and conditions need interpretation (team review T1; ADR-0004, ADR-0022). Delivered from 0.2.
+
+**Verification Method**: Test (T)
+
+### L1-REG-003
+
+**Statement**: Every registry interpretation SHALL record an author and a different, independent reviewer, both people, and a hash of the source text it interprets; an interpretation whose source text has changed SHALL be flagged for re-review.
+
+**Rationale**: Owner decision (2026-09-26): a two-person rule for interpretation reviews; tooling or AI drafting counts as neither person (ADR-0022). The hash catches rows changed by a new edition. Delivered from 0.2.
+
+**Verification Method**: Inspection (I)
+
+### L1-REG-004
+
+**Statement**: Each condition in the registry SHALL declare its occurrence scope (same occurrence, linked occurrence, or document-wide), whether it follows a link, and whether it uses defaulted values; a condition whose operand is missing or invalid SHALL evaluate to "cannot evaluate", never to true or false.
+
+**Rationale**: Chapter 9 writes conditions for people; for example `C-d\DPNO` is "Allowed when: C\DCT is "DER"", naming `C\DCT` without an index. Semantics are defined once so every rule is evaluated the same way (team review T1; ADR-0022). Delivered from 0.2.
 
 **Verification Method**: Test (T)
 
@@ -260,6 +276,14 @@ requirements are added. The requirement entries below and the generated
 **Statement**: The library SHALL report every link that cannot be resolved rather than omit it.
 
 **Rationale**: Silent omission hides broken configurations (UC-05, UC-14). Delivered in 0.2.
+
+**Verification Method**: Test (T)
+
+### L1-VIEW-004
+
+**Statement**: The library SHALL report the effective value of an attribute as explicit (with its location), defaulted (with the citation of the default), missing, invalid (with the raw text and the reason), or ambiguous (with the conflicting candidates), and SHALL NOT insert defaults or any other value into the stored document.
+
+**Rationale**: Views and validation must agree on every value's state, and the document stays byte-faithful (team review T1; ADR-0002, ADR-0023). Delivered from 0.2.
 
 **Verification Method**: Test (T)
 
@@ -296,6 +320,22 @@ requirements are added. The requirement entries below and the generated
 **Statement**: The library SHALL report a value longer than a recommended maximum length as a warning by default, not as an error.
 
 **Rationale**: Chapter 9 gives some ranges as "the recommended maximum length of the value"; owner decision 2026-09-25 (UC-06). Delivered in 0.3.
+
+**Verification Method**: Test (T)
+
+### L1-VAL-005
+
+**Statement**: Validation SHALL report every required attribute that is absent, evaluating each Required-when and R/R Ch 10 Status rule for every occurrence to which it applies.
+
+**Rationale**: A pass over present attributes cannot report an absent one; `G\106` is "Required when: Always" (Table 9-2) and must be reported when missing (team review T1; ADR-0023). Delivered in 0.3.
+
+**Verification Method**: Test (T)
+
+### L1-VAL-006
+
+**Statement**: Validation SHALL report each finding with the pass that produced it — present attributes, presence, counters and indices, or relationships — and SHALL report a condition that cannot be evaluated as a finding of its own.
+
+**Rationale**: Separate passes make absences, counters, and links each checked deliberately; "cannot evaluate" is never hidden (team review T1; ADR-0022, ADR-0023). Delivered in 0.3.
 
 **Verification Method**: Test (T)
 

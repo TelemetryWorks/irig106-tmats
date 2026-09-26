@@ -70,8 +70,12 @@ architecture must honour:
   serialize reproduces the input unless the caller asks for normalization.
 - **Registry-driven.** Chapter 9 attribute definitions live in one data-driven
   registry, generated into a checked-in source file by a script (no
-  `build.rs`). Every entry cites the edition, table, and row it came from, and
-  records the edition that introduced, changed, or removed it.
+  `build.rs`). Every entry holds the source text as printed, with its
+  citation, and a reviewed, executable interpretation; each interpretation
+  names an author and a different reviewer (two people — tooling or AI
+  counts as neither) and is re-reviewed when its source text changes
+  (ADR-0022). Validation runs four passes over effective values and never
+  inserts defaults into the document (ADR-0023).
 - **Extensible.** Users can layer their own attribute definitions and
   overrides on the built-in registry, adjust validation severity, and add
   rules. The standard's own extension groups — V (vendor, §9.5.13) and X

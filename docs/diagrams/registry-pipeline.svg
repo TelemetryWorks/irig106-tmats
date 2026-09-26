@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 470" role="img" aria-label="Building the registry: the table extractor turns an archived Chapter 9 edition into the source layer of cited table text; one person authors each interpretation and a second person reviews it; the generator compiles source and interpretations into checked-in static tables; four CI checks guard completeness, interpretation coverage, source-text changes, and the two-person rule; a changed source row sends its interpretation back for re-review.">
+  <style>
+    text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; fill: #1f2328; }
+    .t { font-size: 15px; font-weight: 600; }
+    .b { font-weight: 600; }
+    .l { font-size: 11px; fill: #57606a; }
+    .box { fill: #f6f8fa; stroke: #57606a; stroke-width: 1.2; }
+    .hl { fill: #ddf4ff; stroke: #0969da; stroke-width: 1.6; }
+    .usr { fill: #fff8c5; stroke: #9a6700; stroke-width: 1.2; }
+    .chk { fill: none; stroke: #1a7f37; stroke-width: 1.2; stroke-dasharray: 5 3; }
+    .ln { stroke: #57606a; stroke-width: 1.3; fill: none; }
+    .cl { stroke: #9a6700; stroke-width: 1.4; fill: none; stroke-dasharray: 5 3; }
+    .gk { stroke: #1a7f37; stroke-width: 1.1; fill: none; stroke-dasharray: 3 3; }
+    .gt { font-size: 11px; fill: #1a7f37; }
+    .ah { fill: #57606a; } .ahc { fill: #9a6700; }
+    @media (prefers-color-scheme: dark) {
+      text { fill: #e6edf3; } .l { fill: #9198a1; } .gt { fill: #3fb950; }
+      .box { fill: #161b22; stroke: #9198a1; } .hl { fill: #0c2d6b; stroke: #4493f8; }
+      .usr { fill: #3b2e00; stroke: #d29922; } .chk, .gk { stroke: #3fb950; }
+      .ln { stroke: #9198a1; } .cl { stroke: #d29922; }
+      .ah { fill: #9198a1; } .ahc { fill: #d29922; }
+    }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ahc" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+
+  <text class="t" x="20" y="30">Building the registry</text>
+
+  <!-- main flow -->
+  <rect class="box" x="20" y="80" width="150" height="70" rx="6"/>
+  <text class="b" x="95" y="104" text-anchor="middle">Archived edition</text>
+  <text class="l" x="95" y="122" text-anchor="middle">rcc-106-standards</text>
+  <text class="l" x="95" y="138" text-anchor="middle">Chapter 9 PDF</text>
+
+  <rect class="box" x="200" y="80" width="150" height="70" rx="6"/>
+  <text class="b" x="275" y="104" text-anchor="middle">Table extractor</text>
+  <text class="l" x="275" y="122" text-anchor="middle">one row per attribute</text>
+  <text class="l" x="275" y="138" text-anchor="middle">script, no hand edits</text>
+  <path class="ln" d="M170,115 L200,115" marker-end="url(#a)"/>
+
+  <rect class="hl" x="380" y="80" width="170" height="70" rx="6"/>
+  <text class="b" x="465" y="104" text-anchor="middle">Source layer</text>
+  <text class="l" x="465" y="122" text-anchor="middle">table row as printed</text>
+  <text class="l" x="465" y="138" text-anchor="middle">+ citation</text>
+  <path class="ln" d="M350,115 L380,115" marker-end="url(#a)"/>
+
+  <rect class="usr" x="580" y="60" width="150" height="46" rx="6"/>
+  <text class="b" x="655" y="80" text-anchor="middle">Author (person 1)</text>
+  <text class="l" x="655" y="96" text-anchor="middle">writes the rule</text>
+  <rect class="usr" x="580" y="124" width="150" height="46" rx="6"/>
+  <text class="b" x="655" y="144" text-anchor="middle">Reviewer (person 2)</text>
+  <text class="l" x="655" y="160" text-anchor="middle">independent check</text>
+  <path class="ln" d="M550,100 L580,86" marker-end="url(#a)"/>
+  <path class="ln" d="M655,106 L655,124" marker-end="url(#a)"/>
+
+  <rect class="hl" x="760" y="80" width="160" height="70" rx="6"/>
+  <text class="b" x="840" y="104" text-anchor="middle">Interpretation layer</text>
+  <text class="l" x="840" y="122" text-anchor="middle">conditions · default + origin</text>
+  <text class="l" x="840" y="138" text-anchor="middle">both names · source hash</text>
+  <path class="ln" d="M730,147 L760,130" marker-end="url(#a)"/>
+
+  <rect class="box" x="950" y="80" width="130" height="70" rx="6"/>
+  <text class="b" x="1015" y="104" text-anchor="middle">Generator</text>
+  <text class="l" x="1015" y="122" text-anchor="middle">compiles both into</text>
+  <text class="l" x="1015" y="138" text-anchor="middle">checked-in tables</text>
+  <path class="ln" d="M920,115 L950,115" marker-end="url(#a)"/>
+
+  <!-- re-review loop -->
+  <path class="cl" d="M465,150 L465,196 L655,196 L655,176" marker-end="url(#c)"/>
+  <text class="l" x="560" y="214" text-anchor="middle">source text changed (new edition) → re-review</text>
+
+  <!-- CI checks -->
+  <rect class="chk" x="200" y="270" width="880" height="150" rx="10"/>
+  <text class="b" x="216" y="292">CI checks (fail the build)</text>
+  <text x="216" y="318">1 Completeness — every table code name and every prose default ("Default is …") is in the registry, or excluded with a reason</text>
+  <text x="216" y="342">2 Coverage — every source row has an interpretation or is explicitly marked "not yet interpreted"</text>
+  <text x="216" y="366">3 Freshness — an interpretation whose source-text hash no longer matches is flagged for re-review</text>
+  <text x="216" y="390">4 Two-person rule — every interpretation names an author and a different reviewer; tooling or AI counts as neither</text>
+  <path class="gk" d="M275,150 L275,270"/>
+  <text class="gt" x="283" y="244">1</text>
+  <path class="gk" d="M840,150 L840,270"/>
+  <text class="gt" x="848" y="244">2 3 4</text>
+  <path class="gk" d="M1015,150 L1015,270"/>
+  <text class="gt" x="1023" y="244">generated file</text>
+  <text class="gt" x="1023" y="258">up to date</text>
+
+  <text class="l" x="20" y="452">Amber: the people and the re-review loop. Green: what CI enforces. Nothing enters the registry without a citation and two people.</text>
+</svg>

@@ -140,7 +140,10 @@ checked against the archived standard, mapped to the existing documents and
 the coverage items above, and planned here. Items are added as they arrive.
 
 **T1. Make the registry an executable specification, with reviewed
-interpretations.** Confirmed against 106-24R1: `C-d\DPNO` has its default
+interpretations.** *Applied 2026-09-26: `docs/ARCHITECTURE.md` section 4,
+`docs/diagrams/data-flow.svg` and `registry-pipeline.svg`, ADR-0022 and
+ADR-0023 (with status pointers on ADR-0004, 0005, 0006), and L1-REG-002 to
+004, L1-VIEW-004, L1-VAL-005 and 006. Implementation follows L2.* Confirmed against 106-24R1: `C-d\DPNO` has its default
 only in prose ("Default is 1.", Table 9-11; the chapter has 107 `Default:`
 fields and further prose-only defaults), and `G\106` is "Required when:
 Always" (Table 9-2), which a pass over present attributes cannot report

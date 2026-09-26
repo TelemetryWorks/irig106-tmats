@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: accepted; content refined by ADR-0022
 date: 2026-09-25
 decision-makers: Joey
 ---

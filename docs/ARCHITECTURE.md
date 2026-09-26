@@ -139,11 +139,14 @@ else from it and from the spec registry.
 
 ![Data flow through irig106-tmats](diagrams/data-flow.svg)
 
-*Data flow.* The Document feeds views and the validator from one side; the
-spec-cited registry, with the user's overlay checked first, feeds them from
-the other. The only paths that change anything are amber: the user's overlay
-and the caller's choice of suggested edits. The writer is the original bytes
-plus the chosen patches.
+*Data flow* (updated for T1, section 4). The Document and the registry meet
+in the effective-value resolver and the condition evaluator; views and the
+validator read everything through them. The registry holds source text and
+reviewed interpretations, with the user's overlay checked first. The link
+graph is built before validation, and validation runs four passes. The only
+paths that change anything are amber: the user's overlay and the caller's
+choice of suggested edits. The writer is the original bytes plus the chosen
+patches.
 
 ![One buffer, spans, keys, and an index](diagrams/document-model.svg)
 
@@ -169,9 +172,111 @@ result no longer matches the stored `G\SHA`, so the library reports it stale
 and suggests a stamp edit; `G\SHA` changes only if the caller applies that
 suggestion (`tmats stamp` does this on request).
 
-## 4. Decisions this architecture must honour
+## 4. Refinement T1: executable registry, validation passes, effective values
 
-Recorded as ADRs in `docs/adr/` (0001–0019 accepted): the lossless ordered attribute store as the
+From the team design review, priority T1 (`docs/ROADMAP.md`, "Team design
+review"; text in `docs/research/2026-09-26-team-design-review.md`). Applied
+2026-09-26 at the owner's direction; recorded in ADR-0022 and ADR-0023. The
+shape of the architecture is unchanged — bytes → single scan → lossless
+Document → views and validator ← registry. Two components are deepened and
+one is added. This section **amends points 4, 5, 7, and 9 of section 2**,
+which stays as the verbatim record of the original proposal.
+
+### 4.1 Registry: source text plus reviewed interpretations (amends point 5)
+
+Each registry entry has two layers:
+
+- **Source layer** — the Chapter 9 table row exactly as printed: parameter
+  name, code-name pattern, the usage-attribute text, and the definition prose,
+  with its citation (edition, table, page). Produced by the table extractor;
+  never edited by hand. Prose-only facts survive here, such as `C-d\DPNO`'s
+  "Default is 1." (Table 9-11), which has no `Default:` field.
+- **Interpretation layer** — what the code executes: Allowed-when and
+  Required-when as expressions in a small, defined **condition language**;
+  the default and its origin (a `Default:` field or the prose); typed ranges;
+  links. Each interpretation records its **author and an independent
+  reviewer** (two people; tooling or AI drafting counts as neither), the
+  review date, a note wherever it is not literal (for example "`C\DCT` in
+  `C-d\DPNO`'s condition means `C-d\DCT` of the same occurrence"), and a
+  **hash of the source text** it interprets.
+
+Both layers are generated into the static tables of point 5; conditions are
+compiled, so the registry still has no runtime set-up cost. The user overlay
+supplies entries of the same shape.
+
+![Building the registry](diagrams/registry-pipeline.svg)
+
+*Building the registry.* The extractor produces the source layer from the
+archived edition; people author interpretations and a second person reviews
+each; the generator compiles both into checked-in tables. Four CI checks
+guard it: every table code name and prose default is in the registry
+(completeness); every source row is interpreted or explicitly marked "not
+yet interpreted"; an interpretation whose source text hash changed is
+flagged for re-review; and every interpretation names two different people.
+
+### 4.2 Condition semantics
+
+Defined once, not per rule:
+
+- **Occurrence scope.** Each condition declares whether its operands refer to
+  the same occurrence, a linked occurrence, or the whole document.
+- **Links.** A condition may follow a registry link (for example from a D
+  group to the P group it describes); the link graph is therefore built
+  before conditions are evaluated.
+- **Missing or invalid dependencies.** A condition whose operand is missing
+  or invalid evaluates to **cannot evaluate**, reported as its own finding —
+  never silently true or false.
+- **Defaults.** Each condition declares whether it sees defaulted values or
+  only explicit ones.
+
+The **condition evaluator** implements these rules and returns true, false,
+or cannot-evaluate, with the operands it used.
+
+### 4.3 Effective values (amends point 4)
+
+Views and the validator read values through an **effective-value resolver**
+between the Document and the registry. Every read returns one of five
+states, and the stored bytes are never changed (ADR-0002):
+
+| State | Carries |
+|-------|---------|
+| Explicit | the value and its location in the bytes |
+| Defaulted | the default and the citation it came from |
+| Missing | nothing present and no default |
+| Invalid | the raw text and why it failed |
+| Ambiguous | the conflicting candidates (for example disagreeing duplicates) |
+
+Values are still parsed only when asked for.
+
+### 4.4 Validation in four passes (amends point 7)
+
+Validation runs four passes, in order, each over the Document, the link
+graph, and the registry through the condition evaluator and the resolver:
+
+1. **Present attributes** — each is known, allowed where it appears, and
+   within its range and type.
+2. **Presence** — every Required-when and R/R Ch 10 Status rule is evaluated
+   for each occurrence it applies to. This pass reports attributes that are
+   absent, such as a missing `G\106` ("Required when: Always", Table 9-2);
+   a pass over present attributes alone cannot.
+3. **Counters and indices** — each `\N` counter agrees with its entries, and
+   indices run "with no missing values" (§9.5.1 a).
+4. **Relationships** — links resolve and key values are unique.
+
+Every finding names its pass. Severity policy, user rules, and the Chapter 10
+recorder profile apply as before (ADR-0006). Diagnostics gain one kind,
+**cannot evaluate** (amends point 9).
+
+### 4.5 Cost
+
+The presence pass iterates registry rules per group occurrence rather than
+only the attributes present. The rules are compiled and static and TMATS
+documents are small, so the cost is expected to be negligible; the benchmarks
+of point 15 measure it.
+
+## 5. Decisions this architecture must honour
+
+Recorded as ADRs in `docs/adr/` (0001–0019, 0022–0023 accepted): the lossless ordered attribute store as the
 single source of truth; owned storage instead of borrowed lifetimes; the
 layered, spec-cited registry generated by a script (no `build.rs`);
 registry-driven validation with severity policy and user rules; no automatic
@@ -180,14 +285,18 @@ ecosystem types from `irig106-types`; the two-crate lockstep workspace
 (`irig106-tmats` and `irig106-tmats-cli`, binary `tmats`); a minimal Chapter
 10 packet reader inside the CLI until `irig106-core` provides one; `G\SHA`
 over the original bytes and the flex signature as a labelled compatibility
-option; no I/O in the library; the edition strategy. This proposal itself is
-captured in ADR-0020 and ADR-0021 (proposed).
+option; no I/O in the library; the edition strategy; the two-layer registry
+with reviewed interpretations and defined condition semantics (ADR-0022);
+validation in four passes over effective values (ADR-0023). The original
+proposal is captured in ADR-0020 and ADR-0021 (proposed).
 
-## 5. To be written
+## 6. To be written
 
 - Module structure and public API sketch (document, scanner, keys and
-  index, registry and overlay, link graph, views, validator, edits and
-  writer, checksums, Chapter 10 setup-record adapter, CLI).
+  index, registry and overlay, link graph, condition evaluator,
+  effective-value resolver, views, validator, edits and writer, checksums,
+  Chapter 10 setup-record adapter, CLI).
+- The condition language's grammar and the interpretation file format.
 - Data flow per use case (UC-01 … UC-17).
 - Error and diagnostic model; JSON output schema for the CLI.
 - Performance and memory budget, set after the first benchmark.
