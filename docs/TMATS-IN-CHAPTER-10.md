@@ -374,7 +374,7 @@ format number in Chapter 11" (1: Chapter 4, 7, or 8 PCM; 2: DQM/DQE).
 
 The families are not all eight codes wide (CAN is one code, and Fibre
 Channel follows it directly), so the correspondence is a reviewed table,
-not arithmetic (register entry INT-024). Two conditions in these rows are
+not arithmetic (register entry INT-024). Three conditions in these rows are
 themselves inconsistent: `R-x\TDTF-n` is "Allowed when: R\CDT is "TSPIN"",
 a keyword the enumeration does not define (it defines TSPIIN; INT-025), and
 `R-x\RPS-n` and `R-x\MFF\RPS-n-m` are "Allowed when: P-d\CDT is "PCMIN"",
