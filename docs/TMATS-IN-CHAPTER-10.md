@@ -253,21 +253,22 @@ library performs no I/O (ADR-0010). Shared types — the edition, the
 data-type codes, the setup-record CSDW layout — come from `irig106-types`
 (ADR-0009).
 
-### 2.4 Which crate depends on which (proposal)
+### 2.4 Which crate depends on which
 
-Section 1.6 asked whether `irig106-core` depends on `irig106-tmats`. The
-proposal, for the owner's decision (ROADMAP follow-up F5):
+Section 1.6 asked whether `irig106-core` depends on `irig106-tmats`.
+**Decided (owner, 2026-09-26; ADR-0030): it does not** (ROADMAP follow-up
+F5, option A); a crate that joins them may follow later (option C).
 
 | Crate | Depends on | Does not depend on |
 |-------|-----------|--------------------|
-| `irig106-types` | — | — |
+| `irig106-types` | — | — (holds the plain data that crosses between the crates: setup-record fragments with provenance, packet summaries) |
 | `irig106-tmats` | `irig106-types` | any packet reader or decoder |
 | `irig106-core` | `irig106-types` | `irig106-tmats` |
 | `irig106-decode` | `irig106-types`, `irig106-tmats` (the description's types) | the packet reader's internals |
 | `irig106-time` | `irig106-types` | — (receives what it needs from TMATS as plain data) |
 | tools (`studio`, `ch10-reader`, `cli`, `index`) | `irig106-core`, `irig106-tmats`, `irig106-decode`, `irig106-time` | — |
 
-Why `irig106-core` should not depend on `irig106-tmats`:
+Why `irig106-core` does not depend on `irig106-tmats`:
 
 - Its job is structural — walking packets fast, even when the TMATS is
   missing or damaged; a dependency on the setup record would couple the two
@@ -277,10 +278,13 @@ Why `irig106-core` should not depend on `irig106-tmats`:
 - Checking packets against the configuration — a channel in the data but
   not in TMATS, a data type that differs from `R-x\CDT-n`, a disabled channel
   that carries data — needs both the packets and the description, so it
-  belongs to the layer that holds both: the tools, or a small checking
-  function in `irig106-tmats` that takes a packet summary as plain data
-  (section 6).
+  belongs where both meet: a checking function in `irig106-tmats` takes
+  packet summaries as plain data (L1-CH10-007; section 6), and each tool's
+  joining loop — walk with core, hand fragments to the library, track the
+  governing description, call the check, pass packets to the decoder —
+  calls it.
 
-The alternative — `irig106-core` depends on `irig106-tmats` and checks every
-packet against the channel table as it reads — puts the check in one place,
-at the cost of making the structural reader depend on the setup record.
+Considered and not chosen: core depending on `irig106-tmats` and checking
+packets as it reads (option B). Kept open: moving the joining loop into a
+crate of its own if the tools start repeating it (option C); the check
+itself would not change.

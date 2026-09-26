@@ -43,6 +43,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-CH10-004 | _(none)_ | _(none)_ | Draft |
 | L1-CH10-005 | _(none)_ | _(none)_ | Draft |
 | L1-CH10-006 | _(none)_ | _(none)_ | Draft |
+| L1-CH10-007 | _(none)_ | _(none)_ | Draft |
 
 ### L1-EDN: IRIG 106 editions
 
@@ -204,7 +205,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | Category | L1 | L2 | L3 | L2 tested | L3 tested | L2 verified | L3 verified |
 |----------|----|----|----|-----------|-----------|-------------|-------------|
 | READ | 7 | 0 | 0 | 0 | 0 | 0 | 0 |
-| CH10 | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
+| CH10 | 7 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EDN | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REG | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
 | VIEW | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -218,13 +219,13 @@ This matrix is the single source of truth for live status; the requirement docum
 | ROB | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 2 | 0 | 0 | 0 | 0 | 0 | 0 |
-| **Total** | **72** | **0** | **0** | **0** | **0** | **0** | **0** |
+| **Total** | **73** | **0** | **0** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 72 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 73 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 1 of 72 (1.4%).
+**Tested by at least one test marker**: 1 of 73 (1.4%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 72 (2.8%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 73 (2.7%).
 
 ### Orphan check
 

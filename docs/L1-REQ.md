@@ -220,6 +220,15 @@ requirements are added. The requirement entries below and the generated
 
 **Verification Method**: Test (T)
 
+
+### L1-CH10-007
+
+**Statement**: Given summaries of a recording's packets (channel ID, data type, file offset, sequence number, relative time counter) and the setup record that governs them, the library SHALL report each packet on a channel the setup record does not define, each packet whose data type does not match its channel's data type, and each packet on a channel the setup record marks disabled.
+
+**Rationale**: The setup record "describes the hardware, software, and data channel configuration used to produce the other data packets in the file" (Chapter 11 §11.2.7.2). The check lives in this library over plain data, so `irig106-core` need not depend on it (owner decision F5, option A; ADR-0030). How `R-x\CDT-n` keywords correspond to packet data types is defined in `docs/TMATS-IN-CHAPTER-10.md` section 3. Delivered in 0.2.
+
+**Verification Method**: Test (T)
+
 ---
 
 ## L1-EDN: IRIG 106 editions

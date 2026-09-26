@@ -42,6 +42,7 @@ status line points to the later record.
 | [0027](0027-interpretation-register-and-three-source-relationships.md) | An interpretation register; relationships from Links to, Links from, and §9.5.1 b; the H group | accepted |
 | [0028](0028-edition-declarations-and-validation-basis.md) | TMATS edition and recording-format version kept apart; validation basis labelled; fallback and compatibility checks named | accepted |
 | [0029](0029-transactional-edits-and-checksum-stamping.md) | Edits are transactions over defined targets; a stamp hashes the final bytes (F1–F3 open) | accepted; F1–F3 open |
+| [0030](0030-core-independent-of-tmats.md) | `irig106-core` does not depend on `irig106-tmats`; plain data through `irig106-types`; the packet check lives in `irig106-tmats` | accepted |
 
 New records take the next number and use the same front matter
 (`status`, `date`, `decision-makers`).

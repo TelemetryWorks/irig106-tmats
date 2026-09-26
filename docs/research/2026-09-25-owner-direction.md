@@ -339,3 +339,15 @@ reader, the TMATS library, and later the decoder lives, and whether it is
 shared. `irig106-types` is what lets option A work: the plain data that
 crosses between the crates is defined there, so neither crate needs the
 other. F5 stays open until the owner confirms A.
+
+## 27. F5 decided: option A (2026-09-26)
+
+> go with A and we may switch to C in the future, then start section 3.
+
+Decided: `irig106-core` does not depend on `irig106-tmats`; the plain data
+that crosses between them (setup-record fragments with provenance, packet
+summaries) is defined in `irig106-types`; the check of packets against the
+governing description is a function in `irig106-tmats`; each tool writes
+the joining loop. Option C — a crate that holds the joining loop — stays
+open for the future. Recorded in: ADR-0030, `docs/ROADMAP.md` (F5, X2, X3),
+`docs/TMATS-IN-CHAPTER-10.md` section 2.4, `docs/L1-REQ.md` (L1-CH10-007).
