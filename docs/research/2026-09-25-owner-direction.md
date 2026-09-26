@@ -328,3 +328,14 @@ a reusable CLI library" (a proposal with the decisions it needs) and the
 breakdown of follow-up F5. The earlier open question in the ROADMAP's
 "Decisions" — whether `irig106-cli` mounts the `tmats` commands — is answered
 by this direction: it does, through `irig106-tmats-cli`'s library.
+
+## 26. F5: is A the same as C? Where does `irig106-types` fit? (2026-09-26)
+
+> For F5 I am not sure the difference between A and C in reality they are basically the same but instead of in C where there is a new crate in A there is going to be additional code which should be the same as the additional crate in C. Is that correct?  Also how does `irig106-types` come into play here. Is this my license to go with A like you recommend?
+
+Answered in `docs/ROADMAP.md` (F5, "Clarification"): the checking code is
+the same in both; what differs is where the loop that joins the packet
+reader, the TMATS library, and later the decoder lives, and whether it is
+shared. `irig106-types` is what lets option A work: the plain data that
+crosses between the crates is defined there, so neither crate needs the
+other. F5 stays open until the owner confirms A.

@@ -951,6 +951,43 @@ it.
 *Recommendation:* A now — it decides nothing that C cannot build on later —
 and revisit C if the tools start repeating the same joining code.
 
+*Clarification (owner's question, 2026-09-26: are A and C the same code in
+different places?).* Largely yes. Two pieces of code are involved:
+
+1. **The check** — packets against the governing description. In both A and
+   C it is the same function, in `irig106-tmats`, taking plain data.
+2. **The joining loop** — open the recording, walk it with `irig106-core`,
+   hand setup-record fragments to `irig106-tmats`, keep track of which
+   description governs the packets that follow, call the check, and pass
+   each packet with its description on to `irig106-decode`. In **A** this
+   loop is written in each tool that needs it (or in a helper one tool
+   owns); in **C** it is written once, in its own crate, and every tool uses
+   it.
+
+So the difference is not what the code does but whether the joining loop is
+shared: A lets it be repeated; C makes it a crate. Choosing A now does not
+lose anything, because moving the loop into a crate later is a move, not a
+rewrite — the check stays where it is.
+
+*Where `irig106-types` fits.* Option A only works if `irig106-core` and
+`irig106-tmats` can exchange data without depending on each other. The
+shared types crate is what makes that possible: the plain data that crosses
+between them is defined in `irig106-types`, which both depend on. Beyond the
+edition, the data-type codes, and the setup-record CSDW layout already
+planned there (X2), that would mean:
+
+- the **setup-record fragment with its provenance** (bytes; file offset,
+  channel ID, sequence number, relative time counter, CSDW fields,
+  data-type version) — what core produces and the assembler takes
+  (ADR-0025);
+- a **packet summary** (channel ID, data type, offset, sequence number,
+  relative time counter) — what core produces and the check takes.
+
+With those in `irig106-types`, core produces them, `irig106-tmats` consumes
+them, and neither crate knows the other exists. `irig106-types` must stay
+small and hold only such plain data; anything with behaviour stays in the
+crate that owns it.
+
 **Plan for F4.** Input: the survey of the other repositories
 (`docs/research/2026-09-26-consumer-survey.md`) — no repository yet states
 most of what a decoder needs from TMATS. The document
