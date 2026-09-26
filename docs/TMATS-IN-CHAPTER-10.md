@@ -15,7 +15,7 @@
 | 2. Where TMATS sits in Chapter 10 processing | **draft for review** |
 | 3. What the description answers, question by question | **draft for review** |
 | 4. Contracts per consumer | **draft for review** |
-| 5. Configuration over a recording | to be written |
+| 5. Configuration over a recording | **draft for review** |
 | 6. When TMATS is missing, wrong, or disagrees with the data | to be written |
 | 7. A worked example: Appendix 9-C from channel to engineering units | to be written |
 | 8. What changes as a result | to be written |
@@ -646,7 +646,7 @@ several tools, it moves into a crate of its own (ADR-0030, option C).
 | **Gives** | setup-record fragments, as the joining loop's first step |
 | **Gets** | each setup record's raw bytes, unchanged (L1-WRT-001) — 0.1; the edition declarations and checksum status (3.9) — 0.1; channel labels and data-source grouping from the channel views (3.1, 3.2) — 0.2; format, measurement, and conversion views for display (3.5–3.7) — 0.2; validation findings — 0.3; values through `irig106-decode` |
 | **Can rely on** | a library that performs no I/O (L1-IO-001) |
-| **Open** | whether the library is guaranteed to build for WebAssembly, which studio's browser build needs (ROADMAP follow-up F6) |
+| **Can rely on** | a library that builds for WebAssembly, checked on every change (L1-REL-003) — 0.1 |
 | **Its changes** | recorded in `irig106-studio`, `docs/TMATS-ISSUES.md` |
 
 ### 4.9 `irig106-index` — catalogues for search
@@ -681,12 +681,159 @@ loop for the commands that need it, and presents the library's answers
 (`docs/CLI.md`). It is organised as a reusable library so that
 `irig106-cli` can mount it (4.10).
 
-### 4.13 Open points from this section
+### 4.13 Sharing without copying
 
-- **F6 — WebAssembly.** Studio's browser build compiles its Rust core to
-  WebAssembly. ADR-0015 moved WASM *bindings* out of the library; whether
-  the plain library must also **build** for a WebAssembly target — kept true
-  by a CI check — is for the owner (ROADMAP follow-up F6).
+The owner asked (2026-09-26) whether the other crates can read what the
+library builds without copying it, to stay fast and memory-efficient. Yes —
+within one process, this is how Rust borrowing works, and the compiler
+checks that no reader outlives what it reads:
+
+- **The recording's bytes are never copied.** The packet reader memory-maps
+  the file; each packet body and each setup-record fragment is a borrowed
+  slice of that mapping, handed on as it is.
+- **One copy of each setup record, and only of the TMATS.** The library
+  keeps the assembled record in one owned buffer (ADR-0003), so the
+  description can outlive the file mapping, be kept by a tool, or move
+  between threads. That buffer is the only copy — the TMATS body, typically
+  kilobytes, at most 134,217,728 bytes (Chapter 11 Table 11-3), against a
+  recording of gigabytes. A record that spans several packets has to be
+  joined into one buffer in any case, because its fragments are not next to
+  each other in the file.
+- **Everything else points into that buffer.** Attributes, the index, the
+  link graph, and every view refer to the bytes by position (spans,
+  ADR-0003); values reach a consumer as borrowed slices of the buffer.
+- **Consumers read the description by reference.** `irig106-decode` and the
+  tools hold a reference to it, or a shared pointer when it is kept across
+  threads. It does not change once built, so any number of readers —
+  threads, decoders — can use it at the same time without locks or copies.
+- **Repeated setup records share one description** when their bytes are
+  identical (section 5).
+- **Packet summaries are copied, deliberately**: each is a few small numbers
+  (channel ID, data type, offset, sequence number, time counter), cheaper to
+  copy than to refer to.
+- **Where references cannot go.** Across a process boundary or into
+  JavaScript — studio's user interface, reached through Tauri or
+  WebAssembly bindings — data has to be serialized. The Rust side keeps the
+  description and sends the interface only what it shows.
+
+`irig106-core` itself does not read the library's objects (ADR-0030); the
+decoder and the tools do.
+
+### 4.14 Open points from this section
+
+- **F6 — WebAssembly (decided).** The library builds for the
+  `wasm32-unknown-unknown` target, checked on every change (L1-REL-003;
+  owner decision 2026-09-26). It stays a `std` library: WebAssembly does not
+  need `no_std` (ROADMAP, "Deferred features").
 - **Release order against need.** Decoding needs the 0.2 views; studio and
   ch10-reader get useful answers from 0.1. Section 8 checks the release plan
   against these contracts.
+
+---
+
+## 5. Configuration over a recording
+
+A recording can carry more than one setup record. This section defines
+which one governs each packet, and what the library tells consumers about
+the sequence.
+
+### 5.1 What the standard says
+
+- **The setup record comes first.** A recording file must contain, as a
+  minimum, "Computer-Generated Packet(s), Format 1 setup record IAW Chapter 11
+  Subsection 11.2.7.2 as the first packets in the recording", then "Time
+  data packet(s) … as the first dynamic packet after the computer-generated
+  packet, setup record" (Chapter 10 §10.5.1 a–b; Table 10-9: "First packets
+  in recording. A single setup record may span across multiple
+  Computer-Generated Data Packet, Format 1 setup records"). Chapter 11 agrees:
+  "A time data packet shall be the first dynamic data packet at the start of
+  each session. Only static Computer-Generated Data, Format 1 packets may
+  precede the first time data packet."
+- **A changed configuration gets a new setup record before the data it
+  affects.** "When a setup record configuration change has taken place, bit
+  8 (SRCC) shall be set to 1 and the new setup record packet will be
+  committed to the stream prior to any new or changed data packets being
+  committed to the stream" (Chapter 11 §11.2.7.2). Dynamic imagery gives an
+  example: when its settings change, "a new setup record packet shall be
+  created prior to any Format 2 image packets to which the new settings are
+  applied. These changes shall be noted as a setup record configuration
+  change" (§11.2.11.3).
+- **Unchanged records may repeat.** "The next setup record packet(s)
+  committed to the stream, if not changed from this new setup record, shall
+  clear the SRCC bit to 0" (§11.2.7.2).
+- **A change is announced.** "Prior to the new setup record being committed
+  to the stream, a setup record configuration change event packet shall be
+  inserted into the stream" (§11.2.7.2). The standard does not say which
+  packet type or format that event packet is (INT-030, open).
+- **Every record stands alone.** "Each new setup record packet must adhere to
+  all applicable setup record requirements including, but not limited to,
+  the minimum required TMATS attributes" (§11.2.7.2): a later record is a
+  complete configuration, not a patch to the earlier one.
+- **SRCC is relative to the session**: it "indicates if the recorder
+  configuration contained in the previous setup record packet(s) of the
+  current recording session (defined as .RECORD to .STOP) has changed".
+
+### 5.2 Which description governs a packet
+
+![Which setup record governs which packets](diagrams/configuration-timeline.svg)
+
+*The timeline.* Setup record A occupies the first packets; its description
+governs the time packet and the data that follow. A repeated record with
+SRCC = 0 and the same bytes changes nothing. After the configuration-change
+event packet, record B (SRCC = 1) arrives before the changed data, and its
+description governs from there.
+
+The rule (register entry INT-028, proposed): **a packet is governed by the
+most recent complete setup record before it in file order**, starting with
+the packet after that record's last fragment. A repeated record with the
+same bytes keeps the same description. Packets before the first complete
+setup record have no governing description; section 6 says what happens to
+them. File order is the stream's commit order for a single-file recording;
+a recording written as several simultaneous files (Chapter 10 §10.5.1) is
+left for section 6.
+
+### 5.3 Kinds of setup record, and what is reported
+
+| Kind | How it is recognised | Reported |
+|------|----------------------|----------|
+| First | the first complete record of the recording | its description; `SRCC = 1` on it is a finding, since there is no previous record to have changed |
+| Repeat | `SRCC = 0` and the same bytes as the governing record | nothing new; it shares the governing description |
+| Change | `SRCC = 1` | its description, and how it differs from the one it replaces |
+| Unannounced change | `SRCC = 0` but different bytes | a finding: the content changed without the change bit; it governs from here all the same |
+| Announced non-change | `SRCC = 1` but the same bytes | a finding: the change bit is set with nothing changed |
+
+"Same bytes" means a byte-identical TMATS body; when bytes differ, the
+attribute-by-attribute comparison (L1-WRT-005, UC-11) says what changed and
+whether anything a decoder depends on did — channels, formats,
+measurements, conversions. The kinds and findings are register entry
+INT-029 (proposed). The session rules already required — ASCII and XML not
+mixed, the event packet before a change, setup records on channel `0x0000`
+from 106-17 — stay as L1-CH10-005 states them.
+
+### 5.4 What the library returns
+
+The **configuration timeline** of a recording (L1-CH10-008): for each
+complete setup record, in file order —
+
+- its provenance: the offsets of its first and last fragments, its channel,
+  and the relative time counter of its first fragment;
+- its CSDW summary (format, SRCC, RCCVER as read);
+- its kind (5.3) and any findings;
+- its description — one per distinct record body, shared by repeats;
+- for a change, the differences from the record it replaces;
+
+and a **lookup**: the governing record for any file offset, and — through
+the relative time counter of each record — for a time.
+
+The library builds the timeline from the complete records the joining loop
+hands it, in order, with their provenance; it opens no file (ADR-0010).
+
+### 5.5 Who uses it
+
+| Consumer | Uses the timeline to |
+|----------|----------------------|
+| `irig106-decode` | switch to the new description where the configuration changes, and never decode a packet with the wrong one |
+| `irig106-index` | key its channel and measurement catalogues by setup record |
+| `irig106-studio` | show each setup record, what changed between them, and which one a displayed packet belongs to |
+| `irig106-ch10-reader` | report a configuration change in one line by default (ROADMAP X4) |
+| `irig106-time` | know when the time channels or their formats change |

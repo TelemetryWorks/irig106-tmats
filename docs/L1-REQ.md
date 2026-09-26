@@ -225,7 +225,16 @@ requirements are added. The requirement entries below and the generated
 
 **Statement**: Given summaries of a recording's packets (channel ID, data type, file offset, sequence number, relative time counter) and the setup record that governs them, the library SHALL report each packet on a channel the setup record does not define, each packet whose data type does not match its channel's data type, and each packet on a channel the setup record marks disabled.
 
-**Rationale**: The setup record "describes the hardware, software, and data channel configuration used to produce the other data packets in the file" (Chapter 11 §11.2.7.2). The check lives in this library over plain data, so `irig106-core` need not depend on it (owner decision F5, option A; ADR-0030). How `R-x\CDT-n` keywords correspond to packet data types is defined in `docs/TMATS-IN-CHAPTER-10.md` section 3. Delivered in 0.2.
+**Rationale**: The setup record "describes the hardware, software, and data channel configuration used to produce the other data packets in the file" (Chapter 11 §11.2.7.2). The packet check applies the setup record that governs each packet (L1-CH10-008). The check lives in this library over plain data, so `irig106-core` need not depend on it (owner decision F5, option A; ADR-0030). How `R-x\CDT-n` keywords correspond to packet data types is defined in `docs/TMATS-IN-CHAPTER-10.md` section 3. Delivered in 0.2.
+
+**Verification Method**: Test (T)
+
+
+### L1-CH10-008
+
+**Statement**: From the complete setup records of a recording, supplied in file order with their provenance, the library SHALL build a configuration timeline giving, for each record, its provenance, its CSDW summary, whether it is the first record, a repeat, or a change, any inconsistency between its configuration-change bit and its content, and for a change the differences from the record it replaces; identical records SHALL share one description; and the library SHALL answer which record governs a given file offset or relative time.
+
+**Rationale**: A recording may carry several setup records; "the new setup record packet will be committed to the stream prior to any new or changed data packets", and an unchanged record clears SRCC (Chapter 11 §11.2.7.2). Every consumer that reads packets needs the governing description (`docs/TMATS-IN-CHAPTER-10.md` section 5; INT-028, INT-029). Delivered in 0.2.
 
 **Verification Method**: Test (T)
 
@@ -754,6 +763,14 @@ requirements are added. The requirement entries below and the generated
 **Verification Method**: Inspection (I)
 
 **Evidence**: `.github/workflows/ci.yml` job `msrv` (`cargo check --workspace --all-features` on Rust 1.85)
+
+### L1-REL-003
+
+**Statement**: The library SHALL build for the `wasm32-unknown-unknown` target, without WebAssembly bindings, so that a WebAssembly project can depend on it; the project SHALL check this on every change.
+
+**Rationale**: `irig106-studio`'s browser build compiles its Rust core to WebAssembly (owner decision F6, 2026-09-26: "it should be necessary to support being consumed into a webassembly project by checking for this ability"). ADR-0015 keeps bindings in a separate crate; this requirement is about the plain library. It holds because the library performs no I/O (L1-IO-001). Delivered from 0.1; the CI job is added with the first new library code.
+
+**Verification Method**: Inspection (I)
 
 ---
 

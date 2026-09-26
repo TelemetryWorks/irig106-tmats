@@ -563,3 +563,59 @@ listed here.
 **Test**: `measurement_name_sources_for_conversions`
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+## Configuration over a recording
+
+### INT-028
+
+**Title**: Which setup record governs a packet
+
+**Sources**:
+- Chapter 11 §11.2.7.2: "the new setup record packet will be committed to the stream prior to any new or changed data packets being committed to the stream".
+- Chapter 10 §10.5.1: the setup record "as the first packets in the recording"; Table 10-9.
+- Chapter 11: "A single setup record may span multiple consecutive packets."
+
+**Behaviour**: A packet is governed by the most recent complete setup record before it in file order, from the packet after that record's last fragment. A repeated record with the same bytes keeps the same description. Packets before the first complete record have none (`docs/TMATS-IN-CHAPTER-10.md` sections 5 and 6). Recordings written as several simultaneous files are not covered here.
+
+**Reason**: The standard orders setup records before the data they describe but never states the governing rule outright.
+
+**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: pending · **Origin**: F4 section 5
+
+**Test**: `each_packet_is_governed_by_the_preceding_setup_record`
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+### INT-029
+
+**Title**: Repeated, changed, and inconsistent setup records
+
+**Sources**:
+- Chapter 11 §11.2.7.2: SRCC "indicates if the recorder configuration contained in the previous setup record packet(s) of the current recording session (defined as .RECORD to .STOP) has changed"; "The next setup record packet(s) committed to the stream, if not changed from this new setup record, shall clear the SRCC bit to 0."
+
+**Behaviour**: A record is a repeat when SRCC is 0 and its TMATS body is byte-identical to the governing record's; otherwise it is a change. Findings: SRCC 1 on the first record (nothing to have changed); SRCC 0 with different bytes (an unannounced change, which still governs from there); SRCC 1 with identical bytes (a change bit with nothing changed). A change is reported with the attribute-by-attribute differences (L1-WRT-005).
+
+**Reason**: The standard defines the bit, not how "changed" is judged; byte identity is exact, and the attribute comparison explains any difference.
+
+**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: pending · **Origin**: F4 section 5
+
+**Test**: `setup_record_kinds_and_srcc_findings`
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+### INT-030
+
+**Title**: The "setup record configuration change event packet" is not defined
+
+**Sources**:
+- Chapter 11 §11.2.7.2: "Prior to the new setup record being committed to the stream, a setup record configuration change event packet shall be inserted into the stream."
+- No other passage of Chapter 10, Chapter 11, or Chapter 9 (106-24R1) names the packet type, format, or content of that event packet.
+
+**Behaviour**: **Open — owner follow-up F7.** Until decided, L1-CH10-005's check for the event packet is not implemented, and a changed setup record is reported without judging whether the event packet was present.
+
+**Reason**: Checking for a packet the standard does not identify would rest on a guess (for example, that it is a Format 2 recording event packet).
+
+**Design**: open (follow-up F7, 2026-09-26) · **Review**: pending · **Origin**: F4 section 5
+
+**Test**: `configuration_change_event_packet` (written once F7 is decided)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written

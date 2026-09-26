@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 430" role="img" aria-label="Configuration over a recording: setup record A spans the first two packets of the recording and its description governs the packets that follow, including a repeated setup record with SRCC 0 and identical bytes, which shares description A; a configuration change event packet precedes setup record B with SRCC 1, whose description governs every packet after it.">
+  <style>
+    text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; fill: #1f2328; }
+    .t { font-size: 15px; font-weight: 600; }
+    .b { font-weight: 600; }
+    .l { font-size: 11px; fill: #57606a; }
+    .s { font-size: 11px; }
+    .n { font-size: 12px; font-weight: 700; fill: #0969da; }
+    .pk { fill: #f6f8fa; stroke: #57606a; stroke-width: 1.1; }
+    .sr { fill: #ddf4ff; stroke: #0969da; stroke-width: 1.6; }
+    .rp { fill: #ddf4ff; stroke: #0969da; stroke-width: 1.3; stroke-dasharray: 4 3; }
+    .ev { fill: #fff8c5; stroke: #9a6700; stroke-width: 1.4; }
+    .ga { fill: #ddf4ff; stroke: #0969da; stroke-width: 1; opacity: 0.8; }
+    .gb { fill: #dafbe1; stroke: #1a7f37; stroke-width: 1; opacity: 0.9; }
+    .ln { stroke: #57606a; stroke-width: 1.2; fill: none; }
+    .ah { fill: #57606a; }
+    @media (prefers-color-scheme: dark) {
+      text { fill: #e6edf3; } .l { fill: #9198a1; } .n { fill: #4493f8; }
+      .pk { fill: #161b22; stroke: #9198a1; } .sr, .rp, .ga { fill: #0c2d6b; stroke: #4493f8; }
+      .ev { fill: #3b2e00; stroke: #d29922; } .gb { fill: #0f2e1a; stroke: #3fb950; }
+      .ln { stroke: #9198a1; } .ah { fill: #9198a1; }
+    }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+
+  <text class="t" x="20" y="30">Which setup record governs which packets</text>
+  <text class="l" x="20" y="48">One recording in file order. Each packet is read with the description of the setup record before it.</text>
+
+  <!-- markers -->
+  <text class="n" x="77"  y="120" text-anchor="middle">1</text>
+  <text class="n" x="165" y="120" text-anchor="middle">2</text>
+  <text class="n" x="394" y="120" text-anchor="middle">3</text>
+  <text class="n" x="571" y="120" text-anchor="middle">4</text>
+  <text class="n" x="640" y="120" text-anchor="middle">5</text>
+  <text class="l" x="880" y="155">file order →</text>
+
+  <!-- packets -->
+  <rect class="sr" x="20"  y="130" width="55" height="40"/><text class="s" x="47"  y="154" text-anchor="middle">A 1/2</text>
+  <rect class="sr" x="79"  y="130" width="55" height="40"/><text class="s" x="106" y="154" text-anchor="middle">A 2/2</text>
+  <rect class="pk" x="138" y="130" width="55" height="40"/><text class="s" x="165" y="154" text-anchor="middle">time</text>
+  <rect class="pk" x="197" y="130" width="50" height="40"/><text class="s" x="222" y="154" text-anchor="middle">PCM</text>
+  <rect class="pk" x="251" y="130" width="50" height="40"/><text class="s" x="276" y="154" text-anchor="middle">1553</text>
+  <rect class="pk" x="305" y="130" width="50" height="40"/><text class="s" x="330" y="154" text-anchor="middle">PCM</text>
+  <rect class="rp" x="359" y="130" width="70" height="40"/><text class="s" x="394" y="154" text-anchor="middle">A again</text>
+  <rect class="pk" x="433" y="130" width="50" height="40"/><text class="s" x="458" y="154" text-anchor="middle">PCM</text>
+  <rect class="pk" x="487" y="130" width="50" height="40"/><text class="s" x="512" y="154" text-anchor="middle">1553</text>
+  <rect class="ev" x="541" y="130" width="60" height="40"/><text class="s" x="571" y="154" text-anchor="middle">event</text>
+  <rect class="sr" x="605" y="130" width="70" height="40"/><text class="s" x="640" y="154" text-anchor="middle">B</text>
+  <rect class="pk" x="679" y="130" width="50" height="40"/><text class="s" x="704" y="154" text-anchor="middle">PCM</text>
+  <rect class="pk" x="733" y="130" width="50" height="40"/><text class="s" x="758" y="154" text-anchor="middle">1553</text>
+  <rect class="pk" x="787" y="130" width="40" height="40"/><text class="s" x="807" y="154" text-anchor="middle">…</text>
+
+  <!-- governing spans -->
+  <rect class="ga" x="138" y="186" width="463" height="28" rx="4"/>
+  <text class="b" x="369" y="205" text-anchor="middle">description A governs</text>
+  <rect class="gb" x="679" y="186" width="148" height="28" rx="4"/>
+  <text class="b" x="753" y="205" text-anchor="middle">description B governs</text>
+  <path class="ln" d="M394,170 L394,186" marker-end="url(#a)"/>
+
+  <!-- key -->
+  <text class="n" x="20" y="252">1</text><text class="l" x="36" y="252">Setup record A, spanning two packets: "the first packets in the recording" (Chapter 10 §10.5.1).</text>
+  <text class="n" x="20" y="274">2</text><text class="l" x="36" y="274">Time: "the first dynamic data packet at the start of each session"; only setup-record packets may precede it (Chapter 11).</text>
+  <text class="n" x="20" y="296">3</text><text class="l" x="36" y="296">A setup record repeated with SRCC = 0: "if not changed from this new setup record, shall clear the SRCC bit to 0". Same bytes: it shares description A.</text>
+  <text class="n" x="20" y="318">4</text><text class="l" x="36" y="318">"Prior to the new setup record being committed to the stream, a setup record configuration change event packet shall be inserted."</text>
+  <text class="n" x="20" y="340">5</text><text class="l" x="36" y="340">Setup record B with SRCC = 1, committed "prior to any new or changed data packets" (Chapter 11 §11.2.7.2); description B governs from here.</text>
+  <text class="l" x="20" y="376">A record governs from the packet after its last fragment (its fragments are consecutive packets). Packets before the first</text>
+  <text class="l" x="20" y="392">complete record have no governing description (section 6). Quotations: 106-24R1.</text>
+</svg>

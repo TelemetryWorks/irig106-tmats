@@ -891,8 +891,9 @@ owner decides; the decision is then recorded in
 | F2 | What should happen when an edit removes an attribute that X extensions point to? | As F1: needs the options and their consequences for editing, for vendors' extensions, and for §9.5.14's "preserve it". | INT-022; L1-WRT-003; ADR-0029 |
 | F3 | Should the reader suggest `:` where `=` was typed, as in Chapter 6's own `G\DSI\N=18;`? | As F1: needs the options and the risk of a suggestion that is wrong. | INT-023; `docs/TEST-DATA.md` E3 |
 | F5 | **Decided 2026-09-26: A**, with C possible later (ADR-0030). Does `irig106-core` depend on `irig106-tmats`, or do the tools join them? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 1.6; proposal in section 2.4 (core stays structural and independent; checking packets against TMATS belongs to the layer holding both) awaits the owner. | `docs/TMATS-IN-CHAPTER-10.md` section 2.4; ROADMAP X3 |
-| F6 | Must the library build for WebAssembly (a CI check that the plain library compiles for a `wasm32` target), so studio's browser build can use it? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 4.8. ADR-0015 moved WASM *bindings* out of the library; building the plain library for WebAssembly is a separate question. The library already performs no I/O (L1-IO-001), which is the main condition. | ADR-0015; a possible L1 requirement and CI job |
-| F4 | What does processing the TMATS setup record give the rest of Chapter 10 processing — `irig106-core`, `irig106-decode`, and the other consumers? | "When I am processing a CH.10 file what do I expect processing the TMATS packet to provide to the other parts of the processing … We need to document this in great detail." (2026-09-26) | `docs/TMATS-IN-CHAPTER-10.md` — outline approved 2026-09-26; sections 1 to 4 drafted for review |
+| F6 | **Decided 2026-09-26: yes** — L1-REL-003, a CI check added with the first new library code. Must the library build for WebAssembly (a CI check that the plain library compiles for a `wasm32` target), so studio's browser build can use it? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 4.8. ADR-0015 moved WASM *bindings* out of the library; building the plain library for WebAssembly is a separate question. The library already performs no I/O (L1-IO-001), which is the main condition. | ADR-0015; a possible L1 requirement and CI job |
+| F7 | Which packet is the "setup record configuration change event packet" that must precede a changed setup record? | Chapter 11 §11.2.7.2 requires it but no passage of Chapters 9–11 (106-24R1) names its type or content, so L1-CH10-005's check cannot be implemented without a decision (for example, that it is a Format 2 recording event packet), best confirmed against real recordings. | INT-030; L1-CH10-005; `docs/TMATS-IN-CHAPTER-10.md` section 5.1 |
+| F4 | What does processing the TMATS setup record give the rest of Chapter 10 processing — `irig106-core`, `irig106-decode`, and the other consumers? | "When I am processing a CH.10 file what do I expect processing the TMATS packet to provide to the other parts of the processing … We need to document this in great detail." (2026-09-26) | `docs/TMATS-IN-CHAPTER-10.md` — outline approved 2026-09-26; sections 1 to 5 drafted for review |
 
 **F5 broken down** (owner direction, 2026-09-26: "break down F5 so I can
 answer").
@@ -1095,6 +1096,20 @@ forgotten; none has a committed version.
   unconditionally. To bring it back: a real `no_std` + `alloc` build with an
   output sink abstraction, verified in CI on a `no_std` target. Only worth it
   if an embedded consumer appears.
+  *Owner's question (2026-09-26): is TMATS std or no_std, and what are the
+  limits of no_std?* The library is and stays a `std` library; WebAssembly
+  does not need `no_std` — `wasm32-unknown-unknown` supports `std`, and a
+  library that performs no I/O runs there as it is (L1-REL-003). `no_std`
+  matters only for targets without an operating system (embedded
+  processors). Plain `no_std` is impossible here, because the lossless
+  document owns a growable buffer (ADR-0003); `no_std` + `alloc` is possible,
+  with these limits: no `std::io` traits, so writers need the library's own
+  output trait or `core::fmt::Write`; no `HashMap` in `alloc`, so maps use
+  `BTreeMap` or an extra crate; every dependency (SHA-256, for example) must
+  itself support `no_std`; `f64` functions such as `powf` are not in `core`
+  (which affects only the test-only reference evaluator, ADR-0024); and every
+  feature must be built and tested twice. To keep the door open cheaply, new
+  code keeps `std`-only use (I/O traits, hashing maps) at the edges.
 - **Rich diagnostics.** The prototype's `rich-errors` feature pulled in
   `miette` with its `fancy` renderer but used nothing from it. To bring it
   back: source-span diagnostics rendered by a *binary* (CLI or example), not

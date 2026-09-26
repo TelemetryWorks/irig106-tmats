@@ -44,6 +44,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-CH10-005 | _(none)_ | _(none)_ | Draft |
 | L1-CH10-006 | _(none)_ | _(none)_ | Draft |
 | L1-CH10-007 | _(none)_ | _(none)_ | Draft |
+| L1-CH10-008 | _(none)_ | _(none)_ | Draft |
 
 ### L1-EDN: IRIG 106 editions
 
@@ -194,6 +195,7 @@ This matrix is the single source of truth for live status; the requirement docum
 |-------|-------------|----------------|--------|
 | L1-REL-001 | _(none)_ | `irig106-tmats-cli/tests/lockstep.rs::cli_and_library_versions_match`<br>`irig106-tmats-cli/tests/lockstep.rs::library_dependency_is_pinned_exactly`<br>`irig106-tmats-cli/tests/lockstep.rs::version_flag_reports_both_versions` | Implemented |
 | L1-REL-002 | _(none)_ | `.github/workflows/ci.yml`<br>`msrv`<br>`cargo check --workspace --all-features` | Implemented (I) |
+| L1-REL-003 | _(none)_ | _(none)_ | Draft |
 
 ---
 
@@ -205,7 +207,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | Category | L1 | L2 | L3 | L2 tested | L3 tested | L2 verified | L3 verified |
 |----------|----|----|----|-----------|-----------|-------------|-------------|
 | READ | 7 | 0 | 0 | 0 | 0 | 0 | 0 |
-| CH10 | 7 | 0 | 0 | 0 | 0 | 0 | 0 |
+| CH10 | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EDN | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REG | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
 | VIEW | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -218,14 +220,14 @@ This matrix is the single source of truth for live status; the requirement docum
 | CLI | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
 | ROB | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
-| REL | 2 | 0 | 0 | 0 | 0 | 0 | 0 |
-| **Total** | **73** | **0** | **0** | **0** | **0** | **0** | **0** |
+| REL | 3 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Total** | **75** | **0** | **0** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 73 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 75 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 1 of 73 (1.4%).
+**Tested by at least one test marker**: 1 of 75 (1.3%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 73 (2.7%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 75 (2.7%).
 
 ### Orphan check
 
@@ -265,9 +267,12 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-025 | `R-x\TDTF-n`'s condition names `TSPIN`, which is not a channel type | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
 | INT-026 | Two recorder polarity conditions name `P-d\CDT`, which does not exist | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
 | INT-027 | `C-d\DCN`'s "Links from:" lists `R-x\AMN-n-m` twice | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
+| INT-028 | Which setup record governs a packet | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
+| INT-029 | Repeated, changed, and inconsistent setup records | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
+| INT-030 | The "setup record configuration change event packet" is not defined | open (follow-up F7, 2026-09-26) | not yet written | _(none)_ |
 
-* Entries without a written analysis: **27** of 27
-* Entries without a test: **27** of 27
+* Entries without a written analysis: **30** of 30
+* Entries without a test: **30** of 30
 * Entries missing the development mark: **0**
 
 ### Marker reference check

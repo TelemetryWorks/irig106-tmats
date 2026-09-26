@@ -351,3 +351,11 @@ governing description is a function in `irig106-tmats`; each tool writes
 the joining loop. Option C — a crate that holds the joining loop — stays
 open for the future. Recorded in: ADR-0030, `docs/ROADMAP.md` (F5, X2, X3),
 `docs/TMATS-IN-CHAPTER-10.md` section 2.4, `docs/L1-REQ.md` (L1-CH10-007).
+
+## 28. F6 decided; `std` or `no_std`; sharing without copying (2026-09-26)
+
+> F6 yes it should be necessary to support being consumed into a webassembly project by checking for this ability (If this is what you are asking), is TMATS currently std or no_std? What are the limitations if we go no_std? Continue with section 5. As for the joining loop which is between multiple crates I would expect the variables which are instantiated like in the tmats code when processing tmats data the `objects` or what ever you want to call it will be read by the other crates like core so we are not copying memory locations keeping this performant and memory effecient. Is this possible or practical?
+
+Recorded in: `docs/ROADMAP.md` (F6 decided; "`std` and `no_std`"),
+`docs/L1-REQ.md` (L1-REL-003), `docs/TMATS-IN-CHAPTER-10.md` section 4.14
+(sharing without copying) and section 5.
