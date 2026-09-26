@@ -297,3 +297,10 @@ answered with a plan for a detailed document. Recorded in:
 `docs/ROADMAP.md` (T7; "Follow-ups for the owner"), ADR-0029,
 `docs/ARCHITECTURE.md` section 10, `docs/L1-REQ.md`, `docs/USE-CASES.md`,
 `docs/INTERPRETATIONS.md`, `docs/TEST-DATA.md`, `docs/CLI.md`.
+
+## 23. The F4 document: outline approved (2026-09-26)
+
+> Approve the F4 outline, start with section 1
+
+Recorded in: `docs/ROADMAP.md` (F4); `docs/TMATS-IN-CHAPTER-10.md` is written
+one section at a time for the owner's review, starting with section 1.

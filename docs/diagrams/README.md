@@ -6,6 +6,7 @@ Hand-authored SVG diagrams of the architecture, embedded in
 
 | File | Shows |
 |------|-------|
+| `packet-vs-setup-record.svg` | What a packet says (channel ID, data type, bytes) against what the setup record adds, traced through the standard's Appendix 9-C example from recorder channel to PCM format, measurement location, and conversion |
 | `system-context.svg` | The crate in the ecosystem: CLI, library, lockstep workspace, consumers, shared types |
 | `legacy-vs-new.svg` | The `idmptmat` / `irig106lib` pipeline against ours, with each defect (D1–D7) at the stage that causes it |
 | `data-flow.svg` | Scanner → Document; Document and registry meet in the read-through layer (link graph, effective-value resolver, condition evaluator); views and the four-pass validator read through it; suggested edits → caller → patch list → writer |

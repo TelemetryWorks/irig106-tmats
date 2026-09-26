@@ -129,6 +129,9 @@ architecture must honour:
   drafted; L2/L3 conventions only); `docs/TRACE-MATRIX.md` — generated live
   status, never edited by hand.
 - `docs/INTERPRETATIONS.md` — the interpretation register (ADR-0027).
+- `docs/TMATS-IN-CHAPTER-10.md` — what the library is for and what it gives
+  the rest of Chapter 10 processing (`irig106-core`, `irig106-decode`, and
+  the other consumers); written a section at a time.
 - The RCC 106 standards themselves are mirrored, with their original URLs and
   checksums, in the `TelemetryWorks/rcc-106-standards` repository. Chapter 9
   is the governing document for this crate; the RCC 124 TMATS Handbook is the

@@ -32,6 +32,8 @@ irig106-tmats/
 │   ├── USE-CASES.md           Actors, library boundary, use cases UC-01..UC-17 (design draft)
 │   ├── CLI.md                 `tmats` command design: commands, decided behaviour, open decisions (draft)
 │   ├── TEST-DATA.md           Real data and test oracles (local-only policy); reference-tool defects
+│   ├── TMATS-IN-CHAPTER-10.md What TMATS gives Chapter 10 processing and each consumer (follow-up F4;
+│                              written a section at a time)
 │   ├── INTERPRETATIONS.md     Interpretation register: where the standard is inconsistent or silent, the
 │                              behaviour chosen, and its test (hand-written until the registry generates it)
 │   ├── RELEASING.md           Lockstep versioning, crates.io publishing, release binaries (design draft)
