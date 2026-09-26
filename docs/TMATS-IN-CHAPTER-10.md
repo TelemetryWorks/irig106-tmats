@@ -18,7 +18,7 @@
 | 5. Configuration over a recording | **draft for review** |
 | 6. When TMATS is missing, wrong, or disagrees with the data | **draft for review** |
 | 7. A worked example: Appendix 9-C from channel to engineering units | **draft for review** |
-| 8. What changes as a result | to be written |
+| 8. What changes as a result | **draft for review** |
 
 ---
 
@@ -1048,3 +1048,108 @@ which every report then labels as an assumption (as for INT-032). How
 
 This whole path becomes an acceptance test, `appendix_9c_channel_2_trace`
 (`docs/TEST-DATA.md`).
+
+---
+
+## 8. What changes as a result
+
+This section gathers what writing sections 1–7 changed, and proposes what
+should change next. Items marked **proposed** wait for the owner's decision
+(ROADMAP follow-up F8); nothing proposed here has been applied.
+
+### 8.1 Already recorded while writing
+
+| Kind | What | Where |
+|------|------|-------|
+| Decisions | F5: `irig106-core` does not depend on `irig106-tmats` (option A); F6: the library builds for WebAssembly | ADR-0030; L1-REL-003 |
+| Requirements | L1-CH10-007 (the packet check, widened in section 6), L1-CH10-008 (the configuration timeline), L1-REL-003 | `docs/L1-REQ.md` |
+| Register | INT-024 to INT-029 and INT-031 to INT-033 (proposed); INT-030 (open, follow-up F7) | `docs/INTERPRETATIONS.md` |
+| Acceptance test | `appendix_9c_channel_2_trace` | `docs/TEST-DATA.md` |
+| Diagrams | `packet-vs-setup-record`, `tmats-in-the-pipeline`, `joining-loop`, `configuration-timeline`, `degraded-cases`, `worked-example-82aj01` | `docs/diagrams/` |
+| Other repositories | the studio's TMATS issues, TI-1 to TI-10 (committed locally there) | `irig106-studio/docs/TMATS-ISSUES.md` |
+| ROADMAP | follow-ups F5 to F7; X2 and X3 revised; the `std`/`no_std` note | `docs/ROADMAP.md` |
+
+The questions of section 1.6 are answered: the dependency of core (F5,
+section 2.4), the two version code lists (section 3.9; ROADMAP X2), channel
+`0x0000` (sections 4.1 and 6.7), one description per setup record (section
+5), and WebAssembly (F6).
+
+### 8.2 New use cases (proposed)
+
+The use cases (`docs/USE-CASES.md`) predate the consumer contracts. Three
+are missing:
+
+| Proposed | Summary | Requirements | Sections |
+|----------|---------|--------------|----------|
+| UC-18 Check a recording's packets against its setup records | Given the packets of a recording as plain summaries, report unknown and disabled channels, wrong data types, ungoverned packets, silent channels, and misuse of channel `0x0000` | L1-CH10-007 | 3.3, 6 |
+| UC-19 Follow the configuration through a recording | List every setup record with its kind, findings, and differences; answer which one governs a packet or a time | L1-CH10-008 | 5 |
+| UC-20 Find the time channels and their formats | Report the TIMEIN channels with their data type format, time format, and time source, each channel's secondary-header time format, and the measurements that are time words | proposed L1-VIEW-007 | 3.8 |
+
+### 8.3 New requirements (proposed)
+
+- **L1-VIEW-007** — the time view of section 3.8 (UC-20).
+- **L1-VIEW-008** — assumptions are labelled: when a caller supplies what the
+  TMATS does not give — a description for ungoverned packets (INT-032), the
+  order of fragments (INT-033) — every answer built on it says so.
+- **L1-VIEW-009** — the channel view gives the packet data types a channel
+  may carry (section 3.3; INT-024), or "cannot evaluate" when the format
+  attribute is missing, as in the worked example.
+
+### 8.4 The release plan, checked against the contracts
+
+The planned releases (`docs/ROADMAP.md`, "Planned releases") were written
+before the team review's T3–T7 and this document. Checked against the
+requirements' own release notes and the contracts of section 4:
+
+| # | Finding | Proposed change |
+|---|---------|-----------------|
+| R1 | 0.1's row does not mention assembling multi-packet setup records (L1-CH10-004), the session rules (L1-CH10-005), the two edition declarations and the labelled validation basis (L1-EDN-002, L1-EDN-005), the suspected-semicolon diagnostic (L1-READ-007), or the WebAssembly build (L1-REL-003), all due in 0.1 | add them to 0.1's row |
+| R2 | L1-SUM-004 stamps `G\SHA` "only as the last step of an edit transaction" in 0.1, while the transaction (L1-WRT-007) is due in 0.5 | deliver in 0.1 the minimal transaction the stamp needs — validate, emit, hash, verify — and grow it into the full edit transaction in 0.5 |
+| R3 | L1-CH10-008 gives "the differences from the record it replaces" in 0.2, while the attribute-by-attribute comparison it needs (L1-WRT-005, UC-11) is due in 0.5 | move the comparison (read-only) to 0.2; `tmats diff` can follow in 0.2 or stay in 0.5 |
+| R4 | 0.2's row lists channel resolution but not the packet check (L1-CH10-007), the configuration timeline (L1-CH10-008), the channel-type table (INT-024), link states (L1-VIEW-006), measurement locations and conversions, recorder packing settings, or the time view — what `irig106-decode`, `irig106-time`, and `irig106-index` need first (sections 4.5, 4.6, 4.9) | add them to 0.2's row |
+| R5 | 0.3's row omits derived parameters (L1-DER-001 to 005, due in 0.3) | add them |
+| R6 | 0.4's row omits compatibility checks for editions the registry does not cover (L1-EDN-006, due in 0.4) | add them |
+| R7 | 0.5's row promises "a builder whose output passes validation", which L1-WRT-006 replaced with a valid document or an incomplete draft with missing-input findings; it omits the verified transaction (L1-WRT-007) and the setup-record payload (L1-CH10-003) | reword and add them |
+| R8 | The workspace restructure (ROADMAP W1–W3) must precede the first new code | add it as the first step before 0.1 |
+
+### 8.5 Documents in this repository to update (proposed)
+
+- **`docs/ARCHITECTURE.md`** — add the components this document defines — the
+  packet check, the configuration timeline, the channel-type table — to the
+  architecture, with a pointer here for the consumer contracts; add them to
+  "To be written" (module structure).
+- **`docs/USE-CASES.md`** — UC-18 to UC-20 (8.2); the actors table gains a
+  time correlator (`irig106-time`) and a catalogue builder (`irig106-index`).
+- **`docs/CLI.md`** — show the configuration timeline in `tmats show`, and
+  consider a `tmats check` command for the packet check (UC-18), both
+  reusable by `irig106-cli` (ROADMAP W3).
+- **`docs/ROADMAP.md`** — the release plan changes of 8.4.
+
+### 8.6 Notes for the other repositories (proposed)
+
+Following the owner's direction that each repository records its own
+changes (2026-09-26), these notes would be written in the repositories
+themselves, where and when the owner directs:
+
+| Repository | What its notes would say |
+|------------|--------------------------|
+| `irig106-types` | the plain data it holds (section 4.3): two separate version code lists, the setup-record fragment with provenance, the packet summary |
+| `irig106-core` | its contract (section 4.4): slicing rules, fragments and packet summaries as `irig106-types` data, no dependency on `irig106-tmats` |
+| `irig106-decode` | its contract (section 4.5): what it receives from 0.2 and 0.3, that it owns conversions and derived-parameter evaluation, and that it reports rather than guesses (sections 6.8 and 7.2) |
+| `irig106-time` | its contract (section 4.6): the TMATS time attributes and the recording-format version; the RCCVER mapping from `irig106-types` (ROADMAP X1) |
+| `irig106-ch10-reader` | its contract (section 4.7) and ROADMAP X4 |
+| `irig106-index` | catalogues keyed by setup record (sections 4.9 and 5) |
+| `irig106-cli` | mounting `irig106-tmats-cli` and the joining loop (sections 4.2 and 4.10) |
+| `irig106-write` | its contract (section 4.11): splitting records, SRCC, the event packet (pending F7), channel `0x0000` |
+| `irig106-rust` | its requirement REQ-L1-014 calls the setup record "Format 0" |
+| `irig106-docs` | the ecosystem overview: this document's picture of where TMATS sits (section 2) |
+
+### 8.7 Decisions this document leaves with the owner
+
+- **F7** — which packet is the configuration change event packet (INT-030).
+- **F8** — the proposals of this section: UC-18 to UC-20, L1-VIEW-007 to 009,
+  the release plan changes R1–R8, the documents of 8.5, and the notes of
+  8.6.
+- **The proposed register entries** INT-024 to INT-029 and INT-031 to
+  INT-033.
+- **The review of sections 1–8** of this document.
