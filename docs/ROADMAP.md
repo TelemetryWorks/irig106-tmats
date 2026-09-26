@@ -60,6 +60,73 @@ Decisions taken so far are recorded in `docs/adr/` (index in
 its command implementations as a library under the same lockstep and semver
 rules (ADR-0011).
 
+## Specification coverage plan
+
+A section-by-section review of IRIG 106-24R1 Chapter 9 (the baseline
+edition) against `docs/ARCHITECTURE.md`, `docs/adr/`, and `docs/L1-REQ.md`
+(2026-09-26) found the chapter covered at the section level except for the
+items below. They are additions and clarifications, not changes of
+direction; each is folded into the architecture, the ADRs, and the L1
+requirements before L2 is written. New requirement IDs are assigned in
+`docs/L1-REQ.md`, not here.
+
+Checked and not a gap: the Q group's "the first item is numbered 0"
+(§9.5.10) refers to element and field offsets, which are values; Q code-name
+indices are 1-based like every other group's, so the index-contiguity rule
+stands.
+
+### Coverage work items
+
+1. **Prove attribute-level completeness mechanically.** No requirement yet
+   says the built-in registry defines every code name in Tables 9-2 through
+   9-11 of each supported edition. Add an L1 registry requirement for it,
+   verified by a CI check that compares the Chapter 9 table extractor's
+   output with the registry: every code name is either defined or explicitly
+   excluded with a reason. This check is the standing proof of coverage and
+   keeps it current when a new edition is published.
+2. **Treat the H group as an extension mechanism.** §9.5.12 reserves H for
+   user-defined airborne-hardware attributes, tied to G by `H\TA`, with
+   `H\ST-n` determining how the rest are interpreted — the same pattern as
+   the V group. Extend ADR-0008 and the extensibility requirement to cover H
+   (grouping by test item and system type; user-supplied definitions).
+3. **Decide the scope of Appendices 9-D and 9-E, and of conversions.**
+   Appendix 9-D (floating-point formats) is referenced by `C-d\FPF` and
+   S-group enumerations; validating those names is already covered, while
+   interpreting raw bits is `irig106-decode`'s work and should be stated as a
+   non-requirement. Appendix 9-E (derived-parameter grammar) governs the
+   value of `C-d\DPA` when `C-d\DPAT` is `A`. **Owner decision needed:**
+   validate derived-algorithm syntax in this library, or declare it out of
+   scope. Evaluating any C-group conversion to engineering units is stated as
+   out of scope either way (it is implied today but not written).
+4. **Follow every link, not only the pictured ones.** §9.5.1 b says "Not all
+   valid paths are shown" and that all are documented in the "Links to /
+   Links from" fields (for example the R-group filtering and overwrite links
+   into P, D, and B). Reword the channel-view requirement to follow every
+   registry link.
+5. **State how nonprintable characters are interpreted.** §9.4.1: TMATS is
+   7-bit ASCII and "nonprintable characters will be discarded by the
+   destination agency". Keep them in the bytes (lossless), ignore them for
+   meaning, and report them.
+6. **Warn on `OTH` without an explanation.** Many enumerations offer "OTH –
+   Other, define in comments", and §9.2 places nonstandard values in each
+   group's comments. **Owner decision needed:** whether a missing comment is
+   a warning by default.
+7. **Check the §9.4.2 recommendations.** Blanks should not appear in code
+   names, keywords, or link values, and link and measurement names should use
+   only capitals, digits, and `_`. **Owner decision needed:** warnings by
+   default, matching the decision on recommended maximum lengths.
+8. **Declare the cover sheet out of scope.** Appendix 9-B concerns exchanging
+   physical media; record it as a non-requirement.
+9. **Complete the citations.** Appendix 9-F cites IEEE 1588-2008, RFC 1305,
+   and RCC 200-16; add RFC 1305 and RCC 200-16 to the standards archive's
+   "cited but not mirrored" list (RCC 200 may instead be mirrored, since it is
+   an RCC document).
+
+Also carried into L2 (already covered at L1): the §9.4.2 scientific-notation
+regular expression, line breaks as insignificant between attributes, one
+mission configuration per document, and the D-group location types and
+subframes removed as of 106-11 as an edition delta.
+
 ## Planned releases
 
 | Version | Theme | Scope |
