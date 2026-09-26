@@ -12,6 +12,7 @@ Hand-authored SVG diagrams of the architecture, embedded in
 | `derived-parameters.svg` | Appendix 9-E: function and formula styles → binder and Table E-6 parser → description, derivation graph, validation; evaluation in `irig106-decode`; the test-only reference evaluator |
 | `setup-record-assembly.svg` | One setup record across three consecutive packets: slicing (header, secondary header, Data Length, filler, checksum), the library's assembler, provenance, the boundary rule, `G\SHA` over the assembled body |
 | `registry-pipeline.svg` | Extractor → source layer → author and independent reviewer → interpretation layer (indexed in the interpretation register) → generator, with the five CI checks and the re-review loop |
+| `edition-basis.svg` | The two edition declarations (`G\106`, the setup record's RCCVER) kept apart, and how the rules applied are chosen: override, declared, compatibility check, or labelled fallback |
 | `document-model.svg` | One buffer, spans, keys, index, and the byte range the `G\SHA` digest covers |
 | `link-graph.svg` | The Chapter 9 §9.5.1 b ties between groups, labelled with the value that carries each, and the H group's one tie to G (§9.5.12) |
 | `link-resolution.svg` | How one link resolves: case-folded match, the channel-type selector, resolved / ambiguous (all candidates listed) / unresolved, and keys unique per attribute (P and D data-link names equal by design) |

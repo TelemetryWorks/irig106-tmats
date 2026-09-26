@@ -54,6 +54,8 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-EDN-002 | _(none)_ | _(none)_ | Draft |
 | L1-EDN-003 | _(none)_ | _(none)_ | Draft |
 | L1-EDN-004 | _(none)_ | _(none)_ | Draft |
+| L1-EDN-005 | _(none)_ | _(none)_ | Draft |
+| L1-EDN-006 | _(none)_ | _(none)_ | Draft |
 
 ### L1-REG: Attribute definitions (registry)
 
@@ -201,7 +203,7 @@ This matrix is the single source of truth for live status; the requirement docum
 |----------|----|----|----|-----------|-----------|-------------|-------------|
 | READ | 7 | 0 | 0 | 0 | 0 | 0 | 0 |
 | CH10 | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
-| EDN | 4 | 0 | 0 | 0 | 0 | 0 | 0 |
+| EDN | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REG | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
 | VIEW | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
 | VAL | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -214,13 +216,13 @@ This matrix is the single source of truth for live status; the requirement docum
 | ROB | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 2 | 0 | 0 | 0 | 0 | 0 | 0 |
-| **Total** | **68** | **0** | **0** | **0** | **0** | **0** | **0** |
+| **Total** | **70** | **0** | **0** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 68 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 70 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 1 of 68 (1.5%).
+**Tested by at least one test marker**: 1 of 70 (1.4%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 68 (2.9%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 70 (2.9%).
 
 ### Orphan check
 
@@ -246,8 +248,12 @@ Every entry of `docs/INTERPRETATIONS.md` with the tests that name it (`/// Inter
 | INT-011 | Where one multi-packet setup record ends | accepted (owner, 2026-09-26) | _(none)_ |
 | INT-012 | RCCVER `0x0E` means "106-22 or later" | accepted (owner, 2026-09-26) | _(none)_ |
 | INT-013 | Appendix 9-C ends 18 attributes with `:` instead of `;` | suspect (owner, 2026-09-26; `docs/ROADMAP.md`, S1) | _(none)_ |
+| INT-014 | `G\106` gives two year digits, so one value can name two editions | accepted (owner, 2026-09-26) | _(none)_ |
+| INT-015 | `G\106` had no defined format before 106-17 | accepted (owner, 2026-09-26) | _(none)_ |
+| INT-016 | What the setup record's version byte declares, and when it did not exist | accepted (owner, 2026-09-26) | _(none)_ |
+| INT-017 | The fallback edition taken from RCCVER | accepted (owner, 2026-09-26) | _(none)_ |
 
-* Entries without a test: **13** of 13
+* Entries without a test: **17** of 17
 
 ### Marker reference check
 

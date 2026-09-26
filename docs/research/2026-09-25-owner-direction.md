@@ -258,3 +258,14 @@ measurand `n`), and `D-x\MNF\N-y-n-m` (fragments of location `m`), and the
 fragment attributes are `D-x\WFT-y-n-m-e` and `D-x\WFP-y-n-m-e`. The three
 documents were corrected in place, as a factual error in an example rather
 than a change of decision.
+
+## 20. When the TMATS edition is missing or unrecognised (2026-09-26)
+
+> apply T6 with (a)
+
+Option (a) adopted: when `G\106` is missing or unrecognised and the caller
+gives no override, validation uses a **labelled fallback** — the edition read
+from the setup record's RCCVER, else the baseline 106-24R1 — and continues;
+the report names the fallback and its reason. Recorded in: `docs/ROADMAP.md`
+(T6), ADR-0028, `docs/ARCHITECTURE.md` section 9, `docs/L1-REQ.md`,
+`docs/USE-CASES.md` (UC-04, UC-06), `docs/INTERPRETATIONS.md`, `docs/CLI.md`.

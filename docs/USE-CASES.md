@@ -154,10 +154,18 @@ interpretation is UC-05.
 
 **Actor:** validator, recording reader. **Trigger:** any document.
 
-The edition is taken from, in order: a caller override; `G\106` ("last 2
-digits of the year", Table 9-2); the Chapter 10 version in the setup-record
-CSDW. The answer states which source was used and whether the sources
-disagree. Unknown or future editions are reported as such, never guessed.
+Two declarations are reported, side by side and exactly as read: the **TMATS
+edition** from `G\106` ("used to generate this TMATS file", two year digits,
+Table 9-2 — so `24` means 106-24 or 106-24R1), and, per setup record, the
+**recording-format version** from the CSDW ("to which the following recorded
+data complies with", Chapter 11; "not declared" in 106-04 and 106-05
+recordings). A difference between them is normal and is not a finding.
+Unrecognised values are reported as such, never guessed.
+
+The edition whose rules apply is then selected: a caller override; else the
+edition `G\106` names; else a labelled fallback — RCCVER's edition, else the
+baseline 106-24R1. The answer states the edition applied and its basis
+(team review T6; ADR-0028; `docs/diagrams/edition-basis.svg`).
 
 ### UC-05 See channels and their definitions — *0.2*
 
@@ -193,6 +201,10 @@ ranges, lengths, hexadecimal, binary patterns, IP addresses, dates), and
 A "Chapter 10 recorder" profile applies the R/R Ch 10 Status rules on top.
 A value longer than a *recommended* maximum length (a Range given as a number
 of characters) is a warning by default, never an error.
+Every report names the edition applied and its basis (override, declared, or
+fallback). A file declaring an edition the registry does not cover (before
+106-04, or after the baseline) gets a **compatibility check** against 106-04
+or the baseline, named as such, never "validated against" its own edition.
 
 **Outcome:** a report of findings, each with a stable rule identifier, a
 severity, the attribute and its location, and the Chapter 9 citation.

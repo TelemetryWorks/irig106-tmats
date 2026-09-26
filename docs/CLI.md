@@ -48,6 +48,12 @@ a command computes, the library can compute for other callers.
   another code name (defect D4).
 - **Nothing is changed in place.** Commands that produce modified TMATS
   (`stamp`, and later fix application) write to a new output file.
+- **Editions shown as the file declares them.** `show` and `validate` print
+  the TMATS edition declared (`G\106`, raw and read), each setup record's
+  recording-format version (CSDW, raw and read), and — for `validate` — the
+  edition whose rules were applied with its basis (override, declared, or
+  fallback). `--edition` is the override. A compatibility check is labelled
+  as one (ADR-0028).
 - **Both versions in every report.** `tmats --version` prints
   `tmats X.Y.Z (irig106-tmats X.Y.Z)`; JSON output carries both.
 - **Every reference-tool defect is a regression test** (D1–D7,

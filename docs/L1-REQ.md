@@ -234,9 +234,9 @@ requirements are added. The requirement entries below and the generated
 
 ### L1-EDN-002
 
-**Statement**: The library SHALL determine a document's IRIG 106 edition from, in order of precedence, a caller override, the `G\106` attribute, and the Chapter 10 version in the setup-record CSDW; it SHALL report which source was used and any disagreement between sources, and SHALL report an unknown edition rather than guess.
+**Statement**: The library SHALL select the edition whose rules it applies from a caller override, else the edition that `G\106` names, else a fallback — the edition read from the setup-record RCCVER, else the baseline 106-24R1 — and SHALL report the edition applied together with its basis (override, declared, or fallback with its reason); it SHALL NOT report a difference between `G\106` and RCCVER as a finding by default.
 
-**Rationale**: UC-04; ADR-0016. `G\106` holds "the last 2 digits of the year" (Table 9-2). Delivered in 0.1.
+**Rationale**: `G\106` declares the edition "used to generate this TMATS file" (Table 9-2), while RCCVER declares what "the following recorded data complies with" (Chapter 11, 106-24R1), so differing values are normal; owner decision 2026-09-26 for a labelled fallback (UC-04; team review T6; ADR-0028, partly superseding ADR-0016). Delivered in 0.1.
 
 **Verification Method**: Test (T)
 
@@ -255,6 +255,22 @@ requirements are added. The requirement entries below and the generated
 **Rationale**: The owner asked "can we document the deltas in all the versions?"; ADR-0016. Delivered in 0.4 as `VERSION-DELTAS.md`.
 
 **Verification Method**: Inspection (I)
+
+### L1-EDN-005
+
+**Statement**: The library SHALL report the TMATS edition declared by `G\106` — its raw value and its candidate editions, or "unrecognised" — and, for each setup record, the recording-format version declared by its CSDW — the raw value and its reading for its era, including "not declared" where the field did not exist — without deriving either declaration from the other.
+
+**Rationale**: `24` names 106-24 or 106-24R1; the two-digit rule appears only from 106-17; the CSDW version field is CH10VER in 106-07 and absent in 106-05 ("Reserved. (Bits 31-0)") (team review T6; ADR-0028; INT-012, INT-014 to INT-016). Delivered in 0.1.
+
+**Verification Method**: Test (T)
+
+### L1-EDN-006
+
+**Statement**: For a declared edition outside those the registry covers, the library SHALL NOT report validation against that edition; it SHALL instead report a compatibility check against a named covered edition — 106-04 for earlier editions, the baseline for later ones — and SHALL name it a compatibility check in every report.
+
+**Rationale**: Checking a 1996 file against 106-04 is useful but is not validation against its edition; this reconciles "unknown editions are not guessed" with checking old files (team review T6; ADR-0028). Delivered in 0.4.
+
+**Verification Method**: Test (T)
 
 ---
 

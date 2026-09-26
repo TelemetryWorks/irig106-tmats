@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: accepted; precedence chain, disagreement finding, and pre-2004 validation superseded by 0028
 date: 2026-09-25
 decision-makers: Joey
 ---

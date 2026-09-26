@@ -91,6 +91,12 @@ architecture must honour:
   `irig106-core` exists.
 - **No silent repair.** Validation may *suggest* edits; only an explicit call
   applies them.
+- **Two edition declarations, one labelled basis.** `G\106` (the edition that
+  generated the TMATS) and the setup record's RCCVER (what the recorded data
+  complies with) are kept apart and never turned into a conflict; every
+  validation report names the edition applied and its basis (override,
+  declared, or fallback), and a compatibility check is never called
+  validation (ADR-0028).
 - **Shared types come from `irig106-types`** (`Irig106Version`, Chapter 10 data
   type codes, the setup-record CSDW layout). Do not redefine them here.
 

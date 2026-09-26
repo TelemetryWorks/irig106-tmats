@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 440" role="img" aria-label="Edition declarations and the validation basis (ADR-0028): G\106 declares the edition that generated the TMATS file and the setup record's RCCVER declares what the recorded data complies with; both are kept and shown side by side, never compared into a conflict. The rules applied come from a caller override, else the edition G\106 names (validated if the registry covers it, otherwise a compatibility check named as such), else a labelled fallback to the RCCVER edition or the baseline 106-24R1.">
+  <style>
+    text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; fill: #1f2328; }
+    .t { font-size: 15px; font-weight: 600; }
+    .h { font-size: 13px; font-weight: 600; }
+    .b { font-weight: 600; }
+    .c { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: 12px; }
+    .l { font-size: 11px; fill: #57606a; }
+    .box { fill: #f6f8fa; stroke: #57606a; stroke-width: 1.2; }
+    .ok { fill: #ddf4ff; stroke: #0969da; stroke-width: 1.6; }
+    .usr { fill: #fff8c5; stroke: #9a6700; stroke-width: 1.2; }
+    .ln { stroke: #57606a; stroke-width: 1.3; fill: none; }
+    .dl { stroke: #57606a; stroke-width: 1.3; fill: none; stroke-dasharray: 4 4; }
+    .ah { fill: #57606a; }
+    @media (prefers-color-scheme: dark) {
+      text { fill: #e6edf3; } .l { fill: #9198a1; }
+      .box { fill: #161b22; stroke: #9198a1; } .ok { fill: #0c2d6b; stroke: #4493f8; }
+      .usr { fill: #3b2e00; stroke: #d29922; } .ln, .dl { stroke: #9198a1; } .ah { fill: #9198a1; }
+    }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+
+  <text class="t" x="20" y="30">Two declarations, and the rules actually applied (ADR-0028)</text>
+  <text class="h" x="20" y="62">What the file declares (kept, never rewritten)</text>
+  <text class="h" x="520" y="62">Which edition's rules are applied, and why</text>
+
+  <!-- caller -->
+  <rect class="usr" x="20" y="80" width="420" height="44" rx="6"/>
+  <text class="b" x="34" y="100">Caller override (optional)</text>
+  <text class="l" x="34" y="116">for example: validate as 106-19</text>
+
+  <!-- declarations -->
+  <rect class="box" x="20" y="150" width="420" height="66" rx="6"/>
+  <text class="c" x="34" y="170">G\106:24;</text>
+  <text class="b" x="34" y="188">TMATS edition declared</text>
+  <text class="l" x="34" y="205">"used to generate this TMATS file": 106-24 or 106-24R1</text>
+
+  <text class="l" x="34" y="244">Two declarations answer two questions: shown side by side,</text>
+  <text class="l" x="34" y="258">never compared into a conflict (a user rule may flag them).</text>
+
+  <rect class="box" x="20" y="280" width="420" height="66" rx="6"/>
+  <text class="c" x="34" y="300">setup record CSDW: RCCVER 0x0E</text>
+  <text class="b" x="34" y="318">Recording-format version declared</text>
+  <text class="l" x="34" y="335">"recorded data complies with": 106-22 or later (none before 106-07)</text>
+
+  <!-- decision chain -->
+  <rect class="box" x="520" y="80" width="230" height="44" rx="6"/>
+  <text class="b" x="534" y="107">1  Override given?</text>
+  <rect class="box" x="520" y="170" width="230" height="44" rx="6"/>
+  <text class="b" x="534" y="197">2  G\106 names an edition?</text>
+  <rect class="box" x="520" y="290" width="230" height="44" rx="6"/>
+  <text class="b" x="534" y="310">3  Otherwise: fallback</text>
+  <text class="l" x="534" y="326">G\106 missing or unrecognised</text>
+
+  <path class="ln" d="M440,102 L520,102" marker-end="url(#a)"/>
+  <path class="ln" d="M440,192 L520,192" marker-end="url(#a)"/>
+  <path class="dl" d="M440,312 L520,312" marker-end="url(#a)"/>
+
+  <path class="ln" d="M635,124 L635,170" marker-end="url(#a)"/>
+  <text class="l" x="643" y="151">no</text>
+  <path class="ln" d="M635,214 L635,290" marker-end="url(#a)"/>
+  <text class="l" x="643" y="256">no</text>
+
+  <!-- results -->
+  <rect class="ok" x="790" y="80" width="190" height="44" rx="6"/>
+  <text class="b" x="802" y="100">Validate: that edition</text>
+  <text class="l" x="802" y="116">basis: override</text>
+  <rect class="ok" x="790" y="146" width="190" height="44" rx="6"/>
+  <text class="b" x="802" y="166">Validate: that edition</text>
+  <text class="l" x="802" y="182">basis: declared (106-04 … 24R1)</text>
+  <rect class="usr" x="790" y="198" width="190" height="72" rx="6"/>
+  <text class="b" x="802" y="216">Compatibility check</text>
+  <text class="l" x="802" y="232">vs 106-04 or the baseline,</text>
+  <text class="l" x="802" y="246">never called validation</text>
+  <text class="l" x="802" y="260">(for example G\106:96;)</text>
+  <rect class="ok" x="790" y="290" width="190" height="44" rx="6"/>
+  <text class="b" x="802" y="310">Validate: RCCVER's edition</text>
+  <text class="l" x="802" y="326">else 106-24R1 · basis: fallback</text>
+
+  <path class="ln" d="M750,102 L790,102" marker-end="url(#a)"/>
+  <text class="l" x="756" y="96">yes</text>
+  <path class="ln" d="M750,186 L790,168" marker-end="url(#a)"/>
+  <path class="ln" d="M750,200 L790,222" marker-end="url(#a)"/>
+  <text class="l" x="752" y="150">covered</text>
+  <text class="l" x="682" y="240">not covered</text>
+  <path class="ln" d="M750,312 L790,312" marker-end="url(#a)"/>
+
+  <!-- example report -->
+  <line x1="20" y1="372" x2="980" y2="372" stroke="#d0d7de"/>
+  <text class="h" x="20" y="398">Report for this file</text>
+  <text class="c" x="20" y="420">rules: 106-24R1 · basis: declared (G\106 = 24) · RCCVER 0x0E: 106-22 or later · no conflict</text>
+</svg>

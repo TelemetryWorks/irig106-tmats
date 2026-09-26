@@ -659,6 +659,13 @@ unrecognised and no override is given — (a) apply a labelled fallback
 (RCCVER's edition, else the baseline) and continue, or (b) validate nothing
 edition-specific and ask for an override. Recommendation: (a), because a
 labelled fallback is still useful and says plainly what it is.
+**Decided (owner, 2026-09-26): (a), a labelled fallback** — RCCVER's
+edition (for `0x0E`, the newest it covers), else the baseline.
+*Applied 2026-09-26: ADR-0028 (with a status pointer on ADR-0016),
+`docs/ARCHITECTURE.md` section 9 and section 6.5, a new diagram
+`docs/diagrams/edition-basis.svg`, L1-EDN-002 revised, L1-EDN-005 and 006,
+`docs/USE-CASES.md` (UC-04, UC-06), INT-014 to INT-017 (and INT-012
+cross-referenced), and `docs/CLI.md`.*
 
 ### Suspect findings to confirm against real data
 

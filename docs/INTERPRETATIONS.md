@@ -230,7 +230,7 @@ listed here.
 
 **Behaviour**: `0x0E` is reported as "106-22 or later", reserved values as an unknown edition, and `G\106` stays the primary edition source (ADR-0016).
 
-**Reason**: Later editions did not assign new codes, so `0x0E` cannot identify one edition.
+**Reason**: Later editions did not assign new codes, so `0x0E` cannot identify one edition. RCCVER declares the recording-format version, not the TMATS edition; see INT-016 and INT-017 (ADR-0028).
 
 **Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T3
 
@@ -253,3 +253,71 @@ listed here.
 **Design**: **suspect** (owner, 2026-09-26; `docs/ROADMAP.md`, S1) · **Review**: pending · **Origin**: T4
 
 **Test**: `appendix_9c_example_reports_suspected_semicolons` (`docs/TEST-DATA.md`)
+
+## Editions and versions
+
+### INT-014
+
+**Title**: `G\106` gives two year digits, so one value can name two editions
+
+**Sources**:
+- Table 9-2 (106-24R1), `G\106`: "Version of RCC IRIG 106 standard used to generate this TMATS file. The last 2 digits of the year should be used. Use a leading 0 if necessary." "Range: 0 to 99".
+- 106-24 and 106-24R1 are both published editions; 106-24R1 did not change Chapter 9 (ADR-0016).
+
+**Behaviour**: The value is read as a year and mapped to every archived edition of that year: `24` → 106-24 and 106-24R1; `96` → 106-96. A value without its leading zero (`4`) is read the same way, with a note. When all candidates share the same Chapter 9 rules, the newest is named as the rules applied (`24` → 106-24R1); when their rules differ, the choice needs its own entry here.
+
+**Reason**: The field cannot say more than the year, and "should" makes even the two-digit form a recommendation.
+
+**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T6
+
+**Test**: `g106_24_names_106_24_and_106_24r1`
+
+### INT-015
+
+**Title**: `G\106` had no defined format before 106-17
+
+**Sources**:
+- 106-05 and 106-07 Chapter 9, `G\106`: "VERSION OF IRIG 106 STANDARD USED TO GENERATE THIS TMATS FILE" (no format).
+- 106-13 Chapter 9, `G\106`: "Version of RCC IRIG 106 standard used to generate this TMATS file." with a maximum field size of 2.
+- 106-17 Chapter 9: the first edition with "The last 2 digits of the year should be used."
+
+**Behaviour**: Only a value that reads as the year of an archived edition (INT-014) is recognised. Any other form — `106-05`, `2005`, `IRIG 106-05` — is reported as "unrecognised", preserved exactly, and not interpreted; the fallback of ADR-0028 then applies, and the caller may override.
+
+**Reason**: Older files may use forms the standard never defined; reading them would be a guess.
+
+**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T6
+
+**Test**: `g106_other_forms_are_unrecognised_and_preserved`
+
+### INT-016
+
+**Title**: What the setup record's version byte declares, and when it did not exist
+
+**Sources**:
+- 106-05 Chapter 10, computer-generated Format 1 CSDW: "Reserved. (Bits 31-0) are reserved."
+- 106-07 Chapter 10: "IRIG-106 Chapter 10 Version (CH10VER). (1 Byte) indicates which IRIG-106 Chapter 10 release version the recorder requirements and following recorded data are applicable to and comply with." "0x00 thru 06 = Reserved", "0x07 = IRIG-106-07", "0x08 thru 0xFF = Reserved".
+- 106-24R1 Chapter 11: "RCC 106 Version (RCCVER). Bits 7-0 specify which RCC release version applies and to which the following recorded data complies with." "0x0E = RCC 106-22", "0x0F through 0xFF = Reserved".
+
+**Behaviour**: The byte is reported as the **recording-format version declared**, never as the TMATS edition. A value from `0x00` to `0x06` is reported as "not declared (the field did not exist before 106-07, or is reserved)", not as an error; defined codes are read from the newest table (106-24R1), since later editions only added codes.
+
+**Reason**: The field describes the recorder and recorded data, and 106-04 and 106-05 recordings carry no version at all.
+
+**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T6
+
+**Test**: `zero_csdw_version_is_not_declared`
+
+### INT-017
+
+**Title**: The fallback edition taken from RCCVER
+
+**Sources**:
+- 106-24R1 Chapter 11 RCCVER codes: "0x07 = RCC 106-07" … "0x0D = RCC 106-19", "0x0E = RCC 106-22".
+- Owner decision (2026-09-26): when `G\106` is missing or unrecognised and there is no override, use a labelled fallback (ADR-0028).
+
+**Behaviour**: Codes `0x07` to `0x0D` name one edition each and that edition's rules apply. `0x0E` covers 106-22 and every later edition, so the newest covered edition within that range applies (the baseline, 106-24R1). With no usable RCCVER, the baseline applies. The report says "fallback" and gives the reason.
+
+**Reason**: Using the newest edition of the range avoids reporting attributes introduced after 106-22 as unknown; the label keeps the choice visible.
+
+**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T6
+
+**Test**: `missing_g106_falls_back_to_rccver_edition_labelled`
