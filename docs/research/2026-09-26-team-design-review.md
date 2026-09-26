@@ -100,3 +100,16 @@ arrive.
 > ADR-0016 (/C:/Users/Joey/Documents/GIT-GitHub/telemetryworks/irig106-tmats/docs/adr/0016-edition-strategy.md:36) also needs to reconcile “unknown editions are not guessed” with automatically validating
 > pre-2004 files against 106-04. That can be useful compatibility checking, but should not be presented as validation against the file’s actual edition. Sources: Chapter 9 Table 9-2
 > (https://www.irig106.org/docs/106-24R1/chapter9.pdf), Chapter 11 §11.2.7.2 (https://www.irig106.org/docs/106-24R1/chapter11.pdf).
+
+## Priority 7 (verbatim)
+
+> 7. Complete the edit and checksum contracts before committing to the APIs.
+>
+> The patch model is appropriate, but it needs defined behavior for overlapping patches, stale item IDs, duplicate attributes, renumbering collisions, and extensions whose original attribute is removed.
+>
+> Checksum stamping must hash the final emitted bytes outside the checksum item. Adding a newline during insertion changes the hashed content. Duplicate or unterminated G\SHA items also need an explicit
+> diagnostic policy rather than an undocumented choice.
+>
+> Add transactional edits: validate the patch set, apply it atomically, rebuild affected derived state, and verify the emitted checksum. Also revise L1-WRT-006 so insufficient generator input produces an
+> incomplete draft with missing-input findings; it cannot simultaneously guarantee valid output and leave required information unspecified. References: L1-WRT requirements
+> (/C:/Users/Joey/Documents/GIT-GitHub/telemetryworks/irig106-tmats/docs/L1-REQ.md:350), Chapter 6 §6.2.3.11(f) (https://www.irig106.org/docs/106-24R1/chapter6.pdf).

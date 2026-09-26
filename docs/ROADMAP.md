@@ -672,6 +672,109 @@ edition (for `0x0E`, the newest it covers), else the baseline.
 `docs/USE-CASES.md` (UC-04, UC-06), INT-014 to INT-017 (and INT-012
 cross-referenced), and `docs/CLI.md`.*
 
+**T7. Complete the edit and checksum contracts before committing to the
+APIs.** Verified against 106-24R1 and our documents:
+
+- *What is hashed*: "The entire contents of the TMATS file except the
+  characters from "G\SHA:" to the following ";" (inclusive) shall be used to
+  calculate the checksum" (Table 9-2); "If the TMATS includes a G\SHA code
+  name, all text between the "G\SHA" and the following semicolon, inclusive,
+  shall be discarded for the purposes of digest calculation" (Chapter 6
+  §6.2.3.11 f). Separators around the item — a line break added on
+  insertion — are outside that range and are hashed, so a digest computed
+  before the item is inserted is wrong. Stamping must hash the final emitted
+  bytes.
+- *What is not defined*: both texts speak of one item and "the following
+  semicolon". Neither says what to do with two `G\SHA` items or one with no
+  following semicolon; and since "TMATS is not case sensitive" (§9.4.2),
+  `g\sha` is the same code name. Chapter 6 also requires "64 lower-case
+  hexadecimal characters" while Table 9-2 says only "hex characters".
+- *X extensions*: §9.5.14 covers renumbering ("the extension code could be
+  updated to preserve the link") and says "no new values may be added", but
+  not what happens when the original attribute is removed.
+- *Our gaps*: ADR-0007 makes edits a patch list and ADR-0014 suggests a stamp
+  edit when `G\SHA` is stale, but nothing defines overlapping patches, edits
+  that name items from an older revision, edits to duplicated attributes,
+  renumbering onto an index already in use, or orphaned extensions.
+  L1-WRT-006 asks for output that "passes validation" while "reporting what
+  the caller must still supply", which cannot both hold; UC-13 says the same.
+- *Also found — Chapter 6's own examples*: the `.TMATS WRITE` and `.TMATS
+  READ` examples send `G\DSI\N=18;`, `=` where §9.4.2 requires `:`; and the
+  example setup file carries `G\SHA:0;`, a value the Range ("integer
+  followed by "-" followed by hex characters") does not allow.
+
+Mapping: refines ADR-0007 and ADR-0014 (a new ADR for transactional edits
+and the stamping contract), revises L1-WRT-003, L1-WRT-006, and L1-SUM-002,
+revises UC-10, UC-13, UC-15, and the edits-and-checksum diagram; adds
+register entries; no conflict with T1–T6. Plan:
+
+1. *Edit targets*: every edit names its item by an item ID bound to one
+   document revision, or by code name. Defined outcomes, each a rejection of
+   the whole set with a finding naming the items involved:
+   - **overlapping patches** — two edits in a set touching the same bytes or
+     the same item (no order-dependent merging); inserts at one position keep
+     the set's order;
+   - **stale item IDs** — an ID from another revision; never re-targeted by
+     guess;
+   - **duplicate attributes** — a code name with several items is ambiguous
+     unless the edit names one item ID or says "every occurrence";
+   - **renumbering collisions** — a target index already in use, unless the
+     same set moves the occupant (a swap or permutation is validated as a
+     whole); counters change only if the set says so, with a suggested
+     counter edit otherwise;
+   - **extensions whose original is removed** — rejected unless the set also
+     removes or re-targets them, or the caller explicitly keeps them as
+     orphans, which are then reported (§9.5.14's "preserve it").
+2. *Transactional edits*: **validate** the set (targets, the rules above,
+   and that new text is well formed — code names parse, values contain no
+   `;`); **apply** it atomically as a new revision, the original untouched
+   and nothing changed on any failure; **rebuild** the derived state it
+   affects (index, link graph, derivation graph, effective values — first by
+   rebuilding in full, measured by the benchmarks); **verify** by re-reading
+   the emitted bytes and checking they hold exactly the intended attributes
+   and, when the set stamps, that the emitted checksum verifies.
+3. *Stamping contract*: the stamp is the last step of a transaction. The
+   writer emits the final bytes with the `G\SHA` item in place (with the
+   document's own separator and line ending), computes SHA-256 over every
+   emitted byte outside that item, writes the value inside the item (which
+   cannot change the digest), and re-verifies.
+4. *`G\SHA` diagnostic policy*, each a register entry: `g\sha` in any case is
+   the code name, text inside a value never is (D6); **two or more items** —
+   an error, verification reports "ambiguous" and never "match", and stamping
+   is refused until one remains (a suggested removal); an item with **no
+   following semicolon** — an error, verification reports "malformed", and
+   stamping suggests the terminator; **upper-case hex** — verified as a
+   match of the digest with a warning, because Chapter 6 requires lower
+   case.
+5. *Generator (L1-WRT-006, UC-13)*: with sufficient input, output passes
+   validation for the selected edition; with insufficient input, the result
+   is an **incomplete draft** plus missing-input findings, never presented
+   as valid and never filled with invented values.
+6. *Chapter 6 errata*: `G\DSI\N=18;` is read as the standard requires — no
+   colon, so a missing-delimiter finding — with a suggested edit replacing
+   `=` by `:` when the text before it is a complete code name; `G\SHA:0;` is
+   verified as malformed. Both go into `docs/TEST-DATA.md` as fixtures.
+7. *Tests*: each rejection above; a failing set leaves the document
+   unchanged; a swap renumber succeeds; stamp by insertion with a new line
+   then verify (the team's case); `G\SHA` first, middle, last (D5), in a
+   value (D6), duplicated, unterminated, in lower and upper case; generator
+   with full and with insufficient input; the Chapter 6 examples.
+
+Documents affected: a new ADR (transactional edits and the stamping
+contract; status pointers on ADR-0007 and ADR-0014), ARCHITECTURE (a section
+for T7; the edits-and-checksum diagram), L1-WRT-003, L1-WRT-006, and
+L1-SUM-002 revised, new L1 requirements for the transaction and the stamp,
+`docs/USE-CASES.md` (UC-10, UC-13, UC-15), `docs/INTERPRETATIONS.md` (the
+`G\SHA` policy, orphaned extensions, the Chapter 6 errata — each marked for
+intensive testing and deep analysis), `docs/TEST-DATA.md`, and `docs/CLI.md`
+(`stamp`).
+**Owner decisions needed:** (1) the duplicate-`G\SHA` policy — recommended:
+an error, "ambiguous", never "match", stamping refused until one remains;
+(2) orphaned extensions — recommended: reject the removal unless the set
+handles them or the caller explicitly keeps orphans; (3) the Chapter 6 `=`
+suggestion — recommended: offer it, marked **suspect** like S1 until real
+data shows whether writers produce it.
+
 ### Suspect findings to confirm against real data
 
 Findings accepted into the design but held in doubt by the owner until they
