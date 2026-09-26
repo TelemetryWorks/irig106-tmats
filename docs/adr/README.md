@@ -1,0 +1,37 @@
+# Architecture Decision Records
+
+MADR-format records of the decisions that shape `irig106-tmats` and the
+`tmats` CLI, in the style of `mie-decoder`'s `docs/adr/`. Each record states
+the problem, the options considered, the choice, and its consequences. A
+decision is changed by a new record that supersedes the old one; records are
+not rewritten.
+
+**Status:** `accepted` — decided by the project owner; `proposed` — part of the
+architecture proposal (`docs/ARCHITECTURE.md`) awaiting the owner's review.
+
+| ADR | Decision | Status |
+|-----|----------|--------|
+| [0001](0001-rebuild-rather-than-patch-the-prototype.md) | Rebuild the crate rather than patch the prototype | accepted |
+| [0002](0002-lossless-ordered-attribute-store.md) | The ordered attribute list is the single source of truth | accepted |
+| [0003](0003-owned-buffer-with-spans.md) | Owned byte buffer with spans instead of borrowed lifetimes | accepted |
+| [0004](0004-layered-spec-cited-registry.md) | A layered, spec-cited, edition-tagged attribute registry | accepted |
+| [0005](0005-generated-registry-without-build-rs.md) | Generate the registry into checked-in source with a script; no `build.rs` | accepted |
+| [0006](0006-registry-driven-validation-with-policy.md) | Registry-driven validation with severity policy and user rules | accepted |
+| [0007](0007-suggested-edits-not-automatic-repair.md) | No automatic repair: suggested edits, applied only by the caller | accepted |
+| [0008](0008-first-class-vendor-and-extension-groups.md) | Vendor (V) and extension (X) groups are first-class | accepted |
+| [0009](0009-shared-types-from-irig106-types.md) | Shared IRIG 106 types come from `irig106-types` | accepted |
+| [0010](0010-library-performs-no-io.md) | The library performs no I/O | accepted |
+| [0011](0011-lockstep-library-and-cli-workspace.md) | One workspace; library and `tmats` CLI released in lockstep | accepted |
+| [0012](0012-publishing-and-release-binaries.md) | Publish both crates together; `tmats` binaries via `cargo-dist` | accepted |
+| [0013](0013-hand-rolled-cli-argument-parsing.md) | Hand-rolled argument parsing for the CLI | accepted |
+| [0014](0014-tmats-checksums.md) | `G\SHA` over the original bytes; flex signature as a labelled compatibility option | accepted |
+| [0015](0015-remove-xml-wasm-and-unused-features.md) | Remove XML, WASM, and the unused features until done properly | accepted |
+| [0016](0016-edition-strategy.md) | Parse every edition; baseline 106-24R1; validate 106-04 … 106-24R1 | accepted |
+| [0017](0017-standards-archive-repository.md) | Mirror the RCC 106 standards in a separate repository, as release assets | accepted |
+| [0018](0018-reference-tools-and-test-data.md) | Reference tools are oracles, not authorities; real data stays local | accepted |
+| [0019](0019-cli-minimal-chapter-10-reader.md) | The CLI carries a minimal Chapter 10 packet reader until `irig106-core` | accepted |
+| [0020](0020-correctness-guard-rails.md) | Correctness guard rails in the code and the tests | proposed |
+| [0021](0021-single-pass-scanner.md) | A single-pass scanner that indexes, checksums, and reports as it reads | proposed |
+
+New records take the next number and use the same front matter
+(`status`, `date`, `decision-makers`).

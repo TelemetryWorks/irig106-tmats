@@ -102,7 +102,9 @@ architecture must honour:
   assistant's memory.
 - `docs/PROJECT_STRUCTURE.md` — what every file and directory is for. Keep it
   current in the same commit that adds, moves, or removes a file.
-- `docs/adr/` — architecture decision records (MADR format), once written.
+- `docs/adr/` — architecture decision records (MADR format); read the
+  index (`docs/adr/README.md`) before changing anything they cover, and
+  supersede a record with a new one rather than editing it.
 - `docs/L1-REQ.md`, `docs/L2-REQ.md`, `docs/L3-REQ.md`, `docs/TRACE-MATRIX.md`
   — requirements and the generated trace matrix, once written.
 - The RCC 106 standards themselves are mirrored, with their original URLs and

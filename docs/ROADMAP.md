@@ -43,62 +43,21 @@ Produced in this order, each reviewed before the next begins:
 2. **Architecture and data flow** — the lossless ordered attribute store, the
    code-name grammar, the layered attribute registry, the validator, the
    edit/suggestion model, and the Chapter 10 setup-record boundary.
-3. **ADRs** — one per decision already taken in review (listed under
-   "Decisions to record" below) and any the architecture work raises.
+3. **ADRs** — written for the decisions taken so far (`docs/adr/`); two
+   architecture ADRs (0020, 0021) are proposed pending the architecture
+   review.
 4. **L1 → L2 → L3 requirements**, the trace-matrix script, and test-marker
    conventions.
 5. **Standards baseline** — the RCC 106 archive (`TelemetryWorks/rcc-106-standards`)
    in place, so every registry entry can cite an edition, table, and row.
 
-### Decisions to record as ADRs
+### Decisions
 
-- Rebuild rather than patch the prototype.
-- The ordered attribute list is the single source of truth; typed accessors
-  are views over it, and a parse/serialize round trip is byte-faithful by
-  default.
-- Owned storage (one backing buffer plus spans) instead of `Cow<'a, str>`
-  lifetimes on public types.
-- A layered attribute registry: built-in, spec-cited entries tagged by the
-  edition that introduced, changed, or removed them, with user-supplied
-  definitions and overrides layered on top.
-- Validation is registry-driven, with severity policy and user rules; the
-  document's edition is taken from a caller override, then `G\106`, then the
-  Chapter 10 setup-record CSDW.
-- No automatic repair: diagnostics may carry suggested edits, and the caller
-  applies the ones it chooses.
-- V (vendor) and X (extension) groups are first-class, with X attributes
-  linked to the attribute they extend (Chapter 9 §9.5.13–9.5.14).
-- The registry is generated into a checked-in source file by a script with a
-  `--check` mode in CI; no `build.rs`.
-- `Irig106Version`, the Chapter 10 data-type code, and the Computer-Generated
-  Format 1 CSDW layout live in `irig106-types`, shared across the ecosystem.
-- XML, WASM bindings, and the unused `std` / `rich-errors` features are
-  removed until they can be done properly (see "Deferred features").
-- The repository is a Cargo workspace of two crates, the library
-  `irig106-tmats` and the CLI `irig106-tmats-cli` (binary `tmats`), released
-  **in lockstep**: one version (`[workspace.package] version`), one tag, one
-  changelog, and the CLI depends on the library with an exact `=X.Y.Z`
-  requirement so a mismatched pair can never be built or installed.
-- Both crates are published to crates.io together, library first; the CLI is
-  also shipped as prebuilt binaries on each GitHub release. Publishing
-  mechanics are in `docs/RELEASING.md`.
-- The CLI's argument parsing is hand-rolled with no dependency (no `clap`),
-  as in `mie-decoder`: table-driven, with a test for every flag and usage
-  error.
-- The CLI opens Chapter 10 files with a minimal internal packet reader (sync
-  pattern, header, data type `0x01` payloads) until `irig106-core` provides
-  one; the library itself stays payload-level.
-- `G\SHA` (Chapter 9 Table 9-2, Chapter 6 §6.2.3.11 f) is computed over the
-  original bytes; the irig106.org "flex signature" is supported as an
-  explicitly non-standard, compatibility-only option.
-- Every defect found in a reference tool (`idmptmat`, `irig106lib`) is guarded
-  by a named regression test (`docs/TEST-DATA.md`, "Known defects").
-- `tmats` is a **focused TMATS tool**; the complete, ecosystem-wide command
-  line tool is `irig106-cli` (its own repository and crates.io crate), which
-  builds on the `irig106-tmats` library like any other consumer. Still to
-  decide: whether `irig106-tmats-cli` also exposes its command
-  implementations as a library so `irig106-cli` can mount them as a `tmats`
-  subcommand without duplicating them.
+Decisions taken so far are recorded in `docs/adr/` (index in
+`docs/adr/README.md`). Still to decide: whether `irig106-cli` mounts the
+`tmats` commands directly, which would mean `irig106-tmats-cli` also exposes
+its command implementations as a library under the same lockstep and semver
+rules (ADR-0011).
 
 ## Planned releases
 
