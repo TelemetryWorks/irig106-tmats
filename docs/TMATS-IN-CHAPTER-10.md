@@ -12,7 +12,7 @@
 | Section | Status |
 |---------|--------|
 | 1. What `irig106-tmats` is for | **draft for review** |
-| 2. Where TMATS sits in Chapter 10 processing | to be written |
+| 2. Where TMATS sits in Chapter 10 processing | **draft for review** |
 | 3. What the description answers, question by question | to be written |
 | 4. Contracts per consumer | to be written |
 | 5. Configuration over a recording | to be written |
@@ -51,7 +51,7 @@ data type `0x01` ("Computer-Generated Data, Format 1 — Setup Record",
 Table 11-4), carried from 106-17 on channel ID `0x0000`, a channel that may
 also carry Format 4 streaming configuration records (§11.2.1.1 b). One
 record may be up to 134,217,728 bytes and may span several consecutive
-packets (§11.2.1.1 c, §11.2.7.2); a recording may carry more than one
+packets (§11.2.1 c, §11.2.7.2); a recording may carry more than one
 record when the recorder's configuration changes (§11.2.7.2, SRCC).
 
 ![What a packet says, and what the setup record adds](diagrams/packet-vs-setup-record.svg)
@@ -159,3 +159,128 @@ Section 4 turns each row into a contract.
   out of the library ("WASM returns as a separate `irig106-tmats-wasm`
   crate"); the library's lack of I/O keeps that possible, and section 4 must
   say what studio can rely on until then.
+
+---
+
+## 2. Where TMATS sits in Chapter 10 processing
+
+![Where TMATS sits in Chapter 10 processing](diagrams/tmats-in-the-pipeline.svg)
+
+*Two directions.* Reading a recording (top): a packet reader walks the file,
+hands setup-record fragments to `irig106-tmats` and every other packet to
+the components that decode them; `irig106-tmats` gives them, and the tools
+that present results, the description they need. Producing a recording
+(bottom): a caller's channel inventory or edits become a stamped
+setup-record payload that `irig106-write` packs into packets. Letters name
+what crosses each boundary; section 2.3 defines each.
+
+### 2.1 Reading a recording
+
+1. **A packet reader walks the file** (A). It reads each packet header,
+   checks the header checksums before trusting any length, and slices each
+   packet body by its Data Length (Chapter 11 §11.2.1; ADR-0025). Today this
+   is the `tmats` CLI's minimal reader (ADR-0019); it moves to
+   `irig106-core` when that exists (ROADMAP X3).
+2. **Setup-record fragments go to `irig106-tmats`** (B). A packet of data type
+   `0x01` carries a fragment of a setup record (Table 11-4). The reader hands
+   over each fragment's bytes — after the CSDW, without filler or checksum —
+   with its provenance: file offset, channel ID, sequence number, relative
+   time counter, the CSDW fields, and the data-type version (ADR-0025).
+   Finding setup records by data type, never by channel ID alone, matters:
+   channel `0x0000` also carries Format 4 streaming configuration records
+   from 106-17 (§11.2.1.1 b).
+3. **`irig106-tmats` builds the description.** It assembles complete setup
+   records ("A single setup record may span multiple consecutive packets",
+   §11.2.7.2), reads each one without loss, interprets it through the
+   registry, and makes the answers, declarations, checksum status, and
+   findings available (section 1.2). One description exists per setup
+   record.
+4. **Every other packet goes to the component that decodes it** (C), by
+   channel ID: data packets to `irig106-decode`, time packets to
+   `irig106-time`.
+5. **Those components ask the description how to interpret each channel**
+   (D, E). `irig106-decode` needs the channel's data type and format
+   definition, where each measurement lies, how each converts, and how
+   derived parameters are defined; `irig106-time` needs which channels carry
+   time, in what format, and the recording-format version (section 3 lists
+   the attributes).
+6. **Tools present the results** (F, G): `irig106-studio`, `irig106-index`,
+   `irig106-ch10-reader`, and `irig106-cli` show labels, groupings,
+   declarations, findings, and the raw TMATS from the description, and
+   engineering-unit values from `irig106-decode`.
+
+**Order matters.** When a recorder's configuration changes, "the new setup
+record packet will be committed to the stream prior to any new or changed
+data packets", preceded by "a setup record configuration change event
+packet" (§11.2.7.2). A packet is therefore interpreted with the description
+of the setup record that precedes it; section 5 defines how a consumer
+learns which one that is.
+
+### 2.2 Producing a recording
+
+1. **The caller supplies a channel inventory, or edits** to an existing
+   document.
+2. **`irig106-tmats` generates or edits the TMATS** as a verified
+   transaction: with sufficient input the result validates for the selected
+   edition, otherwise it is an incomplete draft with missing-input findings
+   (L1-WRT-006, L1-WRT-007); the `G\SHA` stamp is the transaction's last step
+   (L1-SUM-004).
+3. **It returns the setup-record payload** (H): the CSDW and the TMATS body
+   (L1-CH10-003).
+4. **`irig106-write` packs the payload into packets and writes the file.**
+   A packet may hold at most 524,288 bytes, while a setup record may be up to
+   134,217,728 bytes (§11.2.1 c, Table 11-3), so a large record is split
+   across consecutive packets whose "sequence counter shall increment in the
+   order of segmentation of the setup record, n+1" (§11.2.7.2). For a
+   configuration change, `irig106-write` sets the SRCC bit and inserts the
+   configuration-change event packet first (§11.2.7.2).
+
+### 2.3 What crosses each boundary
+
+| | From → to | What crosses | Defined in |
+|---|-----------|--------------|------------|
+| A | recording → packet reader | the file's bytes (memory-mapped) | ADR-0010, ADR-0019 |
+| B | packet reader → `irig106-tmats` | setup-record fragments: bytes after the CSDW, and provenance (file offset, channel ID, sequence number, relative time counter, CSDW fields, data-type version) | ADR-0025; L1-CH10-001, 004 |
+| C | packet reader → `irig106-decode`, `irig106-time` | every other packet, by channel ID | `irig106-core` (to be designed) |
+| D | `irig106-tmats` → `irig106-decode` | for each channel: data type and packing, format definition (PCM frame, bus messages, message data), measurement locations, conversions, derived-parameter descriptions — each with its state | sections 3 and 4 |
+| E | `irig106-tmats` → `irig106-time` | the channels that carry time and their formats; the recording-format version declared | sections 3 and 4 |
+| F | `irig106-tmats` → presentation tools | channel labels and data-source grouping, the TMATS edition and recording-format version declared, `G\SHA` status, findings, the raw TMATS bytes | sections 3 and 4 |
+| G | `irig106-decode` → presentation tools | values in engineering units | `irig106-decode` |
+| H | `irig106-tmats` → `irig106-write` | the stamped setup-record payload (CSDW and body) | L1-CH10-003, L1-SUM-004 |
+
+Every boundary carries bytes and plain data, never files or handles: the
+library performs no I/O (ADR-0010). Shared types — the edition, the
+data-type codes, the setup-record CSDW layout — come from `irig106-types`
+(ADR-0009).
+
+### 2.4 Which crate depends on which (proposal)
+
+Section 1.6 asked whether `irig106-core` depends on `irig106-tmats`. The
+proposal, for the owner's decision (ROADMAP follow-up F5):
+
+| Crate | Depends on | Does not depend on |
+|-------|-----------|--------------------|
+| `irig106-types` | — | — |
+| `irig106-tmats` | `irig106-types` | any packet reader or decoder |
+| `irig106-core` | `irig106-types` | `irig106-tmats` |
+| `irig106-decode` | `irig106-types`, `irig106-tmats` (the description's types) | the packet reader's internals |
+| `irig106-time` | `irig106-types` | — (receives what it needs from TMATS as plain data) |
+| tools (`studio`, `ch10-reader`, `cli`, `index`) | `irig106-core`, `irig106-tmats`, `irig106-decode`, `irig106-time` | — |
+
+Why `irig106-core` should not depend on `irig106-tmats`:
+
+- Its job is structural — walking packets fast, even when the TMATS is
+  missing or damaged; a dependency on the setup record would couple the two
+  for no gain.
+- It still serves the library: it produces the fragments (B) the assembler
+  needs, as plain data.
+- Checking packets against the configuration — a channel in the data but
+  not in TMATS, a data type that differs from `R-x\CDT-n`, a disabled channel
+  that carries data — needs both the packets and the description, so it
+  belongs to the layer that holds both: the tools, or a small checking
+  function in `irig106-tmats` that takes a packet summary as plain data
+  (section 6).
+
+The alternative — `irig106-core` depends on `irig106-tmats` and checks every
+packet against the channel table as it reads — puts the check in one place,
+at the cost of making the structural reader depend on the setup record.

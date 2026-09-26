@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-label="Where TMATS sits in Chapter 10 processing: a packet reader walks the file; it hands setup-record fragments with their provenance to irig106-tmats and every other packet, by channel, to irig106-decode and irig106-time; irig106-tmats gives the description — formats, measurements, conversions, time channels, declarations, findings — to decode, time, and the presentation tools; decode gives engineering-unit values to the presentation tools. In the other direction, a caller's channel inventory or edits go to irig106-tmats, which returns a stamped setup-record payload that irig106-write packs into packets. All crates share types from irig106-types.">
+  <style>
+    text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; fill: #1f2328; }
+    .t { font-size: 15px; font-weight: 600; }
+    .b { font-weight: 600; }
+    .l { font-size: 11px; fill: #57606a; }
+    .k { font-size: 12px; font-weight: 700; fill: #0969da; }
+    .box { fill: #f6f8fa; stroke: #57606a; stroke-width: 1.2; }
+    .hub { fill: #ddf4ff; stroke: #0969da; stroke-width: 1.8; }
+    .usr { fill: #fff8c5; stroke: #9a6700; stroke-width: 1.2; }
+    .ln { stroke: #57606a; stroke-width: 1.3; fill: none; }
+    .lb { stroke: #0969da; stroke-width: 1.6; fill: none; }
+    .lw { stroke: #9a6700; stroke-width: 1.4; fill: none; }
+    .ah { fill: #57606a; } .ahb { fill: #0969da; } .ahw { fill: #9a6700; }
+    @media (prefers-color-scheme: dark) {
+      text { fill: #e6edf3; } .l { fill: #9198a1; } .k { fill: #4493f8; }
+      .box { fill: #161b22; stroke: #9198a1; } .hub { fill: #0c2d6b; stroke: #4493f8; }
+      .usr { fill: #3b2e00; stroke: #d29922; } .ln { stroke: #9198a1; } .lb { stroke: #4493f8; }
+      .lw { stroke: #d29922; } .ah { fill: #9198a1; } .ahb { fill: #4493f8; } .ahw { fill: #d29922; }
+    }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ahb" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="w" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ahw" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+
+  <text class="t" x="20" y="30">Where TMATS sits in Chapter 10 processing</text>
+  <text class="l" x="20" y="48">Reading a recording (top) and producing one (bottom). Letters name what crosses each boundary (key at left).</text>
+
+  <!-- read direction -->
+  <rect class="box" x="20" y="84" width="130" height="56" rx="6"/>
+  <text class="b" x="85" y="108" text-anchor="middle">Chapter 10</text>
+  <text class="b" x="85" y="124" text-anchor="middle">recording</text>
+
+  <rect class="box" x="190" y="76" width="200" height="80" rx="6"/>
+  <text class="b" x="290" y="98" text-anchor="middle">Packet reader</text>
+  <text class="l" x="290" y="116" text-anchor="middle">irig106-core (today: the tmats</text>
+  <text class="l" x="290" y="130" text-anchor="middle">CLI's minimal reader)</text>
+  <text class="l" x="290" y="146" text-anchor="middle">walks headers, checks checksums</text>
+
+  <rect class="hub" x="470" y="66" width="220" height="150" rx="8"/>
+  <text class="b" x="580" y="90" text-anchor="middle">irig106-tmats</text>
+  <text class="l" x="580" y="112" text-anchor="middle">assembles setup records</text>
+  <text class="l" x="580" y="128" text-anchor="middle">reads them without loss</text>
+  <text class="l" x="580" y="144" text-anchor="middle">interprets (cited registry)</text>
+  <text class="l" x="580" y="160" text-anchor="middle">answers · validates</text>
+  <text class="l" x="580" y="176" text-anchor="middle">checks G\SHA</text>
+  <text class="l" x="580" y="198" text-anchor="middle">→ the description</text>
+
+  <rect class="box" x="790" y="66" width="190" height="58" rx="6"/>
+  <text class="b" x="885" y="90" text-anchor="middle">irig106-decode</text>
+  <text class="l" x="885" y="108" text-anchor="middle">extracts and converts values</text>
+
+  <rect class="box" x="790" y="156" width="150" height="50" rx="6"/>
+  <text class="b" x="865" y="178" text-anchor="middle">irig106-time</text>
+  <text class="l" x="865" y="194" text-anchor="middle">time correlation</text>
+
+  <rect class="box" x="470" y="286" width="510" height="56" rx="6"/>
+  <text class="b" x="725" y="309" text-anchor="middle">irig106-studio · irig106-index · irig106-ch10-reader · irig106-cli</text>
+  <text class="l" x="725" y="327" text-anchor="middle">display, catalogue, report</text>
+
+  <!-- A: file to reader -->
+  <path class="ln" d="M150,112 L190,112" marker-end="url(#a)"/>
+  <text class="k" x="164" y="104">A</text>
+  <!-- B: fragments -->
+  <path class="lb" d="M390,100 L470,100" marker-end="url(#b)"/>
+  <text class="k" x="424" y="92">B</text>
+  <!-- C: other packets to decode and time -->
+  <path class="ln" d="M390,140 L440,140 L440,248 L760,248 L760,112 L790,112" marker-end="url(#a)"/>
+  <path class="ln" d="M760,196 L790,196" marker-end="url(#a)"/>
+  <text class="k" x="448" y="242">C</text>
+  <!-- D: description to decode -->
+  <path class="lb" d="M690,84 L790,84" marker-end="url(#b)"/>
+  <text class="k" x="735" y="78">D</text>
+  <!-- E: to time -->
+  <path class="lb" d="M690,168 L790,168" marker-end="url(#b)"/>
+  <text class="k" x="720" y="162">E</text>
+  <!-- F: to presentation -->
+  <path class="lb" d="M580,216 L580,286" marker-end="url(#b)"/>
+  <text class="k" x="588" y="272">F</text>
+  <!-- G: decode values to presentation -->
+  <path class="ln" d="M965,124 L965,286" marker-end="url(#a)"/>
+  <text class="k" x="950" y="240">G</text>
+
+  <!-- write direction -->
+  <line x1="20" y1="372" x2="980" y2="372" stroke="#d0d7de"/>
+  <rect class="usr" x="190" y="396" width="200" height="56" rx="6"/>
+  <text class="b" x="290" y="418" text-anchor="middle">Caller</text>
+  <text class="l" x="290" y="436" text-anchor="middle">channel inventory, or edits</text>
+
+  <rect class="hub" x="470" y="396" width="220" height="56" rx="8"/>
+  <text class="b" x="580" y="418" text-anchor="middle">irig106-tmats</text>
+  <text class="l" x="580" y="436" text-anchor="middle">generates · edits · stamps</text>
+
+  <rect class="box" x="790" y="396" width="190" height="56" rx="6"/>
+  <text class="b" x="885" y="418" text-anchor="middle">irig106-write</text>
+  <text class="l" x="885" y="436" text-anchor="middle">packs packets, writes file</text>
+
+  <path class="lw" d="M390,424 L470,424" marker-end="url(#w)"/>
+  <path class="lw" d="M690,424 L790,424" marker-end="url(#w)"/>
+  <text class="k" x="734" y="416">H</text>
+
+  <!-- key -->
+  <text class="b" x="20" y="186">Key</text>
+  <text class="k" x="20" y="206">A</text><text class="l" x="36" y="206">the recording's bytes</text>
+  <text class="k" x="20" y="224">B</text><text class="l" x="36" y="224">setup-record fragments (0x01)</text>
+  <text class="l" x="36" y="237">with their provenance</text>
+  <text class="k" x="20" y="255">C</text><text class="l" x="36" y="255">every other packet, by channel</text>
+  <text class="k" x="20" y="273">D</text><text class="l" x="36" y="273">formats, measurements,</text>
+  <text class="l" x="36" y="286">conversions, derived parameters</text>
+  <text class="k" x="20" y="304">E</text><text class="l" x="36" y="304">time channels and formats;</text>
+  <text class="l" x="36" y="317">recording-format version</text>
+  <text class="k" x="20" y="335">F</text><text class="l" x="36" y="335">labels, grouping, declarations,</text>
+  <text class="l" x="36" y="348">findings, the raw TMATS</text>
+  <text class="k" x="250" y="304">G</text><text class="l" x="266" y="304">values in engineering</text>
+  <text class="l" x="266" y="317">units</text>
+  <text class="k" x="250" y="335">H</text><text class="l" x="266" y="335">setup-record payload,</text>
+  <text class="l" x="266" y="348">stamped</text>
+
+  <text class="l" x="20" y="496">All crates share types from irig106-types: the edition, the data-type codes, the setup-record CSDW layout (ADR-0009).</text>
+</svg>
