@@ -19,7 +19,8 @@ listed here.
   page where it helps. Baseline: 106-24R1 unless stated.
 - **Design** is the owner's decision on the behaviour: `accepted`,
   `suspect` (accepted but held in doubt until checked against real data —
-  `docs/ROADMAP.md`, "Suspect findings"), or `open` (no behaviour chosen;
+  `docs/ROADMAP.md`, "Suspect findings"), `proposed` (a behaviour drafted
+  while documenting, not yet reviewed by the owner), or `open` (no behaviour chosen;
   an owner follow-up in `docs/ROADMAP.md`, "Follow-ups for the owner" — the
   implementation must not choose one).
 - **Review** is ADR-0022's two-person rule for the executable
@@ -486,5 +487,79 @@ listed here.
 **Design**: open (follow-up F3, 2026-09-26) · **Review**: pending · **Origin**: T7
 
 **Test**: `chapter_6_example_equals_sign_is_missing_delimiter`
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+## Channels and packets
+
+### INT-024
+
+**Title**: Which packet data types a channel may carry
+
+**Sources**:
+- Chapter 11 Table 11-4 (106-24R1): data-type families of eight codes (for example "0x08 PCM Data, Format 0" to "0x0B - 0x0F PCM Data, Format 3 - Format 7"), except "0x78 Controller Area Network Bus" (one code) and "0x79 Fibre Channel Data, Format 0", "0x7A Fibre Channel Data, Format 1", "0x7B – 0x80 … Reserved"; no `0x22` is listed.
+- Table 9-4: `R-x\CDT-n` enumeration (PCMIN … TMOUT) and one data-type-format attribute per type, for example `R-x\PDTF-n` "PCM data type format. Enumeration equates to format number in Chapter 11"; `R-x\TTF-n`, `R-x\VTF-n`, and others "equates to format number in Chapter 10"; `R-x\UTF-n` and `R-x\FCTF-n` without that sentence.
+
+**Behaviour**: A reviewed table maps each `R-x\CDT-n` keyword to its Table 11-4 family, and the channel's data-type-format value to the format within it (`docs/TMATS-IN-CHAPTER-10.md` section 3.3). TMOUT has no packet data type. The packet check (L1-CH10-007) reports a packet whose data type is not the one the table gives.
+
+**Reason**: The families are irregular (CAN, Fibre Channel, the missing `0x22`), and several format attributes still cite Chapter 10 after the packet formats moved to Chapter 11, so the mapping cannot be computed and must be reviewed.
+
+**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: pending · **Origin**: F4 section 3
+
+**Test**: `channel_data_type_maps_to_packet_data_types`
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+### INT-025
+
+**Title**: `R-x\TDTF-n`'s condition names `TSPIN`, which is not a channel type
+
+**Sources**:
+- Table 9-4, `R-x\TDTF-n`: "Allowed when: R\CDT is "TSPIN"".
+- Table 9-4, `R-x\CDT-n` enumeration: "TSPIIN TSPI/CTS Input"; no `TSPIN`.
+
+**Behaviour**: The condition is read as `TSPIIN`, as INT-007 reads `FBCIN` as `FBCHIN`.
+
+**Reason**: Read literally, the TSPI/CTS data type format could never be allowed.
+
+**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: pending · **Origin**: F4 section 3
+
+**Test**: `tspi_data_type_format_allowed_for_tspiin`
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+### INT-026
+
+**Title**: Two recorder polarity conditions name `P-d\CDT`, which does not exist
+
+**Sources**:
+- Table 9-4, `R-x\RPS-n` (recorder polarity setting): "Allowed when: P-d\CDT is "PCMIN"".
+- Table 9-4, `R-x\MFF\RPS-n-m` (recorder polarity setting for a filtered minor frame): "Allowed when: When P-d\CDT is "PCMIN"".
+- No `CDT` attribute exists in the P group (Figure 9-6); the channel data type is `R-x\CDT-n`, and the PCM data type attributes around these two are "Allowed when: R\CDT is "PCMIN"" (seven of them in 106-24R1).
+
+**Behaviour**: Both conditions are read as `R\CDT` of the same channel.
+
+**Reason**: Both attributes are in the R group's PCM block beside attributes conditioned on `R\CDT`; `P-d\CDT` cannot be evaluated.
+
+**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: pending · **Origin**: F4 section 3
+
+**Test**: `recorder_polarity_allowed_for_pcm_channels`
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+### INT-027
+
+**Title**: `C-d\DCN`'s "Links from:" lists `R-x\AMN-n-m` twice
+
+**Sources**:
+- Table 9-11, `C-d\DCN`: "Links from: R-x\AMN-n-m, R-x\AMN-n-m, M-x\SI\MN-n, M-x\BB\MN, D-x\MN-y-n, B-x\UMN1-i, B-x\UMN2-i, B-x\UMN3-i, B-x\MN-i-n-p, S-d\MN-i-n-p, R-x\DMN-n-m, Q-d\MMNM-i-n-m, Q-d\SMMNM-i-n-m-o".
+
+**Behaviour**: The duplicate is ignored; the analysis checks whether another R-group measurement-name attribute was meant (the list names `R-x\DMN-n-m` separately) and, if one is found, it becomes a link source here.
+
+**Reason**: A repeated source adds nothing, but may hide an omitted one.
+
+**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: pending · **Origin**: F4 section 3
+
+**Test**: `measurement_name_sources_for_conversions`
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written

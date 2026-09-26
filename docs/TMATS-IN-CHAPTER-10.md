@@ -13,7 +13,7 @@
 |---------|--------|
 | 1. What `irig106-tmats` is for | **draft for review** |
 | 2. Where TMATS sits in Chapter 10 processing | **draft for review** |
-| 3. What the description answers, question by question | to be written |
+| 3. What the description answers, question by question | **draft for review** |
 | 4. Contracts per consumer | to be written |
 | 5. Configuration over a recording | to be written |
 | 6. When TMATS is missing, wrong, or disagrees with the data | to be written |
@@ -288,3 +288,257 @@ Considered and not chosen: core depending on `irig106-tmats` and checking
 packets as it reads (option B). Kept open: moving the joining loop into a
 crate of its own if the tools start repeating it (option C); the check
 itself would not change.
+
+---
+
+## 3. What the description answers, question by question
+
+Each subsection takes one question a consumer asks, lists the Chapter 9
+attributes that answer it — code names and parameter names as printed in
+the group figures and tables of 106-24R1 Chapter 9 (Figures 9-2 to 9-11,
+Tables 9-2 to 9-11) — says what the library returns, and names the
+consumers. Where the standard is inconsistent, the register entry is named.
+
+Every answer carries its state (section 1.5): a value is explicit,
+defaulted (with the citation of the default), missing, invalid, or
+ambiguous; a link is resolved, unresolved, or ambiguous with all candidates
+listed; and every answer points back to the attribute's bytes. The library
+**describes**; it never decodes data or evaluates a conversion (section 1.3).
+
+### 3.1 Where did this recording come from?
+
+| Attribute | Parameter (Chapter 9) | What it says |
+|-----------|-----------------------|--------------|
+| `G\PN`, `G\TA` | Program name; test item | The program and the item under test |
+| `G\OD`, `G\RN`, `G\RD`, `G\UN`, `G\UD` | Origination, revision, and update dates and numbers | The configuration's history |
+| `G\POC\N`, `G\POC1-n` … `G\POC4-n` | Points of contact | Who to ask |
+| `G\DSI\N`, `G\DSI-n` | Data source ID: "Provide a descriptive name for this source. Each source identifier must be unique." | The data sources; each links to `R-x\ID`, `T-x\ID`, `M-x\ID`, or `V-x\ID` |
+| `G\DST-n` | Data source type: RF, TAP (tape), STO (storage), REP (reproducer), DSS (distributed source), DRS (direct source), OTH | What kind of source each is |
+
+**Returns:** the recording's identity and its data sources, each linked to
+the recorder (R), transmission (T), multiplex (M), or vendor (V) group that
+describes it. **Consumers:** studio (grouping channels by data source),
+index and CLI (catalogue), `irig106-write` (generation).
+
+### 3.2 What is channel N, and is it enabled?
+
+The recorder group lists one entry per channel, indexed `n` within
+recorder `x` (Table 9-4, "*Data"):
+
+| Attribute | Parameter | What it says |
+|-----------|-----------|--------------|
+| `R-x\TK1-n` | Track number / channel ID: "the track number or the channel ID that contains the data", 1 to 65535 | The channel ID that packets carry |
+| `R-x\CHE-n` | Channel enable: "Source must be enabled to generate data packets" (T, F) | Whether packets are expected |
+| `R-x\CDT-n` | Channel data type: PCMIN, VIDIN, ANAIN, 1553IN, DISIN, TIMEIN, UARTIN, 429IN, MSGIN, IMGIN, 1394IN, PARIN, ETHIN, TSPIIN, CANIN, FBCHIN, TMOUT | What kind of data the channel carries (section 3.3) |
+| `R-x\DSI-n` | Data source ID: "Specify the data source identification" | The source this channel records |
+| `R-x\CDLN-n` | Channel data link name | The link to the format definition (section 3.5) |
+| `R-x\TK4-n` | Recorder physical channel number | The recorder's own channel number |
+| `R-x\SHTF-n` | Secondary header time format: 0 Chapter 4 BCD, 1 IEEE-1588, 2 ERTC | How to read the packets' secondary-header time (section 3.8) |
+| `R-x\NSB` | Number of source bits (Chapter 11 §11.2.1.1 b) | How many high-order channel-ID bits name a multiplexer source (L1-VIEW-005) |
+| `R-x\ID` | "Data source ID consistent with General Information group" | Which `G\DSI-n` this recorder is |
+
+**Returns:** a channel view per `R-x\TK1-n`, including the channel ID split
+by `R-x\NSB`. Chapter 9 has no attribute that is a channel's display label;
+the view offers the channel ID, `R-x\DSI-n`, and `R-x\CDLN-n`, and the
+presenting tool chooses. **Consumers:** the packet check (L1-CH10-007),
+`irig106-decode` (which decoder a channel needs), studio and ch10-reader
+(labels, grouping, enabled state), index.
+
+### 3.3 Does a packet match its channel?
+
+A packet's data type (Chapter 11 Table 11-4) is a data-type family plus a
+format number. TMATS gives both: `R-x\CDT-n` names the family, and a
+data-type-format attribute of the same channel gives the format number —
+for example `R-x\PDTF-n`, "PCM data type format. Enumeration equates to
+format number in Chapter 11" (1: Chapter 4, 7, or 8 PCM; 2: DQM/DQE).
+
+| `R-x\CDT-n` | Format attribute | Packet data types (Table 11-4) |
+|-------------|------------------|--------------------------------|
+| PCMIN | `R-x\PDTF-n` | PCM Data, `0x08`–`0x0F` (Format 1 = `0x09`, Format 2 = `0x0A`) |
+| TIMEIN | `R-x\TTF-n` | Time Data, `0x10`–`0x17` |
+| 1553IN | `R-x\BTF-n` | MIL-STD-1553 Data, `0x18`–`0x1F` |
+| ANAIN | `R-x\ATF-n` | Analog Data, `0x20`–`0x27` (no `0x22` is listed) |
+| DISIN | `R-x\DTF-n` | Discrete Data, `0x28`–`0x2F` |
+| MSGIN | `R-x\MTF-n` | Message Data, `0x30`–`0x37` |
+| 429IN | `R-x\ABTF-n` | ARINC-429 Data, `0x38`–`0x3F` |
+| VIDIN | `R-x\VTF-n` | Video Data, `0x40`–`0x47` |
+| IMGIN | `R-x\ITF-n` | Image Data, `0x48`–`0x4F` |
+| UARTIN | `R-x\UTF-n` | UART Data, `0x50`–`0x57` |
+| 1394IN | `R-x\IETF-n` | IEEE 1394 Data, `0x58`–`0x5F` |
+| PARIN | `R-x\PLTF-n` | Parallel Data, `0x60`–`0x67` |
+| ETHIN | `R-x\ENTF-n` | Ethernet Data, `0x68`–`0x6F` |
+| TSPIIN | `R-x\TDTF-n` | TSPI/CTS Data, `0x70`–`0x77` |
+| CANIN | `R-x\CBTF-n` | Controller Area Network Bus, `0x78` |
+| FBCHIN | `R-x\FCTF-n` | Fibre Channel Data, `0x79`–`0x7A` (`0x7B`–`0x80` reserved) |
+| TMOUT | — | none: a telemetry output, not a recorded input |
+
+The families are not all eight codes wide (CAN is one code, and Fibre
+Channel follows it directly), so the correspondence is a reviewed table,
+not arithmetic (register entry INT-024). Two conditions in these rows are
+themselves inconsistent: `R-x\TDTF-n` is "Allowed when: R\CDT is "TSPIN"",
+a keyword the enumeration does not define (it defines TSPIIN; INT-025), and
+`R-x\RPS-n` and `R-x\MFF\RPS-n-m` are "Allowed when: P-d\CDT is "PCMIN"",
+naming an attribute that does not exist (INT-026).
+
+**Returns:** for each channel, the packet data types it may carry.
+**Consumers:** the packet check (L1-CH10-007) — a packet whose data type is
+not among them is reported; `irig106-decode` (which decoder, which format).
+
+### 3.4 How are the channel's packets packed?
+
+Each data type has its own block of recorder settings in Table 9-4 ("*Data
+Type Attributes": PCM, MIL-STD-1553, analog, discrete, ARINC 429, video,
+time, image, UART, message, IEEE-1394, parallel, Ethernet, TSPI/CTS, CAN,
+Fibre Channel, telemetry output). For PCM, for example:
+
+| Attribute | Parameter | What it says |
+|-----------|-----------|--------------|
+| `R-x\PDTF-n` | PCM data type format | Which PCM packet format (section 3.3) |
+| `R-x\PDP-n` | Data packing option: UN unpacked, TM throughput mode, PFS packed with frame sync | How the stream is placed in packets |
+| `R-x\RPS-n`, `R-x\ICE-n`, `R-x\IST-n`, `R-x\ITH-n`, `R-x\ITM-n`, `R-x\PTF-n` | Recorder polarity setting, input clock edge, input signal type, threshold, termination, PCM video type format | How the recorder captured the stream |
+| `R-x\MFF\…`, `R-x\POF\…`, `R-x\SMF\…` | Minor frame filtering; post-process overwrite and filtering; selected measurement overwrite | Which minor frames or measurements the recorder filtered or overwrote |
+
+**Returns:** the channel's recorder settings for its data type, as effective
+values. **Consumers:** `irig106-decode` (how to unpack a PCM packet into
+the stream), studio (display).
+
+### 3.5 What format does the channel's data follow?
+
+The channel's data link name (`R-x\CDLN-n`) links to the group that defines
+the format — for PCM the P group, for buses the B group, for message data
+the S or Q group — chosen by the channel's data type where the targets
+overlap (INT-001, INT-002, INT-005; ADR-0026, ADR-0027; architecture
+section 7.2). The link graph is in `docs/diagrams/link-graph.svg`.
+
+**PCM format (P group, Table 9-6).**
+
+| Block | Attributes | What they define |
+|-------|------------|------------------|
+| Input data | `P-d\D1` PCM code, `D2` bit rate, `D3` encrypted, `D4` polarity, `D5` auto-polarity correction, `D6` data direction, `D7` data randomized, `D8` randomizer type | The bit stream |
+| Format | `P-d\TF` type format, `F1` common word length, `F2` word transfer order, `F3` parity, `F4` parity transfer order, `CRC`, `CRCCB`, `CRCDB`, `CRCDN` | Words |
+| Minor frame | `P-d\MF\N` minor frames in the major frame, `MF1` words per minor frame, `MF2` bits per minor frame, `MF3` sync type | Frames |
+| Synchronization | `P-d\MF4` sync pattern length, `MF5` pattern; `SYNC1`–`SYNC5` in-sync and out-of-sync criteria | Frame sync |
+| Word sizes | `P-d\MFW\N`, `MFW1-n`, `MFW2-n` | Words whose size differs from the common length |
+| Subframes | `P-d\ISF\N`, `ISF1-n`, `ISF2-n`; ID counter `IDC1-n` … `IDC10-n` | Subframe synchronization |
+| Embedded formats | `P-d\AEF\N`, `AEF\DLN-n`, `AEF1-n` … `AEF9-n-w-m` | Asynchronous formats embedded in this one (links to other P groups) |
+| Format change | `P-d\FFI1`, `FFI2`; `MLC\N`, `MLC1-n`, `MLC2-n`; `FSC\N`, `FSC1-n`, `FSC2-n` | The frame format identifier and the measurement lists or formats it selects |
+| Other | `P-d\ALT\…` alternate tag and data; `P-d\ADM\…` asynchronous data merge; `P-d\C7\…` Chapter 7 segments | Special structures |
+
+A P group links onward to the D group that lists its measurements, and to a
+B group when bus data is carried in the PCM stream (`P-d\DLN` "Links to:
+D-x\DLN, B-d\DLN"; INT-004).
+
+**Bus data (B group, Table 9-8).** Buses (`B-x\NBS\N`, `BID-i`, `BNA-i`,
+`BT-i`: 1553 or A429); user-defined words (`UMN1-i` … `U3T-i`); messages
+(`NMS\N-i`, `MID-i-n`, `MNA-i-n`; command word `CWE`, `CMD`; remote terminal
+`TRN`, `TRA`; subterminal `STN`, `STA`; `TRM` transmit or receive; `DWC`
+word count or mode code; `SPR` special processing); ARINC 429 label and SDI
+(`LBL-i-n`, `SDI-i-n`); RT/RT receive commands (`RCWE` … `RDWC`); mode codes
+(`MCD`, `MCW`).
+
+**Message data (S group, Table 9-9).** Streams (`S-d\NS\N`, `SNA-i`); message
+data type and layout (`MDT-i`, `MDL-i`), element size, message ID location,
+length, delimiters, orientation; messages (`NMS\N-i`, `MID-i-n`, `MNA-i-n`)
+and their fields (`NFLDS\N-i-n`, `FNUM`, `FPOS`, `FLEN`).
+
+**Message structure (Q group, Table 9-10).** Sources (`Q-d\NS\N`, `SNA-i`);
+message header layout and length rules (`MES`, `MHDO`, `MHO`, `MHS`, `MLT`,
+`MLFO`, `MLFS`, `MLVE`, `MLVB`, `MLV`); messages (`NOM\N-i`, `MNM-i-n`,
+`MSDI-i-n`) identified by header ID fields (`MHIF\N`, `MHIN`, `MHIO`,
+`MHIFS`, `MHIV`, `MHIM`); sub-messages with the same structure one level
+down (`SMHDO` … `SMHIM`).
+
+**Returns:** the format definition the channel's link resolves to, as a
+typed view with effective values, including embedded formats followed
+through their links. **Consumers:** `irig106-decode` (frame sync, word and
+message extraction), studio (structure display).
+
+### 3.6 Where is each measurement?
+
+| Data | Attributes | What they define |
+|------|------------|------------------|
+| PCM (D group, Table 9-7) | `D-x\ML\N`, `MLN-y` measurement lists; `MN\N-y`, `MN-y-n` names; `MN1`–`MN3` parity, parity transfer order, measurement transfer order; `LT-y-n` location type; word and frame: `IDCN-y-n`, `MML\N-y-n` locations, `MNF\N-y-n-m` fragments, and per fragment (`-y-n-m-e`) `WP`, `WI`, `FP`, `FI`, `WFM`, `WFT`, `WFP`; simultaneous sampling `SS`, `SON`, `SMN`, `SS\N`, `SS1`, `SS2`; tagged data `TD\N`, `TD2`–`TD5`; relative `REL\N`, `REL1`–`REL4` | Word and frame positions, masks, fragments and their order, tags, and measurements defined relative to others |
+| Bus (B group) | `B-x\MN\N-i-n`, `MN-i-n-p`, `MT-i-n-p` measurement type, `MN1`, `MN2`; `NML\N-i-n-p`, `MWN` message word number, `MBM` bit mask, `MTO` transfer order, `MFP` fragment position | Where in a bus message each measurement is |
+| Message data (S group) | `S-d\MN\N-i-n`, `MN-i-n-p`, `MN1`, `MN2`, `MBFM` data type, `MFPF` floating-point format, `MDO` data orientation; `NML\N`, `MFN` message field number, `MBM`, `MTO`, `MFP` | Where in a message field each measurement is, and its type |
+| Message structure (Q group) | `Q-d\NOMM\N-i-n`, `MDI`, `MMNM` measurement name, `MTO`; samples `NMS\N`, fragments `NSF\N`, `MFTO`, `MEN` element number, `MFL` fragment length, `MBM`, `MFP`; the same for sub-messages (`SNOMM` … `SMFP`) | Where in a message or sub-message each measurement sample is |
+
+Measurement names also appear for analog and discrete channels in the R
+group and for baseband and subcarrier signals in the M group. The complete
+set of attributes that can hold a measurement name is the "Links from:"
+list of `C-d\DCN`: `R-x\AMN-n-m`, `M-x\SI\MN-n`, `M-x\BB\MN`, `D-x\MN-y-n`,
+`B-x\UMN1-i` to `UMN3-i`, `B-x\MN-i-n-p`, `S-d\MN-i-n-p`, `R-x\DMN-n-m`,
+`Q-d\MMNM-i-n-m`, `Q-d\SMMNM-i-n-m-o` (the list names `R-x\AMN-n-m` twice;
+INT-027).
+
+**Returns:** for each measurement, every location with its fragments in
+order, following counters within their parent scope (ADR-0026).
+**Consumers:** `irig106-decode` (extraction), index and CLI (search by
+measurement name), studio.
+
+### 3.7 How does each measurement convert, and how are derived parameters defined?
+
+The C group ties a measurement name (`C-d\DCN`, "Give the measurement
+name") to its conversion (Table 9-11):
+
+| Block | Attributes | What they define |
+|-------|------------|------------------|
+| Measurand | `C-d\MN1` description, `MNA` alias, `MN2` excitation voltage, `MN3` engineering units, `MN4` link type | What the measurement is, in which units |
+| Telemetry value | `C-d\BFM` binary format; `FPF` floating-point format (Appendix 9-D); `BWT\N`, `BWTB-n`, `BWTV-n` bit weights | How to read the raw value |
+| Calibration | `C-d\MC\N`, `MC1-n` … `MC3-n` in-flight calibration; `MA\N`, `MA1-n` … `MA3-n` ambient value | Reference points |
+| Limits and rate | `C-d\MOT1`–`MOT7` high and low measurement, alert, and warning values, and initial value; `SR` sample rate; `FEN`, `FDL`, `F\N`, `FTY-n`, `FNPS-n` filtering | Ranges and filtering |
+| Conversion type | `C-d\DCT`: NON none, PRS pair sets, COE coefficients, NPC coefficients (negative powers of X), DER derived, DIS discrete, PTM PCM time, NTM network time, BTM 1553 time, VOI digital voice, VID digital video, OTH other, SP special processing | Which conversion applies |
+| Per type | pair sets `PS\N`, `PS1`, `PS2`, `PS3-n`, `PS4-n`; coefficients `CO\N`, `CO1`, `CO`, `CO-n`; negative powers `NPC\N`, `NPC1`, `NPC`, `NPC-n`; `OTH`; derived `DPAT`, `DPA`, `DPTM`, `DPNO`, `DP\N`, `DP-n`, `DPC\N`, `DPC-n`; discrete `DIC\N`, `DICI\N`, `DICC-n`, `DICP-n`; time words `PTM`, `NTM`, `BTM`; voice and video `VOI\E`, `VOI\D`, `VID\E`, `VID\D` | The conversion's parameters |
+
+**Returns:** for each measurement name, its conversion definition with
+effective values; for derived parameters, a parsed and validated
+description with inputs, trigger, occurrences, and a derivation graph
+(ADR-0024; architecture section 5). **Not returned:** converted values —
+`irig106-decode` applies conversions and evaluates derived parameters
+(NR-007; ROADMAP X6). **Consumers:** `irig106-decode`, studio (units and
+descriptions), index.
+
+### 3.8 Which channel carries time, and in what format?
+
+| Attribute | Parameter | What it says |
+|-----------|-----------|--------------|
+| `R-x\CDT-n` = TIMEIN | Channel data type | The channel carries time packets |
+| `R-x\TTF-n` | Time data type format ("equates to format number in Chapter 10") | Which time packet format |
+| `R-x\TFMT-n` | Time format: A, B, G (IRIG-A, -B, -G per RCC 200), I internal, N native GPS time, U UTC time from GPS, X none, 0 NTP version 3 (RFC 1305), 1 IEEE 1588-2002, 2 IEEE 1588-2008; "Default: A" | The time code carried |
+| `R-x\TSRC-n` | Time source: I internal, E external, R internal from RMM, X none | Where the recorder's time came from |
+| `R-x\SHTF-n` | Secondary header time format | How any channel's secondary-header time is written (section 3.2) |
+| `C-d\DCT` = PTM, NTM, BTM, with `C-d\PTM`, `NTM`, `BTM` | PCM, network, and 1553 time word formats | Time carried inside data, as measurements |
+
+**Returns:** the time channels with their formats and sources, and the
+measurements that are time words. **Consumers:** `irig106-time` (which
+channel and format to correlate against), `irig106-decode`, studio.
+
+### 3.9 Which edition, which version, and is the TMATS intact?
+
+Three different version fields exist, and they must not be confused
+(ADR-0028; ROADMAP X2):
+
+| Field | Where | Says | Codes |
+|-------|-------|------|-------|
+| `G\106` | TMATS, G group | "Version of RCC IRIG 106 standard used to generate this TMATS file" | two year digits (`24` = 106-24 or 106-24R1; INT-014, INT-015) |
+| RCCVER | setup-record CSDW, bits 7–0 | "which RCC release version applies and to which the following recorded data complies with" | `0x07` = 106-07 … `0x0E` = 106-22 (INT-012, INT-016) |
+| Data type version | every packet header (§11.2.1.1 e) | "a value at or below the release version of the standard applied to the data types in Table 11-4" | `0x01` = 106-04 … `0x0A` = 106-22 — the same numbers name different editions from RCCVER |
+
+And the checksum: `G\SHA`, verified over the exact bytes (ADR-0014,
+ADR-0029).
+
+**Returns:** the TMATS edition and each setup record's recording-format
+version as declared, the edition whose rules validation applied and its
+basis, and the checksum status (match, mismatch, absent, unknown
+algorithm, malformed). **Consumers:** every consumer; `irig106-time` and
+`irig106-decode` for the recording-format version; studio and ch10-reader
+for display.
+
+### 3.10 What this section leaves out
+
+The T (transmission) and M (multiplex/modulation) groups, and the
+recorder's media, interfaces, streams, drives, events, and index settings,
+are read, validated, and viewable like every other group, but no consumer
+of a recording has asked for them yet; section 4 notes where they matter
+(for example, the M group's baseband and subcarrier measurement names). V
+and X attributes attach to their groups (ADR-0008); H attributes other than
+`H\TA` and `H\ST-n` are organisation-defined (ADR-0027).

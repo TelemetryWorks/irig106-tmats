@@ -261,9 +261,13 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-021 | Two or more `G\SHA` items in one document | open (follow-up F1, 2026-09-26) | not yet written | _(none)_ |
 | INT-022 | Removing an attribute that X extensions point to | open (follow-up F2, 2026-09-26) | not yet written | _(none)_ |
 | INT-023 | `=` typed where `:` belongs, as in Chapter 6's own example | open (follow-up F3, 2026-09-26) | not yet written | _(none)_ |
+| INT-024 | Which packet data types a channel may carry | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
+| INT-025 | `R-x\TDTF-n`'s condition names `TSPIN`, which is not a channel type | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
+| INT-026 | Two recorder polarity conditions name `P-d\CDT`, which does not exist | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
+| INT-027 | `C-d\DCN`'s "Links from:" lists `R-x\AMN-n-m` twice | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
 
-* Entries without a written analysis: **23** of 23
-* Entries without a test: **23** of 23
+* Entries without a written analysis: **27** of 27
+* Entries without a test: **27** of 27
 * Entries missing the development mark: **0**
 
 ### Marker reference check
