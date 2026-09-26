@@ -190,3 +190,12 @@ searchable and debuggable. `build.rs`'s one advantage — never stale — is
 provided by the `--check` job. `build.rs` would be preferred only if the
 generated data were large enough to bloat the repository or varied by build
 target; neither applies.
+
+## 17. Recording work for other repositories (2026-09-26)
+
+> How do we record this in the other projects so this work does not get lost?
+
+> Leave the roadmap item for now.
+
+The cross-repository items stay in `docs/ROADMAP.md`, "Work for other
+repositories" (X1–X7); no issues are filed in the other repositories yet.
