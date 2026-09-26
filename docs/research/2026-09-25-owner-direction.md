@@ -143,3 +143,16 @@ releases; `cargo-dist` for release binaries. Recorded in: `docs/CLI.md`
 
 Recorded in: `docs/ROADMAP.md` ("Team design review", T1): an author and an
 independent reviewer, both people, enforced by the registry CI check.
+
+## 14. Scope of Appendix 9-E (2026-09-26)
+
+> What do you recommend
+
+> Go with your recommendation and apply T2
+
+Recommendation adopted: the library parses, validates, and describes derived
+parameters; `irig106-decode` evaluates them; a reference evaluator exists only
+in the tests, to prove the Table E-6 precedence; the errata are read as "`==`
+is the operator; `= =` is accepted with a warning". Recorded in:
+`docs/ROADMAP.md` (T2, coverage item 3), `docs/ARCHITECTURE.md` section 5,
+ADR-0024, `docs/L1-REQ.md`.

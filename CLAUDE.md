@@ -80,6 +80,10 @@ architecture must honour:
   overrides on the built-in registry, adjust validation severity, and add
   rules. The standard's own extension groups — V (vendor, §9.5.13) and X
   (extensions linked to existing attributes, §9.5.14) — are first-class.
+- **Derived parameters are described, not evaluated.** Appendix 9-E
+  expressions are parsed with Table E-6 precedence (not C's), validated, and
+  exposed with their dependencies and triggers; `irig106-decode` evaluates
+  them (ADR-0024). The only evaluator here lives in the tests.
 - **No silent repair.** Validation may *suggest* edits; only an explicit call
   applies them.
 - **Shared types come from `irig106-types`** (`Irig106Version`, Chapter 10 data

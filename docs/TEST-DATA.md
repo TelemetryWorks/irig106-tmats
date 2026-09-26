@@ -11,6 +11,9 @@ locally; CI runs on synthesized examples and fuzzing only.
   a developer into a local directory outside the repository. Tests that need
   them are opt-in and skip cleanly when the directory is absent (the exact
   mechanism is decided with the test architecture in the design phase).
+- **Spec fixtures**: the Chapter 9 Appendix 9-C format example and every
+  expression and TMATS example in Appendix 9-E (§E.6.b, §E.9.a–d, both
+  styles), taken verbatim from the archived standard with their citations.
 - **CI uses synthesized fixtures**: small TMATS documents written for a
   specific behaviour, each citing the Chapter 9 clause it exercises, plus
   simulated variants of the conditions observed in real files (vendor quirks,

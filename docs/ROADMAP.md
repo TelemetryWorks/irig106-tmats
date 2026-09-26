@@ -94,9 +94,10 @@ stands.
    S-group enumerations; validating those names is already covered, while
    interpreting raw bits is `irig106-decode`'s work and should be stated as a
    non-requirement. Appendix 9-E (derived-parameter grammar) governs the
-   value of `C-d\DPA` when `C-d\DPAT` is `A`. **Owner decision needed:**
-   validate derived-algorithm syntax in this library, or declare it out of
-   scope. Evaluating any C-group conversion to engineering units is stated as
+   value of `C-d\DPA` when `C-d\DPAT` is `A`. *Resolved by team review T2
+   (2026-09-26): the library parses and validates derived-algorithm syntax
+   and describes it; evaluation, engineering-unit conversion, and the
+   interpretation of floating-point bit patterns are non-requirement NR-007.* Evaluating any C-group conversion to engineering units is stated as
    out of scope either way (it is implied today but not written).
 4. **Follow every link, not only the pictured ones.** §9.5.1 b says "Not all
    valid paths are shown" and that all are documented in the "Links to /
@@ -275,9 +276,15 @@ dependency graph, the scanner rule), a new ADR (Appendix 9-E: parse,
 validate, and describe; no evaluation), ADR-0021 (status pointer for the
 scanner rule), L1 (derived-parameter parsing, validation, dependencies,
 triggers; the scanner rule; a non-requirement for evaluation).
-**Owner decision needed:** adopt the team's recommended scope — the library
-parses, validates, and describes derived parameters, and `irig106-decode`
-evaluates them. This also resolves coverage item 3's Appendix 9-E question.
+**Decided (owner, 2026-09-26):** the library parses, validates, and describes
+derived parameters; `irig106-decode` evaluates them. Added to the plan: a
+reference evaluator that exists only in the tests, to prove the Table E-6
+precedence (for example that `2 + 3 & 1` means `2 + (3 & 1)`), and never
+ships; and the reading of the errata — `==` is the equality operator (the
+grammar is the machine-readable source) and `= =` is accepted with a warning.
+*Applied 2026-09-26: `docs/ARCHITECTURE.md` section 5, the data-flow and
+derived-parameters diagrams, ADR-0024 (with a status pointer on ADR-0021),
+L1-DER-001 to 005, L1-READ-006, and NR-007.*
 
 ## Planned releases
 

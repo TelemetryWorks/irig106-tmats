@@ -74,6 +74,7 @@ CATEGORIES: list[tuple[str, str]] = [
     ("REG", "Attribute definitions (registry)"),
     ("VIEW", "Lookup, structured views, and links"),
     ("VAL", "Validation"),
+    ("DER", "Derived parameters (Appendix 9-E)"),
     ("EXT", "Extensibility and the standard's extension groups"),
     ("WRT", "Writing, editing, comparing, and generating"),
     ("SUM", "TMATS checksums"),

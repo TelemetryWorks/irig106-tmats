@@ -94,6 +94,7 @@ and `L3-REQ.md` carry only spec content.
 | `REG`  | Attribute definitions (registry)                   |
 | `VIEW` | Lookup, structured views, and links                |
 | `VAL`  | Validation                                         |
+| `DER`  | Derived parameters (Appendix 9-E)                  |
 | `EXT`  | Extensibility and the standard's extension groups  |
 | `WRT`  | Writing, editing, comparing, and generating        |
 | `SUM`  | TMATS checksums                                    |
@@ -148,6 +149,14 @@ requirements are added. The requirement entries below and the generated
 **Statement**: The library SHALL recognise every attribute group defined in Chapter 9 of the baseline edition — G, T, R, M, P, D, B, S, Q, C, H, V, and X — and the `COMMENT` code name.
 
 **Rationale**: Table 9-1 (106-23) defines thirteen groups; the prototype knew nine. `COMMENT` is defined in §9.4.2. Delivered in 0.1.
+
+**Verification Method**: Test (T)
+
+### L1-READ-006
+
+**Statement**: The library SHALL take the first colon of an attribute as the end of its code name and every later colon as part of the value, which ends at the next semicolon, and SHALL ignore blanks around the code name when interpreting it while keeping them in the stored bytes.
+
+**Rationale**: Values may contain colons — Appendix 9-E's own expression `A<B || B<<C ? D : E` (§E.6.b) — and the standard's own example `C-6\DCN :DMC;` (§E.9.c) has a blank before the colon; semicolons are not allowed in data items (§9.4.2) (team review T2; ADR-0024). Delivered in 0.1.
 
 **Verification Method**: Test (T)
 
@@ -336,6 +345,50 @@ requirements are added. The requirement entries below and the generated
 **Statement**: Validation SHALL report each finding with the pass that produced it — present attributes, presence, counters and indices, or relationships — and SHALL report a condition that cannot be evaluated as a finding of its own.
 
 **Rationale**: Separate passes make absences, counters, and links each checked deliberately; "cannot evaluate" is never hidden (team review T1; ADR-0022, ADR-0023). Delivered in 0.3.
+
+**Verification Method**: Test (T)
+
+---
+
+## L1-DER: Derived parameters (Appendix 9-E)
+
+### L1-DER-001
+
+**Statement**: The library SHALL parse every derived-parameter definition (a C group whose `C-d\DCT` is `DER`) into an interpretable description with locations in the source bytes: in formula style (`C-d\DPAT` = `A`), the expression in `C-d\DPA`; in function style (`C-d\DPAT` = `N`), the operator, function, or custom-algorithm name in `C-d\DPA` bound to the ordered inputs `C-d\DP-n` and constants `C-d\DPC-n`.
+
+**Rationale**: Appendix 9-E §E.1 defines both styles; consumers need one correct reading rather than a string (team review T2; ADR-0024). Delivered in 0.3.
+
+**Verification Method**: Test (T)
+
+### L1-DER-002
+
+**Statement**: The library SHALL parse formula-style expressions with the operators, precedence, and associativity of Appendix 9-E Table E-6 and the lexical rules of §E.4–E.5 (names containing `$`, `_`, and `.`, names quoted with `"` or `'`, decimal, hexadecimal, and scientific constants, case-insensitive).
+
+**Rationale**: The grammar "strictly speaking, does not match the C language" (§E.7); Table E-6 binds `& ^ |` tighter than `* / %` and `+ -` tighter than `<< >>`, consistent with the appendix's Yacc declarations. Verified by a reference evaluator that exists only in the tests (ADR-0024). Delivered in 0.3.
+
+**Verification Method**: Test (T)
+
+### L1-DER-003
+
+**Statement**: The library SHALL report syntax errors with their locations, wrong arity for the functions Table E-9 lists, function names not in that list as custom algorithms (a warning), inputs or constants used in a style that does not use them, measurement names that resolve to no telemetry or derived measurement, and cycles among derived measurements.
+
+**Rationale**: Derived-parameter defects are TMATS defects (UC-06). Table E-9 lists "selected" functions and §E.9.d uses a custom `NEWALG`, so an unknown name is not an error. Delivered in 0.3.
+
+**Verification Method**: Test (T)
+
+### L1-DER-004
+
+**Statement**: For each derived measurement, the library SHALL expose the measurements it depends on, resolved to their defining groups, including other derived measurements, as a graph from which an evaluation order can be taken.
+
+**Rationale**: Derived measurements may depend on other derived measurements (§E.5; §E.9.d chains `XA` → `XB` → `XC` → `DMD`); `irig106-decode` needs the order without re-parsing (ADR-0024). Delivered in 0.3.
+
+**Verification Method**: Test (T)
+
+### L1-DER-005
+
+**Statement**: For each derived measurement, the library SHALL report its trigger — the trigger measurand `C-d\DPTM`, or the single input when there is exactly one input and no trigger — and its number of occurrences `C-d\DPNO` as an effective value with its default of 1.
+
+**Rationale**: Appendix 9-E §E.1 and §E.9.c ("there is only one input, which must trigger the calculation"); the default of 1 appears only in the prose of Table 9-11 (team review T1, T2). Delivered in 0.3.
 
 **Verification Method**: Test (T)
 
@@ -600,3 +653,10 @@ separate `irig106-tmats-wasm` crate. ADR-0015.
 ### NR-006
 
 The library does not repair documents automatically. ADR-0007.
+
+### NR-007
+
+Derived parameters are not evaluated, raw values are not converted to
+engineering units, and floating-point bit patterns (Appendix 9-D) are not
+interpreted; the library describes these and `irig106-decode` computes them.
+ADR-0024.

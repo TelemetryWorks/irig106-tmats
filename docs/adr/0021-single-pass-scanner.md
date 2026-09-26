@@ -1,5 +1,5 @@
 ---
-status: proposed
+status: proposed; scanner colon and blank rule added by ADR-0024
 date: 2026-09-25
 decision-makers: Joey
 ---

@@ -274,9 +274,90 @@ only the attributes present. The rules are compiled and static and TMATS
 documents are small, so the cost is expected to be negligible; the benchmarks
 of point 15 measure it.
 
-## 5. Decisions this architecture must honour
+## 5. Refinement T2: derived parameters (Appendix 9-E)
 
-Recorded as ADRs in `docs/adr/` (0001–0019, 0022–0023 accepted): the lossless ordered attribute store as the
+From the team design review, priority T2 (`docs/ROADMAP.md`). Applied
+2026-09-26 with the owner's decision on scope; recorded in ADR-0024. It adds
+one component to the read-through layer, a dependency graph beside the link
+graph, and a scanner rule (**amends point 1 of section 2**).
+
+### 5.1 Scope
+
+The library **parses, validates, and describes** derived parameters;
+`irig106-decode` **evaluates** them. Evaluation needs measurement values over
+time, trigger timing, and numeric policy (division by zero, the `pow` error
+conditions of Table E-9), none of which this I/O-free library sees
+(ADR-0010). Engineering-unit conversion and the interpretation of
+floating-point bit patterns (Appendix 9-D) stay with `irig106-decode` for the
+same reason (NR-007).
+
+### 5.2 The derived-expression component
+
+For every C group whose `C-d\DCT` is `DER`:
+
+- **Formula style** (`C-d\DPAT` = `A`): a hand-written lexer and parser for
+  the Appendix 9-E grammar. Precedence and associativity follow Table E-6
+  exactly — which differs from C: `& ^ |` bind tighter than `* / %`, and
+  `+ -` tighter than `<< >>` — cross-checked against the Yacc declarations of
+  the appendix's grammar figures, which agree with the table. Tokens follow
+  §E.4–E.5: measurement names of alphanumerics and `$ _ .`, names quoted with
+  `"` or `'`, decimal, hexadecimal (`0x…`), and scientific constants,
+  case-insensitive throughout.
+- **Function style** (`C-d\DPAT` = `N`): a binder that pairs the operator,
+  function, or custom-algorithm name in `C-d\DPA` with the ordered inputs
+  `C-d\DP-n` and constants `C-d\DPC-n` (order carries meaning; for division
+  the first input is the dividend, §E.9.b).
+- **Output**: an interpretable description — an expression tree or a bound
+  call — whose nodes carry spans back to the `C-d\DPA` bytes, the trigger
+  (`C-d\DPTM`, or the single input when there is one input and no trigger,
+  §E.9.c), and the number of occurrences (`C-d\DPNO`, read as an effective
+  value with its prose default of 1).
+- **Validation** (in the four passes of section 4.4): syntax errors with
+  locations; arity of the functions Table E-9 lists; names not in that
+  "selected" list reported as custom algorithms (a warning); inputs and
+  constants used only in the style that allows them; unresolved measurement
+  names; cycles among derived measurements.
+- **Errata**, read through the two-person interpretation review: `==` is the
+  equality operator (the grammar is the machine-readable source), and `= =`
+  as printed in Table E-3 is accepted with a warning.
+
+### 5.3 Dependencies
+
+Derived measurements appear only in the C group and may depend on telemetry
+measurements (R, M, D, B, S groups) and on other derived measurements
+(§E.1, §E.5; §E.9.d chains `XA` → `XB` → `XC` → `DMD`). The read-through
+layer holds a **derivation graph** beside the link graph: for each derived
+measurement, what it reads, resolved to its defining group, with cycle
+detection. Consumers get evaluation order from it without re-parsing.
+
+![Derived parameters: parsed and described here, evaluated in irig106-decode](diagrams/derived-parameters.svg)
+
+*Derived parameters.* Both styles become one description with a trigger and a
+derivation graph; validation reports syntax, arity, custom algorithms,
+unresolved names, and cycles; `irig106-decode` evaluates, while
+`irig106-studio` and `tmats` display. The evaluator exists only in the tests.
+
+### 5.4 Scanner rule (amends point 1)
+
+A colon may appear inside a value: Appendix 9-E's own example is
+`A<B || B<<C ? D : E` (§E.6.b), so `C-1\DPA:A?B:C;` is valid. **The first
+colon of an attribute ends the code name; every later colon belongs to the
+value**, which ends at the semicolon (semicolons are not allowed in data
+items, §9.4.2). Blanks around the code name are ignored for interpretation
+and kept in the bytes — the standard's own example `C-6\DCN :DMC;`
+(§E.9.c) has one before the colon.
+
+### 5.5 Proving the precedence
+
+A **reference evaluator exists only in the test suite** and never ships. It
+proves the parser's precedence by computing values: for example
+`2 + 3 & 1` must equal `2 + (3 & 1)`, not `(2 + 3) & 1` as in C. Every
+expression and TMATS example in Appendix 9-E (§E.6.b e–h, §E.9.a–d, both
+styles) is a test fixture, with one precedence test per level of Table E-6.
+
+## 6. Decisions this architecture must honour
+
+Recorded as ADRs in `docs/adr/` (0001–0019, 0022–0024 accepted): the lossless ordered attribute store as the
 single source of truth; owned storage instead of borrowed lifetimes; the
 layered, spec-cited registry generated by a script (no `build.rs`);
 registry-driven validation with severity policy and user rules; no automatic
@@ -287,14 +368,17 @@ ecosystem types from `irig106-types`; the two-crate lockstep workspace
 over the original bytes and the flex signature as a labelled compatibility
 option; no I/O in the library; the edition strategy; the two-layer registry
 with reviewed interpretations and defined condition semantics (ADR-0022);
-validation in four passes over effective values (ADR-0023). The original
+validation in four passes over effective values (ADR-0023); derived
+parameters parsed, validated, and described here and evaluated in
+`irig106-decode` (ADR-0024). The original
 proposal is captured in ADR-0020 and ADR-0021 (proposed).
 
-## 6. To be written
+## 7. To be written
 
 - Module structure and public API sketch (document, scanner, keys and
   index, registry and overlay, link graph, condition evaluator,
-  effective-value resolver, views, validator, edits and writer, checksums,
+  effective-value resolver, derived-expression parser and derivation graph,
+  views, validator, edits and writer, checksums,
   Chapter 10 setup-record adapter, CLI).
 - The condition language's grammar and the interpretation file format.
 - Data flow per use case (UC-01 … UC-17).

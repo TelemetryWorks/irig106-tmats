@@ -33,9 +33,10 @@ status line points to the later record.
 | [0018](0018-reference-tools-and-test-data.md) | Reference tools are oracles, not authorities; real data stays local | accepted |
 | [0019](0019-cli-minimal-chapter-10-reader.md) | The CLI carries a minimal Chapter 10 packet reader until `irig106-core` | accepted |
 | [0020](0020-correctness-guard-rails.md) | Correctness guard rails in the code and the tests | proposed |
-| [0021](0021-single-pass-scanner.md) | A single-pass scanner that indexes, checksums, and reports as it reads | proposed |
+| [0021](0021-single-pass-scanner.md) | A single-pass scanner that indexes, checksums, and reports as it reads | proposed; scanner rule added by 0024 |
 | [0022](0022-registry-source-text-and-reviewed-interpretations.md) | The registry holds source text and reviewed, executable interpretations (two-person rule) | accepted |
 | [0023](0023-validation-passes-and-effective-values.md) | Validate in four passes over effective values | accepted |
+| [0024](0024-derived-parameters-parsed-not-evaluated.md) | Derived parameters parsed, validated, and described here; evaluated in `irig106-decode` | accepted |
 
 New records take the next number and use the same front matter
 (`status`, `date`, `decision-makers`).
