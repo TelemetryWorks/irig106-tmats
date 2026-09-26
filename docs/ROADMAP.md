@@ -368,12 +368,15 @@ assembler and the slicing rules; system-context and data-flow diagrams), a
 new ADR (the setup-record assembly contract), ADR-0019 (status pointer:
 header checksums now verified), L1-CH10-001 and L1-CLI-003 revised, new L1
 requirements for assembly, provenance, slicing, and session rules.
-**Owner decision needed — where the assembler lives.** The team suggests the
-CLI first, moving to `irig106-core`. Recommended instead: **in the library**,
-because it only turns fragments (bytes plus provenance) into a complete
-record — pure, no I/O, consistent with ADR-0010 — so `irig106-ch10-reader`,
-`irig106-studio`, and later `irig106-core` reuse it unchanged; packet
-slicing stays in the CLI's reader until `irig106-core` exists.
+**Decided (owner, 2026-09-26): the assembler lives in the library**
+(fragments with provenance in, complete records out; no I/O); packet slicing
+stays in the CLI's reader until `irig106-core` exists. The multi-packet case
+has a named acceptance test, `multi_packet_setup_record_is_assembled`
+(`docs/TEST-DATA.md`), and a diagram (`docs/diagrams/setup-record-assembly.svg`).
+*Applied 2026-09-26: `docs/USE-CASES.md` (UC-02, UC-17), `docs/ARCHITECTURE.md`
+section 6, the system-context and data-flow diagrams, ADR-0025 (with a status
+pointer on ADR-0019), L1-CH10-001 and L1-CLI-003 revised, L1-CH10-004 to 006,
+L1-CLI-008, L1-VIEW-005.*
 
 ## Planned releases
 

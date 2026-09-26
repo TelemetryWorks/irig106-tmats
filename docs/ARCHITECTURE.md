@@ -123,8 +123,9 @@ theme on their own. Each shows one mechanism.
 ![irig106-tmats in the TelemetryWorks ecosystem](diagrams/system-context.svg)
 
 *Context.* The `tmats` CLI is the only part that opens files: it
-memory-maps a Chapter 10 recording and hands each setup-record payload (or a
-standalone TMATS file's bytes) to the library. CLI and library are one
+memory-maps a Chapter 10 recording, slices each setup-record packet, and hands
+the fragments (or a standalone TMATS file's bytes) to the library, whose
+assembler joins fragments into complete setup records (section 6). CLI and library are one
 workspace released in lockstep; the sibling crates, including the complete
 `irig106-cli`, depend on the library; shared types come from
 `irig106-types`; `irig106-core` will later replace the CLI's packet reader.
@@ -355,9 +356,91 @@ proves the parser's precedence by computing values: for example
 expression and TMATS example in Appendix 9-E (§E.6.b e–h, §E.9.a–d, both
 styles) is a test fixture, with one precedence test per level of Table E-6.
 
-## 6. Decisions this architecture must honour
+## 6. Refinement T3: setup-record packets versus complete setup records
 
-Recorded as ADRs in `docs/adr/` (0001–0019, 0022–0024 accepted): the lossless ordered attribute store as the
+From the team design review, priority T3 (`docs/ROADMAP.md`). Applied
+2026-09-26 with the owner's decision that the assembler lives in the library;
+recorded in ADR-0025. It adds an assembler in front of the scanner and
+specifies how the CLI slices packets.
+
+### 6.1 The problem
+
+"A single setup record may span multiple consecutive packets. When spanning
+multiple packets, the sequence counter shall increment in the order of
+segmentation of the setup record, n+1" (Chapter 11 §11.2.7.2, 106-24R1). Each
+fragment's packet body begins with its own CSDW. Reading each packet on its
+own — as UC-02 first said — would split a valid record, break any attribute
+that crosses a packet boundary, and compute `G\SHA` over the wrong bytes.
+
+![One setup record, three packets: slicing and assembly](diagrams/setup-record-assembly.svg)
+
+*Slicing and assembly.* One record spans three consecutive `0x01` packets
+whose sequence numbers roll over from `0xFF` to `0x00`. Each packet is sliced
+by its header, optional secondary header, and Data Length; filler and data
+checksum are never included. The assembler joins the fragments into one
+complete record with a provenance map; only complete records are scanned,
+and `G\SHA` covers the assembled body. The acceptance test
+`multi_packet_setup_record_is_assembled` uses exactly this stream.
+
+### 6.2 Division of work
+
+| Stage | Owner | Input → output |
+|-------|-------|----------------|
+| Packet reading and slicing | the `tmats` CLI's reader (later `irig106-core`) | file → packets → fragment bytes with provenance |
+| Assembly | **the library** (no I/O) | fragments with provenance → complete setup records |
+| Reading | the library (scanner, section 2 point 1) | complete record → Document |
+
+The assembler takes bytes and provenance, never files, so it is consistent
+with ADR-0010 and reusable unchanged by `irig106-ch10-reader`,
+`irig106-studio`, and `irig106-core`.
+
+### 6.3 Slicing rules (the CLI's reader)
+
+From Chapter 11 §11.2.1.1–11.2.1.4: the 24-byte header begins with sync
+`0xEB25`; a 12-byte secondary header follows when packet-flags bit 7 is 1;
+the packet body starts after them; Data Length covers the CSDW and the data
+and excludes filler and the data checksum; the TMATS fragment is the body
+from offset 4 to Data Length. The header checksum and, when present, the
+secondary-header checksum are verified before any length field is trusted;
+the data checksum (8, 16, or 32 bits per packet-flags bits 1–0) is verified
+and reported when present.
+
+### 6.4 Assembly contract (the library)
+
+- **In:** fragments in file order, each with its bytes and provenance — file
+  offset, channel ID, sequence number, relative time counter, the CSDW fields
+  (FRMT, SRCC, RCCVER), and the data-type version.
+- **Out:** complete setup records, each with the concatenated TMATS body, one
+  CSDW summary, and a **provenance map** from every body offset back to its
+  packet and offset, so every diagnostic can name the packet it came from.
+- **Boundary rule** (a reviewed interpretation, because the standard defines
+  no end-of-record marker): a record is a run of consecutive data type `0x01`
+  packets on one channel whose sequence numbers increase by one modulo 256 and
+  whose CSDWs agree on FRMT and RCCVER. It ends at an intervening packet, a
+  sequence gap, a CSDW change, or the end of input. Anything ambiguous is
+  reported, never guessed.
+- **Checksums:** `G\SHA` and the flex signature are computed over the
+  assembled body.
+
+### 6.5 Session rules and edition codes
+
+Across the complete records of one recording: ASCII and XML are never mixed
+("It is not permissible to have both ASCII and XML Chapter 9 TMATS attributes
+in the same session"); a record with SRCC = 1 is preceded by a
+configuration-change event packet; from 106-17, setup records are on channel
+`0x0000`. RCCVER defines `0x07` (106-07) to `0x0E` (106-22) and reserves the
+rest, so `0x0E` reads as "106-22 or later" and reserved values as unknown;
+`G\106` remains the primary edition source (ADR-0016).
+
+### 6.6 Channel IDs
+
+`R-x\NSB` gives the number of high-order channel-ID bits that identify a
+multiplexer source (Chapter 11 §11.2.1.1 b). Channel views (UC-05) split
+channel IDs accordingly.
+
+## 7. Decisions this architecture must honour
+
+Recorded as ADRs in `docs/adr/` (0001–0019, 0022–0025 accepted): the lossless ordered attribute store as the
 single source of truth; owned storage instead of borrowed lifetimes; the
 layered, spec-cited registry generated by a script (no `build.rs`);
 registry-driven validation with severity policy and user rules; no automatic
@@ -370,16 +453,18 @@ option; no I/O in the library; the edition strategy; the two-layer registry
 with reviewed interpretations and defined condition semantics (ADR-0022);
 validation in four passes over effective values (ADR-0023); derived
 parameters parsed, validated, and described here and evaluated in
-`irig106-decode` (ADR-0024). The original
+`irig106-decode` (ADR-0024); setup records assembled from their packet
+fragments in the library, with packet slicing in the CLI's reader
+(ADR-0025). The original
 proposal is captured in ADR-0020 and ADR-0021 (proposed).
 
-## 7. To be written
+## 8. To be written
 
 - Module structure and public API sketch (document, scanner, keys and
   index, registry and overlay, link graph, condition evaluator,
   effective-value resolver, derived-expression parser and derivation graph,
   views, validator, edits and writer, checksums,
-  Chapter 10 setup-record adapter, CLI).
+  Chapter 10 setup-record assembler, CLI packet reader).
 - The condition language's grammar and the interpretation file format.
 - Data flow per use case (UC-01 … UC-17).
 - Error and diagnostic model; JSON output schema for the CLI.

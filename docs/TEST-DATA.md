@@ -97,6 +97,61 @@ Open items: `irig106lib` comments that `R-x\DST-n` existed only in 106-04 and
 was replaced by `R-x\CDT-n`; confirm against the 106-04 and 106-05 Chapter 9
 in the archive and record it in the edition deltas.
 
+## Required acceptance tests
+
+Tests that must exist, by name, before the requirement they verify can be
+shown as Implemented in `docs/TRACE-MATRIX.md`. They are specified here
+during the design phase and written with the code they test; no placeholder
+or ignored test is added in the meantime, because a marker on it would make
+the trace matrix report the requirement as verified.
+
+### `multi_packet_setup_record_is_assembled`
+
+Verifies that one setup record spanning several consecutive packets is
+assembled into one complete record ("A single setup record may span multiple
+consecutive packets", Chapter 11 §11.2.7.2, 106-24R1). Requirements:
+L1-CH10-001, L1-CH10-004, L1-CH10-006, L1-CLI-003, L1-CLI-008, L1-SUM-001.
+Pictured in
+`docs/diagrams/setup-record-assembly.svg`.
+
+*Input* — a synthesized recording, in file order:
+
+1. A PCM packet on channel 3.
+2. Data type `0x01`, channel `0x0000`, sequence number `0xFE`, no secondary
+   header, CSDW with FRMT = 0 (ASCII), SRCC = 0, RCCVER = `0x0E`; TMATS text
+   fragment 1 is the first part of a document that includes a correct `G\SHA`
+   for the whole document, split in the middle of an attribute.
+3. Data type `0x01`, channel `0x0000`, sequence number `0xFF`, **with** a
+   secondary header (packet-flags bit 7 = 1), the same CSDW, fragment 2, 3
+   bytes of `0x00` filler, and a 16-bit data checksum (flags bits 1–0 = 10).
+4. Data type `0x01`, channel `0x0000`, sequence number `0x00` (rollover),
+   the same CSDW, fragment 3, `0xFF` filler, and an 8-bit data checksum.
+5. A PCM packet on channel 3.
+
+Every header and secondary-header checksum is correct.
+
+*Expected*:
+
+- Exactly one complete setup record, whose TMATS body is byte-for-byte
+  fragment 1 + fragment 2 + fragment 3 — no header, secondary header, CSDW,
+  filler, or checksum bytes.
+- One CSDW summary: ASCII, no configuration change, RCCVER `0x0E` read as
+  "106-22 or later".
+- The provenance map sends a body offset inside fragment 2 to packet 3 and
+  the right offset within it, and an attribute split across fragments 1 and 2
+  to both packets.
+- The document parses without diagnostics; the attribute split across the
+  packet boundary is one attribute.
+- `G\SHA` verifies as a match over the assembled body.
+- `tmats` reports one setup record, not three.
+
+*Companion cases* (same fixture builder): the same record with a sequence gap
+(`0xFE`, `0x00`) is reported as two incomplete records with a diagnostic;
+fragment 2 with a different RCCVER ends the record and is reported; a PCM
+packet between fragments 1 and 2 ends the record; a corrupted header
+checksum on fragment 2 is reported and the record is not assembled from
+untrusted lengths.
+
 ## Standards
 
 The RCC 106 standards and handbooks are mirrored, with original URLs and

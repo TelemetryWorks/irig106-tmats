@@ -166,9 +166,9 @@ requirements are added. The requirement entries below and the generated
 
 ### L1-CH10-001
 
-**Statement**: The library SHALL accept the payload of a Chapter 10 Computer-Generated Data Format 1 (data type `0x01`) setup-record packet, decode its channel-specific data word, and read its TMATS body.
+**Statement**: The library SHALL accept the fragments of Chapter 10 Computer-Generated Data Format 1 (data type `0x01`) setup-record packets, decode each fragment's channel-specific data word, and read the TMATS body of each complete setup record, whether the record occupies one packet or several.
 
-**Rationale**: Every Chapter 10 recording carries its TMATS as a setup record (UC-02). Delivered in 0.1.
+**Rationale**: Every Chapter 10 recording carries its TMATS as a setup record (UC-02), and "A single setup record may span multiple consecutive packets" (Chapter 11 §11.2.7.2, 106-24R1; team review T3; ADR-0025). Verified by the acceptance test `multi_packet_setup_record_is_assembled` (`docs/TEST-DATA.md`). Delivered in 0.1.
 
 **Verification Method**: Test (T)
 
@@ -185,6 +185,30 @@ requirements are added. The requirement entries below and the generated
 **Statement**: The library SHALL build a setup-record payload — channel-specific data word and TMATS body — from a document.
 
 **Rationale**: `irig106-write` puts TMATS into recordings; the library supplies the payload and never writes packets or files itself (ADR-0010). Delivered in 0.5.
+
+**Verification Method**: Test (T)
+
+### L1-CH10-004
+
+**Statement**: The library SHALL assemble setup-record fragments, each supplied with its provenance (file offset, channel ID, sequence number, relative time counter, CSDW fields, and data-type version), into complete setup records, each with the concatenated TMATS body, one CSDW summary, and a map from every body offset to the packet and offset it came from; it SHALL join only consecutive data type `0x01` fragments on one channel whose sequence numbers increase by one modulo 256 and whose CSDWs agree on format and version, and SHALL report any ambiguity rather than guess.
+
+**Rationale**: A setup record may span consecutive packets, sequence numbers "increment in the order of segmentation" (Chapter 11 §11.2.7.2), and the standard defines no end-of-record marker, so the boundary rule is a reviewed interpretation (team review T3; ADR-0025). The assembler takes bytes, not files (ADR-0010). Verified by `multi_packet_setup_record_is_assembled` and its companion cases. Delivered in 0.1.
+
+**Verification Method**: Test (T)
+
+### L1-CH10-005
+
+**Statement**: Across the complete setup records of one recording, the library SHALL report a mixture of ASCII and XML setup records, a record with the setup-record-configuration-change bit set that is not preceded by a configuration-change event packet, and, for recordings of 106-17 or later, a setup record on a channel other than `0x0000`.
+
+**Rationale**: "It is not permissible to have both ASCII and XML Chapter 9 TMATS attributes in the same session"; "Prior to the new setup record being committed to the stream, a setup record configuration change event packet shall be inserted" (Chapter 11 §11.2.7.2); channel `0x0000` carries setup records "as of 106-17" (§11.2.1.1 b) (team review T3; ADR-0025). Delivered in 0.1.
+
+**Verification Method**: Test (T)
+
+### L1-CH10-006
+
+**Statement**: The library SHALL interpret the setup-record CSDW version field (RCCVER) according to Chapter 11 Figure 11-34, reading `0x0E` as "106-22 or later" and reserved values as an unknown edition.
+
+**Rationale**: 106-24R1 defines `0x07` (106-07) to `0x0E` (106-22) and reserves `0x0F`–`0xFF`, so the field cannot distinguish 106-22, 106-23, and 106-24, and 106-20 has no code; `G\106` stays the primary edition source (ADR-0016; team review T3). Delivered in 0.1.
 
 **Verification Method**: Test (T)
 
@@ -293,6 +317,14 @@ requirements are added. The requirement entries below and the generated
 **Statement**: The library SHALL report the effective value of an attribute as explicit (with its location), defaulted (with the citation of the default), missing, invalid (with the raw text and the reason), or ambiguous (with the conflicting candidates), and SHALL NOT insert defaults or any other value into the stored document.
 
 **Rationale**: Views and validation must agree on every value's state, and the document stays byte-faithful (team review T1; ADR-0002, ADR-0023). Delivered from 0.2.
+
+**Verification Method**: Test (T)
+
+### L1-VIEW-005
+
+**Statement**: When a recorder declares a number of multiplexer source bits (`R-x\NSB`), the library SHALL present channel IDs split into the multiplexer source ID (the declared number of most significant bits) and the channel ID of the data source (the remaining bits).
+
+**Rationale**: Chapter 11 §11.2.1.1 b (106-24R1): "The setup record shall contain a "Number of Source Bits" recorder attribute (R-x\NSB) to specify the number of msbs (from the channel ID) that distinguish the multiplexer source ID" (team review T3). Delivered in 0.2.
 
 **Verification Method**: Test (T)
 
@@ -534,9 +566,9 @@ requirements are added. The requirement entries below and the generated
 
 ### L1-CLI-003
 
-**Statement**: `tmats` SHALL report every setup record in a recording, in file order.
+**Statement**: `tmats` SHALL report every complete setup record in a recording, in file order, assembling records that span several packets.
 
-**Rationale**: `idmptmat` reads only the first packet (defect D2, `docs/TEST-DATA.md`). Delivered in 0.1.
+**Rationale**: `idmptmat` reads only the first packet (defect D2, `docs/TEST-DATA.md`); a setup record may span consecutive packets (Chapter 11 §11.2.7.2; team review T3). Verified by `multi_packet_setup_record_is_assembled`. Delivered in 0.1.
 
 **Verification Method**: Test (T)
 
@@ -569,6 +601,14 @@ requirements are added. The requirement entries below and the generated
 **Statement**: `tmats` SHALL NOT modify any input file; results that change TMATS SHALL be written to a new output.
 
 **Rationale**: No silent change to user data (ADR-0007; `docs/CLI.md`). Applies from 0.1.
+
+**Verification Method**: Test (T)
+
+### L1-CLI-008
+
+**Statement**: `tmats` SHALL slice each setup-record packet by its 24-byte header, its 12-byte secondary header when packet-flags bit 7 is set, and its Data Length, excluding filler and the data checksum; SHALL verify the header checksum and, when present, the secondary-header checksum before trusting any length field; and SHALL verify and report the data checksum when one is present.
+
+**Rationale**: Chapter 11 §11.2.1.1–11.2.1.4 (106-24R1): Data Length "does not include packet trailer filler and data checksum"; the checksums are defined for the header, the secondary header, and the data (team review T3; ADR-0025, refining ADR-0019). Delivered in 0.1.
 
 **Verification Method**: Test (T)
 

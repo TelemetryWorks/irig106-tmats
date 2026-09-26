@@ -119,19 +119,27 @@ original spelling.
 
 ### UC-02 Read TMATS from a Chapter 10 setup record — *0.1*
 
-**Actor:** recording reader. **Trigger:** `irig106-core` or a reader has
-extracted the payload of a data type `0x01` packet.
+**Actor:** recording reader. **Trigger:** `irig106-core`, the `tmats` CLI, or
+a reader has sliced the payloads of data type `0x01` packets (Chapter 11
+§11.2.1.1–11.2.1.4).
 
-1. The caller passes the payload.
-2. The library decodes the CSDW (using the layout from `irig106-types`),
-   reports the Chapter 10 version, the configuration-change flag, and the
-   body format.
-3. If the body is code-name TMATS, it is read as in UC-01. If it is XML, the
-   library returns the CSDW information and an "XML not supported" result.
+1. The caller passes the setup-record fragments in file order, each with its
+   provenance (offset, channel, sequence number, relative time counter).
+   "A single setup record may span multiple consecutive packets" (Chapter 11
+   §11.2.7.2, revised after team review T3).
+2. The library's assembler decodes each fragment's CSDW (FRMT, SRCC, RCCVER;
+   layout from `irig106-types`) and joins consecutive fragments into complete
+   setup records by the reviewed boundary rule, with a map from every body
+   byte back to its packet.
+3. A complete code-name record is read as in UC-01. An XML record returns the
+   CSDW information and an "XML not supported" result.
 
-**Outcome:** CSDW facts plus the document. A recording can contain more than
-one setup record (a configuration change during recording); each is read
-independently, and UC-11 compares them.
+**Outcome:** complete setup records, each with a CSDW summary, a provenance
+map, and its document. A recording can contain more than one setup record (a
+configuration change during recording); each complete record is read on its
+own, and UC-11 compares them. Session rules across records are reported: no
+mixing of ASCII and XML, a configuration-change event packet before a record
+with SRCC set, and setup records on channel `0x0000` from 106-17.
 
 ### UC-03 Find attributes by code name — *0.1*
 
@@ -344,8 +352,8 @@ Programmers' Handbook) and the viewing parts of `igDisplayTMATS`:
 
 Input is detected by content (a Chapter 10 file starts with the packet sync
 pattern; anything else is treated as TMATS text). Unlike `idmptmat`, which
-reads only the first packet, `tmats` reports every setup record in a
-recording. Output is plain text by default and machine-readable (JSON) on
+reads only the first packet, `tmats` reports every complete setup record in a
+recording, assembling records that span several packets (UC-02). Output is plain text by default and machine-readable (JSON) on
 request, with documented exit codes so scripts can rely on it.
 
 The tool ships from this repository as a second crate, `irig106-tmats-cli`

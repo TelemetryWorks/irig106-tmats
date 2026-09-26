@@ -156,3 +156,15 @@ in the tests, to prove the Table E-6 precedence; the errata are read as "`==`
 is the operator; `= =` is accepted with a warning". Recorded in:
 `docs/ROADMAP.md` (T2, coverage item 3), `docs/ARCHITECTURE.md` section 5,
 ADR-0024, `docs/L1-REQ.md`.
+
+## 15. Where the setup-record assembler lives (2026-09-26)
+
+> Go with your recommendation and apply T3, and make sure we have a test for One setup record can span multiple consecutive packets. This should also be documented with a picture (svg)
+
+Recommendation adopted: the assembler is in the library (fragments with
+provenance in, complete record out; no I/O); packet slicing stays in the CLI's
+reader until `irig106-core` exists. The multi-packet case has a named
+acceptance test (`docs/TEST-DATA.md`) and a diagram
+(`docs/diagrams/setup-record-assembly.svg`). Recorded in: `docs/ROADMAP.md`
+(T3), `docs/USE-CASES.md`, `docs/ARCHITECTURE.md` section 6, ADR-0025,
+`docs/L1-REQ.md`.

@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 640" role="img" aria-label="Setup-record assembly: one setup record spans three consecutive data type 0x01 packets whose sequence numbers increase by one modulo 256; each packet is sliced by its header, optional secondary header, and Data Length, excluding filler and checksum, leaving a CSDW and a TMATS fragment; the library's assembler joins the fragments into one complete TMATS body with a CSDW summary and a provenance map; only the complete record is scanned, and G\SHA covers the assembled body.">
+  <style>
+    text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; fill: #1f2328; }
+    .t { font-size: 15px; font-weight: 600; }
+    .b { font-weight: 600; }
+    .m { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 11.5px; }
+    .l { font-size: 11px; fill: #57606a; }
+    .box { fill: #f6f8fa; stroke: #57606a; stroke-width: 1.2; }
+    .dim { fill: #f6f8fa; stroke: #8c959f; stroke-width: 1; }
+    .opt { fill: #f6f8fa; stroke: #57606a; stroke-width: 1.2; stroke-dasharray: 5 3; }
+    .su { fill: #ddf4ff; stroke: #0969da; stroke-width: 1.6; }
+    .txt { fill: #dafbe1; stroke: #1a7f37; stroke-width: 1.4; }
+    .ex { fill: #ffebe9; stroke: #cf222e; stroke-width: 1.1; }
+    .ln { stroke: #57606a; stroke-width: 1.3; fill: none; }
+    .br { stroke: #0969da; stroke-width: 1.3; fill: none; }
+    .zm { stroke: #8c959f; stroke-width: 1; fill: none; stroke-dasharray: 3 3; }
+    .bt { font-size: 11px; fill: #0969da; }
+    .rt { font-size: 11px; fill: #cf222e; }
+    .ah { fill: #57606a; }
+    @media (prefers-color-scheme: dark) {
+      text { fill: #e6edf3; } .l { fill: #9198a1; } .bt { fill: #4493f8; } .rt { fill: #f85149; }
+      .box, .dim, .opt { fill: #161b22; stroke: #9198a1; } .su { fill: #0c2d6b; stroke: #4493f8; }
+      .txt { fill: #0f2e1b; stroke: #3fb950; } .ex { fill: #3d1214; stroke: #f85149; }
+      .ln { stroke: #9198a1; } .br { stroke: #4493f8; } .zm { stroke: #6e7681; } .ah { fill: #9198a1; }
+    }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+
+  <text class="t" x="20" y="30">One setup record, three packets: slicing and assembly</text>
+
+  <!-- stream -->
+  <text class="l" x="20" y="58">Chapter 10 recording, in file order</text>
+  <rect class="dim" x="20"  y="70" width="150" height="44" rx="4"/><text x="95"  y="90" text-anchor="middle">ch 3 · PCM</text><text class="l" x="95" y="106" text-anchor="middle">other data</text>
+  <rect class="su"  x="200" y="70" width="180" height="44" rx="4"/><text class="b" x="290" y="90" text-anchor="middle">0x01 · ch 0 · seq 0xFE</text><text class="l" x="290" y="106" text-anchor="middle">fragment 1</text>
+  <rect class="su"  x="410" y="70" width="180" height="44" rx="4"/><text class="b" x="500" y="90" text-anchor="middle">0x01 · ch 0 · seq 0xFF</text><text class="l" x="500" y="106" text-anchor="middle">fragment 2</text>
+  <rect class="su"  x="620" y="70" width="180" height="44" rx="4"/><text class="b" x="710" y="90" text-anchor="middle">0x01 · ch 0 · seq 0x00</text><text class="l" x="710" y="106" text-anchor="middle">fragment 3 (rollover)</text>
+  <rect class="dim" x="830" y="70" width="150" height="44" rx="4"/><text x="905" y="90" text-anchor="middle">ch 3 · PCM</text><text class="l" x="905" y="106" text-anchor="middle">ends the record</text>
+  <path class="ln" d="M170,92 L200,92" marker-end="url(#a)"/>
+  <path class="ln" d="M380,92 L410,92" marker-end="url(#a)"/>
+  <path class="ln" d="M590,92 L620,92" marker-end="url(#a)"/>
+  <path class="ln" d="M800,92 L830,92" marker-end="url(#a)"/>
+  <path class="br" d="M200,124 L200,132 L800,132 L800,124 M500,132 L500,140"/>
+  <text class="bt" x="500" y="154" text-anchor="middle">one setup record: consecutive 0x01 packets, sequence number + 1 (mod 256), CSDWs agree (Ch 11 §11.2.7.2)</text>
+
+  <!-- zoom into fragment 2 -->
+  <text class="l" x="20" y="186">Fragment 2 (seq 0xFF) as one packet, sliced (Ch 11 §11.2.1.1–11.2.1.4)</text>
+  <rect class="box" x="60"  y="196" width="170" height="46"/><text class="b" x="145" y="216" text-anchor="middle">Header</text><text class="l" x="145" y="232" text-anchor="middle">24 bytes · sync 0xEB25</text>
+  <rect class="opt" x="230" y="196" width="170" height="46"/><text class="b" x="315" y="216" text-anchor="middle">Secondary header</text><text class="l" x="315" y="232" text-anchor="middle">12 bytes if flags bit 7</text>
+  <rect class="su"  x="400" y="196" width="110" height="46"/><text class="b" x="455" y="216" text-anchor="middle">CSDW</text><text class="l" x="455" y="232" text-anchor="middle">FRMT·SRCC·RCCVER</text>
+  <rect class="txt" x="510" y="196" width="340" height="46"/><text class="b" x="680" y="216" text-anchor="middle">TMATS fragment 2</text><text class="l" x="680" y="232" text-anchor="middle">body[4 .. Data Length]</text>
+  <rect class="ex"  x="850" y="196" width="110" height="46"/><text x="905" y="216" text-anchor="middle">Filler</text><text class="l" x="905" y="232" text-anchor="middle">0x00 / 0xFF</text>
+  <rect class="ex"  x="960" y="196" width="140" height="46"/><text x="1030" y="216" text-anchor="middle">Data checksum</text><text class="l" x="1030" y="232" text-anchor="middle">8/16/32 bits, flags 1–0</text>
+  <path class="br" d="M400,252 L400,260 L850,260 L850,252 M625,260 L625,268"/>
+  <text class="bt" x="625" y="282" text-anchor="middle">Data Length: CSDW + data, excluding filler and data checksum</text>
+  <path class="ln" d="M60,300 L60,294 L1100,294 L1100,300"/>
+  <text class="l" x="580" y="314" text-anchor="middle">Packet Length: everything, a multiple of 4 · header and secondary-header checksums verified before any length is trusted</text>
+  <text class="rt" x="905" y="186" text-anchor="middle">excluded</text>
+
+  <!-- assembly -->
+  <text class="l" x="20" y="356">Library: assembler (no I/O — fragments in, complete record out)</text>
+  <rect class="txt" x="20"  y="370" width="130" height="40"/><text x="85"  y="395" text-anchor="middle">fragment 1</text>
+  <rect class="txt" x="150" y="370" width="130" height="40"/><text x="215" y="395" text-anchor="middle">fragment 2</text>
+  <rect class="txt" x="280" y="370" width="130" height="40"/><text x="345" y="395" text-anchor="middle">fragment 3</text>
+  <text class="l" x="215" y="430" text-anchor="middle">each with provenance: offset, channel, sequence, RTC, CSDW</text>
+
+  <rect class="su" x="470" y="360" width="170" height="60" rx="6"/>
+  <text class="b" x="555" y="386" text-anchor="middle">Assembler</text>
+  <text class="l" x="555" y="404" text-anchor="middle">applies the boundary rule</text>
+  <path class="ln" d="M410,390 L470,390" marker-end="url(#a)"/>
+
+  <rect class="su" x="700" y="346" width="400" height="90" rx="6"/>
+  <text class="b" x="900" y="368" text-anchor="middle">Complete setup record</text>
+  <text x="716" y="390">TMATS body = fragment 1 + fragment 2 + fragment 3</text>
+  <text x="716" y="408">CSDW summary (FRMT, SRCC, RCCVER)</text>
+  <text x="716" y="426">provenance map: body offset → packet, offset</text>
+  <path class="ln" d="M640,390 L700,390" marker-end="url(#a)"/>
+
+  <!-- then -->
+  <rect class="box" x="700" y="470" width="190" height="56" rx="6"/>
+  <text class="b" x="795" y="494" text-anchor="middle">Scanner → Document</text>
+  <text class="l" x="795" y="512" text-anchor="middle">only complete records</text>
+  <rect class="box" x="910" y="470" width="190" height="56" rx="6"/>
+  <text class="b" x="1005" y="494" text-anchor="middle">G\SHA, flex signature</text>
+  <text class="l" x="1005" y="512" text-anchor="middle">over the assembled body</text>
+  <path class="ln" d="M795,436 L795,470" marker-end="url(#a)"/>
+  <path class="ln" d="M1005,436 L1005,470" marker-end="url(#a)"/>
+
+  <rect class="box" x="20" y="470" width="620" height="86" rx="6"/>
+  <text class="b" x="36" y="492">Boundary rule (reviewed interpretation — the standard defines no end marker)</text>
+  <text x="36" y="514">A record ends at an intervening packet, a sequence gap, a CSDW change, or the end of input.</text>
+  <text x="36" y="534">Anything ambiguous is reported, never guessed; diagnostics point back to packet and offset.</text>
+
+  <text class="l" x="20" y="600">Acceptance test multi_packet_setup_record_is_assembled uses exactly this stream (docs/TEST-DATA.md).</text>
+  <text class="l" x="20" y="618">Green: TMATS text that is assembled. Red: bytes never included. Blue brackets: what the standard's length fields cover.</text>
+</svg>

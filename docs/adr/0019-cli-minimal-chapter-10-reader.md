@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: accepted; slicing and header-checksum verification refined by ADR-0025
 date: 2026-09-25
 decision-makers: Joey
 ---
