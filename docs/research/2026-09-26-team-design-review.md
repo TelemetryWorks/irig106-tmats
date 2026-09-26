@@ -44,3 +44,16 @@ arrive.
 >
 > This also affects the scanner: C-1\DPA:A?B:C; contains a legitimate colon inside the value. Only the first colon separates the code from its value. The expression parser must follow the appendix’s
 > precedence rules, which explicitly differ from C. Source: Chapter 9 Table 9-11, Appendix 9-E §§E.1–E.7 (https://www.irig106.org/docs/106-24R1/chapter9.pdf).
+
+## Priority 3 (verbatim)
+
+> 3. Distinguish a setup-record packet from a complete setup record.
+>
+> Chapter 11 expressly permits one setup record to span multiple consecutive packets. The current design says each setup packet is read independently, while assigning reassembly outside the library and
+> providing only a minimal CLI packet reader.
+>
+> That leaves a valid recording that the proposed CLI cannot correctly extract, validate, or checksum. Define an explicit assembly contract: packet fragments and their provenance enter an assembler; a
+> complete TMATS body enters the document parser. Ownership can remain with the CLI initially and move to irig106-core.
+>
+> Also specify payload slicing using data length, excluding packet filler/checksum and handling the optional secondary header. This belongs in the derivation of L1-CH10-001 and L1-CLI-003
+> (/C:/Users/Joey/Documents/GIT-GitHub/telemetryworks/irig106-tmats/docs/L1-REQ.md:158). Source: Chapter 11 §11.2.7.2 and §11.2.1.1 (https://www.irig106.org/docs/106-24R1/chapter11.pdf).

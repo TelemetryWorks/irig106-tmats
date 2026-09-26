@@ -286,6 +286,95 @@ grammar is the machine-readable source) and `= =` is accepted with a warning.
 derived-parameters diagrams, ADR-0024 (with a status pointer on ADR-0021),
 L1-DER-001 to 005, L1-READ-006, and NR-007.*
 
+**T3. Distinguish a setup-record packet from a complete setup record.**
+Verified against 106-24R1 Chapter 11:
+
+- *Spanning* (§11.2.7.2): "A single setup record may span multiple
+  consecutive packets. When spanning multiple packets, the sequence counter
+  shall increment in the order of segmentation of the setup record, n+1."
+  The packet body of each Format 1 packet begins with the CSDW, so every
+  fragment carries its own CSDW. The maximum packet size is 512 KB
+  (§11.2.7.3).
+- *No end marker*: nothing marks the last fragment of a setup record, so the
+  boundary between one multi-packet record and the next is not defined by the
+  standard and needs a reviewed interpretation.
+- *Slicing* (§11.2.1.1–11.2.1.4): a 24-byte header (sync `0xEB25`); a 12-byte
+  secondary header when packet-flags bit 7 is 1; Data Length "includes
+  channel-specific data … and data but does not include packet trailer filler
+  and data checksum"; filler of `0x00` or `0xFF` for 32-bit alignment;
+  packet-flags bits 1–0 declare an 8-, 16-, or 32-bit data checksum; header,
+  secondary-header, and data checksums are defined. The TMATS text is the
+  body from offset 4 (after the CSDW) to Data Length.
+- *Sequence numbers* are per channel, 8-bit, and roll over after `0xFF`.
+- *CSDW* (Figure 11-34) — this confirms the bit positions left open by
+  ADR-0009: bits 31–10 reserved; bit 9 FRMT (0 ASCII, 1 XML); bit 8 SRCC;
+  bits 7–0 RCCVER. "It is not permissible to have both ASCII and XML
+  Chapter 9 TMATS attributes in the same session." When SRCC is 1, "a setup
+  record configuration change event packet shall be inserted into the
+  stream" before the new setup record.
+- *Channel 0* (§11.2.1.1 b): "as of 106-17" channel ID `0x0000` carries only
+  setup records and streaming-configuration records.
+- *Also found — edition codes*: RCCVER defines `0x07` = 106-07 through
+  `0x0E` = 106-22 and reserves `0x0F`–`0xFF`; the header's Data Type Version
+  stops at `0x0A` = 106-22. The CSDW therefore cannot distinguish 106-22,
+  106-23, and 106-24, and 106-20 has no code. `irig106-time` maps `0x0F` to
+  106-23, which contradicts the standard; recorded here for the
+  `irig106-types` work (ADR-0009), not changed in this repository.
+- *Also found — multiplexer source bits*: `R-x\NSB` gives the number of
+  channel-ID high bits that identify a multiplexer source (§11.2.1.1 b), so
+  channel views (UC-05) must split channel IDs accordingly.
+
+Mapping: contradicts UC-02 ("each is read independently") and under-specifies
+L1-CH10-001, L1-CLI-003, ADR-0019, and the `G\SHA` checksum (which must cover
+the assembled record, not one fragment); consistent with ADR-0010 if the
+assembler takes bytes, not files. Plan:
+
+1. *Assembly contract.* Fragments enter an assembler with their provenance —
+   file offset, channel ID, sequence number, relative time counter, CSDW
+   fields, data-type version, and the fragment's TMATS bytes. A complete
+   setup record leaves it: the concatenated TMATS body, one CSDW summary, and
+   a map from every byte of the body back to its packet and offset (for
+   diagnostics). Only complete records enter the document parser.
+2. *Assembly rules* (a reviewed interpretation, because the standard defines
+   no end marker): fragments of one record are consecutive data type `0x01`
+   packets on one channel whose sequence numbers increase by one modulo 256
+   and whose CSDWs agree on FRMT and RCCVER; a record ends at an intervening
+   packet, a sequence discontinuity, a CSDW change, or end of input. Anything
+   ambiguous is reported, never guessed.
+3. *Slicing rules* for the packet reader: body after the header and the
+   optional secondary header; TMATS = body from offset 4 to Data Length;
+   filler and data checksum excluded; header and secondary-header checksums
+   verified (the length fields cannot be trusted otherwise — this narrows
+   ADR-0019's "checksums out of scope"); data checksum verified and reported
+   when present.
+4. *Checksums*: `G\SHA` and the flex signature are computed over the
+   assembled record.
+5. *Session rules* reported across setup records: ASCII and XML not mixed;
+   SRCC = 1 preceded by a configuration-change event packet; a setup record
+   on a channel other than `0x0000` in a 106-17-or-later recording (a
+   warning).
+6. *Edition codes*: RCCVER `0x0E` reads as "106-22 or later"; reserved values
+   are reported as unknown; `G\106` stays the primary edition source
+   (ADR-0016).
+7. *Channel IDs*: channel views apply `R-x\NSB` to separate the multiplexer
+   source ID from the channel ID.
+8. *Tests* (synthesized recordings): one-packet and multi-packet records,
+   sequence rollover `0xFF` → `0x00`, secondary header present and absent,
+   filler, each checksum width, back-to-back records, a configuration change
+   with SRCC = 1, an XML record, a sequence gap, a corrupt header checksum.
+
+Documents affected: `docs/USE-CASES.md` (UC-02, UC-17), ARCHITECTURE (the
+assembler and the slicing rules; system-context and data-flow diagrams), a
+new ADR (the setup-record assembly contract), ADR-0019 (status pointer:
+header checksums now verified), L1-CH10-001 and L1-CLI-003 revised, new L1
+requirements for assembly, provenance, slicing, and session rules.
+**Owner decision needed — where the assembler lives.** The team suggests the
+CLI first, moving to `irig106-core`. Recommended instead: **in the library**,
+because it only turns fragments (bytes plus provenance) into a complete
+record — pure, no I/O, consistent with ADR-0010 — so `irig106-ch10-reader`,
+`irig106-studio`, and later `irig106-core` reuse it unchanged; packet
+slicing stays in the CLI's reader until `irig106-core` exists.
+
 ## Planned releases
 
 | Version | Theme | Scope |
