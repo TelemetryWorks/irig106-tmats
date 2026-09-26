@@ -17,7 +17,7 @@
 | 4. Contracts per consumer | **draft for review** |
 | 5. Configuration over a recording | **draft for review** |
 | 6. When TMATS is missing, wrong, or disagrees with the data | **draft for review** |
-| 7. A worked example: Appendix 9-C from channel to engineering units | to be written |
+| 7. A worked example: Appendix 9-C from channel to engineering units | **draft for review** |
 | 8. What changes as a result | to be written |
 
 ---
@@ -958,3 +958,93 @@ the files of one recording is the caller's work.
 | `G\SHA` does not verify | yes | yes | checksum verification |
 | Packet does not match its channel | yes | the consumer's choice | the packet check |
 | Needed value missing, link unresolved or ambiguous | yes | not that channel or measurement | the view, then `irig106-decode` |
+
+---
+
+## 7. A worked example: Appendix 9-C from channel to engineering units
+
+The standard's own example (106-24R1 Chapter 9, Appendix 9-C) describes "a
+single RF data source and a stored data source containing two channels of
+data … The two recorded channels of data are PCM signals: one is an
+aircraft telemetry stream, and the other is a radar data telemetry stream."
+This section follows the first recorded channel, channel ID 2, to
+measurement 82AJ01 in engineering units, as the library would answer each
+step. Every attribute is quoted from the example; the states are those of
+section 1.5.
+
+### 7.1 Step by step
+
+| Step | The example's TMATS | What the library returns |
+|------|---------------------|--------------------------|
+| Edition | no `G\106` | **missing**, a required attribute ("Required when: Always", Table 9-2): a validation finding (L1-VAL-005). The example is a TMATS file, not a recording, so there is no RCCVER either: validation applies the baseline 106-24R1 as a **fallback**, labelled "`G\106` missing" (ADR-0028) |
+| Checksum | no `G\SHA` | checksum status **absent** — not an error |
+| Data source | `G\DSI-2:Two PCM links - TM & TSPI; G\DST-2:STO;` and `R-1\ID:Two PCM links - TM & TSPI;` | the recorder `R-1` is data source 2, a storage source: link **resolved** |
+| Channel | `R-1\TK1-1:2; R-1\DSI-1:PCM w/subframe fragmented; R-1\CDT-1:PCMIN; R-1\CDLN-1:PCM1;` | channel ID 2, a PCM input, data link `PCM1`: **explicit** |
+| Enabled? | no `R-1\CHE-1` | **missing**, required when the recorder has channels (Table 9-4): the packet check cannot say whether channel 2 should carry packets, and says so |
+| Packet data type | no `R-1\PDTF-1` | **missing**, required for a PCMIN channel: the packet check knows the family (PCM Data, `0x08`–`0x0F`) but not the format, so it cannot confirm `0x09` (section 3.3) |
+| Packing | no `R-1\PDP-1` | **missing**, required for a PCMIN channel: how the stream was placed in packets is not given |
+| Format link | `R-1\CDLN-1:PCM1` and `P-2\DLN:PCM1;` | one candidate after the PCMIN selector: **resolved** to `P-2` (INT-005) |
+| Bit stream | `P-2\D1:NRZ-L; P-2\D2:2000000; P-2\D3:U; P-2\D4:N;` | NRZ-L, 2,000,000 bit/s, unencrypted, normal polarity |
+| Words | `P-2\TF:ONE; P-2\F1:10; P-2\F2:M; P-2\F3:NO;` `P-2\MFW1-1:121; P-2\MFW2-1:6; P-2\MFW1-2:122; P-2\MFW2-2:4;` | Class I; 10-bit words, msb first, no parity; word 121 has 6 bits and word 122 has 4 |
+| Frames and sync | `P-2\MF\N:64; P-2\MF1:277; P-2\MF4:30; P-2\MF5:101110000001100111110101101011; P-2\SYNC1:1;` | 64 minor frames of 277 words; a 30-bit sync pattern; in sync after one good sync pattern |
+| Subframe counter | `P-2\ISF\N:1; P-2\ISF1-1:1; P-2\ISF2-1:ID; P-2\IDC1-1:13; P-2\IDC3-1:5; P-2\IDC4-1:6; P-2\IDC5-1:M; P-2\IDC6-1:0; P-2\IDC7-1:1; P-2\IDC8-1:63; P-2\IDC9-1:64; P-2\IDC10-1:INC;` | one ID counter in word 13, its msb at bit 5 of the word, 6 bits, msb first, counting 0 in frame 1 to 63 in frame 64, increasing |
+| Measurement list | `D-3\DLN:PCM1; D-3\MLN-1:ONLY ONE; D-3\MN\N-1:1;` | the measurements of `PCM1`: link from `P-2\DLN` **resolved** to `D-3` |
+| Measurement | `D-3\MN-1-1:82AJ01; D-3\LT-1-1: WDFR; D-3\MML\N-1-1:1; D-3\MNF\N-1-1-1:2;` | 82AJ01, located by word and frame, one location, two fragments |
+| Fragment 1 | `D-3\WP-1-1-1-1:113; D-3\WI-1-1-1-1:0; D-3\FP-1-1-1-1:5; D-3\FI-1-1-1-1:32; D-3\WFM-1-1-1-1:FW;` | word 113 of frames 5, 37 (every 32 frames), the full word |
+| Fragment 2 | `D-3\WP-1-1-1-2:121; D-3\WI-1-1-1-2:0; D-3\FP-1-1-1-2:5; D-3\FI-1-1-1-2:32; D-3\WFM-1-1-1-2:FW;` | word 121 of the same frames, the full word |
+| Fragment order | no `D-3\WFT-…`, no `D-3\WFP-…` | transfer order **defaulted** ("Default: D", meaning `P-2\F2`, msb first); position **defaulted** to 1 for both fragments ("Default: 1"), which breaks "Each fragment position from 1 to N must be specified only once" (Table 9-7): the order of the two fragments is **ambiguous** (INT-033) |
+| Conversion link | `C-7\DCN:82AJ01;` | from `D-3\MN-1-1` **resolved** to `C-7` |
+| Conversion | `C-7\MN1:LANTZ Norm acceleration; C-7\MN3:MTR/S/S; C-7\MOT1:1023.97; C-7\MOT2:-1023.97; C-7\DCT:COE; C-7\CO\N:1; C-7\CO1:N; C-7\CO:0; C-7\CO-1:.03125; C-7\BFM:TWO;` | two's complement; coefficients of order 1, not derived from pair sets: 0 + 0.03125 × value; m/s²; high and low values ±1023.97 |
+| Time | no channel with `R-x\CDT-n` = TIMEIN | the time question of section 3.8 has no answer in this file |
+
+![Measurement 82AJ01: what the description gives, and what it cannot](diagrams/worked-example-82aj01.svg)
+
+*82AJ01.* The description locates both fragments exactly — word 113 (10
+bits) and word 121 (6 bits) of frames 5 and 37 — and defines the conversion
+completely. It cannot say which fragment is most significant: both
+positions default to 1. Table C-2's prose gives the intent ("the 10 msbs
+indicated as M and the 6 lsbs as L"), and the conversion is consistent with
+a 16-bit value (32,767 × 0.03125 = 1,023.97, rounded), but prose is not an
+attribute; the library reports the ambiguity and does not choose.
+
+### 7.2 What `irig106-decode` receives for channel 2
+
+In the terms of section 4.5, for packets governed by this description:
+
+- **Channel:** ID 2, PCMIN, data link `PCM1`; enabled state **missing**;
+  packet format **missing** (family PCM); packing **missing**.
+- **Format `PCM1`:** complete enough to find frame sync and words — bit
+  rate, code, polarity, word lengths and exceptions, 64 × 277-word minor
+  frames, the 30-bit sync pattern, the subframe ID counter.
+- **Measurement 82AJ01:** one location, two fragments at words 113 and 121
+  of frames 5 and 37, full words, transfer order msb first (defaulted),
+  **fragment order ambiguous**.
+- **Conversion:** complete and explicit.
+- **Findings:** `G\106` missing; `R-1\CHE-1`, `R-1\PDTF-1`, `R-1\PDP-1`
+  missing; duplicate fragment positions for 82AJ01.
+
+With that, `irig106-decode` can synchronise to `PCM1` and extract both
+fragments of 82AJ01 in every major frame, but it cannot assemble the
+16-bit value without an order the TMATS does not give. It reports 82AJ01 as
+not decodable, naming the reason, unless the caller supplies the order —
+which every report then labels as an assumption (as for INT-032). How
+`R-1\PDP-1`'s absence affects unpacking PCM packets is for
+`irig106-decode`'s design.
+
+### 7.3 What the example teaches
+
+- **Even the standard's own example is incomplete.** Four attributes it
+  marks required are absent on this one path, and one fragmented
+  measurement cannot be assembled from the attributes alone. Real files
+  will be no better: every answer must carry its state, and every gap must
+  reach the consumer as a finding, never as a silent default or a guess.
+- **Defaults are part of the answer.** Two of the five facts about 82AJ01's
+  fragments come from defaults — one from a `Default:` field that refers to
+  another attribute (`WFT` "D" meaning `P-2\F2`). The effective-value
+  resolver (ADR-0023) and the register make each one visible.
+- **The errata elsewhere in the example do not touch this path.** The colon
+  errata of Appendix 9-C are in `D-1` and `D-2` (INT-013); `D-3` is written
+  correctly.
+
+This whole path becomes an acceptance test, `appendix_9c_channel_2_trace`
+(`docs/TEST-DATA.md`).

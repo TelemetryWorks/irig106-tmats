@@ -655,3 +655,23 @@ listed here.
 **Test**: `ungoverned_packets_are_reported_and_assumptions_labelled`
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+## Measurements
+
+### INT-033
+
+**Title**: Fragment positions that default to the same value
+
+**Sources**:
+- Table 9-7, `D-x\WFP-y-n-m-e`: "A number from 1 to N specifying the position of this fragment within the reconstructed binary data word. 1 corresponds to the most significant fragment. Each fragment position from 1 to N must be specified only once." "Default: 1".
+- Appendix 9-C (106-24R1): `D-3\MNF\N-1-1-1:2;` with fragments at `D-3\WP-1-1-1-1:113;` and `D-3\WP-1-1-1-2:121;` and no `D-3\WFP-…`; Table C-2's prose: "the 10 msbs indicated as M and the 6 lsbs as L".
+
+**Behaviour**: Each absent position takes its default, as defaulted values (ADR-0023). When two or more fragments of one location end up with the same position, validation reports it and the fragment order is ambiguous: the library does not infer the order from the fragment index, the word order, or prose. A caller may supply the order explicitly; every report then labels it as an assumption.
+
+**Reason**: The default makes a measurement with several fragments invalid unless every position is given; inferring an order would be a guess that decodes wrongly when it is wrong.
+
+**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: pending · **Origin**: F4 section 7
+
+**Test**: `defaulted_fragment_positions_are_ambiguous`
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written

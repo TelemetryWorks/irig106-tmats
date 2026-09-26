@@ -11,6 +11,7 @@ states the claim.
 | `joining-loop.svg` | The loop each tool writes under ADR-0030: core yields packets as plain data, setup-record fragments go to the assembler and the completed description becomes the governing one, other packets are checked and decoded with it |
 | `configuration-timeline.svg` | One recording in file order: setup record A first, a repeat with SRCC 0 sharing its description, the configuration-change event packet, setup record B with SRCC 1, and which description governs each packet |
 | `degraded-cases.svg` | Where TMATS can fail and what follows: incomplete or XML setup records govern nothing; faulty but readable ones govern with findings; ungoverned packets are reported, mismatched ones reported with decoding the consumer's choice |
+| `worked-example-82aj01.svg` | Appendix 9-C's measurement 82AJ01: its two fragments in minor frames 5 and 37, both fragment positions defaulted to 1 so the order is ambiguous, and its complete conversion |
 | `system-context.svg` | The crate in the ecosystem: CLI, library, lockstep workspace, consumers, shared types |
 | `legacy-vs-new.svg` | The `idmptmat` / `irig106lib` pipeline against ours, with each defect (D1–D7) at the stage that causes it |
 | `data-flow.svg` | Scanner → Document; Document and registry meet in the read-through layer (link graph, effective-value resolver, condition evaluator); views and the four-pass validator read through it; suggested edits → caller → patch list → writer |

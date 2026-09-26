@@ -182,6 +182,35 @@ archived 106-24R1 Chapter 9 (Distribution A), including page C-8.
 produce no such warning; a value ending `: G\COM:x;` is reported (the G group
 has no occurrence index).
 
+### `appendix_9c_channel_2_trace`
+
+Verifies the path of `docs/TMATS-IN-CHAPTER-10.md` section 7: from channel
+ID 2 of the standard's own example to measurement 82AJ01 in engineering
+units, with every state. Requirements: L1-VIEW-002, L1-VIEW-004,
+L1-VIEW-006, L1-VAL-005, L1-EDN-002, L1-SUM-002.
+
+*Input* — the Appendix 9-C code-name example transcribed verbatim from the
+archived 106-24R1 Chapter 9 (the same fixture as
+`appendix_9c_example_reports_suspected_semicolons`).
+
+*Expected*:
+
+- The channel view for channel ID 2 gives `R-1\CDT-1` PCMIN, `R-1\DSI-1`,
+  and `R-1\CDLN-1` `PCM1` as explicit; `R-1\CHE-1`, `R-1\PDTF-1`, and
+  `R-1\PDP-1` as missing, each with a required-attribute finding.
+- The format link resolves to `P-2` only; the view gives exactly the values
+  of section 7.1 (bit rate 2,000,000, 10-bit words with words 121 and 122 of
+  6 and 4 bits, 64 × 277-word minor frames, the 30-bit pattern, the ID
+  counter).
+- The measurement link resolves to `D-3`; 82AJ01 has one location with two
+  fragments at words 113 and 121, frame 5, frame interval 32, full words;
+  both transfer orders defaulted to msb first; both positions defaulted to
+  1, with a finding and an ambiguous fragment order (INT-033).
+- The conversion link resolves to `C-7`, with every value explicit.
+- `G\106` missing is reported; the validation basis is a fallback to
+  106-24R1, labelled; `G\SHA` is absent (not an error).
+- No channel has `R-x\CDT-n` TIMEIN.
+
 ## Errata in the standard's own examples
 
 Found while checking the design against the archived standard. Each is kept

@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 490" role="img" aria-label="Measurement 82AJ01 in the standard's Appendix 9-C example: two fragments, word 113 (10 bits) and word 121 (6 bits) of minor frame 5, repeating every 32 frames; both fragment positions are absent and default to 1, so the TMATS allows either order and the library reports the ambiguity instead of choosing; Table C-2's prose says word 113 holds the 10 most significant bits; the conversion is two's complement times 0.03125 in metres per second squared.">
+  <style>
+    text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; fill: #1f2328; }
+    .t { font-size: 15px; font-weight: 600; }
+    .h { font-size: 13px; font-weight: 600; }
+    .b { font-weight: 600; }
+    .m { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: 11.5px; }
+    .l { font-size: 11px; fill: #57606a; }
+    .w { fill: #f6f8fa; stroke: #57606a; stroke-width: 1; }
+    .sy { fill: #eaeef2; stroke: #57606a; stroke-width: 1; }
+    .f1 { fill: #ddf4ff; stroke: #0969da; stroke-width: 1.6; }
+    .f2 { fill: #dafbe1; stroke: #1a7f37; stroke-width: 1.6; }
+    .bad { fill: #ffebe9; stroke: #cf222e; stroke-width: 1.3; }
+    .ok { fill: #ddf4ff; stroke: #0969da; stroke-width: 1.3; }
+    .ln { stroke: #57606a; stroke-width: 1.2; fill: none; }
+    .ah { fill: #57606a; }
+    .rt { font-size: 11px; fill: #cf222e; }
+    @media (prefers-color-scheme: dark) {
+      text { fill: #e6edf3; } .l { fill: #9198a1; } .rt { fill: #f85149; }
+      .w { fill: #161b22; stroke: #9198a1; } .sy { fill: #21262d; stroke: #9198a1; }
+      .f1, .ok { fill: #0c2d6b; stroke: #4493f8; } .f2 { fill: #0f2e1a; stroke: #3fb950; }
+      .bad { fill: #3d1214; stroke: #f85149; } .ln { stroke: #9198a1; } .ah { fill: #9198a1; }
+    }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+
+  <text class="t" x="20" y="30">Measurement 82AJ01: what the description gives, and what it cannot</text>
+  <text class="l" x="20" y="48">106-24R1 Chapter 9, Appendix 9-C: PCM format P-2 (data link PCM1), measurement list D-3, conversion C-7</text>
+
+  <!-- minor frame strip -->
+  <text class="h" x="20" y="80">Minor frames 5 and 37 of 64 (FP 5, FI 32)</text>
+  <rect class="sy" x="20"  y="92" width="90" height="34"/><text class="m" x="65"  y="113" text-anchor="middle">sync 30</text>
+  <rect class="w"  x="110" y="92" width="60" height="34"/><text class="m" x="140" y="113" text-anchor="middle">1 … 12</text>
+  <rect class="sy" x="170" y="92" width="60" height="34"/><text class="m" x="200" y="113" text-anchor="middle">13 ID</text>
+  <rect class="w"  x="230" y="92" width="110" height="34"/><text class="m" x="285" y="113" text-anchor="middle">14 … 112</text>
+  <rect class="f1" x="340" y="92" width="100" height="34"/><text class="m" x="390" y="113" text-anchor="middle">113: 10 bits</text>
+  <rect class="w"  x="440" y="92" width="110" height="34"/><text class="m" x="495" y="113" text-anchor="middle">114 … 120</text>
+  <rect class="f2" x="550" y="92" width="90" height="34"/><text class="m" x="595" y="113" text-anchor="middle">121: 6</text>
+  <rect class="w"  x="640" y="92" width="60" height="34"/><text class="m" x="670" y="113" text-anchor="middle">122: 4</text>
+  <rect class="w"  x="700" y="92" width="80" height="34"/><text class="m" x="740" y="113" text-anchor="middle">… 276</text>
+  <text class="l" x="800" y="104">10-bit words (P-2\F1),</text>
+  <text class="l" x="800" y="118">words 121 and 122 sized</text>
+  <text class="l" x="800" y="132">by P-2\MFW1/MFW2</text>
+
+  <!-- fragments -->
+  <text class="h" x="20" y="170">The two fragments (D-3, location 1)</text>
+  <text class="b" x="20"  y="194">Fragment</text><text class="b" x="110" y="194">WP · FP · FI · WFM</text><text class="b" x="330" y="194">Transfer order (WFT)</text><text class="b" x="560" y="194">Position (WFP)</text>
+  <text class="m" x="20"  y="216">e = 1</text><text class="m" x="110" y="216">113 · 5 · 32 · FW</text><text class="l" x="330" y="216">absent → "Default: D" → P-2\F2 = M</text><text class="rt" x="560" y="216">absent → "Default: 1"</text>
+  <text class="m" x="20"  y="238">e = 2</text><text class="m" x="110" y="238">121 · 5 · 32 · FW</text><text class="l" x="330" y="238">absent → "Default: D" → P-2\F2 = M</text><text class="rt" x="560" y="238">absent → "Default: 1"</text>
+  <rect class="bad" x="720" y="186" width="260" height="60" rx="6"/>
+  <text class="b" x="732" y="206">Two fragments at position 1</text>
+  <text class="l" x="732" y="222">"Each fragment position from 1 to N</text>
+  <text class="l" x="732" y="236">must be specified only once" (Table 9-7)</text>
+
+  <!-- assemblies -->
+  <text class="h" x="20" y="286">So the 16-bit value can be assembled two ways</text>
+  <rect class="f1" x="20"  y="298" width="150" height="32"/><text class="m" x="95"  y="318" text-anchor="middle">113 (10 bits)</text>
+  <rect class="f2" x="170" y="298" width="90"  height="32"/><text class="m" x="215" y="318" text-anchor="middle">121 (6)</text>
+  <text class="l" x="280" y="312">the prose's intent: "the 10 msbs indicated as M</text>
+  <text class="l" x="280" y="326">and the 6 lsbs as L" (Table C-2)</text>
+  <rect class="f2" x="20"  y="342" width="90"  height="32"/><text class="m" x="65"  y="362" text-anchor="middle">121 (6)</text>
+  <rect class="f1" x="110" y="342" width="150" height="32"/><text class="m" x="185" y="362" text-anchor="middle">113 (10 bits)</text>
+  <text class="l" x="280" y="356">equally allowed by the TMATS as written</text>
+  <rect class="bad" x="620" y="298" width="360" height="76" rx="6"/>
+  <text class="b" x="632" y="318">The library reports the ambiguity</text>
+  <text class="l" x="632" y="336">and does not choose (INT-033); irig106-decode</text>
+  <text class="l" x="632" y="350">reports 82AJ01 as not decodable until a caller</text>
+  <text class="l" x="632" y="364">supplies the order, labelled as an assumption</text>
+
+  <!-- conversion -->
+  <text class="h" x="20" y="412">Conversion (C-7): fully defined</text>
+  <rect class="ok" x="20" y="424" width="960" height="46" rx="6"/>
+  <text class="m" x="34" y="444">C-7\BFM:TWO; C-7\DCT:COE; C-7\CO\N:1; C-7\CO:0; C-7\CO-1:.03125; C-7\MN3:MTR/S/S; C-7\MOT1:1023.97; C-7\MOT2:-1023.97;</text>
+  <text class="l" x="34" y="460">two's complement × 0.03125 → "LANTZ Norm acceleration" in m/s²; a 16-bit range gives 32,767 × 0.03125 = 1,023.97 (rounded)</text>
+</svg>
