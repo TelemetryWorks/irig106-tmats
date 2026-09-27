@@ -373,3 +373,11 @@ note is archived verbatim with a review in
 repositories (section 8.6) wait for the owner to say where they are written.
 The question about the rest of IRIG 106 is answered in the ROADMAP
 ("Covering the rest of IRIG 106").
+
+## 30. What TmNS is; the coverage plan explained (2026-09-26)
+
+> What is The TmNS chapters (21–28) are out of scope for now. Chapter 23 is TmNS's own counterpart of TMATS and a candidate for a future crate. Tell me what the coverage plan currently looks like and what you recommned.
+
+Answered in conversation from the archived 106-24R1 Chapters 21 and 23; the
+Chapter 21–28 row of "Covering the rest of IRIG 106" in `docs/ROADMAP.md`
+now quotes them. F9 stays open for the owner's decision.

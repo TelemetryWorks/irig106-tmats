@@ -1074,7 +1074,7 @@ Proposed owners, by chapter of 106-24R1 (from the archive manifest):
 | 10 | Digital Recording Standards | `irig106-core` (recording files and their organisation), `irig106-write` |
 | 11 | Recorder Data Packet Format Standard | `irig106-core` (packet structure), `irig106-decode` (data-type bodies), `irig106-time` (time packets), `irig106-tmats` (setup-record packets) |
 | 12 | Randomization Methods for Telemetry Systems | `irig106-decode` (derandomising, which `P-d\D7` and `P-d\D8` describe) |
-| 21–28 | Telemetry Network Standard (TmNS) | out of scope for now; Chapter 23, Metadata Configuration (MDL), is TmNS's counterpart of TMATS and a candidate for a future crate |
+| 21–28 | Telemetry Network Standard (TmNS) | out of scope for now. TmNS is IRIG 106's network-based telemetry: "The TmNS approach leverages existing standardized Internet protocols", adding bidirectional links to PCM telemetry (Chapter 21). Its Chapter 23, Metadata Configuration, defines the Metadata Description Language (MDL) that describes "the configuration of the components in a telemetry system" — TmNS's counterpart of TMATS — and reuses the TMATS XML schema for PCM formats ("The MDL schema requires the tmatsP:PCMFormatAttributesType"). A candidate for a future crate, and a reason to design XML TMATS support (deferred, ADR-0015) so that MDL could reuse it. |
 | Annexes A.1–A.4 | PAM, magnetic tape, ADARIO, ARMOR | out of scope |
 
 ## Work for other repositories
