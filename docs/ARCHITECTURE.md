@@ -717,7 +717,33 @@ point to), and F3 (suggesting `:` where `=` was typed, as in Chapter 6's
 "Follow-ups for the owner". Until each is decided, the implementation
 chooses no behaviour for it.
 
-## 11. Decisions this architecture must honour
+## 11. Components from the consumer contracts
+
+`docs/TMATS-IN-CHAPTER-10.md` (follow-up F4) defines what the library gives
+the rest of Chapter 10 processing; applying it (follow-up F8) adds these
+components, all pure functions over data the caller supplies (ADR-0010):
+
+- **The packet check** (L1-CH10-007; UC-18) — takes packet summaries, plain
+  `irig106-types` data, and the governing description; reports unknown and
+  disabled channels, wrong data types, ungoverned packets, silent channels,
+  and misuse of channel `0x0000`.
+- **The configuration timeline** (L1-CH10-008; UC-19) — built from the
+  complete setup records in file order; classifies each (first, repeat,
+  change), shares one description among identical records, reports what
+  changed using the attribute comparison (L1-WRT-005), and answers which
+  record governs a file offset or time.
+- **The channel-type table** (L1-VIEW-009; INT-024) — the reviewed
+  correspondence between `R-x\CDT-n` with its data-type-format attribute and
+  the packet data types of Chapter 11 Table 11-4.
+- **The time view** (L1-VIEW-007; UC-20) and **labelled assumptions**
+  (L1-VIEW-008) for what a caller supplies that the TMATS does not give.
+
+The loop that joins the packet reader, this library, and the decoder lies
+outside the library, in each tool (ADR-0030; `docs/diagrams/joining-loop.svg`).
+Consumers share each description by reference; only the setup record's
+TMATS body is copied, once (`docs/TMATS-IN-CHAPTER-10.md` section 4.13).
+
+## 12. Decisions this architecture must honour
 
 Recorded as ADRs in `docs/adr/` (0001–0019, 0022–0029 accepted): the lossless ordered attribute store as the
 single source of truth; owned storage instead of borrowed lifetimes; the
@@ -745,13 +771,14 @@ verified transactions over targets bound to a revision, with the checksum
 stamp hashing the final bytes (ADR-0029; follow-ups F1–F3 open). The original
 proposal is captured in ADR-0020 and ADR-0021 (proposed).
 
-## 12. To be written
+## 13. To be written
 
 - Module structure and public API sketch (document, scanner, keys and
   index, registry and overlay, link graph, condition evaluator,
   effective-value resolver, derived-expression parser and derivation graph,
   views, validator, edits and writer, checksums,
-  Chapter 10 setup-record assembler, CLI packet reader).
+  Chapter 10 setup-record assembler, packet check, configuration timeline,
+  channel-type table, CLI packet reader).
 - The condition language's grammar and the interpretation file format.
 - Data flow per use case (UC-01 … UC-17).
 - Error and diagnostic model; JSON output schema for the CLI.

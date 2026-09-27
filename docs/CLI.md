@@ -28,12 +28,16 @@ a command computes, the library can compute for other callers.
 | `tmats verify FILE` | Compare the embedded `G\SHA` with the computed value | 0.1 |
 | `tmats stamp FILE -o OUT` | Write a copy with `G\SHA` inserted or updated | 0.1 |
 | `tmats validate FILE` | Validation report (UC-06/07) | 0.3 |
-| `tmats diff A B` | Compare two documents (UC-11) | 0.5 |
+| `tmats diff A B` | Compare two documents (UC-11) | 0.2 |
+| `tmats check FILE.ch10` | Check every packet against the setup record that governs it (UC-18) | 0.2 |
 
 ## 3. Behaviour already decided
 
 - **Input by content, not extension.** A file that starts with the Chapter 10
   packet sync pattern is a recording; anything else is TMATS text.
+- **The configuration timeline.** From 0.2, `show` lists every setup record
+  with its kind (first, repeat, change), its findings, and what changed
+  (UC-19; L1-CH10-008), and `check` runs the packet check (UC-18).
 - **Every setup record.** A recording's setup records are all reported, in
   file order (the `idmptmat` first-packet-only limitation, defect D2, is not
   repeated). Each record's output is labelled with its position and packet

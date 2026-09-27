@@ -1054,8 +1054,9 @@ This whole path becomes an acceptance test, `appendix_9c_channel_2_trace`
 ## 8. What changes as a result
 
 This section gathers what writing sections 1–7 changed, and proposes what
-should change next. Items marked **proposed** wait for the owner's decision
-(ROADMAP follow-up F8); nothing proposed here has been applied.
+should change next. **The owner approved the proposals on 2026-09-26
+(ROADMAP follow-up F8), and 8.2 to 8.5 are applied**; the notes of 8.6 wait
+for the owner to say where they are written.
 
 ### 8.1 Already recorded while writing
 
@@ -1074,18 +1075,18 @@ section 2.4), the two version code lists (section 3.9; ROADMAP X2), channel
 `0x0000` (sections 4.1 and 6.7), one description per setup record (section
 5), and WebAssembly (F6).
 
-### 8.2 New use cases (proposed)
+### 8.2 New use cases (applied)
 
-The use cases (`docs/USE-CASES.md`) predate the consumer contracts. Three
-are missing:
+The use cases (`docs/USE-CASES.md`) predated the consumer contracts. Three
+were added:
 
 | Proposed | Summary | Requirements | Sections |
 |----------|---------|--------------|----------|
 | UC-18 Check a recording's packets against its setup records | Given the packets of a recording as plain summaries, report unknown and disabled channels, wrong data types, ungoverned packets, silent channels, and misuse of channel `0x0000` | L1-CH10-007 | 3.3, 6 |
 | UC-19 Follow the configuration through a recording | List every setup record with its kind, findings, and differences; answer which one governs a packet or a time | L1-CH10-008 | 5 |
-| UC-20 Find the time channels and their formats | Report the TIMEIN channels with their data type format, time format, and time source, each channel's secondary-header time format, and the measurements that are time words | proposed L1-VIEW-007 | 3.8 |
+| UC-20 Find the time channels and their formats | Report the TIMEIN channels with their data type format, time format, and time source, each channel's secondary-header time format, and the measurements that are time words | L1-VIEW-007 | 3.8 |
 
-### 8.3 New requirements (proposed)
+### 8.3 New requirements (applied)
 
 - **L1-VIEW-007** — the time view of section 3.8 (UC-20).
 - **L1-VIEW-008** — assumptions are labelled: when a caller supplies what the
@@ -1101,7 +1102,7 @@ The planned releases (`docs/ROADMAP.md`, "Planned releases") were written
 before the team review's T3–T7 and this document. Checked against the
 requirements' own release notes and the contracts of section 4:
 
-| # | Finding | Proposed change |
+| # | Finding | Change (applied to "Planned releases") |
 |---|---------|-----------------|
 | R1 | 0.1's row does not mention assembling multi-packet setup records (L1-CH10-004), the session rules (L1-CH10-005), the two edition declarations and the labelled validation basis (L1-EDN-002, L1-EDN-005), the suspected-semicolon diagnostic (L1-READ-007), or the WebAssembly build (L1-REL-003), all due in 0.1 | add them to 0.1's row |
 | R2 | L1-SUM-004 stamps `G\SHA` "only as the last step of an edit transaction" in 0.1, while the transaction (L1-WRT-007) is due in 0.5 | deliver in 0.1 the minimal transaction the stamp needs — validate, emit, hash, verify — and grow it into the full edit transaction in 0.5 |
@@ -1112,7 +1113,7 @@ requirements' own release notes and the contracts of section 4:
 | R7 | 0.5's row promises "a builder whose output passes validation", which L1-WRT-006 replaced with a valid document or an incomplete draft with missing-input findings; it omits the verified transaction (L1-WRT-007) and the setup-record payload (L1-CH10-003) | reword and add them |
 | R8 | The workspace restructure (ROADMAP W1–W3) must precede the first new code | add it as the first step before 0.1 |
 
-### 8.5 Documents in this repository to update (proposed)
+### 8.5 Documents in this repository to update (applied)
 
 - **`docs/ARCHITECTURE.md`** — add the components this document defines — the
   packet check, the configuration timeline, the channel-type table — to the
@@ -1125,7 +1126,7 @@ requirements' own release notes and the contracts of section 4:
   reusable by `irig106-cli` (ROADMAP W3).
 - **`docs/ROADMAP.md`** — the release plan changes of 8.4.
 
-### 8.6 Notes for the other repositories (proposed)
+### 8.6 Notes for the other repositories (awaiting the owner's direction)
 
 Following the owner's direction that each repository records its own
 changes (2026-09-26), these notes would be written in the repositories
@@ -1141,15 +1142,15 @@ themselves, where and when the owner directs:
 | `irig106-index` | catalogues keyed by setup record (sections 4.9 and 5) |
 | `irig106-cli` | mounting `irig106-tmats-cli` and the joining loop (sections 4.2 and 4.10) |
 | `irig106-write` | its contract (section 4.11): splitting records, SRCC, the event packet (pending F7), channel `0x0000` |
-| `irig106-rust` | its requirement REQ-L1-014 calls the setup record "Format 0" |
 | `irig106-docs` | the ecosystem overview: this document's picture of where TMATS sits (section 2) |
 
 ### 8.7 Decisions this document leaves with the owner
 
 - **F7** — which packet is the configuration change event packet (INT-030).
-- **F8** — the proposals of this section: UC-18 to UC-20, L1-VIEW-007 to 009,
-  the release plan changes R1–R8, the documents of 8.5, and the notes of
-  8.6.
+- **8.6** — where the notes for the other repositories are written.
+- **F9** — covering the rest of IRIG 106: a contract document like this one
+  in each repository for the chapters it owns, and a map of every chapter in
+  `irig106-docs` (ROADMAP, "Covering the rest of IRIG 106").
 - **The proposed register entries** INT-024 to INT-029 and INT-031 to
   INT-033.
 - **The review of sections 1–8** of this document.

@@ -39,7 +39,9 @@ planned interface (`docs/INTEGRATION.md`) and its TMATS extraction
   (owner-direction entry 24), not here.
 - `irig106-time`'s ecosystem diagram shows `irig106-tmats` feeding only the
   reader and the CLI, not decode, studio, or write.
-- `irig106-rust` REQ-L1-014: "Format 0" for the setup record.
+- `irig106-rust` REQ-L1-014: "Format 0" for the setup record. (Later excluded from
+  the ecosystem by the owner; what it held of note is kept in
+  `2026-09-26-irig106-rust/`.)
 
 ## Needs no repository states yet (gaps)
 

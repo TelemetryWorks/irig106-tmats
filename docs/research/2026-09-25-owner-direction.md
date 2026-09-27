@@ -359,3 +359,17 @@ open for the future. Recorded in: ADR-0030, `docs/ROADMAP.md` (F5, X2, X3),
 Recorded in: `docs/ROADMAP.md` (F6 decided; "`std` and `no_std`"),
 `docs/L1-REQ.md` (L1-REL-003), `docs/TMATS-IN-CHAPTER-10.md` section 4.14
 (sharing without copying) and section 5.
+
+## 29. `irig106-rust` excluded; the rest of IRIG 106; F8 approved (2026-09-26)
+
+> Exclude irig106-rust from the final solution - this repo will probably get deleted. But if there is anything in the repo of note then we should capture it before we dispose of it. docs/TMATS-IN-CHAPTER-10.md is where we have been writing all this information, are we going to expect an additional document for like chapter 11 in order to cover the entire irig106 specification? Your recommendations for section 8 seem correct (F8).
+
+Done: `irig106-rust` is removed from the ecosystem plan; what it held of
+note is archived verbatim with a review in
+`docs/research/2026-09-26-irig106-rust/`. F8 is approved and applied
+(`docs/TMATS-IN-CHAPTER-10.md` section 8; `docs/USE-CASES.md`;
+`docs/L1-REQ.md`; `docs/ROADMAP.md` "Planned releases";
+`docs/ARCHITECTURE.md`; `docs/CLI.md`); the notes for the other
+repositories (section 8.6) wait for the owner to say where they are written.
+The question about the rest of IRIG 106 is answered in the ROADMAP
+("Covering the rest of IRIG 106").

@@ -893,7 +893,8 @@ owner decides; the decision is then recorded in
 | F5 | **Decided 2026-09-26: A**, with C possible later (ADR-0030). Does `irig106-core` depend on `irig106-tmats`, or do the tools join them? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 1.6; proposal in section 2.4 (core stays structural and independent; checking packets against TMATS belongs to the layer holding both) awaits the owner. | `docs/TMATS-IN-CHAPTER-10.md` section 2.4; ROADMAP X3 |
 | F6 | **Decided 2026-09-26: yes** — L1-REL-003, a CI check added with the first new library code. Must the library build for WebAssembly (a CI check that the plain library compiles for a `wasm32` target), so studio's browser build can use it? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 4.8. ADR-0015 moved WASM *bindings* out of the library; building the plain library for WebAssembly is a separate question. The library already performs no I/O (L1-IO-001), which is the main condition. | ADR-0015; a possible L1 requirement and CI job |
 | F7 | Which packet is the "setup record configuration change event packet" that must precede a changed setup record? | Chapter 11 §11.2.7.2 requires it but no passage of Chapters 9–11 (106-24R1) names its type or content, so L1-CH10-005's check cannot be implemented without a decision (for example, that it is a Format 2 recording event packet), best confirmed against real recordings. | INT-030; L1-CH10-005; `docs/TMATS-IN-CHAPTER-10.md` section 5.1 |
-| F8 | Approve, change, or reject the proposals of `docs/TMATS-IN-CHAPTER-10.md` section 8: use cases UC-18 to UC-20, requirements L1-VIEW-007 to 009, the release plan changes R1–R8, the documents to update (8.5), and the notes for the other repositories (8.6). | Section 8 found the planned releases predate T3–T7 and the consumer contracts; in particular L1-SUM-004's stamp (0.1) needs a transaction due in 0.5 (R2), and L1-CH10-008's differences (0.2) need a comparison due in 0.5 (R3). | `docs/TMATS-IN-CHAPTER-10.md` section 8; "Planned releases" |
+| F8 | **Approved 2026-09-26 and applied**, except the notes for the other repositories (8.6), which wait for the owner to say where they are written. Approve, change, or reject the proposals of `docs/TMATS-IN-CHAPTER-10.md` section 8: use cases UC-18 to UC-20, requirements L1-VIEW-007 to 009, the release plan changes R1–R8, the documents to update (8.5), and the notes for the other repositories (8.6). | Section 8 found the planned releases predate T3–T7 and the consumer contracts; in particular L1-SUM-004's stamp (0.1) needs a transaction due in 0.5 (R2), and L1-CH10-008's differences (0.2) need a comparison due in 0.5 (R3). | `docs/TMATS-IN-CHAPTER-10.md` section 8; "Planned releases" |
+| F9 | Adopt the plan for covering the rest of IRIG 106 ("Covering the rest of IRIG 106", below)? | The owner asked (2026-09-26) whether other chapters need a document like `docs/TMATS-IN-CHAPTER-10.md`. | the ecosystem's repositories; `irig106-docs` |
 | F4 | What does processing the TMATS setup record give the rest of Chapter 10 processing — `irig106-core`, `irig106-decode`, and the other consumers? | "When I am processing a CH.10 file what do I expect processing the TMATS packet to provide to the other parts of the processing … We need to document this in great detail." (2026-09-26) | `docs/TMATS-IN-CHAPTER-10.md` — outline approved 2026-09-26; all eight sections drafted for review |
 
 **F5 broken down** (owner direction, 2026-09-26: "break down F5 so I can
@@ -1039,6 +1040,43 @@ standard first, the findings recorded in `docs/research/`; sections are
 written one at a time for the owner's review, each with a diagram where it
 helps.
 
+### Covering the rest of IRIG 106 (proposal, follow-up F9)
+
+The owner asked (2026-09-26): "are we going to expect an additional
+document for like chapter 11 in order to cover the entire irig106
+specification?" Proposal: not one document per chapter here, but one
+document of the same kind in **each repository, for the chapters it owns**,
+and one **map** of the whole standard in `irig106-docs`.
+
+- `docs/TMATS-IN-CHAPTER-10.md` is this repository's contract: what the
+  TMATS library gives everyone else. It already cites Chapters 6, 10, and
+  11 wherever TMATS meets them, and needs no sister document here.
+- Each other repository would carry its own contract document with the same
+  sections (purpose, place in the pipeline, questions answered, contracts,
+  failures, a worked example, consequences), for the chapters it owns.
+- `irig106-docs` would hold a coverage map: every chapter of 106-24R1, its
+  owning crate and document, or why it is out of scope — so "the entire
+  specification" is accounted for in one place.
+
+Proposed owners, by chapter of 106-24R1 (from the archive manifest):
+
+| Chapter | Title | Proposed owner |
+|---------|-------|----------------|
+| 1 | Introduction | `irig106-docs` (terms, the map itself) |
+| 2 | Transmitter and Receiver Systems | out of scope (RF equipment); the TMATS T group describes it |
+| 3 | Frequency Division Multiplexing Telemetry Standards | out of scope; the TMATS M group describes subcarriers |
+| 4 | Pulse Code Modulation Standards | `irig106-decode` (PCM frames, which the TMATS P group describes) |
+| 5 | Digitized Audio Telemetry Standard | `irig106-decode`, if audio channels are decoded; otherwise out of scope |
+| 6 | Recorder & Reproducer Command and Control | `irig106-tmats` for §6.2.3.11 (`.TMATS`, the checksum); the rest out of scope unless a recorder-control crate is started |
+| 7 | Packet Telemetry Downlink | `irig106-decode` (Chapter 7 formats, which `P-d\C7` describes) |
+| 8 | Digital Data Bus Acquisition Formatting Standard | `irig106-decode` (bus data in PCM, which the B group describes) |
+| 9 | Telemetry Attributes Transfer Standard | `irig106-tmats` |
+| 10 | Digital Recording Standards | `irig106-core` (recording files and their organisation), `irig106-write` |
+| 11 | Recorder Data Packet Format Standard | `irig106-core` (packet structure), `irig106-decode` (data-type bodies), `irig106-time` (time packets), `irig106-tmats` (setup-record packets) |
+| 12 | Randomization Methods for Telemetry Systems | `irig106-decode` (derandomising, which `P-d\D7` and `P-d\D8` describe) |
+| 21–28 | Telemetry Network Standard (TmNS) | out of scope for now; Chapter 23, Metadata Configuration (MDL), is TmNS's counterpart of TMATS and a candidate for a future crate |
+| Annexes A.1–A.4 | PAM, magnetic tape, ADARIO, ARMOR | out of scope |
+
 ## Work for other repositories
 
 Findings and decisions made here that require changes in sibling
@@ -1060,11 +1098,16 @@ this list once that repository has it.
 
 | Version | Theme | Scope |
 |---------|-------|-------|
-| 0.1 | Read | Lossless parser for code-name (ASCII) TMATS and the Chapter 10 setup-record payload, including the CSDW format bit (ASCII vs XML). Lookup by code name. V and X groups preserved and linked. Byte-faithful writer. Edition detection. `G\SHA` compute/verify and the flex signature. First crates.io release of both crates. **`tmats` CLI**: `show` in raw, tree, and channel-summary form (the three `idmptmat` formats), `extract`, `checksum` (`G\SHA`, `--flex`), `verify`, `stamp`; every setup record in a recording; plain text and JSON output. |
-| 0.2 | Registry | Spec-derived registry for the baseline edition (106-24R1) covering every group in Chapter 9 (G, T, R, M, P, D, B, S, Q, C, H, V, X). Typed accessors generated from it. Channel resolution from R through P/B/S/Q to D and C; `tmats show` summary uses the resolved links. |
-| 0.3 | Validate | Registry-driven validation: required/allowed-when rules, keywords, ranges, value types, counters and index consistency, cross-group references. User registries, severity policy, custom rules. `tmats validate`. |
-| 0.4 | Editions | Registry deltas for every edition from 106-04 to 106-24R1 (including renamed codes such as `R-x\DST-n` → `R-x\CDT-n`, to be confirmed), a generated `VERSION-DELTAS.md`, and edition-aware validation. |
-| 0.5 | Generate and edit | Edit API (set/insert/remove), validation diagnostics carrying suggested edits with explicit apply, and a builder whose output passes validation. `tmats diff` and applying chosen fixes. |
+| before 0.1 | Restructure | The workspace layout and the reusable CLI library ("Workspace layout and a reusable CLI library", once W1–W3 are decided), with CI green before and after; no new library code until it is done. |
+| 0.1 | Read | Lossless parser for code-name (ASCII) TMATS, with the suspected-semicolon diagnostic (L1-READ-007). Setup records assembled from their packet fragments, with provenance, the CSDW fields, and the session rules (L1-CH10-001, 002, 004–006). The TMATS edition and recording-format version declared, and a labelled validation basis (L1-EDN-002, 005). Lookup by code name. V and X groups preserved and linked. Byte-faithful writer. `G\SHA` compute, verify, and stamp — the stamp as the minimal verified transaction it needs (L1-SUM-004) — and the flex signature. The interpretation register seeded. The WebAssembly build checked in CI (L1-REL-003). First crates.io release of both crates. **`tmats` CLI**: `show` in raw, tree, and channel-summary form (the three `idmptmat` formats), `extract`, `checksum` (`G\SHA`, `--flex`), `verify`, `stamp`; every setup record in a recording; plain text and JSON output. |
+| 0.2 | Registry and views | Spec-derived registry for the baseline edition (106-24R1) covering every group in Chapter 9 (G, T, R, M, P, D, B, S, Q, C, H, V, X), with counter and link declarations. Typed accessors generated from it. Channel views resolving R through P/B/S/Q to D and C, with link states (L1-VIEW-002, 003, 006) and effective values (L1-VIEW-004): each channel's recorder settings, format definition, measurement locations, and conversions — what `irig106-decode` needs first. The channel-type table and each channel's packet data types (L1-VIEW-009), the time view (L1-VIEW-007), labelled assumptions (L1-VIEW-008). The packet check (L1-CH10-007) and the configuration timeline (L1-CH10-008), with the attribute-by-attribute comparison it uses (L1-WRT-005). **`tmats` CLI**: `show` uses the resolved links and lists the configuration timeline; `check`; `diff`. |
+| 0.3 | Validate | Registry-driven validation in four passes: required/allowed-when rules, keywords, ranges, value types, counters and index consistency, cross-group references. Derived parameters parsed, validated, and described (L1-DER-001 to 005). User registries, severity policy, custom rules. `tmats validate`. |
+| 0.4 | Editions | Registry deltas for every edition from 106-04 to 106-24R1 (including renamed codes such as `R-x\DST-n` → `R-x\CDT-n`, to be confirmed), a generated `VERSION-DELTAS.md`, edition-aware validation, and compatibility checks, named as such, for editions the registry does not cover (L1-EDN-006). |
+| 0.5 | Generate and edit | Edit API (set, insert, remove, renumber) as verified transactions (L1-WRT-003, 007), grown from 0.1's stamp; validation diagnostics carrying suggested edits with explicit apply; a generator that returns valid TMATS or an incomplete draft with missing-input findings (L1-WRT-006); the setup-record payload for `irig106-write` (L1-CH10-003). Applying chosen fixes from `tmats`. |
+
+*Revised 2026-09-26 (owner-approved follow-up F8; `docs/TMATS-IN-CHAPTER-10.md`
+section 8.4, R1–R8) so that every requirement's own release note, and every
+consumer contract, matches this table.*
 
 Testing strategy for every release: spec-sourced fixtures (starting with the
 Chapter 9 Appendix 9-C example), property tests (never panics on arbitrary

@@ -39,6 +39,8 @@ Format 1, data type `0x01`) at the start of the file.
 | **Validator / QA** | Range acceptance, data-quality checks, CI for instrumentation configurations | Validate against a named IRIG 106 edition, with a policy they control, and a stable, machine-readable report |
 | **Extender** | Programs, vendors, and ranges whose TMATS uses vendor (V) or extension (X) attributes, private conventions, or deliberately non-conforming content | Teach the library their attributes and rules, relax or tighten checks, and never lose their content |
 | **Archivist / analyst** | Data centers comparing configurations across revisions, flights, or mid-recording setup changes | Compare two TMATS documents meaningfully and trace which revision applies to which data |
+| **Time correlator** | `irig106-time` | Which channels carry time, in what format and from what source, and the recording-format version each setup record declares |
+| **Catalogue builder** | `irig106-index`, search tools | Channel and measurement catalogues for each setup record, with which packets each record governs |
 
 ## 3. Inputs and outputs at the boundary
 
@@ -264,7 +266,7 @@ index in use are rejected with a finding, and the document is unchanged.
 Removing an attribute that X extensions point to is an open question
 (follow-up F2) (team review T7; ADR-0029; `docs/diagrams/edit-transaction.svg`).
 
-### UC-11 Compare two documents — *0.5*
+### UC-11 Compare two documents — *0.2*
 
 **Actor:** archivist/analyst, recording reader. **Trigger:** two revisions of
 a configuration, or two setup records from one recording.
@@ -378,7 +380,8 @@ Programmers' Handbook) and the viewing parts of `igDisplayTMATS`:
 | `tmats stamp FILE -o OUT` | Write a copy with `G\SHA` inserted or updated | 0.1 |
 | `tmats checksum --flex [--include ...] FILE` | irig106.org flex signature (UC-16) | 0.1 |
 | `tmats validate FILE` | Validation report (UC-06/07) | 0.3 |
-| `tmats diff A B` | Compare two documents (UC-11) | 0.5 |
+| `tmats diff A B` | Compare two documents (UC-11) | 0.2 |
+| `tmats check FILE.ch10` | Check every packet against its governing setup record (UC-18) | 0.2 |
 
 Input is detected by content (a Chapter 10 file starts with the packet sync
 pattern; anything else is treated as TMATS text). Unlike `idmptmat`, which
@@ -392,6 +395,41 @@ focused TMATS tool: the complete, ecosystem-wide command-line tool is
 `irig106-cli`, which uses this library (and may mount `tmats`' commands as a
 subcommand). A GUI view belongs in `irig106-studio`, using the same library
 calls.
+
+### UC-18 Check a recording's packets against its setup records — *0.2*
+
+**Actor:** recording reader, validator/QA. **Trigger:** a tool walks a
+recording and wants to know whether its data agree with its configuration.
+
+The tool hands the library plain summaries of the packets (channel ID, data
+type, offset, sequence number, relative time counter) through its joining
+loop (`docs/TMATS-IN-CHAPTER-10.md` section 4.2). Against the setup record
+that governs each packet, the library reports packets on channels the
+record does not define, packets on disabled channels, packets whose data
+type is not the channel's, packets that no setup record governs, enabled
+channels that carry nothing, and misuse of channel `0x0000`
+(L1-CH10-007; sections 3.3 and 6).
+
+### UC-19 Follow the configuration through a recording — *0.2*
+
+**Actor:** recording reader, data decoder, archivist/analyst, catalogue
+builder. **Trigger:** a recording carries more than one setup record.
+
+The library lists every complete setup record in file order with its
+provenance, CSDW summary, kind (first, repeat, change), findings, and, for a
+change, what differs from the record it replaces; identical records share
+one description. It answers which record governs a given file offset or
+time (L1-CH10-008; section 5).
+
+### UC-20 Find the time channels and their formats — *0.2*
+
+**Actor:** time correlator, data decoder. **Trigger:** a consumer needs to
+correlate relative time with absolute time.
+
+The library reports the channels whose data type is TIMEIN with their time
+data type format, time format, and time source; each channel's
+secondary-header time format; and the measurements that are PCM, network,
+or 1553 time words (L1-VIEW-007; section 3.8).
 
 ## 5. Consumer notes
 

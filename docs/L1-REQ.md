@@ -410,6 +410,31 @@ requirements are added. The requirement entries below and the generated
 
 **Verification Method**: Test (T)
 
+
+### L1-VIEW-007
+
+**Statement**: The library SHALL present the channels whose data type is TIMEIN with their time data type format (`R-x\TTF-n`), time format (`R-x\TFMT-n`), and time source (`R-x\TSRC-n`); each channel's secondary-header time format (`R-x\SHTF-n`); and the measurements whose conversion type is a PCM, network, or 1553 time word.
+
+**Rationale**: `irig106-time` needs to know which channels carry time and how (UC-20; `docs/TMATS-IN-CHAPTER-10.md` sections 3.8 and 4.6). Delivered in 0.2.
+
+**Verification Method**: Test (T)
+
+### L1-VIEW-008
+
+**Statement**: When a caller supplies information the TMATS does not give — a description for packets that no setup record governs, or the order of a measurement's fragments — every answer built on it SHALL state that it rests on the caller's assumption.
+
+**Rationale**: The library never guesses (section 1.5 of `docs/TMATS-IN-CHAPTER-10.md`), but a caller may know better; its choice must stay visible (INT-032, INT-033). Delivered in 0.2.
+
+**Verification Method**: Test (T)
+
+### L1-VIEW-009
+
+**Statement**: For each channel, the library SHALL give the packet data types the channel may carry, from its `R-x\CDT-n` and its data-type-format attribute, or "cannot evaluate" when the format attribute is missing or invalid.
+
+**Rationale**: The packet check and `irig106-decode` both need it; the correspondence with Chapter 11 Table 11-4 is a reviewed table (INT-024; `docs/TMATS-IN-CHAPTER-10.md` section 3.3), and the standard's own example omits the format attribute (section 7). Delivered in 0.2.
+
+**Verification Method**: Test (T)
+
 ---
 
 ## L1-VAL: Validation
@@ -582,7 +607,7 @@ requirements are added. The requirement entries below and the generated
 
 **Statement**: The library SHALL compare two documents attribute by attribute, independent of order and case, reporting added, removed, and changed attributes.
 
-**Rationale**: UC-11, including changes between setup records within one recording. Delivered in 0.5.
+**Rationale**: UC-11, including changes between setup records within one recording; the configuration timeline needs it (L1-CH10-008), so it is delivered in 0.2, before the edit API (`docs/TMATS-IN-CHAPTER-10.md` section 8.4, R3).
 
 **Verification Method**: Test (T)
 
@@ -634,7 +659,7 @@ requirements are added. The requirement entries below and the generated
 
 **Statement**: The library SHALL stamp `G\SHA` only as the last step of an edit transaction, computing the digest over the final emitted bytes outside the `G\SHA` item — including any separator or line break written with the item — and SHALL verify the stamped result.
 
-**Rationale**: Only the text from `G\SHA` through the following semicolon is excluded (Table 9-2; Chapter 6 §6.2.3.11 f), so a digest computed before a line break is inserted would not verify (team review T7; ADR-0029). Delivered in 0.1.
+**Rationale**: Only the text from `G\SHA` through the following semicolon is excluded (Table 9-2; Chapter 6 §6.2.3.11 f), so a digest computed before a line break is inserted would not verify (team review T7; ADR-0029). Delivered in 0.1 with the minimal transaction the stamp needs — validate, emit, hash, verify — which grows into the full edit transaction of L1-WRT-007 in 0.5 (`docs/TMATS-IN-CHAPTER-10.md` section 8.4, R2).
 
 **Verification Method**: Test (T)
 

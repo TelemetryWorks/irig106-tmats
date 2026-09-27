@@ -86,6 +86,9 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-VIEW-004 | _(none)_ | _(none)_ | Draft |
 | L1-VIEW-005 | _(none)_ | _(none)_ | Draft |
 | L1-VIEW-006 | _(none)_ | _(none)_ | Draft |
+| L1-VIEW-007 | _(none)_ | _(none)_ | Draft |
+| L1-VIEW-008 | _(none)_ | _(none)_ | Draft |
+| L1-VIEW-009 | _(none)_ | _(none)_ | Draft |
 
 ### L1-VAL: Validation
 
@@ -210,7 +213,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | CH10 | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EDN | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REG | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
-| VIEW | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
+| VIEW | 9 | 0 | 0 | 0 | 0 | 0 | 0 |
 | VAL | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
 | DER | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EXT | 4 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -221,13 +224,13 @@ This matrix is the single source of truth for live status; the requirement docum
 | ROB | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 3 | 0 | 0 | 0 | 0 | 0 | 0 |
-| **Total** | **75** | **0** | **0** | **0** | **0** | **0** | **0** |
+| **Total** | **78** | **0** | **0** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 75 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 78 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 1 of 75 (1.3%).
+**Tested by at least one test marker**: 1 of 78 (1.3%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 75 (2.7%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 78 (2.6%).
 
 ### Orphan check
 
