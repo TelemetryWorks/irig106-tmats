@@ -381,3 +381,15 @@ The question about the rest of IRIG 106 is answered in the ROADMAP
 Answered in conversation from the archived 106-24R1 Chapters 21 and 23; the
 Chapter 21–28 row of "Covering the rest of IRIG 106" in `docs/ROADMAP.md`
 now quotes them. F9 stays open for the owner's decision.
+
+## 31. F9 adopted; the map lives in `irig106-docs` (2026-09-26)
+
+> I agree with the plan, lets get it captured.  You said the plan should go into the -docs repo right? I think I still want Chapter 5 but it will be super low priority. Make sure you capture the comments about chapter 23 and XML TMATS support like you told me. I sort of want to complete -time next because I think it will be easier than -decode and -core.
+
+Done: the coverage map is `irig106-docs/src/coverage.md` (committed locally
+in that repository, not pushed; the owner's uncommitted drafts there were
+left untouched). Chapter 5 is kept in scope under `irig106-decode` at very
+low priority. The order of the contract documents is `irig106-time`, then
+`irig106-decode`, `irig106-core`, and `irig106-write`. The Chapter 23 and
+XML TMATS notes are in the map and in `docs/ROADMAP.md` ("Deferred
+features", XML).

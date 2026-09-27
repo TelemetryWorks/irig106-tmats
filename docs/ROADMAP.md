@@ -894,7 +894,7 @@ owner decides; the decision is then recorded in
 | F6 | **Decided 2026-09-26: yes** — L1-REL-003, a CI check added with the first new library code. Must the library build for WebAssembly (a CI check that the plain library compiles for a `wasm32` target), so studio's browser build can use it? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 4.8. ADR-0015 moved WASM *bindings* out of the library; building the plain library for WebAssembly is a separate question. The library already performs no I/O (L1-IO-001), which is the main condition. | ADR-0015; a possible L1 requirement and CI job |
 | F7 | Which packet is the "setup record configuration change event packet" that must precede a changed setup record? | Chapter 11 §11.2.7.2 requires it but no passage of Chapters 9–11 (106-24R1) names its type or content, so L1-CH10-005's check cannot be implemented without a decision (for example, that it is a Format 2 recording event packet), best confirmed against real recordings. | INT-030; L1-CH10-005; `docs/TMATS-IN-CHAPTER-10.md` section 5.1 |
 | F8 | **Approved 2026-09-26 and applied**, except the notes for the other repositories (8.6), which wait for the owner to say where they are written. Approve, change, or reject the proposals of `docs/TMATS-IN-CHAPTER-10.md` section 8: use cases UC-18 to UC-20, requirements L1-VIEW-007 to 009, the release plan changes R1–R8, the documents to update (8.5), and the notes for the other repositories (8.6). | Section 8 found the planned releases predate T3–T7 and the consumer contracts; in particular L1-SUM-004's stamp (0.1) needs a transaction due in 0.5 (R2), and L1-CH10-008's differences (0.2) need a comparison due in 0.5 (R3). | `docs/TMATS-IN-CHAPTER-10.md` section 8; "Planned releases" |
-| F9 | Adopt the plan for covering the rest of IRIG 106 ("Covering the rest of IRIG 106", below)? | The owner asked (2026-09-26) whether other chapters need a document like `docs/TMATS-IN-CHAPTER-10.md`. | the ecosystem's repositories; `irig106-docs` |
+| F9 | **Adopted 2026-09-26** (map in `irig106-docs/src/coverage.md`; Chapter 5 kept at very low priority; `irig106-time` next). Adopt the plan for covering the rest of IRIG 106 ("Covering the rest of IRIG 106", below)? | The owner asked (2026-09-26) whether other chapters need a document like `docs/TMATS-IN-CHAPTER-10.md`. | the ecosystem's repositories; `irig106-docs` |
 | F4 | What does processing the TMATS setup record give the rest of Chapter 10 processing — `irig106-core`, `irig106-decode`, and the other consumers? | "When I am processing a CH.10 file what do I expect processing the TMATS packet to provide to the other parts of the processing … We need to document this in great detail." (2026-09-26) | `docs/TMATS-IN-CHAPTER-10.md` — outline approved 2026-09-26; all eight sections drafted for review |
 
 **F5 broken down** (owner direction, 2026-09-26: "break down F5 so I can
@@ -1040,7 +1040,14 @@ standard first, the findings recorded in `docs/research/`; sections are
 written one at a time for the owner's review, each with a diagram where it
 helps.
 
-### Covering the rest of IRIG 106 (proposal, follow-up F9)
+### Covering the rest of IRIG 106 (adopted, follow-up F9)
+
+**Adopted by the owner, 2026-09-26, with two changes:** Chapter 5 stays in
+scope under `irig106-decode` at very low priority, and the contract
+documents are written in the order `irig106-time`, `irig106-decode`,
+`irig106-core`, `irig106-write`. **The map now lives in `irig106-docs`,
+`src/coverage.md`** (committed locally there); it governs, and the text
+below is the proposal as it was adopted.
 
 The owner asked (2026-09-26): "are we going to expect an additional
 document for like chapter 11 in order to cover the entire irig106
@@ -1066,7 +1073,7 @@ Proposed owners, by chapter of 106-24R1 (from the archive manifest):
 | 2 | Transmitter and Receiver Systems | out of scope (RF equipment); the TMATS T group describes it |
 | 3 | Frequency Division Multiplexing Telemetry Standards | out of scope; the TMATS M group describes subcarriers |
 | 4 | Pulse Code Modulation Standards | `irig106-decode` (PCM frames, which the TMATS P group describes) |
-| 5 | Digitized Audio Telemetry Standard | `irig106-decode`, if audio channels are decoded; otherwise out of scope |
+| 5 | Digitized Audio Telemetry Standard | `irig106-decode`, at very low priority (owner, 2026-09-26) |
 | 6 | Recorder & Reproducer Command and Control | `irig106-tmats` for §6.2.3.11 (`.TMATS`, the checksum); the rest out of scope unless a recorder-control crate is started |
 | 7 | Packet Telemetry Downlink | `irig106-decode` (Chapter 7 formats, which `P-d\C7` describes) |
 | 8 | Digital Data Bus Acquisition Formatting Standard | `irig106-decode` (bus data in PCM, which the B group describes) |
@@ -1128,7 +1135,13 @@ forgotten; none has a committed version.
   mapping from the official XSDs, handle the documented
   differences from the code-name form (one C group per data link, no `\N`
   counters, expanded keywords, XML date formats, semicolons allowed in text),
-  and prove round trips against the code-name form. The Chapter 10 setup
+  and prove round trips against the code-name form. Design it so that a
+  future crate for the Telemetry Network Standard's Metadata Description
+  Language can reuse it: "The MDL schema requires the
+  tmatsP:PCMFormatAttributesType to describe pulse code modulation (PCM)
+  measurements, and it is imported directly from the Telemetry Attributes
+  Transfer Standard (TMATS) schema" (Chapter 23 §23.2.1.6; owner direction
+  2026-09-26; `irig106-docs` coverage map). The Chapter 10 setup
   record already signals XML payloads through the CSDW format bit, so 0.1
   detects them and reports them as unsupported rather than misparsing them.
 - **WebAssembly bindings.** The prototype exposed parse/validate/serialize to

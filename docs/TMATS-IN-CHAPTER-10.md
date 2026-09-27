@@ -1148,9 +1148,10 @@ themselves, where and when the owner directs:
 
 - **F7** — which packet is the configuration change event packet (INT-030).
 - **8.6** — where the notes for the other repositories are written.
-- **F9** — covering the rest of IRIG 106: a contract document like this one
-  in each repository for the chapters it owns, and a map of every chapter in
-  `irig106-docs` (ROADMAP, "Covering the rest of IRIG 106").
+- **F9 (adopted 2026-09-26)** — covering the rest of IRIG 106: a contract
+  document like this one in each repository for the chapters it owns,
+  starting with `irig106-time`, and a map of every chapter in
+  `irig106-docs` (`src/coverage.md`).
 - **The proposed register entries** INT-024 to INT-029 and INT-031 to
   INT-033.
 - **The review of sections 1–8** of this document.
