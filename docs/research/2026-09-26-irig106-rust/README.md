@@ -99,3 +99,7 @@ book; the Makefile; `audit.toml` (cargo-deny covers advisories); the
 commented-out CI file; the release script (its useful part is step 7 above);
 the Rust 1.81 pin; `CODEOWNERS`; the licence file. The copies above in this
 folder stay as the record.
+
+**Deleted on 2026-09-27**: the owner deleted `TelemetryWorks/irig106-rust` on
+GitHub, and its local clone was removed. This folder and the table above
+are what remains of it.
