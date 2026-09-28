@@ -420,3 +420,15 @@ and `docs/TEST-DATA.md` (new acceptance tests and regression cases P1–P5)
 updated; ROADMAP item T8; a prototype notice at the top of both READMEs; the
 RCCVER wording in `irig106-time`.
 
+## 34. RCCVER `0x0D` falls back to 106-20 (2026-09-27)
+
+Asked: when a file does not say which edition its TMATS follows and its
+version code is `0x0D` ("RCC 106-19"), check it against 106-20's rules, since
+106-20 recorders write the same code?
+
+> Yes, use 106-20
+
+Done: ADR-0032 and INT-017 apply the newest archived edition that still uses
+the code — 106-20 for `0x0D`, 106-24R1 for `0x0E` — as a labelled policy;
+ROADMAP T8 records the decision.
+

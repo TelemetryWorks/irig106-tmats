@@ -394,9 +394,9 @@ Complete records govern (INT-028); incomplete and ambiguous records do not by de
 - 106-24R1 Chapter 11 RCCVER codes: "0x07 = RCC 106-07" … "0x0D = RCC 106-19", "0x0E = RCC 106-22".
 - Owner decision (2026-09-26): when `G\106` is missing or unrecognised and there is no override, use a labelled fallback (ADR-0028).
 
-**Behaviour**: Codes `0x07` to `0x0D` apply the rules of the edition each names (for `0x0D`, 106-19; whether 106-20 should apply instead is open for the owner). For `0x0E` ("RCC 106-22") the rules of 106-24R1 apply, as a labelled **policy**: "the newest archived edition that still uses this code" (INT-012). With no usable RCCVER, the baseline applies. The report says "fallback" and gives the reason. *(Revised 2026-09-27, ADR-0032: the policy is now named as one; the effect for `0x0E` is unchanged.)*
+**Behaviour**: Codes `0x07` to `0x0C` apply the rules of the edition each names. For `0x0D` ("RCC 106-19") the rules of 106-20 apply, and for `0x0E` ("RCC 106-22") those of 106-24R1, each as a labelled **policy**: "the newest archived edition that still uses this code" (INT-012; owner, 2026-09-27, "Yes, use 106-20"). With no usable RCCVER, the baseline applies. The report says "fallback" and gives the reason. *(Revised 2026-09-27, ADR-0032: the policy is now named as one; the effect for `0x0E` is unchanged.)*
 
-**Reason**: Applying 106-24R1 avoids reporting attributes introduced after 106-22 as unknown in recordings that could only declare `0x0E`; the label keeps the choice visible as policy, not as something RCCVER says.
+**Reason**: Applying the newest edition that still uses a code avoids reporting attributes introduced by that edition as unknown in recordings that could only declare the older code; the label keeps the choice visible as policy, not as something RCCVER says.
 
 **Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T6
 

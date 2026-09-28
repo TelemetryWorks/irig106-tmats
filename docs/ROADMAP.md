@@ -883,8 +883,8 @@ recommendations on 2026-09-27 ("Yes to all three, go ahead").
 | The README does not say the code is a prototype | correct | a notice at the top of `README.md` (and of `irig106-time`'s) |
 | Prove a small registry slice first, with independently sourced fixtures | agreed; matches ADR-0016 and the tests-first order | first slice: the G group and the P group's D and F attributes, the families the prototype got wrong |
 
-Open for the owner: whether RCCVER `0x0D` should fall back to 106-20's rules
-rather than 106-19's (ADR-0032).
+Decided (owner, 2026-09-27, "Yes, use 106-20"): RCCVER `0x0D` falls back to
+106-20's rules, as `0x0E` falls back to 106-24R1's (ADR-0032, INT-017).
 
 ### Suspect findings to confirm against real data
 

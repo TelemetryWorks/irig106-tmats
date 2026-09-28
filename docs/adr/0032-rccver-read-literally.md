@@ -51,8 +51,9 @@ with 'unchanged through 106-24R1' as a note?"; answered "Yes").
 - **Fallback** (ADR-0028 option a, when `G\106` is missing or unrecognised):
   for `0x0E`, the rules of 106-24R1, labelled "policy: the newest archived
   edition that still uses this code" — the same effect as before, now named
-  as a policy. For `0x0D`, the fallback stays 106-19 until the owner decides
-  whether it should be 106-20.
+  as a policy. For `0x0D` ("RCC 106-19"), likewise the rules of 106-20, the
+  newest archived edition that still uses that code (owner, 2026-09-27:
+  "Yes, use 106-20").
 
 ### Consequences
 
