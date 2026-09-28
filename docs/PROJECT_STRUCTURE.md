@@ -81,6 +81,10 @@ irig106-tmats/
 
 ## Planned layout
 
+The research index includes `docs/research/2026-09-27-spec-alignment-review.md`,
+which records the 106-24R1 review, prototype reproductions, and recommendations
+that have not been adopted as design decisions.
+
 Filled in as the design documents are written. Expected additions:
 
 - `docs/schema/` — the versioned JSON schema for `tmats` output.

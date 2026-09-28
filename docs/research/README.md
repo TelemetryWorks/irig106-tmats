@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-09-27-spec-alignment-review.md](2026-09-27-spec-alignment-review.md) | Independent 106-24R1 alignment review, executable prototype reproductions, and open design questions about SRCC, RCCVER, and record completeness |
 | [2026-09-25-owner-direction.md](2026-09-25-owner-direction.md) | The project owner's instructions and answers, verbatim and in order, with where each decision is recorded |
 | [2026-09-25-prototype-review.md](2026-09-25-prototype-review.md) | The three-reviewer audit of the prototype (tag `prototype-0`), verbatim, and what was confirmed independently |
 | [2026-09-25-editions-and-extensibility.md](2026-09-25-editions-and-extensibility.md) | IRIG 106 editions and Chapter 9 changes, multi-edition support, extensibility, performance, repair-as-suggestions; the Chapter 9 text relied on |
