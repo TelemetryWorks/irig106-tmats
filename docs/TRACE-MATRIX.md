@@ -254,7 +254,8 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-009 | Counters named without indices in conditions | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-010 | Equality is `==`, although Table E-3 prints `= =` | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-011 | Where one multi-packet setup record ends | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
-| INT-012 | RCCVER `0x0E` means "106-22 or later" | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-012 | RCCVER codes are read as their table states; later editions' reuse is a note | accepted (owner, 2026-09-26; wording revised by the owner's decision of 2026-09-27) | not yet written | _(none)_ |
+| INT-034 | A joined run is complete, incomplete, or ambiguous | accepted in principle (three outcomes, owner, 2026-09-27, ADR-0031); these rules proposed | not yet written | _(none)_ |
 | INT-013 | Appendix 9-C ends 18 attributes with `:` instead of `;` | suspect (owner, 2026-09-26; `docs/ROADMAP.md`, S1) | not yet written | _(none)_ |
 | INT-014 | `G\106` gives two year digits, so one value can name two editions | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-015 | `G\106` had no defined format before 106-17 | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
@@ -271,14 +272,14 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-026 | Two recorder polarity conditions name `P-d\CDT`, which does not exist | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
 | INT-027 | `C-d\DCN`'s "Links from:" lists `R-x\AMN-n-m` twice | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
 | INT-028 | Which setup record governs a packet | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
-| INT-029 | Repeated, changed, and inconsistent setup records | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
+| INT-029 | Repeated, changed, and inconsistent setup records | proposed (2026-09-26, revised 2026-09-27, awaiting the owner) | not yet written | _(none)_ |
 | INT-030 | The "setup record configuration change event packet" is not defined | open (follow-up F7, 2026-09-26) | not yet written | _(none)_ |
 | INT-031 | After a setup record that cannot be assembled, nothing governs | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
 | INT-032 | Packets that no setup record governs | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
 | INT-033 | Fragment positions that default to the same value | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
 
-* Entries without a written analysis: **33** of 33
-* Entries without a test: **33** of 33
+* Entries without a written analysis: **34** of 34
+* Entries without a test: **34** of 34
 * Entries missing the development mark: **0**
 
 ### Marker reference check

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" role="img" aria-label="Where TMATS can fail and what follows: setup-record fragments that cannot be assembled, or an XML setup record, are reported and govern nothing; a record that is readable but has malformed attributes, or whose G\SHA does not verify, still governs, with its findings; a data packet with no governing description is reported, not decoded; a packet on an unknown or disabled channel, or with the wrong data type, is reported and decoding is the consumer's choice.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" role="img" aria-label="Where TMATS can fail and what follows: setup-record fragments that form an incomplete or ambiguous record (ADR-0031), or an XML setup record, are reported and govern nothing; a record that is readable but has malformed attributes, or whose G\SHA does not verify, still governs, with its findings; a data packet with no governing description is reported, not decoded; a packet on an unknown or disabled channel, or with the wrong data type, is reported and decoding is the consumer's choice.">
   <style>
     text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; fill: #1f2328; }
     .t { font-size: 15px; font-weight: 600; }
@@ -40,9 +40,9 @@
   <path class="ln" d="M840,99 L870,99" marker-end="url(#a)"/>
 
   <rect class="bad" x="195" y="150" width="160" height="92" rx="6"/>
-  <text class="b" x="205" y="169">No: incomplete</text>
-  <text class="l" x="205" y="186">sequence gap, missing or</text>
-  <text class="l" x="205" y="200">untrusted fragment: reported;</text>
+  <text class="b" x="205" y="169">No: not complete</text>
+  <text class="l" x="205" y="186">text cut inside an attribute,</text>
+  <text class="l" x="205" y="200">bad fragment, doubtful split:</text>
   <text class="l" x="205" y="214">governs nothing, and nothing</text>
   <text class="l" x="205" y="228">governs after it (INT-031)</text>
   <rect class="bad" x="370" y="150" width="160" height="92" rx="6"/>

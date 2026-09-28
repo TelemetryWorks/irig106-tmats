@@ -2,6 +2,17 @@
 
 **TMATS parser, validator, and generator for the IRIG 106 ecosystem.**
 
+> **Status: prototype — do not use for compliance validation or to rewrite
+> authoritative TMATS.** The code in this repository is the retired
+> prototype (git tag `prototype-0`). Reviews against IRIG 106-24R1 found that
+> it misreads PCM attributes, rejects standard keywords, drops the setup
+> record's format bit, confuses the recording-format version with the TMATS
+> edition, and can lose a whole document in lenient mode
+> (`docs/research/2026-09-25-prototype-review.md`,
+> `docs/research/2026-09-27-spec-alignment-review.md`). The library is being
+> rebuilt documentation first (`docs/ROADMAP.md`); the features listed below
+> describe the prototype, not the design.
+
 Part of the [TelemetryWorks](https://github.com/TelemetryWorks) organization — open, high-performance telemetry tooling for flight test and range instrumentation, built in Rust.  
 
 ## What is TMATS?

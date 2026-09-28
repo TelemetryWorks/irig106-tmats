@@ -415,12 +415,14 @@ and reported when present.
 - **Out:** complete setup records, each with the concatenated TMATS body, one
   CSDW summary, and a **provenance map** from every body offset back to its
   packet and offset, so every diagnostic can name the packet it came from.
-- **Boundary rule** (a reviewed interpretation, because the standard defines
-  no end-of-record marker): a record is a run of consecutive data type `0x01`
-  packets on one channel whose sequence numbers increase by one modulo 256 and
-  whose CSDWs agree on FRMT and RCCVER. It ends at an intervening packet, a
-  sequence gap, a CSDW change, or the end of input. Anything ambiguous is
-  reported, never guessed.
+- **Boundary rule** (reviewed interpretations, because the standard defines
+  no end-of-record marker): fragments are joined while they are consecutive
+  data type `0x01` packets on one channel whose sequence numbers increase by
+  one modulo 256 and whose CSDWs agree on FRMT and RCCVER (INT-011). Each
+  joined run is then **complete**, **incomplete**, or **ambiguous**, with the
+  evidence that decided it — the body's final byte, gaps, CSDW changes,
+  repeated single-entry attributes (ADR-0031, INT-034). Only complete records
+  govern by default; uncertainty is reported, never guessed.
 - **Checksums:** `G\SHA` and the flex signature are computed over the
   assembled body.
 
@@ -431,7 +433,9 @@ Across the complete records of one recording: ASCII and XML are never mixed
 in the same session"); a record with SRCC = 1 is preceded by a
 configuration-change event packet; from 106-17, setup records are on channel
 `0x0000`. RCCVER defines `0x07` (106-07) to `0x0E` (106-22) and reserves the
-rest, so `0x0E` reads as "106-22 or later" and reserved values as unknown;
+rest; each code reads as its table states — `0x0E` "RCC 106-22", with the
+labelled note that 106-23 to 106-24R1 assign no newer code — and reserved
+values as unknown (ADR-0032);
 RCCVER declares what the recorded data complies with, not the TMATS edition;
 section 9 keeps the two apart (ADR-0028).
 
@@ -608,7 +612,7 @@ ADR-0028, which partly supersedes ADR-0016.
 | Declaration | Where | What it says | Reading |
 |-------------|-------|--------------|---------|
 | TMATS edition | `G\106` (Table 9-2) | "Version of RCC IRIG 106 standard used to generate this TMATS file. The last 2 digits of the year should be used." | candidate editions (`24` → 106-24 or 106-24R1), or "unrecognised" (INT-014, INT-015) |
-| Recording-format version | setup-record CSDW, RCCVER (Chapter 11) | "which RCC release version applies and to which the following recorded data complies with" | one edition, "106-22 or later" for `0x0E`, reserved, or "not declared" before 106-07 (INT-012, INT-016) |
+| Recording-format version | setup-record CSDW, RCCVER (Chapter 11) | "which RCC release version applies and to which the following recorded data complies with" | one edition as its table states (`0x0E` "RCC 106-22", noted as unchanged through 106-24R1), reserved, or "not declared" before 106-07 (INT-012, INT-016; ADR-0032) |
 
 Both are kept exactly as read and reported side by side, per document and
 per setup record. Neither is rewritten from the other, and a difference

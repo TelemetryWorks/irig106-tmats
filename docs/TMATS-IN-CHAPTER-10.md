@@ -797,16 +797,19 @@ left for section 6.
 | Kind | How it is recognised | Reported |
 |------|----------------------|----------|
 | First | the first complete record of the recording | its description; `SRCC = 1` on it is a finding, since there is no previous record to have changed |
-| Repeat | `SRCC = 0` and the same bytes as the governing record | nothing new; it shares the governing description |
-| Change | `SRCC = 1` | its description, and how it differs from the one it replaces |
-| Unannounced change | `SRCC = 0` but different bytes | a finding: the content changed without the change bit; it governs from here all the same |
-| Announced non-change | `SRCC = 1` but the same bytes | a finding: the change bit is set with nothing changed |
+| Repeat | `SRCC = 0` and the same bytes, or the same configuration written differently | nothing new; it shares the governing description (a rewrite is noted as information) |
+| Change | `SRCC = 1` and a changed configuration | its description, and how it differs from the one it replaces |
+| Unannounced change | `SRCC = 0` but a changed configuration | a finding: the configuration changed without the change bit; it governs from here all the same |
+| Announced non-change | `SRCC = 1` but the same bytes or the same configuration | a finding: the change bit is set with nothing changed |
+| Not comparable | malformed attributes, or differences only in attributes the registry does not define | the textual differences; no SRCC finding either way |
 
-"Same bytes" means a byte-identical TMATS body; when bytes differ, the
-attribute-by-attribute comparison (L1-WRT-005, UC-11) says what changed and
-whether anything a decoder depends on did — channels, formats,
-measurements, conversions. The kinds and findings are register entry
-INT-029 (proposed). The session rules already required — ASCII and XML not
+"The same configuration" means the same attributes regardless of order and
+case — Chapter 9 says "Attributes may appear in any order" and "TMATS is not
+case sensitive" (§9.4.2) — so reordering is never mistaken for a change
+(team spec alignment review, 2026-09-27). The attribute-by-attribute
+comparison (L1-WRT-005, UC-11) says what changed and whether anything a
+decoder depends on did — channels, formats, measurements, conversions. The
+kinds and findings are register entry INT-029 (proposed). The session rules already required — ASCII and XML not
 mixed, the event packet before a change, setup records on channel `0x0000`
 from 106-17 — stay as L1-CH10-005 states them.
 
@@ -878,10 +881,15 @@ proposed).
 
 ### 6.3 A setup record that cannot be assembled
 
-A sequence gap between fragments, a missing fragment, a fragment with a
-different CSDW, a header checksum that fails before a length can be
-trusted, or a file that ends mid-record: the assembler reports an
-incomplete record and does not build a description from it (ADR-0025).
+The standard has no end-of-record marker, so each joined run is classified
+with its evidence (ADR-0031, INT-034): **complete** when its text ends at an
+attribute boundary and another packet or the end of input follows;
+**incomplete** when its text is cut inside an attribute, a fragment cannot
+be trusted (a header checksum that fails before a length can be trusted), or
+a sequence gap splits an attribute; **ambiguous** when a gap or a CSDW
+change falls at an attribute boundary, or a gap-free run repeats a
+single-entry attribute — two records, or one broken one. An incomplete or
+ambiguous record builds no description by default (ADR-0025).
 Because a new record means the configuration may have changed, the
 previous description is **not** carried forward: packets after an
 incomplete record are ungoverned until the next complete record (6.2;

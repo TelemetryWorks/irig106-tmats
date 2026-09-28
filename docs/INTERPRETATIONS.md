@@ -257,9 +257,9 @@ listed here.
 **Sources**:
 - Chapter 11 §11.2.7.2: "A single setup record may span multiple consecutive packets. When spanning multiple packets, the sequence counter shall increment in the order of segmentation of the setup record, n+1". No end-of-record marker is defined.
 
-**Behaviour**: A record is a run of consecutive data type `0x01` packets on one channel whose sequence numbers increase by one modulo 256 and whose CSDWs agree on FRMT and RCCVER; it ends at an intervening packet, a sequence gap, a CSDW change, or the end of input. Anything ambiguous is reported.
+**Behaviour**: Fragments are joined while they are consecutive data type `0x01` packets on one channel whose sequence numbers increase by one modulo 256 and whose CSDWs agree on FRMT and RCCVER. Whether the joined run is a complete record is decided by INT-034 (ADR-0031): an intervening packet, a sequence gap, a CSDW change, or the end of input stops the joining, but none of them alone proves the record complete. *(Revised 2026-09-27: the earlier text also made these conditions the record's end, which contradicted INT-031; team spec alignment review.)*
 
-**Reason**: The standard says how fragments follow each other but not how a record ends (ADR-0025).
+**Reason**: The standard says how fragments follow each other but not how a record ends (ADR-0025, ADR-0031).
 
 **Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T3
 
@@ -269,18 +269,42 @@ listed here.
 
 ### INT-012
 
-**Title**: RCCVER `0x0E` means "106-22 or later"
+**Title**: RCCVER codes are read as their table states; later editions' reuse is a note
 
 **Sources**:
-- Chapter 11, setup-record CSDW (106-24R1): "0x0E = RCC 106-22", "0x0F through 0xFF = Reserved"; there is no code for 106-20, 106-23, or 106-24.
+- Chapter 11, setup-record CSDW (106-24R1, Figure 11-34): "0x0E = RCC 106-22", "0x0F through 0xFF = Reserved"; the same list in 106-22, 106-23, and 106-24.
+- 106-19 and 106-20 Chapter 11: "0x0D = RCC 106-19", "0x0E through 0xFF = Reserved".
 
-**Behaviour**: `0x0E` is reported as "106-22 or later", reserved values as an unknown edition, and `G\106` stays the primary edition source (ADR-0016).
+**Behaviour**: `0x0E` is reported as "RCC 106-22" with the labelled note "unchanged through 106-24R1: 106-23, 106-24, and 106-24R1 assign no newer code"; `0x0D` as "RCC 106-19" with the note "106-20 assigns no newer code"; reserved values as an unknown edition. `G\106` stays the primary edition source (ADR-0016). *(Revised 2026-09-27, ADR-0032: previously "106-22 or later".)*
 
-**Reason**: Later editions did not assign new codes, so `0x0E` cannot identify one edition. RCCVER declares the recording-format version, not the TMATS edition; see INT-016 and INT-017 (ADR-0028).
+**Reason**: The table names one edition per code. That later editions kept the code is an observation about the archived editions, not a promise about future ones (team spec alignment review). RCCVER declares the recording-format version, not the TMATS edition; see INT-016 and INT-017 (ADR-0028).
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T3
+**Design**: accepted (owner, 2026-09-26; wording revised by the owner's decision of 2026-09-27) · **Review**: pending · **Origin**: T3; team spec alignment review
 
-**Test**: `rccver_0x0e_reads_as_106_22_or_later`
+**Test**: `rccver_codes_read_as_their_table_states`
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+### INT-034
+
+**Title**: A joined run is complete, incomplete, or ambiguous
+
+**Sources**:
+- Chapter 11 §11.2.7.2: "A single setup record may span multiple consecutive packets. When spanning multiple packets, the sequence counter shall increment in the order of segmentation of the setup record, n+1". No end-of-record marker is defined.
+- §11.2.1.1 f: "Each channel in a session shall have its own sequence counter providing a unique sequence number for that channel" — two records back to back on one channel continue one count.
+- Chapter 9 §9.4.2: each attribute is a code name and data item ended by a semicolon; "Semicolons are not allowed in any data item (including comment items)."
+
+**Behaviour**: For each run joined under INT-011:
+- **complete** — no gap or CSDW change inside it, the body's last non-blank byte is `;`, and the run is followed by another packet (basis "followed by another packet") or by the end of input (basis "end of input", labelled);
+- **incomplete** — the body is cut inside an attribute (its last non-blank byte is not `;`), a fragment is unreadable or untrusted, or a sequence gap splits text that continues an attribute across it;
+- **ambiguous** — a sequence gap or a CSDW change where the text before it ends at `;`, or a gap-free run whose text repeats a single-entry attribute (for example `G\106` or `G\PN`); both readings and the split point are reported.
+Complete records govern (INT-028); incomplete and ambiguous records do not by default (INT-031). An XML body (FRMT 1) is of unknown completeness.
+
+**Reason**: The packets alone cannot tell where a record ends; the text's final byte and repeated single-entry attributes are the only evidence the standard gives, and neither is proof in every case.
+
+**Design**: accepted in principle (three outcomes, owner, 2026-09-27, ADR-0031); these rules proposed · **Review**: pending · **Origin**: team spec alignment review, 2026-09-27
+
+**Test**: `setup_record_completeness_outcomes`
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -370,9 +394,9 @@ listed here.
 - 106-24R1 Chapter 11 RCCVER codes: "0x07 = RCC 106-07" … "0x0D = RCC 106-19", "0x0E = RCC 106-22".
 - Owner decision (2026-09-26): when `G\106` is missing or unrecognised and there is no override, use a labelled fallback (ADR-0028).
 
-**Behaviour**: Codes `0x07` to `0x0D` name one edition each and that edition's rules apply. `0x0E` covers 106-22 and every later edition, so the newest covered edition within that range applies (the baseline, 106-24R1). With no usable RCCVER, the baseline applies. The report says "fallback" and gives the reason.
+**Behaviour**: Codes `0x07` to `0x0D` apply the rules of the edition each names (for `0x0D`, 106-19; whether 106-20 should apply instead is open for the owner). For `0x0E` ("RCC 106-22") the rules of 106-24R1 apply, as a labelled **policy**: "the newest archived edition that still uses this code" (INT-012). With no usable RCCVER, the baseline applies. The report says "fallback" and gives the reason. *(Revised 2026-09-27, ADR-0032: the policy is now named as one; the effect for `0x0E` is unchanged.)*
 
-**Reason**: Using the newest edition of the range avoids reporting attributes introduced after 106-22 as unknown; the label keeps the choice visible.
+**Reason**: Applying 106-24R1 avoids reporting attributes introduced after 106-22 as unknown in recordings that could only declare `0x0E`; the label keeps the choice visible as policy, not as something RCCVER says.
 
 **Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T6
 
@@ -591,14 +615,20 @@ listed here.
 
 **Sources**:
 - Chapter 11 §11.2.7.2: SRCC "indicates if the recorder configuration contained in the previous setup record packet(s) of the current recording session (defined as .RECORD to .STOP) has changed"; "The next setup record packet(s) committed to the stream, if not changed from this new setup record, shall clear the SRCC bit to 0."
+- Chapter 9 §9.4.2: "For alphanumeric data items, including keywords, either upper or lower case is allowed; TMATS is not case sensitive"; "Leading, trailing, and embedded blanks are assumed to be intentional"; "Attributes may appear in any order."
 
-**Behaviour**: A record is a repeat when SRCC is 0 and its TMATS body is byte-identical to the governing record's; otherwise it is a change. Findings: SRCC 1 on the first record (nothing to have changed); SRCC 0 with different bytes (an unannounced change, which still governs from there); SRCC 1 with identical bytes (a change bit with nothing changed). A change is reported with the attribute-by-attribute differences (L1-WRT-005).
+**Behaviour**: Each complete record is compared with the governing record:
+- **identical** — the same bytes (used to share one description);
+- **same configuration** — different bytes, but the same attributes: code names compared regardless of order ("Attributes may appear in any order") and, with values, regardless of case ("TMATS is not case sensitive"), as L1-READ-004 and ADR-0026 require; blanks are kept ("assumed to be intentional");
+- **changed configuration** — attributes added, removed, or with different values, reported attribute by attribute (L1-WRT-005);
+- **indeterminate** — either record has malformed attributes, or the only differences are in attributes the registry does not define, so no defensible judgement is possible; the textual differences are reported.
+Findings: SRCC 1 on the first record; SRCC 0 with a changed configuration (an unannounced change, which still governs from there); SRCC 1 with an identical record or the same configuration (a change bit with nothing changed); SRCC 0 with the same configuration but different bytes is information, not a finding. An indeterminate comparison raises no SRCC finding either way. Whether a difference only in descriptive attributes (such as `G\COM` or `G\OD`) is a configuration change is for the analysis. *(Revised 2026-09-27 from byte identity alone, which would have called reordered attributes a change; team spec alignment review.)*
 
-**Reason**: The standard defines the bit, not how "changed" is judged; byte identity is exact, and the attribute comparison explains any difference.
+**Reason**: The standard ties SRCC to "the recorder configuration", and Chapter 9 lets the same configuration be written in any order and case; byte identity alone confuses rewriting with changing.
 
-**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: pending · **Origin**: F4 section 5
+**Design**: proposed (2026-09-26, revised 2026-09-27, awaiting the owner) · **Review**: pending · **Origin**: F4 section 5; team spec alignment review
 
-**Test**: `setup_record_kinds_and_srcc_findings`
+**Test**: `setup_record_kinds_and_srcc_findings`, `srcc_compares_configuration_not_bytes`
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -628,7 +658,7 @@ listed here.
 - Chapter 11 §11.2.7.2: "A single setup record may span multiple consecutive packets. When spanning multiple packets, the sequence counter shall increment in the order of segmentation of the setup record, n+1"; "the new setup record packet will be committed to the stream prior to any new or changed data packets".
 - The standard does not say what applies after a record that cannot be read.
 
-**Behaviour**: An incomplete setup record (sequence gap, missing or untrusted fragment, a CSDW change within it, or the end of the file) is reported and builds no description; the previous description is not carried forward, and packets after it are ungoverned until the next complete record. The fragment bytes are kept.
+**Behaviour**: A setup record INT-034 finds incomplete or ambiguous is reported and builds no description by default (a caller may accept an ambiguous split, labelled); the previous description is not carried forward, and packets after it are ungoverned until the next complete record. The fragment bytes are kept.
 
 **Reason**: A new setup record means the configuration may have changed; applying the old description to data the new one describes would decode it wrongly without a word.
 

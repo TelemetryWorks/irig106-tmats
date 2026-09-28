@@ -37,12 +37,14 @@ status line points to the later record.
 | [0022](0022-registry-source-text-and-reviewed-interpretations.md) | The registry holds source text and reviewed, executable interpretations (two-person rule) | accepted; extended by 0026 and 0027 |
 | [0023](0023-validation-passes-and-effective-values.md) | Validate in four passes over effective values | accepted; refined by 0026 |
 | [0024](0024-derived-parameters-parsed-not-evaluated.md) | Derived parameters parsed, validated, and described here; evaluated in `irig106-decode` | accepted |
-| [0025](0025-setup-record-assembly-contract.md) | Setup records assembled from packet fragments in the library; packets sliced by the CLI's reader | accepted |
+| [0025](0025-setup-record-assembly-contract.md) | Setup records assembled from packet fragments in the library; packets sliced by the CLI's reader | accepted; record ending superseded by 0031; edition-code wording refined by 0032 |
 | [0026](0026-counter-scopes-link-namespaces-and-comparison.md) | Counters declare their scope, links their namespace, selector, and cardinality; keys unique per attribute; case-insensitive comparison | accepted; extended by 0027 |
 | [0027](0027-interpretation-register-and-three-source-relationships.md) | An interpretation register; relationships from Links to, Links from, and §9.5.1 b; the H group | accepted |
-| [0028](0028-edition-declarations-and-validation-basis.md) | TMATS edition and recording-format version kept apart; validation basis labelled; fallback and compatibility checks named | accepted |
+| [0028](0028-edition-declarations-and-validation-basis.md) | TMATS edition and recording-format version kept apart; validation basis labelled; fallback and compatibility checks named | accepted; RCCVER wording refined by 0032 |
 | [0029](0029-transactional-edits-and-checksum-stamping.md) | Edits are transactions over defined targets; a stamp hashes the final bytes (F1–F3 open) | accepted; F1–F3 open |
 | [0030](0030-core-independent-of-tmats.md) | `irig106-core` does not depend on `irig106-tmats`; plain data through `irig106-types`; the packet check lives in `irig106-tmats` | accepted |
+| [0031](0031-setup-record-completeness.md) | A setup record is complete, incomplete, or ambiguous — each with its basis | accepted |
+| [0032](0032-rccver-read-literally.md) | RCCVER is read literally; later editions' reuse of a code is a labelled note; the fallback is labelled policy | accepted |
 
 New records take the next number and use the same front matter
 (`status`, `date`, `decision-makers`).

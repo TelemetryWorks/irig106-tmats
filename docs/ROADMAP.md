@@ -867,6 +867,25 @@ revised, L1-WRT-007 and L1-SUM-004, `docs/USE-CASES.md` (UC-10, UC-13,
 UC-15), INT-018 to INT-020 (decided) and INT-021 to INT-023 (open),
 `docs/TEST-DATA.md` (errata E3, E4), and `docs/CLI.md`.*
 
+**T8. The 106-24R1 spec alignment review (2026-09-27).** The team reviewed
+local HEAD `da59b01` against 106-24R1 Chapters 9 and 11, ran the test suite,
+and reproduced prototype defects; their text and reproductions are in
+`docs/research/2026-09-27-spec-alignment-review.md`. Checked against the
+archive and the design documents; the owner accepted all six
+recommendations on 2026-09-27 ("Yes to all three, go ahead").
+
+| Point | Verdict | Applied |
+|-------|---------|---------|
+| Five prototype defects (PCM D/F meanings; `G\DST` `STO`; CSDW bit 9; RCCVER over `G\106`; lenient recovery) | all confirmed against 106-24R1; all but the RCCVER override were already in the 2026-09-25 prototype review, and the design (ADR-0028) already separates the declarations | regression tests P1–P5 in `docs/TEST-DATA.md` |
+| SRCC judged by byte identity (INT-029) | correct: reordered or re-cased attributes would be called an unannounced change, against Chapter 9 §9.4.2 and this project's own L1-READ-004 | INT-029 revised: identical, same configuration, changed configuration, not comparable; `srcc_compares_configuration_not_bytes` |
+| "106-22 or later" (INT-012, INT-017) | mostly correct: the table says "0x0E = RCC 106-22"; that 106-23 to 106-24R1 keep the code is an observation, not a guarantee. Also found: 106-20 keeps `0x0D` ("RCC 106-19") the same way | ADR-0032; INT-012, INT-017, L1-CH10-006, `docs/ARCHITECTURE.md`, `docs/TEST-DATA.md`; the same wording in `irig106-time` |
+| Record completeness (INT-011 against INT-031) | correct: the same conditions meant "finished" in one and "incomplete" in the other | ADR-0031 and INT-034 (complete, incomplete, ambiguous); INT-011 and INT-031 aligned; `setup_record_completeness_outcomes` |
+| The README does not say the code is a prototype | correct | a notice at the top of `README.md` (and of `irig106-time`'s) |
+| Prove a small registry slice first, with independently sourced fixtures | agreed; matches ADR-0016 and the tests-first order | first slice: the G group and the P group's D and F attributes, the families the prototype got wrong |
+
+Open for the owner: whether RCCVER `0x0D` should fall back to 106-20's rules
+rather than 106-19's (ADR-0032).
+
 ### Suspect findings to confirm against real data
 
 Findings accepted into the design but held in doubt by the owner until they
@@ -1093,7 +1112,7 @@ this list once that repository has it.
 
 | # | Repository | Item | Source here |
 |---|------------|------|-------------|
-| X1 | `irig106-time` | Edition code `0x0F` is mapped to 106-23 (`src/version.rs`), but 106-24R1 Chapter 11 Figure 11-34 defines RCCVER `0x07`–`0x0E` (106-07 to 106-22) and reserves `0x0F`–`0xFF`; `0x0E` means "106-22 or later", and 106-20 has no code. The version table in its `docs/ROADMAP.md` also omits 106-20 and 106-24. | ROADMAP T3; ADR-0025 |
+| X1 | `irig106-time` | Edition code `0x0F` is mapped to 106-23 (`src/version.rs`), but 106-24R1 Chapter 11 Figure 11-34 defines RCCVER `0x07`–`0x0E` (106-07 to 106-22) and reserves `0x0F`–`0xFF`; `0x0E` reads "RCC 106-22" (unchanged through 106-24R1, ADR-0032), and 106-20 has no code of its own. The version table in its `docs/ROADMAP.md` also omits 106-20 and 106-24. | ROADMAP T3; ADR-0025 |
 | X2 | `irig106-types` | Define `Irig106Version` (`#[non_exhaustive]`, with an unknown value, RCCVER mapping per Figure 11-34), the Chapter 10/11 data-type codes and data-type-version field (Table 11-4, §11.2.1.1 e), and the Computer-Generated Format 1 CSDW (bits 31–10 reserved, bit 9 FRMT, bit 8 SRCC, bits 7–0 RCCVER); then remove the duplicate enum from `irig106-time` (fixes X1). Keep the packet header's data-type-version codes (§11.2.1.1 e) and the setup record's RCCVER codes (Figure 11-34) as two separate mappings: the same number names different editions in each (`0x09` is 106-19 in one and 106-11 in the other). Also define the plain data that crosses between `irig106-core` and `irig106-tmats` (F5 = A, ADR-0030): the setup-record fragment with its provenance, and the packet summary. | ADR-0009; ADR-0025 |
 | X3 | `irig106-core` | When its packet reader exists, it takes over slicing from the `tmats` CLI (header, optional secondary header, Data Length, filler and checksums, header-checksum verification) and supplies setup-record fragments with provenance to this library's assembler. It depends on `irig106-types`, not on `irig106-tmats`, and produces fragments and packet summaries as `irig106-types` data (F5 = A, ADR-0030). | ADR-0019; ADR-0025 |
 | X4 | `irig106-ch10-reader` | Report a mid-recording setup-record change by default, in one line naming what changed; assemble setup records that span several packets before reporting TMATS presence or size; replace the Windows guide's external extraction advice with `tmats extract`. | USE-CASES §5 and §7 (question 3); ADR-0025 |

@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: accepted; record ending superseded by 0031; edition-code wording refined by 0032
 date: 2026-09-26
 decision-makers: Joey
 ---

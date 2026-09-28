@@ -198,9 +198,9 @@ requirements are added. The requirement entries below and the generated
 
 ### L1-CH10-004
 
-**Statement**: The library SHALL assemble setup-record fragments, each supplied with its provenance (file offset, channel ID, sequence number, relative time counter, CSDW fields, and data-type version), into complete setup records, each with the concatenated TMATS body, one CSDW summary, and a map from every body offset to the packet and offset it came from; it SHALL join only consecutive data type `0x01` fragments on one channel whose sequence numbers increase by one modulo 256 and whose CSDWs agree on format and version, and SHALL report any ambiguity rather than guess.
+**Statement**: The library SHALL assemble setup-record fragments, each supplied with its provenance (file offset, channel ID, sequence number, relative time counter, CSDW fields, and data-type version), into complete setup records, each with the concatenated TMATS body, one CSDW summary, and a map from every body offset to the packet and offset it came from; it SHALL join only consecutive data type `0x01` fragments on one channel whose sequence numbers increase by one modulo 256 and whose CSDWs agree on format and version; SHALL classify each joined run as complete, incomplete, or ambiguous, with the evidence that decided it; and SHALL report any ambiguity rather than guess.
 
-**Rationale**: A setup record may span consecutive packets, sequence numbers "increment in the order of segmentation" (Chapter 11 §11.2.7.2), and the standard defines no end-of-record marker, so the boundary rule is a reviewed interpretation (team review T3; ADR-0025). The assembler takes bytes, not files (ADR-0010). Verified by `multi_packet_setup_record_is_assembled` and its companion cases. Delivered in 0.1.
+**Rationale**: A setup record may span consecutive packets, sequence numbers "increment in the order of segmentation" (Chapter 11 §11.2.7.2), and the standard defines no end-of-record marker, so the boundary rule is a reviewed interpretation (team review T3; ADR-0025; completeness by ADR-0031 and INT-034). The assembler takes bytes, not files (ADR-0010). Verified by `multi_packet_setup_record_is_assembled` and `setup_record_completeness_outcomes`. Delivered in 0.1.
 
 **Verification Method**: Test (T)
 
@@ -214,9 +214,9 @@ requirements are added. The requirement entries below and the generated
 
 ### L1-CH10-006
 
-**Statement**: The library SHALL interpret the setup-record CSDW version field (RCCVER) according to Chapter 11 Figure 11-34, reading `0x0E` as "106-22 or later" and reserved values as an unknown edition.
+**Statement**: The library SHALL interpret the setup-record CSDW version field (RCCVER) according to Chapter 11 Figure 11-34, reporting each code as its table states — `0x0E` as "RCC 106-22" — with a labelled note where later archived editions assign no newer code, and reserved values as an unknown edition.
 
-**Rationale**: 106-24R1 defines `0x07` (106-07) to `0x0E` (106-22) and reserves `0x0F`–`0xFF`, so the field cannot distinguish 106-22, 106-23, and 106-24, and 106-20 has no code; `G\106` stays the primary edition source (ADR-0016; team review T3). Delivered in 0.1.
+**Rationale**: 106-24R1 defines `0x07` (106-07) to `0x0E` (106-22) and reserves `0x0F`–`0xFF`, so the field cannot distinguish 106-22, 106-23, and 106-24, and 106-20 has no code of its own; `G\106` stays the primary edition source (ADR-0016; team review T3). The note is an observation about the archived editions, not a promise about later ones (ADR-0032; team spec alignment review, 2026-09-27). Delivered in 0.1.
 
 **Verification Method**: Test (T)
 
@@ -232,7 +232,7 @@ requirements are added. The requirement entries below and the generated
 
 ### L1-CH10-008
 
-**Statement**: From the complete setup records of a recording, supplied in file order with their provenance, the library SHALL build a configuration timeline giving, for each record, its provenance, its CSDW summary, whether it is the first record, a repeat, or a change, any inconsistency between its configuration-change bit and its content, and for a change the differences from the record it replaces; identical records SHALL share one description; and the library SHALL answer which record governs a given file offset or relative time.
+**Statement**: From the complete setup records of a recording, supplied in file order with their provenance, the library SHALL build a configuration timeline giving, for each record, its provenance, its CSDW summary, whether it is the first record, identical to the governing record, the same configuration written differently, a changed configuration, or not comparable, any inconsistency between its configuration-change bit and its configuration, and for a change the differences from the record it replaces; identical records SHALL share one description; and the library SHALL answer which record governs a given file offset or relative time.
 
 **Rationale**: A recording may carry several setup records; "the new setup record packet will be committed to the stream prior to any new or changed data packets", and an unchanged record clears SRCC (Chapter 11 §11.2.7.2). Every consumer that reads packets needs the governing description (`docs/TMATS-IN-CHAPTER-10.md` section 5; INT-028, INT-029). Delivered in 0.2.
 

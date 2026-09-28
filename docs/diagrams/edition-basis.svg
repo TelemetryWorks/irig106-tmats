@@ -43,7 +43,7 @@
   <rect class="box" x="20" y="280" width="420" height="66" rx="6"/>
   <text class="c" x="34" y="300">setup record CSDW: RCCVER 0x0E</text>
   <text class="b" x="34" y="318">Recording-format version declared</text>
-  <text class="l" x="34" y="335">"recorded data complies with": 106-22 or later (none before 106-07)</text>
+  <text class="l" x="34" y="335">"recorded data complies with": RCC 106-22, unchanged to 106-24R1 (none before 106-07)</text>
 
   <!-- decision chain -->
   <rect class="box" x="520" y="80" width="230" height="44" rx="6"/>
@@ -90,5 +90,5 @@
   <!-- example report -->
   <line x1="20" y1="372" x2="980" y2="372" stroke="#d0d7de"/>
   <text class="h" x="20" y="398">Report for this file</text>
-  <text class="c" x="20" y="420">rules: 106-24R1 · basis: declared (G\106 = 24) · RCCVER 0x0E: 106-22 or later · no conflict</text>
+  <text class="c" x="20" y="420">rules: 106-24R1 · basis: declared (G\106 = 24) · RCCVER 0x0E: RCC 106-22 · no conflict</text>
 </svg>

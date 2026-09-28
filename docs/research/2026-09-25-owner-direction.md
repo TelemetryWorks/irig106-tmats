@@ -393,3 +393,30 @@ low priority. The order of the contract documents is `irig106-time`, then
 `irig106-decode`, `irig106-core`, and `irig106-write`. The Chapter 23 and
 XML TMATS notes are in the map and in `docs/ROADMAP.md` ("Deferred
 features", XML).
+
+## 32. The team's spec alignment review, assessed before any change (2026-09-27)
+
+> Tell me what you think about my teams comments. They may not be correct or it might need major changes or somewhere between. Dont make any changes until you can tell me what you would do with this information:
+
+(The team's review followed; it is kept as
+`docs/research/2026-09-27-spec-alignment-review.md`.)
+
+Answered in conversation: the five prototype defects are real and all but
+one were already recorded; the three design points are right (SRCC by byte
+identity; "106-22 or later"; the INT-011 / INT-031 contradiction); six
+changes were proposed, with three questions.
+
+## 33. All six applied (2026-09-27)
+
+> Yes to all three, go ahead
+
+The three answers: apply the six changes; read RCCVER `0x0E` literally as
+"RCC 106-22" with "unchanged through 106-24R1" as a note; commit the team's
+files as their review. Done: the team's review committed as their own
+commit; ADR-0031 (setup record completeness, with INT-034) and ADR-0032
+(RCCVER read literally); INT-011, INT-012, INT-017, INT-029, and INT-031
+revised; `docs/ARCHITECTURE.md`, `docs/L1-REQ.md`, `docs/TMATS-IN-CHAPTER-10.md`,
+and `docs/TEST-DATA.md` (new acceptance tests and regression cases P1–P5)
+updated; ROADMAP item T8; a prototype notice at the top of both READMEs; the
+RCCVER wording in `irig106-time`.
+

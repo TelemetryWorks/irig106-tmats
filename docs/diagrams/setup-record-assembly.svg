@@ -89,8 +89,8 @@
 
   <rect class="box" x="20" y="470" width="620" height="86" rx="6"/>
   <text class="b" x="36" y="492">Boundary rule (reviewed interpretation — the standard defines no end marker)</text>
-  <text x="36" y="514">A record ends at an intervening packet, a sequence gap, a CSDW change, or the end of input.</text>
-  <text x="36" y="534">Anything ambiguous is reported, never guessed; diagnostics point back to packet and offset.</text>
+  <text x="36" y="514">Join while consecutive; then complete, incomplete, or ambiguous by the text's last byte (ADR-0031).</text>
+  <text x="36" y="534">Uncertainty is reported, never guessed; diagnostics point back to packet and offset.</text>
 
   <text class="l" x="20" y="600">Acceptance test multi_packet_setup_record_is_assembled uses exactly this stream (docs/TEST-DATA.md).</text>
   <text class="l" x="20" y="618">Green: TMATS text that is assembled. Red: bytes never included. Blue brackets: what the standard's length fields cover.</text>

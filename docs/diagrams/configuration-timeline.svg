@@ -62,7 +62,7 @@
   <!-- key -->
   <text class="n" x="20" y="252">1</text><text class="l" x="36" y="252">Setup record A, spanning two packets: "the first packets in the recording" (Chapter 10 §10.5.1).</text>
   <text class="n" x="20" y="274">2</text><text class="l" x="36" y="274">Time: "the first dynamic data packet at the start of each session"; only setup-record packets may precede it (Chapter 11).</text>
-  <text class="n" x="20" y="296">3</text><text class="l" x="36" y="296">A setup record repeated with SRCC = 0: "if not changed from this new setup record, shall clear the SRCC bit to 0". Same bytes: it shares description A.</text>
+  <text class="n" x="20" y="296">3</text><text class="l" x="36" y="296">A setup record repeated with SRCC = 0: "if not changed from this new setup record, shall clear the SRCC bit to 0". The same configuration (in any order or case): it shares description A.</text>
   <text class="n" x="20" y="318">4</text><text class="l" x="36" y="318">"Prior to the new setup record being committed to the stream, a setup record configuration change event packet shall be inserted."</text>
   <text class="n" x="20" y="340">5</text><text class="l" x="36" y="340">Setup record B with SRCC = 1, committed "prior to any new or changed data packets" (Chapter 11 §11.2.7.2); description B governs from here.</text>
   <text class="l" x="20" y="376">A record governs from the packet after its last fragment (its fragments are consecutive packets). Packets before the first</text>

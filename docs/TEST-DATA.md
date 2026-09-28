@@ -136,7 +136,7 @@ Every header and secondary-header checksum is correct.
   fragment 1 + fragment 2 + fragment 3 — no header, secondary header, CSDW,
   filler, or checksum bytes.
 - One CSDW summary: ASCII, no configuration change, RCCVER `0x0E` read as
-  "106-22 or later".
+  "RCC 106-22" with the note "unchanged through 106-24R1" (ADR-0032).
 - The provenance map sends a body offset inside fragment 2 to packet 3 and
   the right offset within it, and an attribute split across fragments 1 and 2
   to both packets.
@@ -210,6 +210,51 @@ archived 106-24R1 Chapter 9 (the same fixture as
 - `G\106` missing is reported; the validation basis is a fallback to
   106-24R1, labelled; `G\SHA` is absent (not an error).
 - No channel has `R-x\CDT-n` TIMEIN.
+
+### `setup_record_completeness_outcomes`
+
+Verifies the three outcomes of ADR-0031 and INT-034, one case each, all on
+channel `0x0000` with an ASCII CSDW. Requirements: L1-CH10-004,
+L1-CH10-008.
+
+| Case | Input | Expected |
+|------|-------|----------|
+| a | a record in two fragments ending with `;`, then a time packet | complete, "followed by another packet" |
+| b | the same record as the last packets of the input | complete, "end of input" (labelled) |
+| c | the same record with its last fragment cut inside an attribute, at the end of input | incomplete; no description |
+| d | three fragments with the middle one missing (sequence jumps by 2) and an attribute split across the gap | incomplete; no description |
+| e | two complete records back to back, sequence continuous, same CSDW, the second starting again with `G\106` | ambiguous; the split point and both readings reported; neither governs by default |
+| f | a sequence gap where the text before it ends with `;` | ambiguous |
+
+### `srcc_compares_configuration_not_bytes`
+
+Verifies INT-029's comparison. Each case is a governing record followed by
+a second complete record. Requirements: L1-CH10-008, L1-READ-004.
+
+| Case | Second record | Expected |
+|------|---------------|----------|
+| a | the same attributes in another order, SRCC 0 | same configuration; information only |
+| b | the same attributes with keywords in lower case, SRCC 0 | same configuration; information only |
+| c | one value changed, SRCC 0 | changed configuration; unannounced-change finding |
+| d | identical bytes, SRCC 1 | identical; change-bit-with-nothing-changed finding |
+| e | reordered only, SRCC 1 | same configuration; change-bit-with-nothing-changed finding |
+| f | one malformed attribute added, SRCC 0 | not comparable; textual differences; no SRCC finding |
+
+## Known defects in the prototype, and the tests that guard the rebuild
+
+The team's spec alignment review (`docs/research/2026-09-27-spec-alignment-review.md`)
+reproduced five defects in the prototype (tag `prototype-0`) against
+106-24R1. Each is known from the 2026-09-25 prototype review and becomes a
+regression test for the rebuilt library, as D1–D7 do for the reference
+tools. They describe the prototype, not the design.
+
+| # | Prototype defect | Standard | Regression test |
+|---|------------------|----------|-----------------|
+| P1 | `P-d\D1` read as bit rate, `D2` as encoding, `F1`–`F3` misread; D1 and F2 dropped when serialized | Table 9-6: D1 PCM code, D2 bit rate, F1 common word length, F2 word transfer order, F3 parity | `pcm_d_and_f_attributes_keep_their_table_9_6_meanings` (L1-READ-001, L1-REG-001) |
+| P2 | `G\DST-1:STO` rejected as an invalid keyword | Table 9-2, `G\DST-n`: "STO Storage" | `g_dst_accepts_every_table_9_2_keyword` (L1-REG-001, L1-VAL-001) |
+| P3 | CSDW bit 9 treated as reserved; `[12, 2, 0, 0]` re-encoded as `[12, 0, 0, 0]` | Figure 11-34: "FRMT. Bit 9 is the setup record format"; bits 31–10 reserved | `setup_record_format_bit_survives_decode_and_encode` (L1-CH10-002, L1-CH10-003) |
+| P4 | RCCVER `0x0B` with `G\106:17` reported as source version 106-15 | ADR-0028: two declarations, neither derived from the other | `rccver_does_not_replace_g106` (L1-EDN-005) |
+| P5 | Lenient reading of `G\PN:TEST;G\106:17;BROKEN` returned an empty document with no diagnostics | L1-READ-001, L1-READ-003 (preservation) | `lenient_reading_keeps_attributes_before_a_malformed_tail` (L1-READ-001, L1-READ-003) |
 
 ## Errata in the standard's own examples
 
