@@ -74,3 +74,28 @@ repository today):
   chain").
 - Carry the non-functional requirements above into the ecosystem's
   requirements, repository by repository, when each is designed.
+
+## Where its useful parts went (2026-09-27)
+
+The owner decided to delete the repository and to keep only what makes the
+existing projects better ("Only copy the things that will make our existing
+projects better"). Each item went where it is used:
+
+| From `irig106-rust` | Now | Where |
+|---------------------|-----|-------|
+| `SECURITY.md` | the organisation's security policy, reporting through GitHub's private vulnerability reporting; its controls section rewritten to state what is in place and what is planned | `TelemetryWorks/.github` `SECURITY.md` (covers every repository without its own) |
+| `deny.toml` | updated to the current cargo-deny schema and run in CI; its first run found three advisories (see L1-REL-005) | `deny.toml` and CI job `deny` in `irig106-tmats` and `irig106-time` |
+| `semgrep-rust.yml` | its useful rules (no `unwrap`, `expect`, panics, `dbg!`, or printing in library code) as Clippy lints, which know types and already run in CI; its `unsafe` rules duplicate `#![forbid(unsafe_code)]` and its async rules do not apply | L1-ROB-002 and ADR-0020 here; `irig106-time` L1-API-012 and architecture section 9 |
+| `notes/SLSA1.md`, the SBOM steps of `scripts/make_release.sh` | a software bill of materials and a build-provenance attestation with each release | `docs/RELEASING.md` step 7 and L1-REL-006 here; `irig106-time` L1-REL-006 |
+| Draft L1: Windows, Linux, and macOS (REQ-L1-103) | requirement; `irig106-time`'s CI now tests on all three, as this repository's already did | L1-REL-004 in both repositories |
+| Draft L1: 80% coverage (REQ-L1-111) | requirement | L1-ROB-003 here; `irig106-time` L1-TST-006 |
+| Draft L1: 100 Mbps sustained (REQ-L1-102) | the figure the first performance measurement is compared with | L1-PERF-001 in both repositories |
+| Draft L1: C interface; UDP streaming; PCM decommutation | ideas for later | `irig106-docs` `src/coverage.md`, "Ideas for later" |
+| `.editorconfig` | adopted, with Markdown and YAML settings added | `.editorconfig` in `irig106-tmats` and `irig106-time` |
+
+Not taken, because nothing would improve: the placeholder code, tests,
+benchmark, and fuzz target; the empty conformance folders and documentation
+book; the Makefile; `audit.toml` (cargo-deny covers advisories); the
+commented-out CI file; the release script (its useful part is step 7 above);
+the Rust 1.81 pin; `CODEOWNERS`; the licence file. The copies above in this
+folder stay as the record.

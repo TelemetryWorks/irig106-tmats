@@ -181,6 +181,8 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
 | L1-ROB-001 | _(none)_ | _(none)_ | Draft |
+| L1-ROB-002 | _(none)_ | _(none)_ | Draft |
+| L1-ROB-003 | _(none)_ | _(none)_ | Draft |
 
 ### L1-PERF: Performance
 
@@ -199,6 +201,9 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-REL-001 | _(none)_ | `irig106-tmats-cli/tests/lockstep.rs::cli_and_library_versions_match`<br>`irig106-tmats-cli/tests/lockstep.rs::library_dependency_is_pinned_exactly`<br>`irig106-tmats-cli/tests/lockstep.rs::version_flag_reports_both_versions` | Implemented |
 | L1-REL-002 | _(none)_ | `.github/workflows/ci.yml`<br>`msrv`<br>`cargo check --workspace --all-features` | Implemented (I) |
 | L1-REL-003 | _(none)_ | _(none)_ | Draft |
+| L1-REL-004 | _(none)_ | `.github/workflows/ci.yml`<br>`test`<br>`ubuntu-latest`<br>`windows-latest`<br>`macos-latest` | Implemented (I) |
+| L1-REL-005 | _(none)_ | `.github/workflows/ci.yml`<br>`deny`<br>`EmbarkStudios/cargo-deny-action`<br>`deny.toml` | Implemented (I) |
+| L1-REL-006 | _(none)_ | _(none)_ | Draft |
 
 ---
 
@@ -221,16 +226,16 @@ This matrix is the single source of truth for live status; the requirement docum
 | SUM | 4 | 0 | 0 | 0 | 0 | 0 | 0 |
 | IO | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | CLI | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
-| ROB | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| ROB | 3 | 0 | 0 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
-| REL | 3 | 0 | 0 | 0 | 0 | 0 | 0 |
-| **Total** | **78** | **0** | **0** | **0** | **0** | **0** | **0** |
+| REL | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Total** | **83** | **0** | **0** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 78 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 83 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 1 of 78 (1.3%).
+**Tested by at least one test marker**: 1 of 83 (1.2%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 78 (2.6%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 4 of 83 (4.8%).
 
 ### Orphan check
 

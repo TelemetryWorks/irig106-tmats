@@ -73,6 +73,15 @@ Before 1.0, a breaking change bumps the minor version (0.1 → 0.2).
    binaries and their SHA-256 checksums to the GitHub release, and copies the
    changelog section into the release notes (decided 2026-09-25; configured
    before 0.1).
+7. The release workflow also attaches a **software bill of materials** for
+   each binary (CycloneDX, `cargo cyclonedx`) and creates a
+   **build-provenance attestation** for every attached file with
+   `actions/attest-build-provenance` (SLSA build level 1, signed through
+   GitHub's Sigstore instance; the workflow needs `id-token: write` and
+   `attestations: write`). A user verifies a download with
+   `gh attestation verify <file> --owner TelemetryWorks` (L1-REL-006;
+   recipe from the retired `irig106-rust`'s `notes/SLSA1.md`, kept in
+   `docs/research/2026-09-26-irig106-rust/`).
 
 ## Credentials
 
@@ -95,8 +104,10 @@ dependency resolution but does not delete anything.
 
 ## Open questions
 
-- Should `tmats` binaries be signed, beyond the published SHA-256
-  checksums?
+- ~~Should `tmats` binaries be signed, beyond the published SHA-256
+  checksums?~~ Answered by step 7: each file carries a signed
+  build-provenance attestation (2026-09-27). Signing the binaries themselves
+  (Authenticode on Windows, notarisation on macOS) stays open.
 - `irig106-cli` is the complete ecosystem tool and is released from its own
   repository on its own schedule; it depends on the `irig106-tmats` library
   like any consumer. If `irig106-tmats-cli` exposes its commands as a library

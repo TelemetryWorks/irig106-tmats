@@ -755,6 +755,26 @@ requirements are added. The requirement entries below and the generated
 
 **Verification Method**: Test (T)
 
+### L1-ROB-002
+
+**Statement**: The library's code outside tests SHALL NOT call `unwrap` or `expect`, invoke `panic!`, `todo!`, `unimplemented!`, `unreachable!`, or `dbg!`, or print, and the build SHALL fail if it does.
+
+**Rationale**: A panic on bad input is the failure L1-ROB-001 forbids, and the library performs no I/O (L1-IO-001). Clippy's lints `unwrap_used`, `expect_used`, `panic`, `todo`, `unimplemented`, `unreachable`, `dbg_macro`, `print_stdout`, `print_stderr` enforce this with the compiler's knowledge of types; they replace the text-pattern semgrep rules of the retired `irig106-rust` repository (its `semgrep-rust.yml`, its draft L1 specification, `CODE_ANALYSIS.md`, and `notes/SLSA1.md`; kept in `irig106-tmats` `docs/research/2026-09-26-irig106-rust/`) (ADR-0020). Applies from the first new library code.
+
+**Verification Method**: Inspection (I)
+
+**Planned evidence**: a `[lints.clippy]` table in the workspace `Cargo.toml` setting those lints to `deny`, allowed in `#[cfg(test)]` code and the CLI's `main.rs`, checked by the `clippy` job.
+
+### L1-ROB-003
+
+**Statement**: The project's tests SHALL cover at least 80% of the library's lines, measured in CI.
+
+**Rationale**: A floor keeps untested code visible; the figure is the draft ecosystem L1's ("minimum 80% code coverage", REQ-L1-111, the retired `irig106-rust` repository (its `semgrep-rust.yml`, its draft L1 specification, `CODE_ANALYSIS.md`, and `notes/SLSA1.md`; kept in `irig106-tmats` `docs/research/2026-09-26-irig106-rust/`)). Coverage does not show standards conformance (the trace matrix does); it shows code no test reaches. Applies from the first new library code.
+
+**Verification Method**: Inspection (I)
+
+**Planned evidence**: a CI job running `cargo llvm-cov` with `--fail-under-lines 80`.
+
 ---
 
 ## L1-PERF: Performance
@@ -763,7 +783,7 @@ requirements are added. The requirement entries below and the generated
 
 **Statement**: The project SHALL measure the time to read TMATS and to find every setup record in a recording with benchmarks run on synthesized and sample data, and SHALL compare the results with `idmptmat` on the same files.
 
-**Rationale**: The owner requires "maximum performance" and efficiency; a numeric budget is set after the first measurement rather than guessed (ADR-0021). Applies from 0.1.
+**Rationale**: The owner requires "maximum performance" and efficiency; a numeric budget is set after the first measurement rather than guessed (ADR-0021). The draft ecosystem L1 of the retired `irig106-rust` asked for "minimum 100 Mbps sustained" reading and writing (REQ-L1-102); the first measurement is compared with that figure. Applies from 0.1.
 
 **Verification Method**: Inspection (I)
 
@@ -796,6 +816,36 @@ requirements are added. The requirement entries below and the generated
 **Rationale**: `irig106-studio`'s browser build compiles its Rust core to WebAssembly (owner decision F6, 2026-09-26: "it should be necessary to support being consumed into a webassembly project by checking for this ability"). ADR-0015 keeps bindings in a separate crate; this requirement is about the plain library. It holds because the library performs no I/O (L1-IO-001). Delivered from 0.1; the CI job is added with the first new library code.
 
 **Verification Method**: Inspection (I)
+
+### L1-REL-004
+
+**Statement**: The library and `tmats` SHALL build and pass their tests on Windows, Linux, and macOS.
+
+**Rationale**: Flight-test users work on all three; `tmats` binaries are released for all three (`docs/RELEASING.md`). The draft ecosystem L1 asked the same (REQ-L1-103, the retired `irig106-rust` repository (its `semgrep-rust.yml`, its draft L1 specification, `CODE_ANALYSIS.md`, and `notes/SLSA1.md`; kept in `irig106-tmats` `docs/research/2026-09-26-irig106-rust/`)).
+
+**Verification Method**: Inspection (I)
+
+**Evidence**: `.github/workflows/ci.yml` job `test` (matrix `ubuntu-latest`, `windows-latest`, `macos-latest`)
+
+### L1-REL-005
+
+**Statement**: The project SHALL admit only dependencies that pass its dependency policy: no known vulnerability, no unmaintained or yanked crate, permissive licences only, and crates.io as the only source; each exception SHALL be listed with its reason.
+
+**Rationale**: A dependency is code the project ships; the policy is `deny.toml`, adapted from the retired `irig106-rust` repository (its `semgrep-rust.yml`, its draft L1 specification, `CODE_ANALYSIS.md`, and `notes/SLSA1.md`; kept in `irig106-tmats` `docs/research/2026-09-26-irig106-rust/`). Its first run found three advisories: one fixed by updating `crossbeam-epoch`, two in `quick-xml` listed as exceptions because only the prototype's `xml` feature uses it (ADR-0015).
+
+**Verification Method**: Inspection (I)
+
+**Evidence**: `.github/workflows/ci.yml` job `deny` (`EmbarkStudios/cargo-deny-action`, policy `deny.toml`)
+
+### L1-REL-006
+
+**Statement**: Each release SHALL publish, with its binaries, a software bill of materials and a build-provenance attestation that a user can verify.
+
+**Rationale**: Users of `tmats` binaries can check what went into them and that GitHub Actions built them from this repository (SLSA build level 1; the retired `irig106-rust` repository (its `semgrep-rust.yml`, its draft L1 specification, `CODE_ANALYSIS.md`, and `notes/SLSA1.md`; kept in `irig106-tmats` `docs/research/2026-09-26-irig106-rust/`)). Answers the open question in `docs/RELEASING.md` about signing. Applies from 0.1.
+
+**Verification Method**: Inspection (I)
+
+**Planned evidence**: the release workflow's `actions/attest-build-provenance` and SBOM steps (`docs/RELEASING.md`, step 7).
 
 ---
 

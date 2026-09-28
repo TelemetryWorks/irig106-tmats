@@ -27,7 +27,8 @@ the architecture.
   on public enums; an immutable `Send + Sync` document; fuzzing from the first
   commit; property tests (the scan never panics, a round trip is
   byte-identical, the index agrees with the item list); the D1–D7 regression
-  tests
+  tests; Clippy lints `unwrap_used`, `expect_used`, `panic`, `todo`, `unimplemented`, `unreachable`, `dbg_macro`, `print_stdout`, `print_stderr` denied in library code (the intent of
+  the retired `irig106-rust`'s semgrep rules, enforced by the compiler; L1-ROB-002)
 * Add them later, when the code stabilises
 
 ## Decision Outcome
