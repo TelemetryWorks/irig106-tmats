@@ -1,5 +1,7 @@
 # irig106-tmats
 
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/TelemetryWorks/irig106-tmats/badge)](https://scorecard.dev/viewer/?uri=github.com/TelemetryWorks/irig106-tmats)
+
 **TMATS parser, validator, and generator for the IRIG 106 ecosystem.**
 
 > **Status: prototype — do not use for compliance validation or to rewrite
