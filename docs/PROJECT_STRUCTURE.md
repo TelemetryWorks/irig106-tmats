@@ -12,6 +12,9 @@ lands and is not a specification.
 
 ```text
 irig106-tmats/
+├── .github/dependabot.yml   Weekly Actions and Cargo updates (root, CLI, fuzz)
+├── .github/workflows/scorecard.yml  Main/scheduled Scorecard analysis, SARIF and public results
+├── .github/workflows/zizmor.yml     PR workflow security audit (regular persona, failing mode)
 ├── .github/workflows/ci.yml  CI: tests (Linux, Windows, macOS), MSRV 1.85, clippy, fmt, rustdoc, publish dry run
 ├── AGENTS.md              Pointer for coding agents; the two things most likely to trip one up
 ├── CHANGELOG.md           One changelog for the library and the CLI (released in lockstep)
@@ -28,6 +31,7 @@ irig106-tmats/
 │                          spec-cited registry source
 ├── docs/
 │   ├── PROJECT_STRUCTURE.md   This file
+│   ├── evals/2026-11-15-supply-chain-rollout.md  Workflow pin evidence and rollout validation
 │   ├── ROADMAP.md             Forward-looking plan, decisions to record, releases, deferred features
 │   ├── USE-CASES.md           Actors, library boundary, use cases UC-01..UC-17 (design draft)
 │   ├── CLI.md                 `tmats` command design: commands, decided behaviour, open decisions (draft)
