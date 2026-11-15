@@ -44,7 +44,7 @@ smallvec = "1.13"
 # irig106-types = { version = "0.1", default-features = false }
 
 # Optional
-quick-xml = { version = "0.36", optional = true }
+quick-xml = { version = "0.41", optional = true }
 serde = { version = "1", features = ["derive"], optional = true }
 serde_json = { version = "1", optional = true }
 wasm-bindgen = { version = "0.2", optional = true }
