@@ -40,9 +40,9 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-READ-003 | L3-READ-004, L3-READ-005 | _(TBD)_ | Draft |
 | L2-READ-004 | L3-READ-006, L3-READ-007 | _(TBD)_ | Draft |
 | L2-READ-005 | L3-READ-008 | _(TBD)_ | Draft |
-| L2-READ-006 | L3-READ-009, L3-READ-010 | _(TBD)_ | Draft |
+| L2-READ-006 | L3-READ-009, L3-READ-010, L3-READ-014 | _(TBD)_ | Draft |
 | L2-READ-007 | L3-READ-011, L3-READ-012 | _(TBD)_ | Draft |
-| L2-READ-008 | L3-READ-013, L3-READ-014 | _(TBD)_ | Draft |
+| L2-READ-008 | L3-READ-013, L3-READ-017, L3-READ-018 | _(TBD)_ | Draft |
 | L2-READ-009 | L3-READ-015, L3-READ-016 | _(TBD)_ | Draft |
 
 ### L1-CH10: Chapter 10 setup records
@@ -261,7 +261,7 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | Category | L1 | L2 | L3 | L2 tested | L3 tested | L2 verified | L3 verified |
 |----------|----|----|----|-----------|-----------|-------------|-------------|
-| READ | 7 | 9 | 16 | 0 | 0 | 0 | 0 |
+| READ | 7 | 9 | 18 | 0 | 0 | 0 | 0 |
 | CH10 | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EDN | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REG | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -276,13 +276,13 @@ This matrix is the single source of truth for live status; the requirement docum
 | ROB | 3 | 2 | 3 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **16** | **25** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **16** | **27** | **0** | **0** | **0** | **0** |
 
 The countable requirement set is every L2 and L3 requirement plus the 75 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 116 (0.0%).
+**Tested by at least one test marker**: 0 of 118 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 116 (2.6%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 118 (2.5%).
 
 ### Orphan check
 

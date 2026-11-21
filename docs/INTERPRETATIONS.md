@@ -787,22 +787,36 @@ in ROADMAP.md, not implemented or a permission to split source.
 
 **Behaviour**: **Proposed.** Frame on original bytes; omit `00-1F` and `7F` only from interpreted code-name/value projections. Preserve every raw byte and source location. Treat CR/LF, including a lone CR, as omitted characters, never delimiters. Trim ordinary `20` spaces only around interpreted code names, retain internal name spaces for validity checking, and retain value spaces. Do not convert controls to spaces or discard high bytes. A value projected to zero bytes remains present, not absent.
 
+When omitted controls occur between printable bytes inside an interpreted
+code name (for example `CO\r\nMMENT`), emit a located information finding
+on the omitted bytes. Leading/trailing layout around a name stays silent,
+except that NUL anywhere in a code-name or value field emits one located
+information finding per affected field, identifying all its NUL locations.
+The NUL rule also applies at field edges and when the projected value is empty;
+it does not replace an independently applicable internal-name finding.
+
+TAB and other controls in text values (COMMENT, descriptions) disappear from
+the interpreted view: `a\tb` becomes `ab`, never `a b`. Human-display
+renderers must use retained raw text, with any display decoding/escaping
+explicitly labelled, rather than present the filtered projection as original.
+Expose raw spans so interpreted spelling is never confused with original bytes.
+
 Classify only spaces plus that nonprintable set as layout/padding for INT-035;
-apply its one-information-finding run rule and silent EOF rule, with no extra
-finding just for an omitted control. This may join printable parts across a
-control; expose raw spans so that interpreted spelling is never confused with
-original bytes. Known leading encoding markers follow INT-037 before this
-projection. Unknown-code and embedded-blank validity checks still follow.
+apply its one-information-finding run rule and silent EOF rule. These are
+regions, not fields: NUL padding there does not add a field finding. Other
+omitted controls in values add no character finding by themselves. Known
+leading encoding markers follow INT-037 before projection. Unknown-code and
+embedded-blank validity checks still follow.
 
 **Reason**: Chapter 9 requires nonprintable discard for meaning and intentional blanks, while product policy retains bytes. The precise set and separate raw/projected operations need a reviewable interpretation rather than locale/Unicode whitespace heuristics.
 
-**Design**: proposed (2026-11-21; owner sign-off required) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: pending · **Origin**: family 2 batch 3
+**Design**: proposed (2026-11-21; owner sign-off required) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: CONCERNS on [#15](https://github.com/TelemetryWorks/irig106-tmats/pull/15) head `0c3174a` (owner-relayed, 2026-11-21); amended draft recheck pending · **Origin**: family 2 batch 3; review amendments requested 2026-11-21
 
-**Test**: `control_projection_preserves_raw_spans`, `code_name_and_value_blanks_differ`, `character_classes_keep_int035_run_policy` (planned, not yet written)
+**Test**: `control_projection_preserves_raw_spans`, `nul_fields_have_one_information_finding_each`, `code_name_and_value_blanks_differ`, `character_classes_keep_int035_run_policy` (planned, not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
-**Draft analysis**: [baseline draft, alternatives and outstanding work](research/2026-11-21-character-interpretation-drafts.md)
+**Draft analysis**: [baseline draft and 2026-11-21 review amendments](research/2026-11-21-character-interpretation-drafts.md#review-amendments--2026-11-21)
 
 ### INT-037
 
@@ -810,23 +824,33 @@ projection. Unknown-code and embedded-blank validity checks still follow.
 
 **Sources**:
 - 106-24R1 Chapter 9 section 9.4.1, page 9-2, specifies 7-bit ASCII; it does not define Unicode or BOM handling.
-- Unicode BOM FAQ, BOM table, lists `EF BB BF`, `FE FF` and `FF FE`; this is evidence for byte signatures, not a Chapter 9 compatibility rule.
+- Unicode BOM FAQ, BOM table, lists UTF-8 `EF BB BF`, UTF-16BE/LE `FE FF` / `FF FE`, and UTF-32BE/LE `00 00 FE FF` / `FF FE 00 00`; this is evidence for byte signatures, not a Chapter 9 compatibility rule.
 - ADR-0002/0003 preserve raw bytes; L1-READ-003 requires non-ASCII findings. Proposed INT-036 defines the separate ASCII control projection.
 
-**Behaviour**: **Proposed.** At source offset zero, a recognized leading signature above gives a located unsupported-encoding-marker finding, retains all source bytes and blocks document semantic lookup. Do not silently strip the marker, guess the full encoding or transcode the body. Outside that leading marker, retain and diagnose `80-FF` bytes and withhold an affected field's usable explicit interpretation; unaffected raw material remains available. A midstream or partial signature is not treated as a leading BOM.
+**Behaviour**: **Proposed.** At text offset zero, recognize `EF BB BF`, `FE FF`, `FF FE` and `00 00 FE FF`; UTF-32LE `FF FE 00 00` is caught by its `FF FE` prefix. Emit a located unsupported-encoding-marker finding, retain all source bytes and block document semantic lookup. Offset zero means the start of the **assembled TMATS text**, after removal of every Format 1 packet's CSDW and other framing under ADR-0025, not packet/file offset zero. Recognize markers after assembly even when split across fragment packets, before omitting controls or padding. For a standalone input it is the first supplied text byte. Do not strip markers, guess the full encoding or transcode the body.
+
+Outside that leading marker, retain and diagnose `80-FF` bytes. An affected
+field has no usable interpreted value: **Invalid**, including a Latin-1
+`Temp °C` field containing byte `B0`. Raw bytes remain available. ADR-0003's
+explicitly labelled, on-request `as_latin1` and lossy (`as_str_lossy`) views
+remain available to callers; they do not turn Invalid into a valid semantic
+value. A midstream or partial signature is not a leading BOM. A marker after
+leading CR/LF or NUL padding is midstream: do not skip padding and retry the
+leading-marker check; ordinary character/field findings apply.
 
 Do not guess UTF-16 from alternating zero bytes. Without a BOM, some UTF-16
-bytes can resemble ASCII with controls that INT-036 omits; this policy does
-not claim complete encoding detection. A caller aware of another encoding
+bytes can resemble ASCII with controls that INT-036 omits; its per-field
+NUL information findings expose most such inputs without guessing an encoding.
+This policy does not claim complete encoding detection. A caller aware of another encoding
 must convert outside the parser with separate provenance. Never call that
 converted data the original TMATS bytes, and never infer an edition from a BOM.
 
 **Reason**: Silently accepting/removing markers or decoding Unicode introduces an undocumented input format and changes the basis for byte locations/checksums. A narrow, explicit detection policy exposes that uncertainty without inventing broad Unicode support.
 
-**Design**: proposed (2026-11-21; owner sign-off required) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: pending · **Origin**: family 2 batch 3
+**Design**: proposed (2026-11-21; owner sign-off required) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: CONCERNS on [#15](https://github.com/TelemetryWorks/irig106-tmats/pull/15) head `0c3174a` (owner-relayed, 2026-11-21); amended draft recheck pending · **Origin**: family 2 batch 3; review amendments requested 2026-11-21
 
-**Test**: `leading_encoding_marker_blocks_semantic_lookup`, `high_bytes_are_not_silently_decoded`, `unmarked_zero_patterns_do_not_select_encoding` (planned, not yet written)
+**Test**: `leading_encoding_marker_blocks_semantic_lookup`, `split_marker_is_recognised_after_assembly`, `marker_after_padding_is_midstream`, `high_bytes_are_not_silently_decoded`, `unmarked_zero_patterns_do_not_select_encoding` (planned, not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
-**Draft analysis**: [baseline draft, alternatives and outstanding work](research/2026-11-21-character-interpretation-drafts.md)
+**Draft analysis**: [baseline draft and 2026-11-21 review amendments](research/2026-11-21-character-interpretation-drafts.md#review-amendments--2026-11-21)

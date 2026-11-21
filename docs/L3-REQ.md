@@ -214,7 +214,7 @@ under INT-037 precedes semantic projection, so BOM-marked input is not converted
 merely discarding its zero bytes.
 
 **L3-READ-012** · Parent: L2-READ-007 · Verification: T
-*Raw field access and default emission SHALL remain byte-exact, and locations derived from projections SHALL refer to the original source, including skipped-byte gaps, rather than use shortened projection offsets as if they were source offsets.*
+*Raw field access and default emission SHALL remain byte-exact, human-display renderers SHALL use raw text with explicitly labelled display decoding/escaping rather than filtered semantic text, and locations derived from projections SHALL refer to the original source, including skipped-byte gaps, rather than use shortened projection offsets as if they were source offsets.*
 
 A projection may be non-contiguous in the source. Preserve its raw enclosing
 span and enough correspondence to locate contributing bytes; do not fabricate
@@ -224,19 +224,28 @@ a contiguous raw value from an interpreted string.
 *After the proposed nonprintable omission, code-name interpretation SHALL trim only leading/trailing `0x20` bytes, retain internal `0x20` bytes for code-name validation, and leave value `0x20` bytes in place; the L3-READ-008 comparator SHALL continue folding ASCII case without trimming its own input.*
 
 An empty interpreted name still receives a finding, not a fabricated key.
+TAB and other controls in COMMENT/description values are omitted, so `a\tb`
+becomes `ab`, never `a b`; raw display follows L3-READ-012.
 A value projected to zero bytes is present, not absent; whether that empty
 value satisfies a particular attribute definition is separate validation.
 
-**L3-READ-014** · Parent: L2-READ-008 · Verification: T
+**L3-READ-014** · Parent: L2-READ-006 · Verification: T
 *Layout/padding-only classification for INT-035 SHALL accept only `0x20`, `0x00..=0x1F` and `0x7F`; a maximal terminated run so classified SHALL use the approved one-information-finding rule, and an unterminated EOF suffix so classified SHALL remain silent and retained.*
 
 A colon, high byte or other printable byte prevents layout-only classification.
 This must not turn a genuinely unterminated attribute into silent padding.
-Ordinary ignored controls alone do not add a second character finding to the
-approved run information finding or silent EOF suffix (proposed INT-036).
+These regions are not fields, so NUL padding does not add a field finding to
+the approved run information finding or silent EOF suffix (proposed INT-036).
 
 **L3-READ-015** · Parent: L2-READ-009 · Verification: T
-*At source offset zero, the reader SHALL recognize leading `EF BB BF`, `FE FF` or `FF FE` byte signatures as unsupported encoding markers, retain the entire source and a located marker finding, and withhold document semantic lookup instead of stripping the prefix or transcoding the body.*
+*At assembled TMATS text offset zero, the reader SHALL recognize leading `EF BB BF`, `FE FF`, `FF FE` or `00 00 FE FF` byte signatures as unsupported encoding markers, retain the entire source and a located marker finding, and withhold document semantic lookup instead of stripping the prefix or transcoding the body.*
+
+UTF-32LE `FF FE 00 00` is caught by its `FF FE` prefix. Under ADR-0025,
+text begins after each Format 1 CSDW is removed and fragments are assembled;
+recognition must work across fragment boundaries, not separately per packet.
+For standalone text, zero is the first supplied byte. Inspect original
+assembled bytes before control/padding omission: a marker after CR/LF or NUL
+padding is midstream, not a leading marker.
 
 These byte patterns follow Unicode's BOM table, cited in INT-037; no claim
 about Chapter 9's own definition of BOM is made. Recognition is prefix-based,
@@ -244,8 +253,27 @@ not proof of a complete Unicode encoding, and never sets a recorder edition.
 No inference from alternating zeros is permitted for unmarked input.
 
 **L3-READ-016** · Parent: L2-READ-009 · Verification: T
-*Outside the recognized leading marker, bytes `0x80..=0xFF` SHALL remain raw with located non-ASCII findings, not be omitted or decoded as UTF-8/Latin-1 automatically; an affected field SHALL NOT be exposed as an explicit usable interpreted value while unaffected raw material and findings remain available.*
+*Outside the recognized leading marker, bytes `0x80..=0xFF` SHALL remain raw with located non-ASCII findings, not be omitted or decoded as UTF-8/Latin-1 automatically; an affected field SHALL be Invalid with no usable interpreted value while unaffected raw material and findings remain available.*
 
+A Latin-1 `Temp °C` field containing `B0` is Invalid by this rule.
+ADR-0003's explicitly labelled on-request `as_latin1` and lossy
+(`as_str_lossy`) display views remain available without semantic acceptance.
 This proposed INT-037 behavior does not prove that every unmarked Unicode
-stream can be detected. Explicit caller-side conversion is outside this byte
-parser and must not be represented as original recorded bytes.
+stream can be detected; NUL fields receive L3-READ-018 findings. Explicit
+caller-side conversion is outside this byte parser and must not be represented as original recorded bytes.
+
+
+**L3-READ-017** · Parent: L2-READ-008 · Verification: T
+*When omitted controls lie between printable bytes within an interpreted code name, the reader SHALL emit a located information finding identifying the omitted source bytes; leading/trailing name layout SHALL stay silent except for the NUL-field rule.*
+
+`CO\r\nMMENT` projects to COMMENT with a finding on the internal CR/LF.
+Retain original source correspondence. This proposed INT-036 finding does
+not itself invalidate a name or replace subsequent code-name validation.
+
+**L3-READ-018** · Parent: L2-READ-008 · Verification: T
+*Each code-name or value field containing one or more NUL bytes SHALL emit exactly one located information finding for that field, identifying all its NUL locations, including at field edges or in a value whose projection is empty.*
+
+The internal-name omission finding applies independently when its condition
+also holds. This proposed INT-036 rule exposes zero-interleaved inputs
+without guessing their encoding or asserting UTF-16; it is not a NUL-padding
+finding for the non-field regions governed by L3-READ-014.
