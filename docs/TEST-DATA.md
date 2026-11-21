@@ -28,8 +28,9 @@ L2/L3 foundation batch. None is evidence until implemented and run on the
 replacement. They are not new interpretations of IRIG 106 or a claim that
 the old prototype satisfies the replacement requirements.
 
-For the restructure, the oracle is coordinator-decided ADR-0034 and the
-lockstep rule. For source storage, it is accepted ADR-0002/0003 plus the
+For the restructure, the oracle is owner-decided ADR-0035 (overriding only
+ADR-0034 W1), unchanged W2/W3, and the lockstep rule. For source storage,
+it is accepted ADR-0002/0003 plus the
 independent original byte vector. Byte-only fixtures below test storage,
 not standards conformance: they deliberately need no invented attribute
 meaning, keyword, default or delimiter-recovery policy.
@@ -38,7 +39,7 @@ meaning, keyword, default or delimiter-recovery policy.
 
 | Planned check | Arrange and act | Required observation | Requirement |
 | --- | --- | --- | --- |
-| `workspace_retains_root_layout_and_lockstep` | Inspect parsed root and CLI manifests, targets, workspace version and library dependency | Library remains at root; CLI has library and binary targets; both inherit one real-release version; CLI path/exact version match | L3-REL-001 |
+| `virtual_workspace_retains_lockstep` | Inspect parsed root and CLI manifests, targets, workspace version and library dependency | No root package; members are crates/irig106-tmats and apps/irig106-tmats-cli; shared version and exact path dependency are inherited; CLI retains library and binary targets | L3-REL-001 |
 | `host_runner_returns_to_caller` | A subprocess driver supplies arguments and two capture writers to `run`, then emits a sentinel after it returns; exercise success and failure invocations | Sentinel reached in both cases, output is in the supplied writers, returned class matches the documented command outcome | L3-CLI-001 |
 | `thin_binary_matches_host_runner` | Run the same implemented invocation through the binary and host adapter with captured streams | Same reports, diagnostics and equivalent exit classification; inspect the thin main for duplicated command behavior | L3-CLI-002 |
 | `command_and_renderer_can_be_hosted` | Call an implemented command directly, then render its report into memory without calling the runner | Report available independently; rendering uses the supplied writer and no process exit | L3-CLI-003 |
@@ -102,9 +103,19 @@ are deliberately nonconforming recovery cases, not valid configurations.
 | --- | --- | --- | --- |
 | `first_colon_and_semicolon_keep_raw_ranges` | `COMMENT:a:b;COMMENT:c;` | Two raw regions; first value is `a:b`; component and delimiter spans select exact original bytes | L3-READ-004, L3-READ-005 |
 | `missing_colon_recovers_at_semicolon` | `BROKEN;COMMENT:ok;` | Retain first region with missing-colon finding; do not borrow the later colon; retain later COMMENT region | L3-READ-004, L3-READ-006, L3-READ-007 |
-| `unterminated_suffix_is_retained` | `COMMENT:ok;BROKEN` | Earlier material retained; suffix retained with missing-terminator finding; no fabricated delimiter | L3-READ-006, L3-READ-007 |
+| `unterminated_suffix_is_retained` | `COMMENT:ok;BROKEN` and `G\SHA:2-incomplete` | Earlier material retained; suffix retained with finding and no explicit lookup value, consistent with INT-019; no fabricated delimiter | L3-READ-006, L3-READ-007 |
 | `code_like_value_text_does_not_split` | `COMMENT:a COMMENT:b;` | One raw value containing the later colon/code-like text; no silent split or edit | L3-READ-005 |
 | `quoted_semicolon_does_not_escape_framing` | Nonconforming `COMMENT:"a;b";` | Actual semicolon still ends the first raw region; quotes do not invent escape semantics or swallow the later malformed region | L3-READ-004, L3-READ-005, L3-READ-006 |
+| `line_endings_are_not_terminators` | `COMMENT:a\r\nb;` and `COMMENT:a\rb;` | CR/LF never split the raw attribute; bytes remain in the raw span pending character interpretation | L3-READ-005 |
+| `later_colon_cannot_validate_missing_separator` | Nonconforming `G\COM Time 12:30;` | Framing uses its colon but code-name-validity batch must report the invalid code name; never claim recovery of the intended item | L3-READ-004, L3-READ-007 |
+| `empty_value_is_present` | `X:;` | Well-framed zero-length raw value, distinct from an absent item; unknown/invalid-code findings remain separate from framing | L3-READ-004 |
+| `empty_code_name_is_reported` | `:v;` | Retain the complete region and value bytes, with an empty-code-name finding; no fabricated key | L3-READ-004, L3-READ-007 |
+| `stray_value_semicolon_preserves_uncertainty` | Damaged intended value represented by `COMMENT:alpha;tail;` | Actual boundary splits candidates; later invalid/unknown-code/duplicate checks are the defence, not proof of intended meaning | L3-READ-004, L3-READ-007 |
+| `eof_padding_is_not_an_unterminated_attribute` | A terminated attribute followed only by NUL, 0x1A or space padding | Retain padding without a missing-terminator finding; exact character classification is a prerequisite | L3-READ-006 |
+| `code_name_line_endings_require_character_policy` | CR/LF before/inside a code name and a lone CR | No line-ending terminator; retain bytes; character-batch classification must precede semantic lookup | L3-READ-005, L3-READ-008 |
+| `encoding_markers_require_character_policy` | UTF-8 BOM and UTF-16 input | Retain original bytes, do not guess/transcode; finding/support behavior remains a character-batch prerequisite | L3-READ-007 |
+| `empty_and_layout_only_regions` | `;;` and `\r\n;` | Owner question: finding or silence remains open; both retain bytes and advance | L3-READ-006, L3-ROB-003 |
+| `code_name_blanks_do_not_change_raw_comparison` | `C-6\DCN :DMC;` (Appendix 9-E section E.9.c) | Code-name view ignores surrounding blanks per L1-READ-006, then compares; raw span and comparator input behavior stay unchanged | L3-READ-008 |
 | `ascii_comparison_changes_no_source` | Mixed ASCII letter case, spaces, punctuation and high bytes as comparator inputs | Only ASCII letters fold for comparison; lengths and all source bytes unchanged; no semantic-validity assertion | L3-READ-008 |
 | `framing_retains_findings_and_source` | Malformed and well-framed regions interleaved | Every raw byte retained; findings point inside source and do not erase retained material | L3-READ-007 |
 | `framing_cursor_terminates` | Empty source, runs of semicolons, missing-colon runs, unterminated suffix and generated arbitrary bytes | Cursor advances or finishes, never exceeds bounds or revisits a boundary; at most N+1 region steps | L3-ROB-003 |
@@ -112,9 +123,20 @@ are deliberately nonconforming recovery cases, not valid configurations.
 Expected byte ranges are computed from hand-written fixture positions, not
 from the scanner under test. The raw-source equality oracle is the original
 input vector. Generated arbitrary bytes test framing/termination and do not
-validate those bytes as compliant TMATS. Layout-only suffix expectations wait
-for the character-rule batch; do not turn deferred classification into a
-new malformed-input default. Use INT-035 markers on actual recovery tests
+validate those bytes as compliant TMATS. Character-batch prerequisites,
+from section 9.4.1 and the review:
+
+- A suffix consisting solely of trailing NUL/0x1A/space padding at EOF does
+  not get a missing-terminator finding. Retain it; do not use padding removal
+  to hide an otherwise unterminated attribute containing other bytes.
+- Specify CR/LF inside/before a code name and a lone CR; none is a terminator.
+- Specify UTF-8 BOM and UTF-16 handling without guessing an encoding or
+  transcoding original bytes.
+
+Empty/layout-only **terminated** regions have the separate open finding-or-
+silence question above. These prerequisites and code-name/duplicate/unknown-
+code findings must precede implementation; framing success alone is not
+semantic validity. Use INT-035 markers on actual recovery tests
 when they are implemented, alongside their L3 requirement markers.
 
 ## Real Chapter 10 recordings (local use only)

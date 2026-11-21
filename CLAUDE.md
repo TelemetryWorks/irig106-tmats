@@ -30,8 +30,13 @@ until the design documents for that area exist and have been reviewed.** Read
 Edition 2024, MSRV 1.85 (the edition-2024 floor). Raise the MSRV only for a
 concrete language or library feature, and record why here.
 
-The repository becomes a Cargo workspace of two crates released **in
-lockstep**: the library `irig106-tmats` and the focused CLI
+The owner-decided target (2026-11-21, ADR-0035) is a virtual workspace:
+`crates/irig106-tmats/` for the library, `apps/irig106-tmats-cli/` for the
+CLI, shared workspace version and an exact-version library path dependency
+in `[workspace.dependencies]`. The restructure has not happened yet.
+W2 prototype removal and W3 reusable APIs remain unchanged.
+
+The two crates are released **in lockstep**: the library `irig106-tmats` and the focused CLI
 `irig106-tmats-cli` (binary `tmats`, the Rust successor to irig106.org's
 `idmptmat`). One version, one tag, one changelog; the CLI pins the library
 with `=X.Y.Z`. Never bump one crate's version without the other. The complete

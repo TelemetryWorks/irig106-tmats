@@ -262,7 +262,7 @@ does not by itself sign off an executable interpretation.
 | Decision | Authority | Recorded outcome |
 | --- | --- | --- |
 | Interpretation reviews | Owner-decided, 2026-11-21; ADR-0033 | Agents draft with citations. One human owner sign-off plus the independent AI reviewer as a second, non-human check approves an interpretation |
-| W1: workspace | Coordinator-decided, 2026-11-21; owner may override | Keep the library at the repo root and `irig106-tmats-cli/` alongside it, matching irig106-time; no move to `crates/` |
+| W1: workspace | Owner-decided, 2026-11-21; ADR-0035 supersedes ADR-0034 W1 | Virtual root; library `crates/irig106-tmats/`, CLI `apps/irig106-tmats-cli/`; shared lockstep workspace version and exact-version path dependency in workspace.dependencies |
 | W2: prototype retirement | Coordinator-decided, 2026-11-21; owner may override | Remove the prototype in the restructure change; `prototype-0` retains history. Split an oversized PR or return to the owner |
 | W3: host CLI integration | Coordinator-decided, 2026-11-21; owner may override | Both a host-callable `run(args, stdout, stderr) -> exit class` that never exits the process and individual command/render APIs; thin `main`, matching irig106-time |
 | F1: duplicate SHA items | Coordinator-decided, 2026-11-21; owner may override | Reject as indeterminate, list every occurrence, preserve every byte, refuse stamping until fixed, and never claim positive verification |
@@ -275,9 +275,10 @@ test obligations. Earlier accepted design labels do not establish that an
 interpretation's executable rule has completed these checks.
 
 [ADR-0034](adr/0034-coordinator-release-foundation-decisions.md) records the
-coordinator decisions. W1 replaces the virtual-workspace proposal; W2 removes
-the prototype rather than moving it into a new crate. The reusable CLI library
-and thin binary remain necessary without a directory move.
+coordinator decisions. Its W1 alone is superseded by
+[ADR-0035](adr/0035-virtual-workspace-with-library-crate-and-cli-app.md), the
+owner's virtual crates/apps layout. W2 prototype removal and W3 reusable CLI
+library plus thin binary are unchanged; the full 0.1 scope remains binding.
 
 F1 deliberately leaves damaged recordings readable but without a positive
 integrity verdict. Fixing duplicates requires an explicit action before

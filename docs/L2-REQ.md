@@ -32,8 +32,8 @@ content.
 
 ## Foundation batch: restructure and source store
 
-These obligations derive ADR-0002/0003/0010/0011 and coordinator-decided
-ADR-0034 (owner may override). They select no new interpretation of the
+These obligations derive ADR-0002/0003/0010/0011, coordinator-decided
+ADR-0034 and the owner's W1 override in ADR-0035. They select no new interpretation of the
 standard. In particular, source retention is not a decision about malformed
 attribute boundaries, nonprintable-character meaning or recovery grammar.
 Those scanner rules need their own cited requirements and, where applicable,
@@ -54,9 +54,9 @@ release-acceptance claim.
 
 **Parent**: L1-REL-001
 
-**Statement**: The workspace SHALL retain the library package at the repository root and the CLI package in `irig106-tmats-cli/`, with one shared version, an exact matching CLI-to-library dependency, and no third crate or move to `crates/` for the restructure.
+**Statement**: The workspace SHALL have a virtual root manifest with the library in `crates/irig106-tmats/` and the CLI in `apps/irig106-tmats-cli/`, one shared real-release version in `[workspace.package]`, and an exact-version library path dependency declared in `[workspace.dependencies]` and inherited by the CLI.
 
-**Rationale**: ADR-0011 and coordinator-decided W1 (ADR-0034). Prototype retirement is W2: remove it in the restructure change, splitting oversized review work or returning to the owner. This does not authorize publishing placeholders as functional releases or remove the first-upload exception in RELEASING.md.
+**Rationale**: ADR-0011 and owner-decided ADR-0035, 2026-11-21, superseding W1 in ADR-0034. The reference model is Praevis-Quant/praevis-thetadata; the CLI is for testing and simple examples, with full 0.1 scope and W3 unchanged. Prototype retirement is W2: remove it in the restructure change, splitting oversized review work or returning to the owner. This does not authorize publishing placeholders as functional releases or remove the first-upload exception in RELEASING.md.
 
 **Verification Method**: Test (T)
 
@@ -155,7 +155,7 @@ and suspect-semicolon suggestions remain separate obligations.
 
 **Parent**: L1-READ-003
 
-**Statement**: For a semicolon-bounded region missing its colon, or an unterminated final non-layout region, the reader SHALL retain the raw bytes and a located diagnostic, continuing after an actual semicolon where available; it SHALL NOT reinterpret an internal colon as an invented semicolon or silently return an empty successful document.
+**Statement**: For a semicolon-bounded region missing its colon, an empty code name, or an unterminated final non-layout region, the reader SHALL retain the raw bytes and a located diagnostic, continuing after an actual semicolon where available; it SHALL NOT reinterpret an internal colon as an invented semicolon or silently return an empty successful document.
 
 **Rationale**: Proposed INT-035 reconciles the valid-input delimiter syntax (106-24R1 Chapter 9 section 9.4.2, page 9-2) with the owner-directed lossless recovery in L1-READ-001/003. It deliberately does not claim to reconstruct the writer's intended configuration. Owner sign-off and independent AI review remain pending.
 

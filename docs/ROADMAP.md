@@ -39,8 +39,8 @@ views and the rest of the general views stay in 0.2. There is no scope cut.
 [The release scope and time-view contract](RELEASE-0.1.md) defines the boundary,
 API review, acceptance cases, dated decisions and twelve-family order.
 L2/L3 and tests precede implementation. ADR-0033 records the owner's revised
-interpretation-review rule; ADR-0034 records coordinator-decided W1-W3 and
-F1/F7, each subject to owner override. No implementation is claimed.
+interpretation-review rule; ADR-0035 records the owner's W1 override.
+ADR-0034's coordinator-decided W2/W3 and F1/F7 are unchanged. No implementation is claimed.
 
 ## Queued for the next release (`[Unreleased]`)
 
@@ -71,15 +71,21 @@ Produced in this order, each reviewed before the next begins:
 Decisions taken so far are recorded in `docs/adr/` (index in
 `docs/adr/README.md`). `irig106-cli` will mount the `tmats` commands through
 a library in `irig106-tmats-cli` rather than duplicating them (owner
-direction, 2026-09-26); how that crate and the repository are organised is
-proposed in the next section.
+direction, 2026-09-26); the owner-decided organisation is
+recorded in the next section.
 
-### Current layout and a reusable CLI library (coordinator-decided)
+### Virtual workspace and a reusable CLI library (owner override)
 
-Coordinator decisions, 2026-11-21 (ADR-0034); the owner may override each:
+Owner decision, 2026-11-21 (ADR-0035), supersedes ADR-0034 W1 only:
 
-- **W1:** keep the library at the repository root and `irig106-tmats-cli/`
-  alongside it, matching irig106-time. No virtual root or move to `crates/`.
+- **W1 (owner-decided):** a virtual workspace, with the library under
+  `crates/irig106-tmats/` and the CLI under `apps/irig106-tmats-cli/`, modelled
+  on Praevis-Quant/praevis-thetadata. The root contains workspace configuration,
+  a shared `[workspace.package]` version and exact-version library path
+  dependency under `[workspace.dependencies]`, not a root package. The CLI
+  is for testing and simple examples; its documented 0.1 scope is unchanged.
+
+The following coordinator decisions remain unchanged; the owner may override them:
 - **W2:** remove the prototype in the restructure change; `prototype-0`
   retains its history. Split the PR if it is too large to review, or return
   to the owner. This does not authorize an unreviewable bulk deletion.
@@ -87,8 +93,8 @@ Coordinator decisions, 2026-11-21 (ADR-0034); the owner may override each:
   that never exits the process and individual command/render APIs, with a
   thin `main`, matching irig106-time.
 
-These replace the earlier virtual-workspace proposal, not the requirement for
-reusable commands. The CLI library holds the argument table, input boundary,
+W1 follows the owner's 2026-09-26 section 25 direction and replaces the
+coordinator's root-layout choice, without changing reusable commands. The CLI library holds the argument table, input boundary,
 commands, report models and renderers; printing and process exit stay at the
 binary edge. The published crate names and lockstep versions do not change.
 
@@ -1077,7 +1083,7 @@ this list once that repository has it.
 
 | Version | Theme | Scope |
 |---------|-------|-------|
-| before 0.1 | Restructure | The workspace layout and the reusable CLI library (current root layout and W1-W3 as coordinator-decided, owner may override), with CI green before and after; no new library code until it is done. |
+| before 0.1 | Restructure | The workspace layout and the reusable CLI library (virtual root and crates/apps layout per owner-decided W1, with W2/W3 unchanged), with CI green before and after; no new library code until it is done. |
 | 0.1 | Read | Lossless parser for code-name (ASCII) TMATS, with the suspected-semicolon diagnostic (L1-READ-007). Setup records assembled from their packet fragments, with provenance, the CSDW fields, and the session rules (L1-CH10-001, 002, 004–006). The TMATS edition and recording-format version declared, and a labelled validation basis (L1-EDN-002, 005). Lookup by code name. V and X groups preserved and linked. Byte-faithful writer. `G\SHA` compute, verify, and stamp — the stamp as the minimal verified transaction it needs (L1-SUM-004) — and the flex signature. The interpretation register seeded. The WebAssembly build checked in CI (L1-REL-003). First crates.io release of both crates. Bounded time view for irigtime (L1-VIEW-007 channel fields and applicable L1-VIEW-004/005/006/008), as specified in `docs/RELEASE-0.1.md`. **`tmats` CLI**: `show` in raw, tree, and channel-summary form (the three `idmptmat` formats), `extract`, `checksum` (`G\SHA`, `--flex`), `verify`, `stamp`; every setup record in a recording; plain text and JSON output. |
 | 0.2 | Registry and views | Spec-derived registry for the baseline edition (106-24R1) covering every group in Chapter 9 (G, T, R, M, P, D, B, S, Q, C, H, V, X), with counter and link declarations. Typed accessors generated from it. Channel views resolving R through P/B/S/Q to D and C, with link states (L1-VIEW-002, 003, 006) and effective values (L1-VIEW-004): each channel's recorder settings, format definition, measurement locations, and conversions — what `irig106-decode` needs first. The channel-type table and each channel's packet data types (L1-VIEW-009), the remaining measurement time-word views (L1-VIEW-007) beyond the bounded channel subset delivered in 0.1, and the remaining labelled assumptions (L1-VIEW-008). The packet check (L1-CH10-007) and the configuration timeline (L1-CH10-008), with the attribute-by-attribute comparison it uses (L1-WRT-005). **`tmats` CLI**: `show` uses the resolved links and lists the configuration timeline; `check`; `diff`. |
 | 0.3 | Validate | Registry-driven validation in four passes: required/allowed-when rules, keywords, ranges, value types, counters and index consistency, cross-group references. Derived parameters parsed, validated, and described (L1-DER-001 to 005). User registries, severity policy, custom rules. `tmats validate`. |

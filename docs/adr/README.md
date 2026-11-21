@@ -47,7 +47,8 @@ status line points to the later record.
 | [0031](0031-setup-record-completeness.md) | A setup record is complete, incomplete, or ambiguous — each with its basis | accepted; interpretation review superseded by 0033 |
 | [0032](0032-rccver-read-literally.md) | RCCVER is read literally; later editions' reuse of a code is a labelled note; the fallback is labelled policy | accepted |
 | [0033](0033-owner-signoff-and-independent-ai-interpretation-review.md) | One owner sign-off plus an independent AI check approves an interpretation | accepted (owner, 2026-11-21) |
-| [0034](0034-coordinator-release-foundation-decisions.md) | W1-W3 and F1/F7 release-foundation decisions | coordinator-decided (2026-11-21); owner may override |
+| [0034](0034-coordinator-release-foundation-decisions.md) | W1-W3 and F1/F7 release-foundation decisions | coordinator-decided (2026-11-21); W1 superseded by owner decision 0035; others unchanged |
+| [0035](0035-virtual-workspace-with-library-crate-and-cli-app.md) | Virtual root, library under crates/, CLI under apps/, exact shared dependency | accepted (owner, 2026-11-21); supersedes 0034 W1 only |
 
 New records take the next number and use the same front matter
 (`status`, `date`, `decision-makers`).
