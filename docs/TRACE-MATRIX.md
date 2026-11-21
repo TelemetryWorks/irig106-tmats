@@ -23,13 +23,20 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
-| L1-READ-001 | _(none)_ | _(none)_ | Draft |
+| L1-READ-001 | L2-READ-001, L2-READ-002 | _(none)_ | Draft |
 | L1-READ-002 | _(none)_ | _(none)_ | Draft |
 | L1-READ-003 | _(none)_ | _(none)_ | Draft |
 | L1-READ-004 | _(none)_ | _(none)_ | Draft |
 | L1-READ-005 | _(none)_ | _(none)_ | Draft |
 | L1-READ-006 | _(none)_ | _(none)_ | Draft |
 | L1-READ-007 | _(none)_ | _(none)_ | Draft |
+
+**L2 -> L3 -> Verification Artifacts**
+
+| L2 ID | L3 Children | Test Artifacts | Status |
+|-------|-------------|----------------|--------|
+| L2-READ-001 | L3-READ-001, L3-READ-002 | _(TBD)_ | Draft |
+| L2-READ-002 | L3-READ-003 | _(TBD)_ | Draft |
 
 ### L1-CH10: Chapter 10 setup records
 
@@ -132,13 +139,19 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
-| L1-WRT-001 | _(none)_ | _(none)_ | Draft |
+| L1-WRT-001 | L2-WRT-001 | _(none)_ | Draft |
 | L1-WRT-002 | _(none)_ | _(none)_ | Draft |
 | L1-WRT-003 | _(none)_ | _(none)_ | Draft |
 | L1-WRT-004 | _(none)_ | _(none)_ | Draft |
 | L1-WRT-005 | _(none)_ | _(none)_ | Draft |
 | L1-WRT-006 | _(none)_ | _(none)_ | Draft |
 | L1-WRT-007 | _(none)_ | _(none)_ | Draft |
+
+**L2 -> L3 -> Verification Artifacts**
+
+| L2 ID | L3 Children | Test Artifacts | Status |
+|-------|-------------|----------------|--------|
+| L2-WRT-001 | L3-WRT-001 | _(TBD)_ | Draft |
 
 ### L1-SUM: TMATS checksums
 
@@ -157,7 +170,13 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
-| L1-IO-001 | _(none)_ | _(none)_ | Draft |
+| L1-IO-001 | L2-IO-001 | _(none)_ | Draft |
+
+**L2 -> L3 -> Verification Artifacts**
+
+| L2 ID | L3 Children | Test Artifacts | Status |
+|-------|-------------|----------------|--------|
+| L2-IO-001 | L3-IO-001 | _(TBD)_ | Draft |
 
 ### L1-CLI: The tmats command-line tool
 
@@ -166,13 +185,20 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
 | L1-CLI-001 | _(none)_ | _(none)_ | Draft |
-| L1-CLI-002 | _(none)_ | _(none)_ | Draft |
+| L1-CLI-002 | L2-CLI-002 | _(none)_ | Draft |
 | L1-CLI-003 | _(none)_ | _(none)_ | Draft |
 | L1-CLI-004 | _(none)_ | _(none)_ | Draft |
 | L1-CLI-005 | _(none)_ | _(none)_ | Draft |
-| L1-CLI-006 | _(none)_ | _(none)_ | Draft |
+| L1-CLI-006 | L2-CLI-001 | _(none)_ | Draft |
 | L1-CLI-007 | _(none)_ | _(none)_ | Draft |
 | L1-CLI-008 | _(none)_ | _(none)_ | Draft |
+
+**L2 -> L3 -> Verification Artifacts**
+
+| L2 ID | L3 Children | Test Artifacts | Status |
+|-------|-------------|----------------|--------|
+| L2-CLI-001 | L3-CLI-001, L3-CLI-002 | _(TBD)_ | Draft |
+| L2-CLI-002 | L3-CLI-003 | _(TBD)_ | Draft |
 
 ### L1-ROB: Robustness against arbitrary input
 
@@ -180,9 +206,15 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
-| L1-ROB-001 | _(none)_ | _(none)_ | Draft |
+| L1-ROB-001 | L2-ROB-001 | _(none)_ | Draft |
 | L1-ROB-002 | _(none)_ | _(none)_ | Draft |
 | L1-ROB-003 | _(none)_ | _(none)_ | Draft |
+
+**L2 -> L3 -> Verification Artifacts**
+
+| L2 ID | L3 Children | Test Artifacts | Status |
+|-------|-------------|----------------|--------|
+| L2-ROB-001 | L3-ROB-001, L3-ROB-002 | _(TBD)_ | Draft |
 
 ### L1-PERF: Performance
 
@@ -198,12 +230,18 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
-| L1-REL-001 | _(none)_ | `irig106-tmats-cli/tests/lockstep.rs::cli_and_library_versions_match`<br>`irig106-tmats-cli/tests/lockstep.rs::library_dependency_is_pinned_exactly`<br>`irig106-tmats-cli/tests/lockstep.rs::version_flag_reports_both_versions` | Implemented |
+| L1-REL-001 | L2-REL-001 | `irig106-tmats-cli/tests/lockstep.rs::cli_and_library_versions_match`<br>`irig106-tmats-cli/tests/lockstep.rs::library_dependency_is_pinned_exactly`<br>`irig106-tmats-cli/tests/lockstep.rs::version_flag_reports_both_versions` | Partially Implemented |
 | L1-REL-002 | _(none)_ | `.github/workflows/ci.yml`<br>`msrv`<br>`cargo check --workspace --all-features` | Implemented (I) |
 | L1-REL-003 | _(none)_ | _(none)_ | Draft |
 | L1-REL-004 | _(none)_ | `.github/workflows/ci.yml`<br>`test`<br>`ubuntu-latest`<br>`windows-latest`<br>`macos-latest` | Implemented (I) |
 | L1-REL-005 | _(none)_ | `.github/workflows/ci.yml`<br>`deny`<br>`EmbarkStudios/cargo-deny-action`<br>`deny.toml` | Implemented (I) |
 | L1-REL-006 | _(none)_ | _(none)_ | Draft |
+
+**L2 -> L3 -> Verification Artifacts**
+
+| L2 ID | L3 Children | Test Artifacts | Status |
+|-------|-------------|----------------|--------|
+| L2-REL-001 | L3-REL-001 | _(TBD)_ | Draft |
 
 ---
 
@@ -214,7 +252,7 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | Category | L1 | L2 | L3 | L2 tested | L3 tested | L2 verified | L3 verified |
 |----------|----|----|----|-----------|-----------|-------------|-------------|
-| READ | 7 | 0 | 0 | 0 | 0 | 0 | 0 |
+| READ | 7 | 2 | 3 | 0 | 0 | 0 | 0 |
 | CH10 | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EDN | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REG | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -222,20 +260,20 @@ This matrix is the single source of truth for live status; the requirement docum
 | VAL | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
 | DER | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EXT | 4 | 0 | 0 | 0 | 0 | 0 | 0 |
-| WRT | 7 | 0 | 0 | 0 | 0 | 0 | 0 |
+| WRT | 7 | 1 | 1 | 0 | 0 | 0 | 0 |
 | SUM | 4 | 0 | 0 | 0 | 0 | 0 | 0 |
-| IO | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
-| CLI | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
-| ROB | 3 | 0 | 0 | 0 | 0 | 0 | 0 |
+| IO | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
+| CLI | 8 | 2 | 3 | 0 | 0 | 0 | 0 |
+| ROB | 3 | 1 | 2 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
-| REL | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
-| **Total** | **83** | **0** | **0** | **0** | **0** | **0** | **0** |
+| REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
+| **Total** | **83** | **8** | **11** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 83 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 76 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 1 of 83 (1.2%).
+**Tested by at least one test marker**: 0 of 95 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 4 of 83 (4.8%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 95 (3.2%).
 
 ### Orphan check
 

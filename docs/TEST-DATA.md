@@ -21,6 +21,71 @@ locally; CI runs on synthesized examples and fuzzing only.
 - **When a real file reveals a behaviour**, it is reproduced as a synthesized
   fixture in the same change, so CI keeps the lesson without the file.
 
+## Family 2 batch 1: foundation acceptance specifications
+
+**Status: planned, not executable tests.** These checks accompany the first
+L2/L3 foundation batch. None is evidence until implemented and run on the
+replacement. They are not new interpretations of IRIG 106 or a claim that
+the old prototype satisfies the replacement requirements.
+
+For the restructure, the oracle is coordinator-decided ADR-0034 and the
+lockstep rule. For source storage, it is accepted ADR-0002/0003 plus the
+independent original byte vector. Byte-only fixtures below test storage,
+not standards conformance: they deliberately need no invented attribute
+meaning, keyword, default or delimiter-recovery policy.
+
+### Restructure and host integration
+
+| Planned check | Arrange and act | Required observation | Requirement |
+| --- | --- | --- | --- |
+| `workspace_retains_root_layout_and_lockstep` | Inspect parsed root and CLI manifests, targets, workspace version and library dependency | Library remains at root; CLI has library and binary targets; both inherit one real-release version; CLI path/exact version match | L3-REL-001 |
+| `host_runner_returns_to_caller` | A subprocess driver supplies arguments and two capture writers to `run`, then emits a sentinel after it returns; exercise success and failure invocations | Sentinel reached in both cases, output is in the supplied writers, returned class matches the documented command outcome | L3-CLI-001 |
+| `thin_binary_matches_host_runner` | Run the same implemented invocation through the binary and host adapter with captured streams | Same reports, diagnostics and equivalent exit classification; inspect the thin main for duplicated command behavior | L3-CLI-002 |
+| `command_and_renderer_can_be_hosted` | Call an implemented command directly, then render its report into memory without calling the runner | Report available independently; rendering uses the supplied writer and no process exit | L3-CLI-003 |
+
+The manifest check must fail if only the library version changes or the CLI
+pin ceases to be exact. During restructure, removing prototype code must not
+be reported as implementing commands that remain scaffolds. Command outcome
+fixtures and argument representations follow the command-specific batch;
+only implemented entry points can supply acceptance evidence.
+
+The I/O-boundary inspection for L3-IO-001 must inspect public APIs and their
+reachable input/output acquisition paths. Record actual reviewed locations
+before adding an Evidence line. A capture-writer test is useful but cannot
+prove no hidden environment, file, network or process access exists.
+
+### Source ownership, order and output
+
+| Planned check | Arrange and act | Required observation | Requirement |
+| --- | --- | --- | --- |
+| `document_owns_original_bytes` | Create the document from a mutable byte vector, then overwrite/drop the caller vector | Document source remains exactly the independently retained original | L3-READ-001 |
+| `raw_access_preserves_non_utf8` | Supply source containing `00`, `FF`, an invalid UTF-8 sequence and mixed line endings; inspect raw spans and request a decoded view | Raw slices remain byte-exact before and after the view request | L3-READ-002 |
+| `ordered_items_retain_duplicates` | Use a scanner-approved fixture with repeated keys, unknown attributes and malformed retained material | Ordered enumeration preserves all supplied occurrences; a derived lookup cannot replace the item sequence | L3-READ-003 |
+| `unedited_output_is_original_source` | Compare default output to the original byte vector, including retained separators, gaps and a malformed suffix | Exact byte equality, including final-newline presence or absence | L3-WRT-001 |
+| `default_write_propagates_sink_failure` | Supply a writer that fails after a chosen prefix of a nonempty source | Error returned; no false successful completion or retry that changes the output bytes | L3-WRT-001 |
+
+Ownership and raw-range checks can first use storage fixtures constructed
+without parsing. Parser round trips and item classification remain blocked
+on the next scanner requirements/interpretation batch; do not invent a
+resynchronization rule merely to create a passing foundation test.
+
+After the scanner exists, generated arbitrary byte vectors must compare
+output directly to the original and exercise recovery findings as separately
+specified. Empty input, repeated identical bytes and different newline
+endings belong in the matrix; comparing only decoded fields is insufficient.
+
+### Span arithmetic
+
+| Planned check | Inputs | Required observation | Requirement |
+| --- | --- | --- | --- |
+| `span_constructor_checks_boundaries` | Empty range at zero/end; exact-end range; start beyond end; length beyond remaining source; values around `usize::MAX` | Valid ranges accepted, invalid/overflow ranges rejected without a panic or oversized allocation | L3-ROB-001 |
+| `span_access_rechecks_actual_source` | Reuse a span constructed for a longer source against a shorter source; include an empty source and valid exact-end access | Safe slice or explicit rejection according to actual bounds; never unchecked indexing | L3-ROB-002 |
+
+Future test markers must name the actual L3 obligations they check. Do not
+attach them to these prose cases or to legacy tests that assert a different
+contract. Coverage of these foundations does not complete their broader L1
+parents: later feature batches still supply the remaining decomposition.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample
