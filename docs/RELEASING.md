@@ -131,6 +131,10 @@ for a maintainer or an automated publisher.
 3. Revoke the token **immediately** after the upload. Register the crate's
    Trusted Publisher for this repository, `trusted-publishing.yml` and the
    `crates-io` environment, and verify that registration before 0.1.
+   Before any later upload, enable crates.io's per-crate
+   Trusted-Publishing-only setting for `irig106-tmats-cli` and ensure it is
+   also enabled for the existing `irig106-tmats` library crate, as required by
+   [the security program policy](https://github.com/TelemetryWorks/.github/blob/main/SECURITY-PROGRAM.md#L37-L42).
 4. Every later release is Trusted Publishing only. This is not a fallback
    for a failed TP run or permission problem, nor authorization to bootstrap
    an already published crate.
