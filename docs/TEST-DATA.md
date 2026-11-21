@@ -121,8 +121,10 @@ are deliberately nonconforming recovery cases, not valid configurations.
 | `code_name_line_endings_require_character_policy` | CR/LF before/inside a code name and a lone CR | No line-ending terminator; retain bytes; character-batch classification must precede semantic lookup | L3-READ-005, L3-READ-008 |
 | `encoding_markers_require_character_policy` | UTF-8 BOM and UTF-16 input | Retain original bytes, do not guess/transcode; finding/support behavior remains a character-batch prerequisite | L3-READ-007 |
 | `empty_region_run_has_one_information_finding` | `;;;;` | Exactly one information-level finding with source span `[0, 4)`; preserve all four semicolons | L3-READ-009 |
+| `two_empty_regions_have_one_information_finding` | `;;` | Exactly one information-level finding with source span `[0, 2)` | L3-READ-009 |
+| `layout_only_terminated_region_has_information_finding` | `\r\n;` | Exactly one information-level finding with source span `[0, 3)` | L3-READ-009 |
 | `mixed_empty_layout_run_has_one_information_finding` | `;;\r\n;` | One information finding over `[0, 5)`, merging the adjacent empty and layout-only terminated regions | L3-READ-009 |
-| `nonempty_region_separates_empty_runs` | `;;COMMENT:x;;;` | Two information findings, one per empty run; never merge across COMMENT | L3-READ-009 |
+| `nonempty_region_separates_empty_runs` | `;;COMMENT:x;;;` | Two information-level findings with spans `[0, 2)` and `[12, 14)`; never merge across COMMENT | L3-READ-009 |
 | `empty_value_and_empty_name_are_not_empty_regions` | `X:;` and `:v;` | Neither belongs to an empty-region run; preserve existing empty-value/empty-name distinctions | L3-READ-004, L3-READ-009 |
 | `unterminated_layout_at_eof_is_silent` | `\r\n` alone, then `;;;;\r\n` | Layout-only input has no finding; second input has one information finding over `[0, 4)` only; EOF suffix retained silently | L3-READ-009, L3-READ-010 |
 | `code_name_blanks_do_not_change_raw_comparison` | `C-6\DCN :DMC;` (isolated attribute derived from Appendix 9-E section E.9.c, not the annotated example block) | Code-name view ignores surrounding blanks per L1-READ-006, then compares; raw span and comparator input behavior stay unchanged | L3-READ-008 |
