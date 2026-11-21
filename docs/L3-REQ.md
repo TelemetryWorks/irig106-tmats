@@ -129,7 +129,7 @@ or edit revision rules, which need their own later requirements.
 
 ## Scanner batch 2: implementation obligations
 
-The recovery entries below depend on proposed INT-035. Acceptance cases
+The recovery entries below follow owner-approved INT-035. Acceptance cases
 are specified in TEST-DATA.md; none is an implemented or traced test yet.
 
 **L3-READ-004** · Parent: L2-READ-003 · Verification: T
@@ -152,9 +152,9 @@ an escape syntax to TMATS delimiters.
 **L3-READ-006** · Parent: L2-READ-004 · Verification: T
 *When a nonempty candidate region not classified as permitted layout has a semicolon but no colon, the reader SHALL retain that region as uninterpreted source material with a diagnostic spanning it and resume at the byte after that semicolon; a nonempty final region not classified as permitted layout and lacking a semicolon SHALL be retained with a missing-terminator finding and SHALL NOT be fabricated into a terminated attribute or exposed as an explicit value by lookups.*
 
-This is proposed INT-035. Permitted inter-attribute layout must be classified
+This follows owner-approved INT-035 (Joey, 2026-11-21). Permitted inter-attribute layout must be classified
 by its own character rules before claiming a layout-only suffix is malformed.
-The empty/layout-only terminated-region policy is an open owner question
+L3-READ-009/010 specify the approved empty-region and EOF-silence policy
 (INT-035). Full malformed code-name diagnostics remain a prerequisite,
 including rejection of a missing separator masked by a later colon.
 
@@ -180,3 +180,19 @@ nonprintables without conflating them with ordinary value blanks.
 The bound concerns region advancement, not an unapproved performance budget
 or a claim about all subsequent parsing/validation work. Empty input and
 runs consisting solely of semicolons must terminate without repeated state.
+
+
+**L3-READ-009** · Parent: L2-READ-006 · Verification: T
+*For a maximal adjacent run of empty or layout-only terminated regions, the reader SHALL emit exactly one information-level finding whose half-open span begins at the first region's start and ends immediately after the last region's semicolon; a nonempty attribute or non-layout malformed region SHALL end the run.*
+
+`;;;;` yields one finding over `[0, 4)`. Mixed empty/layout-only terminated
+regions can share that run; a present zero-length value or an empty code
+name is not such a region. Original bytes and region advancement remain
+unchanged. Character-batch rules determine which bytes count as layout.
+
+**L3-READ-010** · Parent: L2-READ-006 · Verification: T
+*An EOF suffix classified as unterminated layout or padding SHALL produce no finding, SHALL remain retained, and SHALL NOT extend the span of a preceding terminated empty-region run or become an explicit lookup value.*
+
+Silence applies to the layout/padding suffix only, not to an unterminated
+attribute containing other material. No tests or implementation are supplied
+by these requirements; use the acceptance cases in TEST-DATA.md.

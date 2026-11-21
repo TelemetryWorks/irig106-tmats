@@ -2,7 +2,7 @@
 
 > **Status: foundation and scanner-framing batches drafted (family 2, batches 1-2).**
 > Foundations derive the approved restructure/source store; framing and
-> recovery add a proposed interpretation requiring owner sign-off. Remaining
+> recovery use owner-approved INT-035; implementation evidence is pending. Remaining
 > code-name, character, CLI and later-area derivations follow;
 > a parent with children here is not necessarily fully decomposed yet.
 
@@ -135,9 +135,9 @@ release-acceptance claim.
 
 ## Scanner batch 2: byte framing and conservative recovery
 
-INT-035 is **proposed**, with owner sign-off and independent AI review
-pending under ADR-0033. These are requirements for review, not permission
-to implement that interpretation. Full code-name grammar, nonprintable-byte
+INT-035 is **approved** by Joey, 2026-11-21, with independent AI concurrence
+referenced to PR #13 under ADR-0033. Approval does not complete the analysis,
+character/layout prerequisites or executable verification. Full code-name grammar, nonprintable-byte
 meaning, character diagnostics, duplicate classification, counter/link rules
 and suspect-semicolon suggestions remain separate obligations.
 
@@ -157,7 +157,7 @@ and suspect-semicolon suggestions remain separate obligations.
 
 **Statement**: For a semicolon-bounded region missing its colon, an empty code name, or an unterminated final non-layout region, the reader SHALL retain the raw bytes and a located diagnostic, continuing after an actual semicolon where available; it SHALL NOT reinterpret an internal colon as an invented semicolon or silently return an empty successful document.
 
-**Rationale**: Proposed INT-035 reconciles the valid-input delimiter syntax (106-24R1 Chapter 9 section 9.4.2, page 9-2) with the owner-directed lossless recovery in L1-READ-001/003. It deliberately does not claim to reconstruct the writer's intended configuration. Owner sign-off and independent AI review remain pending.
+**Rationale**: Owner-approved INT-035 reconciles the valid-input delimiter syntax (106-24R1 Chapter 9 section 9.4.2, page 9-2) with the owner-directed lossless recovery in L1-READ-001/003. It deliberately does not claim to reconstruct the writer's intended configuration. Owner sign-off and the PR #13 independent AI concurrence are recorded; implementation evidence remains pending.
 
 **Verification Method**: Test (T)
 
@@ -178,5 +178,16 @@ and suspect-semicolon suggestions remain separate obligations.
 **Statement**: The scanner SHALL make bounded forward progress on arbitrary input bytes: each scan step SHALL advance its source cursor or finish, and recovery SHALL NOT revisit the same boundary indefinitely.
 
 **Rationale**: A malformed byte must not cause a loop. This derives the termination part of L1-ROB-001 for framing only; it does not select the proposed ADR-0021 indexing/checksum pipeline or establish whole-library robustness.
+
+**Verification Method**: Test (T)
+
+
+#### L2-READ-006
+
+**Parent**: L1-READ-003
+
+**Statement**: The reader SHALL emit one information-level located finding for each maximal consecutive run of empty or layout-only terminated regions, merging the run into one source span; unterminated layout or padding at EOF SHALL remain silent, and all bytes SHALL remain retained.
+
+**Rationale**: Joey's 2026-11-21 sign-off on INT-035 settles the open diagnostic policy under ADR-0033. EOF silence follows the owner-directed treatment of Chapter 9 section 9.4.1, page 9-2. This is product recovery policy, not a new rule that the standard mandates an informational diagnostic.
 
 **Verification Method**: Test (T)

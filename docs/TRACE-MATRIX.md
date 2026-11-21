@@ -25,7 +25,7 @@ This matrix is the single source of truth for live status; the requirement docum
 |-------|-------------|----------------|--------|
 | L1-READ-001 | L2-READ-001, L2-READ-002 | _(none)_ | Draft |
 | L1-READ-002 | _(none)_ | _(none)_ | Draft |
-| L1-READ-003 | L2-READ-004 | _(none)_ | Draft |
+| L1-READ-003 | L2-READ-004, L2-READ-006 | _(none)_ | Draft |
 | L1-READ-004 | L2-READ-005 | _(none)_ | Draft |
 | L1-READ-005 | _(none)_ | _(none)_ | Draft |
 | L1-READ-006 | L2-READ-003 | _(none)_ | Draft |
@@ -40,6 +40,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-READ-003 | L3-READ-004, L3-READ-005 | _(TBD)_ | Draft |
 | L2-READ-004 | L3-READ-006, L3-READ-007 | _(TBD)_ | Draft |
 | L2-READ-005 | L3-READ-008 | _(TBD)_ | Draft |
+| L2-READ-006 | L3-READ-009, L3-READ-010 | _(TBD)_ | Draft |
 
 ### L1-CH10: Chapter 10 setup records
 
@@ -257,7 +258,7 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | Category | L1 | L2 | L3 | L2 tested | L3 tested | L2 verified | L3 verified |
 |----------|----|----|----|-----------|-----------|-------------|-------------|
-| READ | 7 | 5 | 8 | 0 | 0 | 0 | 0 |
+| READ | 7 | 6 | 10 | 0 | 0 | 0 | 0 |
 | CH10 | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EDN | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REG | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -272,13 +273,13 @@ This matrix is the single source of truth for live status; the requirement docum
 | ROB | 3 | 2 | 3 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **12** | **17** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **13** | **19** | **0** | **0** | **0** | **0** |
 
 The countable requirement set is every L2 and L3 requirement plus the 75 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 104 (0.0%).
+**Tested by at least one test marker**: 0 of 107 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 104 (2.9%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 107 (2.8%).
 
 ### Orphan check
 
@@ -325,7 +326,7 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-031 | After a setup record that cannot be assembled, nothing governs | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
 | INT-032 | Packets that no setup record governs | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
 | INT-033 | Fragment positions that default to the same value | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
-| INT-035 | Recover malformed framing only at an actual semicolon | proposed (2026-11-21; owner sign-off required) | not yet written | _(none)_ |
+| INT-035 | Recover malformed framing only at an actual semicolon | approved (Joey, owner sign-off, 2026-11-21) | not yet written | _(none)_ |
 
 * Entries without a written analysis: **35** of 35
 * Entries without a test: **35** of 35

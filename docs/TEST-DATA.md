@@ -11,9 +11,14 @@ locally; CI runs on synthesized examples and fuzzing only.
   a developer into a local directory outside the repository. Tests that need
   them are opt-in and skip cleanly when the directory is absent (the exact
   mechanism is decided with the test architecture in the design phase).
-- **Spec fixtures**: the Chapter 9 Appendix 9-C format example and every
-  expression and TMATS example in Appendix 9-E (§E.6.b, §E.9.a–d, both
-  styles), taken verbatim from the archived standard with their citations.
+- **Spec-sourced fixtures**: cite the archived Chapter 9 Appendix 9-C and
+  Appendix 9-E (§E.6.b, §E.9.a–d) material used. Do not treat annotated
+  Appendix 9-E example text as a conforming TMATS-file fixture: trailing
+  annotations after a semicolon become the next region's code-name bytes.
+  Use isolated, cited attribute/grammar fixtures with extraction documented;
+  verbatim annotated blocks belong only in explicitly nonconforming tests,
+  with original bytes retained. Existing Appendix 9-C suspect cases remain
+  suspect rather than silently repaired.
 - **CI uses synthesized fixtures**: small TMATS documents written for a
   specific behaviour, each citing the Chapter 9 clause it exercises, plus
   simulated variants of the conditions observed in real files (vendor quirks,
@@ -90,7 +95,8 @@ parents: later feature batches still supply the remaining decomposition.
 ## Family 2 batch 2: scanner framing acceptance specifications
 
 **Status: planned, not executable tests.** Framing recovery depends on
-proposed INT-035 and its owner sign-off/independent AI review. Only framing
+owner-approved INT-035 (Joey, 2026-11-21; independent AI concurrence
+referenced to PR #13). Only framing
 and ASCII comparison are covered here; raw code-name validity, character
 meaning and permitted layout require subsequent derivations before parser
 implementation. The case names below are prospective test names.
@@ -111,11 +117,15 @@ are deliberately nonconforming recovery cases, not valid configurations.
 | `empty_value_is_present` | `X:;` | Well-framed zero-length raw value, distinct from an absent item; unknown/invalid-code findings remain separate from framing | L3-READ-004 |
 | `empty_code_name_is_reported` | `:v;` | Retain the complete region and value bytes, with an empty-code-name finding; no fabricated key | L3-READ-004, L3-READ-007 |
 | `stray_value_semicolon_preserves_uncertainty` | Damaged intended value represented by `COMMENT:alpha;tail;` | Actual boundary splits candidates; later invalid/unknown-code/duplicate checks are the defence, not proof of intended meaning | L3-READ-004, L3-READ-007 |
-| `eof_padding_is_not_an_unterminated_attribute` | A terminated attribute followed only by NUL, 0x1A or space padding | Retain padding without a missing-terminator finding; exact character classification is a prerequisite | L3-READ-006 |
+| `eof_padding_is_not_an_unterminated_attribute` | A terminated attribute followed only by NUL, 0x1A or space padding | Retain padding silently, with no missing-terminator finding; character classification is a prerequisite | L3-READ-010 |
 | `code_name_line_endings_require_character_policy` | CR/LF before/inside a code name and a lone CR | No line-ending terminator; retain bytes; character-batch classification must precede semantic lookup | L3-READ-005, L3-READ-008 |
 | `encoding_markers_require_character_policy` | UTF-8 BOM and UTF-16 input | Retain original bytes, do not guess/transcode; finding/support behavior remains a character-batch prerequisite | L3-READ-007 |
-| `empty_and_layout_only_regions` | `;;` and `\r\n;` | Owner question: finding or silence remains open; both retain bytes and advance | L3-READ-006, L3-ROB-003 |
-| `code_name_blanks_do_not_change_raw_comparison` | `C-6\DCN :DMC;` (Appendix 9-E section E.9.c) | Code-name view ignores surrounding blanks per L1-READ-006, then compares; raw span and comparator input behavior stay unchanged | L3-READ-008 |
+| `empty_region_run_has_one_information_finding` | `;;;;` | Exactly one information-level finding with source span `[0, 4)`; preserve all four semicolons | L3-READ-009 |
+| `mixed_empty_layout_run_has_one_information_finding` | `;;\r\n;` | One information finding over `[0, 5)`, merging the adjacent empty and layout-only terminated regions | L3-READ-009 |
+| `nonempty_region_separates_empty_runs` | `;;COMMENT:x;;;` | Two information findings, one per empty run; never merge across COMMENT | L3-READ-009 |
+| `empty_value_and_empty_name_are_not_empty_regions` | `X:;` and `:v;` | Neither belongs to an empty-region run; preserve existing empty-value/empty-name distinctions | L3-READ-004, L3-READ-009 |
+| `unterminated_layout_at_eof_is_silent` | `\r\n` alone, then `;;;;\r\n` | Layout-only input has no finding; second input has one information finding over `[0, 4)` only; EOF suffix retained silently | L3-READ-009, L3-READ-010 |
+| `code_name_blanks_do_not_change_raw_comparison` | `C-6\DCN :DMC;` (isolated attribute derived from Appendix 9-E section E.9.c, not the annotated example block) | Code-name view ignores surrounding blanks per L1-READ-006, then compares; raw span and comparator input behavior stay unchanged | L3-READ-008 |
 | `ascii_comparison_changes_no_source` | Mixed ASCII letter case, spaces, punctuation and high bytes as comparator inputs | Only ASCII letters fold for comparison; lengths and all source bytes unchanged; no semantic-validity assertion | L3-READ-008 |
 | `framing_retains_findings_and_source` | Malformed and well-framed regions interleaved | Every raw byte retained; findings point inside source and do not erase retained material | L3-READ-007 |
 | `framing_cursor_terminates` | Empty source, runs of semicolons, missing-colon runs, unterminated suffix and generated arbitrary bytes | Cursor advances or finishes, never exceeds bounds or revisits a boundary; at most N+1 region steps | L3-ROB-003 |
@@ -133,11 +143,21 @@ from section 9.4.1 and the review:
 - Specify UTF-8 BOM and UTF-16 handling without guessing an encoding or
   transcoding original bytes.
 
-Empty/layout-only **terminated** regions have the separate open finding-or-
-silence question above. These prerequisites and code-name/duplicate/unknown-
-code findings must precede implementation; framing success alone is not
+Empty/layout-only **terminated** regions have the owner-decided run-level
+information finding above; unterminated layout/padding is silent. These
+prerequisites and code-name/duplicate/unknown-code findings must precede implementation; framing success alone is not
 semantic validity. Use INT-035 markers on actual recovery tests
 when they are implemented, alongside their L3 requirement markers.
+
+### Planned suspect-terminator suggestion (not implemented)
+
+Plan a future case with a line break inside a value followed by a complete
+code name and colon, for example `COMMENT:first\nCOMMENT:second;`. This remains
+one raw value under current framing. The future finding is suggestion-only:
+never split, insert a terminator or apply an edit automatically. Complete
+code-name recognition, requirement derivation and tests are future work;
+this is neither a conforming two-attribute fixture nor an implemented check.
+It supplements rather than silently changes L1-READ-007's existing pattern.
 
 ## Real Chapter 10 recordings (local use only)
 
