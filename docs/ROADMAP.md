@@ -42,6 +42,16 @@ L2/L3 and tests precede implementation. ADR-0033 records the owner's revised
 interpretation-review rule; ADR-0035 records the owner's W1 override.
 ADR-0034's coordinator-decided W2/W3 and F1/F7 are unchanged. No implementation is claimed.
 
+### Planned scanner suggestion after framing
+
+Record the independent reviewer's note carried forward by the owner on
+2026-11-21: plan a suggestion-only suspect-terminator finding for a line
+break inside a value followed by a complete code name and colon. It must
+not split attributes or apply an edit. Complete code-name recognition,
+requirements and test derivations precede implementation. This is a planned
+addition alongside L1-READ-007, not an implemented diagnostic or a change
+to the semicolon-only framing approved in INT-035.
+
 ## Queued for the next release (`[Unreleased]`)
 
 `[Unreleased]` is emptied at each release cut; whatever sits above the most

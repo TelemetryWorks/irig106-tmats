@@ -727,7 +727,7 @@ Findings: SRCC 1 on the first record; SRCC 0 with a changed configuration (an un
 - Appendix 9-E section E.9.c has `C-6\DCN :DMC;`, motivating L1-READ-006's interpretation of surrounding code-name blanks without changing source bytes.
 - L1-READ-001/003 and ADR-0002 require retained bytes, located findings and continued recovery. These are product policies, not additional standard text. INT-019 requires an unterminated SHA item to remain malformed.
 
-**Behaviour**: **Proposed.** Bound candidate regions by actual semicolons and search for the first colon inside each region only. Line endings are never attribute terminators. Retain a missing-colon region with a located finding and resume after its semicolon. An empty code name (`:v;`) gives a finding. `X:;` is well-framed with a present zero-length raw value, distinct from an absent item; framing alone does not validate the code name or its semantics. Retain an unterminated non-layout suffix with a finding, never fabricate a terminator or expose that suffix as an explicit value in lookups (consistent with INT-019). Do not split on code-like value text, invent delimiters, apply edits or substitute empty success for retained material and findings.
+**Behaviour**: **Approved by Joey, 2026-11-21, under ADR-0033.** Bound candidate regions by actual semicolons and search for the first colon inside each region only. Line endings are never attribute terminators. Retain a missing-colon region with a located finding and resume after its semicolon. An empty code name (`:v;`) gives a finding. `X:;` is well-framed with a present zero-length raw value, distinct from an absent item; framing alone does not validate the code name or its semantics. Retain an unterminated non-layout suffix with a finding, never fabricate a terminator or expose that suffix as an explicit value in lookups (consistent with INT-019). Do not split on code-like value text, invent delimiters, apply edits or substitute empty success for retained material and findings.
 
 A stray semicolon intended as part of a damaged value can produce false
 candidate boundaries. Later code-name-validity, duplicate and unknown-code
@@ -736,9 +736,14 @@ For example, `G\COM Time 12:30;` is raw-framed at its later colon but must be
 flagged by the code-name-validity batch; framing cannot detect that the
 writer may have omitted an earlier colon. Do not repair it by guessing.
 
-**Open owner question**: for empty and layout-only terminated regions such
-as `;;` and `\r\n;`, should the reader emit a finding or remain silent?
-Both options retain every byte and advance; neither is selected here.
+**Empty-region policy (owner-decided, 2026-11-21)**: emit one information-
+level located finding for each maximal run of consecutive empty or layout-
+only terminated regions, with one merged source span from the run's first
+byte through its last terminating semicolon. `;;;;` therefore produces one
+finding over `[0, 4)`. A nonempty attribute or non-layout malformed region
+ends the run. Present empty values (`X:;`) and empty code names (`:v;`) are
+not empty regions. Unterminated layout or padding at EOF is silent per
+section 9.4.1; it remains preserved outside the terminated run's span.
 
 **Character-batch prerequisites**: classify an EOF suffix consisting solely of NUL/0x1A/space padding
 without a missing-terminator finding (section 9.4.1); specify CR/LF
@@ -750,14 +755,20 @@ blanks under L1-READ-006 and preserves the original span.
 
 **Reason**: The standard describes valid framing but not recovery. An actual semicolon is a reproducible boundary that avoids borrowing another region's colon; this policy preserves uncertainty rather than claiming the writer's intent was reconstructed.
 
-**Design**: proposed (2026-11-21; owner sign-off required) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: pending · **Origin**: family 2 batch 2
+**Design**: approved (Joey, owner sign-off, 2026-11-21) · **Review**: approved under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-21; independent AI check: CONCURS on PR #13 at e622311, relayed by the owner 2026-11-21 · **Origin**: family 2 batch 2
 
-**Test**: `missing_colon_recovers_at_semicolon`, `unterminated_suffix_is_retained`, `code_like_value_text_does_not_split` (planned, not yet written)
+**Test**: `missing_colon_recovers_at_semicolon`, `unterminated_suffix_is_retained`, `code_like_value_text_does_not_split`, `empty_region_run_has_one_information_finding`, `unterminated_layout_at_eof_is_silent` (planned, not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
 **Draft analysis**: [baseline draft and remaining work](research/2026-11-21-scanner-framing-recovery.md)
 
+**Sign-off and AI-check reference**: [owner approval record](research/2026-11-21-int035-owner-signoff.md), referencing [PR #13](https://github.com/TelemetryWorks/irig106-tmats/pull/13) at `e622311690fc5812f689c9d77a19e21447aab6fd` and the owner's dated relay of the independent check.
+
 The baseline draft does not complete cross-edition/handbook/sample analysis
-or testing. Its existence must not be read as implementation readiness;
-owner sign-off and the independent AI review remain outstanding.
+or testing. Approval records the interpretation decision; character-batch
+prerequisites, full analysis and executable tests remain implementation gates.
+Do not use annotated Appendix 9-E blocks as conforming fixtures; trailing
+annotations become the next region's code-name bytes (see TEST-DATA.md).
+The line-break/code-name suspect-terminator suggestion is planned separately
+in ROADMAP.md, not implemented or a permission to split source.
