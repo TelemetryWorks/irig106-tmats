@@ -332,8 +332,10 @@ following semicolon, reported as `2-` plus 64 lower-case hex characters.
    included; the result is verified (ADR-0029).
 4. **Policy:** `G\SHA` is recognised in any letter case, never inside a
    value; an item with no following semicolon is malformed; upper-case hex
-   that matches is a match with a warning. Two or more `G\SHA` items are an
-   open question (follow-up F1).
+   that matches is a match with a warning. F1 is coordinator-decided,
+   2026-11-21 (owner may override; ADR-0034): duplicate `G\SHA` items are
+   indeterminate; list every occurrence, preserve all bytes, never claim
+   positive verification, and refuse stamping until fixed.
 
 **Why the lossless design matters here:** the digest covers raw bytes, so any
 normalization (reordering, case changes, line endings) invalidates it. After

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" role="img" aria-label="Transactional edits and checksum stamping (ADR-0029): an edit set is validated, applied atomically as a new revision, the affected derived state is rebuilt, and the emitted bytes are re-read and verified; any rejection refuses the whole set and leaves the document unchanged. A stamp is the last step: the final bytes are emitted with the G\SHA item in place, SHA-256 covers every byte outside the item including the line break the insertion added, the value is written inside the item, and the result is verified. Three decisions remain open for the owner.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" role="img" aria-label="Transactional edits and checksum stamping (ADR-0029): an edit set is validated, applied atomically as a new revision, the affected derived state is rebuilt, and the emitted bytes are re-read and verified; any rejection refuses the whole set and leaves the document unchanged. A stamp is the last step: the final bytes are emitted with the G\SHA item in place, SHA-256 covers every byte outside the item including the line break the insertion added, the value is written inside the item, and the result is verified. F1 is coordinator-decided, 2026-11-21, subject to owner override: duplicate SHA items are indeterminate and stamping refuses them. Only F2 and F3 remain open for the owner.">
   <style>
     text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; fill: #1f2328; }
     .t { font-size: 15px; font-weight: 600; }
@@ -91,10 +91,14 @@
   <text class="l" x="734" y="346">it cannot change the digest</text>
   <text class="l" x="720" y="362">d. re-read and verify (stage 4)</text>
 
-  <!-- open decisions -->
-  <rect class="usr" x="20" y="404" width="960" height="76" rx="6"/>
-  <text class="b" x="34" y="426">Open for the owner (ROADMAP "Follow-ups for the owner"); no behaviour chosen yet</text>
-  <text class="l" x="34" y="446">F1  two or more G\SHA items in one document</text>
-  <text class="l" x="34" y="462">F2  removing an attribute that X extensions point to</text>
-  <text class="l" x="500" y="446">F3  suggesting ":" where "=" was typed (Chapter 6 example)</text>
+  <!-- coordinator decision; separate from open owner questions -->
+  <rect class="usr" x="20" y="404" width="960" height="48" rx="6"/>
+  <text class="b" x="34" y="424">F1 coordinator-decided, 2026-11-21; owner may override (ADR-0034)</text>
+  <text class="l" x="34" y="442">Duplicate SHA: indeterminate; list all occurrences, preserve bytes, never verify positively; refuse stamping until fixed</text>
+
+  <!-- remaining open decisions -->
+  <rect class="usr" x="20" y="464" width="960" height="60" rx="6"/>
+  <text class="b" x="34" y="486">Open for the owner: F2/F3; no behaviour chosen yet</text>
+  <text class="l" x="34" y="508">F2  removing an attribute that X extensions point to</text>
+  <text class="l" x="500" y="508">F3  suggesting ":" where "=" was typed (Chapter 6 example)</text>
 </svg>

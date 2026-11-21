@@ -253,59 +253,39 @@ and its review; a fixture invented merely to make resolution succeed is not
 proof. Standards-based positive and negative cases must be independent of
 the implementation, including the known prototype regressions.
 
-## Owner decisions still required
+## Decisions recorded 2026-11-21
 
-The following are short proposals, not decisions taken by this document:
+The owner may override every coordinator decision. Policy authority and
+interpretation review completion are separate: coordinator direction below
+does not by itself sign off an executable interpretation.
 
-| Decision | Options | Recommendation |
+| Decision | Authority | Recorded outcome |
 | --- | --- | --- |
-| W1: workspace | Virtual root with two sibling crates; or separate third CLI-binary crate | Two sibling crates under `crates/`, CLI library plus binary in one crate |
-| W2: prototype retirement | Remove in the layout change; or move into `crates/irig106-tmats` and retire in stages | Remove in the same change, as the roadmap recommends; see tradeoffs below |
-| W3: host CLI integration | Whole command runner; individual command/render APIs; or both | Both, with shared command semantics and a thin process entry point |
-| Interpretation reviews | Supply author and distinct human reviewer; or keep an interpretation blocked | Obtain both people and source analysis before relying on it; tools count as neither |
-| F1: duplicate SHA items | Reject as indeterminate; select an occurrence; or explicitly consolidate | Reject ambiguity and preserve bytes; practical consequences below, pending owner decision |
-| F7: configuration-change event | Require verified identification; or assume an event packet type | Require evidence and report indeterminate meanwhile; no guessed packet type |
+| Interpretation reviews | Owner-decided, 2026-11-21; ADR-0033 | Agents draft with citations. One human owner sign-off plus the independent AI reviewer as a second, non-human check approves an interpretation |
+| W1: workspace | Coordinator-decided, 2026-11-21; owner may override | Keep the library at the repo root and `irig106-tmats-cli/` alongside it, matching irig106-time; no move to `crates/` |
+| W2: prototype retirement | Coordinator-decided, 2026-11-21; owner may override | Remove the prototype in the restructure change; `prototype-0` retains history. Split an oversized PR or return to the owner |
+| W3: host CLI integration | Coordinator-decided, 2026-11-21; owner may override | Both a host-callable `run(args, stdout, stderr) -> exit class` that never exits the process and individual command/render APIs; thin `main`, matching irig106-time |
+| F1: duplicate SHA items | Coordinator-decided, 2026-11-21; owner may override | Reject as indeterminate, list every occurrence, preserve every byte, refuse stamping until fixed, and never claim positive verification |
+| F7: configuration-change event | Coordinator-decided, 2026-11-21; owner may override | Require verified identification and report indeterminate meanwhile; never guess a packet type |
 
-### W2 tradeoff (undecided)
+[ADR-0033](adr/0033-owner-signoff-and-independent-ai-interpretation-review.md)
+supersedes the two-human rule. Record the draft author, owner sign-off and
+independent AI check; preserve source-hash re-review, citations, analysis and
+test obligations. Earlier accepted design labels do not establish that an
+interpretation's executable rule has completed these checks.
 
-The [roadmap's workspace proposal](ROADMAP.md#workspace-layout-and-a-reusable-cli-library-proposal)
-recommends removing the prototype in the same layout change. That avoids
-moving defective public surfaces and obsolete tests into the new crate and
-leaves a clean placeholder; it also removes working prototype entry points
-and can make the diff too large for the normal review budget. The tag
-`prototype-0` retains the historical implementation.
+[ADR-0034](adr/0034-coordinator-release-foundation-decisions.md) records the
+coordinator decisions. W1 replaces the virtual-workspace proposal; W2 removes
+the prototype rather than moving it into a new crate. The reusable CLI library
+and thin binary remain necessary without a directory move.
 
-The alternative moves the prototype to `crates/irig106-tmats` and retires it
-in stages. That preserves an executable comparison baseline and permits
-smaller deletion/replacement PRs, but carries known defects longer and needs
-a clear separation from the new release API and acceptance evidence.
-Recommendation: same-change removal, consistent with the roadmap. If its
-size cannot be reviewed within the agreed budget, bring the staged option
-back to the owner; do not silently switch approaches. W2 is still undecided.
-
-### F1 practical consequences (undecided)
-
-Two or more SHA items leave unclear which embedded digest and excluded byte
-range verification or stamping should use (INT-021; L1-SUM-002/004; ADR-0029).
-These are policy options, not claims that the standard selects one:
-
-| Option | Verification in practice | Stamping and existing recordings |
-| --- | --- | --- |
-| Reject ambiguity | Return an indeterminate finding listing all SHA occurrences; do not report a document-wide match, even if one candidate happens to match | Refuse stamping and preserve every byte. A user must resolve duplicates explicitly before a verified stamp; some field recordings remain readable but cannot receive a positive integrity verdict |
-| Select an occurrence under a documented rule | First, last, or a caller-named item requires a defined exclusion range and treatment of all other SHA items; different tools may disagree, and ordering may change which one wins | Updating only the selected item leaves other digests stale or contradictory. Auto-selection hides a policy choice; caller selection must be explicit, and competing digest results remain visible |
-| Explicitly consolidate to one item | Until a caller requests consolidation, report the original duplicates as indeterminate; verify the new document only after the edit | Remove/replace duplicate items only in a new output, compute the digest over its final bytes and re-read to verify it. Original recorded bytes and their old checksums are no longer the output; provenance must retain the original. This needs an approved duplicate-edit policy and cannot be silent repair |
-
-Recommendation: reject duplicate-SHA ambiguity for verification and stamping
-while preserving the input and listing every occurrence. This avoids an
-unjustified positive integrity claim and automatic edits, at the cost of
-requiring explicit remediation before affected files can be stamped.
-The owner must choose the behavior, including identical duplicate values;
-no option is implemented or adopted here.
-
-F1 and F7 remain release blockers where their requirements depend on them.
-Proposed interim outcomes above do not implement or waive the corresponding
-requirements. Resolve and record them through the existing interpretation
-process before the affected code is written. W1-W3 precede restructuring.
+F1 deliberately leaves damaged recordings readable but without a positive
+integrity verdict. Fixing duplicates requires an explicit action before
+stamping; verification must not silently choose or consolidate occurrences.
+F7 decides the uncertainty behavior, not the actual event identity. The latter
+still needs verified evidence before the event-presence check is implementable.
+These decisions do not mark requirements implemented or interpretations reviewed.
+F2/F3 and other unreviewed interpretations remain open where already recorded.
 
 ## Delivery and release gates
 

@@ -37,9 +37,10 @@ association uncertainty and labelled caller assumptions. Measurement time-word
 views and the rest of the general views stay in 0.2. There is no scope cut.
 
 [The release scope and time-view contract](RELEASE-0.1.md) defines the boundary,
-API review, acceptance cases, pending owner decisions and twelve-family order.
-L2/L3 and tests precede implementation. W1-W3, interpretation reviews and
-F1/F7 remain owner decisions; no behavior is silently chosen by the plan.
+API review, acceptance cases, dated decisions and twelve-family order.
+L2/L3 and tests precede implementation. ADR-0033 records the owner's revised
+interpretation-review rule; ADR-0034 records coordinator-decided W1-W3 and
+F1/F7, each subject to owner override. No implementation is claimed.
 
 ## Queued for the next release (`[Unreleased]`)
 
@@ -73,88 +74,28 @@ a library in `irig106-tmats-cli` rather than duplicating them (owner
 direction, 2026-09-26); how that crate and the repository are organised is
 proposed in the next section.
 
-### Workspace layout and a reusable CLI library (proposal)
+### Current layout and a reusable CLI library (coordinator-decided)
 
-**Owner direction (2026-09-26):** "make the irig106-tmats-cli code to be a
-library we will be able to pull into the greater irig106-cli so we are not
-dumplicating code … we need to make sure we architect and organize the
-irig106-tmats-cli correctly … we should not have a src folder and a
-irig106-tmats-cli folder. This should be structured differently."
+Coordinator decisions, 2026-11-21 (ADR-0034); the owner may override each:
 
-**Today.** The repository root is both the workspace and the library
-package: the prototype's `src/`, `tests/`, `benches/`, `data/`, and
-`build.rs` sit beside `irig106-tmats-cli/`, a binary-only crate whose
-`src/main.rs` is a scaffold. One crate is nested inside the other's
-directory, the prototype and the new work share the root, and nothing in
-the CLI can be reused.
+- **W1:** keep the library at the repository root and `irig106-tmats-cli/`
+  alongside it, matching irig106-time. No virtual root or move to `crates/`.
+- **W2:** remove the prototype in the restructure change; `prototype-0`
+  retains its history. Split the PR if it is too large to review, or return
+  to the owner. This does not authorize an unreviewable bulk deletion.
+- **W3:** expose both a host-callable `run(args, stdout, stderr) -> exit class`
+  that never exits the process and individual command/render APIs, with a
+  thin `main`, matching irig106-time.
 
-**Proposed layout** — a virtual workspace with every crate under `crates/`:
+These replace the earlier virtual-workspace proposal, not the requirement for
+reusable commands. The CLI library holds the argument table, input boundary,
+commands, report models and renderers; printing and process exit stay at the
+binary edge. The published crate names and lockstep versions do not change.
 
-```
-irig106-tmats/                  repository and workspace root (no package)
-├── Cargo.toml                  [workspace] members = ["crates/*"]; [workspace.package] (one version)
-├── Cargo.lock
-├── crates/
-│   ├── irig106-tmats/          the library: src/, tests/, benches/, README.md
-│   └── irig106-tmats-cli/      the CLI library and the `tmats` binary
-│       ├── src/lib.rs          reusable: commands, report models, renderers, argument table
-│       ├── src/main.rs         `tmats`: parse argv, run, print, exit — a few lines
-│       └── tests/
-├── fuzz/                       excluded from the workspace
-├── docs/  scripts/  .github/   shared by both crates
-├── README.md  CHANGELOG.md  CLAUDE.md  AGENTS.md  LICENSE
-```
-
-Why: each crate is a sibling with its own directory and README; the root
-holds only what the repository shares (the workspace manifest, docs,
-scripts, CI, the changelog); `cargo publish --workspace` and lockstep
-versioning (ADR-0011) work unchanged; and it is the layout `irig106-cli` and
-the other `irig106-*` repositories can copy.
-
-**Proposed shape of `irig106-tmats-cli`** — one crate with a library target
-and a binary target, so `cargo install irig106-tmats-cli` still installs
-`tmats` and `irig106-cli` depends on the same crate for the library:
-
-| Module | Holds | Reused by `irig106-cli` |
-|--------|-------|-------------------------|
-| `args` | the table-driven parser (ADR-0013) and a public table of the `tmats` commands and flags, so a host CLI can mount them under its own prefix (for example `irig106 tmats show`) | yes |
-| `input` | reading files, detecting a recording or TMATS text by content, and the minimal packet reader (ADR-0019) until `irig106-core` exists — the only module that touches the file system | yes |
-| `commands` | one function per command (`show`, `extract`, `checksum`, `verify`, `stamp`, `validate`, `diff`), taking options and input and returning a report; no printing | yes |
-| `report` | the typed report models — the source of the versioned JSON schema (`docs/CLI.md`) | yes |
-| `render` | plain-text and JSON renderers writing to any `std::io::Write` | yes |
-| `run` | one entry point, `run(args, stdout, stderr) -> exit code`, that ties the above together | yes, for mounting the whole command set |
-| `main.rs` | calls `run` with the process's arguments and streams | no |
-
-Rules that keep it reusable: no `std::process::exit` or direct printing
-outside `main.rs`; every command testable without a process; exit codes and
-usage errors as values; the library API is public and follows semver in
-lockstep with `irig106-tmats` (ADR-0011).
-
-**What the move touches:** the root and crate manifests (paths, `readme`,
-`include`), `irig106-tmats-cli`'s path dependency, `scripts/build-trace-matrix.py`
-(source roots), CI (paths, the lockstep and publish dry-run jobs), cargo-dist
-configuration, `fuzz/` (its path dependency), `docs/PROJECT_STRUCTURE.md`,
-`CLAUDE.md` (commands), `docs/CLI.md`, `docs/RELEASING.md`, and a new ADR.
-The published crate names and the `tmats` binary name do not change.
-
-**Decisions needed from the owner:**
-
-- W1. The layout above — a virtual workspace with `crates/irig106-tmats` and
-  `crates/irig106-tmats-cli`. Alternative: a separate `tmats` binary crate
-  (three crates) instead of one crate with both targets; not recommended,
-  because it adds a published crate without adding reuse.
-- W2. The prototype. Moving it into `crates/irig106-tmats` carries code the
-  redesign replaces; removing it now (it stays at tag `prototype-0`, and
-  ADR-0001 already decided the rebuild) leaves the library crate a clean
-  placeholder until its first code. Recommended: remove it in the same
-  change.
-- W3. How `irig106-cli` mounts the commands: through `run` (the whole
-  `tmats` command set as a subcommand) or through `commands` and `render`
-  (picking commands into its own structure). Recommended: offer both, as
-  the table above does, and let `irig106-cli`'s design choose.
-
-**When:** a single change of its own, after `docs/TMATS-IN-CHAPTER-10.md`
-and before the first new library code, with CI green before and after.
+The restructure affects the CLI targets and public library surface, prototype
+retirement, manifest paths only where needed, source roots used by trace/fuzz
+checks, documentation and CI. Keep CI green before and after each bounded
+change; new library code still requires reviewed design and requirements.
 
 ## Specification coverage plan
 
@@ -294,13 +235,12 @@ and its status line becomes "mechanism superseded by" the new validation
 ADR, following the rule that records are superseded, not rewritten;
 ADR-0004 gains a similar pointer. L1-REG-002 is strengthened, and new L1
 requirements cover missing-required detection and effective values.
-**Decided (owner, 2026-09-26): a two-person rule for interpretation
-reviews.** Every interpretation records two different people: its author and
-an independent reviewer. An interpretation drafted with tooling or an AI
-assistant still needs both people; the tool counts as neither. The CI check
-from step 1 enforces it: an interpretation whose author and reviewer are
-missing or identical fails, and a re-review after a source change needs both
-again.
+**Revised by the owner, 2026-11-21 (ADR-0033):** one human sign-off by
+the owner plus an independent AI reviewer as a second, non-human check
+approves an interpretation. Agents draft with citations; the owner signs.
+Record draft author, owner sign-off and independent AI review, and re-review
+source changes. This supersedes the 2026-09-26 two-human requirement; planned
+review checks must enforce the revised rule, not distinct-human identity.
 
 **T2. Add explicit Appendix 9-E (derived parameter) support.** Verified
 against 106-24R1 Appendix 9-E and Table 9-11:
@@ -334,7 +274,7 @@ against 106-24R1 Appendix 9-E and Table 9-11:
   own example `C-6\DCN :DMC;` (§E.9.c) has a blank before the colon, so blanks
   around the code name must be tolerated for interpretation (while kept in
   the bytes).
-- *Errata to interpret (two-person review)*: Table E-3 prints the equality
+- *Errata to interpret (owner sign-off and independent AI review)*: Table E-3 prints the equality
   operator as `= =` while the Lex grammar recognises `==`; the figure numbers
   in the body differ from the List of Figures.
 
@@ -541,7 +481,7 @@ of T1; affects the Appendix 9-C spec fixture; no conflict. Plan:
    its cardinality (exactly one, at most one, or many). The declarations are
    built from both the "Links to:" and the "Links from:" fields; where the two
    sides disagree (Q above) the interpretation records how it was resolved,
-   under the two-person review. Resolution returns **resolved**,
+   under the owner sign-off and independent AI review. Resolution returns **resolved**,
    **unresolved**, or **ambiguous** (several candidates after the selector,
    all listed); the library never picks one.
 3. *Key uniqueness per namespace*: a key must be unique among the values of
@@ -617,8 +557,8 @@ diagram; carries out coverage item 2 for H; no conflict. Plan:
 1. *An interpretation register* — one entry per place where the standard is
    inconsistent, incomplete, or silent and the design had to choose. Each
    entry has a permanent identifier, the conflicting citations quoted
-   verbatim, the chosen behaviour, the reason, the author and reviewer
-   (ADR-0022's two-person rule), a status (accepted, or suspect as in S1),
+   verbatim, the chosen behaviour, the reason, the draft author and review evidence
+   (ADR-0033 review rule), a status (accepted, or suspect as in S1),
    and **a focused test** that pins the behaviour. A test names its entry
    with a doc-comment marker, and the trace-matrix script reports any entry
    without a test.
@@ -864,7 +804,7 @@ L1-SUM-002 revised, new L1 requirements for the transaction and the stamp,
 `G\SHA` policy, orphaned extensions, the Chapter 6 errata — each marked for
 intensive testing and deep analysis), `docs/TEST-DATA.md`, and `docs/CLI.md`
 (`stamp`).
-**Owner decisions needed:** (1) the duplicate-`G\SHA` policy — recommended:
+**Historical proposal (2026-09-26); F1 is now coordinator-decided by ADR-0034.** Owner decisions requested then: (1) the duplicate-`G\SHA` policy — recommended:
 an error, "ambiguous", never "match", stamping refused until one remains;
 (2) orphaned extensions — recommended: reject the removal unless the set
 handles them or the caller explicitly keeps orphans; (3) the Chapter 6 `=`
@@ -919,12 +859,12 @@ owner decides; the decision is then recorded in
 
 | # | Question | Why it is open | Where it lands |
 |---|----------|----------------|----------------|
-| F1 | What should happen when a document holds two or more `G\SHA` items? | "Three decisions I need way more information to understand what those mean and the concequences of our decision." (2026-09-26) — needs a detailed explanation of each possible policy and its consequences for verification, stamping, and recordings already in the field. | INT-021; L1-SUM-002; ADR-0029 |
+| F1 | **Coordinator-decided, 2026-11-21; owner may override.** Duplicate SHA items are indeterminate. | List every occurrence, preserve every byte, never claim positive verification, and refuse stamping until fixed. Review and test evidence still required. | INT-021; ADR-0034 |
 | F2 | What should happen when an edit removes an attribute that X extensions point to? | As F1: needs the options and their consequences for editing, for vendors' extensions, and for §9.5.14's "preserve it". | INT-022; L1-WRT-003; ADR-0029 |
 | F3 | Should the reader suggest `:` where `=` was typed, as in Chapter 6's own `G\DSI\N=18;`? | As F1: needs the options and the risk of a suggestion that is wrong. | INT-023; `docs/TEST-DATA.md` E3 |
 | F5 | **Decided 2026-09-26: A**, with C possible later (ADR-0030). Does `irig106-core` depend on `irig106-tmats`, or do the tools join them? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 1.6; proposal in section 2.4 (core stays structural and independent; checking packets against TMATS belongs to the layer holding both) awaits the owner. | `docs/TMATS-IN-CHAPTER-10.md` section 2.4; ROADMAP X3 |
 | F6 | **Decided 2026-09-26: yes** — L1-REL-003, a CI check added with the first new library code. Must the library build for WebAssembly (a CI check that the plain library compiles for a `wasm32` target), so studio's browser build can use it? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 4.8. ADR-0015 moved WASM *bindings* out of the library; building the plain library for WebAssembly is a separate question. The library already performs no I/O (L1-IO-001), which is the main condition. | ADR-0015; a possible L1 requirement and CI job |
-| F7 | Which packet is the "setup record configuration change event packet" that must precede a changed setup record? | Chapter 11 §11.2.7.2 requires it but no passage of Chapters 9–11 (106-24R1) names its type or content, so L1-CH10-005's check cannot be implemented without a decision (for example, that it is a Format 2 recording event packet), best confirmed against real recordings. | INT-030; L1-CH10-005; `docs/TMATS-IN-CHAPTER-10.md` section 5.1 |
+| F7 | **Coordinator-decided, 2026-11-21; owner may override.** Require verified identification; report indeterminate meanwhile. | Never guess a packet type. The event identity still needs evidence; the decision does not supply it. | INT-030; L1-CH10-005; ADR-0034 |
 | F8 | **Approved 2026-09-26 and applied**, except the notes for the other repositories (8.6), which wait for the owner to say where they are written. Approve, change, or reject the proposals of `docs/TMATS-IN-CHAPTER-10.md` section 8: use cases UC-18 to UC-20, requirements L1-VIEW-007 to 009, the release plan changes R1–R8, the documents to update (8.5), and the notes for the other repositories (8.6). | Section 8 found the planned releases predate T3–T7 and the consumer contracts; in particular L1-SUM-004's stamp (0.1) needs a transaction due in 0.5 (R2), and L1-CH10-008's differences (0.2) need a comparison due in 0.5 (R3). | `docs/TMATS-IN-CHAPTER-10.md` section 8; "Planned releases" |
 | F9 | **Adopted 2026-09-26** (map in `irig106-docs/src/coverage.md`; Chapter 5 kept at very low priority; `irig106-time` next). Adopt the plan for covering the rest of IRIG 106 ("Covering the rest of IRIG 106", below)? | The owner asked (2026-09-26) whether other chapters need a document like `docs/TMATS-IN-CHAPTER-10.md`. | the ecosystem's repositories; `irig106-docs` |
 | F4 | What does processing the TMATS setup record give the rest of Chapter 10 processing — `irig106-core`, `irig106-decode`, and the other consumers? | "When I am processing a CH.10 file what do I expect processing the TMATS packet to provide to the other parts of the processing … We need to document this in great detail." (2026-09-26) | `docs/TMATS-IN-CHAPTER-10.md` — outline approved 2026-09-26; all eight sections drafted for review |
@@ -1137,7 +1077,7 @@ this list once that repository has it.
 
 | Version | Theme | Scope |
 |---------|-------|-------|
-| before 0.1 | Restructure | The workspace layout and the reusable CLI library ("Workspace layout and a reusable CLI library", once W1–W3 are decided), with CI green before and after; no new library code until it is done. |
+| before 0.1 | Restructure | The workspace layout and the reusable CLI library (current root layout and W1-W3 as coordinator-decided, owner may override), with CI green before and after; no new library code until it is done. |
 | 0.1 | Read | Lossless parser for code-name (ASCII) TMATS, with the suspected-semicolon diagnostic (L1-READ-007). Setup records assembled from their packet fragments, with provenance, the CSDW fields, and the session rules (L1-CH10-001, 002, 004–006). The TMATS edition and recording-format version declared, and a labelled validation basis (L1-EDN-002, 005). Lookup by code name. V and X groups preserved and linked. Byte-faithful writer. `G\SHA` compute, verify, and stamp — the stamp as the minimal verified transaction it needs (L1-SUM-004) — and the flex signature. The interpretation register seeded. The WebAssembly build checked in CI (L1-REL-003). First crates.io release of both crates. Bounded time view for irigtime (L1-VIEW-007 channel fields and applicable L1-VIEW-004/005/006/008), as specified in `docs/RELEASE-0.1.md`. **`tmats` CLI**: `show` in raw, tree, and channel-summary form (the three `idmptmat` formats), `extract`, `checksum` (`G\SHA`, `--flex`), `verify`, `stamp`; every setup record in a recording; plain text and JSON output. |
 | 0.2 | Registry and views | Spec-derived registry for the baseline edition (106-24R1) covering every group in Chapter 9 (G, T, R, M, P, D, B, S, Q, C, H, V, X), with counter and link declarations. Typed accessors generated from it. Channel views resolving R through P/B/S/Q to D and C, with link states (L1-VIEW-002, 003, 006) and effective values (L1-VIEW-004): each channel's recorder settings, format definition, measurement locations, and conversions — what `irig106-decode` needs first. The channel-type table and each channel's packet data types (L1-VIEW-009), the remaining measurement time-word views (L1-VIEW-007) beyond the bounded channel subset delivered in 0.1, and the remaining labelled assumptions (L1-VIEW-008). The packet check (L1-CH10-007) and the configuration timeline (L1-CH10-008), with the attribute-by-attribute comparison it uses (L1-WRT-005). **`tmats` CLI**: `show` uses the resolved links and lists the configuration timeline; `check`; `diff`. |
 | 0.3 | Validate | Registry-driven validation in four passes: required/allowed-when rules, keywords, ranges, value types, counters and index consistency, cross-group references. Derived parameters parsed, validated, and described (L1-DER-001 to 005). User registries, severity policy, custom rules. `tmats validate`. |

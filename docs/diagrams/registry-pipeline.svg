@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 500" role="img" aria-label="Building the registry: the table extractor turns an archived Chapter 9 edition into the source layer of cited table text; one person authors each interpretation and a second person reviews it; the generator compiles source and interpretations into checked-in static tables; each interpretation is indexed in the interpretation register; five CI checks guard completeness, interpretation coverage, source-text changes, the two-person rule, and relationships stated by only some of their three sources, which need a register entry; a changed source row sends its interpretation back for re-review.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 500" role="img" aria-label="Building the registry: the table extractor turns an archived Chapter 9 edition into the source layer of cited table text; agents draft interpretations with citations; the owner signs them and an independent AI reviewer provides a second, non-human check; the generator compiles source and interpretations into checked-in static tables; each interpretation is indexed in the interpretation register; five CI checks guard completeness, interpretation coverage, source-text changes, owner sign-off and independent AI review, and relationships stated by only some of their three sources, which need a register entry; a changed source row sends its interpretation back for re-review.">
   <style>
     text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; fill: #1f2328; }
     .t { font-size: 15px; font-weight: 600; }
@@ -47,18 +47,18 @@
   <path class="ln" d="M350,115 L380,115" marker-end="url(#a)"/>
 
   <rect class="usr" x="580" y="60" width="150" height="46" rx="6"/>
-  <text class="b" x="655" y="80" text-anchor="middle">Author (person 1)</text>
-  <text class="l" x="655" y="96" text-anchor="middle">writes the rule</text>
+  <text class="b" x="655" y="80" text-anchor="middle">Agent draft</text>
+  <text class="l" x="655" y="96" text-anchor="middle">cites the source</text>
   <rect class="usr" x="580" y="124" width="150" height="46" rx="6"/>
-  <text class="b" x="655" y="144" text-anchor="middle">Reviewer (person 2)</text>
-  <text class="l" x="655" y="160" text-anchor="middle">independent check</text>
+  <text class="b" x="655" y="144" text-anchor="middle">Owner sign-off</text>
+  <text class="l" x="655" y="160" text-anchor="middle">+ independent AI check</text>
   <path class="ln" d="M550,100 L580,86" marker-end="url(#a)"/>
   <path class="ln" d="M655,106 L655,124" marker-end="url(#a)"/>
 
   <rect class="hl" x="760" y="80" width="160" height="70" rx="6"/>
   <text class="b" x="840" y="104" text-anchor="middle">Interpretation layer</text>
   <text class="l" x="840" y="122" text-anchor="middle">conditions · default + origin</text>
-  <text class="l" x="840" y="138" text-anchor="middle">both names · source hash</text>
+  <text class="l" x="840" y="138" text-anchor="middle">review evidence · source hash</text>
   <path class="ln" d="M730,147 L760,130" marker-end="url(#a)"/>
 
   <rect class="box" x="950" y="80" width="130" height="70" rx="6"/>
@@ -77,7 +77,7 @@
   <text x="216" y="318">1 Completeness — every table code name and every prose default ("Default is …") is in the registry, or excluded with a reason</text>
   <text x="216" y="342">2 Coverage — every source row has an interpretation or is explicitly marked "not yet interpreted"</text>
   <text x="216" y="366">3 Freshness — an interpretation whose source-text hash no longer matches is flagged for re-review</text>
-  <text x="216" y="390">4 Two-person rule — every interpretation names an author and a different reviewer; tooling or AI counts as neither</text>
+  <text x="216" y="390">4 Review — every interpretation records its draft author, owner sign-off and independent AI check (ADR-0033)</text>
   <text x="216" y="414">5 Relationships — "Links to:", "Links from:", and §9.5.1 b are all read; a relationship only some of them state needs a register entry</text>
   <path class="gk" d="M275,150 L275,270"/>
   <text class="gt" x="283" y="244">1</text>
@@ -92,5 +92,5 @@
   <text class="gt" x="1023" y="244">generated file</text>
   <text class="gt" x="1023" y="258">up to date</text>
 
-  <text class="l" x="20" y="482">Amber: the people and the re-review loop. Green: what CI enforces. Nothing enters the registry without a citation and two people.</text>
+  <text class="l" x="20" y="482">Amber: drafting, review and the re-review loop. Green: what CI enforces. Nothing enters the registry without citations, owner sign-off and an independent AI check.</text>
 </svg>

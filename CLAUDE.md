@@ -72,9 +72,11 @@ architecture must honour:
   registry, generated into a checked-in source file by a script (no
   `build.rs`). Every entry holds the source text as printed, with its
   citation, and a reviewed, executable interpretation; each interpretation
-  names an author and a different reviewer (two people — tooling or AI
-  counts as neither) and is re-reviewed when its source text changes
-  (ADR-0022). Validation runs four passes over effective values and never
+  records its draft author, one human sign-off by the owner, and an
+  independent AI reviewer as a second, non-human check (owner decision,
+  2026-11-21; ADR-0033 supersedes ADR-0022's two-human rule). Agents draft
+  interpretations with citations; the owner signs them. Source changes
+  require re-review. Validation runs four passes over effective values and never
   inserts defaults into the document (ADR-0023).
 - **Extensible.** Users can layer their own attribute definitions and
   overrides on the built-in registry, adjust validation severity, and add

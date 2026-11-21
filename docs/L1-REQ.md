@@ -312,9 +312,9 @@ requirements are added. The requirement entries below and the generated
 
 ### L1-REG-003
 
-**Statement**: Every registry interpretation SHALL record an author and a different, independent reviewer, both people, and a hash of the source text it interprets; an interpretation whose source text has changed SHALL be flagged for re-review.
+**Statement**: Every registry interpretation SHALL record its draft author, one human sign-off by the owner, an independent AI review as a second, non-human check, and a hash of the source text it interprets; an interpretation whose source text has changed SHALL be flagged for re-review.
 
-**Rationale**: Owner decision (2026-09-26): a two-person rule for interpretation reviews; tooling or AI drafting counts as neither person (ADR-0022). The hash catches rows changed by a new edition. Delivered from 0.2.
+**Rationale**: Owner decision (2026-11-21): agents draft interpretations with citations; one owner sign-off plus an independent AI check approves an interpretation (ADR-0033 supersedes ADR-0022's two-human rule). The hash catches rows changed by a new edition. Delivered from 0.2.
 
 **Verification Method**: Inspection (I)
 
@@ -336,7 +336,7 @@ requirements are added. The requirement entries below and the generated
 
 ### L1-REG-006
 
-**Statement**: The project SHALL keep an interpretation register with one entry for every place where the standard is inconsistent, incomplete, or silent and the design chose a behaviour, each entry recording the sources quoted verbatim, the chosen behaviour and its reason, its design status, its author and reviewer, and at least one test that names it; the library SHALL rely on no interpretation that the register does not list.
+**Statement**: The project SHALL keep an interpretation register with one entry for every place where the standard is inconsistent, incomplete, or silent and the design chose a behaviour, each entry recording the sources quoted verbatim, the chosen behaviour and its reason, its design status, its draft author, owner sign-off and independent AI review, and at least one test that names it; the library SHALL rely on no interpretation that the register does not list.
 
 **Rationale**: The tables are not mechanically complete — for example `R-x\CDLN-n` omits Q from its "Links to:" while `Q-d\DLN` lists it (Tables 9-4 and 9-10) — and interpretations must be reviewable and tested in one place (team review T5; ADR-0022, ADR-0027). Delivered from 0.1 (`docs/INTERPRETATIONS.md`, generated from the registry from 0.2).
 
@@ -643,7 +643,7 @@ requirements are added. The requirement entries below and the generated
 
 **Statement**: The library SHALL verify an embedded `G\SHA` value and report whether it matches, does not match, is absent, names an unknown algorithm, or is malformed; it SHALL recognise the `G\SHA` code name in any letter case and never inside another item's value, SHALL report an item with no following semicolon as an error with the status malformed, and SHALL report upper-case hexadecimal digits that otherwise match as a match with a warning.
 
-**Rationale**: UC-15; ADR-0014. The excluded range ends at "the following semicolon" (Table 9-2), TMATS is not case sensitive (§9.4.2), and the digest is "64 lower-case hexadecimal characters" (Chapter 6 §6.2.3.11 f) (team review T7; ADR-0029; INT-018 to INT-020). Two or more `G\SHA` items are open (follow-up F1). Delivered in 0.1.
+**Rationale**: UC-15; ADR-0014. The excluded range ends at "the following semicolon" (Table 9-2), TMATS is not case sensitive (§9.4.2), and the digest is "64 lower-case hexadecimal characters" (Chapter 6 §6.2.3.11 f) (team review T7; ADR-0029; INT-018 to INT-020). Coordinator-decided F1 (2026-11-21, owner may override): duplicate SHA items are indeterminate; list every occurrence, preserve bytes, never claim positive verification, and refuse stamping until fixed (ADR-0034). Delivered in 0.1.
 
 **Verification Method**: Test (T)
 

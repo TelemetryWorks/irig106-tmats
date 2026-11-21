@@ -1,5 +1,5 @@
 ---
-status: accepted; three questions open as owner follow-ups F1–F3
+status: accepted; F1 superseded by coordinator decision 0034 (2026-11-21); F2–F3 remain open
 date: 2026-09-26
 decision-makers: Joey
 ---

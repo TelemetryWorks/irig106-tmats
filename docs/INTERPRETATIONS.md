@@ -23,10 +23,15 @@ listed here.
   while documenting, not yet reviewed by the owner), or `open` (no behaviour chosen;
   an owner follow-up in `docs/ROADMAP.md`, "Follow-ups for the owner" — the
   implementation must not choose one).
-- **Review** is ADR-0022's two-person rule for the executable
-  interpretation: an author and a different reviewer, both people; tooling
-  or AI drafting counts as neither. Until both are recorded the review is
-  `pending`.
+- **Review** follows ADR-0033 (owner decision, 2026-11-21), superseding
+  ADR-0022's two-human rule. Agents draft each interpretation with citations;
+  one human sign-off by the owner plus an independent AI reviewer as a
+  second, non-human check approves it. Record draft author, owner sign-off
+  and independent AI review with their dates and evidence; review stays
+  `pending` until both checks are recorded. Re-review changed source text.
+- **Coordinator-decided** design entries record coordinator direction and
+  its date; the owner may override them. Such direction does not substitute
+  for the interpretation's owner sign-off, independent AI review or evidence.
 - **Test** names the focused test that pins the behaviour. The test carries
   a `/// Interpretations: INT-NNN` doc comment directly above `#[test]`;
   `scripts/build-trace-matrix.py` lists every entry and the tests that name
@@ -50,7 +55,9 @@ listed here.
      each archived edition the entry touches; and, where local sample
      recordings exercise it, a check against real data (`docs/TEST-DATA.md`;
      local only, never in CI). All carry the entry's marker.
-  3. **Both reviewers** (Review) read the analysis as well as the rule.
+  3. **The owner and independent AI reviewer** (Review) check the analysis
+     as well as the rule. Updating decision metadata does not mark that work
+     complete or waive the analysis and tests.
   The trace matrix shows each entry's analysis and tests; an entry with
   either missing is not ready.
 - **Analysis** links the written analysis, or says `not yet written`.
@@ -468,13 +475,13 @@ Complete records govern (INT-028); incomplete and ambiguous records do not by de
 - Table 9-2 and Chapter 6 §6.2.3.11 f (quoted in INT-018 and INT-019) speak of one item: "If the TMATS includes a G\SHA code name".
 - Table 9-2: the code name `G\SHA` carries no index.
 
-**Behaviour**: **Open — owner follow-up F1.** No behaviour is chosen until the owner decides; the implementation must not pick one.
+**Behaviour**: **Coordinator-decided F1, 2026-11-21; owner may override.** Reject duplicate SHA items as indeterminate; list every occurrence, preserve every byte, never claim positive verification, and refuse stamping until the input is fixed (ADR-0034).
 
 **Reason**: The standard does not say which item, if any, holds the checksum, or which text is excluded, when there are several.
 
-**Design**: open (follow-up F1, 2026-09-26) · **Review**: pending · **Origin**: T7
+**Design**: coordinator-decided (F1, 2026-11-21; owner may override) · **Review**: pending · **Origin**: T7
 
-**Test**: `duplicate_g_sha_items` (written once F1 is decided)
+**Test**: `duplicate_g_sha_items` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -640,13 +647,13 @@ Findings: SRCC 1 on the first record; SRCC 0 with a changed configuration (an un
 - Chapter 11 §11.2.7.2: "Prior to the new setup record being committed to the stream, a setup record configuration change event packet shall be inserted into the stream."
 - No other passage of Chapter 10, Chapter 11, or Chapter 9 (106-24R1) names the packet type, format, or content of that event packet.
 
-**Behaviour**: **Open — owner follow-up F7.** Until decided, L1-CH10-005's check for the event packet is not implemented, and a changed setup record is reported without judging whether the event packet was present.
+**Behaviour**: **Coordinator-decided F7, 2026-11-21; owner may override.** Require verified event identification and report indeterminate meanwhile; never guess a packet type (ADR-0034). This does not identify the event packet or complete L1-CH10-005's check.
 
 **Reason**: Checking for a packet the standard does not identify would rest on a guess (for example, that it is a Format 2 recording event packet).
 
-**Design**: open (follow-up F7, 2026-09-26) · **Review**: pending · **Origin**: F4 section 5
+**Design**: coordinator-decided (F7, 2026-11-21; owner may override) · **Review**: pending · **Origin**: F4 section 5
 
-**Test**: `configuration_change_event_packet` (written once F7 is decided)
+**Test**: `configuration_change_event_packet` (planned; event identification still unverified)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
