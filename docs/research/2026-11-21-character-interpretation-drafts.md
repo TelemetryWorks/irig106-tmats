@@ -74,3 +74,58 @@ stays planned only. Cross-edition and relevant handbook/sample analysis
 remain outstanding; no real-data evidence is claimed. Both interpretations
 need independent AI review and Joey's sign-off under ADR-0033 before use;
 full analysis and tests are additional implementation gates.
+
+## Review amendments — 2026-11-21
+
+The baseline above is retained as the original draft. This addendum and the
+amended register/requirements replace its no-control-finding policy and
+three-prefix marker set; they do not claim completed analysis or approval.
+The owner relayed the independent AI check's **CONCERNS** on PR #15 head
+`0c3174a25da79f413bee4bf2f9c7b62356366ce8` on 2026-11-21 and requested these
+amendments before sign-off. Recheck of the amendments and owner sign-off
+remain pending under ADR-0033.
+
+### INT-036: expose omissions without changing semantic projection
+
+Keep the proposed ASCII omission set and original-byte retention, citing
+106-24R1 Chapter 9 sections 9.4.1/9.4.2. Emit a located information finding
+when omitted controls occur between printable bytes inside a code name;
+`CO\r\nMMENT` therefore exposes the source CR/LF, not just COMMENT.
+Leading/trailing name layout stays silent except for NUL: one information
+finding per code-name or value field containing NUL, identifying all its
+locations even at field edges. The internal-name and per-field NUL rules
+apply independently when both conditions hold. Layout-only regions and EOF
+padding are not fields and retain INT-035's approved diagnostic policy.
+
+Most zero-interleaved fields now have an explicit NUL finding without a
+UTF-16 guess; it remains an information finding, not proof of an encoding or
+an automatic rejection. COMMENT/description values lose TAB and other
+controls for interpretation (`a\tb` becomes `ab`, never `a b`). Human display
+must use raw text, with any display decoding/escaping explicitly labelled.
+This avoids presenting joined words as the original text.
+
+### INT-037: assembled-text markers and the Latin-1 trade-off
+
+The [Unicode BOM table](https://www.unicode.org/faq/utf_bom.html#BOM) also
+lists UTF-32BE `00 00 FE FF` and UTF-32LE `FF FE 00 00`. Recognize the former
+explicitly; the latter is already caught by `FF FE`. These signatures still
+do not prove a complete encoding and never imply Unicode TMATS support.
+
+Offset zero is the first **assembled TMATS text** byte. ADR-0025 removes each
+Format 1 packet's CSDW and framing before joining fragments; recognize markers
+even across packet boundaries, before ASCII controls or padding are omitted.
+For standalone text it is the first supplied byte. A marker after CR/LF or
+NUL padding is midstream, with ordinary high-byte/field findings, not a
+leading marker; do not strip padding and retry detection.
+
+The Chapter 9 section 9.4.1 7-bit ASCII policy has a deliberate cost: a value
+containing a Latin-1 degree sign (`Temp °C`, byte B0) is **Invalid**, with no
+usable interpreted value. ADR-0003's explicitly labelled on-request
+`as_latin1` and lossy (`as_str_lossy`) views still allow callers to display
+retained bytes. That display does not validate the field or transcode the
+stored source. Owner sign-off must accept this semantic/display distinction.
+
+The amended TEST-DATA cases cover internal-name locations, quiet edge layout,
+per-field NUL aggregation, overlapping finding conditions, raw human display,
+Latin-1 Invalid versus display, UTF-32 markers, all fragment split points and
+markers after padding. They remain planned cases, not executable results.

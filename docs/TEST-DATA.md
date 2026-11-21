@@ -176,18 +176,24 @@ to the parser. Raw and interpreted expectations must be independently set.
 
 | Planned check | Fixture or stimulus | Expected observation under the proposals | Requirement |
 | --- | --- | --- | --- |
-| `control_projection_preserves_raw_spans` | `CO\r\nMMENT:v;` | Interpreted name COMMENT; raw name span `[0, 9)`; contributing source offsets `[0,1,4,5,6,7,8]`; no invented raw contiguous spelling | L3-READ-011, L3-READ-012 |
-| `crlf_before_name_is_not_a_delimiter` | `\r\nCOMMENT:v;` and `\rCOMMENT:v;` | Prefix controls omitted for name meaning; one attribute, full original bytes retained | L3-READ-011, L3-READ-013 |
-| `controls_in_values_are_not_spaces` | `COMMENT:a\tb;` and `COMMENT:a\r\nb;` | Interpreted value ab under INT-036; raw control bytes retained; no automatic space or terminator insertion | L3-READ-011, L3-READ-012 |
+| `control_projection_preserves_raw_spans` | `CO\r\nMMENT:v;` | Interpreted name COMMENT; raw name span `[0, 9)`; contributing source offsets `[0,1,4,5,6,7,8]`; located information finding on omitted CR/LF `[2, 4)`; no invented raw contiguous spelling | L3-READ-011, L3-READ-012, L3-READ-017 |
+| `crlf_before_name_is_not_a_delimiter` | `\r\nCOMMENT:v;` and `\rCOMMENT:v;` | Prefix controls omitted for name meaning; no control finding for leading layout; one attribute, full original bytes retained | L3-READ-011, L3-READ-013, L3-READ-017 |
+| `controls_in_values_are_not_spaces` | `COMMENT:a\tb;` and `COMMENT:a\r\nb;` | Interpreted value ab under INT-036; raw control bytes retained and used for human display (label any escaping/decoding); no automatic space or terminator insertion | L3-READ-011, L3-READ-012 |
 | `code_name_and_value_blanks_differ` | `  COMMENT :  value  ;` | Name COMMENT after surrounding-space trim; value keeps both leading and trailing spaces; comparator does not trim | L3-READ-013 |
 | `embedded_name_space_is_not_repaired` | `COM MENT:v;` | Embedded ordinary space retained for later invalid-code finding; never silently change it to COMMENT | L3-READ-013 |
-| `projected_empty_value_is_still_present` | `COMMENT:\x00;` versus `COMMENT:;` | Both have a present zero-length interpreted value; different raw value spans/bytes; neither becomes absent | L3-READ-011, L3-READ-013 |
+| `projected_empty_value_is_still_present` | `COMMENT:\x00;` versus `COMMENT:;` | Both have a present zero-length interpreted value; different raw value spans/bytes; NUL case alone has one information finding at `[8, 9)`; neither becomes absent | L3-READ-011, L3-READ-013, L3-READ-018 |
 | `character_classes_keep_int035_run_policy` | `;\t\r\n\x7F;` | One information finding over `[0, 6)`; preserve bytes; no extra control findings | L3-READ-014 |
 | `all_layout_eof_suffix_is_silent` | Terminated COMMENT followed by space/NUL/SUB/DEL/CR/LF | Retain suffix silently; never treat a colon/high byte as part of that layout-only class | L3-READ-014 |
-| `high_bytes_are_not_silently_decoded` | COMMENT value containing FF or valid UTF-8 multibyte text | Located non-ASCII finding; raw bytes retained; affected field has no usable explicit interpretation, with no implicit UTF-8/Latin-1 conversion | L3-READ-016 |
-| `leading_encoding_marker_blocks_semantic_lookup` | Each of EF BB BF, FE FF, FF FE at offset zero plus data | Located unsupported-marker finding and retained source; no semantic lookup, stripping or transcoding | L3-READ-015 |
+| `high_bytes_are_not_silently_decoded` | COMMENT value containing FF or valid UTF-8 multibyte text | Located non-ASCII finding; raw bytes retained; affected field is Invalid with no usable interpreted value, with no implicit UTF-8/Latin-1 conversion | L3-READ-016 |
+| `leading_encoding_marker_blocks_semantic_lookup` | Each of EF BB BF, FE FF, FF FE, 00 00 FE FF and FF FE 00 00 at assembled-text offset zero plus data | Located unsupported-marker finding and retained source; no semantic lookup, stripping or transcoding | L3-READ-015 |
 | `partial_or_midstream_marker_is_not_a_leading_bom` | EF BB without BF; EF BB BF after a terminated COMMENT | Ordinary located high-byte findings, not a silently removed leading marker; retain source | L3-READ-015, L3-READ-016 |
-| `unmarked_zero_patterns_do_not_select_encoding` | Unmarked ASCII bytes interleaved with NUL | No automatic UTF-16 selection; raw ASCII/control proposal applies, explicitly not proof of original encoding | L3-READ-011, L3-READ-015 |
+| `unmarked_zero_patterns_do_not_select_encoding` | Unmarked ASCII bytes interleaved with NUL | No automatic UTF-16 selection; raw ASCII/control proposal applies with one NUL information finding per affected field (plus internal-name omission findings where applicable), explicitly not proof of original encoding | L3-READ-011, L3-READ-015, L3-READ-018 |
+| `name_edge_layout_stays_silent` | `\tCOMMENT\r\n:v;` | No control finding for name-edge layout; NUL is tested separately | L3-READ-017 |
+| `nul_fields_have_one_information_finding_each` | `\x00\x00COMMENT:v\x00x\x00;` | Exactly one NUL information finding for name at `[0, 2)` and one for value identifying `[11, 12)` and `[13, 14)`; preserve all bytes | L3-READ-018 |
+| `internal_name_nul_rules_both_apply` | `CO\x00MMENT:v;` | One NUL-field information finding and an internal-name omission information finding, both located at `[2, 3)`; no encoding guess | L3-READ-017, L3-READ-018 |
+| `latin1_display_does_not_validate_field` | `COMMENT:Temp \xB0C;` (Latin-1 degree sign) | Value is Invalid with no usable interpreted value; raw bytes and explicitly labelled on-request `as_latin1`/lossy display remain available | L3-READ-012, L3-READ-016 |
+| `split_marker_is_recognised_after_assembly` | Every recognized marker split at each internal byte boundary across Format 1 fragment packets, each with its own CSDW | Remove packet framing/CSDWs and assemble text first; same located unsupported-marker finding and blocked semantic lookup as unsplit text, with fragment provenance | L3-READ-015 |
+| `marker_after_padding_is_midstream` | `\r\n\xEF\xBB\xBFCOMMENT:v;` and `\x00\xEF\xBB\xBFCOMMENT:v;` | High-byte findings and Invalid affected field, not a leading-marker finding or document-wide marker gate; NUL variant additionally has one NUL-field information finding; no padding skip/retry | L3-READ-015, L3-READ-016, L3-READ-018 |
 
 The byte-class tests also enumerate all 256 possible byte inputs to the
 projection/comparator helpers without asserting they are conforming field
@@ -198,9 +204,11 @@ locations. The `[0, 6)` run comprises two terminated regions, including the
 TAB/CR/LF/DEL bytes, not six separate diagnostics.
 
 Known marker handling precedes semantic control omission; a BOM-marked
-UTF-16-like stream must not become usable by deleting its zeros. Unmarked
-lookalikes remain an explicitly documented limitation, not detected encoding
-facts. No annotated Appendix 9-E text is a conforming-file fixture here.
+UTF-16/32-like stream must not become usable by deleting its zeros. Offset
+zero is the first assembled text byte after Format 1 CSDW removal, never
+packet/file offset zero. Unmarked lookalikes get the NUL-field findings
+without an encoding guess; incomplete encoding detection remains a limitation.
+No annotated Appendix 9-E text is a conforming-file fixture here.
 Keep the future line-break hint on original bytes: losing CR/LF from an
 interpreted value must not lose its raw location or implement that hint now.
 
