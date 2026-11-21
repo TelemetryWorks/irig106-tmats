@@ -1,8 +1,8 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundation batch drafted for review (family 2, batch 1).**
+> **Status: foundation and scanner-framing batches drafted (family 2, batches 1-2).**
 > These are implementation obligations, not existing interfaces or completed
-> tests. Remaining L2/L3 derivations follow in separate feature batches.
+> tests. INT-035 review and remaining L2/L3 derivations follow before implementation.
 
 ## Purpose
 
@@ -123,3 +123,49 @@ to allocate source buffers of those sizes.
 Check access to an empty source, exact-end ranges and a shorter source than
 the constructor length. This does not define cross-document item identities
 or edit revision rules, which need their own later requirements.
+
+
+## Scanner batch 2: implementation obligations
+
+The recovery entries below depend on proposed INT-035. Acceptance cases
+are specified in TEST-DATA.md; none is an implemented or traced test yet.
+
+**L3-READ-004** · Parent: L2-READ-003 · Verification: T
+*For each semicolon-terminated candidate region, the scanner SHALL search for the first colon only within that region, excluding the semicolon, and retain separate source ranges for the complete region, code-name bytes, value bytes and both delimiters when present.*
+
+A colon in a later region must not make an earlier missing-colon region
+appear well formed. Component spans identify raw bytes, not a claim that
+the code name or its value is semantically valid.
+
+**L3-READ-005** · Parent: L2-READ-003 · Verification: T
+*Bytes after the first colon and before the terminating semicolon SHALL remain the raw value, including later colons, spaces and line endings; neither code-like text nor quote characters SHALL create an alternate terminator or an implicit attribute split.*
+
+A future suspected-semicolon finding under L1-READ-007 may suggest an edit;
+it must not change framing or apply it. This does not add quoted strings or
+an escape syntax to TMATS delimiters.
+
+**L3-READ-006** · Parent: L2-READ-004 · Verification: T
+*When a candidate region has a semicolon but no colon, the reader SHALL retain that region as uninterpreted source material with a diagnostic spanning it and resume at the byte after that semicolon; a nonempty final region not classified as permitted layout and lacking a semicolon SHALL be retained with a missing-terminator finding and SHALL NOT be fabricated into a terminated attribute.*
+
+This is proposed INT-035. Permitted inter-attribute layout must be classified
+by its own character rules before claiming a layout-only suffix is malformed.
+Those rules and full malformed code-name diagnostics are not settled here.
+
+**L3-READ-007** · Parent: L2-READ-004 · Verification: T
+*The framing result SHALL carry both retained source material and framing diagnostics with byte ranges in that source; one malformed region SHALL NOT erase earlier or later retained material or replace its findings with empty success.*
+
+For assembled setup records, later provenance requirements map these ranges
+to packets. This entry does not declare an incomplete record usable.
+
+**L3-READ-008** · Parent: L2-READ-005 · Verification: T
+*ASCII comparison SHALL map byte values `0x61..=0x7A` to their corresponding `0x41..=0x5A` values for comparison only and leave every other byte unchanged; it SHALL NOT trim, decode/re-encode or alter the source as a side effect.*
+
+Test mixed case, punctuation and high bytes as comparator inputs. Equality
+of raw comparator inputs does not validate their attribute semantics.
+
+**L3-ROB-003** · Parent: L2-ROB-002 · Verification: T
+*The framing cursor SHALL remain within the source bounds, consume each discovered semicolon before the next region, and terminate at EOF; on an input of length N it SHALL finish after at most N+1 region steps, including empty-region handling, without allocating an N-sized fixture merely to test integer limits.*
+
+The bound concerns region advancement, not an unapproved performance budget
+or a claim about all subsequent parsing/validation work. Empty input and
+runs consisting solely of semicolons must terminate without repeated state.

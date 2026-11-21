@@ -86,6 +86,37 @@ attach them to these prose cases or to legacy tests that assert a different
 contract. Coverage of these foundations does not complete their broader L1
 parents: later feature batches still supply the remaining decomposition.
 
+## Family 2 batch 2: scanner framing acceptance specifications
+
+**Status: planned, not executable tests.** Framing recovery depends on
+proposed INT-035 and its owner sign-off/independent AI review. Only framing
+and ASCII comparison are covered here; raw code-name validity, character
+meaning and permitted layout require subsequent derivations before parser
+implementation. The case names below are prospective test names.
+
+The valid fixture code COMMENT comes from 106-24R1 Chapter 9 section 9.4.2,
+page 9-3; framing rules are in the same section, page 9-2. Malformed fixtures
+are deliberately nonconforming recovery cases, not valid configurations.
+
+| Planned check | Fixture or stimulus | Required observation | Requirement |
+| --- | --- | --- | --- |
+| `first_colon_and_semicolon_keep_raw_ranges` | `COMMENT:a:b;COMMENT:c;` | Two raw regions; first value is `a:b`; component and delimiter spans select exact original bytes | L3-READ-004, L3-READ-005 |
+| `missing_colon_recovers_at_semicolon` | `BROKEN;COMMENT:ok;` | Retain first region with missing-colon finding; do not borrow the later colon; retain later COMMENT region | L3-READ-004, L3-READ-006, L3-READ-007 |
+| `unterminated_suffix_is_retained` | `COMMENT:ok;BROKEN` | Earlier material retained; suffix retained with missing-terminator finding; no fabricated delimiter | L3-READ-006, L3-READ-007 |
+| `code_like_value_text_does_not_split` | `COMMENT:a COMMENT:b;` | One raw value containing the later colon/code-like text; no silent split or edit | L3-READ-005 |
+| `quoted_semicolon_does_not_escape_framing` | Nonconforming `COMMENT:"a;b";` | Actual semicolon still ends the first raw region; quotes do not invent escape semantics or swallow the later malformed region | L3-READ-004, L3-READ-005, L3-READ-006 |
+| `ascii_comparison_changes_no_source` | Mixed ASCII letter case, spaces, punctuation and high bytes as comparator inputs | Only ASCII letters fold for comparison; lengths and all source bytes unchanged; no semantic-validity assertion | L3-READ-008 |
+| `framing_retains_findings_and_source` | Malformed and well-framed regions interleaved | Every raw byte retained; findings point inside source and do not erase retained material | L3-READ-007 |
+| `framing_cursor_terminates` | Empty source, runs of semicolons, missing-colon runs, unterminated suffix and generated arbitrary bytes | Cursor advances or finishes, never exceeds bounds or revisits a boundary; at most N+1 region steps | L3-ROB-003 |
+
+Expected byte ranges are computed from hand-written fixture positions, not
+from the scanner under test. The raw-source equality oracle is the original
+input vector. Generated arbitrary bytes test framing/termination and do not
+validate those bytes as compliant TMATS. Layout-only suffix expectations wait
+for the character-rule batch; do not turn deferred classification into a
+new malformed-input default. Use INT-035 markers on actual recovery tests
+when they are implemented, alongside their L3 requirement markers.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample

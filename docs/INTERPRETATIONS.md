@@ -712,3 +712,31 @@ Findings: SRCC 1 on the first record; SRCC 0 with a changed configuration (an un
 **Test**: `defaulted_fragment_positions_are_ambiguous`
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+
+## Scanner recovery
+
+### INT-035
+
+**Title**: Recover malformed framing only at an actual semicolon
+
+**Sources**:
+- 106-24R1 Chapter 9 section 9.4.2, page 9-2: "The code name appears first, delimited by a colon."
+- Same section/page: "Semicolons are not allowed in any data item"; the section specifies semicolon termination.
+- L1-READ-001/003 and ADR-0002 require retained original bytes, located findings and continued recovery. These are product policies, not additional standard text.
+
+**Behaviour**: **Proposed.** Bound candidate regions by actual semicolons and search for the first colon inside each region only. A missing-colon region remains uninterpreted source with a located finding; resume after its semicolon. A final non-layout suffix without a semicolon remains retained and unterminated with a finding. Do not invent delimiters, split on code-like value text, apply edits or return empty success in place of retained material and findings. Permitted-layout classification remains a separate prerequisite.
+
+**Reason**: The standard describes valid framing but not recovery. An actual semicolon is a reproducible boundary that avoids borrowing another region's colon; this policy preserves uncertainty rather than claiming the writer's intent was reconstructed.
+
+**Design**: proposed (2026-11-21; owner sign-off required) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: pending · **Origin**: family 2 batch 2
+
+**Test**: `missing_colon_recovers_at_semicolon`, `unterminated_suffix_is_retained`, `code_like_value_text_does_not_split` (planned, not yet written)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Draft analysis**: [baseline draft and remaining work](research/2026-11-21-scanner-framing-recovery.md)
+
+The baseline draft does not complete cross-edition/handbook/sample analysis
+or testing. Its existence must not be read as implementation readiness;
+owner sign-off and the independent AI review remain outstanding.
