@@ -67,3 +67,36 @@ The independent AI check and owner sign-off must be recorded under ADR-0033.
 Full analysis, character/layout prerequisites and the specified tests remain
 implementation gates. Keep **Analysis** at `not yet written` in the register
 until the complete required analysis is available; this file is a draft.
+
+## Independent-check concerns incorporated — 2026-11-21
+
+This addendum narrows the proposal; the earlier baseline discussion is not
+an owner sign-off or a completed character specification. Section 9.4.1 is
+now explicit in INT-035's Sources alongside section 9.4.2. Readability CR/LF
+and discarded nonprintables do not authorize dropping original source bytes
+or treating line endings as attribute terminators.
+
+Framing cannot tell whether a semicolon was a mistaken part of a damaged
+value. It can create a plausible prefix and false later candidate boundaries;
+code-name-validity, duplicate and unknown-code findings are the defence.
+They cannot guarantee detection of every plausible but wrong fragment.
+A later colon in `G\COM Time 12:30;` is a framing separator, but that does
+not validate the code name: its finding belongs to the code-name batch.
+
+`X:;` has a present zero-length raw value, not an absent item. That fact
+alone does not validate X as a known attribute. `:v;` must produce an empty-
+code-name finding. Unterminated source, even with a colon, stays retained
+but never becomes an explicit lookup value; this agrees with INT-019.
+
+An EOF suffix consisting solely of NUL/0x1A/space padding must not get a
+missing-terminator finding. The character batch still needs CR/LF inside or
+before code names, a lone CR, UTF-8 BOM and UTF-16 handling. Nonprintable
+meaning and padding must not silently alter source bytes or excuse a real
+unterminated attribute. The comparator remains a byte-folding operation;
+code-name interpretation ignores surrounding blanks first, as L1-READ-006
+requires (Appendix 9-E section E.9.c's `C-6\DCN :DMC;`).
+
+**Open owner question:** should empty and layout-only terminated regions,
+including `;;` and `\r\n;`, produce a finding or remain silent? Both
+preserve bytes and advance. No choice is adopted; owner sign-off remains
+pending on the amended proposal and its outstanding prerequisites.

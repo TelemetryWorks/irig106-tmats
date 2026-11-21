@@ -16,8 +16,9 @@ specifies future release mechanics; it does not claim the workflow exists.
 | `irig106-tmats` | library | yes | a dependency: `irig106-tmats = "0.1"` |
 | `irig106-tmats-cli` | binary `tmats` | yes | `cargo install irig106-tmats-cli` → `tmats` |
 
-Both live in this repository as one Cargo workspace (library at the root, CLI
-in `irig106-tmats-cli/`). Prebuilt `tmats` binaries for Windows, Linux, and
+The release target after the owner-directed restructure (ADR-0035) is a
+virtual workspace: library in `crates/irig106-tmats/`, CLI in
+`apps/irig106-tmats-cli/`. The current files have not moved in this docs PR. Prebuilt `tmats` binaries for Windows, Linux, and
 macOS are attached to each GitHub release for users without a Rust toolchain
 (the way `idmptmat.exe` is distributed today).
 
@@ -44,8 +45,9 @@ and is not a functional CLI release:
 
 - The version is declared once, in `[workspace.package] version`, and both
   crates use `version.workspace = true`.
-- The CLI depends on the library with an **exact** requirement next to the
-  path: `irig106-tmats = { path = "..", version = "=X.Y.Z" }`. A `tmats`
+- The virtual root declares the library in `[workspace.dependencies]` with
+  `path = "crates/irig106-tmats"` and exact `version = "=X.Y.Z"`; the CLI
+  inherits it with `irig106-tmats = { workspace = true }`. A `tmats`
   installed from crates.io is therefore always built against the matching
   library, and a mismatched pair cannot be published.
 - One git tag (`vX.Y.Z`) and one `CHANGELOG.md` cover both; each entry says

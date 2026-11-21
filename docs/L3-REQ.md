@@ -44,11 +44,13 @@ The current prototype's similarly purposed APIs are not accepted evidence.
 ### Workspace and CLI boundaries
 
 **L3-REL-001** · Parent: L2-REL-001 · Verification: T
-*The root manifest SHALL keep workspace members `.` and `irig106-tmats-cli`, declare the real-release version once in `workspace.package.version`, and have both packages inherit it; the CLI dependency SHALL use `path = ".."` and the exact `=X.Y.Z` version matching that shared value.*
+*The root Cargo.toml SHALL contain workspace configuration, not a `[package]`, with members `crates/irig106-tmats` and `apps/irig106-tmats-cli`; both packages SHALL inherit `workspace.package.version`, and the root `[workspace.dependencies]` entry for `irig106-tmats` SHALL use `path = "crates/irig106-tmats"` and the matching exact `=X.Y.Z` version, inherited by the CLI with `workspace = true`.*
 
-The future manifest check reads the actual TOML structure, including the CLI
-library and binary targets, rather than testing whether a version substring
-happens to appear somewhere in the file. Fuzz remains outside the workspace.
+The future manifest check reads actual TOML structures and inheritance,
+including the CLI library and binary targets, rather than matching a version
+substring. Fuzz remains outside the workspace; its dependency path, trace
+source roots and CI/package paths must be reviewed during the restructure.
+This is the owner-decided target (ADR-0035), not a claim that files moved.
 
 **L3-CLI-001** · Parent: L2-CLI-001 · Verification: T
 *The CLI library SHALL export `run(args, stdout, stderr) -> ExitClass`; `args` and both writable streams SHALL be supplied by the host, and returning an `ExitClass` SHALL leave the host running on successful and unsuccessful invocations.*
@@ -136,20 +138,25 @@ are specified in TEST-DATA.md; none is an implemented or traced test yet.
 A colon in a later region must not make an earlier missing-colon region
 appear well formed. Component spans identify raw bytes, not a claim that
 the code name or its value is semantically valid.
+A zero-length value span in `X:;` is present, not an absent item; `:v;`
+requires an empty-code-name finding. These are framing distinctions, not
+approval of `X` as a known attribute or of an empty value for any definition.
 
 **L3-READ-005** · Parent: L2-READ-003 · Verification: T
-*Bytes after the first colon and before the terminating semicolon SHALL remain the raw value, including later colons, spaces and line endings; neither code-like text nor quote characters SHALL create an alternate terminator or an implicit attribute split.*
+*Bytes after the first colon and before the terminating semicolon SHALL remain the raw value, including later colons, spaces and line endings; CR/LF SHALL NOT terminate an attribute, and neither code-like text nor quote characters SHALL create an alternate terminator or an implicit attribute split.*
 
 A future suspected-semicolon finding under L1-READ-007 may suggest an edit;
 it must not change framing or apply it. This does not add quoted strings or
 an escape syntax to TMATS delimiters.
 
 **L3-READ-006** · Parent: L2-READ-004 · Verification: T
-*When a candidate region has a semicolon but no colon, the reader SHALL retain that region as uninterpreted source material with a diagnostic spanning it and resume at the byte after that semicolon; a nonempty final region not classified as permitted layout and lacking a semicolon SHALL be retained with a missing-terminator finding and SHALL NOT be fabricated into a terminated attribute.*
+*When a nonempty candidate region not classified as permitted layout has a semicolon but no colon, the reader SHALL retain that region as uninterpreted source material with a diagnostic spanning it and resume at the byte after that semicolon; a nonempty final region not classified as permitted layout and lacking a semicolon SHALL be retained with a missing-terminator finding and SHALL NOT be fabricated into a terminated attribute or exposed as an explicit value by lookups.*
 
 This is proposed INT-035. Permitted inter-attribute layout must be classified
 by its own character rules before claiming a layout-only suffix is malformed.
-Those rules and full malformed code-name diagnostics are not settled here.
+The empty/layout-only terminated-region policy is an open owner question
+(INT-035). Full malformed code-name diagnostics remain a prerequisite,
+including rejection of a missing separator masked by a later colon.
 
 **L3-READ-007** · Parent: L2-READ-004 · Verification: T
 *The framing result SHALL carry both retained source material and framing diagnostics with byte ranges in that source; one malformed region SHALL NOT erase earlier or later retained material or replace its findings with empty success.*
@@ -158,10 +165,14 @@ For assembled setup records, later provenance requirements map these ranges
 to packets. This entry does not declare an incomplete record usable.
 
 **L3-READ-008** · Parent: L2-READ-005 · Verification: T
-*ASCII comparison SHALL map byte values `0x61..=0x7A` to their corresponding `0x41..=0x5A` values for comparison only and leave every other byte unchanged; it SHALL NOT trim, decode/re-encode or alter the source as a side effect.*
+*ASCII comparison SHALL map byte values `0x61..=0x7A` to their corresponding `0x41..=0x5A` values for comparison only and leave every other byte unchanged; the comparator itself SHALL NOT trim, decode/re-encode or alter the source as a side effect.*
 
 Test mixed case, punctuation and high bytes as comparator inputs. Equality
-of raw comparator inputs does not validate their attribute semantics.
+of raw comparator inputs does not validate their attribute semantics. Before
+comparison, code-name interpretation must ignore surrounding blanks per
+L1-READ-006 while retaining the full raw span; this is separate from the
+byte-comparator operation. The character batch must handle CR/LF and other
+nonprintables without conflating them with ordinary value blanks.
 
 **L3-ROB-003** · Parent: L2-ROB-002 · Verification: T
 *The framing cursor SHALL remain within the source bounds, consume each discovered semicolon before the next region, and terminate at EOF; on an input of length N it SHALL finish after at most N+1 region steps, including empty-region handling, without allocating an N-sized fixture merely to test integer limits.*

@@ -721,11 +721,32 @@ Findings: SRCC 1 on the first record; SRCC 0 with a changed configuration (an un
 **Title**: Recover malformed framing only at an actual semicolon
 
 **Sources**:
-- 106-24R1 Chapter 9 section 9.4.2, page 9-2: "The code name appears first, delimited by a colon."
-- Same section/page: "Semicolons are not allowed in any data item"; the section specifies semicolon termination.
-- L1-READ-001/003 and ADR-0002 require retained original bytes, located findings and continued recovery. These are product policies, not additional standard text.
+- 106-24R1 Chapter 9 section 9.4.1, page 9-2: CR/LF may improve readability; nonprintable characters are discarded before translation into configuration information. Original bytes remain retained under ADR-0002.
+- Section 9.4.2, page 9-2: "The code name appears first, delimited by a colon."
+- Same section/page: "Semicolons are not allowed in any data item"; the section specifies semicolon termination and intentional leading/trailing/embedded blanks.
+- Appendix 9-E section E.9.c has `C-6\DCN :DMC;`, motivating L1-READ-006's interpretation of surrounding code-name blanks without changing source bytes.
+- L1-READ-001/003 and ADR-0002 require retained bytes, located findings and continued recovery. These are product policies, not additional standard text. INT-019 requires an unterminated SHA item to remain malformed.
 
-**Behaviour**: **Proposed.** Bound candidate regions by actual semicolons and search for the first colon inside each region only. A missing-colon region remains uninterpreted source with a located finding; resume after its semicolon. A final non-layout suffix without a semicolon remains retained and unterminated with a finding. Do not invent delimiters, split on code-like value text, apply edits or return empty success in place of retained material and findings. Permitted-layout classification remains a separate prerequisite.
+**Behaviour**: **Proposed.** Bound candidate regions by actual semicolons and search for the first colon inside each region only. Line endings are never attribute terminators. Retain a missing-colon region with a located finding and resume after its semicolon. An empty code name (`:v;`) gives a finding. `X:;` is well-framed with a present zero-length raw value, distinct from an absent item; framing alone does not validate the code name or its semantics. Retain an unterminated non-layout suffix with a finding, never fabricate a terminator or expose that suffix as an explicit value in lookups (consistent with INT-019). Do not split on code-like value text, invent delimiters, apply edits or substitute empty success for retained material and findings.
+
+A stray semicolon intended as part of a damaged value can produce false
+candidate boundaries. Later code-name-validity, duplicate and unknown-code
+findings are the defence, not proof that the intended attributes were recovered.
+For example, `G\COM Time 12:30;` is raw-framed at its later colon but must be
+flagged by the code-name-validity batch; framing cannot detect that the
+writer may have omitted an earlier colon. Do not repair it by guessing.
+
+**Open owner question**: for empty and layout-only terminated regions such
+as `;;` and `\r\n;`, should the reader emit a finding or remain silent?
+Both options retain every byte and advance; neither is selected here.
+
+**Character-batch prerequisites**: classify an EOF suffix consisting solely of NUL/0x1A/space padding
+without a missing-terminator finding (section 9.4.1); specify CR/LF
+inside or before a code name, a lone CR, a UTF-8 BOM and UTF-16 handling.
+Do not guess an encoding or transcode the source. Reconcile interpretation
+of surrounding code-name blanks with the raw comparison helper: L3-READ-008
+must not trim its own input, but the code-name view ignores surrounding
+blanks under L1-READ-006 and preserves the original span.
 
 **Reason**: The standard describes valid framing but not recovery. An actual semicolon is a reproducible boundary that avoids borrowing another region's colon; this policy preserves uncertainty rather than claiming the writer's intent was reconstructed.
 

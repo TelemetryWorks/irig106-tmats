@@ -43,7 +43,8 @@ irig106-tmats/
 │                              behaviour chosen, and its test (hand-written until the registry generates it)
 │   ├── RELEASING.md           Lockstep versioning, crates.io publishing, release binaries (design draft)
 │   ├── adr/                   Architecture decision records (MADR), index in adr/README.md;
-│   │                          0033 revises review policy, 0034 records coordinator release decisions
+│   │                          0033 revises review policy, 0034 records coordinator release decisions,
+│   │                          0035 supersedes W1 with the owner's virtual crates/apps layout
 │   ├── L1-REQ.md              Level 1 SHALL requirements (design draft)
 │   ├── L2-REQ.md              Level 2 requirements (foundation batch drafted; remaining areas pending)
 │   ├── L3-REQ.md              Level 3 requirements (foundation batch drafted; remaining areas pending)
@@ -87,6 +88,12 @@ irig106-tmats/
 ```
 
 ## Planned layout
+
+Owner decision, 2026-11-21 (ADR-0035): a virtual root Cargo.toml with no
+package; library in `crates/irig106-tmats/`, CLI in `apps/irig106-tmats-cli/`,
+shared workspace.package version and exact library path/version in
+workspace.dependencies. The tree above describes the current checkout; no
+files move in the decision PR. W2/W3 are unchanged.
 
 The research index includes `docs/research/2026-09-27-spec-alignment-review.md`,
 which records the 106-24R1 review, prototype reproductions, and recommendations

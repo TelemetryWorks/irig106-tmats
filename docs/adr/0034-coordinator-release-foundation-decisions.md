@@ -1,5 +1,5 @@
 ---
-status: coordinator-decided; owner may override
+status: coordinator-decided; W1 superseded by owner decision 0035 (2026-11-21); other decisions unchanged, owner may override
 date: 2026-11-21
 decision-makers: coordinator
 ---
