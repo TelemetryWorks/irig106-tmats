@@ -406,7 +406,7 @@ requirements are added. The requirement entries below and the generated
 
 **Statement**: The library SHALL resolve each link to exactly one of resolved (one candidate after the link's selector), unresolved (no candidate), or ambiguous (several candidates, all reported), and SHALL NOT choose among several candidates.
 
-**Rationale**: Duplicates are preserved (L1-READ-001), so resolving to the first match would hide a real conflict; a PCM stream carrying bus data gives a P and a B group the same data-link name, which the channel data type distinguishes (team review T4; ADR-0026). The bounded time-view lookup and association-uncertainty contract is brought forward to 0.1 by owner decision 2026-11-21; general link resolution remains in 0.2. See `docs/RELEASE-0.1.md`.
+**Rationale**: Duplicates are preserved (L1-READ-001), so resolving to the first match would hide a real conflict; a PCM stream carrying bus data gives a P and a B group the same data-link name, which the channel data type distinguishes (team review T4; ADR-0026). The bounded time-view attribute lookup contract is brought forward to 0.1 by owner decision 2026-11-21; general link resolution remains in 0.2. See `docs/RELEASE-0.1.md`.
 
 **Verification Method**: Test (T)
 

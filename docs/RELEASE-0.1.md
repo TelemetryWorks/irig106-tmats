@@ -60,8 +60,9 @@ The owner brings these parts forward from 0.2 for irigtime:
   The general effective-value machinery remains in 0.2.
 - L1-VIEW-005: split channel IDs where the recorder explicitly declares
   a valid number of multiplexer source bits; retain that declaration's source.
-- L1-VIEW-006: unresolved and ambiguous results for the time-view lookups
-  and candidate associations; no arbitrary winner among duplicates.
+- L1-VIEW-006: unresolved and ambiguous results for time-view attribute
+  lookups; no arbitrary winner among duplicates. Candidate clock associations
+  are a separate L1-VIEW-007/008 contract with distinct states below.
 - L1-VIEW-008: carry caller-assumption provenance through time-view answers.
   Other uses of labelled assumptions remain in 0.2.
 
@@ -179,17 +180,21 @@ candidates, provenance and a reason:
 
 | State | Meaning |
 | --- | --- |
-| Unresolved | No adequate evidence identifies a time channel; may include one or more candidates that are only possible matches |
-| Ambiguous | Multiple conflicting or equally supported associations remain; return all candidates and their evidence |
-| Resolved with evidence | One association is actually established by evidence valid for this record; return that evidence, not just a selected ID |
+| `association_unestablished` | No adequate evidence identifies a time channel; may include one or more candidates that are only possible matches |
+| `association_conflicting` | Multiple conflicting or equally supported associations remain; return all candidates and their evidence |
+| `association_evidenced` | One association is actually established by evidence valid for this record; return that evidence, not just a selected ID |
 
-A single TIMEIN channel is still unresolved without association evidence.
+These semantic state names are distinct from L1-VIEW-006 link/lookup states
+and do not freeze Rust symbols. Parent this association contract to
+L1-VIEW-007 and L1-VIEW-008 only.
+
+A single TIMEIN channel is still `association_unestablished` without evidence.
 The first, lowest-numbered, nearest, enabled, or only time channel must never
 be selected by default. Equal DSI values, recorder occurrence or multiplexer
 source grouping alone are not proof of association. A defaulted TFMT does
-not change an unresolved association into a resolved one.
+not change an unestablished association into an evidenced one.
 
-Evidence for a future resolved case must identify its origin, applicability
+Evidence for a future `association_evidenced` case must identify its origin, applicability
 to the recording/setup record and channel identities, and how it establishes
 the relationship. A cited extension with reviewed semantics may supply such
 evidence; this family defines no extension, inference rule or resolver API.
@@ -199,8 +204,9 @@ merely because their names appear to suggest a clock relationship.
 An explicit caller choice without supporting evidence is an assumption,
 not a verified TMATS association. A consumer may use such an override only
 with the choice and assumption basis attached to every derived answer
-(L1-VIEW-008). The underlying TMATS association remains unresolved/ambiguous;
-its result must not be relabelled as resolved by the override.
+(L1-VIEW-008). The underlying association remains
+`association_unestablished` or `association_conflicting`; the override must
+not relabel it as `association_evidenced`.
 
 Do not carry associations from another recording or setup revision without
 new evidence. Full configuration-timeline construction stays in 0.2; the
@@ -231,10 +237,12 @@ regenerate the trace matrix without manually upgrading status.
 | Lower-case codes/keywords and reordered fields | Same interpretation, unchanged bytes and locations | L1-READ-001, 004 |
 | Explicit A versus applicable missing-TFMT default A | Different states and evidence, identical input bytes on emission | L1-VIEW-004; L1-WRT-001 |
 | Invalid, duplicate/conflicting, or unsupported-edition format | Invalid/ambiguous or missing reason; no guessed default | L1-VIEW-004, 006 |
-| One TIMEIN, no association evidence | Unresolved, even with a valid/defaulted TFMT | L1-VIEW-006, 007 |
-| Several possible time sources | Unresolved or ambiguous with candidates; never first-match | L1-VIEW-006, 007 |
-| Caller selects a time channel without proof | Assumed answer; underlying association not upgraded | L1-VIEW-008 |
-| Evidence from another record/revision | No resolved result for the current record | L1-VIEW-006, 008 |
+| One TIMEIN, no association evidence | `association_unestablished`, even with a valid/defaulted TFMT | L1-VIEW-007, 008 |
+| Several possible time sources | `association_unestablished` or `association_conflicting` with candidates; never first-match | L1-VIEW-007, 008 |
+| Caller selects a time channel without proof | Assumed answer; underlying association not upgraded | L1-VIEW-007, 008 |
+| Evidence from another record/revision | No `association_evidenced` result for the current record | L1-VIEW-007, 008 |
+| TIMEIN, TTF=2, TFMT absent at the baseline | TFMT is defaulted A with its edition/citation plus a finding about the network-time inconsistency; never override packet evidence | L1-VIEW-004, 007 |
+| TK1=0; NSB=0; NSB outside 0-13 | TK1 invalid (range 1-65535); explicit NSB=0 is valid (source ID 0, full channel ID retained) and proves no association; invalid NSB is reported without splitting/defaulting | L1-VIEW-004, 005, 007 |
 | Explicit valid NSB versus absent/invalid NSB | Split only with valid declaration; otherwise retain uncertainty | L1-VIEW-005 |
 | Multi-packet, truncated, XML or ambiguous setup record | Preserve assembly outcome; no false usable ASCII view | L1-CH10-001, 002, 004 |
 | Malformed attribute among valid time metadata | Preserve input with diagnostics rather than empty success | L1-READ-001, 003 |
@@ -252,11 +260,47 @@ The following are short proposals, not decisions taken by this document:
 | Decision | Options | Recommendation |
 | --- | --- | --- |
 | W1: workspace | Virtual root with two sibling crates; or separate third CLI-binary crate | Two sibling crates under `crates/`, CLI library plus binary in one crate |
-| W2: prototype retirement | Retire before replacement; or retain temporarily while replacement is staged | Retire in bounded reviewable steps, preserving `prototype-0`; avoid a bulk deletion PR |
+| W2: prototype retirement | Remove in the layout change; or move into `crates/irig106-tmats` and retire in stages | Remove in the same change, as the roadmap recommends; see tradeoffs below |
 | W3: host CLI integration | Whole command runner; individual command/render APIs; or both | Both, with shared command semantics and a thin process entry point |
 | Interpretation reviews | Supply author and distinct human reviewer; or keep an interpretation blocked | Obtain both people and source analysis before relying on it; tools count as neither |
-| F1: duplicate SHA items | Reject verification/stamping as indeterminate; or choose/remove occurrences under an explicit policy | Reject ambiguity and preserve bytes until an owner-approved policy exists |
+| F1: duplicate SHA items | Reject as indeterminate; select an occurrence; or explicitly consolidate | Reject ambiguity and preserve bytes; practical consequences below, pending owner decision |
 | F7: configuration-change event | Require verified identification; or assume an event packet type | Require evidence and report indeterminate meanwhile; no guessed packet type |
+
+### W2 tradeoff (undecided)
+
+The [roadmap's workspace proposal](ROADMAP.md#workspace-layout-and-a-reusable-cli-library-proposal)
+recommends removing the prototype in the same layout change. That avoids
+moving defective public surfaces and obsolete tests into the new crate and
+leaves a clean placeholder; it also removes working prototype entry points
+and can make the diff too large for the normal review budget. The tag
+`prototype-0` retains the historical implementation.
+
+The alternative moves the prototype to `crates/irig106-tmats` and retires it
+in stages. That preserves an executable comparison baseline and permits
+smaller deletion/replacement PRs, but carries known defects longer and needs
+a clear separation from the new release API and acceptance evidence.
+Recommendation: same-change removal, consistent with the roadmap. If its
+size cannot be reviewed within the agreed budget, bring the staged option
+back to the owner; do not silently switch approaches. W2 is still undecided.
+
+### F1 practical consequences (undecided)
+
+Two or more SHA items leave unclear which embedded digest and excluded byte
+range verification or stamping should use (INT-021; L1-SUM-002/004; ADR-0029).
+These are policy options, not claims that the standard selects one:
+
+| Option | Verification in practice | Stamping and existing recordings |
+| --- | --- | --- |
+| Reject ambiguity | Return an indeterminate finding listing all SHA occurrences; do not report a document-wide match, even if one candidate happens to match | Refuse stamping and preserve every byte. A user must resolve duplicates explicitly before a verified stamp; some field recordings remain readable but cannot receive a positive integrity verdict |
+| Select an occurrence under a documented rule | First, last, or a caller-named item requires a defined exclusion range and treatment of all other SHA items; different tools may disagree, and ordering may change which one wins | Updating only the selected item leaves other digests stale or contradictory. Auto-selection hides a policy choice; caller selection must be explicit, and competing digest results remain visible |
+| Explicitly consolidate to one item | Until a caller requests consolidation, report the original duplicates as indeterminate; verify the new document only after the edit | Remove/replace duplicate items only in a new output, compute the digest over its final bytes and re-read to verify it. Original recorded bytes and their old checksums are no longer the output; provenance must retain the original. This needs an approved duplicate-edit policy and cannot be silent repair |
+
+Recommendation: reject duplicate-SHA ambiguity for verification and stamping
+while preserving the input and listing every occurrence. This avoids an
+unjustified positive integrity claim and automatic edits, at the cost of
+requiring explicit remediation before affected files can be stamped.
+The owner must choose the behavior, including identical duplicate values;
+no option is implemented or adopted here.
 
 F1 and F7 remain release blockers where their requirements depend on them.
 Proposed interim outcomes above do not implement or waive the corresponding
@@ -277,13 +321,14 @@ Use GitHub CI for builds, substantive tests, coverage and bounded fuzz or
 benchmark evidence. Local checks stay lightweight; stop background jobs.
 No release is justified by source inspection or a green prototype suite alone.
 
-Publishing is Trusted Publishing only through `trusted-publishing.yml` and
-the protected `crates-io` environment, without stored registry tokens or local
-publishing. [RELEASING.md](RELEASING.md) governs the library/CLI lockstep,
+All real releases use Trusted Publishing through `trusted-publishing.yml`
+and the protected `crates-io` environment. The sole first-upload exception is
+the coordinator/owner CLI name-placeholder bootstrap in RELEASING.md under
+the existing 2026-11-15 policy; CI never performs it or stores its token.
+[RELEASING.md](RELEASING.md) governs the library/CLI lockstep,
 package order, binaries, checksums, SBOMs and provenance. Workflow creation,
 publisher-registration verification and release execution are later work.
 
 Every PR is handed to the independent reviewer with its exact commit head
 before the owner merges. Changed heads require fresh review; no admin bypass,
-force push or tool-attribution trailers. Family 1 stops after its first
-reviewable docs PR is opened and its number/head reported.
+force push or tool-attribution trailers.

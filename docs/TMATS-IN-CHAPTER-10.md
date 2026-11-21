@@ -628,8 +628,8 @@ several tools, it moves into a crate of its own (ADR-0030, option C).
 Owner direction, 2026-11-21: the irigtime CLI consumes the bounded time view
 in 0.1 before `irig106-time` 0.8.0. The time library does not gain a TMATS
 dependency. [RELEASE-0.1.md](RELEASE-0.1.md) specifies effective values and
-association uncertainty: no first-time-channel default, and caller choices
-without evidence remain labelled assumptions. TSRC is a source category,
+association uncertainty with distinct association states: no first-time-channel
+default, and caller choices without evidence remain labelled assumptions. TSRC is a source category,
 not a data-channel-to-time-channel reference.
 
 | | |
