@@ -4,6 +4,11 @@
 > publishing is understood before any code is released. The decisions here are
 > recorded as ADRs; the mechanics are finalized with the first release (0.1).
 
+The 2026-11-21 owner decision keeps the full 0.1 release obligations and
+adds a bounded time view before `irig106-time` 0.8.0. See the
+[scope, API review and acceptance contract](RELEASE-0.1.md). This document
+specifies future release mechanics; it does not claim the workflow exists.
+
 ## What gets released
 
 | Crate | Kind | crates.io | Installs |
@@ -89,9 +94,10 @@ Publishing runs only in GitHub Actions using **crates.io trusted publishing**
 (OIDC via `rust-lang/crates-io-auth-action`): the workflow exchanges its
 identity for a short-lived token, so no long-lived crates.io API token is
 stored in the repository. Trusted publishing is configured once per crate on
-crates.io, restricted to this repository, the release workflow, and a
-protected `release` environment. Local `cargo publish` is not part of the
-normal process.
+crates.io, restricted to this repository, `trusted-publishing.yml`, and the
+protected `crates-io` environment (owner decision, 2026-11-21). Both crates
+need matching publisher registrations. Publishing is through that workflow
+only; stored registry tokens and local publishing are prohibited.
 
 The release toolchain may be newer than the MSRV (1.85); only building and
 testing are held to the MSRV.

@@ -32,6 +32,7 @@ irig106-tmats/
 ├── docs/
 │   ├── PROJECT_STRUCTURE.md   This file
 │   ├── evals/2026-11-15-supply-chain-rollout.md  Workflow pin evidence and rollout validation
+│   ├── RELEASE-0.1.md         Full 0.1 scope, bounded time-view/API contract, uncertainty and review gates
 │   ├── ROADMAP.md             Forward-looking plan, decisions to record, releases, deferred features
 │   ├── USE-CASES.md           Actors, library boundary, use cases UC-01..UC-17 (design draft)
 │   ├── CLI.md                 `tmats` command design: commands, decided behaviour, open decisions (draft)
