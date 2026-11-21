@@ -743,6 +743,14 @@ requirements are added. The requirement entries below and the generated
 
 **Verification Method**: Test (T)
 
+### L1-CLI-009
+
+**Statement**: The CLI SHALL be provided as a library that the `irig106-cli` host can mount, with a host-callable runner that never exits the process, plus individual command and rendering APIs and a thin standalone `tmats` entry point.
+
+**Rationale**: Existing owner direction, 2026-09-26, recorded in [owner-direction section 25](research/2026-09-25-owner-direction.md#25-the-cli-as-a-reusable-library-the-workspace-layout-f5-explained-2026-09-26), requires reusable CLI code rather than duplication in the greater host CLI. Coordinator-decided W3 in [ADR-0034](adr/0034-coordinator-release-foundation-decisions.md) specifies both runner and individual APIs; the owner may override it. This records decisions already made, not a new feature. Delivered in 0.1.
+
+**Verification Method**: Test (T)
+
 ---
 
 ## L1-ROB: Robustness against arbitrary input
