@@ -772,3 +772,61 @@ Do not use annotated Appendix 9-E blocks as conforming fixtures; trailing
 annotations become the next region's code-name bytes (see TEST-DATA.md).
 The line-break/code-name suspect-terminator suggestion is planned separately
 in ROADMAP.md, not implemented or a permission to split source.
+
+
+## Character interpretation (proposed)
+
+### INT-036
+
+**Title**: Omit ASCII nonprintables only from semantic projections
+
+**Sources**:
+- 106-24R1 Chapter 9 section 9.4.1, page 9-2: "Nonprintable characters will be discarded by the destination agency" before translating attributes to configuration information; CR/LF may improve readability.
+- Section 9.4.2, same page: "Leading, trailing, and embedded blanks are assumed to be intentional". L1-READ-006 already requires surrounding code-name blanks to be ignored.
+- RFC 20 sections 2 and 4.1/4.2 distinguish ASCII control positions, DEL and SP; see the cited draft analysis. ADR-0002/0003 require original byte retention; INT-035 supplies approved empty-run findings and EOF silence.
+
+**Behaviour**: **Proposed.** Frame on original bytes; omit `00-1F` and `7F` only from interpreted code-name/value projections. Preserve every raw byte and source location. Treat CR/LF, including a lone CR, as omitted characters, never delimiters. Trim ordinary `20` spaces only around interpreted code names, retain internal name spaces for validity checking, and retain value spaces. Do not convert controls to spaces or discard high bytes. A value projected to zero bytes remains present, not absent.
+
+Classify only spaces plus that nonprintable set as layout/padding for INT-035;
+apply its one-information-finding run rule and silent EOF rule, with no extra
+finding just for an omitted control. This may join printable parts across a
+control; expose raw spans so that interpreted spelling is never confused with
+original bytes. Known leading encoding markers follow INT-037 before this
+projection. Unknown-code and embedded-blank validity checks still follow.
+
+**Reason**: Chapter 9 requires nonprintable discard for meaning and intentional blanks, while product policy retains bytes. The precise set and separate raw/projected operations need a reviewable interpretation rather than locale/Unicode whitespace heuristics.
+
+**Design**: proposed (2026-11-21; owner sign-off required) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: pending · **Origin**: family 2 batch 3
+
+**Test**: `control_projection_preserves_raw_spans`, `code_name_and_value_blanks_differ`, `character_classes_keep_int035_run_policy` (planned, not yet written)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Draft analysis**: [baseline draft, alternatives and outstanding work](research/2026-11-21-character-interpretation-drafts.md)
+
+### INT-037
+
+**Title**: Diagnose Unicode markers without automatic transcoding
+
+**Sources**:
+- 106-24R1 Chapter 9 section 9.4.1, page 9-2, specifies 7-bit ASCII; it does not define Unicode or BOM handling.
+- Unicode BOM FAQ, BOM table, lists `EF BB BF`, `FE FF` and `FF FE`; this is evidence for byte signatures, not a Chapter 9 compatibility rule.
+- ADR-0002/0003 preserve raw bytes; L1-READ-003 requires non-ASCII findings. Proposed INT-036 defines the separate ASCII control projection.
+
+**Behaviour**: **Proposed.** At source offset zero, a recognized leading signature above gives a located unsupported-encoding-marker finding, retains all source bytes and blocks document semantic lookup. Do not silently strip the marker, guess the full encoding or transcode the body. Outside that leading marker, retain and diagnose `80-FF` bytes and withhold an affected field's usable explicit interpretation; unaffected raw material remains available. A midstream or partial signature is not treated as a leading BOM.
+
+Do not guess UTF-16 from alternating zero bytes. Without a BOM, some UTF-16
+bytes can resemble ASCII with controls that INT-036 omits; this policy does
+not claim complete encoding detection. A caller aware of another encoding
+must convert outside the parser with separate provenance. Never call that
+converted data the original TMATS bytes, and never infer an edition from a BOM.
+
+**Reason**: Silently accepting/removing markers or decoding Unicode introduces an undocumented input format and changes the basis for byte locations/checksums. A narrow, explicit detection policy exposes that uncertainty without inventing broad Unicode support.
+
+**Design**: proposed (2026-11-21; owner sign-off required) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: pending · **Origin**: family 2 batch 3
+
+**Test**: `leading_encoding_marker_blocks_semantic_lookup`, `high_bytes_are_not_silently_decoded`, `unmarked_zero_patterns_do_not_select_encoding` (planned, not yet written)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Draft analysis**: [baseline draft, alternatives and outstanding work](research/2026-11-21-character-interpretation-drafts.md)

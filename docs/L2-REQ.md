@@ -1,9 +1,9 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundation and scanner-framing batches drafted (family 2, batches 1-2).**
+> **Status: foundations, framing and character batch drafted (family 2, batches 1-3).**
 > Foundations derive the approved restructure/source store; framing and
-> recovery use owner-approved INT-035; implementation evidence is pending. Remaining
-> code-name, character, CLI and later-area derivations follow;
+> recovery use owner-approved INT-035. Character policies INT-036/037 are
+> proposed and require owner sign-off; code-name grammar, CLI and later areas follow;
 > a parent with children here is not necessarily fully decomposed yet.
 
 ## Purpose
@@ -189,5 +189,43 @@ and suspect-semicolon suggestions remain separate obligations.
 **Statement**: The reader SHALL emit one information-level located finding for each maximal consecutive run of empty or layout-only terminated regions, merging the run into one source span; unterminated layout or padding at EOF SHALL remain silent, and all bytes SHALL remain retained.
 
 **Rationale**: Joey's 2026-11-21 sign-off on INT-035 settles the open diagnostic policy under ADR-0033. EOF silence follows the owner-directed treatment of Chapter 9 section 9.4.1, page 9-2. This is product recovery policy, not a new rule that the standard mandates an informational diagnostic.
+
+**Verification Method**: Test (T)
+
+
+## Character batch 3: interpreted bytes and source identity
+
+INT-036 and INT-037 are proposals under ADR-0033. They do not amend the
+owner-approved INT-035 framing/run policy or authorize implementation before
+review, owner sign-off, required analysis and tests. Full code-name grammar,
+indices, duplicate classification and known-code validation remain next work.
+
+#### L2-READ-007
+
+**Parent**: L1-READ-001
+
+**Statement**: The reader SHALL retain original source bytes while obtaining interpreted field bytes through a separate projection, preserving the association of every interpreted field and character finding with original source ranges; discarding characters for interpretation SHALL NOT discard them from storage or default output.
+
+**Rationale**: ADR-0002/0003 and proposed INT-036 reconcile 106-24R1 Chapter 9 section 9.4.1, page 9-2, with lossless retention. This is not a normalization edit, and semantic projection does not change the actual colon/semicolon framing of INT-035.
+
+**Verification Method**: Test (T)
+
+#### L2-READ-008
+
+**Parent**: L1-READ-006
+
+**Statement**: Code-name interpretation SHALL ignore the approved nonprintable set and surrounding ordinary blanks without removing embedded ordinary blanks; value interpretation SHALL retain ordinary blanks, and the ASCII comparator SHALL operate only on the interpreted input supplied to it without trimming source itself.
+
+**Rationale**: Proposed INT-036 supplies the character-class details for section 9.4.1; section 9.4.2, page 9-2, treats blanks as intentional. L1-READ-006 already requires surrounding code-name blanks to be ignored. Internal blanks still need code-name-validity findings; they are not silently erased to repair a key.
+
+**Verification Method**: Test (T)
+
+#### L2-READ-009
+
+**Parent**: L1-READ-003
+
+**Statement**: Non-ASCII field bytes and supported detections of incompatible encoding markers SHALL produce located findings while original bytes remain available; the reader SHALL NOT silently strip a BOM, transcode input, guess UTF-16 from zero-byte patterns or treat failed character interpretation as an explicit usable field value.
+
+**Rationale**: Chapter 9 section 9.4.1 specifies 7-bit ASCII. Proposed INT-037 defines the limited marker policy, not a Unicode TMATS format. Ordinary unmarked raw input can remain partly interpretable; a detected leading unsupported marker blocks semantic lookup for that document as specified in the draft, without dropping its source.
 
 **Verification Method**: Test (T)

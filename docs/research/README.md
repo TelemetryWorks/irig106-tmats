@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-21-character-interpretation-drafts.md](2026-11-21-character-interpretation-drafts.md) | INT-036/037 baseline character/encoding proposals, sources, alternatives, ambiguity and pending analysis/review |
 | [2026-11-21-int035-owner-signoff.md](2026-11-21-int035-owner-signoff.md) | Joey's INT-035 sign-off, PR #13 AI-concurrence reference, empty-run/EOF policy and reviewer notes |
 | [2026-11-21-scanner-framing-recovery.md](2026-11-21-scanner-framing-recovery.md) | INT-035 baseline recovery draft, alternatives and outstanding cross-edition/review/test work |
 | [2026-09-27-spec-alignment-review.md](2026-09-27-spec-alignment-review.md) | Independent 106-24R1 alignment review, executable prototype reproductions, and open design questions about SRCC, RCCVER, and record completeness |

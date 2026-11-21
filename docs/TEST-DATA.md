@@ -161,6 +161,49 @@ code-name recognition, requirement derivation and tests are future work;
 this is neither a conforming two-attribute fixture nor an implemented check.
 It supplements rather than silently changes L1-READ-007's existing pattern.
 
+## Family 2 batch 3: character-policy acceptance specifications
+
+**Status: planned, not executable tests.** These cases exercise proposed
+INT-036/037 only after independent AI review, owner sign-off and development
+prerequisites. INT-035 remains approved, including merged run findings and
+EOF silence. Full code-name grammar and index parsing remain later work.
+
+Sources: 106-24R1 Chapter 9 sections 9.4.1/9.4.2, page 9-2 (characters and
+blanks), section 9.4.2 page 9-3 (COMMENT); RFC 20 sections 2 and 4.1/4.2
+(ASCII positions); Unicode's BOM table. The draft analysis links each.
+Escapes in the table denote actual fixture bytes, not backslash text to pass
+to the parser. Raw and interpreted expectations must be independently set.
+
+| Planned check | Fixture or stimulus | Expected observation under the proposals | Requirement |
+| --- | --- | --- | --- |
+| `control_projection_preserves_raw_spans` | `CO\r\nMMENT:v;` | Interpreted name COMMENT; raw name span `[0, 9)`; contributing source offsets `[0,1,4,5,6,7,8]`; no invented raw contiguous spelling | L3-READ-011, L3-READ-012 |
+| `crlf_before_name_is_not_a_delimiter` | `\r\nCOMMENT:v;` and `\rCOMMENT:v;` | Prefix controls omitted for name meaning; one attribute, full original bytes retained | L3-READ-011, L3-READ-013 |
+| `controls_in_values_are_not_spaces` | `COMMENT:a\tb;` and `COMMENT:a\r\nb;` | Interpreted value ab under INT-036; raw control bytes retained; no automatic space or terminator insertion | L3-READ-011, L3-READ-012 |
+| `code_name_and_value_blanks_differ` | `  COMMENT :  value  ;` | Name COMMENT after surrounding-space trim; value keeps both leading and trailing spaces; comparator does not trim | L3-READ-013 |
+| `embedded_name_space_is_not_repaired` | `COM MENT:v;` | Embedded ordinary space retained for later invalid-code finding; never silently change it to COMMENT | L3-READ-013 |
+| `projected_empty_value_is_still_present` | `COMMENT:\x00;` versus `COMMENT:;` | Both have a present zero-length interpreted value; different raw value spans/bytes; neither becomes absent | L3-READ-011, L3-READ-013 |
+| `character_classes_keep_int035_run_policy` | `;\t\r\n\x7F;` | One information finding over `[0, 6)`; preserve bytes; no extra control findings | L3-READ-014 |
+| `all_layout_eof_suffix_is_silent` | Terminated COMMENT followed by space/NUL/SUB/DEL/CR/LF | Retain suffix silently; never treat a colon/high byte as part of that layout-only class | L3-READ-014 |
+| `high_bytes_are_not_silently_decoded` | COMMENT value containing FF or valid UTF-8 multibyte text | Located non-ASCII finding; raw bytes retained; affected field has no usable explicit interpretation, with no implicit UTF-8/Latin-1 conversion | L3-READ-016 |
+| `leading_encoding_marker_blocks_semantic_lookup` | Each of EF BB BF, FE FF, FF FE at offset zero plus data | Located unsupported-marker finding and retained source; no semantic lookup, stripping or transcoding | L3-READ-015 |
+| `partial_or_midstream_marker_is_not_a_leading_bom` | EF BB without BF; EF BB BF after a terminated COMMENT | Ordinary located high-byte findings, not a silently removed leading marker; retain source | L3-READ-015, L3-READ-016 |
+| `unmarked_zero_patterns_do_not_select_encoding` | Unmarked ASCII bytes interleaved with NUL | No automatic UTF-16 selection; raw ASCII/control proposal applies, explicitly not proof of original encoding | L3-READ-011, L3-READ-015 |
+
+The byte-class tests also enumerate all 256 possible byte inputs to the
+projection/comparator helpers without asserting they are conforming field
+values; actual colon/semicolon framing remains a separate operation. Check
+that a high byte cannot disappear to make a different apparently valid key.
+Use independent expected offsets rather than projection lengths as source
+locations. The `[0, 6)` run comprises two terminated regions, including the
+TAB/CR/LF/DEL bytes, not six separate diagnostics.
+
+Known marker handling precedes semantic control omission; a BOM-marked
+UTF-16-like stream must not become usable by deleting its zeros. Unmarked
+lookalikes remain an explicitly documented limitation, not detected encoding
+facts. No annotated Appendix 9-E text is a conforming-file fixture here.
+Keep the future line-break hint on original bytes: losing CR/LF from an
+interpreted value must not lose its raw location or implement that hint now.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample

@@ -1,8 +1,9 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundation and scanner-framing batches drafted (family 2, batches 1-2).**
+> **Status: foundations, framing and character batch drafted (family 2, batches 1-3).**
 > These are implementation obligations, not existing interfaces or completed
-> tests. INT-035 review and remaining L2/L3 derivations follow before implementation.
+> tests. INT-035 is approved; INT-036/037 are proposed. Remaining derivations
+> and development evidence still precede implementation.
 
 ## Purpose
 
@@ -196,3 +197,55 @@ unchanged. Character-batch rules determine which bytes count as layout.
 Silence applies to the layout/padding suffix only, not to an unterminated
 attribute containing other material. No tests or implementation are supplied
 by these requirements; use the acceptance cases in TEST-DATA.md.
+
+
+## Character batch 3: implementation obligations (proposed)
+
+These obligations depend on owner sign-off and independent AI review of
+INT-036/037. Existing INT-035 run findings and EOF silence are unchanged;
+this batch proposes exactly which bytes classify as layout/nonprintables.
+
+**L3-READ-011** · Parent: L2-READ-007 · Verification: T
+*For interpretation only, the reader SHALL omit bytes `0x00..=0x1F` and `0x7F` from a field projection while retaining all original bytes; it SHALL NOT reinterpret an omitted byte as a space, delimiter or missing value, and CR/LF SHALL NOT terminate attributes.*
+
+This is the proposed INT-036 mapping, not an implemented filter. High bytes
+are outside this omission set. Recognized leading encoding-marker handling
+under INT-037 precedes semantic projection, so BOM-marked input is not converted by
+merely discarding its zero bytes.
+
+**L3-READ-012** · Parent: L2-READ-007 · Verification: T
+*Raw field access and default emission SHALL remain byte-exact, and locations derived from projections SHALL refer to the original source, including skipped-byte gaps, rather than use shortened projection offsets as if they were source offsets.*
+
+A projection may be non-contiguous in the source. Preserve its raw enclosing
+span and enough correspondence to locate contributing bytes; do not fabricate
+a contiguous raw value from an interpreted string.
+
+**L3-READ-013** · Parent: L2-READ-008 · Verification: T
+*After the proposed nonprintable omission, code-name interpretation SHALL trim only leading/trailing `0x20` bytes, retain internal `0x20` bytes for code-name validation, and leave value `0x20` bytes in place; the L3-READ-008 comparator SHALL continue folding ASCII case without trimming its own input.*
+
+An empty interpreted name still receives a finding, not a fabricated key.
+A value projected to zero bytes is present, not absent; whether that empty
+value satisfies a particular attribute definition is separate validation.
+
+**L3-READ-014** · Parent: L2-READ-008 · Verification: T
+*Layout/padding-only classification for INT-035 SHALL accept only `0x20`, `0x00..=0x1F` and `0x7F`; a maximal terminated run so classified SHALL use the approved one-information-finding rule, and an unterminated EOF suffix so classified SHALL remain silent and retained.*
+
+A colon, high byte or other printable byte prevents layout-only classification.
+This must not turn a genuinely unterminated attribute into silent padding.
+Ordinary ignored controls alone do not add a second character finding to the
+approved run information finding or silent EOF suffix (proposed INT-036).
+
+**L3-READ-015** · Parent: L2-READ-009 · Verification: T
+*At source offset zero, the reader SHALL recognize leading `EF BB BF`, `FE FF` or `FF FE` byte signatures as unsupported encoding markers, retain the entire source and a located marker finding, and withhold document semantic lookup instead of stripping the prefix or transcoding the body.*
+
+These byte patterns follow Unicode's BOM table, cited in INT-037; no claim
+about Chapter 9's own definition of BOM is made. Recognition is prefix-based,
+not proof of a complete Unicode encoding, and never sets a recorder edition.
+No inference from alternating zeros is permitted for unmarked input.
+
+**L3-READ-016** · Parent: L2-READ-009 · Verification: T
+*Outside the recognized leading marker, bytes `0x80..=0xFF` SHALL remain raw with located non-ASCII findings, not be omitted or decoded as UTF-8/Latin-1 automatically; an affected field SHALL NOT be exposed as an explicit usable interpreted value while unaffected raw material and findings remain available.*
+
+This proposed INT-037 behavior does not prove that every unmarked Unicode
+stream can be detected. Explicit caller-side conversion is outside this byte
+parser and must not be represented as original recorded bytes.
