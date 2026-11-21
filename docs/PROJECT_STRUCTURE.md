@@ -42,7 +42,8 @@ irig106-tmats/
 │   ├── INTERPRETATIONS.md     Interpretation register: where the standard is inconsistent or silent, the
 │                              behaviour chosen, and its test (hand-written until the registry generates it)
 │   ├── RELEASING.md           Lockstep versioning, crates.io publishing, release binaries (design draft)
-│   ├── adr/                   Architecture decision records (MADR), index in adr/README.md
+│   ├── adr/                   Architecture decision records (MADR), index in adr/README.md;
+│   │                          0033 revises review policy, 0034 records coordinator release decisions
 │   ├── L1-REQ.md              Level 1 SHALL requirements (design draft)
 │   ├── L2-REQ.md              Level 2 requirements (conventions only; not yet written)
 │   ├── L3-REQ.md              Level 3 requirements (conventions only; not yet written)

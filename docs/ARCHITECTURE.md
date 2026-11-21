@@ -197,9 +197,9 @@ Each registry entry has two layers:
 - **Interpretation layer** — what the code executes: Allowed-when and
   Required-when as expressions in a small, defined **condition language**;
   the default and its origin (a `Default:` field or the prose); typed ranges;
-  links. Each interpretation records its **author and an independent
-  reviewer** (two people; tooling or AI drafting counts as neither), the
-  review date, a note wherever it is not literal (for example "`C\DCT` in
+  links. Each interpretation records its **draft author, owner sign-off and
+  independent AI review** (owner decision, 2026-11-21; ADR-0033), the
+  review dates, a note wherever it is not literal (for example "`C\DCT` in
   `C-d\DPNO`'s condition means `C-d\DCT` of the same occurrence"), and a
   **hash of the source text** it interprets.
 
@@ -210,12 +210,14 @@ supplies entries of the same shape.
 ![Building the registry](diagrams/registry-pipeline.svg)
 
 *Building the registry.* The extractor produces the source layer from the
-archived edition; people author interpretations and a second person reviews
-each; the generator compiles both into checked-in tables. Four CI checks
+archived edition; agents draft interpretations with citations, an independent
+AI reviewer checks them, and the owner signs each; the generator compiles
+both into checked-in tables. Four CI checks
 guard it (a fifth, on relationships, was added by T5 — section 8.2): every table code name and prose default is in the registry
 (completeness); every source row is interpreted or explicitly marked "not
 yet interpreted"; an interpretation whose source text hash changed is
-flagged for re-review; and every interpretation names two different people.
+flagged for re-review; and every interpretation records owner sign-off and
+an independent AI check under ADR-0033.
 
 ### 4.2 Condition semantics
 
@@ -320,7 +322,7 @@ For every C group whose `C-d\DCT` is `DER`:
   "selected" list reported as custom algorithms (a warning); inputs and
   constants used only in the style that allows them; unresolved measurement
   names; cycles among derived measurements.
-- **Errata**, read through the two-person interpretation review: `==` is the
+- **Errata**, read through the owner sign-off and independent AI interpretation review: `==` is the
   equality operator (the grammar is the machine-readable source), and `= =`
   as printed in Table E-3 is accepted with a warning.
 
@@ -554,7 +556,7 @@ registry generator.
 `docs/INTERPRETATIONS.md` lists every place where the standard is
 inconsistent, incomplete, or silent and the design had to choose: the
 sources quoted verbatim, the behaviour, the reason, the design status
-(accepted or suspect), the two-person review (ADR-0022), and a focused test.
+(accepted or suspect), owner sign-off and independent AI review (ADR-0033), and a focused test.
 Tests name their entry (`/// Interpretations: INT-NNN`), and the trace
 matrix lists each entry with its tests. Code relies only on listed
 interpretations. When the registry's interpretation files exist, the
@@ -704,7 +706,7 @@ cannot change the digest; verify.
 | `g\sha` in another case | it is the code name (§9.4.2); the same text inside a value is not (D6) | INT-018 |
 | no following semicolon | error; verification "malformed"; a terminator is suggested | INT-019 |
 | upper-case hex that otherwise matches | a match, with a warning ("lower-case", Chapter 6) | INT-020 |
-| two or more items | **open — follow-up F1** | INT-021 |
+| two or more items | **coordinator-decided, 2026-11-21; owner may override:** indeterminate; list every occurrence, preserve bytes, refuse stamping until fixed, never claim positive verification | INT-021; ADR-0034 |
 
 ### 10.5 The generator
 
@@ -715,8 +717,8 @@ never invents values (L1-WRT-006, UC-13).
 
 ### 10.6 Open follow-ups
 
-F1 (two or more `G\SHA` items), F2 (removing an attribute that X extensions
-point to), and F3 (suggesting `:` where `=` was typed, as in Chapter 6's
+F1 is coordinator-decided (2026-11-21; ADR-0034), subject to owner override.
+F2 (removing an attribute that X extensions point to) and F3 (suggesting `:` where `=` was typed, as in Chapter 6's
 `.TMATS WRITE` example `G\DSI\N=18;`) are open in `docs/ROADMAP.md`,
 "Follow-ups for the owner". Until each is decided, the implementation
 chooses no behaviour for it.
@@ -772,7 +774,7 @@ H group's two built-in attributes (ADR-0027); the TMATS edition and the
 recording-format version kept apart, with every validation report naming the
 edition applied and its basis (ADR-0028); edits as validated, atomic,
 verified transactions over targets bound to a revision, with the checksum
-stamp hashing the final bytes (ADR-0029; follow-ups F1–F3 open). The original
+stamp hashing the final bytes (ADR-0029; F1 coordinator-decided by ADR-0034, F2/F3 open). The original
 proposal is captured in ADR-0020 and ADR-0021 (proposed).
 
 ## 13. To be written

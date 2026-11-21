@@ -1,5 +1,5 @@
 ---
-status: accepted; record ending superseded by 0031; edition-code wording refined by 0032
+status: accepted; record ending superseded by 0031; edition-code wording refined by 0032; interpretation review rule superseded by 0033 (2026-11-21)
 date: 2026-09-26
 decision-makers: Joey
 ---

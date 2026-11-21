@@ -8,6 +8,7 @@ not rewritten.
 
 **Status:** `accepted` — decided by the project owner; `proposed` — part of the
 architecture proposal (`docs/ARCHITECTURE.md`) awaiting the owner's review.
+`coordinator-decided` records coordinator direction, which the owner may override.
 A record refined or partly superseded by a later one keeps its text; only its
 status line points to the later record.
 
@@ -34,17 +35,19 @@ status line points to the later record.
 | [0019](0019-cli-minimal-chapter-10-reader.md) | The CLI carries a minimal Chapter 10 packet reader until `irig106-core` | accepted; refined by 0025 |
 | [0020](0020-correctness-guard-rails.md) | Correctness guard rails in the code and the tests | proposed |
 | [0021](0021-single-pass-scanner.md) | A single-pass scanner that indexes, checksums, and reports as it reads | proposed; scanner rule added by 0024 |
-| [0022](0022-registry-source-text-and-reviewed-interpretations.md) | The registry holds source text and reviewed, executable interpretations (two-person rule) | accepted; extended by 0026 and 0027 |
+| [0022](0022-registry-source-text-and-reviewed-interpretations.md) | The registry holds source text and reviewed, executable interpretations (review rule revised by 0033) | accepted; extended by 0026 and 0027; interpretation review superseded by 0033 |
 | [0023](0023-validation-passes-and-effective-values.md) | Validate in four passes over effective values | accepted; refined by 0026 |
-| [0024](0024-derived-parameters-parsed-not-evaluated.md) | Derived parameters parsed, validated, and described here; evaluated in `irig106-decode` | accepted |
-| [0025](0025-setup-record-assembly-contract.md) | Setup records assembled from packet fragments in the library; packets sliced by the CLI's reader | accepted; record ending superseded by 0031; edition-code wording refined by 0032 |
+| [0024](0024-derived-parameters-parsed-not-evaluated.md) | Derived parameters parsed, validated, and described here; evaluated in `irig106-decode` | accepted; interpretation review superseded by 0033 |
+| [0025](0025-setup-record-assembly-contract.md) | Setup records assembled from packet fragments in the library; packets sliced by the CLI's reader | accepted; record ending superseded by 0031; edition-code wording refined by 0032; interpretation review superseded by 0033 |
 | [0026](0026-counter-scopes-link-namespaces-and-comparison.md) | Counters declare their scope, links their namespace, selector, and cardinality; keys unique per attribute; case-insensitive comparison | accepted; extended by 0027 |
-| [0027](0027-interpretation-register-and-three-source-relationships.md) | An interpretation register; relationships from Links to, Links from, and §9.5.1 b; the H group | accepted |
+| [0027](0027-interpretation-register-and-three-source-relationships.md) | An interpretation register; relationships from Links to, Links from, and §9.5.1 b; the H group | accepted; interpretation review superseded by 0033 |
 | [0028](0028-edition-declarations-and-validation-basis.md) | TMATS edition and recording-format version kept apart; validation basis labelled; fallback and compatibility checks named | accepted; RCCVER wording refined by 0032 |
-| [0029](0029-transactional-edits-and-checksum-stamping.md) | Edits are transactions over defined targets; a stamp hashes the final bytes (F1–F3 open) | accepted; F1–F3 open |
+| [0029](0029-transactional-edits-and-checksum-stamping.md) | Edits are transactions over defined targets; a stamp hashes the final bytes (F1 revised by 0034; F2/F3 open) | accepted; F1 superseded by 0034; F2–F3 open |
 | [0030](0030-core-independent-of-tmats.md) | `irig106-core` does not depend on `irig106-tmats`; plain data through `irig106-types`; the packet check lives in `irig106-tmats` | accepted |
-| [0031](0031-setup-record-completeness.md) | A setup record is complete, incomplete, or ambiguous — each with its basis | accepted |
+| [0031](0031-setup-record-completeness.md) | A setup record is complete, incomplete, or ambiguous — each with its basis | accepted; interpretation review superseded by 0033 |
 | [0032](0032-rccver-read-literally.md) | RCCVER is read literally; later editions' reuse of a code is a labelled note; the fallback is labelled policy | accepted |
+| [0033](0033-owner-signoff-and-independent-ai-interpretation-review.md) | One owner sign-off plus an independent AI check approves an interpretation | accepted (owner, 2026-11-21) |
+| [0034](0034-coordinator-release-foundation-decisions.md) | W1-W3 and F1/F7 release-foundation decisions | coordinator-decided (2026-11-21); owner may override |
 
 New records take the next number and use the same front matter
 (`status`, `date`, `decision-makers`).

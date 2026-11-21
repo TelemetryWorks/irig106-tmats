@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: accepted; interpretation review rule superseded by 0033 (2026-11-21)
 date: 2026-09-27
 decision-makers: Joey
 ---
