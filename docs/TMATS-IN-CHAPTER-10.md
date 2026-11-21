@@ -625,10 +625,17 @@ several tools, it moves into a crate of its own (ADR-0030, option C).
 
 ### 4.6 `irig106-time` — time correlation
 
+Owner direction, 2026-11-21: the irigtime CLI consumes the bounded time view
+in 0.1 before `irig106-time` 0.8.0. The time library does not gain a TMATS
+dependency. [RELEASE-0.1.md](RELEASE-0.1.md) specifies effective values and
+association uncertainty with distinct association states: no first-time-channel
+default, and caller choices without evidence remain labelled assumptions. TSRC is a source category,
+not a data-channel-to-time-channel reference.
+
 | | |
 |---|---|
 | **Gives** | nothing to the library |
-| **Gets** | the time channels with `R-x\TTF-n`, `R-x\TFMT-n`, `R-x\TSRC-n` (3.8) — 0.2; each channel's secondary-header time format `R-x\SHTF-n` (3.2) — 0.2; the measurements that are PCM, network, or 1553 time words (3.7, 3.8) — 0.2; each setup record's recording-format version as declared (3.9) — 0.1 (L1-EDN-005) |
+| **Gets** | the time channels with `R-x\TTF-n`, `R-x\TFMT-n`, `R-x\TSRC-n` (3.8) — 0.1 bounded subset; each channel's secondary-header time format `R-x\SHTF-n` (3.2) — 0.1; the measurements that are PCM, network, or 1553 time words (3.7, 3.8) — 0.2; each setup record's recording-format version as declared (3.9) — 0.1 (L1-EDN-005) |
 | **Must not** | map RCCVER to an edition itself (the mapping lives in `irig106-types`; ROADMAP X1, X2); read an edition from the packet header's data type version as if it were RCCVER |
 
 ### 4.7 `irig106-ch10-reader` — structural summary of a recording

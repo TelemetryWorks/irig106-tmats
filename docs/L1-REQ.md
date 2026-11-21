@@ -390,7 +390,7 @@ requirements are added. The requirement entries below and the generated
 
 **Statement**: The library SHALL report the effective value of an attribute as explicit (with its location), defaulted (with the citation of the default), missing, invalid (with the raw text and the reason), or ambiguous (with the conflicting candidates), and SHALL NOT insert defaults or any other value into the stored document.
 
-**Rationale**: Views and validation must agree on every value's state, and the document stays byte-faithful (team review T1; ADR-0002, ADR-0023). Delivered from 0.2.
+**Rationale**: Views and validation must agree on every value's state, and the document stays byte-faithful (team review T1; ADR-0002, ADR-0023). The bounded time-view effective values are brought forward to 0.1 by owner decision 2026-11-21; general effective values remain in 0.2. See `docs/RELEASE-0.1.md`.
 
 **Verification Method**: Test (T)
 
@@ -398,7 +398,7 @@ requirements are added. The requirement entries below and the generated
 
 **Statement**: When a recorder declares a number of multiplexer source bits (`R-x\NSB`), the library SHALL present channel IDs split into the multiplexer source ID (the declared number of most significant bits) and the channel ID of the data source (the remaining bits).
 
-**Rationale**: Chapter 11 §11.2.1.1 b (106-24R1): "The setup record shall contain a "Number of Source Bits" recorder attribute (R-x\NSB) to specify the number of msbs (from the channel ID) that distinguish the multiplexer source ID" (team review T3). Delivered in 0.2.
+**Rationale**: Chapter 11 §11.2.1.1 b (106-24R1): "The setup record shall contain a "Number of Source Bits" recorder attribute (R-x\NSB) to specify the number of msbs (from the channel ID) that distinguish the multiplexer source ID" (team review T3). Brought forward to 0.1 for the bounded time view by owner decision 2026-11-21; only an explicit valid declaration permits splitting. See `docs/RELEASE-0.1.md`.
 
 **Verification Method**: Test (T)
 
@@ -406,7 +406,7 @@ requirements are added. The requirement entries below and the generated
 
 **Statement**: The library SHALL resolve each link to exactly one of resolved (one candidate after the link's selector), unresolved (no candidate), or ambiguous (several candidates, all reported), and SHALL NOT choose among several candidates.
 
-**Rationale**: Duplicates are preserved (L1-READ-001), so resolving to the first match would hide a real conflict; a PCM stream carrying bus data gives a P and a B group the same data-link name, which the channel data type distinguishes (team review T4; ADR-0026). Delivered in 0.2.
+**Rationale**: Duplicates are preserved (L1-READ-001), so resolving to the first match would hide a real conflict; a PCM stream carrying bus data gives a P and a B group the same data-link name, which the channel data type distinguishes (team review T4; ADR-0026). The bounded time-view attribute lookup contract is brought forward to 0.1 by owner decision 2026-11-21; general link resolution remains in 0.2. See `docs/RELEASE-0.1.md`.
 
 **Verification Method**: Test (T)
 
@@ -415,7 +415,7 @@ requirements are added. The requirement entries below and the generated
 
 **Statement**: The library SHALL present the channels whose data type is TIMEIN with their time data type format (`R-x\TTF-n`), time format (`R-x\TFMT-n`), and time source (`R-x\TSRC-n`); each channel's secondary-header time format (`R-x\SHTF-n`); and the measurements whose conversion type is a PCM, network, or 1553 time word.
 
-**Rationale**: `irig106-time` needs to know which channels carry time and how (UC-20; `docs/TMATS-IN-CHAPTER-10.md` sections 3.8 and 4.6). Delivered in 0.2.
+**Rationale**: `irig106-time` needs to know which channels carry time and how (UC-20; `docs/TMATS-IN-CHAPTER-10.md` sections 3.8 and 4.6). The TIMEIN-channel fields and per-channel secondary-header time format are brought forward to 0.1 for irigtime by owner decision 2026-11-21; measurement time-word views remain in 0.2. See `docs/RELEASE-0.1.md`.
 
 **Verification Method**: Test (T)
 
@@ -423,7 +423,7 @@ requirements are added. The requirement entries below and the generated
 
 **Statement**: When a caller supplies information the TMATS does not give — a description for packets that no setup record governs, or the order of a measurement's fragments — every answer built on it SHALL state that it rests on the caller's assumption.
 
-**Rationale**: The library never guesses (section 1.5 of `docs/TMATS-IN-CHAPTER-10.md`), but a caller may know better; its choice must stay visible (INT-032, INT-033). Delivered in 0.2.
+**Rationale**: The library never guesses (section 1.5 of `docs/TMATS-IN-CHAPTER-10.md`), but a caller may know better; its choice must stay visible (INT-032, INT-033). Assumption provenance for the bounded time view is brought forward to 0.1 by owner decision 2026-11-21; other uses remain in 0.2. See `docs/RELEASE-0.1.md`.
 
 **Verification Method**: Test (T)
 

@@ -102,6 +102,8 @@ architecture must honour:
 
 ## Reference docs
 
+- `docs/RELEASE-0.1.md` — full 0.1 release scope plus the bounded time view
+  required before irig106-time 0.8.0; API review, uncertainty and owner gates.
 - `docs/ROADMAP.md` — forward-looking plan, decisions to record, planned
   releases, and deferred features (XML, WASM, `no_std`, rich diagnostics).
   Completed work is not tracked there.
