@@ -1,7 +1,7 @@
 ---
 status: accepted
 date: 2026-11-21
-decision-makers: owner
+decision-makers: Joey
 ---
 
 # Owner sign-off and an independent AI check approve interpretations
