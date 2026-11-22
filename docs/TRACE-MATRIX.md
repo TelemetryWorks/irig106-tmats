@@ -44,9 +44,9 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-READ-007 | L3-READ-011, L3-READ-012 | _(TBD)_ | Draft |
 | L2-READ-008 | L3-READ-013, L3-READ-017, L3-READ-018 | _(TBD)_ | Draft |
 | L2-READ-009 | L3-READ-015, L3-READ-016 | _(TBD)_ | Draft |
-| L2-READ-010 | L3-READ-021, L3-READ-022, L3-READ-023 | _(TBD)_ | Draft |
+| L2-READ-010 | L3-READ-021, L3-READ-022, L3-READ-023, L3-READ-028 | _(TBD)_ | Draft |
 | L2-READ-011 | L3-READ-019, L3-READ-020, L3-READ-025 | _(TBD)_ | Draft |
-| L2-READ-012 | L3-READ-024, L3-READ-026 | _(TBD)_ | Draft |
+| L2-READ-012 | L3-READ-024, L3-READ-026, L3-READ-027, L3-READ-029 | _(TBD)_ | Draft |
 
 ### L1-CH10: Chapter 10 setup records
 
@@ -264,7 +264,7 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | Category | L1 | L2 | L3 | L2 tested | L3 tested | L2 verified | L3 verified |
 |----------|----|----|----|-----------|-----------|-------------|-------------|
-| READ | 7 | 12 | 26 | 0 | 0 | 0 | 0 |
+| READ | 7 | 12 | 29 | 0 | 0 | 0 | 0 |
 | CH10 | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EDN | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REG | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -279,13 +279,13 @@ This matrix is the single source of truth for live status; the requirement docum
 | ROB | 3 | 2 | 3 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **19** | **35** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **19** | **38** | **0** | **0** | **0** | **0** |
 
 The countable requirement set is every L2 and L3 requirement plus the 73 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 127 (0.0%).
+**Tested by at least one test marker**: 0 of 130 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 127 (2.4%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 130 (2.3%).
 
 ### Orphan check
 

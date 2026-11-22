@@ -240,15 +240,21 @@ are deliberate stimuli, not claims that Chapter 9 defines those attributes.
 | `multiple_path_levels_keep_index_attachment` | `D-1\MNF\N-2-3-4:1;` | Occurrence 1; MNF has no suffix indices; N has [2, 3, 4]; name spelling retained | L3-READ-022 |
 | `index_order_and_arity_are_not_flattened` | MN suffixes `-1-2`, `-2-1`, `-1-2-3` | Different complete structures; third cannot match the two-entry-index definition by dropping its last token; no conformance claim for that extra-index name | L3-READ-021, L3-READ-022, L3-READ-026 |
 | `missing_occurrence_is_not_defaulted` | `R\TK1-3:42;` | Never manufacture occurrence 1 or bind as `R-1\TK1-3`; raw name retained; definition matching cannot accept it as a complete instance of that cited pattern | L3-READ-021, L3-READ-024 |
-| `decimal_index_spelling_preserves_numeric_identity` | `D-01\MN-001-02:a;D-1\MN-1-2:b;` | Under proposed INT-038 both keys have numeric indices (1; 1, 2), but both original items/raw spellings remain ordered; never choose a winner | L3-READ-023, L3-READ-026 |
+| `decimal_index_spelling_preserves_numeric_identity` | `D-01\MN-001-02:a;D-1\MN-1-2:b;` | Under proposed INT-038 both keys have canonical indices (1; 1, 2); per-token information findings for 01/001/02 plus a normalization-only full-key collision information finding listing both occurrences now; retain both items/order, never choose a winner | L3-READ-023, L3-READ-026, L3-READ-027, L3-READ-029 |
 | `zero_index_is_not_range_approval` | `D-0\MN-1-0:v;` | Zero tokens structurally retained under INT-038; do not claim legal counter entries, silently add 1 or erase them | L3-READ-023, L3-READ-026 |
-| `large_index_does_not_wrap_or_allocate_by_value` | A 40-digit nonzero decimal token at a standard index position | Full raw token and decimal identity retained independent of u32/u64/usize; failed bounded conversion explicit; no wrap/saturation/truncation or array up to that number | L3-READ-023 |
+| `large_index_does_not_wrap_or_allocate_by_value` | A 40-digit nonzero decimal token at a standard index position | Full raw token retained; equality/hash use its canonical decimal string without fixed-width or big-integer conversion; failed optional bounded conversion explicit; no wrap/saturation/truncation or array up to that number | L3-READ-023 |
 | `index_token_grammar_is_not_value_numeric_grammar` | Expected index replaced with empty token, `+1`, `1.0`, `1e2`, or template `x` | No match as a decimal index under INT-038; retained input and located name finding, no partial usable key or invented index | L3-READ-023, L3-READ-024 |
 | `internal_blank_name_is_not_a_partial_key` | `G\COM Time 12:30;G\PN:ok;` | First raw name gets a finding; value is 30; never expose it as G\COM; second item retained/read independently | L3-READ-024 |
 | `broken_components_preserve_following_items` | `D-1\MN-1-:v;G\PN:ok;` | No usable partial MN key; locate unfinished index, retain all bytes; next region still read | L3-READ-024 |
 | `unknown_does_not_mean_malformed` | Synthetic `Z-1\EXPERIMENT-2:v;` | Unrecognized group/definition remains retained; no replacement with a known group; no syntax failure solely because no catalogue entry exists | L3-READ-020, L3-READ-025 |
 | `private_names_are_not_forced_into_standard_keys` | H/private input and V attribute-string containing unfamiliar punctuation | Retain opaque raw portions where decomposition is uncertain; lack of a built-in pattern alone is not evidence to drop them or claim malformed syntax/conformance | L3-READ-025 |
 | `extension_structure_is_not_link_resolution` | Isolated `X-1\MYORG\D\MN\SGAIN-1-2:10.75;` from section 9.5.14 | Keep path levels and indices where unambiguous; no resolved association, valid configuration or extension registry entry inferred by parsing | L3-READ-022, L3-READ-025, L3-READ-026 |
+| `noncanonical_index_is_visible` | `R-00\TK1-01:v;`, compared with canonical tokens `0` and `1` | Located information findings on noncanonical token spans `[2, 4)` and `[9, 11)`; canonical strings 0 and 1; canonical 0/1 alone have no normalization finding; range validity remains separate | L3-READ-027 |
+| `normalization_only_collision_is_reported_now` | `D-1\MN-1-2:a;D-01\MN-1-2:b;D-001\MN-1-2:c;` | Collision information finding lists all three occurrences/order now, in addition to token findings; no value agreement, winner or consolidation inferred; general duplicate classification still later | L3-READ-029 |
+| `projected_index_controls_keep_locations` | `R-1\r\n0\TK1-1:v;` | INT-036 projection yields occurrence digits 10, canonical string 10 and internal-omission information finding on `[3, 5)`; raw occurrence span `[2, 6)` retained, no normalization finding solely for controls | L3-READ-023, L3-READ-024 |
+| `canonical_string_equality_and_hashing` | Index digits `1234567890123456789012345678901234567890` and the same 40 digits prefixed with `00` in otherwise identical keys | Equality and hash consume the same canonical 40-digit string without any big-integer/fixed-width conversion; equal keys hash equally; padded token gets a finding; different identities need not have different hash outputs | L3-READ-023, L3-READ-027, L3-READ-029 |
+| `index_blanks_are_not_local_trim` | `R- 1\TK1-1:v;`, `R-1 \TK1-1:v;`, and `R-1\TK1-1 :v;` | First two have internal blanks and located name findings, no repaired usable key; third has only whole-name trailing layout, handled under approved INT-036, not an internal-index failure | L3-READ-024, L3-READ-027 |
+| `x_original_indices_use_numeric_identity` | `X-1\MYORG\D\MN\SGAIN-1-2:10.75;` versus `D-01\MN-01-02:MEAS1;`, then pad the corresponding X indices too | Corresponding occurrence/carried original indices compare by canonical strings 1/1/2 in both directions; padded tokens get findings; X/D remain different full keys with no full-key collision or resolved association inferred | L3-READ-028, L3-READ-027, L3-READ-029 |
 | `character_findings_survive_key_parsing` | `CO\r\nMMENT:v;`, a NUL field and a high-byte name | Keep the approved control/NUL findings and raw spans; high-byte field is Invalid, not rescued by a partial ASCII key; leading markers retain INT-037 gating | L3-READ-024 |
 
 Expected component positions and numeric identities must be specified without
@@ -258,8 +264,15 @@ variants, index permutations and digit lengths around conversion limits;
 assert unchanged source, bounded work and continued framing after failures.
 Table-derived sample attributes here exercise structure only, not all required
 fields for a conforming file. Detailed unknown-code findings, duplicate
-classification, grammar for private extensions and counter/link validation
-remain subsequent derivations; these cases do not complete those L1 parents.
+classification (apart from the normalization-only collision finding required
+now), grammar for private extensions and counter/link validation remain
+subsequent derivations; these cases do not complete those L1 parents.
+
+The `\N` count and no-missing-values checks must count DISTINCT canonical
+numeric identities, not raw spellings or repeated occurrences. Their scoped
+requirements and executable checks are explicitly deferred to the counter
+batch, including the section 9.5.14 X noncontiguity exception. This batch
+checks index identity/visibility only and must not claim counter acceptance.
 
 ## Real Chapter 10 recordings (local use only)
 

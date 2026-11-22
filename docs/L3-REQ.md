@@ -321,10 +321,14 @@ NAME, page 9-115, and NUMBER OF FRAGMENTS, page 9-117. These describe
 name structure, not measurement links or valid counter contents.
 
 **L3-READ-023** · Parent: L2-READ-010 · Verification: T
-*At a standard pattern's index position, the proposed INT-038 reader SHALL accept a nonempty ASCII decimal-digit token, preserve its complete raw spelling, and compare its mathematical nonnegative integer identity without a machine-word ceiling; leading zeros SHALL NOT create a different index identity, and checked numeric conversion SHALL NOT wrap or truncate.*
+*At a standard pattern's index position, the proposed INT-038 reader SHALL accept a nonempty ASCII decimal-digit token, preserve its complete raw spelling, and use its canonical decimal string for identity equality and hashing without fixed-width or big-integer conversion; leading zeros SHALL NOT create a different index identity, and checked numeric conversion SHALL NOT wrap or truncate.*
 
-An all-zero token has identity zero; parsing it does not make it a legal
-entry index. Signs, decimal points, exponents and template letters do not
+Canonicalization strips leading zeros and retains one `0` for an all-zero
+token. Use the INT-036 projection before reading digits and retain original
+source correspondence; omitted controls inside index digits still receive
+the approved internal-name finding. Full-key equality/hashing must preserve
+component and index boundaries (L3-READ-022). An all-zero token has identity
+zero; parsing it does not make it a legal entry index. Signs, decimal points, exponents and template letters do not
 match this proposed index grammar. This rule concerns index tokens only,
 not numeric data values. Range/contiguity checks need separately cited,
 scoped rules; no inferred upper bound or allocation of every intervening
@@ -352,7 +356,35 @@ conformance claim is made for an arbitrary unknown-name example.
 *A structurally read name SHALL NOT by itself establish known-definition validity, entry range/contiguity, value validity, uniqueness or link resolution; equal interpreted keys SHALL retain every original item instead of selecting or merging an occurrence during parsing.*
 
 Proposed INT-038 makes zero-padded decimal spellings equal, so both originals
-must remain available for later duplicate/ambiguity handling. Counters and
+must remain available for later duplicate/ambiguity handling; the narrower
+normalization-only collision finding is required now by L3-READ-029. Counters and
 parent scopes follow ADR-0026 and Chapter 9 section 9.5.1 a; X has the cited
 noncontiguity exception in section 9.5.14. No association or counter default
 is invented by this batch, and no typed getter is declared implemented.
+`\N` count/no-missing-values checks over DISTINCT numeric identities are
+explicitly deferred to the counter batch, including parent scope and the X
+noncontiguity exception; neither occurrences nor raw spellings are counts.
+
+
+**L3-READ-027** · Parent: L2-READ-012 · Verification: T
+*Each projected decimal index token whose spelling differs from its canonical string SHALL produce a located information finding on its original token span, without changing retained bytes; canonical `0` SHALL be distinguished from noncanonical multi-digit zero spellings such as `00`.*
+
+This proposed INT-038 visibility also covers nonzero leading-zero tokens
+such as `01`. Internal/adjacent ordinary blanks within the name do not become
+valid digit tokens by trimming; whole-name edge layout still follows INT-036.
+
+**L3-READ-028** · Parent: L2-READ-010 · Verification: T
+*For section 9.5.14 X-to-original index comparisons, the occurrence and carried indices for the embedded original path SHALL use the same projected canonical decimal-string identity as the original; extra extension indices SHALL remain separate and matching indices SHALL NOT alone establish a resolved association.*
+
+Source: 106-24R1 Chapter 9 section 9.5.14, page 9-172. Proposed INT-038
+settles the spelling comparison: 1 and 01 agree, but all raw spellings remain.
+This does not collapse X and its original into the same full code-name key.
+
+**L3-READ-029** · Parent: L2-READ-012 · Verification: T
+*When complete interpreted keys become equal only after canonicalizing their index spellings, the reader SHALL report a located information finding listing all original occurrences now, retaining their order, raw bytes and values without selecting, consolidating or claiming positive uniqueness.*
+
+This proposed INT-038 collision finding is in addition to per-token
+noncanonical-spelling findings. Compare complete keys after approved
+case/control projection; equal index numbers in different paths/groups are
+not full-key collisions. General duplicate single-entry/value-conflict
+classification remains for the later batch; it does not defer this finding.
