@@ -1,10 +1,11 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations, framing, character and name batches drafted (family 2, batches 1-4).**
+> **Status: foundations through candidate batches drafted (family 2, batches 1-5).**
 > Foundations derive the approved restructure/source store; framing and
 > recovery use owner-approved INT-035. Character policies INT-036/037 were
 > approved by Joey, 2026-11-22, under ADR-0033. Name structure follows here;
-> INT-038 was approved by Joey, 2026-11-22; duplicate classification, CLI and later areas follow;
+> INT-038 was approved by Joey, 2026-11-22. Candidate batch 5 proposes
+> INT-039; remaining view/registry, CLI and later areas follow;
 > a parent with children here is not necessarily fully decomposed yet.
 
 ## Purpose
@@ -272,5 +273,45 @@ registry matcher, counter validator, duplicate classifier or extension resolver.
 **Statement**: Code-name interpretation failures SHALL produce located diagnostics while preserving the framed item's raw name, value and order; incomplete or failed structural matches SHALL NOT become usable partial keys, and absence of a known definition alone SHALL NOT be equated with malformed code-name syntax; approved INT-038 noncanonical index spellings and normalization-only full-key collisions SHALL produce located information findings during reading, without selecting or rewriting an item; the collision finding SHALL trigger for a canonical-key group with two or more distinct raw index-spelling tuples and list every occurrence in that group, exact repeats included.
 
 **Rationale**: L1-READ-001/003, ADR-0002/0003 and INT-035 retain source even when meaning fails. Chapter 9 section 9.4.2, page 9-2, advises against blanks in code names; approved INT-036 ignores only surrounding blanks and controls for meaning. Thus a damaged `G\COM Time 12:30;` cannot be silently accepted as `G\COM`. Unknown definitions and open H/V/X naming space require a distinct outcome from a demonstrated syntax error.
+
+**Verification Method**: Test (T)
+
+
+## Candidate batch 5: duplicate classification and exact lookup
+
+This derives the duplicate part of L1-READ-003, exact-name lookup under
+L1-VIEW-001 and the multiplicity part of L1-VIEW-004. Proposed INT-039 needs
+owner sign-off and independent AI review under ADR-0033. INT-035/036/037/038
+remain approved unchanged. Pattern-query grammar, complete effective-value
+resolution, link selection, time association, counter rules and edits remain
+subsequent derivations; these children do not complete those L1 parents.
+
+#### L2-READ-013
+
+**Parent**: L1-READ-003
+
+**Statement**: The reader SHALL classify repeated instances of a definition-bound scalar attribute by complete canonical key, report the duplicate with every occurrence located, and preserve all items; unknown cardinality and standalone COMMENT collections SHALL NOT be silently treated as duplicate scalar definitions, nor SHALL duplicate classification suppress approved normalization findings.
+
+**Rationale**: 106-24R1 Chapter 9 section 9.4.2, page 9-2, describes unique names and single/multiple-entry attributes; page 9-3 introduces COMMENT for interjected comments. Proposed INT-039 settles repeat handling where that text does not specify recovery. Scalar cardinality must come from a cited, reviewed definition for the applicable edition, not a missing/assumed suffix. ADR-0002 retains source; INT-038's early collision finding remains distinct.
+
+**Verification Method**: Test (T)
+
+#### L2-VIEW-001
+
+**Parent**: L1-VIEW-001
+
+**Statement**: Exact-name lookup SHALL return every item matching the complete canonical key within one document, in input order, with item identity, original name/value bytes and locations; it SHALL distinguish no match from a present empty value and SHALL NOT discard candidates because their values fail interpretation.
+
+**Rationale**: ADR-0002/0003 keep source items authoritative; approved INT-036/038 define projection and key equality. The first-child scope is exact lookup only, not a pattern language or an implementation choice of index data structure. Chapter 9 section 9.4.2, page 9-2, permits any source order; preserving that order for reporting must not make it a winner-selection rule.
+
+**Verification Method**: Test (T)
+
+#### L2-VIEW-002
+
+**Parent**: L1-VIEW-004
+
+**Statement**: A singular effective-value request for a definition-bound scalar slot with two or more matching items SHALL return ambiguous with every original candidate and its findings, without collapsing equal values, filtering invalid candidates, falling back to a default or selecting by source order; one candidate SHALL still require ordinary validity checks before being called explicit.
+
+**Rationale**: ADR-0023 supplies explicit/defaulted/missing/invalid/ambiguous states. Proposed INT-039 chooses conservative multiplicity even for equal repeats; this is not a new default or an assertion that Chapter 9 explicitly specifies resolver precedence. Full zero/one-candidate resolution and scope-dependent defaults are later work. Coordinator-decided F1 keeps duplicate SHA integrity indeterminate under ADR-0034, independently of generic view states.
 
 **Verification Method**: Test (T)
