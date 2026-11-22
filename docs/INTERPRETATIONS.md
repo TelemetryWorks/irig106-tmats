@@ -923,3 +923,42 @@ those scoped checks are explicitly deferred to the counter batch.
 **Draft analysis**: [sources, alternatives and 2026-11-22 review amendments](research/2026-11-22-code-name-index-draft.md#review-amendments--2026-11-22)
 
 **Sign-off and AI-check reference**: [owner approval record](research/2026-11-22-int038-owner-signoff.md), referencing [PR #20](https://github.com/TelemetryWorks/irig106-tmats/pull/20) at `29707da26fd43ec9a871d41bfd6213afdfa3f965` and the owner's 2026-11-22 relay of the independent recheck. The record also identifies the collision-group clarification requested with sign-off. Approval records the interpretation decision, not implementation, completed analysis or executable tests; those development gates remain outstanding.
+
+
+## Scalar candidate multiplicity (proposed)
+
+### INT-039
+
+**Title**: Repeated scalar slots remain ambiguous even when values agree
+
+**Sources**:
+- 106-24R1 Chapter 9 section 9.4.2, page 9-2: "Each attribute appears in the file as a unique code name"; the same section distinguishes single-entry data from numbered multiple entries and permits arbitrary attribute order.
+- Section 9.4.2, page 9-3, introduces standalone COMMENT for interjected comments but does not specify a repeated-comment cardinality or duplicate recovery algorithm.
+- Table 9-2 PROGRAM NAME `G\PN`, page 9-10, gives a scalar example. A reviewed definition and its edition must establish a slot's cardinality; absence of a suffix alone is not evidence.
+- ADR-0002 preserves every item; ADR-0023 defines ambiguous effective values. Approved INT-038 defines canonical grouping and separate normalization/collision information; coordinator-decided F1 in ADR-0034 already rejects duplicate SHA integrity as indeterminate.
+
+**Behaviour**: **Proposed.** For a definition-bound scalar slot, group by complete canonical code-name key within one document. Two or more occurrences give a located duplicate finding listing every original item and an ambiguous singular effective value. Keep identical repeats as separate candidates, even if raw bytes or independently interpreted values agree. Never select the first/last, discard an invalid candidate to keep a valid one, coalesce duplicates or supply a default instead. Keep candidate-specific findings visible. Severity policy does not select values; its detailed mapping is deferred.
+
+A numbered multiple-entry pattern supplies distinct slots for distinct full
+index combinations; repeating the same slot still gives multiplicity.
+Unknown/unreviewed cardinality is unclassified for scalar-duplicate conformance,
+not assumed singular. Raw exact lookup always keeps all matching items.
+Treat standalone COMMENT as an ordered collection with no duplicate-scalar
+finding merely for repeating; this exception is proposed, not stated as an
+explicit Chapter 9 repeatability guarantee. It does not apply to all text fields.
+
+INT-038 information findings still apply independently. Reordering only
+changes reporting order, not the multiplicity outcome. Generic Ambiguous
+must not override F1's separate indeterminate checksum result and stamping
+refusal. This policy does not establish link resolution, record completeness
+or a clock association; zero/one-candidate default and validation rules follow.
+
+**Reason**: Choosing equal repeats as one explicit value would erase multiplicity and conceal a damaged or combined setup. Conservative ambiguity makes that uncertainty visible; the cost is refusing a usable singular value for benign repeats until the caller explicitly fixes the input. Repeated standalone comments serve a different collection purpose. Both choices need owner sign-off rather than a silent parser convention.
+
+**Design**: proposed (2026-11-22; owner sign-off required) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: pending · **Origin**: family 2 batch 5
+
+**Test**: `identical_scalar_repeats_are_ambiguous`, `invalid_candidate_is_not_filtered`, `comment_collection_is_not_a_scalar_duplicate`, `duplicate_and_normalization_findings_coexist` (planned, not yet written)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Draft analysis**: [sources, alternatives and remaining work](research/2026-11-22-scalar-duplicates-draft.md)

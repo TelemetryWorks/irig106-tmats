@@ -25,7 +25,7 @@ This matrix is the single source of truth for live status; the requirement docum
 |-------|-------------|----------------|--------|
 | L1-READ-001 | L2-READ-001, L2-READ-002, L2-READ-007 | _(none)_ | Draft |
 | L1-READ-002 | L2-READ-010 | _(none)_ | Draft |
-| L1-READ-003 | L2-READ-004, L2-READ-006, L2-READ-009, L2-READ-012 | _(none)_ | Draft |
+| L1-READ-003 | L2-READ-004, L2-READ-006, L2-READ-009, L2-READ-012, L2-READ-013 | _(none)_ | Draft |
 | L1-READ-004 | L2-READ-005 | _(none)_ | Draft |
 | L1-READ-005 | L2-READ-011 | _(none)_ | Draft |
 | L1-READ-006 | L2-READ-003, L2-READ-008 | _(none)_ | Draft |
@@ -47,6 +47,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-READ-010 | L3-READ-021, L3-READ-022, L3-READ-023, L3-READ-028 | _(TBD)_ | Draft |
 | L2-READ-011 | L3-READ-019, L3-READ-020, L3-READ-025 | _(TBD)_ | Draft |
 | L2-READ-012 | L3-READ-024, L3-READ-026, L3-READ-027, L3-READ-029 | _(TBD)_ | Draft |
+| L2-READ-013 | L3-READ-030, L3-READ-031, L3-READ-032, L3-READ-033 | _(TBD)_ | Draft |
 
 ### L1-CH10: Chapter 10 setup records
 
@@ -97,15 +98,22 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
-| L1-VIEW-001 | _(none)_ | _(none)_ | Draft |
+| L1-VIEW-001 | L2-VIEW-001 | _(none)_ | Draft |
 | L1-VIEW-002 | _(none)_ | _(none)_ | Draft |
 | L1-VIEW-003 | _(none)_ | _(none)_ | Draft |
-| L1-VIEW-004 | _(none)_ | _(none)_ | Draft |
+| L1-VIEW-004 | L2-VIEW-002 | _(none)_ | Draft |
 | L1-VIEW-005 | _(none)_ | _(none)_ | Draft |
 | L1-VIEW-006 | _(none)_ | _(none)_ | Draft |
 | L1-VIEW-007 | _(none)_ | _(none)_ | Draft |
 | L1-VIEW-008 | _(none)_ | _(none)_ | Draft |
 | L1-VIEW-009 | _(none)_ | _(none)_ | Draft |
+
+**L2 -> L3 -> Verification Artifacts**
+
+| L2 ID | L3 Children | Test Artifacts | Status |
+|-------|-------------|----------------|--------|
+| L2-VIEW-001 | L3-VIEW-001, L3-VIEW-002 | _(TBD)_ | Draft |
+| L2-VIEW-002 | L3-VIEW-003, L3-VIEW-004 | _(TBD)_ | Draft |
 
 ### L1-VAL: Validation
 
@@ -264,11 +272,11 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | Category | L1 | L2 | L3 | L2 tested | L3 tested | L2 verified | L3 verified |
 |----------|----|----|----|-----------|-----------|-------------|-------------|
-| READ | 7 | 12 | 29 | 0 | 0 | 0 | 0 |
+| READ | 7 | 13 | 33 | 0 | 0 | 0 | 0 |
 | CH10 | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EDN | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REG | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
-| VIEW | 9 | 0 | 0 | 0 | 0 | 0 | 0 |
+| VIEW | 9 | 2 | 4 | 0 | 0 | 0 | 0 |
 | VAL | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
 | DER | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EXT | 4 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -279,13 +287,13 @@ This matrix is the single source of truth for live status; the requirement docum
 | ROB | 3 | 2 | 3 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **19** | **38** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **22** | **46** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 73 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 71 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 130 (0.0%).
+**Tested by at least one test marker**: 0 of 139 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 130 (2.3%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 139 (2.2%).
 
 ### Orphan check
 
@@ -336,9 +344,10 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-036 | Omit ASCII nonprintables only from semantic projections | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
 | INT-037 | Diagnose Unicode markers without automatic transcoding | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
 | INT-038 | Decimal index identity without source normalization or machine-word limits | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
+| INT-039 | Repeated scalar slots remain ambiguous even when values agree | proposed (2026-11-22; owner sign-off required) | not yet written | _(none)_ |
 
-* Entries without a written analysis: **38** of 38
-* Entries without a test: **38** of 38
+* Entries without a written analysis: **39** of 39
+* Entries without a test: **39** of 39
 * Entries missing the development mark: **0**
 
 ### Marker reference check

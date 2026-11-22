@@ -1,8 +1,8 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations, framing, character and name batches drafted (family 2, batches 1-4).**
+> **Status: foundations through candidate batches drafted (family 2, batches 1-5).**
 > These are implementation obligations, not existing interfaces or completed
-> tests. INT-035/036/037/038 are approved; INT-038 sign-off is dated 2026-11-22.
+> tests. INT-035/036/037/038 are approved; INT-039 is proposed, 2026-11-22.
 > Remaining derivations and development evidence still precede implementation.
 
 ## Purpose
@@ -394,3 +394,77 @@ value differences alone do not create another index-spelling tuple. Equal
 index numbers in different paths/groups are not full-key collisions. This
 clarification was requested with Joey's 2026-11-22 sign-off. General duplicate
 single-entry/value-conflict classification remains for the later batch; it does not defer this finding.
+
+
+## Candidate batch 5: scalar duplicates and exact-name results
+
+These are planned obligations, not implemented interfaces or executable
+verification. INT-039 is proposed under ADR-0033. One document here means
+one caller-supplied TMATS text/assembled record, not a merge of successive
+setup records; this batch does not decide record completeness or governance.
+
+**L3-READ-030** · Parent: L2-READ-013 · Verification: T
+*Duplicate grouping SHALL use a complete canonical key including group, supplied occurrence, ordered path and every index position, within one document; it SHALL retain each matching item identity and source location once per occurrence, including byte-identical repeats.*
+
+Approved INT-036/038 supply projection and decimal-string identity. Do not
+group by value, path prefix, entry index alone or across distinct documents.
+Source: 106-24R1 section 9.4.2, page 9-2; ADR-0002/0003.
+
+**L3-READ-031** · Parent: L2-READ-013 · Verification: T
+*For a slot established as scalar by a cited reviewed definition, two or more occurrences of its complete canonical key SHALL produce a located duplicate finding referencing every occurrence, irrespective of whether raw or interpreted values agree; distinct index combinations in a multiple-entry pattern SHALL remain separate slots.*
+
+This is proposed INT-039. `G\PN` is PROGRAM NAME (106-24R1 Table 9-2,
+page 9-10); `G\DSI-1` and `G\DSI-2` illustrate distinct numbered entries
+in section 9.4.2, page 9-2. Repeating the same numbered slot is different
+from supplying several different numbered entries. Severity/profile mapping
+is deferred; lowering severity cannot manufacture a unique value.
+
+**L3-READ-032** · Parent: L2-READ-013 · Verification: T
+*Unknown or unreviewed cardinality SHALL remain explicitly unclassified for scalar-duplicate conformance, while raw multiplicity remains visible; standalone COMMENT items SHALL be exposed as a retained ordered collection rather than diagnosed as duplicate scalar attributes merely for repeating.*
+
+The COMMENT collection is a proposed INT-039 reading of section 9.4.2,
+page 9-3; it does not extend to every descriptive attribute such as G\PN.
+No cardinality is inferred solely from absent indices or unfamiliar private
+H/V/X names. This does not suppress INT-038's applicable collision findings.
+
+**L3-VIEW-001** · Parent: L2-VIEW-001 · Verification: T
+*An exact lookup using a complete interpreted key SHALL return all matching items in input order with original item IDs, name/value spans and byte access; an index or typed cache SHALL NOT replace this result with a deduplicated or last/first-wins map.*
+
+Case and index spelling use the approved comparator/projection rules. A
+value's high bytes, invalid type or empty content do not erase its raw
+candidate when the name has a usable key. A malformed/unsupported name with
+no usable interpreted key remains accessible through the source/item store;
+it is not fabricated into an exact-key match. If INT-037 marker gating blocks
+interpreted lookup, report that block and its finding rather than return
+empty success or claim the key is absent; raw source access remains available.
+
+**L3-VIEW-002** · Parent: L2-VIEW-001 · Verification: T
+*On a document with interpreted lookup available, absence of an exact-key match SHALL be represented as an empty candidate collection, distinct from one matching item with a zero-length raw value; returning candidates SHALL NOT itself label their values explicit, defaulted or valid.*
+
+`G\PN:;` has one present raw candidate; whether its value satisfies the
+cited definition is separate. Empty candidate collection is a raw lookup
+outcome, not authority to invent a default or prove a link unresolved.
+
+**L3-VIEW-003** · Parent: L2-VIEW-002 · Verification: T
+*For a definition-bound scalar slot, singular resolution with two or more matching occurrences SHALL be ambiguous and list every original candidate/location, even if all raw bytes agree, interpreted values compare equal, or only one candidate would independently be valid.*
+
+This proposed INT-039 multiplicity gate precedes value-based candidate
+selection. Preserve each candidate's invalid findings; ambiguity must not
+hide the bad input or present one candidate as the chosen explicit value.
+The zero/one-candidate five-state resolver is not fully derived here.
+
+**L3-VIEW-004** · Parent: L2-VIEW-002 · Verification: T
+*Ambiguous scalar resolution SHALL NOT substitute a default, infer an absent value, coalesce equal candidates or become explicit after reordering input or changing diagnostic severity; raw output SHALL continue to reproduce every retained byte.*
+
+Proposed INT-039 refines ADR-0023's ambiguous state for repeated slots.
+Order changes reporting order only. This does not define link selectors,
+packet evidence, caller assumptions or a data-channel/time-source association.
+
+**L3-READ-033** · Parent: L2-READ-013 · Verification: T
+*General scalar-duplicate findings SHALL coexist with the approved per-token normalization and canonical-group collision information findings, and SHALL NOT turn duplicate G\SHA integrity into a positive verdict or permit stamping.*
+
+INT-038 already requires collision information for distinct raw index-spelling
+tuples and lists exact repeats too. Scalar duplicates can exist even with
+only one raw spelling tuple. Coordinator-decided F1 (ADR-0034, owner may
+override; L1-SUM-002) separately requires indeterminate integrity and stamping
+refusal. Checksum mechanics and edits remain later requirements.
