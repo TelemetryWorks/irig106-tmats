@@ -14,7 +14,8 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
-| [2026-11-22-code-name-index-draft.md](2026-11-22-code-name-index-draft.md) | Batch 4 source review and INT-038 decimal index identity proposal plus review amendments, alternatives and outstanding evidence |
+| [2026-11-22-int038-owner-signoff.md](2026-11-22-int038-owner-signoff.md) | Joey's INT-038 sign-off, PR #20 exact-head AI concurrence and collision-group clarification |
+| [2026-11-22-code-name-index-draft.md](2026-11-22-code-name-index-draft.md) | Batch 4 source review and INT-038 decimal index identity proposal plus review amendments, alternatives and outstanding evidence (sign-off superseded by the INT-038 approval record) |
 | [2026-11-22-int036-int037-owner-signoff.md](2026-11-22-int036-int037-owner-signoff.md) | Joey's INT-036/037 sign-off, PR #16 exact-head AI-concurrence reference, discarded controls and strict ASCII choices |
 | [2026-11-21-character-interpretation-drafts.md](2026-11-21-character-interpretation-drafts.md) | INT-036/037 baseline character/encoding proposals plus review amendments, sources, alternatives and pending analysis (sign-off superseded by the 2026-11-22 record) |
 | [2026-11-21-int035-owner-signoff.md](2026-11-21-int035-owner-signoff.md) | Joey's INT-035 sign-off, PR #13 AI-concurrence reference, empty-run/EOF policy and reviewer notes |

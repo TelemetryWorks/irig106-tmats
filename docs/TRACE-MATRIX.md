@@ -335,7 +335,7 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-035 | Recover malformed framing only at an actual semicolon | approved (Joey, owner sign-off, 2026-11-21) | not yet written | _(none)_ |
 | INT-036 | Omit ASCII nonprintables only from semantic projections | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
 | INT-037 | Diagnose Unicode markers without automatic transcoding | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
-| INT-038 | Decimal index identity without source normalization or machine-word limits | proposed (2026-11-22; owner sign-off required) | not yet written | _(none)_ |
+| INT-038 | Decimal index identity without source normalization or machine-word limits | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
 
 * Entries without a written analysis: **38** of 38
 * Entries without a test: **38** of 38

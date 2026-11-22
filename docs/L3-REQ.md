@@ -2,7 +2,7 @@
 
 > **Status: foundations, framing, character and name batches drafted (family 2, batches 1-4).**
 > These are implementation obligations, not existing interfaces or completed
-> tests. INT-035/036/037 are approved; INT-038 is proposed, 2026-11-22.
+> tests. INT-035/036/037/038 are approved; INT-038 sign-off is dated 2026-11-22.
 > Remaining derivations and development evidence still precede implementation.
 
 ## Purpose
@@ -284,10 +284,12 @@ finding for the non-field regions governed by L3-READ-014.
 
 ## Code-name batch 4: components, recognition and failures
 
-These are planned obligations, not implemented APIs. Index identity in
-INT-038 requires independent AI review and owner sign-off under ADR-0033;
-full analysis and executable tests also remain prerequisites. Existing
-character projection, raw display, marker gating and recovery rules apply.
+These are planned obligations, not implemented APIs. INT-038 was approved
+by Joey, 2026-11-22, under ADR-0033; the independent AI recheck concurred
+on PR #20 head `29707da` (see the
+[sign-off record](research/2026-11-22-int038-owner-signoff.md)). Full analysis
+and executable tests remain prerequisites. Existing character projection,
+raw display, marker gating and recovery rules apply.
 
 **L3-READ-019** · Parent: L2-READ-011 · Verification: T
 *Standalone COMMENT SHALL be recognized by whole-name ASCII-insensitive comparison after approved character projection, without fabricating a group occurrence or path; a name with additional suffix/path material SHALL NOT be accepted as COMMENT by prefix matching.*
@@ -321,7 +323,7 @@ NAME, page 9-115, and NUMBER OF FRAGMENTS, page 9-117. These describe
 name structure, not measurement links or valid counter contents.
 
 **L3-READ-023** · Parent: L2-READ-010 · Verification: T
-*At a standard pattern's index position, the proposed INT-038 reader SHALL accept a nonempty ASCII decimal-digit token, preserve its complete raw spelling, and use its canonical decimal string for identity equality and hashing without fixed-width or big-integer conversion; leading zeros SHALL NOT create a different index identity, and checked numeric conversion SHALL NOT wrap or truncate.*
+*At a standard pattern's index position, the approved INT-038 reader SHALL accept a nonempty ASCII decimal-digit token, preserve its complete raw spelling, and use its canonical decimal string for identity equality and hashing without fixed-width or big-integer conversion; leading zeros SHALL NOT create a different index identity, and checked numeric conversion SHALL NOT wrap or truncate.*
 
 Canonicalization strips leading zeros and retains one `0` for an all-zero
 token. Use the INT-036 projection before reading digits and retain original
@@ -329,7 +331,7 @@ source correspondence; omitted controls inside index digits still receive
 the approved internal-name finding. Full-key equality/hashing must preserve
 component and index boundaries (L3-READ-022). An all-zero token has identity
 zero; parsing it does not make it a legal entry index. Signs, decimal points, exponents and template letters do not
-match this proposed index grammar. This rule concerns index tokens only,
+match this approved index grammar. This rule concerns index tokens only,
 not numeric data values. Range/contiguity checks need separately cited,
 scoped rules; no inferred upper bound or allocation of every intervening
 index is permitted just because a large index was supplied.
@@ -355,7 +357,7 @@ conformance claim is made for an arbitrary unknown-name example.
 **L3-READ-026** · Parent: L2-READ-012 · Verification: T
 *A structurally read name SHALL NOT by itself establish known-definition validity, entry range/contiguity, value validity, uniqueness or link resolution; equal interpreted keys SHALL retain every original item instead of selecting or merging an occurrence during parsing.*
 
-Proposed INT-038 makes zero-padded decimal spellings equal, so both originals
+Approved INT-038 makes zero-padded decimal spellings equal, so both originals
 must remain available for later duplicate/ambiguity handling; the narrower
 normalization-only collision finding is required now by L3-READ-029. Counters and
 parent scopes follow ADR-0026 and Chapter 9 section 9.5.1 a; X has the cited
@@ -369,22 +371,26 @@ noncontiguity exception; neither occurrences nor raw spellings are counts.
 **L3-READ-027** · Parent: L2-READ-012 · Verification: T
 *Each projected decimal index token whose spelling differs from its canonical string SHALL produce a located information finding on its original token span, without changing retained bytes; canonical `0` SHALL be distinguished from noncanonical multi-digit zero spellings such as `00`.*
 
-This proposed INT-038 visibility also covers nonzero leading-zero tokens
+This approved INT-038 visibility also covers nonzero leading-zero tokens
 such as `01`. Internal/adjacent ordinary blanks within the name do not become
 valid digit tokens by trimming; whole-name edge layout still follows INT-036.
 
 **L3-READ-028** · Parent: L2-READ-010 · Verification: T
 *For section 9.5.14 X-to-original index comparisons, the occurrence and carried indices for the embedded original path SHALL use the same projected canonical decimal-string identity as the original; extra extension indices SHALL remain separate and matching indices SHALL NOT alone establish a resolved association.*
 
-Source: 106-24R1 Chapter 9 section 9.5.14, page 9-172. Proposed INT-038
+Source: 106-24R1 Chapter 9 section 9.5.14, page 9-172. Approved INT-038
 settles the spelling comparison: 1 and 01 agree, but all raw spellings remain.
 This does not collapse X and its original into the same full code-name key.
 
 **L3-READ-029** · Parent: L2-READ-012 · Verification: T
-*When complete interpreted keys become equal only after canonicalizing their index spellings, the reader SHALL report a located information finding listing all original occurrences now, retaining their order, raw bytes and values without selecting, consolidating or claiming positive uniqueness.*
+*When a canonical full-key group contains two or more DISTINCT raw index-spelling tuples, the reader SHALL report a located information finding listing EVERY original occurrence in that group, exact repeats included, retaining their input order, raw bytes and values without selecting, consolidating or claiming positive uniqueness.*
 
-This proposed INT-038 collision finding is in addition to per-token
-noncanonical-spelling findings. Compare complete keys after approved
-case/control projection; equal index numbers in different paths/groups are
-not full-key collisions. General duplicate single-entry/value-conflict
-classification remains for the later batch; it does not defer this finding.
+This approved INT-038 collision finding is in addition to per-token
+noncanonical-spelling findings. Group complete keys after approved
+case/control projection and canonicalization; determine distinct tuples from
+the original-source spelling of each corresponding index token. One raw tuple
+alone does not trigger this finding, even if repeated. Code-letter case or
+value differences alone do not create another index-spelling tuple. Equal
+index numbers in different paths/groups are not full-key collisions. This
+clarification was requested with Joey's 2026-11-22 sign-off. General duplicate
+single-entry/value-conflict classification remains for the later batch; it does not defer this finding.
