@@ -82,3 +82,62 @@ Full cross-edition/handbook/sample analysis and executable tests remain
 outstanding. Additional family-2 batches still need duplicate classification,
 lookup and counter/link semantics, extensions, Chapter 10, time views,
 checksums, CLI, robustness and release obligations before family 3 begins.
+
+## Review amendments — 2026-11-22
+
+The owner relayed **CONCERNS** from the independent AI check on INT-038
+at [#19](https://github.com/TelemetryWorks/irig106-tmats/pull/19) head
+`b4cbae36e08ee2e89cb6981fc6e0dcd3dcc4ade6`. Numeric identity with raw spelling
+retained was sound; the owner requested the following amendments before
+sign-off. The baseline above is preserved as history; the amended register
+and requirements govern. Owner sign-off and amended-draft recheck remain
+pending under ADR-0033, with full development analysis/tests still required.
+
+### Visible canonicalization and early collision findings
+
+Recommend reporting normalization-only full-key collisions during reading,
+not waiting for general duplicate classification. Emit located information
+for each noncanonical projected token (`01`, `00`), keeping canonical `1`
+and `0` distinct from noncanonical spellings. When full keys become equal
+only by canonicalizing index spellings, list every original occurrence in a
+located information finding now, without selecting a spelling, merging items
+or deciding value agreement. Those findings are separate from per-token
+normalization findings. Counter semantics and broader duplicates remain later.
+
+Alternative: postpone collisions until the duplicate-classification batch.
+That would leave a known identity collision invisible in the intermediate
+reader and make downstream users repeat its detection. Early information is
+recommended because it exposes a chosen interpretation without changing bytes
+or prematurely deciding broader duplicate severity/semantics. Same indices in
+different paths/groups are not full-key collisions; X and D stay distinct.
+
+### Projected digits and canonical strings
+
+Apply INT-036 first: `R-1\r\n0\TK1-1` has occurrence identity 10 and the
+approved internal-omission information finding on the CR/LF. Its raw index
+still spans the controls. Ordinary internal blanks such as `R- 1\` and
+`R-1 \` are not trimmed into an index. Whole-name edge layout remains the
+approved exception; TAB is discarded for meaning, never replaced by a space.
+
+Strip leading zeros from the projected digit string, retaining one `0` for
+all-zero tokens. Identity equality and hashing use that canonical string,
+never fixed-width or big-integer conversion. Keep component/index boundaries
+when using these identities in a full key; no collision-free hash promise
+or numeric-ordering API is introduced. A separately requested bounded numeric
+conversion can fail explicitly. The 40-digit fixture uses string equality
+and equal-hash input expectations independent of any integer implementation.
+
+### X embedded original-path indices and deferred counters
+
+Re-inspected 106-24R1 Chapter 9 section 9.5.14, page 9-172: X's occurrence
+must match the original's first index; the carried original indices match
+the original's corresponding indices, while extra extension indices remain
+separate. Apply canonical decimal strings to these comparisons too. Thus
+`X-1\MYORG\D\MN\SGAIN-1-2` agrees on those positions with
+`D-01\MN-01-02`, without establishing uniqueness or resolving the association.
+This does not move the carried suffix indices onto different path segments.
+
+Explicitly defer the `\N` count and no-missing-values requirements/checks to
+the counter batch. They must count DISTINCT numeric identities, not padded
+spellings or repeated item occurrences, within the cited parent scope and
+with X's noncontiguity exception. No counter acceptance is established here.
