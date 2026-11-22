@@ -163,10 +163,14 @@ It supplements rather than silently changes L1-READ-007's existing pattern.
 
 ## Family 2 batch 3: character-policy acceptance specifications
 
-**Status: planned, not executable tests.** These cases exercise proposed
-INT-036/037 only after independent AI review, owner sign-off and development
-prerequisites. INT-035 remains approved, including merged run findings and
-EOF silence. Full code-name grammar and index parsing remain later work.
+**Status: planned, not executable tests.** INT-036/037 were approved by
+Joey, 2026-11-22, under ADR-0033, with the independent AI recheck concurring
+on PR #16 head `891f77f` (see the
+[sign-off record](research/2026-11-22-int036-int037-owner-signoff.md)).
+Approval is not implementation or passing tests; full development analysis
+and executable checks remain outstanding. INT-035 remains approved,
+including merged run findings and EOF silence. Full code-name grammar and
+index parsing remain later work.
 
 Sources: 106-24R1 Chapter 9 sections 9.4.1/9.4.2, page 9-2 (characters and
 blanks), section 9.4.2 page 9-3 (COMMENT); RFC 20 sections 2 and 4.1/4.2
@@ -174,7 +178,7 @@ blanks), section 9.4.2 page 9-3 (COMMENT); RFC 20 sections 2 and 4.1/4.2
 Escapes in the table denote actual fixture bytes, not backslash text to pass
 to the parser. Raw and interpreted expectations must be independently set.
 
-| Planned check | Fixture or stimulus | Expected observation under the proposals | Requirement |
+| Planned check | Fixture or stimulus | Expected observation under the approved policies | Requirement |
 | --- | --- | --- | --- |
 | `control_projection_preserves_raw_spans` | `CO\r\nMMENT:v;` | Interpreted name COMMENT; raw name span `[0, 9)`; contributing source offsets `[0,1,4,5,6,7,8]`; located information finding on omitted CR/LF `[2, 4)`; no invented raw contiguous spelling | L3-READ-011, L3-READ-012, L3-READ-017 |
 | `crlf_before_name_is_not_a_delimiter` | `\r\nCOMMENT:v;` and `\rCOMMENT:v;` | Prefix controls omitted for name meaning; no control finding for leading layout; one attribute, full original bytes retained | L3-READ-011, L3-READ-013, L3-READ-017 |
@@ -187,7 +191,7 @@ to the parser. Raw and interpreted expectations must be independently set.
 | `high_bytes_are_not_silently_decoded` | COMMENT value containing FF or valid UTF-8 multibyte text | Located non-ASCII finding; raw bytes retained; affected field is Invalid with no usable interpreted value, with no implicit UTF-8/Latin-1 conversion | L3-READ-016 |
 | `leading_encoding_marker_blocks_semantic_lookup` | Each of EF BB BF, FE FF, FF FE, 00 00 FE FF and FF FE 00 00 at assembled-text offset zero plus data | Located unsupported-marker finding and retained source; no semantic lookup, stripping or transcoding | L3-READ-015 |
 | `partial_or_midstream_marker_is_not_a_leading_bom` | EF BB without BF; EF BB BF after a terminated COMMENT | Ordinary located high-byte findings, not a silently removed leading marker; retain source | L3-READ-015, L3-READ-016 |
-| `unmarked_zero_patterns_do_not_select_encoding` | Unmarked ASCII bytes interleaved with NUL | No automatic UTF-16 selection; raw ASCII/control proposal applies with one NUL information finding per affected field (plus internal-name omission findings where applicable), explicitly not proof of original encoding | L3-READ-011, L3-READ-015, L3-READ-018 |
+| `unmarked_zero_patterns_do_not_select_encoding` | Unmarked ASCII bytes interleaved with NUL | No automatic UTF-16 selection; approved raw ASCII/control policy applies with one NUL information finding per affected field (plus internal-name omission findings where applicable), explicitly not proof of original encoding | L3-READ-011, L3-READ-015, L3-READ-018 |
 | `name_edge_layout_stays_silent` | `\tCOMMENT\r\n:v;` | No control finding for name-edge layout; NUL is tested separately | L3-READ-017 |
 | `nul_fields_have_one_information_finding_each` | `\x00\x00COMMENT:v\x00x\x00;` | Exactly one NUL information finding for name at `[0, 2)` and one for value identifying `[11, 12)` and `[13, 14)`; preserve all bytes | L3-READ-018 |
 | `internal_name_nul_rules_both_apply` | `CO\x00MMENT:v;` | One NUL-field information finding and an internal-name omission information finding, both located at `[2, 3)`; no encoding guess | L3-READ-017, L3-READ-018 |
