@@ -4,8 +4,7 @@
 > Foundations derive the approved restructure/source store; framing and
 > recovery use owner-approved INT-035. Character policies INT-036/037 were
 > approved by Joey, 2026-11-22, under ADR-0033. Name structure follows here;
-> INT-038 was approved by Joey, 2026-11-22. Candidate batch 5 proposes
-> INT-039; remaining view/registry, CLI and later areas follow;
+> INT-038/039 were approved by Joey, 2026-11-22; remaining view/registry, CLI and later areas follow;
 > a parent with children here is not necessarily fully decomposed yet.
 
 ## Purpose
@@ -280,10 +279,13 @@ registry matcher, counter validator, duplicate classifier or extension resolver.
 ## Candidate batch 5: duplicate classification and exact lookup
 
 This derives the duplicate part of L1-READ-003, exact-name lookup under
-L1-VIEW-001 and the multiplicity part of L1-VIEW-004. Proposed INT-039 needs
-owner sign-off and independent AI review under ADR-0033. INT-035/036/037/038
-remain approved unchanged. Pattern-query grammar, complete effective-value
-resolution, link selection, time association, counter rules and edits remain
+L1-VIEW-001 and the multiplicity part of L1-VIEW-004. INT-039 was approved
+by Joey, 2026-11-22, under ADR-0033, with independent AI concurrence on
+PR #22 head `b22d45c` (see the
+[sign-off record](research/2026-11-22-int039-owner-signoff.md)). INT-035/036/037/038
+remain approved unchanged. Full development analysis and executable tests
+remain outstanding; approval does not provide implementation evidence.
+Pattern-query grammar, complete effective-value resolution, link selection, time association, counter rules and edits remain
 subsequent derivations; these children do not complete those L1 parents.
 
 #### L2-READ-013
@@ -292,7 +294,7 @@ subsequent derivations; these children do not complete those L1 parents.
 
 **Statement**: The reader SHALL classify repeated instances of a definition-bound scalar attribute by complete canonical key, report the duplicate with every occurrence located, and preserve all items; unknown cardinality and standalone COMMENT collections SHALL NOT be silently treated as duplicate scalar definitions, nor SHALL duplicate classification suppress approved normalization findings.
 
-**Rationale**: 106-24R1 Chapter 9 section 9.4.2, page 9-2, describes unique names and single/multiple-entry attributes; page 9-3 introduces COMMENT for interjected comments. Proposed INT-039 settles repeat handling where that text does not specify recovery. Scalar cardinality must come from a cited, reviewed definition for the applicable edition, not a missing/assumed suffix. ADR-0002 retains source; INT-038's early collision finding remains distinct.
+**Rationale**: 106-24R1 Chapter 9 section 9.4.2, page 9-2, describes unique names and single/multiple-entry attributes; page 9-3 introduces COMMENT for interjected comments. Approved INT-039 settles repeat handling where that text does not specify recovery. Scalar cardinality must come from a cited, reviewed definition for the applicable edition, not a missing/assumed suffix. Group \COM fields remain single-entry per the standard (Table 9-2 G\COM, page 9-13; Table 9-4 R-x\COM, page 9-84), unlike standalone COMMENT. The owner knowingly retained duplicate handling for writers that repeat long remarks; raw lookup keeps every line. ADR-0002 retains source; INT-038's early collision finding remains distinct.
 
 **Verification Method**: Test (T)
 
@@ -312,6 +314,6 @@ subsequent derivations; these children do not complete those L1 parents.
 
 **Statement**: A singular effective-value request for a definition-bound scalar slot with two or more matching items SHALL return ambiguous with every original candidate and its findings, without collapsing equal values, filtering invalid candidates, falling back to a default or selecting by source order; one candidate SHALL still require ordinary validity checks before being called explicit.
 
-**Rationale**: ADR-0023 supplies explicit/defaulted/missing/invalid/ambiguous states. Proposed INT-039 chooses conservative multiplicity even for equal repeats; this is not a new default or an assertion that Chapter 9 explicitly specifies resolver precedence. Full zero/one-candidate resolution and scope-dependent defaults are later work. Coordinator-decided F1 keeps duplicate SHA integrity indeterminate under ADR-0034, independently of generic view states.
+**Rationale**: ADR-0023 supplies explicit/defaulted/missing/invalid/ambiguous states. Approved INT-039 chooses conservative multiplicity even for equal repeats; this is not a new default or an assertion that Chapter 9 explicitly specifies resolver precedence. Full zero/one-candidate resolution and scope-dependent defaults are later work. Coordinator-decided F1 keeps duplicate SHA integrity indeterminate under ADR-0034, independently of generic view states.
 
 **Verification Method**: Test (T)
