@@ -1,10 +1,11 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through candidate batches drafted (family 2, batches 1-5).**
+> **Status: foundations through counter batches drafted (family 2, batches 1-6).**
 > Foundations derive the approved restructure/source store; framing and
 > recovery use owner-approved INT-035. Character policies INT-036/037 were
 > approved by Joey, 2026-11-22, under ADR-0033. Name structure follows here;
-> INT-038/039 were approved by Joey, 2026-11-22; remaining view/registry, CLI and later areas follow;
+> INT-038/039 were approved by Joey, 2026-11-22. Counter batch 6 proposes
+> INT-040; remaining view/registry, CLI and later areas follow;
 > a parent with children here is not necessarily fully decomposed yet.
 
 ## Purpose
@@ -315,5 +316,46 @@ subsequent derivations; these children do not complete those L1 parents.
 **Statement**: A singular effective-value request for a definition-bound scalar slot with two or more matching items SHALL return ambiguous with every original candidate and its findings, without collapsing equal values, filtering invalid candidates, falling back to a default or selecting by source order; one candidate SHALL still require ordinary validity checks before being called explicit.
 
 **Rationale**: ADR-0023 supplies explicit/defaulted/missing/invalid/ambiguous states. Approved INT-039 chooses conservative multiplicity even for equal repeats; this is not a new default or an assertion that Chapter 9 explicitly specifies resolver precedence. Full zero/one-candidate resolution and scope-dependent defaults are later work. Coordinator-decided F1 keeps duplicate SHA integrity indeterminate under ADR-0034, independently of generic view states.
+
+**Verification Method**: Test (T)
+
+
+## Counter batch 6: declared scope and distinct entry identities
+
+This batch derives the counter portion of L1-REG-005, L1-VAL-002 and
+L1-VAL-006, following ADR-0023/0026 and approved INT-038/039. Proposed
+INT-040 addresses membership when entry values are invalid or duplicated;
+it needs owner sign-off and independent AI review under ADR-0033. These are
+requirements for the existing planned validation scope, not a promotion of
+the general registry/validator into 0.1. Link metadata, complete rule/type
+interpretations and other family-2 areas remain separate derivations.
+
+#### L2-REG-001
+
+**Parent**: L1-REG-005
+
+**Statement**: Each counter rule SHALL identify its edition/citation, counter pattern, governed member patterns and index position, fixed parent-index tuple and contiguity policy or cited exception; applicability and membership SHALL come from a reviewed declaration rather than a global suffix or group-name heuristic.
+
+**Rationale**: 106-24R1 Chapter 9 section 9.5.1 a after Table 9-1, page 9-5, supplies the 1-to-N rule; ADR-0026 requires parent scope. Table 9-7 NUMBER OF MEASUREMENT LOCATIONS `D-x\MML\N-y-n` and NUMBER OF FRAGMENTS `D-x\MNF\N-y-n-m`, page 9-117, illustrate different governed positions. Section 9.5.14, page 9-172, exempts X occurrence indices from contiguity, not every nested index in an extension. No counter is created merely because a path ends in N.
+
+**Verification Method**: Test (T)
+
+#### L2-VAL-001
+
+**Parent**: L1-VAL-002
+
+**Statement**: For each applicable reviewed counter rule and fixed parent tuple, validation SHALL compare the usable declared count with DISTINCT canonical numeric identities of governed entries, checking both cardinality and the declared index-domain/contiguity rule while retaining all occurrence evidence; it SHALL NOT substitute raw item count, greatest observed index or another parent's entries for that set.
+
+**Rationale**: ADR-0026 and approved INT-038 already require scoped distinct numeric identities. Proposed INT-040 counts structurally identified entries independently of payload validity and duplicate declarations; other findings remain visible. Chapter 9 section 9.5.1 a, page 9-5, requires no missing values, so equal cardinality alone is insufficient. A counter result is not whole-document conformance or permission to repair source.
+
+**Verification Method**: Test (T)
+
+#### L2-VAL-002
+
+**Parent**: L1-VAL-006
+
+**Statement**: Counter evaluation SHALL report its counter/indices pass, rule citation, parent scope and supporting locations, and SHALL report cannot-evaluate when applicability, the effective counter value or required membership cannot be established without guessing; it SHALL NOT infer a missing count or claim success from an incomplete member set.
+
+**Rationale**: ADR-0022/0023 already require cannot-evaluate for unavailable operands. INT-039 makes duplicate scalar counters Ambiguous even when values agree. A cited default may be used only through a reviewed effective-value rule that permits it; neither suffix spelling nor the largest member supplies one. Proposed INT-040 preserves structural evidence separately from blocked or failing semantic checks.
 
 **Verification Method**: Test (T)

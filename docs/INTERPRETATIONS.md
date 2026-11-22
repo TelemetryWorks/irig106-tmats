@@ -979,3 +979,36 @@ or a clock association; zero/one-candidate default and validation rules follow.
 
 
 **Sign-off and AI-check reference**: [owner approval record](research/2026-11-22-int039-owner-signoff.md), referencing [PR #22](https://github.com/TelemetryWorks/irig106-tmats/pull/22) at `b22d45c4fb49c7b1a43ab6a4fd0a9d142c667f28` and the owner's 2026-11-22 relay of the independent check. The record includes the explicit group-\COM choice and the assembly-scope clarification requested with sign-off. Approval is not implementation, completed analysis or executable tests; those development gates remain outstanding.
+
+
+## Counter membership evidence (proposed)
+
+### INT-040
+
+**Title**: Count structurally identified entries independently of value validity
+
+**Sources**:
+- 106-24R1 Chapter 9 section 9.5.1 a after Table 9-1, page 9-5, specifies indices from one to a declared count with "no missing values"; it does not define recovery membership for invalid entry values.
+- Table 9-7 NUMBER OF MEASUREMENT LOCATIONS `D-x\MML\N-y-n` and NUMBER OF FRAGMENTS `D-x\MNF\N-y-n-m`, page 9-117, count location/fragment definitions rather than arbitrary property lines. Section 9.5.14, page 9-172, exempts X occurrence contiguity.
+- ADR-0023 separates present-value validity from counters/indices; ADR-0026 declares parent scope. Approved INT-038 requires DISTINCT numeric identities; INT-039 retains all duplicate/invalid scalar candidates without selecting one.
+
+**Behaviour**: **Proposed.** Given an applicable reviewed counter/member rule and unambiguously identified parent/index positions, form the observed set from structurally identified entry indices even if a member's payload is Invalid or its scalar slot is Ambiguous. Keep all evidence, but count each canonical numeric identity once across duplicate spellings, repeats and declared member properties. Do not erase an entry because its value is bad. Report value/duplicate findings independently; a matching count is only a structural observation, never a validity verdict for those entries or the document.
+
+Retain zero/out-of-domain indices as observed evidence and report domain
+violations separately; do not remove them to manufacture a valid 1-to-N set.
+If required membership or scope cannot be established, report cannot-evaluate
+with the limitation instead of guessing a member or claiming success from a
+partial set. Likewise an unusable effective counter cannot be replaced by the
+maximum observed index or item count. A cited/permitted default must come
+from its own reviewed rule. An unrelated malformed item is not assigned to a
+scope by guess. No bytes, counters or missing entries are repaired.
+
+**Reason**: Counting only valid values makes a declared entry disappear when its content is broken, confusing cardinality with validity and obscuring separate defects. Counting raw lines overcounts duplicates and multiple properties. Structural evidence plus independent findings exposes both; its cost is that a count may match while the configuration remains invalid, so reports must not call that whole-document success.
+
+**Design**: proposed (2026-11-22; owner sign-off required) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: pending · **Origin**: family 2 batch 6
+
+**Test**: `invalid_payload_keeps_structural_membership`, `counter_counts_distinct_identities`, `unusable_counter_is_not_inferred`, `incomplete_membership_does_not_pass` (planned, not yet written)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Draft analysis**: [sources, alternatives and remaining work](research/2026-11-22-counter-membership-draft.md)
