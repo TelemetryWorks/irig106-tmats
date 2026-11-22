@@ -860,7 +860,7 @@ converted data the original TMATS bytes, and never infer an edition from a BOM.
 **Sign-off and AI-check reference**: [owner approval record](research/2026-11-22-int036-int037-owner-signoff.md), referencing [PR #16](https://github.com/TelemetryWorks/irig106-tmats/pull/16) at `891f77f137c9e90ecc15416a84b11d67b6bbde86` and the owner's 2026-11-22 relay of the independent recheck. Approval records the interpretation decision, not implementation, completed analysis or executable tests; those development gates remain outstanding.
 
 
-## Decimal index identity (proposed)
+## Decimal index identity (approved, 2026-11-22)
 
 ### INT-038
 
@@ -872,17 +872,21 @@ converted data the original TMATS bytes, and never infer an edition from a BOM.
 - Table 9-7 MEASUREMENT NAME `D-x\MN-y-n`, page 9-115, supplies two entry-index positions; NUMBER OF FRAGMENTS `D-x\MNF\N-y-n-m`, page 9-117, supplies a nested path. The text does not define leading-zero equivalence or a parser integer width.
 - ADR-0002/0003 require raw retention; ADR-0026 separates scoped counter validation from source parsing. INT-036/037 define approved character handling, not numeric index identity.
 
-**Behaviour**: **Proposed.** Read index digits from the approved INT-036 code-name projection. At an index position in a standard code pattern, accept a nonempty sequence of ASCII decimal digits for structural reading. Preserve raw spelling and source correspondence. Strip leading zeros for the canonical decimal string, retaining exactly `0` for an all-zero token. Identity equality and hashing use that string, never fixed-width or big-integer conversion. Do not treat signs, fractions, exponents or definition placeholder letters as file indices. This does not prescribe the grammar of arbitrary H/V/X attribute strings.
+**Behaviour**: **Approved by Joey, 2026-11-22, under ADR-0033.** Read index digits from the approved INT-036 code-name projection. At an index position in a standard code pattern, accept a nonempty sequence of ASCII decimal digits for structural reading. Preserve raw spelling and source correspondence. Strip leading zeros for the canonical decimal string, retaining exactly `0` for an all-zero token. Identity equality and hashing use that string, never fixed-width or big-integer conversion. Do not treat signs, fractions, exponents or definition placeholder letters as file indices. This does not prescribe the grammar of arbitrary H/V/X attribute strings.
 
 Each projected digit token different from its canonical string emits a
 located **information** finding on its original token span: both `01` and
 `00` are noncanonical, while `1` and `0` are canonical. This is visible
 interpretation, not a source edit. Report normalization-only full-key
-collisions **now**, as located information listing every occurrence whose
-keys become equal only after canonicalizing index spellings (after the
-already-approved case/control projection). Keep all items in order; do not
-choose a winner. The later duplicate-classification batch still defines
-single-entry/value-conflict behavior; it must not postpone this visibility.
+collisions **now**: a canonical full-key group triggers the located
+information finding when it contains two or more DISTINCT raw index-spelling
+tuples. Compare original-source spellings of corresponding index tokens;
+list EVERY occurrence in the group, exact repeats included, in input order.
+A group with only one raw index-spelling tuple does not trigger this finding;
+code-letter case or value differences alone do not change that tuple. Keep
+all items; do not choose a winner. This group trigger/list clarification was
+requested with the owner's 2026-11-22 sign-off. The later duplicate-
+classification batch still defines single-entry/value-conflict behavior; it must not postpone this visibility.
 
 An omitted control between index digits still triggers INT-036's internal
 code-name omission finding: `R-1\r\n0\TK1-1` has occurrence identity `10`,
@@ -908,12 +912,14 @@ The `\N` count and no-missing-values checks must count **distinct numeric
 identities**, not spellings or occurrences; derivation and implementation of
 those scoped checks are explicitly deferred to the counter batch.
 
-**Reason**: Treating indices as numbers follows the cited examples while preserving questionable inputs for diagnostics. Rejecting zero during lexical reading confuses range validation with structure; a machine-size limit makes the same file parse differently across targets. Leading-zero equality is a proposed product interpretation, not an explicit Chapter 9 spelling rule. Its cost is that previously distinct-looking names can become duplicate candidates; the owner must approve that consequence.
+**Reason**: Treating indices as numbers follows the cited examples while preserving questionable inputs for diagnostics. Rejecting zero during lexical reading confuses range validation with structure; a machine-size limit makes the same file parse differently across targets. Leading-zero equality is an owner-approved product interpretation, not an explicit Chapter 9 spelling rule. Its cost is that previously distinct-looking names can become duplicate candidates; Joey approved that consequence on 2026-11-22.
 
-**Design**: proposed (2026-11-22; owner sign-off required) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: CONCERNS on [#19](https://github.com/TelemetryWorks/irig106-tmats/pull/19) head `b4cbae3` (owner-relayed, 2026-11-22); amended draft recheck pending · **Origin**: family 2 batch 4; review amendments requested 2026-11-22
+**Design**: approved (Joey, owner sign-off, 2026-11-22) · **Review**: approved under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-22; independent AI recheck: CONCURS on PR #20 at `29707da`, relayed by the owner 2026-11-22 · **Origin**: family 2 batch 4; review amendments requested 2026-11-22
 
-**Test**: `decimal_index_spelling_preserves_numeric_identity`, `noncanonical_index_is_visible`, `normalization_only_collision_is_reported_now`, `projected_index_controls_keep_locations`, `canonical_string_equality_and_hashing`, `x_original_indices_use_numeric_identity`, `zero_index_is_not_range_approval`, `large_index_does_not_wrap_or_allocate_by_value` (planned, not yet written)
+**Test**: `decimal_index_spelling_preserves_numeric_identity`, `noncanonical_index_is_visible`, `normalization_only_collision_is_reported_now`, `collision_group_includes_exact_repeats`, `identical_index_spellings_do_not_trigger_normalization_collision`, `projected_index_controls_keep_locations`, `canonical_string_equality_and_hashing`, `x_original_indices_use_numeric_identity`, `zero_index_is_not_range_approval`, `large_index_does_not_wrap_or_allocate_by_value` (planned, not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
 **Draft analysis**: [sources, alternatives and 2026-11-22 review amendments](research/2026-11-22-code-name-index-draft.md#review-amendments--2026-11-22)
+
+**Sign-off and AI-check reference**: [owner approval record](research/2026-11-22-int038-owner-signoff.md), referencing [PR #20](https://github.com/TelemetryWorks/irig106-tmats/pull/20) at `29707da26fd43ec9a871d41bfd6213afdfa3f965` and the owner's 2026-11-22 relay of the independent recheck. The record also identifies the collision-group clarification requested with sign-off. Approval records the interpretation decision, not implementation, completed analysis or executable tests; those development gates remain outstanding.

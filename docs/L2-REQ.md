@@ -4,7 +4,7 @@
 > Foundations derive the approved restructure/source store; framing and
 > recovery use owner-approved INT-035. Character policies INT-036/037 were
 > approved by Joey, 2026-11-22, under ADR-0033. Name structure follows here;
-> INT-038 is proposed; duplicate classification, CLI and later areas follow;
+> INT-038 was approved by Joey, 2026-11-22; duplicate classification, CLI and later areas follow;
 > a parent with children here is not necessarily fully decomposed yet.
 
 ## Purpose
@@ -237,8 +237,11 @@ classification and full known-code validation remain subsequent work.
 ## Code-name batch 4: structure before semantic validation
 
 This batch derives L1-READ-002/005 and the code-name-diagnostic part of
-L1-READ-003. INT-035/036/037 remain approved and unchanged; INT-038 below is
-a proposal about decimal index identity, not an approved interpretation.
+L1-READ-003. INT-035/036/037 remain approved and unchanged; INT-038 was
+approved by Joey, 2026-11-22, under ADR-0033, with the independent AI recheck
+concurring on PR #20 head `29707da` (see the
+[sign-off record](research/2026-11-22-int038-owner-signoff.md)). Approval does
+not supply implementation, full development analysis or executable tests.
 The examples establish structural obligations, not a completed catalogue,
 registry matcher, counter validator, duplicate classifier or extension resolver.
 
@@ -246,9 +249,9 @@ registry matcher, counter validator, duplicate classifier or extension resolver.
 
 **Parent**: L1-READ-002
 
-**Statement**: Code-name interpretation SHALL preserve the group, any supplied occurrence index, ordered path segments and every index attached to each segment, with original-source correspondence; literal digits in a code element SHALL NOT be mistaken for indices, and absent components SHALL NOT be invented; proposed INT-038 identity equality and hashing SHALL use canonical decimal strings, including when X carried indices are compared with the original indices.
+**Statement**: Code-name interpretation SHALL preserve the group, any supplied occurrence index, ordered path segments and every index attached to each segment, with original-source correspondence; literal digits in a code element SHALL NOT be mistaken for indices, and absent components SHALL NOT be invented; approved INT-038 identity equality and hashing SHALL use canonical decimal strings, including when X carried indices are compared with the original indices.
 
-**Rationale**: 106-24R1 Chapter 9 section 9.4.2, pages 9-2/3, and section 9.5.1 a with Table 9-1, page 9-5, establish hierarchical code names and multiple entries. Table 9-7 MEASUREMENT NAME `D-x\MN-y-n`, page 9-115, demonstrates nested indices; NUMBER OF FRAGMENTS `D-x\MNF\N-y-n-m`, page 9-117, demonstrates multiple path levels. Proposed INT-038 specifies index spelling/identity; neither syntax nor a parsed number proves validity in a counter's scope.
+**Rationale**: 106-24R1 Chapter 9 section 9.4.2, pages 9-2/3, and section 9.5.1 a with Table 9-1, page 9-5, establish hierarchical code names and multiple entries. Table 9-7 MEASUREMENT NAME `D-x\MN-y-n`, page 9-115, demonstrates nested indices; NUMBER OF FRAGMENTS `D-x\MNF\N-y-n-m`, page 9-117, demonstrates multiple path levels. Approved INT-038 specifies index spelling/identity; neither syntax nor a parsed number proves validity in a counter's scope.
 
 **Verification Method**: Test (T)
 
@@ -266,7 +269,7 @@ registry matcher, counter validator, duplicate classifier or extension resolver.
 
 **Parent**: L1-READ-003
 
-**Statement**: Code-name interpretation failures SHALL produce located diagnostics while preserving the framed item's raw name, value and order; incomplete or failed structural matches SHALL NOT become usable partial keys, and absence of a known definition alone SHALL NOT be equated with malformed code-name syntax; proposed INT-038 noncanonical index spellings and normalization-only full-key collisions SHALL produce located information findings during reading, without selecting or rewriting an item.
+**Statement**: Code-name interpretation failures SHALL produce located diagnostics while preserving the framed item's raw name, value and order; incomplete or failed structural matches SHALL NOT become usable partial keys, and absence of a known definition alone SHALL NOT be equated with malformed code-name syntax; approved INT-038 noncanonical index spellings and normalization-only full-key collisions SHALL produce located information findings during reading, without selecting or rewriting an item; the collision finding SHALL trigger for a canonical-key group with two or more distinct raw index-spelling tuples and list every occurrence in that group, exact repeats included.
 
 **Rationale**: L1-READ-001/003, ADR-0002/0003 and INT-035 retain source even when meaning fails. Chapter 9 section 9.4.2, page 9-2, advises against blanks in code names; approved INT-036 ignores only surrounding blanks and controls for meaning. Thus a damaged `G\COM Time 12:30;` cannot be silently accepted as `G\COM`. Unknown definitions and open H/V/X naming space require a distinct outcome from a demonstrated syntax error.
 
