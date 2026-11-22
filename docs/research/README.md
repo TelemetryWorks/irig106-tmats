@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-22-int036-int037-owner-signoff.md](2026-11-22-int036-int037-owner-signoff.md) | Joey's INT-036/037 sign-off, PR #16 exact-head AI-concurrence reference, discarded controls and strict ASCII choices |
 | [2026-11-21-character-interpretation-drafts.md](2026-11-21-character-interpretation-drafts.md) | INT-036/037 baseline character/encoding proposals plus review amendments, sources, alternatives and pending analysis/sign-off |
 | [2026-11-21-int035-owner-signoff.md](2026-11-21-int035-owner-signoff.md) | Joey's INT-035 sign-off, PR #13 AI-concurrence reference, empty-run/EOF policy and reviewer notes |
 | [2026-11-21-scanner-framing-recovery.md](2026-11-21-scanner-framing-recovery.md) | INT-035 baseline recovery draft, alternatives and outstanding cross-edition/review/test work |

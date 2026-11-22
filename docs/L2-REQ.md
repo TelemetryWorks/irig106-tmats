@@ -2,8 +2,8 @@
 
 > **Status: foundations, framing and character batch drafted (family 2, batches 1-3).**
 > Foundations derive the approved restructure/source store; framing and
-> recovery use owner-approved INT-035. Character policies INT-036/037 are
-> proposed and require owner sign-off; code-name grammar, CLI and later areas follow;
+> recovery use owner-approved INT-035. Character policies INT-036/037 were
+> approved by Joey, 2026-11-22, under ADR-0033; code-name grammar, CLI and later areas follow;
 > a parent with children here is not necessarily fully decomposed yet.
 
 ## Purpose
@@ -195,10 +195,12 @@ and suspect-semicolon suggestions remain separate obligations.
 
 ## Character batch 3: interpreted bytes and source identity
 
-INT-036 and INT-037 are proposals under ADR-0033. They do not amend the
-owner-approved INT-035 framing/run policy or authorize implementation before
-review, owner sign-off, required analysis and tests. Full code-name grammar,
-indices, duplicate classification and known-code validation remain next work.
+INT-036 and INT-037 were approved by Joey, 2026-11-22, under ADR-0033,
+with the independent AI recheck concurring on PR #16 head `891f77f` (see the
+[sign-off record](research/2026-11-22-int036-int037-owner-signoff.md)). They do
+not amend the approved INT-035 framing/run policy or supply implementation,
+completed analysis or tests. Full code-name grammar, indices, duplicate
+classification and known-code validation remain next work.
 
 #### L2-READ-007
 
@@ -206,7 +208,7 @@ indices, duplicate classification and known-code validation remain next work.
 
 **Statement**: The reader SHALL retain original source bytes while obtaining interpreted field bytes through a separate projection, preserving the association of every interpreted field and character finding with original source ranges; discarding characters for interpretation SHALL NOT discard them from storage or default output, and human-display renderers SHALL use raw text rather than the filtered semantic projection.
 
-**Rationale**: ADR-0002/0003 and proposed INT-036 reconcile 106-24R1 Chapter 9 section 9.4.1, page 9-2, with lossless retention. This is not a normalization edit, and semantic projection does not change the actual colon/semicolon framing of INT-035.
+**Rationale**: ADR-0002/0003 and approved INT-036 reconcile 106-24R1 Chapter 9 section 9.4.1, page 9-2, with lossless retention. This is not a normalization edit, and semantic projection does not change the actual colon/semicolon framing of INT-035.
 
 **Verification Method**: Test (T)
 
@@ -216,7 +218,7 @@ indices, duplicate classification and known-code validation remain next work.
 
 **Statement**: Code-name interpretation SHALL ignore the approved nonprintable set and surrounding ordinary blanks without removing embedded ordinary blanks; value interpretation SHALL retain ordinary blanks; controls omitted between printable bytes inside a code name SHALL produce a located information finding, NUL SHALL produce one located information finding per affected field, and the ASCII comparator SHALL operate only on the interpreted input supplied to it without trimming source itself.
 
-**Rationale**: Proposed INT-036 supplies the character-class details for section 9.4.1; section 9.4.2, page 9-2, treats blanks as intentional. L1-READ-006 already requires surrounding code-name blanks to be ignored. Internal blanks still need code-name-validity findings; they are not silently erased to repair a key.
+**Rationale**: Approved INT-036 supplies the character-class details for section 9.4.1; section 9.4.2, page 9-2, treats blanks as intentional. L1-READ-006 already requires surrounding code-name blanks to be ignored. Internal blanks still need code-name-validity findings; they are not silently erased to repair a key.
 
 **Verification Method**: Test (T)
 
@@ -226,6 +228,6 @@ indices, duplicate classification and known-code validation remain next work.
 
 **Statement**: Non-ASCII field bytes and supported detections of incompatible encoding markers SHALL produce located findings while original bytes remain available; the reader SHALL NOT silently strip a BOM, transcode input, guess UTF-16 from zero-byte patterns or treat failed character interpretation as an explicit usable field value.
 
-**Rationale**: Chapter 9 section 9.4.1 specifies 7-bit ASCII. Proposed INT-037 defines the limited marker policy, not a Unicode TMATS format. Ordinary unmarked raw input can remain partly interpretable; a detected leading unsupported marker blocks semantic lookup for that document as specified in the draft, without dropping its source. Marker detection uses assembled-text offset zero before padding/control omission; fields containing high bytes are Invalid for semantic use, while ADR-0003's explicitly labelled on-request Latin-1/lossy views remain available.
+**Rationale**: Chapter 9 section 9.4.1 specifies 7-bit ASCII. Approved INT-037 defines the limited marker policy, not a Unicode TMATS format. Ordinary unmarked raw input can remain partly interpretable; a detected leading unsupported marker blocks semantic lookup for that document as specified in the approved interpretation, without dropping its source. Marker detection uses assembled-text offset zero before padding/control omission; fields containing high bytes are Invalid for semantic use, while ADR-0003's explicitly labelled on-request Latin-1/lossy views remain available.
 
 **Verification Method**: Test (T)

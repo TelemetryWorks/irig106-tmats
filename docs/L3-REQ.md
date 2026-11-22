@@ -2,7 +2,7 @@
 
 > **Status: foundations, framing and character batch drafted (family 2, batches 1-3).**
 > These are implementation obligations, not existing interfaces or completed
-> tests. INT-035 is approved; INT-036/037 are proposed. Remaining derivations
+> tests. INT-035 is approved; INT-036/037 were approved by Joey, 2026-11-22. Remaining derivations
 > and development evidence still precede implementation.
 
 ## Purpose
@@ -199,16 +199,19 @@ attribute containing other material. No tests or implementation are supplied
 by these requirements; use the acceptance cases in TEST-DATA.md.
 
 
-## Character batch 3: implementation obligations (proposed)
+## Character batch 3: implementation obligations (interpretations approved)
 
-These obligations depend on owner sign-off and independent AI review of
-INT-036/037. Existing INT-035 run findings and EOF silence are unchanged;
-this batch proposes exactly which bytes classify as layout/nonprintables.
+INT-036/037 were approved by Joey, 2026-11-22, under ADR-0033; the
+independent AI recheck concurred on PR #16 head `891f77f` (see the
+[sign-off record](research/2026-11-22-int036-int037-owner-signoff.md)).
+Existing INT-035 run findings and EOF silence are unchanged. This batch
+specifies which bytes classify as layout/nonprintables; implementation,
+full development analysis and executable tests remain outstanding.
 
 **L3-READ-011** · Parent: L2-READ-007 · Verification: T
 *For interpretation only, the reader SHALL omit bytes `0x00..=0x1F` and `0x7F` from a field projection while retaining all original bytes; it SHALL NOT reinterpret an omitted byte as a space, delimiter or missing value, and CR/LF SHALL NOT terminate attributes.*
 
-This is the proposed INT-036 mapping, not an implemented filter. High bytes
+This is the approved INT-036 mapping, not an implemented filter. High bytes
 are outside this omission set. Recognized leading encoding-marker handling
 under INT-037 precedes semantic projection, so BOM-marked input is not converted by
 merely discarding its zero bytes.
@@ -221,7 +224,7 @@ span and enough correspondence to locate contributing bytes; do not fabricate
 a contiguous raw value from an interpreted string.
 
 **L3-READ-013** · Parent: L2-READ-008 · Verification: T
-*After the proposed nonprintable omission, code-name interpretation SHALL trim only leading/trailing `0x20` bytes, retain internal `0x20` bytes for code-name validation, and leave value `0x20` bytes in place; the L3-READ-008 comparator SHALL continue folding ASCII case without trimming its own input.*
+*After the approved nonprintable omission, code-name interpretation SHALL trim only leading/trailing `0x20` bytes, retain internal `0x20` bytes for code-name validation, and leave value `0x20` bytes in place; the L3-READ-008 comparator SHALL continue folding ASCII case without trimming its own input.*
 
 An empty interpreted name still receives a finding, not a fabricated key.
 TAB and other controls in COMMENT/description values are omitted, so `a\tb`
@@ -235,7 +238,7 @@ value satisfies a particular attribute definition is separate validation.
 A colon, high byte or other printable byte prevents layout-only classification.
 This must not turn a genuinely unterminated attribute into silent padding.
 These regions are not fields, so NUL padding does not add a field finding to
-the approved run information finding or silent EOF suffix (proposed INT-036).
+the approved run information finding or silent EOF suffix (approved INT-036).
 
 **L3-READ-015** · Parent: L2-READ-009 · Verification: T
 *At assembled TMATS text offset zero, the reader SHALL recognize leading `EF BB BF`, `FE FF`, `FF FE` or `00 00 FE FF` byte signatures as unsupported encoding markers, retain the entire source and a located marker finding, and withhold document semantic lookup instead of stripping the prefix or transcoding the body.*
@@ -258,7 +261,7 @@ No inference from alternating zeros is permitted for unmarked input.
 A Latin-1 `Temp °C` field containing `B0` is Invalid by this rule.
 ADR-0003's explicitly labelled on-request `as_latin1` and lossy
 (`as_str_lossy`) display views remain available without semantic acceptance.
-This proposed INT-037 behavior does not prove that every unmarked Unicode
+This approved INT-037 behavior does not prove that every unmarked Unicode
 stream can be detected; NUL fields receive L3-READ-018 findings. Explicit
 caller-side conversion is outside this byte parser and must not be represented as original recorded bytes.
 
@@ -267,13 +270,13 @@ caller-side conversion is outside this byte parser and must not be represented a
 *When omitted controls lie between printable bytes within an interpreted code name, the reader SHALL emit a located information finding identifying the omitted source bytes; leading/trailing name layout SHALL stay silent except for the NUL-field rule.*
 
 `CO\r\nMMENT` projects to COMMENT with a finding on the internal CR/LF.
-Retain original source correspondence. This proposed INT-036 finding does
+Retain original source correspondence. This approved INT-036 finding does
 not itself invalidate a name or replace subsequent code-name validation.
 
 **L3-READ-018** · Parent: L2-READ-008 · Verification: T
 *Each code-name or value field containing one or more NUL bytes SHALL emit exactly one located information finding for that field, identifying all its NUL locations, including at field edges or in a value whose projection is empty.*
 
 The internal-name omission finding applies independently when its condition
-also holds. This proposed INT-036 rule exposes zero-interleaved inputs
+also holds. This approved INT-036 rule exposes zero-interleaved inputs
 without guessing their encoding or asserting UTF-16; it is not a NUL-padding
 finding for the non-field regions governed by L3-READ-014.

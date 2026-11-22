@@ -57,7 +57,8 @@ irig106-tmats/
 │   ├── research/              Dated review/discussion records and analysis drafts (history, not specification);
 │   │                          2026-11-21-scanner-framing-recovery.md is the INT-035 baseline draft;
 │   │                          2026-11-21-int035-owner-signoff.md records approval and reviewer notes;
-│   │                          2026-11-21-character-interpretation-drafts.md drafts INT-036/037
+│   │                          2026-11-21-character-interpretation-drafts.md drafts INT-036/037;
+│   │                          2026-11-22-int036-int037-owner-signoff.md records their approval and AI recheck
 │   ├── API_GUIDE.md           prototype: usage examples for the prototype API
 │   ├── REQUIREMENTS.md        prototype: single-file requirements; replaced by L1/L2/L3-REQ.md
 │   └── FOR_IRIG106_DOCS_REPO.md  prototype: cross-crate contract notes intended for irig106-docs

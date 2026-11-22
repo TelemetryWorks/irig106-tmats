@@ -330,8 +330,8 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-032 | Packets that no setup record governs | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
 | INT-033 | Fragment positions that default to the same value | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
 | INT-035 | Recover malformed framing only at an actual semicolon | approved (Joey, owner sign-off, 2026-11-21) | not yet written | _(none)_ |
-| INT-036 | Omit ASCII nonprintables only from semantic projections | proposed (2026-11-21; owner sign-off required) | not yet written | _(none)_ |
-| INT-037 | Diagnose Unicode markers without automatic transcoding | proposed (2026-11-21; owner sign-off required) | not yet written | _(none)_ |
+| INT-036 | Omit ASCII nonprintables only from semantic projections | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
+| INT-037 | Diagnose Unicode markers without automatic transcoding | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
 
 * Entries without a written analysis: **37** of 37
 * Entries without a test: **37** of 37
