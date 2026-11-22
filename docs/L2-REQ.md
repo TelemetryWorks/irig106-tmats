@@ -346,7 +346,7 @@ interpretations and other family-2 areas remain separate derivations.
 
 **Statement**: For each applicable reviewed counter rule and fixed parent tuple, validation SHALL compare the usable declared count with DISTINCT canonical numeric identities of governed entries, checking both cardinality and the declared index-domain/contiguity rule while retaining all occurrence evidence; it SHALL NOT substitute raw item count, greatest observed index or another parent's entries for that set.
 
-**Rationale**: ADR-0026 and approved INT-038 already require scoped distinct numeric identities. Proposed INT-040 counts structurally identified entries independently of payload validity and duplicate declarations; other findings remain visible. Chapter 9 section 9.5.1 a, page 9-5, requires no missing values, so equal cardinality alone is insufficient. A counter result is not whole-document conformance or permission to repair source.
+**Rationale**: ADR-0026 and approved INT-038 already require scoped distinct numeric identities. Proposed INT-040 counts structurally identified entries independently of payload validity and duplicate declarations; other findings remain visible. Chapter 9 section 9.5.1 a, page 9-5, requires no missing values, so equal cardinality alone is insufficient. A counter result is not whole-document conformance or permission to repair source. Explicit child scopes remain evaluable despite parent-domain violations or unusable ancestor counts; the child's own rule/count and membership prerequisites still apply, without an ancestor-validity gate. X attachment does not create D membership, and WFP value uniqueness remains a separate value rule.
 
 **Verification Method**: Test (T)
 

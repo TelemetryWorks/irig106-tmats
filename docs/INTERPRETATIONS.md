@@ -1001,13 +1001,29 @@ with the limitation instead of guessing a member or claiming success from a
 partial set. Likewise an unusable effective counter cannot be replaced by the
 maximum observed index or item count. A cited/permitted default must come
 from its own reviewed rule. An unrelated malformed item is not assigned to a
-scope by guess. No bytes, counters or missing entries are repaired.
+scope by guess. Diagnostic relevance requires a separately framed projected
+name with exact declared literal group/path. With declared index-token arity, a bad
+governed token with readable matching parents blocks that scope; an unreadable
+parent gives unassigned rule-level evidence and cannot-evaluate coverage.
+Wrong arity with matching literals is also unassigned rule-level evidence.
+Nonmatching literals, unframed names or code-like value text are ignored
+for that rule's membership/blocking only, with all other findings retained;
+no repair, prefix guess or usable key is manufactured.
+
+Evaluate child counts from explicit parent indices despite a parent-domain
+violation or unusable ancestor count; 0/00 denote one parent identity. The
+child's own applicable rule and count must be usable. A parsed count outside
+its own range is Invalid and blocks its own evaluation. X items attach but
+never create D members; missing originals are link problems, while extension-
+only indices remain unclassified without reviewed rules. WFP value uniqueness
+(Table 9-7, page 9-118) is a separate VALUE rule outside INT-040. No bytes,
+counters or missing entries are repaired.
 
 **Reason**: Counting only valid values makes a declared entry disappear when its content is broken, confusing cardinality with validity and obscuring separate defects. Counting raw lines overcounts duplicates and multiple properties. Structural evidence plus independent findings exposes both; its cost is that a count may match while the configuration remains invalid, so reports must not call that whole-document success.
 
-**Design**: proposed (2026-11-22; owner sign-off required) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: pending · **Origin**: family 2 batch 6
+**Design**: proposed (2026-11-22; owner sign-off required) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: CONCURS on PR #24 at `ed4666a` (owner-relayed, 2026-11-22); fixture and edge clarifications added for updated-head review · **Origin**: family 2 batch 6
 
-**Test**: `invalid_payload_keeps_structural_membership`, `counter_counts_distinct_identities`, `unusable_counter_is_not_inferred`, `incomplete_membership_does_not_pass` (planned, not yet written)
+**Test**: `invalid_payload_keeps_structural_membership`, `counter_counts_distinct_identities`, `unusable_counter_is_not_inferred`, `incomplete_membership_does_not_pass`, `parsed_counter_outside_own_range_blocks`, `x_extension_does_not_create_d_member`, `invalid_parent_domain_does_not_suppress_child`, `zero_parent_spellings_share_one_scope`, `malformed_governed_token_blocks_known_scope`, `malformed_parent_is_unassigned_rule_evidence` (planned, not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 

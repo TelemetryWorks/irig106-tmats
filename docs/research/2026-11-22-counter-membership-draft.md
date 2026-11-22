@@ -92,3 +92,49 @@ These are acceptance specifications, not executable tests. Full definition
 interpretations, effective-value/type rules, severity/profile policy, remaining
 registry/validator and other family-2 areas still precede family 3. No parent
 is complete merely because these counter children have been drafted.
+
+## Review follow-up — 2026-11-22
+
+The owner relayed independent AI **CONCURS** on INT-040 at #24 head
+`ed4666a1696324842facaae2cd14597022b376d6`, alongside a required fixture fix
+and edge cases. This concurrence references that exact draft, not passing
+implementation tests or review of the new wording. Owner sign-off remains
+pending. Preserve the original analysis above as history.
+
+The original invalid-payload fixture accidentally omitted location m from
+NUMBER OF FRAGMENTS. The corrected counter is D-1\MNF\N-1-1-1:2; with four
+indices (x,y,n,m), as in Table 9-7 page 9-117 and the isolated Appendix 9-C
+example D-1\MNF\N-1-1-1:1. The corrected full fixture's counter spans [0,18),
+its value [16,17), and the first WP's invalid byte [33,34). No annotated
+Appendix example is claimed as a conforming complete file.
+
+Clarifications added to the governing draft and planned cases:
+
+- A count that parses but violates its own range is Invalid and blocks its
+  own check. Table 9-7 page 9-117 gives MNF\N 1–8 and MML\N 1–9999, so 9
+  and 0 respectively are not usable counts.
+- A parent's domain error (m=0 or excessive m) or unusable ancestor count
+  does not erase explicitly identified child scopes. Evaluate a child's
+  count when its own applicable rule/count are usable. Report the ancestor
+  error or inability to establish its bound independently; do not certify
+  the parent. Under INT-038, parent 0 and 00 are one identity.
+- Section 9.5.14 X codes attach to an original without creating it. An X
+  embedding D\WP never contributes a D member; an absent original is a
+  separate link problem. This batch leaves extension-only indices unclassified
+  without their own reviewed rule.
+- Diagnostic member evidence uses separately framed projected names and
+  exact literal group/path matching, not prefix similarity or value text.
+  With declared arity and readable matching parents, a bad/empty governed
+  token blocks that scope. A bad parent or wrong arity within the same
+  literal family is unassigned rule-level evidence: cannot-evaluate coverage,
+  no guessed scope or fabricated key. Nonmatching literal families, X group
+  names and unframed/value material do not block this counter; their other
+  findings remain and no whole-document validity is implied. This deliberately
+  retains same-family damage as uncertainty rather than quietly excluding it.
+- Table 9-7 FRAGMENT POSITION D-x\WFP-y-n-m-e, page 9-118, requires unique
+  position VALUES. That value rule is outside INT-040; distinct e identities
+  do not prove distinct positions or waive the later value check.
+
+These details refine evidence boundaries, not the core structural-counting
+choice. Full development analysis and executable tests remain outstanding;
+updated-head independent review is still required for this PR's changes.
