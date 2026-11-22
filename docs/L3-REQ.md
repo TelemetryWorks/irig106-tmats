@@ -1,8 +1,8 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through candidate batches drafted (family 2, batches 1-5).**
+> **Status: foundations through counter batches drafted (family 2, batches 1-6).**
 > These are implementation obligations, not existing interfaces or completed
-> tests. INT-035/036/037/038/039 are approved; INT-039 sign-off is dated 2026-11-22.
+> tests. INT-035/036/037/038/039 are approved; INT-040 is proposed, 2026-11-22.
 > Remaining derivations and development evidence still precede implementation.
 
 ## Purpose
@@ -364,8 +364,9 @@ parent scopes follow ADR-0026 and Chapter 9 section 9.5.1 a; X has the cited
 noncontiguity exception in section 9.5.14. No association or counter default
 is invented by this batch, and no typed getter is declared implemented.
 `\N` count/no-missing-values checks over DISTINCT numeric identities are
-explicitly deferred to the counter batch, including parent scope and the X
+derived in counter batch 6 below, including parent scope and the X
 noncontiguity exception; neither occurrences nor raw spellings are counts.
+Those requirements do not supply completed rule interpretations or code.
 
 
 **L3-READ-027** · Parent: L2-READ-012 · Verification: T
@@ -481,3 +482,110 @@ tuples and lists exact repeats too. Scalar duplicates can exist even with
 only one raw spelling tuple. Coordinator-decided F1 (ADR-0034, owner may
 override; L1-SUM-002) separately requires indeterminate integrity and stamping
 refusal. Checksum mechanics and edits remain later requirements.
+
+
+## Counter batch 6: member sets and evaluation evidence
+
+Requirements below remain unimplemented. INT-038/039 are approved; INT-040
+is proposed under ADR-0033. Full analysis and executable tests remain gates.
+These obligations do not complete registry generation, link metadata, the
+four-pass validator or the full five-state effective-value resolver.
+
+**L3-REG-001** · Parent: L2-REG-001 · Verification: T
+*Counter metadata SHALL bind a cited counter pattern to its member patterns and governed index position, holding the document/group occurrence and every declared parent index fixed; different fixed parent tuples SHALL produce independent member sets and evaluations.*
+
+For Table 9-7 NUMBER OF MEASUREMENT LOCATIONS, page 9-117,
+`D-x\MML\N-y-n` governs location m in `D-x\MNF\N-y-n-m` within (x,y,n).
+For NUMBER OF FRAGMENTS on the same page, that latter counter governs
+fragment e in `D-x\WP-y-n-m-e` within (x,y,n,m), as declared by the reviewed
+rule. It does not count all D fields or every occurrence of a child property.
+
+**L3-REG-002** · Parent: L2-REG-001 · Verification: T
+*Counter declarations SHALL identify valid pattern/index positions and their parent bindings, carry the source for any contiguity exception, and remain unreviewed/unavailable rather than invent a binding when the source or scope is unresolved.*
+
+ADR-0026 and 106-24R1 section 9.5.14, page 9-172, permit noncontiguous X
+occurrence x matching original objects. Do not create an X counter, apply
+1-to-N to those occurrences, or exempt all extension-only indices by analogy.
+An unknown/private pattern is not counter membership merely by sharing a prefix.
+An X item never becomes a D member by embedding D's path: section 9.5.14
+attaches to an original and does not create it. Missing originals are separate link
+problems; extension-only indices remain unclassified without their own rule.
+
+**L3-VAL-001** · Parent: L2-VAL-001 · Verification: T
+*Within each declared scope, governed entries SHALL contribute a set of canonical numeric index identities, retaining all supporting items/locations; repeated spellings, exact repeats and different member properties for the same governed identity SHALL contribute that identity only once.*
+
+Approved INT-038 supplies string identity: 1 and 01 are one index. Proposed
+INT-040 counts an unambiguously identified entry even when its value is
+Invalid or its scalar slot is Ambiguous; those findings remain independent.
+An index zero remains observed evidence, not a silently discarded or valid
+positive entry. Membership must not be guessed from an unusable name/scope.
+Canonical parent identities 0 and 00 are the same scope. Preserve/report parent-domain errors,
+but evaluate a child's own usable count from its explicit parent indices even
+if m=0, m exceeds MML\N, or the ancestor MML\N is unusable; do not infer the
+ancestor bound or require the parent to be valid before inspecting the child.
+
+**L3-VAL-002** · Parent: L2-VAL-001 · Verification: T
+*For an applicable contiguous 1-to-N rule with a usable counter N and complete membership evidence, validation SHALL independently check distinct-set cardinality, positive indices bounded by N and absence of gaps; cardinality equality or the greatest index equalling N SHALL NOT alone establish success.*
+
+A set {1,3} against N=2 has the right size but violates the domain; a set
+{1,3} against N=3 has the right maximum but lacks 2. Zero/excess indices
+stay located evidence. If a reviewed rule permits N=0, only the empty set
+satisfies that rule's 1-to-N domain; this does not invent a zero default or
+make zero legal for counters whose cited range excludes it.
+
+**L3-VAL-003** · Parent: L2-VAL-001 · Verification: T
+*Counter/index comparison and gap reporting SHALL operate on retained canonical identities without wrapping, truncating or allocating/enumerating up to a supplied index value; missing intervals SHALL be represented compactly with explicit inclusive index bounds rather than expanded into an unbounded item list.*
+
+Canonical nonnegative decimal strings can be ordered by digit length then
+lexicographically at equal length; preserve component boundaries and INT-038
+identity/hash semantics. Work/storage must follow supplied members and compact
+findings, not a 40-digit index's magnitude. No public ordering API or new
+resource-budget number is selected here; detailed budget policy remains later.
+
+**L3-VAL-004** · Parent: L2-VAL-002 · Verification: T
+*Missing, Invalid or Ambiguous counter operands, unresolved applicability, unreviewed membership rules or required members whose governed identity/scope cannot be established SHALL produce cannot-evaluate with the blocking basis, never a guessed N, fabricated empty member set or positive result from partial evidence.*
+
+A number that parses but violates its own counter range is Invalid and
+blocks that counter's evaluation: Table 9-7 page 9-117 gives MNF\N range
+1–8 and MML\N range 1–9999, so 9 and 0 respectively are not usable N.
+This does not block a child's independent count merely because an ancestor
+is unusable; the child's own rule/applicability and count must still be known.
+Count-value parsing and allowed defaults require separate reviewed rules;
+INT-038's index grammar is not a count-value parser. All duplicate counter
+candidates remain visible under INT-039. An unrelated malformed field must
+not be assigned to a counter scope by guess. Partial observed evidence can
+be reported as such without claiming a complete membership check.
+
+Diagnostic membership is exact, not fuzzy: use a separately framed projected
+name and exact literal group/path elements, allowing invalid or empty numeric
+tokens only as diagnostic slots. If literals do not match or no separate name
+is framed, the item is unrelated to this rule's membership/blocking; keep its
+other findings. Matching literals with wrong index arity are related but
+unassigned rule-level evidence: report cannot-evaluate coverage, never guess
+which tokens are missing or extra. Do not search inside values, strip internal
+blanks, repair separators or unwrap X paths.
+With the declared arity, readable matching parent tokens plus an unreadable
+(or empty) governed token block that scope with cannot-evaluate. If a parent
+token is unreadable, retain unassigned rule-level evidence and cannot-evaluate
+coverage, without guessing a scope or claiming complete rule coverage.
+Readable zero/excess parents remain explicit scopes, not unreadable ones.
+This diagnostic classification never creates a usable lookup key or an index.
+Exact source witnesses must identify each decision, including unrelatedness.
+
+**L3-VAL-005** · Parent: L2-VAL-002 · Verification: T
+*Each counter mismatch, index-domain/gap finding and cannot-evaluate result SHALL identify its counters-and-indices pass, reviewed rule/citation, fixed parent tuple, counter provenance and available member evidence, with original-source locations retained.*
+
+No single synthetic span may pretend that disjoint items were adjacent in
+source. Findings for defaults must cite their actual reviewed source, not a
+fabricated location. A structurally correct count does not clear entry-value,
+duplicate, presence, link or assembly findings or certify document conformance.
+D-x\WFP-y-n-m-e FRAGMENT POSITION value uniqueness (Table 9-7, page 9-118)
+is a separate VALUE rule, outside INT-040; distinct e identities do not prove
+those values are unique. This batch neither implements nor waives that rule.
+
+**L3-VAL-006** · Parent: L2-VAL-001 · Verification: T
+*Counter validation SHALL leave all original bytes, item order, index spellings, declared counts and existing findings unchanged; it SHALL NOT recompute/insert counters, fill missing entries or renumber members as a validation side effect.*
+
+ADR-0002 and L1-WRT-002 separate explicit normalization from validation.
+Approved INT-038/039 findings remain visible even when distinct cardinality
+matches N. Repair/edit APIs and their effect on counters are later work.

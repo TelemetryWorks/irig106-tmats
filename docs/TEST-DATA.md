@@ -273,10 +273,10 @@ now), grammar for private extensions and counter/link validation remain
 subsequent derivations; these cases do not complete those L1 parents.
 
 The `\N` count and no-missing-values checks must count DISTINCT canonical
-numeric identities, not raw spellings or repeated occurrences. Their scoped
-requirements and executable checks are explicitly deferred to the counter
-batch, including the section 9.5.14 X noncontiguity exception. This batch
-checks index identity/visibility only and must not claim counter acceptance.
+numeric identities, not raw spellings or repeated occurrences. Counter batch
+6 below derives scoped requirements and planned checks, including the section
+9.5.14 X noncontiguity exception; no executable checks are supplied yet. The
+index cases here check identity/visibility only, not counter acceptance.
 
 ## Family 2 batch 5: duplicate and exact-lookup acceptance specifications
 
@@ -317,7 +317,7 @@ whether the whole fixture is a conforming configuration.
 | `order_and_severity_do_not_choose_values` | Permute repeated scalar items, then lower diagnostic severity | Candidate report order tracks input; multiplicity remains Ambiguous and raw emission remains byte-exact for each input | L3-VIEW-004 |
 | `duplicates_cannot_be_hidden_by_a_default` | Repeated scalar fixture definition with an explicitly supplied test-only default | Ambiguous, never Defaulted; no Chapter 9 default is inferred or introduced by this synthetic metadata | L3-VIEW-004 |
 | `candidate_groups_are_document_local` | Two separate documents each containing one G\PN item | Separate exact-lookups yield one item each; no cross-record grouping or setup-governance inference | L3-READ-030, L3-VIEW-001 |
-| `cross_fragment_scalar_duplicate_is_document_local` | One Format 1 setup record, fragment 1 text `G\PN:a;` and fragment 2 text `G\PN:b;`, each packet with its own CSDW, assembled under ADR-0025 | ONE document with two scalar candidates; duplicate finding and Ambiguous list both; assembled item spans `[0, 7)` and `[7, 14)`, values `[5, 6)` and `[12, 13)`, with fragment-1/2 provenance; no packet-local reset and no completeness inference from the duplicate | L3-READ-030, L3-READ-031, L3-VIEW-001, L3-VIEW-003 |
+| `cross_fragment_scalar_duplicate_is_document_local` | One assembled Format 1 candidate run: same channel, consecutive packets with sequence q then q+1 modulo 256, matching FRMT/RCCVER, fragment texts `G\PN:a;` and `G\PN:b;`, each packet with its own CSDW, under ADR-0025/0031 | ONE document with two scalar candidates; duplicate finding and Ambiguous list both; assembled item spans `[0, 7)` and `[7, 14)`, values `[5, 6)` and `[12, 13)`, with fragment-1/2 provenance; no packet-local reset; joining prerequisites do not prove completeness/governance, and repeated single-entry text may leave the run Ambiguous under ADR-0031 | L3-READ-030, L3-READ-031, L3-VIEW-001, L3-VIEW-003 |
 | `duplicate_sha_keeps_f1_result` | Two G\SHA items (equal or different values) | Retain and list both; generic duplicate handling never yields positive integrity or permits stamping; F1 result remains indeterminate, checksum mechanics later | L3-READ-033 |
 
 Planned generated cases permute small candidate sets and mix exact repeats,
@@ -328,6 +328,57 @@ value success as a candidate filter. A unique raw candidate is not by itself
 an Explicit semantic value. Pattern lookup, full default/type validation,
 unknown-definition diagnostics, links, record assembly and counter rules are
 not completed by these scenarios. No source fixture is changed automatically.
+
+## Family 2 batch 6: counter acceptance specifications
+
+**Status: planned, not executable tests.** INT-040 needs owner sign-off and
+independent AI review under ADR-0033. Earlier interpretations remain approved.
+Fixtures supply declared rule bindings/applicability for the stated checks;
+short attribute snippets are not complete conforming configurations or
+production registry evidence. Count-value typing/default resolution remains
+its own reviewed prerequisite, not INT-038's index-token grammar.
+
+Sources: 106-24R1 Chapter 9 section 9.5.1 a/Table 9-1 page 9-5; Table 9-7
+NUMBER OF MEASUREMENT LOCATIONS, NUMBER OF FRAGMENTS and WORD POSITION,
+page 9-117; section 9.5.14 page 9-172; ADR-0023/0026 and INT-038/039.
+See the [baseline draft](research/2026-11-22-counter-membership-draft.md).
+N below denotes a usable effective count only when explicitly stated.
+
+| Planned check | Fixture or stimulus | Expected observation | Requirement |
+| --- | --- | --- | --- |
+| `nested_counter_scopes_do_not_merge` | D-x\MML\N-y-n rule with (x,y,n)=(1,1,1), N=2, members m={1,2}; another parent (1,1,2), N=1, members m={1} | Separate cardinalities 2 and 1; do not pool three members or mix the repeated m=1 across parents | L3-REG-001, L3-VAL-001 |
+| `fragment_counter_is_one_level_deeper` | D-x\MNF\N-y-n-m with fixed (1,1,1,2), N=2 and WP fragment indices e={1,2}; a WP item under m=3 | Only the first scope's e identities count; different m is a different parent, not an extra fragment | L3-REG-001, L3-VAL-001 |
+| `counter_counts_distinct_identities` | Within one declared scope, member index spellings 1, 01, 1, 2 with N=2 | Observed identities {1,2}; cardinality 2, all witnesses retained; approved normalization/duplicate findings remain, never whole-document success | L3-VAL-001, L3-VAL-006 |
+| `several_properties_are_one_entry` | Reviewed rule names two child properties as witnesses for the same governed identity 1, plus identity 2 | Two distinct identities, not three property lines; no extra membership pattern inferred from a prefix | L3-REG-002, L3-VAL-001 |
+| `invalid_payload_keeps_structural_membership` | `D-1\MNF\N-1-1-1:2;D-1\WP-1-1-1-1:\xFF;D-1\WP-1-1-1-2:4;`, with applicable reviewed fragment rule | e={1,2} structurally counted; first value stays Invalid/non-ASCII, with no overall validity claim; counter span `[0, 18)`, counter value `[16, 17)`, invalid value `[33, 34)` | L3-VAL-001, L3-VAL-005 |
+| `ambiguous_member_does_not_inflate_count` | One scalar member slot repeated with different values at e=1, plus e=2, N=2 | Two identities; slot e=1 remains Ambiguous with all occurrences, not counted twice or selected by payload validity | L3-VAL-001, L3-VAL-006 |
+| `cardinality_is_not_domain_coverage` | N=2 with observed {1,3}; separately N=3 with {1,3} | First has size 2 but domain/gap failure; second has maximum 3 but missing 2/count mismatch; no false pass | L3-VAL-002 |
+| `zero_stays_located_out_of_domain_evidence` | N=2, observed {0,2} | Keep distinct observed count 2, but report index 0 and missing 1; never remove/renumber zero to manufacture success | L3-VAL-001, L3-VAL-002 |
+| `permitted_zero_is_not_invented` | Explicit test rule permitting usable N=0 and complete empty membership; contrast an unavailable/missing N | First satisfies only that rule's empty domain; second cannot-evaluate, never guessed 0; no Chapter 9 zero default introduced | L3-VAL-002, L3-VAL-004 |
+| `unusable_counter_is_not_inferred` | Missing, Invalid or duplicate/Ambiguous counter (including equal repeats), with observed members {1,2} | Counter check cannot-evaluate with reason/candidates; no inferred N=2 from count or maximum and no selected duplicate | L3-VAL-004, L3-VAL-005 |
+| `incomplete_membership_does_not_pass` | Known required member evidence whose governed index/scope cannot be interpreted, plus one identified member | Retain partial observed set/evidence and report cannot-evaluate; do not claim completeness or assign an unrelated malformed field by guess | L3-REG-002, L3-VAL-004 |
+| `x_exception_is_not_global` | X occurrences x={2,7} whose originals are known, beside an ordinary contiguous counter with a gap | No X occurrence contiguity failure solely for the gap; ordinary counter still fails; no X counter invented or extension-only indices exempted by analogy | L3-REG-002, L3-VAL-002 |
+| `large_index_has_compact_domain_findings` | N=2, members 1 and a 40-digit positive decimal identity | Located excess-index/missing-2 evidence; no index-sized allocation, wrap/truncation or enumeration through that huge identity | L3-VAL-002, L3-VAL-003 |
+| `gap_intervals_follow_supplied_members` | Valid rule N=9999 with member indices {1,9999} | Cardinality 2 and compact inclusive missing-index interval [2,9998], not thousands of fabricated member items; report original evidence | L3-VAL-003, L3-VAL-005 |
+| `parsed_counter_outside_own_range_blocks` | Applicable NUMBER OF FRAGMENTS counter `D-1\MNF\N-1-1-1:9;`; separately NUMBER OF MEASUREMENT LOCATIONS `D-1\MML\N-1-1:0;` | Both parse as numbers but are Invalid under their own Table 9-7 ranges (1–8, 1–9999, p. 9-117); their own count evaluation cannot-evaluate, even if raw cardinality would match | L3-VAL-004 |
+| `x_extension_does_not_create_d_member` | D fragment count N=2, ordinary WP members e={1,2}, plus `X-1\ORG\D\WP\FOO-1-1-1-3:v;` and `X-1\ORG\D\WP\FOO-1-1-1-2-7-9:v;` with extra extension-only indices | D set stays {1,2}, never gains 3 from X's embedded path; section 9.5.14 attachment with no matching D original is a separate link problem; extension-only indices 7/9 remain unclassified in this batch, without their own reviewed rule | L3-REG-002, L3-VAL-001 |
+| `invalid_parent_domain_does_not_suppress_child` | Usable MML\N=1 and explicit m=0 or m=2; child MNF\N=2 in that parent scope and WP e={1,2}, with child rule applicable | Report the parent's zero/excess-domain violation; still evaluate that child's own count from explicit parent indices and get structural cardinality/domain match, without validating the parent or whole document | L3-REG-001, L3-VAL-002, L3-VAL-004 |
+| `unusable_ancestor_count_does_not_suppress_child` | MML\N missing/Invalid/Ambiguous; explicit m=2, usable child MNF\N=2, WP e={1,2}, with child rule applicable | Ancestor count/domain check cannot-evaluate; child fragment count still evaluates in (x,y,n,m) from explicit indices, no guessed ancestor bound and no parent-validity claim | L3-REG-001, L3-VAL-004 |
+| `zero_parent_spellings_share_one_scope` | `D-1\MNF\N-1-1-0:2;D-1\WP-1-1-00-1:4;D-1\WP-1-1-0-2:5;` | 0 and 00 mean the same parent m=0 under INT-038; one child scope with e={1,2}, not two scopes; retain normalization information and parent-domain violation; no parent repair | L3-REG-001, L3-VAL-001 |
+| `malformed_governed_token_blocks_known_scope` | `D-1\WP-1-1-1-x:4;` or `D-1\WP-1-1-1-:4;` under declared WP rule | Literal group/path and token arity match, parents (1,1,1,1) readable, governed token invalid/empty: related diagnostic evidence blocks that scope's completeness (cannot-evaluate), contributes no fabricated identity/key; readable different parents affect only their own scope | L3-VAL-004 |
+| `malformed_parent_is_unassigned_rule_evidence` | `D-1\WP-1-1-x-2:4;` or wrong-arity `D-1\WP-1-1-1-2-3:4;` under declared WP rule | Literal group/path match, but parent m unreadable or arity wrong: rule-level cannot-evaluate coverage with unassigned evidence, never assign to a guessed parent or certify complete rule coverage; independently located scopes may still report their partial sets | L3-VAL-004, L3-VAL-005 |
+| `unrelated_malformed_text_does_not_block_counter` | `D-1\WPX-1-1-1-x:v;`, X extension text, an unframed name, or code-like text inside a value | No exact diagnostic literal group/path match as a separately framed D WP name: ignored for this D counter's membership/blocking only; retain all parser/unknown/link findings and never imply document validity | L3-REG-002, L3-VAL-004 |
+| `wfp_value_uniqueness_is_outside_int040` | `D-1\WFP-1-1-1-1:1;D-1\WFP-1-1-1-2:1;`, with distinct e identities {1,2} | Entry identities stay distinct; FRAGMENT POSITION value uniqueness in Table 9-7 p. 9-118 is a separate VALUE rule, not an index-count rule or an INT-040 pass/fail claim; reviewed value validation remains later | L3-VAL-001, L3-VAL-005 |
+| `counter_findings_keep_scope_and_citations` | Mismatch or cannot-evaluate in one parent scope while another has complete correct membership | Counters-and-indices pass, rule/edition/citation, parent tuple and counter/member locations are explicit; unrelated scope is not silently merged or certified as a whole document | L3-VAL-005 |
+| `validation_does_not_repair_counters` | Noncanonical spellings, gaps, invalid values and mismatched N before/after a validation request | Byte-identical source and item order, unchanged declared N/indices and preserved earlier findings; no automatic filling, recomputation or renumbering | L3-VAL-006 |
+
+Expected member sets, scopes and original locations must be independently
+specified. Generated checks use small bounded sets with repeated spellings,
+index permutations and unrelated scopes. Report structural equality separately
+from payload validity. A missing-gap report does not fabricate source spans
+for absent members; its counter/scope is evidence for the inferred interval.
+No fixture here completes registry review, applicability/default evaluation,
+link validation, the four-pass validator or broader release evidence.
 
 ## Real Chapter 10 recordings (local use only)
 
