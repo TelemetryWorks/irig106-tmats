@@ -216,6 +216,51 @@ No annotated Appendix 9-E text is a conforming-file fixture here.
 Keep the future line-break hint on original bytes: losing CR/LF from an
 interpreted value must not lose its raw location or implement that hint now.
 
+## Family 2 batch 4: code-name acceptance specifications
+
+**Status: planned cases, not executable tests.** Structural/recognition
+requirements are drafted; INT-038's decimal identity needs owner sign-off
+and independent AI review under ADR-0033. INT-035/036/037 remain approved.
+Full development analysis and tests still precede implementation.
+
+Sources: 106-24R1 Chapter 9 sections 9.4.2 and 9.5.1 a/Table 9-1,
+pages 9-2/3 and 9-5; Table 9-2 page 9-10; Table 9-4 page 9-48;
+Table 9-7 pages 9-115/117; sections 9.5.12/13/14 pages 9-171/172.
+The [baseline draft](research/2026-11-22-code-name-index-draft.md) identifies
+rows and separates cited syntax from proposed numeric identity policy.
+Escapes below denote fixture bytes. Synthetic malformed/unknown examples
+are deliberate stimuli, not claims that Chapter 9 defines those attributes.
+
+| Planned check | Fixture or stimulus | Expected observation | Requirement |
+| --- | --- | --- | --- |
+| `comment_is_a_whole_name` | `comment:v;`, `COMMENT-1:v;`, `COMMENT\X:v;` | First is standalone COMMENT; no fabricated occurrence/path; other two are not COMMENT by prefix matching, remain retained | L3-READ-019 |
+| `all_baseline_group_identifiers_are_recognised` | Each Table 9-1 identifier in both ASCII cases | Same group identity, original spelling retained; identifier recognition alone makes no claim of a valid complete attribute | L3-READ-020 |
+| `literal_digits_are_not_indices` | `G\106:24;`, `R-1\TK1-3:42;` | G path [106], no occurrence; R occurrence 1, literal TK1, suffix index [3]; value 42 is not an index inferred from the name | L3-READ-021 |
+| `nested_indices_keep_positions` | `D-1\MN-1-2:MEAS1;` | Occurrence 1; path MN with indices [1, 2]; raw index spans `[2, 3)`, `[7, 8)`, `[9, 10)` | L3-READ-022 |
+| `multiple_path_levels_keep_index_attachment` | `D-1\MNF\N-2-3-4:1;` | Occurrence 1; MNF has no suffix indices; N has [2, 3, 4]; name spelling retained | L3-READ-022 |
+| `index_order_and_arity_are_not_flattened` | MN suffixes `-1-2`, `-2-1`, `-1-2-3` | Different complete structures; third cannot match the two-entry-index definition by dropping its last token; no conformance claim for that extra-index name | L3-READ-021, L3-READ-022, L3-READ-026 |
+| `missing_occurrence_is_not_defaulted` | `R\TK1-3:42;` | Never manufacture occurrence 1 or bind as `R-1\TK1-3`; raw name retained; definition matching cannot accept it as a complete instance of that cited pattern | L3-READ-021, L3-READ-024 |
+| `decimal_index_spelling_preserves_numeric_identity` | `D-01\MN-001-02:a;D-1\MN-1-2:b;` | Under proposed INT-038 both keys have numeric indices (1; 1, 2), but both original items/raw spellings remain ordered; never choose a winner | L3-READ-023, L3-READ-026 |
+| `zero_index_is_not_range_approval` | `D-0\MN-1-0:v;` | Zero tokens structurally retained under INT-038; do not claim legal counter entries, silently add 1 or erase them | L3-READ-023, L3-READ-026 |
+| `large_index_does_not_wrap_or_allocate_by_value` | A 40-digit nonzero decimal token at a standard index position | Full raw token and decimal identity retained independent of u32/u64/usize; failed bounded conversion explicit; no wrap/saturation/truncation or array up to that number | L3-READ-023 |
+| `index_token_grammar_is_not_value_numeric_grammar` | Expected index replaced with empty token, `+1`, `1.0`, `1e2`, or template `x` | No match as a decimal index under INT-038; retained input and located name finding, no partial usable key or invented index | L3-READ-023, L3-READ-024 |
+| `internal_blank_name_is_not_a_partial_key` | `G\COM Time 12:30;G\PN:ok;` | First raw name gets a finding; value is 30; never expose it as G\COM; second item retained/read independently | L3-READ-024 |
+| `broken_components_preserve_following_items` | `D-1\MN-1-:v;G\PN:ok;` | No usable partial MN key; locate unfinished index, retain all bytes; next region still read | L3-READ-024 |
+| `unknown_does_not_mean_malformed` | Synthetic `Z-1\EXPERIMENT-2:v;` | Unrecognized group/definition remains retained; no replacement with a known group; no syntax failure solely because no catalogue entry exists | L3-READ-020, L3-READ-025 |
+| `private_names_are_not_forced_into_standard_keys` | H/private input and V attribute-string containing unfamiliar punctuation | Retain opaque raw portions where decomposition is uncertain; lack of a built-in pattern alone is not evidence to drop them or claim malformed syntax/conformance | L3-READ-025 |
+| `extension_structure_is_not_link_resolution` | Isolated `X-1\MYORG\D\MN\SGAIN-1-2:10.75;` from section 9.5.14 | Keep path levels and indices where unambiguous; no resolved association, valid configuration or extension registry entry inferred by parsing | L3-READ-022, L3-READ-025, L3-READ-026 |
+| `character_findings_survive_key_parsing` | `CO\r\nMMENT:v;`, a NUL field and a high-byte name | Keep the approved control/NUL findings and raw spans; high-byte field is Invalid, not rescued by a partial ASCII key; leading markers retain INT-037 gating | L3-READ-024 |
+
+Expected component positions and numeric identities must be specified without
+calling the implementation under test. Compare projections against original
+source correspondence, not shortened string offsets. Generate bounded case
+variants, index permutations and digit lengths around conversion limits;
+assert unchanged source, bounded work and continued framing after failures.
+Table-derived sample attributes here exercise structure only, not all required
+fields for a conforming file. Detailed unknown-code findings, duplicate
+classification, grammar for private extensions and counter/link validation
+remain subsequent derivations; these cases do not complete those L1 parents.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample

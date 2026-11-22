@@ -858,3 +858,36 @@ converted data the original TMATS bytes, and never infer an edition from a BOM.
 **Draft analysis**: [baseline draft and 2026-11-21 review amendments](research/2026-11-21-character-interpretation-drafts.md#review-amendments--2026-11-21)
 
 **Sign-off and AI-check reference**: [owner approval record](research/2026-11-22-int036-int037-owner-signoff.md), referencing [PR #16](https://github.com/TelemetryWorks/irig106-tmats/pull/16) at `891f77f137c9e90ecc15416a84b11d67b6bbde86` and the owner's 2026-11-22 relay of the independent recheck. Approval records the interpretation decision, not implementation, completed analysis or executable tests; those development gates remain outstanding.
+
+
+## Decimal index identity (proposed)
+
+### INT-038
+
+**Title**: Decimal index identity without source normalization or machine-word limits
+
+**Sources**:
+- 106-24R1 Chapter 9 section 9.4.2, page 9-2: "The number appears in the code name preceded by a hyphen." The G\DSI examples instantiate decimal indices.
+- Section 9.5.1 a after Table 9-1, page 9-5, describes lower-case index placeholders and the 1-to-counter rule. Section 9.5.14, page 9-172, explicitly permits noncontiguous X occurrence indices.
+- Table 9-7 MEASUREMENT NAME `D-x\MN-y-n`, page 9-115, supplies two entry-index positions; NUMBER OF FRAGMENTS `D-x\MNF\N-y-n-m`, page 9-117, supplies a nested path. The text does not define leading-zero equivalence or a parser integer width.
+- ADR-0002/0003 require raw retention; ADR-0026 separates scoped counter validation from source parsing. INT-036/037 define approved character handling, not numeric index identity.
+
+**Behaviour**: **Proposed.** At an index position in a standard code pattern, accept a nonempty sequence of ASCII decimal digits for structural reading. Preserve its raw spelling and source correspondence; compare numeric identity after disregarding leading zeros (all-zero spellings mean zero). Do not treat signs, fractions, exponents or definition placeholder letters as file indices. This does not prescribe the grammar of arbitrary H/V/X attribute strings.
+
+A zero index remains structurally readable, but is not made conforming: apply
+cited range/counter rules separately. Do not impose a u32/u64/usize ceiling
+on retained decimal identity; any bounded numeric accessor must report failed
+conversion rather than wrap, truncate or saturate. Never allocate an array
+up to the supplied index just to represent it. Preserve order and every
+item when `01` and `1` produce the same key: later duplicate/ambiguity rules
+must see all candidates and must not pick a spelling or rewrite source.
+
+**Reason**: Treating indices as numbers follows the cited examples while preserving questionable inputs for diagnostics. Rejecting zero during lexical reading confuses range validation with structure; a machine-size limit makes the same file parse differently across targets. Leading-zero equality is a proposed product interpretation, not an explicit Chapter 9 spelling rule. Its cost is that previously distinct-looking names can become duplicate candidates; the owner must approve that consequence.
+
+**Design**: proposed (2026-11-22; owner sign-off required) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: pending · **Origin**: family 2 batch 4
+
+**Test**: `decimal_index_spelling_preserves_numeric_identity`, `zero_index_is_not_range_approval`, `large_index_does_not_wrap_or_allocate_by_value` (planned, not yet written)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Draft analysis**: [sources, alternatives and remaining work](research/2026-11-22-code-name-index-draft.md)
