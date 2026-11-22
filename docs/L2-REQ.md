@@ -1,9 +1,10 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations, framing and character batch drafted (family 2, batches 1-3).**
+> **Status: foundations, framing, character and name batches drafted (family 2, batches 1-4).**
 > Foundations derive the approved restructure/source store; framing and
 > recovery use owner-approved INT-035. Character policies INT-036/037 were
-> approved by Joey, 2026-11-22, under ADR-0033; code-name grammar, CLI and later areas follow;
+> approved by Joey, 2026-11-22, under ADR-0033. Name structure follows here;
+> INT-038 is proposed; duplicate classification, CLI and later areas follow;
 > a parent with children here is not necessarily fully decomposed yet.
 
 ## Purpose
@@ -199,8 +200,8 @@ INT-036 and INT-037 were approved by Joey, 2026-11-22, under ADR-0033,
 with the independent AI recheck concurring on PR #16 head `891f77f` (see the
 [sign-off record](research/2026-11-22-int036-int037-owner-signoff.md)). They do
 not amend the approved INT-035 framing/run policy or supply implementation,
-completed analysis or tests. Full code-name grammar, indices, duplicate
-classification and known-code validation remain next work.
+completed analysis or tests. Name structure is derived in batch 4; duplicate
+classification and full known-code validation remain subsequent work.
 
 #### L2-READ-007
 
@@ -229,5 +230,44 @@ classification and known-code validation remain next work.
 **Statement**: Non-ASCII field bytes and supported detections of incompatible encoding markers SHALL produce located findings while original bytes remain available; the reader SHALL NOT silently strip a BOM, transcode input, guess UTF-16 from zero-byte patterns or treat failed character interpretation as an explicit usable field value.
 
 **Rationale**: Chapter 9 section 9.4.1 specifies 7-bit ASCII. Approved INT-037 defines the limited marker policy, not a Unicode TMATS format. Ordinary unmarked raw input can remain partly interpretable; a detected leading unsupported marker blocks semantic lookup for that document as specified in the approved interpretation, without dropping its source. Marker detection uses assembled-text offset zero before padding/control omission; fields containing high bytes are Invalid for semantic use, while ADR-0003's explicitly labelled on-request Latin-1/lossy views remain available.
+
+**Verification Method**: Test (T)
+
+
+## Code-name batch 4: structure before semantic validation
+
+This batch derives L1-READ-002/005 and the code-name-diagnostic part of
+L1-READ-003. INT-035/036/037 remain approved and unchanged; INT-038 below is
+a proposal about decimal index identity, not an approved interpretation.
+The examples establish structural obligations, not a completed catalogue,
+registry matcher, counter validator, duplicate classifier or extension resolver.
+
+#### L2-READ-010
+
+**Parent**: L1-READ-002
+
+**Statement**: Code-name interpretation SHALL preserve the group, any supplied occurrence index, ordered path segments and every index attached to each segment, with original-source correspondence; literal digits in a code element SHALL NOT be mistaken for indices, and absent components SHALL NOT be invented.
+
+**Rationale**: 106-24R1 Chapter 9 section 9.4.2, pages 9-2/3, and section 9.5.1 a with Table 9-1, page 9-5, establish hierarchical code names and multiple entries. Table 9-7 MEASUREMENT NAME `D-x\MN-y-n`, page 9-115, demonstrates nested indices; NUMBER OF FRAGMENTS `D-x\MNF\N-y-n-m`, page 9-117, demonstrates multiple path levels. Proposed INT-038 specifies index spelling/identity; neither syntax nor a parsed number proves validity in a counter's scope.
+
+**Verification Method**: Test (T)
+
+#### L2-READ-011
+
+**Parent**: L1-READ-005
+
+**Statement**: The reader SHALL recognize the baseline Chapter 9 group identifiers and standalone COMMENT code independently of whether an individual name matches a known definition, retaining unknown names and H/V/X material without claiming that recognition establishes conformance or extension association.
+
+**Rationale**: 106-24R1 Table 9-1, page 9-5, enumerates the thirteen identifiers; section 9.4.2, page 9-3, defines COMMENT. Sections 9.5.12/13, page 9-171, and 9.5.14, page 9-172, reserve H and define vendor/extension conventions that a restrictive generic grammar must not erase. Detailed extension behavior remains a later derivation under L1-EXT; ADR-0002 still retains everything.
+
+**Verification Method**: Test (T)
+
+#### L2-READ-012
+
+**Parent**: L1-READ-003
+
+**Statement**: Code-name interpretation failures SHALL produce located diagnostics while preserving the framed item's raw name, value and order; incomplete or failed structural matches SHALL NOT become usable partial keys, and absence of a known definition alone SHALL NOT be equated with malformed code-name syntax.
+
+**Rationale**: L1-READ-001/003, ADR-0002/0003 and INT-035 retain source even when meaning fails. Chapter 9 section 9.4.2, page 9-2, advises against blanks in code names; approved INT-036 ignores only surrounding blanks and controls for meaning. Thus a damaged `G\COM Time 12:30;` cannot be silently accepted as `G\COM`. Unknown definitions and open H/V/X naming space require a distinct outcome from a demonstrated syntax error.
 
 **Verification Method**: Test (T)

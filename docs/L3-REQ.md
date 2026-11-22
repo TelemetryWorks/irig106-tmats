@@ -1,9 +1,9 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations, framing and character batch drafted (family 2, batches 1-3).**
+> **Status: foundations, framing, character and name batches drafted (family 2, batches 1-4).**
 > These are implementation obligations, not existing interfaces or completed
-> tests. INT-035 is approved; INT-036/037 were approved by Joey, 2026-11-22. Remaining derivations
-> and development evidence still precede implementation.
+> tests. INT-035/036/037 are approved; INT-038 is proposed, 2026-11-22.
+> Remaining derivations and development evidence still precede implementation.
 
 ## Purpose
 
@@ -280,3 +280,79 @@ The internal-name omission finding applies independently when its condition
 also holds. This approved INT-036 rule exposes zero-interleaved inputs
 without guessing their encoding or asserting UTF-16; it is not a NUL-padding
 finding for the non-field regions governed by L3-READ-014.
+
+
+## Code-name batch 4: components, recognition and failures
+
+These are planned obligations, not implemented APIs. Index identity in
+INT-038 requires independent AI review and owner sign-off under ADR-0033;
+full analysis and executable tests also remain prerequisites. Existing
+character projection, raw display, marker gating and recovery rules apply.
+
+**L3-READ-019** · Parent: L2-READ-011 · Verification: T
+*Standalone COMMENT SHALL be recognized by whole-name ASCII-insensitive comparison after approved character projection, without fabricating a group occurrence or path; a name with additional suffix/path material SHALL NOT be accepted as COMMENT by prefix matching.*
+
+Source: 106-24R1 section 9.4.2, page 9-3. This recognizes the name, not a
+new comment terminator or permission to embed semicolons in values.
+
+**L3-READ-020** · Parent: L2-READ-011 · Verification: T
+*Group recognition SHALL distinguish G, T, R, M, P, D, B, S, Q, C, H, V and X using ASCII case folding and preserve the supplied spelling; an unrecognized group SHALL remain retained and SHALL NOT be mapped to another group or discarded.*
+
+Source: 106-24R1 Table 9-1, page 9-5. Recognition of a group is not
+recognition of every attribute within it, nor approval of a name's shape.
+
+**L3-READ-021** · Parent: L2-READ-010 · Verification: T
+*For a cited code-name pattern, structural interpretation SHALL consume the whole interpreted name, distinguish literal code-element characters from hyphen-delimited index positions, and keep occurrence-index absence distinct from any supplied index rather than substitute a default occurrence.*
+
+`G\106` contains a numeric literal code element, not an index; `R-1\TK1-3`
+has literal TK1 and a separate index 3. Sources: Table 9-2 RCC IRIG 106
+REVISION LEVEL, page 9-10; Table 9-4 TRACK NUMBER/CHANNEL ID, page 9-48.
+Pattern references are definitions, not permission to insert their omitted
+indices into file names. This requirement does not define the full grammar
+of uncatalogued vendor/hardware/extension names.
+
+**L3-READ-022** · Parent: L2-READ-010 · Verification: T
+*Every parsed index SHALL retain its position and segment attachment, with original-byte spans/correspondence; path boundaries, index order and multiplicity SHALL NOT be flattened, reordered or truncated when constructing a structured key.*
+
+For `D-1\MN-1-2`, keep occurrence 1, path MN and that segment's indices
+[1, 2]; distinguish [2, 1] and [1, 2, 3]. For `D-1\MNF\N-2-3-4`, keep
+segments MNF then N, with [2, 3, 4] on N. Sources: Table 9-7 MEASUREMENT
+NAME, page 9-115, and NUMBER OF FRAGMENTS, page 9-117. These describe
+name structure, not measurement links or valid counter contents.
+
+**L3-READ-023** · Parent: L2-READ-010 · Verification: T
+*At a standard pattern's index position, the proposed INT-038 reader SHALL accept a nonempty ASCII decimal-digit token, preserve its complete raw spelling, and compare its mathematical nonnegative integer identity without a machine-word ceiling; leading zeros SHALL NOT create a different index identity, and checked numeric conversion SHALL NOT wrap or truncate.*
+
+An all-zero token has identity zero; parsing it does not make it a legal
+entry index. Signs, decimal points, exponents and template letters do not
+match this proposed index grammar. This rule concerns index tokens only,
+not numeric data values. Range/contiguity checks need separately cited,
+scoped rules; no inferred upper bound or allocation of every intervening
+index is permitted just because a large index was supplied.
+
+**L3-READ-024** · Parent: L2-READ-012 · Verification: T
+*A demonstrated code-name syntax failure SHALL retain the item and a located finding without exposing a successfully parsed prefix as the item's usable key; the reader SHALL continue at the existing INT-035 boundary rather than repair punctuation or consume another region.*
+
+Internal ordinary blanks are not removed to manufacture a valid standard
+name. `G\COM Time 12:30;` remains raw-framed at its colon, with a name
+finding; it does not become G\COM. Empty components or unfinished index
+positions in a supplied standard pattern likewise cannot become a partial
+match. INT-036 internal-control/NUL findings remain independently visible;
+INT-037 failed character interpretation must not be bypassed by key parsing.
+
+**L3-READ-025** · Parent: L2-READ-011 · Verification: T
+*An unmatched definition SHALL preserve available structural information and raw-name access without being labelled malformed solely for being unknown; H/V/X or other unfamiliar names that cannot be unambiguously decomposed SHALL retain opaque source material rather than be forced into a standard-pattern key.*
+
+Sources: 106-24R1 sections 9.5.12/13, page 9-171, and 9.5.14, page 9-172;
+ADR-0002. This is a retention/classification boundary. Dedicated extension
+interpretation, association and registry overrides remain later work. No
+conformance claim is made for an arbitrary unknown-name example.
+
+**L3-READ-026** · Parent: L2-READ-012 · Verification: T
+*A structurally read name SHALL NOT by itself establish known-definition validity, entry range/contiguity, value validity, uniqueness or link resolution; equal interpreted keys SHALL retain every original item instead of selecting or merging an occurrence during parsing.*
+
+Proposed INT-038 makes zero-padded decimal spellings equal, so both originals
+must remain available for later duplicate/ambiguity handling. Counters and
+parent scopes follow ADR-0026 and Chapter 9 section 9.5.1 a; X has the cited
+noncontiguity exception in section 9.5.14. No association or counter default
+is invented by this batch, and no typed getter is declared implemented.
