@@ -280,8 +280,11 @@ checks index identity/visibility only and must not claim counter acceptance.
 
 ## Family 2 batch 5: duplicate and exact-lookup acceptance specifications
 
-**Status: planned, not executable tests.** INT-039 needs owner sign-off and
-independent AI review under ADR-0033. Earlier interpretations remain approved.
+**Status: planned, not executable tests.** INT-039 was approved by Joey,
+2026-11-22, under ADR-0033, with independent AI concurrence on PR #22 head
+`b22d45c` (see the [sign-off record](research/2026-11-22-int039-owner-signoff.md)).
+Earlier interpretations remain approved; full development analysis and
+executable tests remain outstanding.
 For scalar cases, the fixture supplies the cited definition binding; this
 is not evidence of a completed production registry or reviewed value rules.
 
@@ -289,11 +292,13 @@ Sources: 106-24R1 Chapter 9 section 9.4.2 pages 9-2/3 (unique code names,
 numbered entries, COMMENT and ordering); Table 9-2 PROGRAM NAME page 9-10;
 ADR-0002/0003/0023, approved INT-038 and coordinator-decided F1/ADR-0034.
 The [baseline draft](research/2026-11-22-scalar-duplicates-draft.md) separates
-literal standard text from proposed duplicate recovery/COMMENT treatment.
+literal standard text from owner-approved duplicate recovery/COMMENT treatment.
+Group \COM examples cite Table 9-2 COMMENTS, page 9-13, and Table 9-4
+COMMENTS, page 9-84; assembly scope follows ADR-0025.
 Escapes below denote bytes. Example attributes test candidate behavior, not
 whether the whole fixture is a conforming configuration.
 
-| Planned check | Fixture or stimulus | Expected observation under proposed INT-039 | Requirement |
+| Planned check | Fixture or stimulus | Expected observation under approved INT-039 | Requirement |
 | --- | --- | --- | --- |
 | `identical_scalar_repeats_are_ambiguous` | `G\PN:a;G\PN:a;` | Two retained candidates; one scalar-duplicate finding referencing both; singular value Ambiguous even though bytes agree; item spans `[0, 7)`, `[7, 14)`, value spans `[5, 6)`, `[12, 13)` | L3-READ-030, L3-READ-031, L3-VIEW-001, L3-VIEW-003 |
 | `conflicting_scalar_repeats_keep_every_candidate` | `G\PN:a;G\PN:b;G\PN:a;` | Three candidates, exact repeats included; duplicate finding and Ambiguous list all in source order, no preferred value | L3-READ-031, L3-VIEW-003 |
@@ -305,12 +310,14 @@ whether the whole fixture is a conforming configuration.
 | `duplicate_and_normalization_findings_coexist` | Repeated scalar slot with raw indices 1, 1, 01, 1 | Scalar-duplicate finding and Ambiguous list all four; INT-038 group information also lists all four and its noncanonical token finding remains separate | L3-READ-033, L3-VIEW-003 |
 | `one_index_spelling_still_has_scalar_duplicates` | Same scalar slot spelled 01 twice | Duplicate finding and Ambiguous; per-token information twice; no INT-038 group collision with just one distinct raw spelling tuple | L3-READ-033, L3-VIEW-003 |
 | `comment_collection_is_not_a_scalar_duplicate` | `COMMENT:first;COMMENT:second;` | Ordered two-item COMMENT collection retained without a duplicate-scalar finding merely for repeat; no concatenation or fabricated single semantic value | L3-READ-032, L3-VIEW-001 |
+| `group_com_is_a_single_entry_duplicate` | `G\COM:first;\r\nG\COM:second;`; separately `R-1\COM:a;R-1\COM:b;R-2\COM:c;` | G slot and R-1 slot each have a duplicate finding listing both occurrences and an Ambiguous singular value; raw lookup returns every line, never concatenates; R-2 is a separate slot; standalone COMMENT exception does not apply | L3-READ-031, L3-READ-032, L3-VIEW-001, L3-VIEW-003 |
 | `unknown_cardinality_is_not_assumed_singular` | Two identical synthetic `Z-1\PRIVATE:v;` items without a reviewed definition | Raw multiplicity visible where the key is structurally usable; scalar-duplicate conformance explicitly unclassified, not valid/singular by assumption; source retained | L3-READ-032, L3-VIEW-001 |
 | `invalid_name_cannot_be_a_partial_lookup_key` | A high-byte code name or `G\PN extra:v;`, followed by `G\PN:ok;` | Bad-name item remains in source with findings, not fabricated into G\PN; exact lookup does not confuse it with the later well-named candidate | L3-VIEW-001 |
 | `marker_block_is_not_missing_key` | Leading UTF-8/UTF-16/UTF-32 marker under INT-037 | Exact interpreted lookup reports the marker block and finding, not an empty-success/no-match claim; raw source remains available | L3-VIEW-001, L3-VIEW-002 |
 | `order_and_severity_do_not_choose_values` | Permute repeated scalar items, then lower diagnostic severity | Candidate report order tracks input; multiplicity remains Ambiguous and raw emission remains byte-exact for each input | L3-VIEW-004 |
 | `duplicates_cannot_be_hidden_by_a_default` | Repeated scalar fixture definition with an explicitly supplied test-only default | Ambiguous, never Defaulted; no Chapter 9 default is inferred or introduced by this synthetic metadata | L3-VIEW-004 |
 | `candidate_groups_are_document_local` | Two separate documents each containing one G\PN item | Separate exact-lookups yield one item each; no cross-record grouping or setup-governance inference | L3-READ-030, L3-VIEW-001 |
+| `cross_fragment_scalar_duplicate_is_document_local` | One Format 1 setup record, fragment 1 text `G\PN:a;` and fragment 2 text `G\PN:b;`, each packet with its own CSDW, assembled under ADR-0025 | ONE document with two scalar candidates; duplicate finding and Ambiguous list both; assembled item spans `[0, 7)` and `[7, 14)`, values `[5, 6)` and `[12, 13)`, with fragment-1/2 provenance; no packet-local reset and no completeness inference from the duplicate | L3-READ-030, L3-READ-031, L3-VIEW-001, L3-VIEW-003 |
 | `duplicate_sha_keeps_f1_result` | Two G\SHA items (equal or different values) | Retain and list both; generic duplicate handling never yields positive integrity or permits stamping; F1 result remains indeterminate, checksum mechanics later | L3-READ-033 |
 
 Planned generated cases permute small candidate sets and mix exact repeats,

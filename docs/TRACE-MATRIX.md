@@ -344,7 +344,7 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-036 | Omit ASCII nonprintables only from semantic projections | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
 | INT-037 | Diagnose Unicode markers without automatic transcoding | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
 | INT-038 | Decimal index identity without source normalization or machine-word limits | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
-| INT-039 | Repeated scalar slots remain ambiguous even when values agree | proposed (2026-11-22; owner sign-off required) | not yet written | _(none)_ |
+| INT-039 | Repeated scalar slots remain ambiguous even when values agree | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
 
 * Entries without a written analysis: **39** of 39
 * Entries without a test: **39** of 39

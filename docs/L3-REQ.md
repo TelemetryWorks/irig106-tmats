@@ -2,7 +2,7 @@
 
 > **Status: foundations through candidate batches drafted (family 2, batches 1-5).**
 > These are implementation obligations, not existing interfaces or completed
-> tests. INT-035/036/037/038 are approved; INT-039 is proposed, 2026-11-22.
+> tests. INT-035/036/037/038/039 are approved; INT-039 sign-off is dated 2026-11-22.
 > Remaining derivations and development evidence still precede implementation.
 
 ## Purpose
@@ -399,21 +399,28 @@ single-entry/value-conflict classification remains for the later batch; it does 
 ## Candidate batch 5: scalar duplicates and exact-name results
 
 These are planned obligations, not implemented interfaces or executable
-verification. INT-039 is proposed under ADR-0033. One document here means
-one caller-supplied TMATS text/assembled record, not a merge of successive
-setup records; this batch does not decide record completeness or governance.
+verification. INT-039 was approved by Joey, 2026-11-22, under ADR-0033,
+with independent AI concurrence on PR #22 head `b22d45c` (see the
+[sign-off record](research/2026-11-22-int039-owner-signoff.md)). Full analysis
+and executable tests remain outstanding. One Format 1 setup record spanning
+several packets is ONE document after ADR-0025 assembly, not one document per
+packet. Separate successive records are not merged; this batch does not
+decide record completeness or governance.
 
 **L3-READ-030** · Parent: L2-READ-013 · Verification: T
 *Duplicate grouping SHALL use a complete canonical key including group, supplied occurrence, ordered path and every index position, within one document; it SHALL retain each matching item identity and source location once per occurrence, including byte-identical repeats.*
 
 Approved INT-036/038 supply projection and decimal-string identity. Do not
 group by value, path prefix, entry index alone or across distinct documents.
-Source: 106-24R1 section 9.4.2, page 9-2; ADR-0002/0003.
+Source: 106-24R1 section 9.4.2, page 9-2; ADR-0002/0003. After ADR-0025
+assembly, G\PN in fragment 1 and again in fragment 2 of one Format 1 record
+is a duplicate in one document; preserve both locations and their fragment
+provenance. A packet boundary does not reset the duplicate group.
 
 **L3-READ-031** · Parent: L2-READ-013 · Verification: T
 *For a slot established as scalar by a cited reviewed definition, two or more occurrences of its complete canonical key SHALL produce a located duplicate finding referencing every occurrence, irrespective of whether raw or interpreted values agree; distinct index combinations in a multiple-entry pattern SHALL remain separate slots.*
 
-This is proposed INT-039. `G\PN` is PROGRAM NAME (106-24R1 Table 9-2,
+This is approved INT-039. `G\PN` is PROGRAM NAME (106-24R1 Table 9-2,
 page 9-10); `G\DSI-1` and `G\DSI-2` illustrate distinct numbered entries
 in section 9.4.2, page 9-2. Repeating the same numbered slot is different
 from supplying several different numbered entries. Severity/profile mapping
@@ -422,8 +429,14 @@ is deferred; lowering severity cannot manufacture a unique value.
 **L3-READ-032** · Parent: L2-READ-013 · Verification: T
 *Unknown or unreviewed cardinality SHALL remain explicitly unclassified for scalar-duplicate conformance, while raw multiplicity remains visible; standalone COMMENT items SHALL be exposed as a retained ordered collection rather than diagnosed as duplicate scalar attributes merely for repeating.*
 
-The COMMENT collection is a proposed INT-039 reading of section 9.4.2,
-page 9-3; it does not extend to every descriptive attribute such as G\PN.
+The COMMENT collection is an approved INT-039 reading of section 9.4.2,
+page 9-3; it does not extend to group `\COM` fields. The owner confirmed
+that repeated `G\COM`, `R-x\COM`, etc. are single-entry duplicates per the
+standard, with Ambiguous singular values and every occurrence in the finding.
+See Table 9-2 COMMENTS, page 9-13, and Table 9-4 COMMENTS, page 9-84.
+Some writers split long remarks across repeated fields; that practice does
+not authorize joining them or treating them as standalone COMMENT. Raw
+lookup still returns every line. This also does not exempt G\PN.
 No cardinality is inferred solely from absent indices or unfamiliar private
 H/V/X names. This does not suppress INT-038's applicable collision findings.
 
@@ -448,7 +461,7 @@ outcome, not authority to invent a default or prove a link unresolved.
 **L3-VIEW-003** · Parent: L2-VIEW-002 · Verification: T
 *For a definition-bound scalar slot, singular resolution with two or more matching occurrences SHALL be ambiguous and list every original candidate/location, even if all raw bytes agree, interpreted values compare equal, or only one candidate would independently be valid.*
 
-This proposed INT-039 multiplicity gate precedes value-based candidate
+This approved INT-039 multiplicity gate precedes value-based candidate
 selection. Preserve each candidate's invalid findings; ambiguity must not
 hide the bad input or present one candidate as the chosen explicit value.
 The zero/one-candidate five-state resolver is not fully derived here.
@@ -456,7 +469,7 @@ The zero/one-candidate five-state resolver is not fully derived here.
 **L3-VIEW-004** · Parent: L2-VIEW-002 · Verification: T
 *Ambiguous scalar resolution SHALL NOT substitute a default, infer an absent value, coalesce equal candidates or become explicit after reordering input or changing diagnostic severity; raw output SHALL continue to reproduce every retained byte.*
 
-Proposed INT-039 refines ADR-0023's ambiguous state for repeated slots.
+Approved INT-039 refines ADR-0023's ambiguous state for repeated slots.
 Order changes reporting order only. This does not define link selectors,
 packet evidence, caller assumptions or a data-channel/time-source association.
 
