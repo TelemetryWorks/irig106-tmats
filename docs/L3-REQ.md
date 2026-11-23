@@ -1448,3 +1448,31 @@ recording ended or was invalid. Other runs may be reported only with their
 retained actual state; no hidden "keep the first channel" policy is allowed.
 Recovery/resume and any opt-in disposal action need their own explicit
 contract. Passing a limit test does not prove all L1-ROB-001 input handling.
+
+
+## Whole-matrix verification contract (proposed INT-046)
+
+These are future implementation obligations. No matrix answer gains approval
+and no executable coverage is claimed by the checked-in documentation artifacts.
+
+**L3-REG-014** · Parent: L2-REG-007 · Verification: T
+*The implementation test harness SHALL deterministically enumerate every Cartesian-product member of the versioned retransmission matrix, currently 139,968, and assert exact domain membership, unique case identity and full equivalence-class membership without sampling or omission; each realizable member SHALL exercise actual bytes/provenance and independently checked expected sealed classification/basis, following classification, located findings and governing effect, while inconsistent observations SHALL receive separately counted consistency/rejection tests and unresolved owner questions SHALL fail readiness visibly.*
+
+The matrix artifacts live in `docs/research/retransmission-matrix/`; class
+compression must not hide members. Independent expectations require reviewed
+rules/fixtures, not calling the documentation generator or production
+classifier to compute an expected answer. No assertion that every nominal
+nonconflicting tuple is realizable is made: witness construction must expose
+further constraints, never silently skip tuples. Changes to dimensions/rules
+require a reviewed matrix revision and a fresh coverage reconciliation.
+
+**L3-REG-015** · Parent: L2-REG-007 · Verification: T
+*Whole-matrix enumeration SHALL be supplemented by named byte/provenance fixtures for SRCC=0 with differing content, SRCC=1 with identical content, checksum only on the following copy, and checksum only on the sealed copy; independent digest oracles and boundary/character mutations SHALL verify raw equality/exclusion, all inherited findings, no silent rejoin or byte loss and no positive F1 verification, with test markers naming INT-046 and its applicable interpretation dependencies.*
+
+Use independently computed hashlib digests, not the implementation or Chapter
+6's unreproducible example digest. Mutations include SHA-value/layout/other
+raw differences, partial-prefix matches, projected G\SHA names, unknown
+attributes, leading layout, value-contained text, missing terminators,
+uppercase hex, noncanonical algorithm 2, BOM/damage, F1 duplicates, differing
+FRMT/RCCVER/channel and actual EOF. Property-based mutation complements the
+full enumeration, never replaces it. This remains planned, not tested today.

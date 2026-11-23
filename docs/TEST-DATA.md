@@ -834,6 +834,35 @@ minimum required attributes are satisfied. Missing-attribute support cites
 packet fill is weak evidence. The digest fixture uses independent Python
 `hashlib.sha256`, never the library under test or Chapter 6's example digest.
 
+## Planned exhaustive retransmission matrix (INT-046 proposed)
+
+Owner direction dated 2026-11-23 requires every combination, not a sample.
+The [matrix and owner questions](research/2026-11-23-retransmission-decision-matrix.md)
+list all 139,968 members and their individual planned test names in the
+compressed artifact. All are PLANNED, not existing tests. Table answers still
+need interpretation review and owner decisions; unresolved rows block
+implementation readiness. The documentation expander checks only the artifact.
+Sources: 106-24R1 Ch11 §11.2.7.2 p. 11-50 SRCC; Ch6 §6.2.3.11 f pp. 6-22–23
+and Ch9 Table 9-2 p. 9-13 checksum; INT-011/018–021/034/039/043/045.
+
+| Named planned test | Fixture / explicit matrix member | Proposed assertions / open question | Requirements |
+| --- | --- | --- | --- |
+| `retransmission_matrix_exhaustive_coverage` | Every tuple in the versioned domains, including inconsistent observations and every class member; 139,968 currently | Independently exercise all observable output columns; no sampled substitute, missing case, silent owner choice or generator-as-oracle. Count realizable byte fixtures separately from observation consistency/rejection checks | L3-REG-014 |
+| `srcc0_different_is_reported_change` | `0.D.NN.C.SS.T.T.I`: bounded following text changes `G\PN:one;` to `G\PN:two;` despite SRCC=0 | Changed claim discrepancy; sealed Ambiguous under existing premature-seal guard; both readings retained, no rejoin. No automatic governing switch (QG) | L3-REG-015 |
+| `srcc1_identical_is_not_assumed_change` | `1.B.NN.C.SS.T.T.M`: same complete raw text, following first SRCC=1 | Proposed Complete, `time-boundary seal (owner policy)` plus `identical retransmission`; report changed claim against identical evidence, no semantic-change assumption (QI/QG) | L3-REG-015 |
+| `sha_only_following_not_sealed_proof` | `0.R.NV.C.SS.T.T.I`: following adds its own well-formed verifying checksum to the sealed text | Not byte-identical. Following-only verification never verifies sealed candidate or cures guard: sealed Ambiguous; report raw change despite SRCC=0; preserve both candidates (QC/QG) | L3-REG-015 |
+| `sha_only_sealed_preserves_verified_exception` | `0.R.VN.C.SS.T.T.I`: following removes the sole checksum; sealed checksum verifies sealed bytes | Sealed Complete ONLY on INT-045's existing sealed-text-verification basis; following absence is explicit, raw change reported; no joined digest/adoption inference (QC/QG) | L3-REG-015 |
+| `identical_duplicate_sha_never_verifies` | `0.B.DD.C.SS.T.T.I`: identical text contains duplicate G\SHA | F1 indeterminate with every occurrence, stamping refusal; proposed assembly hold remains QD, never a positive verification or silently selected duplicate | L3-REG-015 |
+| `retransmission_boundary_and_projection_mutations` | Mutate named witnesses: partial matching prefix, BOM/damaged/projected names, raw exclusion/leading layout, value-contained G\SHA, missing terminator, uppercase hex, `02-`, layout inside/outside exclusion, channel/FRMT/RCCVER/EOF | Preserve dependency findings, exact raw bytes/spans and every candidate; no normalized equality, silent rejoin or unsupported-format interpretation. Compare independent digests, not production output | L3-REG-015 |
+
+The four owner examples are named regressions in addition to all per-member
+names; neither these illustrative text fragments nor documentation outputs
+are conforming full setup fixtures. Future byte witnesses must supply all
+fragments, independently established extents and relevant provenance. Use
+Python hashlib for independent digests. An added/removed checksum belongs to
+R, not H (H changes only existing value bytes). Proper tuple constraints found
+during witness construction must be reported, reviewed and tested, not skipped.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample

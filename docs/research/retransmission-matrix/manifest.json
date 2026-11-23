@@ -1,0 +1,85 @@
+{
+  "status": "DRAFT; no approvals",
+  "combinations": 139968,
+  "classes": 43486,
+  "domains": {
+    "srcc": [
+      "0",
+      "1",
+      "U"
+    ],
+    "content": [
+      "B",
+      "H",
+      "W",
+      "D",
+      "R",
+      "X"
+    ],
+    "sha_pair": [
+      "NN",
+      "NV",
+      "NF",
+      "NM",
+      "ND",
+      "NU",
+      "VN",
+      "VV",
+      "VF",
+      "VM",
+      "VD",
+      "VU",
+      "FN",
+      "FV",
+      "FF",
+      "FM",
+      "FD",
+      "FU",
+      "MN",
+      "MV",
+      "MF",
+      "MM",
+      "MD",
+      "MU",
+      "DN",
+      "DV",
+      "DF",
+      "DM",
+      "DD",
+      "DU",
+      "UN",
+      "UV",
+      "UF",
+      "UM",
+      "UD",
+      "UU"
+    ],
+    "continuity": [
+      "C",
+      "G",
+      "O"
+    ],
+    "frmt_rccver": [
+      "SS",
+      "SD",
+      "DS",
+      "DD"
+    ],
+    "sealed_state": [
+      "T",
+      "X",
+      "A"
+    ],
+    "separator": [
+      "T",
+      "S",
+      "E"
+    ],
+    "phase": [
+      "I",
+      "M"
+    ]
+  },
+  "members_sha256": "8c7d6d86d514f9e76eb37e5b1b6fea7213d2d4cabbbf9f03b3d2d5c338671e3c",
+  "classes_sha256": "2dde1e82df92ee91bad1e60ecd564d2355f289bae03ad64a4f2afed33bb47927"
+}

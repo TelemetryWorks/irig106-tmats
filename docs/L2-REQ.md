@@ -702,3 +702,20 @@ owner after #38 are recorded here; unresolved streaming-use policy stays open.
 **Rationale**: Owner-relayed reviewer consequence after #38, 2026-11-23. Independent channels can keep several runs open while unrelated traffic continues. L1-ROB-001 requires bounded, non-aborting handling; lossless retention forbids hidden eviction. Accounting must include retained text and metadata, not just one channel's payload. The accounting model, numeric defaults if any, and post-error resume API require review before implementation; the budget is resource policy, not a TMATS default or record-size rule.
 
 **Verification Method**: Test (T)
+
+
+## Retransmission interpretation verification (proposed INT-046)
+
+Owner direction, 2026-11-23, requires the whole matrix to be tested. The
+matrix's proposed answers and owner questions remain unapproved; requirements
+for verification do not select those answers or relax ADR-0033 readiness.
+
+#### L2-REG-007
+
+**Parent**: L1-REG-006
+
+**Statement**: Implementation of retransmission interpretation INT-046 SHALL verify every member of the versioned exhaustive decision matrix, asserting sealed outcome/basis, following outcome, findings and governing effect against independently established expectations; unresolved owner decisions SHALL block readiness rather than count as passing implementation coverage, and named fixtures SHALL cover the owner's explicit examples.
+
+**Rationale**: Joey's 2026-11-23 whole-matrix direction extends ADR-0027's interpretation verification and ADR-0033's review gate. The matrix cites 106-24R1 Chapter 11 section 11.2.7.2 SRCC and Chapter 6 section 6.2.3.11 f checksum domain, with INT-011/018–021/034/039/043/045 dependencies. A documentation expander, sampled property test or oracle sharing the implementation path cannot demonstrate these outcomes. Physically inconsistent input observations need explicit rejection/consistency checks, separately reported from realizable byte/provenance fixtures.
+
+**Verification Method**: Test (T)
