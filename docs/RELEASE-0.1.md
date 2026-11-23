@@ -261,6 +261,14 @@ and typed limit error, never silent dropping; numeric policy, full accounting
 and recovery/resume details need review before implementation. See the
 [batch 15 review draft](research/2026-11-23-completeness-contracts-draft.md).
 
+Proposed INT-045 now examines a distinct initial-only boundary: the first
+recognised time packet after a known clean initial setup prefix. The
+[source investigation and pipeline](research/2026-11-23-initial-time-boundary-proposal.md)
+verify 106-07–24R1 and explain why normal initial TMATS need not wait for the
+whole file. Nothing is approved: INT-011's current wording is unchanged,
+INT-034/governance review remains open, and mid-session provisional-use
+permission is not decided by this proposal.
+
 ## Acceptance cases to derive before code
 
 These are test obligations for the next requirements family, not tests already

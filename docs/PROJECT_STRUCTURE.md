@@ -84,7 +84,8 @@ irig106-tmats/
 │   │                          2026-11-23-assembly-contracts-draft.md derives candidate joining and byte provenance;
 │   │                          2026-11-23-int011-per-channel-owner-decision.md records independent joining and START evidence;
 │   │                          2026-11-23-int011-owner-signoff.md records reconfirmation and review consequences;
-│   │                          2026-11-23-completeness-contracts-draft.md derives finality, provisional observations and budget contracts
+│   │                          2026-11-23-completeness-contracts-draft.md derives finality, provisional observations and budget contracts;
+│   │                          2026-11-23-initial-time-boundary-proposal.md verifies historical ordering and proposes INT-045
 │   ├── API_GUIDE.md           prototype: usage examples for the prototype API
 │   ├── REQUIREMENTS.md        prototype: single-file requirements; replaced by L1/L2/L3-REQ.md
 │   └── FOR_IRIG106_DOCS_REPO.md  prototype: cross-crate contract notes intended for irig106-docs

@@ -786,6 +786,32 @@ B=64 case. Full timelines remain 0.2; provisional pre-EOF metadata is an open
 0.1 consumer contract, not silently implemented by a timeline or a fourth
 final state. Existing whole-record acceptance cases remain required.
 
+## Proposed INT-045: initial time-boundary acceptance specifications
+
+**Status: proposed and planned, not executable tests.** INT-045 owner
+sign-off and independent AI check are pending; existing INT-011 approval
+has not changed. Sources: [source investigation and exact editions/pages](research/2026-11-23-initial-time-boundary-proposal.md).
+These cases supply reviewed packet-type/classification bindings to isolate
+the proposal; none asserts that an implementation, governance rule or new
+boundary is approved. Parents below identify affected existing obligations,
+not a completed L2/L3 derivation or a new requirement allocation.
+
+| Planned check | Fixture or stimulus | Proposed expected observation | Parent obligations |
+| --- | --- | --- | --- |
+| `initial_first_time_seals_before_dispatch` | Known session start, trusted matching channel-0 0x01 fragments q=10/11 with `COMMENT:a` + `b;`, then trusted 0x11 on channel 42, then data | Initial boundary before the first time packet, text `COMMENT:ab;`, distinct initial-time evidence; apply supplied completeness binding, then parse eligible TMATS and dispatch the SAME time packet before subsequent data; no rewind or marker bytes in TMATS | L1-CH10-004 |
+| `initial_time_type_is_edition_specific` | Known clean initial prefix; separately first marker 0x11 or 0x12 under supplied 106-15 versus 106-17/24R1 packet bindings, and reserved 0x10/0x13–17 | 0x11 eligible throughout; 0x12 reserved in 106-15, eligible from 106-17; other reserved codes never close positively. Valid structurally trusted source-NONE 0x11 still counts; semantic clock availability is separate | L1-CH10-004, L1-CH10-005 |
+| `non_time_timestamps_do_not_close_setup` | Secondary-header timestamp, IPTS, Ethernet-contained NTP/PTP, TFMT text, or unknown time-family packet before the first recognised time packet | None is this closure signal; non-setup traffic in the initial prefix is an ordering problem, not permission to choose an end marker or assume a time-source link | L1-CH10-004, L1-CH10-005 |
+| `initial_marker_requires_start_order_and_trust` | Cropped/unknown session start; prior PCM or unreadable packet; corrupt/unchecked marker; time before any setup; or unsupported edition binding | Keep evidence/bytes, report unavailable boundary/adoption or ordering/missing-setup problem; no clean-prefix assertion, invented document, backfill or silent repair. No positive result merely because a type byte resembles 0x11 | L1-CH10-004, L1-CH10-005 |
+| `initial_time_does_not_repair_incomplete_setup` | Trusted first time follows cut attribute, gapped/untrusted setup fragments, XML, or unresolved duplicate/split evidence | Boundary evidence does not fabricate Complete/ASCII/unique authority, checksum success or repaired text; INT-034 still supplies the independent verdict or unavailable reason | L1-CH10-004 |
+| `no_initial_time_uses_eof_or_provisional` | Clean exact-semicolon TMATS followed by actual EOF, then same bytes on a paused live source; source-NONE metadata but no time packet | Actual EOF may give Complete labelled end-of-input under INT-034 while recording separately lacks required time; live case remains open/provisional with explicit budget and typed limit error if needed. Pause/limit/NONE never manufactures EOF | L1-CH10-004, L1-CH10-005, L1-ROB-001 |
+| `initial_runs_and_later_documents_do_not_mix` | Pre-106-17 two setup channels before 0x11, each with its own fragments; separately initial `G\PN:a;`, first time, then later `G\PN:b;`; separately repeated G\PN before first time | Seal initial candidates separately without selecting governance; later setup is a separate candidate, not a duplicate added to the initial document. Repeats within one candidate keep every occurrence/duplicate and possible split; first-time boundary chooses no winner | L1-CH10-004 |
+| `mid_session_periodic_time_does_not_seal_update` | After initial first time, new setup fragments interleaved with unchanged-channel packets/periodic 0x11/0x12 and a nearby 0x02 event | No reuse of initial-only closure; update remains open/provisional absent another justified boundary. Nearby event remains only a candidate under INT-030; no proof of changed-data identity or automatically governing snapshot | L1-CH10-004, L1-CH10-005 |
+
+Further adversarial fixtures must test source/session resets and a fragment
+arriving after the proposed seal without merging it backward, plus exact
+packet/provenance boundaries. No late malformed continuation is repaired as
+initial text. No fixture invents a universal mid-session record terminator.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample
