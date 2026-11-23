@@ -1,7 +1,8 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through registry-gate batches drafted (family 2, batches 1-9).**
+> **Status: foundations through initial checksum batches drafted (family 2, batches 1-10).**
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
+> INT-018/019/020 are reconfirmed; INT-043 algorithm-token handling remains proposed.
 > These are implementation obligations, not existing interfaces or completed
 > tests. INT-035/036/037/038/039/040/041/042 are approved; INT-042 sign-off is dated 2026-11-23.
 > Remaining derivations and development evidence still precede implementation.
@@ -481,8 +482,8 @@ packet evidence, caller assumptions or a data-channel/time-source association.
 
 INT-038 already requires collision information for distinct raw index-spelling
 tuples and lists exact repeats too. Scalar duplicates can exist even with
-only one raw spelling tuple. Coordinator-decided F1 (ADR-0034, owner may
-override; L1-SUM-002) separately requires indeterminate integrity and stamping
+only one raw spelling tuple. Owner-approved F1 (Joey, 2026-11-23; INT-021,
+originally ADR-0034; L1-SUM-002) separately requires indeterminate integrity and stamping
 refusal. Checksum mechanics and edits remain later requirements.
 
 
@@ -892,11 +893,11 @@ PR and immutable head as existing sign-off records do; do not fabricate a
 separately posted GitHub review. The owner is the human signatory; the AI
 check is recorded as non-human. This creates no agent-attribution trailers.
 These gates apply to reader/validator behaviour tied to register entries,
-including hand-written behaviour outside the generator. Coordinator decisions
-F1 (INT-021) and F7 (INT-030) remain recommendations; each needs explicit
-ADR-0033 owner sign-off and an independent AI check before implementation.
-The owner relayed AI CONCUR for both at PR #30 head `13173b0`, 2026-11-23;
-owner sign-off remains pending. F1 remains a 0.1 release blocker.
+including hand-written behaviour outside the generator. F1 (INT-021) and
+F7 (INT-030) were approved by Joey, 2026-11-23, under ADR-0033, with
+independent AI CONCUR at PR #30 head `13173b0` (see the
+[owner approval record](research/2026-11-23-int021-int030-owner-signoff.md)). Their semantic review
+is complete; source freshness, analysis and executable verification remain.
 
 **L3-REG-010** · Parent: L2-REG-005 · Verification: T
 *Freshness checking SHALL compare the current cited source dependencies with the source-text hash bound to review, flag every affected interpretation for re-review on a difference or unavailable hash, and prevent the stale interpretation from executing as currently approved.*
@@ -935,7 +936,9 @@ No coordinator policy, including F1/F7, bypasses the approval/AI-review gate.
 Earlier owner-accepted entries (INT-001–034) with Review: pending still need
 the independent AI check before implementation. Existing owner acceptance
 is preserved, not treated as completing the missing check. For 0.1 checksums,
-INT-018/019/020 are explicit pending AI-review dependencies alongside F1.
+INT-018/019/020 were reconfirmed by Joey, 2026-11-23, with independent AI
+CONCUR at main `30e42a3`; F1 also has its owner/AI approval recorded. Their
+semantic review gates are complete, while analysis/freshness/tests remain.
 
 **L3-REG-013** · Parent: L2-REG-006 · Verification: T
 *Registry generation/checking SHALL refuse to emit an executable rule with a failed readiness dependency and SHALL report its entry, blocking interpretation/source evidence and reason; its source coverage status SHALL remain visibly non-executable, without replacing a checked-in reviewed rule silently or rewriting source text to make a gate pass.*
@@ -945,3 +948,62 @@ build-time generation. This specifies the refusal boundary for unready rules;
 complete output determinism, atomic file replacement, extractor diagnostics,
 user overlays and generator CLI details remain later derivations. No current
 CI workflow, registry artifact or prototype build script changes here.
+
+
+## Checksum batch 10: projected recognition, raw exclusion and guards
+
+Planned obligations, not executable checks. INT-018/019/020 were reconfirmed
+by Joey, 2026-11-23, under ADR-0033, with AI CONCUR at main 30e42a3.
+Source freshness, deep development analysis and executable tests remain gates.
+
+**L3-SUM-001** · Parent: L2-SUM-001 · Verification: T
+*Checksum recognition SHALL match the complete projected G\SHA name under INT-036/038, map it to the raw first contributing G/g byte through its following semicolon inclusive, exclude exactly that raw interval and hash all bytes outside it, including leading layout; noncanonical raw name spelling SHALL produce a located finding without rewriting it.*
+
+Source: INT-018 and 106-24R1 Chapter 9 Table 9-2 page 9-13; Chapter 6
+section 6.2.3.11 f page 6-22. Internal omitted name controls remain inside
+raw exclusion; leading layout before the name is outside. X carried paths
+and COMMENT value text are not this complete name. A suspected missing
+prior terminator yields a suggestion-only framing finding, never a new
+boundary/exclusion inside the previous value.
+
+**L3-SUM-002** · Parent: L2-SUM-001 · Verification: T
+*Authoritative COMPUTE SHALL refuse only when its document/exclusion domain is undefined or ambiguous, including a missing terminator, known truncation, duplicate SHA occurrences, compatible name damage, a blocking BOM or evidence of an enlarged mid-document value swallowing a following attribute; a complete, terminated SHA item with a malformed VALUE alone SHALL NOT block COMPUTE when that domain is established.*
+
+INT-019's unterminated-item case is normally EOF. Missing-delimiter evidence
+such as `G\SHA:2-h\r\nG\PN:TEST;` may leave the intended exclusion ambiguous;
+retain that framing evidence and refuse authoritative COMPUTE without repairing
+or choosing a boundary. Do not infer a missing delimiter or truncated record
+merely from a bad digest length. For complete known input, `G\SHA:2-ABC;`
+or a 63-hex-digit value has a defined raw exclusion: VERIFY is malformed,
+COMPUTE is allowed. Value validity and exclusion identity are separate checks.
+The same general rule permits computing with the zero placeholder, an unknown
+algorithm token or unavailable value interpretation when exclusion/completeness
+are established; none makes verification positive. Other findings coexist.
+A separately exposed raw-byte hash stays non-authoritative when the TMATS
+domain is undefined; never present it as the authoritative document checksum.
+
+**L3-SUM-003** · Parent: L2-SUM-002 · Verification: T
+*Verification SHALL report indeterminate for a compatible damaged SHA name or a leading BOM blocking semantic lookup, preserving raw evidence without a guessed exclusion; it SHALL report an exact unterminated SHA or known truncated record malformed and SHALL retain simultaneous duplicate findings without a positive result.*
+
+Sources: INT-018/019/021, INT-037/042 and L3-VAL-012. An exact item's known
+presence does not establish checksum-item uniqueness beside compatible damage.
+No common status precedence hiding a proved error is chosen by this batch.
+
+**L3-SUM-004** · Parent: L2-SUM-002 · Verification: T
+*For a reviewed usable SHA-256 value, verification SHALL use INT-036's value projection, compare against an independently computed digest, report matching upper-case hex with its lower-case warning, retain located CR/LF omission information, and leave raw input unchanged; value blanks without a reviewed handling rule SHALL remain unavailable rather than be trimmed or automatically rejected.*
+
+INT-020 reconfirmation does not choose blank handling or normalize the hashed
+bytes. A projected value mismatch can be reported only when its interpretation
+and exclusion are usable. INT-043's proposed 02- rule remains separate and
+cannot be silently treated as approved through index numeric identity.
+
+**L3-SUM-005** · Parent: L2-SUM-002 · Verification: T
+*G\SHA:0; SHALL be reported unverified with the explicit reason placeholder/no embedded digest, never match or mismatch; as an instance of L3-SUM-002's general defined-exclusion rule its complete unambiguous exclusion SHALL permit COMPUTE, and an explicitly requested stamp MAY replace the placeholder only with final-byte hashing and verification under ADR-0029.*
+
+Source: 106-24R1 Chapter 6 section 6.2.3.11 f, pages 6-22–6-23, and the
+INT-020 follow-up. This is a reported reason, not a fixed Rust representation
+or proof of whole-document validity. Detailed stamp/edit contracts remain a
+later slice; placeholders do not bypass F1 or unknown-exclusion guards.
+The placeholder is not a COMPUTE carve-out: complete malformed digest values
+also permit COMPUTE under that general rule. A stamp always writes canonical
+`2-` and lower-case digits, never an input algorithm spelling such as `02-`.

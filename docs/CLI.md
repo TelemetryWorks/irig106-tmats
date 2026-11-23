@@ -55,8 +55,8 @@ a command computes, the library can compute for other callers.
 - **`stamp` is a verified transaction.** It hashes the final output bytes
   outside the `G\SHA` item (a line break it inserts is included), writes
   lower-case hex, re-reads the output, and fails without writing if the
-  result does not verify (ADR-0029). F1 is coordinator-decided, 2026-11-21
-  (owner may override; ADR-0034): duplicate `G\SHA` items are indeterminate;
+  result does not verify (ADR-0029). F1 is owner-approved, 2026-11-23
+  (INT-021; coordinator origin ADR-0034): duplicate `G\SHA` items are indeterminate;
   list every occurrence, preserve every byte, never claim positive verification,
   and refuse stamping until the input is fixed.
 - **Editions shown as the file declares them.** `show` and `validate` print

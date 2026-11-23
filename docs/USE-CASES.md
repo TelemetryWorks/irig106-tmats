@@ -332,8 +332,8 @@ following semicolon, reported as `2-` plus 64 lower-case hex characters.
    included; the result is verified (ADR-0029).
 4. **Policy:** `G\SHA` is recognised in any letter case, never inside a
    value; an item with no following semicolon is malformed; upper-case hex
-   that matches is a match with a warning. F1 is coordinator-decided,
-   2026-11-21 (owner may override; ADR-0034): duplicate `G\SHA` items are
+   that matches is a match with a warning. F1 is owner-approved,
+   2026-11-23 (INT-021; coordinator origin ADR-0034): duplicate `G\SHA` items are
    indeterminate; list every occurrence, preserve all bytes, never claim
    positive verification, and refuse stamping until fixed.
 

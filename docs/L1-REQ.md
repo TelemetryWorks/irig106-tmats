@@ -643,7 +643,7 @@ requirements are added. The requirement entries below and the generated
 
 **Statement**: The library SHALL verify an embedded `G\SHA` value and report whether it matches, does not match, is absent, names an unknown algorithm, or is malformed; it SHALL recognise the `G\SHA` code name in any letter case and never inside another item's value, SHALL report an item with no following semicolon as an error with the status malformed, and SHALL report upper-case hexadecimal digits that otherwise match as a match with a warning.
 
-**Rationale**: UC-15; ADR-0014. The excluded range ends at "the following semicolon" (Table 9-2), TMATS is not case sensitive (§9.4.2), and the digest is "64 lower-case hexadecimal characters" (Chapter 6 §6.2.3.11 f) (team review T7; ADR-0029; INT-018 to INT-020). Coordinator-decided F1 (2026-11-21, owner may override): duplicate SHA items are indeterminate; list every occurrence, preserve bytes, never claim positive verification, and refuse stamping until fixed (ADR-0034). Delivered in 0.1.
+**Rationale**: UC-15; ADR-0014. The excluded range ends at "the following semicolon" (Table 9-2), TMATS is not case sensitive (§9.4.2), and the digest is "64 lower-case hexadecimal characters" (Chapter 6 §6.2.3.11 f) (team review T7; ADR-0029; INT-018 to INT-020). Owner-approved F1 (Joey, 2026-11-23, INT-021; originally coordinator-decided 2026-11-21): duplicate SHA items are indeterminate; list every occurrence, preserve bytes, never claim positive verification, and refuse stamping until fixed (ADR-0034). Delivered in 0.1.
 
 **Verification Method**: Test (T)
 
