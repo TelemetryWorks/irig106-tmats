@@ -2,7 +2,7 @@
 
 > **Status: foundations through effective-value batches drafted (family 2, batches 1-7).**
 > These are implementation obligations, not existing interfaces or completed
-> tests. INT-035/036/037/038/039/040 are approved; INT-041 is proposed, 2026-11-23.
+> tests. INT-035/036/037/038/039/040/041 are approved; INT-041 sign-off is dated 2026-11-23.
 > Remaining derivations and development evidence still precede implementation.
 
 ## Purpose
@@ -607,8 +607,11 @@ matches N. Repair/edit APIs and their effect on counters are later work.
 
 These are planned obligations, not implemented APIs or a complete registry.
 Existing character, ambiguity and uncertainty rules stay approved unchanged.
-INT-041 is proposed under ADR-0033; no sixth field-value state or concrete
-Rust result representation is selected by this batch.
+INT-041 was approved by Joey, 2026-11-23, under ADR-0033, with independent
+AI concurrence on PR #26 head `0fc0bc8` (see the
+[sign-off record](research/2026-11-23-int041-owner-signoff.md)). Full analysis
+and executable tests remain outstanding; no sixth field-value state or
+concrete Rust result representation is selected by this batch.
 
 **L3-REG-003** · Parent: L2-REG-002 · Verification: T
 *Each effective-field/default rule SHALL bind its original source text, reviewed interpretation and exact edition/section/table/row citation, including whether a default comes from the Default field or definition prose and the occurrence scope/applicability on which it depends.*
@@ -630,7 +633,9 @@ This batch consumes edition selection; it does not choose its algorithm.
 Every candidate remains available with its own findings. A known Ambiguous
 result does not need a successful value conversion to prove multiplicity.
 No scopes, successive records or interpretations from different editions
-are silently combined to obtain a convenient answer.
+are silently combined to obtain a convenient answer. An Invalid result under
+a fallback edition must carry that fallback label, applied edition and basis
+reason; invalidity does not erase the uncertainty of the chosen rule basis.
 
 **L3-VIEW-006** · Parent: L2-VIEW-003 · Verification: T
 *One actual candidate whose reviewed local character/type/range interpretation succeeds SHALL yield Explicit with the interpreted value, original raw value and source location/correspondence, without silently changing its spelling or representing that value as defaulted.*
@@ -639,6 +644,9 @@ Explicit means a usable given value under those local rules, not that every
 Allowed/Required condition, cross-field rule, packet or document is valid.
 Independent findings remain visible. Conditional constraints needed to decide
 local validity must themselves be evaluable; otherwise INT-041 applies.
+For TFMT, lowercase `a` is Explicit A with raw `a` preserved under section
+9.4.2, page 9-2. Present TFMT on a known non-TIMEIN channel is Explicit
+locally with an applicability finding; do not ignore it as an absent field.
 
 **L3-VIEW-007** · Parent: L2-VIEW-003 · Verification: T
 *One candidate with a demonstrated character/type/range failure SHALL yield Invalid with original raw evidence and the reason; zero-length or control-only projected content SHALL remain a present candidate and SHALL NOT trigger an absence default.*
@@ -647,6 +655,10 @@ Whether an empty projected value is valid depends on the reviewed definition;
 this is not a blanket empty-text rejection. INT-037 high bytes stay Invalid.
 A legitimate zero or false-like value is not absence. INT-036 omission/NUL
 information is not itself an automatic invalidity verdict for every field.
+Section 9.4.2, page 9-2, treats value blanks as intentional: `R-1\TFMT-3: A;`
+is unavailable until a blank-handling rule is reviewed, NOT Invalid just
+because an unreviewed exact enum comparison rejects the leading blank.
+Do not silently trim the value or treat it as absent.
 
 **L3-VIEW-008** · Parent: L2-VIEW-004 · Verification: T
 *With no actual candidate, a verified default whose reviewed applicability is established under an identified edition basis SHALL yield Defaulted with the interpreted value, exact source citation, Default-field/prose origin and applicability evidence, without an original input value span.*
@@ -662,7 +674,10 @@ clock association merely to activate that default.
 This follows RELEASE-0.1.md's missing/indeterminate-reason contract. A present
 bad value or duplicate group never enters this absence branch. Carry condition
 cannot-evaluate findings alongside this Missing result, not just a false flag. Missing a reviewed field binding itself is the
-separate INT-041 unavailable-read case.
+separate INT-041 unavailable-read case. Two CDT occurrences make its operand
+Ambiguous under INT-039, so absent TFMT is Missing with an unknown-condition
+reason and cannot-evaluate finding, not a false-condition or Defaulted result.
+Consumers must inspect that reason rather than infer default applicability.
 
 **L3-VIEW-010** · Parent: L2-VIEW-004 · Verification: T
 *Effective reads SHALL leave source bytes, item count/order and earlier findings unchanged; a Defaulted value SHALL NOT satisfy a separate physical-presence obligation or overwrite cross-field/packet evidence.*
@@ -676,7 +691,7 @@ Time-view/packet implementation and complete presence validation remain later.
 **L3-VIEW-011** · Parent: L2-VIEW-003 · Verification: T
 *When a read would require an unavailable reviewed definition, unsupported interpretation basis or unresolved evidence needed to decide local validity, it SHALL report unavailable/cannot-evaluate with the blocking reason and retained raw candidates rather than fabricate Explicit, Defaulted, Missing or a proved Invalid-data verdict.*
 
-This is proposed INT-041, a guard on attempting a supported-field read, not a
+This is approved INT-041, a guard on attempting a supported-field read, not a
 new semantic field-value state. Preserve any already established INT-039 Ambiguous outcome or demonstrated
 Invalid failure; lack of another rule must not erase known evidence. INT-037 marker blocking likewise is not evidence of an
 absent key; raw access stays available. No public enum shape is fixed here.

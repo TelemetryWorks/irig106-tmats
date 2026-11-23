@@ -4,8 +4,8 @@
 > Foundations derive the approved restructure/source store; framing and
 > recovery use owner-approved INT-035. Character policies INT-036/037 were
 > approved by Joey, 2026-11-22, under ADR-0033. Name structure follows here;
-> INT-038/039/040 were approved by Joey, 2026-11-22. Batch 7 proposes
-> INT-041; remaining registry/conditions, views, CLI and later areas follow;
+> INT-038/039/040 were approved by Joey, 2026-11-22; INT-041 was approved
+> by Joey, 2026-11-23; remaining registry/conditions, views, CLI and later areas follow;
 > a parent with children here is not necessarily fully decomposed yet.
 
 ## Purpose
@@ -367,8 +367,11 @@ interpretations and other family-2 areas remain separate derivations.
 
 These requirements extend L1-VIEW-004's zero/one-candidate branches and the
 source/default portion of L1-REG-002. ADR-0023 and RELEASE-0.1.md already
-settle the five semantic states and non-inserting defaults. INT-039/040 stay
-approved; proposed INT-041 addresses unavailable interpretation prerequisites.
+settle the five semantic states and non-inserting defaults. INT-041 was
+approved by Joey, 2026-11-23, under ADR-0033, with independent AI concurrence
+on PR #26 head `0fc0bc8` (see the
+[sign-off record](research/2026-11-23-int041-owner-signoff.md)). INT-039/040
+remain approved; full analysis and executable tests remain outstanding.
 Edition selection, complete condition grammar, dynamic range rules, the
 registry generator, presence/profile validation and time-channel APIs remain
 separate derivations. General effective values/registry keep their existing
@@ -390,7 +393,7 @@ release scope; this batch does not promote them wholesale into 0.1.
 
 **Statement**: For a supported reviewed scalar definition and identified document/scope/basis, a singular read SHALL preserve INT-039 multiplicity, return Explicit only for one usable locally interpreted value, and return Invalid with raw evidence for one demonstrated character/type/range failure; present empty content SHALL NOT be treated as absence, and unavailable decision prerequisites SHALL be reported without guessing a semantic value state.
 
-**Rationale**: Approved INT-035/036 retain present empty values; INT-037 makes high-byte fields Invalid; INT-039 preserves every scalar duplicate. ADR-0023 separates effective values from whole-document validation. Proposed INT-041 distinguishes unavailable knowledge from proved invalid data, without choosing a Rust enum/wrapper or revising the five supported-field states.
+**Rationale**: Approved INT-035/036 retain present empty values; INT-037 makes high-byte fields Invalid; INT-039 preserves every scalar duplicate. ADR-0023 separates effective values from whole-document validation. Approved INT-041 distinguishes unavailable knowledge from proved invalid data, without choosing a Rust enum/wrapper or revising the five supported-field states.
 
 **Verification Method**: Test (T)
 
