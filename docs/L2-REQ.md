@@ -638,8 +638,8 @@ validation remain later derivations. No new supported-edition claim is made.
 
 This derives only joining and source mapping within L1-CH10-004.
 INT-045 is a separate layered phase-closure rule above INT-011 joining;
-its initial A is signed, owner mid-session extension/amended wording awaits
-AI recheck. A closed phase cannot silently accept later fragments backward.
+its initial A and guarded owner mid-session extension are approved (AI
+CONCURS on #41 at 79b94eb). A closed phase cannot silently accept later fragments backward.
 A joined candidate run is not proof of one complete setup record. Completeness,
 ambiguous splits and session rules still need subsequent derivations and
 review of INT-034/028/031. INT-011 is reconfirmed by Joey, 2026-11-23, with AI CONCURS on #38 at

@@ -1263,8 +1263,8 @@ Planned, not implemented. INT-011 is reconfirmed by Joey, 2026-11-23,
 with AI CONCURS on #38 at c623b15; development gates remain;
 INT-034's precise completeness rules remain proposed under ADR-0031/0033.
 These children describe the joining/provenance stage within a phase only.
-INT-045 separately records time-packet phase closure (amended wording awaits
-AI recheck); it adds no per-channel joining predicate. A later +1 fragment
+INT-045 separately records approved time-packet phase closure (AI CONCURS
+on #41 at 79b94eb); it adds no per-channel joining predicate. A later +1 fragment
 across a phase boundary is continuous-but-split, never rejoined backward.
 These children do not settle complete/incomplete/ambiguous classification, adjacent-record splits, SRCC
 aggregation, configuration-event identity or a configuration timeline.
@@ -1387,7 +1387,7 @@ unless reviewed, unambiguous G\SHA verifies the sealed text alone. That exceptio
 retains Complete as classification evidence, never a backward rejoin; every
 mid-session Complete under this layer carries `time-boundary seal (owner policy)`.
 Revised outcomes/findings remain visible to spool-before-publish consumers.
-INT-045's amended wording awaits AI recheck. This EOF case ends exactly at `;`;
+INT-045 is approved (Joey, 2026-11-23; AI CONCURS on #41 at 79b94eb). This EOF case ends exactly at `;`;
 trailing padding/controls require reconciliation with INT-035/036, not a new
 unreviewed trim operation. Finality is not proof of source data validity.
 

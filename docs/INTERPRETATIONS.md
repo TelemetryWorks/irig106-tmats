@@ -306,8 +306,8 @@ record remains; leading-boundary evidence is now retained as well.
 
 **Layered closure cross-reference**: INT-045 is the separate phase-closure
 layer above this per-channel joining rule. Its initial A is signed and its
-owner mid-session extension/amended wording awaits AI recheck. This entry's
-joining predicates and approval are unchanged.
+guarded owner mid-session extension is approved (AI CONCURS on #41 at
+79b94eb). This entry's joining predicates and approval are unchanged.
 
 ### INT-012
 
@@ -376,8 +376,8 @@ or an assertion of final completeness. How a consumer may use such data
 before EOF, and invalidate a previously used snapshot after later bytes,
 remain explicit open items below, not an approved governance extension.
 INT-045 now records a separate owner-decided layered closure: initial setup
-and SRCC=1 updates close at their eligible time boundary (amended wording
-awaits AI recheck). At that boundary a mid-attribute suffix is INCOMPLETE
+and SRCC=1 updates close at their eligible time boundary (approved, AI
+CONCURS on #41 at 79b94eb). At that boundary a mid-attribute suffix is INCOMPLETE
 with a located finding; a same-channel +1 fragment after it is recorded as
 continuous-but-split and never rejoined backward. A semicolon-ending seal
 followed by matching +1 continuity becomes finally AMBIGUOUS with both
@@ -1501,9 +1501,9 @@ INT-014; that rule and all other review/coverage gates remain unchanged.
 - 106-24R1 Chapter 11 section 11.2.3.2 p. 11-24: "Only static Computer-Generated Data, Format 1 packets may precede the first time data packet." Section 11.2.3.3 p. 11-26 repeats the rule for network time; Table 11-4 pp. 11-6–7 defines 0x11/0x12 and reserved time-family codes.
 - Project-archived [106-13 chapter10.pdf](https://github.com/TelemetryWorks/rcc-106-standards/releases/download/106-13/chapter10.pdf), section 10.6.3.2, printed p. 10-44 (PDF page 56), contains the same ordering rule. SHA-256: `e3740c7ac3099236f4e97cbe5b84c169340e6d4a4222769619e83ea0f8176fde`. The third-party Spiral archive is a secondary copy; the distinct p. 10-41 copy inspected for #40 is the irig106.org PDF. Fingerprints/pagination are not interchangeable.
 - Section 11.2.7.2 p. 11-50 puts an updated setup record "prior to any new or changed data packets being committed to the stream"; p. 11-51 puts its configuration-change event before the setup record, not at its end. This does not print a universal mid-session time-packet terminator.
-- Joey, 2026-11-23: initial Option A signed under ADR-0033, with independent AI CONCURS on #40 at 93eb6e2; owner extends closure to SRCC=1 mid-recording setup candidates at the next trusted recognised time packet. Amended wording/extension awaits AI recheck.
+- Joey, 2026-11-23: initial Option A signed under ADR-0033, with independent AI CONCURS on #40 at 93eb6e2; owner extends closure to SRCC=1 mid-recording setup candidates at the next trusted recognised time packet. Guarded mid-session extension AI recheck CONCURS on #41 at 79b94eb; approved under ADR-0033.
 
-**Behaviour**: **Owner decision recorded (initial: A signed; mid-session: owner extension); AI recheck of the amended wording pending.**
+**Behaviour**: **Approved: Joey, initial Option A and guarded mid-session extension, 2026-11-23; independent AI CONCURS on #41 at 79b94eb under ADR-0033.**
 This is a SEPARATE LAYERED closure rule on top of INT-011. INT-011 joins
 qualifying fragments independently per channel; INT-045 seals candidate
 phases, after which later fragments cannot be joined backward into them.
@@ -1609,6 +1609,13 @@ after reporting the candidate's outcome, without requiring a whole-file scan.
 Initial closure and SRCC=1 closure do not decide general snapshot permission,
 INT-028/031 governance, a fallback to an old description or time associations.
 
+**Diagnostic follow-up suggestion (classification unchanged)**: A G\SHA
+located in the CONTINUATION that would verify the joined hypothesis may be
+noted as diagnostic information only. It never supplies the sealed-text
+exception, authorises a rejoin/adoption, upgrades Incomplete/Ambiguous, or
+claims authoritative integrity for the joined reading. Keep locations and
+the unadopted hypothesis label; the original candidates stay separate.
+
 **Reason and rejected recommendation**: Initial Option A is grounded in the
 explicit first-time ordering. The original recommendation rejected a general
 mid-session next-time/data terminator: no observable universal terminator is
@@ -1621,10 +1628,12 @@ update. The incomplete finding and continuous-but-split evidence expose that
 cost rather than silently repairing it. The historical alternatives remain
 in the #40 draft; neither the event nor a nearby 0x02 is guessed as an end.
 
-**Design**: owner decision recorded (initial: A signed; mid-session: owner extension); AI recheck of the amended wording pending · **Review**: pending amended-wording recheck under ADR-0033; draft author: maintainer agent; initial owner sign-off: Joey, 2026-11-23, Option A, independent AI CONCURS on #40 at 93eb6e2; mid-session extension: Joey, 2026-11-23; independent AI recheck: CONCERNS on #41; follow-up amended-wording recheck pending · **Origin**: owner question after #39 and owner extension after #40, 2026-11-23
+**Design**: approved (Joey, initial A and guarded mid-session extension, 2026-11-23) · **Review**: complete under ADR-0033; draft author: maintainer agent; initial owner sign-off: Joey, 2026-11-23, Option A, independent AI CONCURS on #40 at 93eb6e2; owner mid-session extension with premature-seal guard approved, 2026-11-23; independent AI recheck CONCURS on #41 at 79b94eb, resolving its prior narrow CONCERNS · **Origin**: owner question after #39 and owner extension after #40, 2026-11-23
 
-**Test**: `initial_first_time_seals_before_dispatch`, `initial_time_type_is_edition_specific`, `non_time_timestamps_do_not_close_setup`, `initial_marker_requires_start_order_and_trust`, `initial_time_does_not_repair_incomplete_setup`, `no_initial_time_uses_eof_or_provisional`, `initial_runs_and_later_documents_do_not_mix`, `mid_session_time_seals_srcc_update`, `mid_session_cut_update_is_incomplete`, `post_boundary_plus_one_is_continuous_but_split`, `all_non_format1_initial_packets_violate_order`, `session_starts_are_asserted_and_independent`, `untrusted_first_time_cannot_be_replaced`, `channel_zero_time_has_conformance_finding`, `semicolon_seal_continuation_is_finally_ambiguous`, `verified_sha_keeps_sealed_candidate_complete`, `srcc_eligibility_comes_from_first_fragment`, `premature_seal_signals_do_not_replace_verified_sha` (planned; not yet written)
+**Test**: `initial_first_time_seals_before_dispatch`, `initial_time_type_is_edition_specific`, `non_time_timestamps_do_not_close_setup`, `initial_marker_requires_start_order_and_trust`, `initial_time_does_not_repair_incomplete_setup`, `no_initial_time_uses_eof_or_provisional`, `initial_runs_and_later_documents_do_not_mix`, `mid_session_time_seals_srcc_update`, `mid_session_cut_update_is_incomplete`, `post_boundary_plus_one_is_continuous_but_split`, `all_non_format1_initial_packets_violate_order`, `session_starts_are_asserted_and_independent`, `untrusted_first_time_cannot_be_replaced`, `channel_zero_time_has_conformance_finding`, `semicolon_seal_continuation_is_finally_ambiguous`, `verified_sha_keeps_sealed_candidate_complete`, `srcc_eligibility_comes_from_first_fragment`, `premature_seal_signals_do_not_replace_verified_sha`, `continuation_sha_is_diagnostic_only` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
 **Draft analysis**: [original sources/options](research/2026-11-23-initial-time-boundary-proposal.md); [owner layered closure decision, source fingerprint and amended safety cases](research/2026-11-23-int045-layered-owner-decision.md).
+
+**Approval record**: [owner approval and exact AI concurrence](research/2026-11-23-int045-owner-signoff.md). Source freshness, completed development analysis and executable tests remain required. The separate [mid-session corner-case catalogue](research/2026-11-23-mid-session-setup-corner-cases.md) is discussion only, with no approved options.
