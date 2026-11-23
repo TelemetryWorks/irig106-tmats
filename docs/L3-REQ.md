@@ -481,8 +481,8 @@ packet evidence, caller assumptions or a data-channel/time-source association.
 
 INT-038 already requires collision information for distinct raw index-spelling
 tuples and lists exact repeats too. Scalar duplicates can exist even with
-only one raw spelling tuple. Coordinator-decided F1 (ADR-0034, owner may
-override; L1-SUM-002) separately requires indeterminate integrity and stamping
+only one raw spelling tuple. Owner-approved F1 (Joey, 2026-11-23; INT-021,
+originally ADR-0034; L1-SUM-002) separately requires indeterminate integrity and stamping
 refusal. Checksum mechanics and edits remain later requirements.
 
 
@@ -892,11 +892,11 @@ PR and immutable head as existing sign-off records do; do not fabricate a
 separately posted GitHub review. The owner is the human signatory; the AI
 check is recorded as non-human. This creates no agent-attribution trailers.
 These gates apply to reader/validator behaviour tied to register entries,
-including hand-written behaviour outside the generator. Coordinator decisions
-F1 (INT-021) and F7 (INT-030) remain recommendations; each needs explicit
-ADR-0033 owner sign-off and an independent AI check before implementation.
-The owner relayed AI CONCUR for both at PR #30 head `13173b0`, 2026-11-23;
-owner sign-off remains pending. F1 remains a 0.1 release blocker.
+including hand-written behaviour outside the generator. F1 (INT-021) and
+F7 (INT-030) were approved by Joey, 2026-11-23, under ADR-0033, with
+independent AI CONCUR at PR #30 head `13173b0` (see the
+[owner approval record](research/2026-11-23-int021-int030-owner-signoff.md)). Their semantic review
+is complete; source freshness, analysis and executable verification remain.
 
 **L3-REG-010** · Parent: L2-REG-005 · Verification: T
 *Freshness checking SHALL compare the current cited source dependencies with the source-text hash bound to review, flag every affected interpretation for re-review on a difference or unavailable hash, and prevent the stale interpretation from executing as currently approved.*
@@ -935,7 +935,8 @@ No coordinator policy, including F1/F7, bypasses the approval/AI-review gate.
 Earlier owner-accepted entries (INT-001–034) with Review: pending still need
 the independent AI check before implementation. Existing owner acceptance
 is preserved, not treated as completing the missing check. For 0.1 checksums,
-INT-018/019/020 are explicit pending AI-review dependencies alongside F1.
+INT-018/019/020 remain explicit pending AI-review dependencies; F1 itself
+now has owner approval and the independent AI check recorded.
 
 **L3-REG-013** · Parent: L2-REG-006 · Verification: T
 *Registry generation/checking SHALL refuse to emit an executable rule with a failed readiness dependency and SHALL report its entry, blocking interpretation/source evidence and reason; its source coverage status SHALL remain visibly non-executable, without replacing a checked-in reviewed rule silently or rewriting source text to make a gate pass.*

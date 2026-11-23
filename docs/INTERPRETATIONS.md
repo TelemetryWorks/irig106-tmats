@@ -475,7 +475,7 @@ Complete records govern (INT-028); incomplete and ambiguous records do not by de
 - Table 9-2 and Chapter 6 §6.2.3.11 f (quoted in INT-018 and INT-019) speak of one item: "If the TMATS includes a G\SHA code name".
 - Table 9-2: the code name `G\SHA` carries no index.
 
-**Behaviour**: **Coordinator-decided F1, 2026-11-21; owner may override.** Reject duplicate SHA items as indeterminate; list every occurrence, preserve every byte, never claim positive verification, and refuse stamping until the input is fixed (ADR-0034).
+**Behaviour**: **Approved by Joey, 2026-11-23, under ADR-0033; originally coordinator-decided F1, 2026-11-21.** Reject duplicate SHA items as indeterminate; list every occurrence, preserve every byte, never claim positive verification, and refuse stamping until the input is fixed (ADR-0034).
 
 **F1 edge cases (review follow-up, 2026-11-23)**: A damaged name compatible
 with G\SHA under L3-VAL-012, such as `G\SH\xFFA`, also makes verification
@@ -492,15 +492,17 @@ explicit edit, rebuild/re-read the result, and stamp only after the resulting
 input has no blocking duplicate/damaged-SHA ambiguity. A stamp may be the
 last step of that transaction, never run over the still-ambiguous input.
 
-**Implementation gate**: Reader/validator behaviour tied to this register entry is subject to L3-REG-009/012 even when hand-written rather than generated. The coordinator decision stands as the recommendation; ADR-0033 owner sign-off and an independent AI check are required before implementation. Source freshness, development analysis and executable verification remain additional gates.
+**Implementation gate**: Reader/validator behaviour tied to this register entry is subject to L3-REG-009/012 even when hand-written rather than generated. Joey's 2026-11-23 owner sign-off and the independent AI CONCUR at PR #30 head `13173b0` complete the semantic approval/review gate. Source freshness, completed development analysis and executable verification remain additional implementation gates; approval alone does not authorize skipping them.
 
 **Reason**: The standard does not say which item, if any, holds the checksum, or which text is excluded, when there are several.
 
-**Design**: coordinator-decided (F1, 2026-11-21; owner may override) · **Review**: pending under ADR-0033; owner sign-off: pending; independent AI check: CONCUR, relayed by the owner 2026-11-23 for PR #30 head `13173b04faac989fa581b8e9ebbd0df6c80d6b98`; coordinator decision is the recommendation, not approval; implementation still blocked pending owner sign-off · **Origin**: T7
+**Design**: approved (Joey, owner sign-off, 2026-11-23; F1 originally coordinator-decided 2026-11-21) · **Review**: approved under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-23; independent AI check: CONCUR, relayed by the owner 2026-11-23 for PR #30 head `13173b04faac989fa581b8e9ebbd0df6c80d6b98`; source freshness, analysis and verification gates remain · **Origin**: T7
 
 **Test**: `duplicate_g_sha_items`, `damaged_sha_name_is_indeterminate`, `exact_duplicate_removal_precedes_stamping` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Sign-off and AI-check reference**: [owner approval record](research/2026-11-23-int021-int030-owner-signoff.md); independent AI concurrence is tied to PR #30 head `13173b04faac989fa581b8e9ebbd0df6c80d6b98`, not claimed for later amended wording. Approval is not implementation or completed development evidence.
 
 ### INT-022
 
@@ -664,9 +666,9 @@ Findings: SRCC 1 on the first record; SRCC 0 with a changed configuration (an un
 - Chapter 11 §11.2.7.2: "Prior to the new setup record being committed to the stream, a setup record configuration change event packet shall be inserted into the stream."
 - No other passage of Chapter 10, Chapter 11, or Chapter 9 (106-24R1) names the packet type, format, or content of that event packet.
 
-**Behaviour**: **Coordinator-decided F7, 2026-11-21; owner may override.** Require verified event identification and report indeterminate meanwhile; never guess a packet type (ADR-0034). This does not identify the event packet or complete L1-CH10-005's check.
+**Behaviour**: **Approved by Joey, 2026-11-23, under ADR-0033; originally coordinator-decided F7, 2026-11-21.** Require verified event identification and report indeterminate meanwhile; never guess a packet type (ADR-0034). This does not identify the event packet or complete L1-CH10-005's check.
 
-**Implementation gate**: Reader/validator behaviour tied to this register entry is subject to L3-REG-009/012 even when hand-written rather than generated. The coordinator decision stands as the recommendation; ADR-0033 owner sign-off and an independent AI check are required before implementation. Source freshness, development analysis and executable verification remain additional gates.
+**Implementation gate**: Reader/validator behaviour tied to this register entry is subject to L3-REG-009/012 even when hand-written rather than generated. Joey's 2026-11-23 owner sign-off and the independent AI CONCUR at PR #30 head `13173b0` complete the semantic approval/review gate. Source freshness, completed development analysis and executable verification remain additional implementation gates; approval alone does not authorize skipping them.
 
 **Analysis notes (review follow-up, 2026-11-23; not completed analysis)**:
 - Report SRCC=1 on the session's first setup record separately; do not merge
@@ -682,11 +684,13 @@ Findings: SRCC 1 on the first record; SRCC 0 with a changed configuration (an un
 
 **Reason**: Checking for a packet the standard does not identify would rest on a guess (for example, that it is a Format 2 recording event packet).
 
-**Design**: coordinator-decided (F7, 2026-11-21; owner may override) · **Review**: pending under ADR-0033; owner sign-off: pending; independent AI check: CONCUR, relayed by the owner 2026-11-23 for PR #30 head `13173b04faac989fa581b8e9ebbd0df6c80d6b98`; coordinator decision is the recommendation, not approval; implementation still blocked pending owner sign-off · **Origin**: F4 section 5
+**Design**: approved (Joey, owner sign-off, 2026-11-23; F7 originally coordinator-decided 2026-11-21) · **Review**: approved under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-23; independent AI check: CONCUR, relayed by the owner 2026-11-23 for PR #30 head `13173b04faac989fa581b8e9ebbd0df6c80d6b98`; source freshness, analysis and verification gates remain · **Origin**: F4 section 5
 
 **Test**: `configuration_change_event_packet` (planned; event identification still unverified)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Sign-off and AI-check reference**: [owner approval record](research/2026-11-23-int021-int030-owner-signoff.md); independent AI concurrence is tied to PR #30 head `13173b04faac989fa581b8e9ebbd0df6c80d6b98`, not claimed for later amended wording. Approval is not implementation or completed development evidence.
 
 ### INT-031
 

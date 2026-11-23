@@ -290,7 +290,7 @@ is not evidence of a completed production registry or reviewed value rules.
 
 Sources: 106-24R1 Chapter 9 section 9.4.2 pages 9-2/3 (unique code names,
 numbered entries, COMMENT and ordering); Table 9-2 PROGRAM NAME page 9-10;
-ADR-0002/0003/0023, approved INT-038 and coordinator-decided F1/ADR-0034.
+ADR-0002/0003/0023, approved INT-038 and owner-approved F1/INT-021 (Joey, 2026-11-23; originally ADR-0034).
 The [baseline draft](research/2026-11-22-scalar-duplicates-draft.md) separates
 literal standard text from owner-approved duplicate recovery/COMMENT treatment.
 Group \COM examples cite Table 9-2 COMMENTS, page 9-13, and Table 9-4
@@ -501,9 +501,9 @@ remain later requirements; these cases do not silently settle them.
 ### Planned F1 repair and uncertainty edges
 
 Review follow-up to INT-021/F1; these are planned, not executable tests and
-not evidence of completed checksum requirements. F1 remains coordinator-
-recommended with owner sign-off pending; AI CONCUR was relayed for #30 head
-`13173b0`. Sources: 106-24R1 Chapter 9 Table 9-2 MESSAGE DIGEST/CHECKSUM,
+not evidence of completed checksum requirements. F1 was approved by Joey,
+2026-11-23, under ADR-0033, with AI CONCUR at #30 head `13173b0` (see the
+[owner approval record](research/2026-11-23-int021-int030-owner-signoff.md)). Sources: 106-24R1 Chapter 9 Table 9-2 MESSAGE DIGEST/CHECKSUM,
 page 9-13; L3-VAL-012's reviewed diagnostic rule; ADR-0029's exact-target
 transaction and final-byte stamp. INT-018/019/020 still need their AI checks.
 
@@ -537,7 +537,7 @@ See the [derivation record](research/2026-11-23-registry-gates-draft.md).
 | `registry_coverage_accounts_for_each_input_row` | Three supplied source rows classified executable, not yet interpreted and excluded with a reason; then one extra unaccounted row | Three accounted statuses remain distinct; added unaccounted row causes coverage failure, not silent omission or inferred semantics | L3-REG-008 |
 | `registry_exclusion_requires_reason` | Source row excluded without a reason, then with a reason and source identity | Missing reason fails coverage check; identified reason accounts for exclusion without claiming executable support | L3-REG-008 |
 | `registry_review_records_human_and_ai_roles` | Complete revision-bound fixture metadata, then owner sign-off missing, AI evidence missing or pending, or only a coordinator decision in separate fixtures | Complete roles/dates/references retained; each missing prerequisite blocks readiness, no coordinator or AI substitutes for owner approval | L3-REG-009, L3-REG-012 |
-| `coordinator_reader_policy_needs_owner_and_ai_review` | Planned reader/validator behaviour tied to INT-021 (F1) or INT-030 (F7), with only the coordinator decision recorded, whether hand-written or generated | Implementation readiness blocked pending ADR-0033 owner sign-off AND independent AI check for each entry. Keep coordinator recommendations and pending reviews; F1 remains a 0.1 blocker. Prior AI checks on other interpretations or this requirement wording do not approve F1/F7 | L3-REG-009, L3-REG-012 |
+| `coordinator_reader_policy_needs_owner_and_ai_review` | Planned reader/validator behaviour tied to INT-021 (F1) or INT-030 (F7), with only the coordinator decision recorded, whether hand-written or generated | Implementation readiness blocked pending ADR-0033 owner sign-off AND independent AI check for each entry. This is a synthetic missing-review fixture, not current F1/F7 status: both now have owner approval and AI concurrence recorded. Prior checks on other interpretations or requirement wording alone never approve the fixture | L3-REG-009, L3-REG-012 |
 | `legacy_owner_acceptance_still_needs_ai_review` | Existing owner-accepted INT-018/019/020 with Review: pending, then a separate supplied complete-review fixture | Preserve historical owner acceptance but block implementation until independent AI check is recorded; do not grandfather pre-ADR-0033 entries or count AI concurrence on F1/F7 as their review | L3-REG-009, L3-REG-012 |
 | `registry_ai_reference_is_revision_bound` | Owner-relayed AI CONCURS with PR and exact head versus only a moving branch URL | Immutable review reference accepted as evidence without fabricating a separately posted review; moving branch alone does not prove which interpretation/source revision was checked | L3-REG-009 |
 | `registry_source_change_requires_rereview` | Reviewed source hash then changed source prose, source dependency edition or unavailable stored hash in separate stimuli | Every affected interpretation flagged stale/re-review; recomputing a digest alone does not renew approval, old sign-off remains historical | L3-REG-010 |

@@ -125,3 +125,14 @@ stamp. TEST-DATA records planned uncertainty/repair cases, not executed tests.
 These notes guide future analysis; they are not completed analysis, chosen
 fragment-summary/prior semantics or executable evidence. Earlier source
 citations and ADR-0025/0029/0033 remain the governing references.
+
+
+## Owner sign-off recorded — 2026-11-23
+
+Joey approved F1/INT-021 and F7/INT-030 under ADR-0033, with independent AI
+CONCUR at PR #30 head `13173b04faac989fa581b8e9ebbd0df6c80d6b98`.
+This supersedes the earlier pending-owner descriptions above. See the
+[approval record](2026-11-23-int021-int030-owner-signoff.md) for exact-item
+repair, nearby candidate-only events and remaining evidence. INT-018/019/020
+still need their separate AI checks; source freshness, analysis and executable
+verification remain. No completed implementation or new-head review is claimed.

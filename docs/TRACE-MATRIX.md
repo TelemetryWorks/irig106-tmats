@@ -348,7 +348,7 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-018 | `G\SHA` is recognised in any letter case, and never inside a value | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-019 | A `G\SHA` item with no following semicolon | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-020 | Upper-case hexadecimal in a `G\SHA` value | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
-| INT-021 | Two or more `G\SHA` items in one document | coordinator-decided (F1, 2026-11-21; owner may override) | not yet written | _(none)_ |
+| INT-021 | Two or more `G\SHA` items in one document | approved (Joey, owner sign-off, 2026-11-23; F1 originally coordinator-decided 2026-11-21) | not yet written | _(none)_ |
 | INT-022 | Removing an attribute that X extensions point to | open (follow-up F2, 2026-09-26) | not yet written | _(none)_ |
 | INT-023 | `=` typed where `:` belongs, as in Chapter 6's own example | open (follow-up F3, 2026-09-26) | not yet written | _(none)_ |
 | INT-024 | Which packet data types a channel may carry | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
@@ -357,7 +357,7 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-027 | `C-d\DCN`'s "Links from:" lists `R-x\AMN-n-m` twice | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
 | INT-028 | Which setup record governs a packet | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
 | INT-029 | Repeated, changed, and inconsistent setup records | proposed (2026-09-26, revised 2026-09-27, awaiting the owner) | not yet written | _(none)_ |
-| INT-030 | The "setup record configuration change event packet" is not defined | coordinator-decided (F7, 2026-11-21; owner may override) | not yet written | _(none)_ |
+| INT-030 | The "setup record configuration change event packet" is not defined | approved (Joey, owner sign-off, 2026-11-23; F7 originally coordinator-decided 2026-11-21) | not yet written | _(none)_ |
 | INT-031 | After a setup record that cannot be assembled, nothing governs | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
 | INT-032 | Packets that no setup record governs | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
 | INT-033 | Fragment positions that default to the same value | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |

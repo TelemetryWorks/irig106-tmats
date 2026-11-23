@@ -40,7 +40,8 @@ views and the rest of the general views stay in 0.2. There is no scope cut.
 API review, acceptance cases, dated decisions and twelve-family order.
 L2/L3 and tests precede implementation. ADR-0033 records the owner's revised
 interpretation-review rule; ADR-0035 records the owner's W1 override.
-ADR-0034's coordinator-decided W2/W3 and F1/F7 are unchanged. No implementation is claimed.
+ADR-0034's W2/W3 remain coordinator-decided. Joey approved F1/F7 under ADR-0033,
+2026-11-23 (INT-021/030); development evidence remains outstanding. No implementation is claimed.
 
 ### Planned scanner suggestion after framing
 
@@ -820,7 +821,7 @@ L1-SUM-002 revised, new L1 requirements for the transaction and the stamp,
 `G\SHA` policy, orphaned extensions, the Chapter 6 errata — each marked for
 intensive testing and deep analysis), `docs/TEST-DATA.md`, and `docs/CLI.md`
 (`stamp`).
-**Historical proposal (2026-09-26); F1 is now coordinator-decided by ADR-0034.** Owner decisions requested then: (1) the duplicate-`G\SHA` policy — recommended:
+**Historical proposal (2026-09-26); F1 was coordinator-decided by ADR-0034 and owner-approved 2026-11-23 (INT-021).** Owner decisions requested then: (1) the duplicate-`G\SHA` policy — recommended:
 an error, "ambiguous", never "match", stamping refused until one remains;
 (2) orphaned extensions — recommended: reject the removal unless the set
 handles them or the caller explicitly keeps orphans; (3) the Chapter 6 `=`
@@ -875,12 +876,12 @@ owner decides; the decision is then recorded in
 
 | # | Question | Why it is open | Where it lands |
 |---|----------|----------------|----------------|
-| F1 | **Coordinator-decided, 2026-11-21; owner may override.** Duplicate SHA items are indeterminate. | List every occurrence, preserve every byte, never claim positive verification, and refuse stamping until fixed. Review and test evidence still required. | INT-021; ADR-0034 |
+| F1 | **Owner-approved, 2026-11-23, under ADR-0033; AI CONCUR at #30 head 13173b0.** Duplicate SHA items are indeterminate. | List every occurrence, preserve every byte, never claim positive verification, and refuse stamping until fixed. Review and test evidence still required. | INT-021; ADR-0034 |
 | F2 | What should happen when an edit removes an attribute that X extensions point to? | As F1: needs the options and their consequences for editing, for vendors' extensions, and for §9.5.14's "preserve it". | INT-022; L1-WRT-003; ADR-0029 |
 | F3 | Should the reader suggest `:` where `=` was typed, as in Chapter 6's own `G\DSI\N=18;`? | As F1: needs the options and the risk of a suggestion that is wrong. | INT-023; `docs/TEST-DATA.md` E3 |
 | F5 | **Decided 2026-09-26: A**, with C possible later (ADR-0030). Does `irig106-core` depend on `irig106-tmats`, or do the tools join them? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 1.6; proposal in section 2.4 (core stays structural and independent; checking packets against TMATS belongs to the layer holding both) awaits the owner. | `docs/TMATS-IN-CHAPTER-10.md` section 2.4; ROADMAP X3 |
 | F6 | **Decided 2026-09-26: yes** — L1-REL-003, a CI check added with the first new library code. Must the library build for WebAssembly (a CI check that the plain library compiles for a `wasm32` target), so studio's browser build can use it? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 4.8. ADR-0015 moved WASM *bindings* out of the library; building the plain library for WebAssembly is a separate question. The library already performs no I/O (L1-IO-001), which is the main condition. | ADR-0015; a possible L1 requirement and CI job |
-| F7 | **Coordinator-decided, 2026-11-21; owner may override.** Require verified identification; report indeterminate meanwhile. | Never guess a packet type. The event identity still needs evidence; the decision does not supply it. | INT-030; L1-CH10-005; ADR-0034 |
+| F7 | **Owner-approved, 2026-11-23, under ADR-0033; AI CONCUR at #30 head 13173b0.** Require verified identification; report indeterminate meanwhile. | Never guess a packet type. The event identity still needs evidence; the decision does not supply it. | INT-030; L1-CH10-005; ADR-0034 |
 | F8 | **Approved 2026-09-26 and applied**, except the notes for the other repositories (8.6), which wait for the owner to say where they are written. Approve, change, or reject the proposals of `docs/TMATS-IN-CHAPTER-10.md` section 8: use cases UC-18 to UC-20, requirements L1-VIEW-007 to 009, the release plan changes R1–R8, the documents to update (8.5), and the notes for the other repositories (8.6). | Section 8 found the planned releases predate T3–T7 and the consumer contracts; in particular L1-SUM-004's stamp (0.1) needs a transaction due in 0.5 (R2), and L1-CH10-008's differences (0.2) need a comparison due in 0.5 (R3). | `docs/TMATS-IN-CHAPTER-10.md` section 8; "Planned releases" |
 | F9 | **Adopted 2026-09-26** (map in `irig106-docs/src/coverage.md`; Chapter 5 kept at very low priority; `irig106-time` next). Adopt the plan for covering the rest of IRIG 106 ("Covering the rest of IRIG 106", below)? | The owner asked (2026-09-26) whether other chapters need a document like `docs/TMATS-IN-CHAPTER-10.md`. | the ecosystem's repositories; `irig106-docs` |
 | F4 | What does processing the TMATS setup record give the rest of Chapter 10 processing — `irig106-core`, `irig106-decode`, and the other consumers? | "When I am processing a CH.10 file what do I expect processing the TMATS packet to provide to the other parts of the processing … We need to document this in great detail." (2026-09-26) | `docs/TMATS-IN-CHAPTER-10.md` — outline approved 2026-09-26; all eight sections drafted for review |

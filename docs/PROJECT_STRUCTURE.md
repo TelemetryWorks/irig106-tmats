@@ -70,7 +70,8 @@ irig106-tmats/
 │   │                          2026-11-23-condition-scope-draft.md drafts INT-042 and scoped condition evidence;
 │   │                          2026-11-23-int042-owner-signoff.md records Option A approval and diagnostic guard clarifications;
 │   │                          2026-11-23-registry-gates-draft.md derives registry evidence gates and deterministic damage matching;
-│   │                          2026-11-23-f1-f7-review-gates.md records pending F1/F7 approvals and separator-spanning damage
+│   │                          2026-11-23-f1-f7-review-gates.md records F1/F7 review history and separator-spanning damage;
+│   │                          2026-11-23-int021-int030-owner-signoff.md records both approvals and remaining evidence gates
 │   ├── API_GUIDE.md           prototype: usage examples for the prototype API
 │   ├── REQUIREMENTS.md        prototype: single-file requirements; replaced by L1/L2/L3-REQ.md
 │   └── FOR_IRIG106_DOCS_REPO.md  prototype: cross-crate contract notes intended for irig106-docs
