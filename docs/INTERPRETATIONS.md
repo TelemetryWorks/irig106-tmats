@@ -282,15 +282,35 @@ listed here.
 - Chapter 11, setup-record CSDW (106-24R1, Figure 11-34): "0x0E = RCC 106-22", "0x0F through 0xFF = Reserved"; the same list in 106-22, 106-23, and 106-24.
 - 106-19 and 106-20 Chapter 11: "0x0D = RCC 106-19", "0x0E through 0xFF = Reserved".
 
-**Behaviour**: `0x0E` is reported as "RCC 106-22" with the labelled note "unchanged through 106-24R1: 106-23, 106-24, and 106-24R1 assign no newer code"; `0x0D` as "RCC 106-19" with the note "106-20 assigns no newer code"; reserved values as an unknown edition. `G\106` stays the primary edition source (ADR-0016). *(Revised 2026-09-27, ADR-0032: previously "106-22 or later".)*
+**Behaviour**: **Reconfirmed by Joey, 2026-11-23, under ADR-0033.** `0x0E` is reported as "RCC 106-22" with the labelled note "unchanged through 106-24R1: 106-23, 106-24, and 106-24R1 assign no newer code"; `0x0D` as "RCC 106-19" with the note "106-20 assigns no newer code"; reserved values as an unknown edition. `G\106` stays the primary edition source (ADR-0016). *(Revised 2026-09-27, ADR-0032: previously "106-22 or later".)*
+
+**Scope and analysis notes (2026-11-23)**: This is the **Format 1** setup-
+record RCCVER table, Figure 11-34, not a universal version-byte decoder.
+The Format 4 Streaming Configuration Record has its own table: in 106-24R1
+section 11.2.7.5/Figure 11-43, page 11-62, 0x0C = RCC-106-17 and 0x0D–0xFF
+remain reserved. It must never borrow Format 1's mappings. Figure 11-41 in
+this edition is the Recording Index Intra-Packet Header, not the Format 4
+CSDW; retain edition-specific citations rather than copying figure numbers.
+
+The packet-header Data Type Version is a third code space: section 11.2.1.1 e,
+page 11-6, assigns 0x0A = RCC 106-22. Keep it distinct under L3-CH10-008;
+0x0A in the Format 1 RCCVER table instead means RCC 106-13. Raw values require
+their code-space/table identity even if field names look similar.
+
+0x0E -> 106-24R1 rules and 0x0D -> 106-20 rules are ADR-0032/INT-017 fallback
+POLICY, not INT-012's literal reading. Tests must keep those separate; this
+reconfirmation does not approve INT-017 or select a fallback from a Format 4
+or packet-header byte. Full development analysis and tests remain outstanding.
 
 **Reason**: The table names one edition per code. That later editions kept the code is an observation about the archived editions, not a promise about future ones (team spec alignment review). RCCVER declares the recording-format version, not the TMATS edition; see INT-016 and INT-017 (ADR-0028).
 
-**Design**: accepted (owner, 2026-09-26; wording revised by the owner's decision of 2026-09-27) · **Review**: pending · **Origin**: T3; team spec alignment review
+**Design**: approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26, revised 2026-09-27) · **Review**: approved under ADR-0033; draft author: maintainer agent; owner reconfirmation: Joey, 2026-11-23; independent AI check: CONCURRED on PR #34 head `e35232391326a4e56e478c5a3a33e10892038b04` after reading seven archived-edition tables, as relayed by the owner · **Origin**: T3; team spec alignment review
 
-**Test**: `rccver_codes_read_as_their_table_states`
+**Test**: `rccver_codes_read_as_their_table_states`, `version_code_spaces_do_not_share_mapping`, `literal_rccver_is_not_fallback_policy` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Reconfirmation and AI-check reference**: [owner approval record](research/2026-11-23-int012-owner-signoff.md); AI concurrence on #34 head `e352323` after seven-edition source review is owner-relayed, not a claim that this new PR or these later notes have been independently reviewed.
 
 ### INT-034
 
@@ -1344,3 +1364,39 @@ verification status (L3-SUM-002). No source bytes are repaired or dropped.
 **Draft analysis**: [source, alternatives and independent fixture oracle](research/2026-11-23-checksum-followups-draft.md)
 
 **Owner decision record**: [Option B, rationale and rejected alternative](research/2026-11-23-int043-owner-decision.md). Owner Option B, 2026-11-23, is now approved with AI concurrence at #32 head `8941ca1`; see the [approval record](research/2026-11-23-int043-owner-signoff.md). The earlier decision record remains history; analysis, freshness and executable tests are still outstanding.
+
+
+## Ambiguous TMATS edition declarations (proposed, 2026-11-23)
+
+### INT-044
+
+**Title**: Duplicate G\106 blocks automatic edition selection unless the caller overrides
+
+**Sources**:
+- 106-24R1 Chapter 9 section 9.4.2 page 9-2 describes unique names/single-entry attributes; Table 9-2 RCC IRIG 106 REVISION LEVEL G\106, page 9-10, names the generating edition but defines no recovery for duplicate declarations.
+- Approved INT-039 makes repeated scalar fields Ambiguous even when values agree. ADR-0028 selects override, declared edition, then labelled fallback for missing/unrecognised G\106; it does not explicitly classify ambiguous G\106 as missing/unrecognised.
+
+**Behaviour**: **Proposed; owner sign-off and independent AI check pending.**
+With duplicate G\106, keep the scalar declaration Ambiguous with every
+occurrence and its duplicate findings. Recommend no automatic edition/rules
+selection from this input: report selection unavailable/cannot-evaluate with
+the ambiguity reason until the caller explicitly supplies a valid override.
+Do not first/last-win, collapse identical values or relabel the declaration
+missing/unrecognised to activate RCCVER/baseline fallback. A valid explicit
+override selects its own labelled basis while all ambiguous-declaration
+candidates and findings remain; it does not repair the declaration.
+
+This applies to repeated scalar items, not a single valid year naming several
+candidate editions under INT-014. That existing reviewed rule keeps its own
+candidate/basis behavior and pending-review obligations. No duplicate check
+joins separate documents or successive setup records into one declaration.
+
+**Reason**: The recommendation preserves the fact that the writer gave competing declarations instead of borrowing missing-input fallback semantics. It costs an explicit override even for identical duplicate years. Alternative: proceed through a labelled RCCVER/baseline fallback with reason ambiguous G\106, retaining all candidates; more convenient, but expands the owner's missing/unrecognised fallback policy. Recommend blocking automatic selection; owner choice remains open.
+
+**Design**: proposed · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: pending · **Origin**: family 2 edition-basis batch 13
+
+**Test**: `ambiguous_g106_requires_override`, `identical_g106_duplicates_do_not_select`, `override_keeps_ambiguous_declaration_evidence` (planned; not yet written)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Draft analysis**: [source, alternatives and pending dependencies](research/2026-11-23-edition-basis-draft.md)

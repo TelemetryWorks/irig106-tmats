@@ -79,11 +79,18 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
 | L1-EDN-001 | _(none)_ | _(none)_ | Draft |
-| L1-EDN-002 | _(none)_ | _(none)_ | Draft |
+| L1-EDN-002 | L2-EDN-002 | _(none)_ | Draft |
 | L1-EDN-003 | _(none)_ | _(none)_ | Draft |
 | L1-EDN-004 | _(none)_ | _(none)_ | Draft |
-| L1-EDN-005 | _(none)_ | _(none)_ | Draft |
+| L1-EDN-005 | L2-EDN-001 | _(none)_ | Draft |
 | L1-EDN-006 | _(none)_ | _(none)_ | Draft |
+
+**L2 -> L3 -> Verification Artifacts**
+
+| L2 ID | L3 Children | Test Artifacts | Status |
+|-------|-------------|----------------|--------|
+| L2-EDN-001 | L3-EDN-001, L3-EDN-002 | _(TBD)_ | Draft |
+| L2-EDN-002 | L3-EDN-003, L3-EDN-004, L3-EDN-005, L3-EDN-006, L3-EDN-007 | _(TBD)_ | Draft |
 
 ### L1-REG: Attribute definitions (registry)
 
@@ -312,7 +319,7 @@ This matrix is the single source of truth for live status; the requirement docum
 |----------|----|----|----|-----------|-----------|-------------|-------------|
 | READ | 7 | 13 | 33 | 0 | 0 | 0 | 0 |
 | CH10 | 8 | 3 | 8 | 0 | 0 | 0 | 0 |
-| EDN | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
+| EDN | 6 | 2 | 7 | 0 | 0 | 0 | 0 |
 | REG | 8 | 6 | 13 | 0 | 0 | 0 | 0 |
 | VIEW | 9 | 4 | 11 | 0 | 0 | 0 | 0 |
 | VAL | 6 | 3 | 12 | 0 | 0 | 0 | 0 |
@@ -325,13 +332,13 @@ This matrix is the single source of truth for live status; the requirement docum
 | ROB | 3 | 2 | 3 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **40** | **98** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **42** | **105** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 56 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 54 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 194 (0.0%).
+**Tested by at least one test marker**: 0 of 201 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 194 (1.5%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 201 (1.5%).
 
 ### Orphan check
 
@@ -355,7 +362,7 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-009 | Counters named without indices in conditions | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-010 | Equality is `==`, although Table E-3 prints `= =` | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-011 | Where one multi-packet setup record ends | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
-| INT-012 | RCCVER codes are read as their table states; later editions' reuse is a note | accepted (owner, 2026-09-26; wording revised by the owner's decision of 2026-09-27) | not yet written | _(none)_ |
+| INT-012 | RCCVER codes are read as their table states; later editions' reuse is a note | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26, revised 2026-09-27) | not yet written | _(none)_ |
 | INT-034 | A joined run is complete, incomplete, or ambiguous | accepted in principle (three outcomes, owner, 2026-09-27, ADR-0031); these rules proposed | not yet written | _(none)_ |
 | INT-013 | Appendix 9-C ends 18 attributes with `:` instead of `;` | suspect (owner, 2026-09-26; `docs/ROADMAP.md`, S1) | not yet written | _(none)_ |
 | INT-014 | `G\106` gives two year digits, so one value can name two editions | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
@@ -387,9 +394,10 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-041 | Unavailable interpretation is not proof of missing or invalid field data | approved (Joey, owner sign-off, 2026-11-23) | not yet written | _(none)_ |
 | INT-042 | A reviewed is-specified predicate tests actual presence, not value usability | approved (Joey, owner sign-off, 2026-11-23) | not yet written | _(none)_ |
 | INT-043 | Leading-zero algorithm 2 designators are accepted with a warning | approved (Joey, Option B, 2026-11-23) | not yet written | _(none)_ |
+| INT-044 | Duplicate G\106 blocks automatic edition selection unless the caller overrides | proposed | not yet written | _(none)_ |
 
-* Entries without a written analysis: **43** of 43
-* Entries without a test: **43** of 43
+* Entries without a written analysis: **44** of 44
+* Entries without a test: **44** of 44
 * Entries missing the development mark: **0**
 
 ### Marker reference check

@@ -635,8 +635,8 @@ expected answers derived through the stamping implementation itself.
 11-50 and RCCVER table page 11-51; ADR-0009/0015/0025/0028/0032. Payloads
 start at the CSDW and are already bounded by the caller; snippets are not
 whole packets or complete conforming records. Body/candidate completeness
-is an independent later result. INT-012 keeps its existing owner acceptance
-and pending AI review; this PR grants no semantic or implementation approval.
+is an independent later result. INT-012 is reconfirmed by Joey, 2026-11-23,
+with AI concurrence at #34 head e352323; analysis/tests remain outstanding.
 See the [source/review note](research/2026-11-23-setup-payload-draft.md).
 
 | Planned check | Fixture or stimulus | Expected observation | Requirement |
@@ -654,6 +654,8 @@ See the [source/review note](research/2026-11-23-setup-payload-draft.md).
 | `local_srcc_is_not_session_validation` | Same readable CSDW supplied in first-record versus later-record contexts; two separate fragments differ only in SRCC | Local bit preserved in each; no invented event verdict, difference/first-record judgement or SRCC consensus. Assembly/session rules remain separate | L3-CH10-005 |
 | `fragment_csdws_do_not_enter_assembled_text` | Two separately supplied baseline payloads, each with its own CSDW and arbitrary body split | Each adapter returns only its body range; later assembly gets original fragments/provenance, not an inserted CSDW in the text. No concatenation or complete-record decision occurs here | L3-CH10-002 |
 | `split_bom_is_not_stripped_per_payload` | Body 1 ends EF, body 2 starts BB BF after its own CSDW | Both retain bytes; no fragment-level BOM removal or encoding guess. INT-037 evaluates markers after assembly, outside this decoder | L3-CH10-002 |
+| `version_code_spaces_do_not_share_mapping` | Tagged Format 1 RCCVER 0D/0E, Format 4 RCCVER 0D/0E and packet-header Data Type Version 0A under their separately cited baseline tables | Format 1 literals RCC 106-19/22; Format 4 0D/0E reserved/unknown (its 0C is RCC-106-17); header 0A is RCC 106-22, while Format 1 0A is RCC 106-13. Never use a shared untagged version-byte lookup; guard does not implement Format 4 parsing | L3-CH10-007, L3-CH10-008 |
+| `literal_rccver_is_not_fallback_policy` | Format 1 0E/0D, separately supplied reviewed fallback-policy fixture | Literal remains RCC 106-22/19. Optional selected rules 106-24R1/106-20 are separately labelled INT-017 POLICY, not declarations or part of INT-012 approval; test the policy through its own binding/readiness gate | L3-CH10-007, L3-CH10-008 |
 | `version_metadata_sources_remain_distinct` | Packet data-type-version metadata differs from RCCVER; supplied TMATS G\106:24; with raw RCCVER 0E | Report supplied facts separately; no automatic disagreement finding, G\106 rewrite, fallback selection or time-channel inference | L3-CH10-008 |
 | `unknown_layout_knowledge_does_not_prove_bad_data` | Payload bytes present but requested layout interpretation unavailable | Raw payload and limitation retained; unavailable interpretation, not zero-padded/header-default answer or unsupported-era bytes called malformed by guess | L3-CH10-001 |
 
@@ -662,6 +664,37 @@ shared-type adapter, with real unknown-code coverage; none may compute its
 expected masks or version list by calling the decoder being tested. This
 slice does not verify packet checksums, filler removal or the historical
 layout mapping; those are not silently claimed by a green CSDW adapter test.
+
+## Family 2 batch 13: declaration and rules-basis acceptance specifications
+
+**Status: planned, not executable tests.** Sources: 106-24R1 Chapter 9 Table
+9-2 G\106, page 9-10; Chapter 11 Figure 11-34/Format 1 table pages 11-50–
+11-51, Format 4 Figure 11-43/table page 11-62 and packet-header Data Type
+Version section 11.2.1.1 e page 11-6; ADR-0028/0032. INT-012 is reconfirmed.
+INT-014/015/016/017 keep pending review; fixtures explicitly supply reviewed
+bindings/policy to isolate these contracts. INT-044 remains proposed and its
+branch cases require owner sign-off/AI check. No full edition-coverage claim.
+
+| Planned check | Fixture or stimulus | Expected observation | Requirement |
+| --- | --- | --- | --- |
+| `edition_observations_survive_selection` | One G\106 year, separate Format 1 code, packet-header version and caller override, with provenance | Preserve each raw source/identity and candidate reading separately from selected override; never rewrite declarations or share untagged code-space mapping | L3-EDN-001, L3-EDN-003 |
+| `one_year_candidates_are_not_scalar_duplicates` | One G\106:24; plus supplied reviewed INT-014 same-rules binding for 106-24/24R1 | Both candidate editions retained; shared-rules choice 24R1 labelled declared basis, not a fabricated directly declared revision or Ambiguous duplicate scalar | L3-EDN-001, L3-EDN-002, L3-EDN-004 |
+| `unreviewed_year_binding_is_not_missing_data` | Raw G\106 candidate but required year/blank/edition binding unavailable | Unavailable reason with original candidate, no guessed year, missing/unrecognised classification or automatic fallback from absent knowledge | L3-EDN-002, L3-EDN-007 |
+| `explicit_override_preserves_declarations` | Valid override with usable conflicting year/Format 1 code; separately unusable override | First selects override-labelled basis and retains source facts; unusable override reports blocked reason, no silent fallthrough or G\106 rewrite | L3-EDN-003 |
+| `declared_basis_precedes_rccver_without_conflict` | Supplied usable G\106 rule basis 106-24R1, Format 1 literal 0D = RCC 106-19, no override | Declared basis retained, no automatic disagreement finding, RCCVER literal unchanged; no inferred 106-20 fallback | L3-EDN-004 |
+| `fallback_policy_is_not_literal_rccver` | No override, G\106 missing or reviewed unrecognised, Format 1 0D then 0E; supplied reviewed INT-017 policy | Literal remains RCC 106-19/22; separate fallback rule edition is 106-20/24R1 with policy reason. These outputs do not extend INT-012 approval to INT-017 | L3-EDN-005 |
+| `non_format1_codes_do_not_supply_fallback` | Only Format 4 reserved 0D/0E or header Data Type Version 0A metadata, no eligible Format 1 declaration; missing G\106/no override | Do not reinterpret either code space as a Format 1 operand; reviewed baseline fallback, if available, stays labelled policy with missing-eligible-RCCVER reason | L3-EDN-005, L3-EDN-007 |
+| `baseline_fallback_stays_labelled` | Missing G\106 and no usable eligible Format 1 RCCVER, supplied baseline policy | Selected 106-24R1 fallback with reason, not a declared year/revision; effective defaults/findings retain that label | L3-EDN-005, L3-EDN-007 |
+| `ambiguous_g106_requires_override` | G\106:19;G\106:24; with usable Format 1 0E, no override | Proposed INT-044: Ambiguous declaration, automatic selection unavailable/cannot-evaluate with both candidates; no first/last winner or fallback via relabelled missing input | L3-EDN-001, L3-EDN-006 |
+| `identical_g106_duplicates_do_not_select` | G\106:24;G\106:24;, no override | Proposed INT-044 guard still applies: equal values remain scalar duplicates under INT-039, not one usable year/candidate set | L3-EDN-006 |
+| `override_keeps_ambiguous_declaration_evidence` | Either duplicate fixture with valid explicit override | Select override-labelled basis, keep every ambiguous raw candidate/duplicate finding; no implicit source repair or conversion to one declared item | L3-EDN-003, L3-EDN-006 |
+| `selected_basis_does_not_claim_rule_coverage` | Valid explicit selected edition whose requested reviewed definitions are unavailable | Keep selection/basis and coverage limitation distinct; no claim of validation or borrowing baseline definitions without a compatibility contract | L3-EDN-007 |
+| `separate_records_keep_separate_edition_evidence` | Two successive records with one G\106 each | Separate declaration/basis requests, not one duplicate set or propagated version byte; preserve document/revision and record provenance | L3-EDN-001, L3-EDN-006, L3-EDN-007 |
+
+Future tests must keep literal-code fixtures, declaration interpretations and
+fallback policy fixtures independent. A source table lookup passing cannot
+prove a fallback policy correct, and synthetic reviewed fixtures do not mark
+pending interpretations implemented or production coverage complete.
 
 ## Real Chapter 10 recordings (local use only)
 

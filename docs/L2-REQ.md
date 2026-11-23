@@ -1,6 +1,7 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through setup-payload batches drafted (family 2, batches 1-12).**
+> **Status: foundations through edition-basis batches drafted (family 2, batches 1-13).**
+> INT-012 is reconfirmed; INT-044 duplicate-declaration selection remains proposed.
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
 > Foundations derive the approved restructure/source store; framing and
@@ -567,9 +568,9 @@ new default is introduced. Requirements and acceptance cases remain planned.
 
 The concrete baseline below is 106-24R1 Chapter 11 Figure 11-34. Historical
 layout routing and the complete declaration/fallback contract remain separate
-batches. INT-012 already records the owner's literal-code decision, revised
-by ADR-0032, but its Review is still pending; this PR does not approve it or
-bypass the legacy ADR-0033 AI-check/development gates. See the
+batches. INT-012's literal Format 1 decision was reconfirmed by Joey, 2026-11-23,
+with AI concurrence on #34 head e352323 after seven-edition source review.
+Development analysis/tests and the other interpretations' review gates remain. See the
 [source and review note](research/2026-11-23-setup-payload-draft.md).
 
 #### L2-CH10-001
@@ -599,5 +600,36 @@ bypass the legacy ADR-0033 AI-check/development gates. See the
 **Statement**: A supported cited RCCVER reading SHALL preserve the wire byte and report the literal edition assigned by its table, reserved codes as unknown under that reading and any archive-reuse observation separately labelled; it SHALL NOT transform a literal version declaration into a newer edition, an unbounded future claim or a TMATS edition/fallback selection.
 
 **Rationale**: ADR-0032 and INT-012 distinguish table reading from archive observation and fallback policy. 106-24R1 Chapter 11 section 11.2.7.2 a, page 11-51, states 0x0E = RCC 106-22 and 0x0F–0xFF reserved. INT-016's historical not-declared handling and INT-017's fallback remain their own pending-review dependencies; this child does not silently select a historical layout or claim those reviews complete.
+
+**Verification Method**: Test (T)
+
+
+## Edition-basis batch 13: declarations, policy and selection uncertainty
+
+This derives L1-EDN-005's declaration separation and L1-EDN-002's labelled
+basis selection. INT-012 Format 1 literal reading is reconfirmed; INT-014/
+015/016/017 retain their existing decisions and pending review/development
+gates. INT-044 proposes the duplicate-G\106 branch and requires owner sign-off
+and an independent AI check; it is not implemented or implicitly approved.
+Historical-layout routing, full edition coverage/deltas and compatibility
+validation remain later derivations. No new supported-edition claim is made.
+
+#### L2-EDN-001
+
+**Parent**: L1-EDN-005
+
+**Statement**: Declaration reporting SHALL preserve G\106's raw occurrences, source locations and reviewed candidate-edition reading separately from each setup record's version declaration and its code-space/table basis; ambiguous or unavailable declaration evidence SHALL remain visible and SHALL NOT be replaced by an applied rules edition or a differently scoped version byte.
+
+**Rationale**: 106-24R1 Chapter 9 Table 9-2 RCC IRIG 106 REVISION LEVEL, page 9-10, names the generating edition; Chapter 11 section 11.2.7.2 a page 11-51 describes Format 1 recorded-data compliance. ADR-0028/0032 and L3-CH10-008 preserve these distinct meanings. INT-014/015/016 remain reviewed-rule dependencies rather than a license to infer older formats or silently parse arbitrary year strings.
+
+**Verification Method**: Test (T)
+
+#### L2-EDN-002
+
+**Parent**: L1-EDN-002
+
+**Statement**: Rules-basis selection SHALL apply a valid caller override, else a usable reviewed G\106 declaration, else the reviewed missing/unrecognised-declaration fallback policy using eligible Format 1 RCCVER and finally baseline 106-24R1; it SHALL retain the selected edition, basis, reason and supporting evidence without rewriting declarations, conflating code spaces or treating unavailable knowledge as a missing declaration.
+
+**Rationale**: ADR-0028/0032 provide the precedence and labelled fallback; INT-017 chooses 0x0E -> 106-24R1 and 0x0D -> 106-20 as POLICY, distinct from INT-012. Proposed INT-044 keeps Ambiguous G\106 outside the missing/unrecognised branch without an explicit override. Review and rule-coverage gaps stay visible; selecting a basis does not establish that its full validator exists or that the document conforms.
 
 **Verification Method**: Test (T)
