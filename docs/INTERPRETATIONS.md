@@ -1100,32 +1100,53 @@ basis. These edge notes were requested with the 2026-11-23 sign-off.
 **Title**: A reviewed is-specified predicate tests actual presence, not value usability
 
 **Sources**:
-- 106-24R1 Chapter 9 section 9.5.1 a, page 9-6, separately describes when an attribute may/must be specified, requires valid supplied information and describes defaults for absent attributes. It does not formally define recovery semantics for a presence condition whose named item is malformed or duplicated.
+- 106-24R1 Chapter 9 section 9.5.1 a, page 9-6, states: "If the attribute is specified in the TMATS file, it must contain valid information". This distinguishes physical specification from the separate validity obligation and is the textual basis for Option A; the section also describes defaults for absent attributes. It does not formally define recovery semantics for a presence condition whose named item is malformed or duplicated.
 - Table 9-3 TRANSMIT ANTENNA TYPE T-x\AN1, page 9-18: "Allowed when: T-x\ID is specified". This explicit indexed reference supplies a presence example without resolving an omitted index by guess.
 - Table 9-4 TIME FORMAT R-x\TFMT-n, page 9-72, compares R\CDT with TIMEIN; that needs a usable value, unlike the presence example. Its occurrence mapping requires its own reviewed binding.
-- L1-REG-004, ADR-0022/0023 and approved INT-035/037/039/041 require declared scope, retained actual items and visible uncertainty. This proposal clarifies that a known absence is evidence for a presence predicate, while a missing VALUE operand still blocks comparison.
+- L1-REG-004, ADR-0022/0023 and approved INT-035/036/037/038/039/040/041 require declared scope, retained actual items and visible uncertainty. This proposal clarifies that a known absence is evidence for a presence predicate, while a missing VALUE operand still blocks comparison.
 
 **Behaviour**: **Proposed; owner sign-off and independent AI check pending.**
 When a reviewed condition explicitly tests physical presence in an established
-scope, zero actual lookup matches means false; one or more means true, even
+scope, one or more actual lookup matches means true, even
 if their values are empty, Invalid or Ambiguous. Retain all candidates and
 independent findings. A default never makes an absent item physically
 specified. True presence does not make any value usable or select a duplicate.
+Zero exact matches means false only if no compatible related damaged evidence
+remains in that same document/setup record. With a related unterminated suffix
+or damaged name in the same declared literal family, it means cannot-evaluate.
+Thus `T-1\ID:a` at EOF and `T-1\ID\xFF:a;` both block false for T-1 ID
+presence; neither becomes a usable lookup item or proves presence. T-1\AN1
+must not receive a not-allowed verdict from that unknown condition.
+
+Use INT-040's diagnostic compatible-scope guard for readable canonical parent
+facts, including multiple-entry child scopes with damaged parents; unknown
+positions impose no restriction and wrong arity does not justify guessed
+alignment. The explicit ID-plus-high-byte case is related diagnostic damage,
+not an arbitrary printable-prefix match, name repair or value-text search.
+Incompatible parents/unrelated families do not block this predicate's false
+answer; keep their findings. One known exact match proves presence even if
+additional damaged evidence exists. INT-035 framing is unchanged.
+
+Exact matches use the INT-036/038 projection, case-insensitive name matching
+and canonical indices, retaining normalization information and original bytes.
+Other documents or separate setup records do not contribute evidence; one
+record assembled across packets is one document under INT-039/ADR-0025/0031.
+Is-not-specified complements true/false only; cannot-evaluate stays unknown.
 
 Value comparisons instead require usable Explicit or expressly permitted
 Defaulted operands. Missing, Invalid, Ambiguous, unavailable or disallowed-
 default operands give cannot-evaluate, including for inequality. Unknown
 lookup scope, blocked lookup or an unresolved/ambiguous required link target
 also gives cannot-evaluate; it is not proof that the target item is absent.
-Do not infer presence from an unterminated suffix or repair a code name.
+Do not infer true presence from an unterminated suffix or repair a code name.
 No general rule inferring reference scope from abbreviated prose, compound
 Boolean semantics or new default is approved by this proposal.
 
-**Reason**: Physical absence is an answer to a presence question but cannot supply a value for equality. Requiring a valid singular value for is-specified hides actual supplied fields, while treating every failed value comparison as false hides uncertainty. The recommended distinction keeps both facts visible; its cost is that presence can be true while the same field is invalid or ambiguous, so consumers must not mistake presence for validity. The alternative is cannot-evaluate for presence whenever the named field lacks a usable singular value; that is conservative but conflates presence with usability. Owner choice remains open.
+**Reason**: Physical absence is an answer to a presence question but cannot supply a value for equality. Requiring a valid singular value for is-specified hides actual supplied fields, while treating every failed value comparison as false hides uncertainty. The recommended distinction keeps both facts visible; its cost is that presence can be true while the same field is invalid or ambiguous, so consumers must not mistake presence for validity. The alternative is cannot-evaluate for presence whenever the named field lacks a usable singular value; that is conservative but conflates presence with usability. Related damaged evidence prevents a false absence verdict at the cost of additional cannot-evaluate outcomes until the input is fixed. Owner choice remains open.
 
-**Design**: proposed · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: pending · **Origin**: family 2 batch 8
+**Design**: proposed · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: CONCERNS on PR #28 at `07a21a3`, relayed by the owner 2026-11-23; amendment recheck pending · **Origin**: family 2 batch 8
 
-**Test**: `specified_absent_is_false`, `specified_invalid_and_duplicate_stays_true`, `presence_scope_unknown_is_not_absence`, `missing_value_does_not_make_inequality_true`, `default_does_not_make_item_specified` (planned, not yet written)
+**Test**: `specified_absent_is_false`, `specified_invalid_and_duplicate_stays_true`, `presence_scope_unknown_is_not_absence`, `missing_value_does_not_make_inequality_true`, `default_does_not_make_item_specified`, `unterminated_text_is_not_specified`, `damaged_name_blocks_false_presence`, `presence_uses_canonical_name_identity`, `damaged_child_parent_blocks_compatible_scopes`, `not_specified_preserves_unknown`, `other_document_does_not_supply_presence` (planned, not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 

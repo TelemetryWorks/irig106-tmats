@@ -439,8 +439,8 @@ only its reviewed applicable subset. See the
 
 **Parent**: L1-VAL-006
 
-**Statement**: Evaluating a reviewed condition SHALL produce true, false or cannot-evaluate with its rule, scope, operand evidence and edition basis; unavailable scope, link selection or required value operands SHALL produce cannot-evaluate with a separate pass-labelled finding, never a false-condition verdict, winner selection or silent default activation.
+**Statement**: Evaluating a reviewed condition SHALL produce true, false or cannot-evaluate with its rule, scope, operand evidence and edition basis; unavailable scope, link selection or required value operands, and zero exact presence matches with compatible related damaged evidence, SHALL produce cannot-evaluate with a separate pass-labelled finding, never a false-condition verdict, winner selection or silent default activation.
 
-**Rationale**: L1-REG-004 and ADR-0022 already forbid true/false for missing or invalid value operands; INT-039/041 extend the visible guard to ambiguity and unavailable interpretation. Proposed INT-042 permits a known absence to answer a reviewed physical-presence predicate because that predicate consumes presence, not a missing value. A condition result is not whole-document validity, and a true presence predicate does not certify its present values.
+**Rationale**: L1-REG-004 and ADR-0022 already forbid true/false for missing or invalid value operands; INT-039/041 extend the visible guard to ambiguity and unavailable interpretation. Section 9.5.1 a, page 9-6, states: "If the attribute is specified in the TMATS file, it must contain valid information". This separates physical specification from validity and supports proposed Option A. INT-042 permits proved absence to answer a reviewed physical-presence predicate, but zero exact matches alone cannot prove absence when related damaged evidence remains. A condition result is not whole-document validity, and a true presence predicate does not certify its present values.
 
 **Verification Method**: Test (T)

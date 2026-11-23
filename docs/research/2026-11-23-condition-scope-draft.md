@@ -80,3 +80,51 @@ extraction/freshness, link construction and full presence/profile rules.
 Do not import Appendix 9-E expression semantics by analogy or silently use
 Boolean short-circuiting to settle an unavailable required operand. No
 compound-expression truth table is selected by this bounded batch.
+
+
+## Review amendment — 2026-11-23
+
+The owner relayed independent AI **CONCERNS** on PR #28 head `07a21a3`:
+Option A is recommended with a narrower absence rule. This amendment
+supersedes the baseline's unconditional zero-match/known-absence wording and
+its general phrase damaged source ID: a bad VALUE with an exact name can
+prove presence; a damaged NAME cannot. INT-042 remains proposed; owner
+sign-off and independent recheck of the amended head are pending.
+
+Textual basis for Option A: 106-24R1 Chapter 9 section 9.5.1 a, page 9-6,
+under R/R Ch 10 Status, states:
+
+> If the attribute is specified in the TMATS file, it must contain valid information.
+
+The wording separates specification from its validity obligation. It supports
+physically-present semantics, without explicitly prescribing damaged-input
+recovery; the recovery guard below is still proposed interpretation.
+
+Amended Option A: actual matches prove presence, even with unusable values.
+Zero matches proves absence only without related damaged evidence in the
+same declared literal family and compatible scope. An unterminated suffix
+`T-1\ID:a` or damaged name `T-1\ID\xFF:a;` instead gives cannot-evaluate;
+a dependent T-1\AN1 cannot be judged not allowed from that unknown answer.
+Do not repair either input or promote it to a lookup item. INT-035 stays
+unchanged. Related damage alongside a known exact match does not erase that
+positive evidence.
+
+INT-040's readable-parent compatibility guard applies to multiple-entry
+children: unreadable parents do not exclude compatible scopes, and wrong
+arity cannot be guessed into alignment. Retain the literal family and all
+source evidence without searching values, accepting arbitrary printable
+prefixes or enumerating hypothetical parents. Unrelated families and proved
+incompatible parents do not block absence. The explicit trailing-high-byte
+ID example is diagnostic family evidence, not a repaired ID key.
+
+Matching uses projection/case folding and INT-038 canonical indices; raw
+spellings and normalization findings remain. Negated presence complements
+only true/false; unknown stays unknown. Separate documents/setup records do
+not contribute even when their raw names match. INT-039 assembly scope stays
+unchanged: one record spanning matching fragments remains one document.
+Planned fixtures cover each edge; they are not executable tests.
+
+Option B remains requiring a usable singular value even for presence, which
+conflates physical presence with usability. Recommendation remains amended
+A; its practical cost is more cannot-evaluate outcomes when damage prevents
+proof of absence. No owner approval or amended-head concurrence is claimed.

@@ -727,7 +727,8 @@ Unindexed prose cannot become a wildcard or mean occurrence 1 automatically.
 
 Proposed INT-042 supplies the distinction. A terminated empty value remains
 present under INT-035; an unterminated suffix is not an explicit item for
-lookups. An encoding-blocked semantic lookup cannot prove absence (INT-037).
+lookups, but related suffix evidence can block a false presence answer. An
+encoding-blocked semantic lookup cannot prove absence (INT-037).
 Known physical absence is usable presence evidence, not a missing VALUE
 operand; equality/inequality still need a usable interpreted value.
 This does not reinterpret every occurrence of the English word specified
@@ -743,13 +744,38 @@ resolution nor infers a data-channel/time-channel association. Document-wide
 and linked scopes must not silently degrade to same-occurrence lookup.
 
 **L3-VAL-008** · Parent: L2-VAL-003 · Verification: T
-*For a reviewed physical-presence predicate in an established lookup scope, zero actual matches SHALL mean false and one or more SHALL mean true, retaining every occurrence and its independent findings; empty, Invalid or Ambiguous values SHALL NOT make those actual matches absent, and a default alone SHALL NOT establish physical presence.*
+*For a reviewed physical-presence predicate in an established lookup scope, one or more actual matches SHALL mean true, zero matches without compatible related damaged evidence SHALL mean false, and zero matches with such evidence SHALL mean cannot-evaluate, retaining every occurrence and its independent findings; empty, Invalid or Ambiguous values SHALL NOT make those actual matches absent, and a default alone SHALL NOT establish physical presence.*
 
 This is proposed INT-042, not a new value-resolution precedence. Duplicate
 scalar items remain Ambiguous under INT-039 even though their physical
 presence is established. Presence true is not permission to use either value,
 claim local validity or suppress duplicate, invalidity or applicability findings.
-A blocked lookup or unframed code-like suffix cannot establish this predicate.
+A blocked lookup cannot establish presence or absence. A related unterminated
+suffix remains outside lookup under INT-035 but blocks false: `T-1\ID:a`
+at EOF gives cannot-evaluate, so a dependent T-1\AN1 is not judged not allowed.
+Likewise `T-1\ID\xFF:a;` is related damaged-name evidence, not an exact match.
+Retain its raw bytes and finding; do not remove the high byte to manufacture
+an item. A known exact match still proves presence alongside related damage.
+
+Use the declared literal family and index positions for diagnostic relevance,
+with INT-040's compatible-scope guard: a scope is compatible when no readable
+canonical parent fact contradicts it; unknown positions impose no restriction and
+wrong arity must not be guessed into an alignment. In the explicit damaged
+ID example, the retained literal ID plus undecodable trailing byte is related
+family evidence, not permission to accept arbitrary printable prefixes such
+as ID2. Do not search inside values or repair names. Unrelated literal families
+and demonstrably incompatible parents do not block false for this predicate;
+retain their independent findings. Do not enumerate hypothetical parents.
+
+Match exact items through INT-036/038 projection, ASCII case folding and
+canonical numeric identities; keep normalization findings and raw spellings.
+All evidence belongs to the same document/setup record under INT-039 and
+ADR-0025/0031 assembly; other records/documents never count or block absence.
+One assembled setup record may span packets without becoming several scopes.
+
+For a reviewed is-not-specified predicate, complement only true and false;
+cannot-evaluate remains cannot-evaluate. This narrow negated-presence rule
+selects no general compound-condition grammar or Boolean precedence.
 
 **L3-VAL-009** · Parent: L2-VAL-003 · Verification: T
 *A predicate requiring a value SHALL consume only a usable Explicit operand or a Defaulted operand permitted by its declared policy; Missing, Invalid, Ambiguous or unavailable operands and disallowed defaults SHALL yield cannot-evaluate with their reasons/evidence, never a guessed comparison result.*
