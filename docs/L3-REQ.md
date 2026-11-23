@@ -1,8 +1,8 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through counter batches drafted (family 2, batches 1-6).**
+> **Status: foundations through effective-value batches drafted (family 2, batches 1-7).**
 > These are implementation obligations, not existing interfaces or completed
-> tests. INT-035/036/037/038/039/040 are approved; INT-040 sign-off is dated 2026-11-22.
+> tests. INT-035/036/037/038/039/040 are approved; INT-041 is proposed, 2026-11-23.
 > Remaining derivations and development evidence still precede implementation.
 
 ## Purpose
@@ -465,7 +465,8 @@ outcome, not authority to invent a default or prove a link unresolved.
 This approved INT-039 multiplicity gate precedes value-based candidate
 selection. Preserve each candidate's invalid findings; ambiguity must not
 hide the bad input or present one candidate as the chosen explicit value.
-The zero/one-candidate five-state resolver is not fully derived here.
+Batch 7 below derives the zero/one-candidate core; complete condition/type
+interpretations and executable verification are still outstanding.
 
 **L3-VIEW-004** · Parent: L2-VIEW-002 · Verification: T
 *Ambiguous scalar resolution SHALL NOT substitute a default, infer an absent value, coalesce equal candidates or become explicit after reordering input or changing diagnostic severity; raw output SHALL continue to reproduce every retained byte.*
@@ -600,3 +601,82 @@ those values are unique. This batch neither implements nor waives that rule.
 ADR-0002 and L1-WRT-002 separate explicit normalization from validation.
 Approved INT-038/039 findings remain visible even when distinct cardinality
 matches N. Repair/edit APIs and their effect on counters are later work.
+
+
+## Effective-value batch 7: supported-field states and unavailable reads
+
+These are planned obligations, not implemented APIs or a complete registry.
+Existing character, ambiguity and uncertainty rules stay approved unchanged.
+INT-041 is proposed under ADR-0033; no sixth field-value state or concrete
+Rust result representation is selected by this batch.
+
+**L3-REG-003** · Parent: L2-REG-002 · Verification: T
+*Each effective-field/default rule SHALL bind its original source text, reviewed interpretation and exact edition/section/table/row citation, including whether a default comes from the Default field or definition prose and the occurrence scope/applicability on which it depends.*
+
+ADR-0022 supplies the two-layer contract. The existing source-review/freshness
+gates remain prerequisites; merely storing a string called default is not
+review evidence. Full registry extraction and edition deltas remain later.
+
+**L3-REG-004** · Parent: L2-REG-002 · Verification: T
+*The resolver SHALL distinguish a reviewed rule stating that no default exists from a missing/unreviewed rule, and SHALL NOT borrow a baseline default for an unsupported edition or apply another occurrence's condition without a declared scope.*
+
+Source: 106-24R1 section 9.5.1 a, page 9-6; ADR-0022/0028. A supplied
+identified fallback basis stays labelled fallback, never a forged declaration.
+This batch consumes edition selection; it does not choose its algorithm.
+
+**L3-VIEW-005** · Parent: L2-VIEW-003 · Verification: T
+*Effective-field results SHALL retain the document/revision, complete field scope and supplied interpretation basis or its unavailability reason; known scalar multiplicity SHALL preserve INT-039 Ambiguous before attempting to choose among candidates by their value validity or default availability.*
+
+Every candidate remains available with its own findings. A known Ambiguous
+result does not need a successful value conversion to prove multiplicity.
+No scopes, successive records or interpretations from different editions
+are silently combined to obtain a convenient answer.
+
+**L3-VIEW-006** · Parent: L2-VIEW-003 · Verification: T
+*One actual candidate whose reviewed local character/type/range interpretation succeeds SHALL yield Explicit with the interpreted value, original raw value and source location/correspondence, without silently changing its spelling or representing that value as defaulted.*
+
+Explicit means a usable given value under those local rules, not that every
+Allowed/Required condition, cross-field rule, packet or document is valid.
+Independent findings remain visible. Conditional constraints needed to decide
+local validity must themselves be evaluable; otherwise INT-041 applies.
+
+**L3-VIEW-007** · Parent: L2-VIEW-003 · Verification: T
+*One candidate with a demonstrated character/type/range failure SHALL yield Invalid with original raw evidence and the reason; zero-length or control-only projected content SHALL remain a present candidate and SHALL NOT trigger an absence default.*
+
+Whether an empty projected value is valid depends on the reviewed definition;
+this is not a blanket empty-text rejection. INT-037 high bytes stay Invalid.
+A legitimate zero or false-like value is not absence. INT-036 omission/NUL
+information is not itself an automatic invalidity verdict for every field.
+
+**L3-VIEW-008** · Parent: L2-VIEW-004 · Verification: T
+*With no actual candidate, a verified default whose reviewed applicability is established under an identified edition basis SHALL yield Defaulted with the interpreted value, exact source citation, Default-field/prose origin and applicability evidence, without an original input value span.*
+
+For baseline TIMEIN, 106-24R1 Table 9-4 TIME FORMAT R-x\TFMT-n, page 9-72,
+prints Default A. An explicit A and a defaulted A are different states with
+different evidence. This contract does not infer TIMEIN, an edition or a
+clock association merely to activate that default.
+
+**L3-VIEW-009** · Parent: L2-VIEW-004 · Verification: T
+*With no candidate for an otherwise supported field and no verified applicable default, the result SHALL be Missing with the absence reason, distinguishing no declared default, false applicability and unestablished default applicability/basis; it SHALL NOT invent a value or report unestablished applicability as confirmed false.*
+
+This follows RELEASE-0.1.md's missing/indeterminate-reason contract. A present
+bad value or duplicate group never enters this absence branch. Carry condition
+cannot-evaluate findings alongside this Missing result, not just a false flag. Missing a reviewed field binding itself is the
+separate INT-041 unavailable-read case.
+
+**L3-VIEW-010** · Parent: L2-VIEW-004 · Verification: T
+*Effective reads SHALL leave source bytes, item count/order and earlier findings unchanged; a Defaulted value SHALL NOT satisfy a separate physical-presence obligation or overwrite cross-field/packet evidence.*
+
+Section 9.5.1 a, page 9-6, notes required recorder attributes can still be
+required physically even with a default. RELEASE-0.1.md requires missing
+TFMT at TIMEIN/TTF=2 to stay Defaulted A with the cited inconsistency finding;
+never silently substitute another format or override recorded packet facts.
+Time-view/packet implementation and complete presence validation remain later.
+
+**L3-VIEW-011** · Parent: L2-VIEW-003 · Verification: T
+*When a read would require an unavailable reviewed definition, unsupported interpretation basis or unresolved evidence needed to decide local validity, it SHALL report unavailable/cannot-evaluate with the blocking reason and retained raw candidates rather than fabricate Explicit, Defaulted, Missing or a proved Invalid-data verdict.*
+
+This is proposed INT-041, a guard on attempting a supported-field read, not a
+new semantic field-value state. Preserve any already established INT-039 Ambiguous outcome or demonstrated
+Invalid failure; lack of another rule must not erase known evidence. INT-037 marker blocking likewise is not evidence of an
+absent key; raw access stays available. No public enum shape is fixed here.

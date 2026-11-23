@@ -385,6 +385,50 @@ for absent members; its counter/scope is evidence for the inferred interval.
 No fixture here completes registry review, applicability/default evaluation,
 link validation, the four-pass validator or broader release evidence.
 
+## Family 2 batch 7: effective-value acceptance specifications
+
+**Status: planned, not executable tests.** INT-041 needs owner sign-off and
+independent AI review under ADR-0033. Fixtures explicitly supply reviewed
+field/scalar/type/default bindings, known scopes and edition basis except
+where unavailable knowledge is the stimulus. These are not evidence of a
+completed production registry, condition evaluator or channel/time API.
+
+Sources: 106-24R1 Chapter 9 section 9.5.1 a page 9-6; Table 9-4 TIME FORMAT
+page 9-72; Table 9-11 NUMBER OF OCCURRENCES page 9-167; Table 9-2 PROGRAM
+NAME page 9-10; ADR-0022/0023/0028 and RELEASE-0.1.md's approved default
+contract. See the [baseline draft](research/2026-11-23-effective-value-draft.md).
+Escapes denote fixture bytes; short records are not full conforming files.
+
+| Planned check | Fixture or stimulus | Expected observation | Requirement |
+| --- | --- | --- | --- |
+| `default_source_and_review_are_separate` | Cited TIME FORMAT row versus an unreviewed extracted row containing text Default A | Keep source/provenance for both; only a reviewed binding can authorize a default; source extraction alone is not executable permission | L3-REG-003, L3-REG-004 |
+| `default_field_and_prose_origins_remain_distinct` | TIME FORMAT Default A and NUMBER OF OCCURRENCES prose default 1, with applicable reviewed fixture rules | Metadata and any Defaulted result cite the correct edition/table/row and field/prose origin; no regex scan through arbitrary comments establishes a default | L3-REG-003, L3-VIEW-008 |
+| `explicit_a_differs_from_defaulted_a` | `R-1\TFMT-3:A;` versus no TFMT-3, with baseline TIMEIN/default applicability and edition basis established | Explicit A has original value span `[11, 12)`; absent-field result is Defaulted A with Table 9-4 p. 9-72 origin/applicability/basis and no input value span; each emits its original bytes unchanged | L3-VIEW-005, L3-VIEW-006, L3-VIEW-008, L3-VIEW-010 |
+| `bad_present_enum_does_not_default` | `R-1\TFMT-3:Z;` with the cited baseline enum rule | Invalid with original raw Z and reason, never Defaulted A | L3-VIEW-007 |
+| `present_empty_is_not_absent` | `R-1\TFMT-3:;` and `R-1\TFMT-3:\x00;` | Both present; empty enumeration projection is Invalid under that rule, never absence/default; NUL case retains its information finding and raw byte | L3-VIEW-007 |
+| `valid_empty_text_is_not_blanket_invalid` | Synthetic reviewed text rule explicitly allowing empty text, one present zero-length value | Explicit empty with its original zero-length span, not Missing or automatically Invalid; this test rule is not a new Chapter 9 default | L3-VIEW-006, L3-VIEW-007 |
+| `zero_enumeration_is_not_absence` | `R-1\TFMT-3:0;` with baseline TIMEIN and the cited enum rule | Explicit enum 0 with raw provenance; no truthiness-based absence/default, no whole-record coherence claim | L3-VIEW-006, L3-VIEW-007 |
+| `reviewed_no_default_yields_missing` | G\PN absent, binding reviewed as no default in Table 9-2 p. 9-10 | Missing with actual absence/no-default reason, no invented name or source location | L3-REG-004, L3-VIEW-009 |
+| `unknown_default_condition_is_not_false` | Supported absent TFMT; default condition evaluates true, false or cannot-evaluate in separate stimuli | True with identified basis allows Defaulted; false and unknown give Missing with different reasons; preserve the unknown condition's cannot-evaluate finding, never call it false or use it to invent A | L3-VIEW-008, L3-VIEW-009 |
+| `unestablished_default_basis_is_not_invented` | Supported absent field/default binding but no identified edition basis for applying it | Missing with the missing/indeterminate default-basis reason under RELEASE-0.1.md; no forged edition or default | L3-REG-004, L3-VIEW-009 |
+| `unsupported_basis_does_not_borrow_default` | Requested edition has no supported reviewed field interpretation | Unavailable/cannot-evaluate read, raw access retained; do not borrow baseline A or claim data Invalid/field Missing merely from missing knowledge | L3-REG-004, L3-VIEW-011 |
+| `unavailable_definition_is_not_data_invalidity` | Raw candidates present or absent, but no reviewed requested field binding | Unavailable reason with raw evidence, not a fabricated five-state answer or assertion that unknown data is malformed | L3-VIEW-011 |
+| `unknown_validity_operand_blocks_explicit` | One type-parseable candidate whose reviewed range needs an unavailable operand, with no demonstrated failure | Cannot-evaluate read with operand reason and raw candidate, not guessed Explicit or Invalid | L3-VIEW-006, L3-VIEW-011 |
+| `known_multiplicity_survives_unavailable_value_rule` | Reviewed scalar cardinality, two candidates, value-rule dependency unavailable | Ambiguous with both candidates under INT-039; no default or valid-only selection, no erasure of proved multiplicity | L3-VIEW-005, L3-VIEW-011 |
+| `known_failure_survives_other_unavailable_rule` | One high-byte value already Invalid under INT-037, plus another unavailable local constraint | Keep the proved Invalid raw failure and dependency reason; do not erase it as mere unknown knowledge | L3-VIEW-007, L3-VIEW-011 |
+| `fallback_basis_stays_labelled` | Applicable baseline default under a supplied identified fallback edition basis | Defaulted carries fallback and its reason/citation; neither G\106 nor RCCVER is rewritten or conflated | L3-REG-004, L3-VIEW-005, L3-VIEW-008 |
+| `defaults_do_not_satisfy_physical_presence` | Baseline TIMEIN, absent TFMT, applicable R-status rule and verified A default | Defaulted A remains distinguishable from physically present; default does not suppress the separate missing-required-field obligation | L3-VIEW-010 |
+| `network_time_inconsistency_does_not_rewrite_default` | Baseline TIMEIN, explicit TTF=2, TFMT absent with verified default applicability | Defaulted A plus the approved inconsistency finding/evidence boundary; no substitute format, clock association or packet override | L3-VIEW-008, L3-VIEW-010 |
+| `default_scope_is_not_a_neighbour` | TIMEIN/default condition established only for another occurrence/channel | Do not borrow that condition to default this field; return this scope's actual Missing/unavailable reason, with no guessed parent | L3-REG-003, L3-REG-004, L3-VIEW-009 |
+| `read_availability_is_not_marker_absence` | INT-037 leading marker blocks interpreted lookup | Retain marker block/raw bytes; never turn blocked lookup into zero candidates followed by Missing or Defaulted | L3-VIEW-011 |
+
+Planned generated checks vary zero/one/many candidates, raw spelling and
+zero-length projections with independent expected states and byte locations.
+State reporting must not mutate source or absorb separate findings. Required
+fields, cross-field consistency, general Allowed/Required conditions and
+packet checks still need their own reviewed implementations; these scenarios
+do not claim those validators exist or complete the parent requirements.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample
