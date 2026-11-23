@@ -58,7 +58,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-CH10-001 | L2-CH10-001 | _(none)_ | Draft |
 | L1-CH10-002 | L2-CH10-002 | _(none)_ | Draft |
 | L1-CH10-003 | _(none)_ | _(none)_ | Draft |
-| L1-CH10-004 | _(none)_ | _(none)_ | Draft |
+| L1-CH10-004 | L2-CH10-004, L2-CH10-005 | _(none)_ | Draft |
 | L1-CH10-005 | _(none)_ | _(none)_ | Draft |
 | L1-CH10-006 | L2-CH10-003 | _(none)_ | Draft |
 | L1-CH10-007 | _(none)_ | _(none)_ | Draft |
@@ -71,6 +71,8 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-CH10-001 | L3-CH10-001, L3-CH10-002 | _(TBD)_ | Draft |
 | L2-CH10-002 | L3-CH10-003, L3-CH10-004, L3-CH10-005, L3-CH10-006 | _(TBD)_ | Draft |
 | L2-CH10-003 | L3-CH10-007, L3-CH10-008 | _(TBD)_ | Draft |
+| L2-CH10-004 | L3-CH10-009, L3-CH10-010, L3-CH10-011, L3-CH10-012, L3-CH10-016 | _(TBD)_ | Draft |
+| L2-CH10-005 | L3-CH10-013, L3-CH10-014, L3-CH10-015 | _(TBD)_ | Draft |
 
 ### L1-EDN: IRIG 106 editions
 
@@ -318,7 +320,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | Category | L1 | L2 | L3 | L2 tested | L3 tested | L2 verified | L3 verified |
 |----------|----|----|----|-----------|-----------|-------------|-------------|
 | READ | 7 | 13 | 33 | 0 | 0 | 0 | 0 |
-| CH10 | 8 | 3 | 8 | 0 | 0 | 0 | 0 |
+| CH10 | 8 | 5 | 16 | 0 | 0 | 0 | 0 |
 | EDN | 6 | 2 | 7 | 0 | 0 | 0 | 0 |
 | REG | 8 | 6 | 13 | 0 | 0 | 0 | 0 |
 | VIEW | 9 | 4 | 11 | 0 | 0 | 0 | 0 |
@@ -332,13 +334,13 @@ This matrix is the single source of truth for live status; the requirement docum
 | ROB | 3 | 2 | 3 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **42** | **105** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **44** | **113** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 54 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 53 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 201 (0.0%).
+**Tested by at least one test marker**: 0 of 210 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 201 (1.5%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 210 (1.4%).
 
 ### Orphan check
 
@@ -394,7 +396,7 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-041 | Unavailable interpretation is not proof of missing or invalid field data | approved (Joey, owner sign-off, 2026-11-23) | not yet written | _(none)_ |
 | INT-042 | A reviewed is-specified predicate tests actual presence, not value usability | approved (Joey, owner sign-off, 2026-11-23) | not yet written | _(none)_ |
 | INT-043 | Leading-zero algorithm 2 designators are accepted with a warning | approved (Joey, Option B, 2026-11-23) | not yet written | _(none)_ |
-| INT-044 | Duplicate G\106 retains ambiguity with an explicitly labelled fallback basis | owner decision recorded, AI recheck of the amended wording pending | not yet written | _(none)_ |
+| INT-044 | Duplicate G\106 retains ambiguity with an explicitly labelled fallback basis | approved (Joey, Option B, 2026-11-23) | not yet written | _(none)_ |
 
 * Entries without a written analysis: **44** of 44
 * Entries without a test: **44** of 44

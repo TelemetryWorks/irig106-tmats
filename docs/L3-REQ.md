@@ -1,7 +1,7 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through edition-basis batches drafted (family 2, batches 1-13).**
-> INT-012 is reconfirmed; INT-044 Option B is owner-decided; amended wording awaits independent AI recheck.
+> **Status: foundations through assembly-contract batches drafted (family 2, batches 1-14).**
+> INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
 > These are implementation obligations, not existing interfaces or completed
@@ -1185,7 +1185,8 @@ not literal decoding, and require their own review/evidence before execution.
 
 ## Edition-basis batch 13: evidence before precedence
 
-Planned obligations. INT-044 Option B is owner-decided, AI recheck pending;
+Planned obligations. INT-044 Option B is approved (Joey, 2026-11-23;
+AI CONCURS on #36 at 6f6e080);
 existing INT-014/015/016/017 review statuses are unchanged. Tests below supply reviewed fixture bindings where
 necessary; they are not production-registry or cross-edition analysis evidence.
 
@@ -1240,8 +1241,9 @@ Identical-value agreement is information only, not a declared basis. A valid
 override takes precedence while preserving ambiguity. Separate records or
 documents do not form duplicates. A single high-byte/blank value remains
 subject to INT-037/041, not this branch. One year with several candidate
-editions remains INT-014's separate case. AI recheck of the amended wording
-is pending; this does not clear any implementation gate.
+editions remains INT-014's separate case. INT-044's review gate is complete;
+analysis, source freshness and executable tests remain outstanding. Mixed recognised/unrecognised duplicates
+retain ambiguity first: `G\106:zz;G\106:24;` has n=2 and this reason.
 
 **L3-EDN-007** · Parent: L2-EDN-002 · Verification: T
 *Every selection result or blocked selection SHALL carry its document/record scope, relevant caller/declaration/policy evidence, applied edition if selected, basis label and precise reason; a selected edition without available reviewed rule coverage SHALL remain a coverage limitation, never a false claim of validation or a silently substituted supported edition.*
@@ -1249,6 +1251,92 @@ is pending; this does not clear any implementation gate.
 Defaulted views and validation findings keep the basis/fallback label under
 ADR-0023/0028 and INT-041, including INT-044's explicit ambiguity reason.
 CLI text and JSON SHALL make that fallback basis/reason at least as prominent
-as a cannot-evaluate result. Edition selection changes no source bytes and
+as a cannot-evaluate result. JSON SHALL use stable machine code
+`ambiguous_g106` with numeric `candidates`, separate from its display label
+and counting occurrences as L3-EDN-006 specifies. Edition selection changes no source bytes and
 clears no other findings. Full out-of-range compatibility-check selection
 under L1-EDN-006 is a later derivation, not an implied fallback here.
+
+## Assembly-contract batch 14: candidate runs and exact source mapping
+
+Planned, not implemented. INT-011's independent AI review remains pending;
+INT-034's precise completeness rules remain proposed under ADR-0031/0033.
+These children describe the joining/provenance stage only. They do not settle
+complete/incomplete/ambiguous classification, adjacent-record splits, SRCC
+aggregation, configuration-event identity or a configuration timeline.
+
+**L3-CH10-009** · Parent: L2-CH10-004 · Verification: T
+*Assembly input SHALL retain caller-supplied recording order and evidence of packet adjacency, data type, channel, sequence, raw CSDW and fragment text bounds; absent adjacency evidence SHALL NOT be interpreted as proof that two setup fragments were consecutive packets.*
+
+INT-011 joins consecutive packets, not merely consecutive entries in a list
+filtered to data type 0x01. The caller may supply intervening-packet evidence
+or explicit adjacency metadata; this does not freeze a Rust API. Missing
+input evidence stays unavailable rather than being manufactured from file
+offset proximity or equal timestamps. Packet slicing remains outside the
+library (ADR-0010/0025); L3-CH10-001/002 supply its bounded body interface.
+
+**L3-CH10-010** · Parent: L2-CH10-004 · Verification: T
+*Under an available reviewed INT-011 binding, two adjacent fragments SHALL join only when both have data type 0x01, the same channel, sequence numbers differing by +1 modulo 256, and matching decoded FRMT and RCCVER; the assembler SHALL record the source evidence for those predicates without replacing either raw CSDW.*
+
+Source: Chapter 11 section 11.2.7.2 and section 11.2.1.1 f (106-24R1),
+ADR-0025 and INT-011. Sequence 255 then 0 satisfies +1; 255 then 1 does not.
+This tests wire-code agreement, not equivalent fallback rule editions.
+SRCC is not an added joining predicate; preserve each SRCC reading and leave
+its disagreement/summary interpretation visibly unresolved for later review.
+
+**L3-CH10-011** · Parent: L2-CH10-004 · Verification: T
+*An intervening packet, channel change, sequence discontinuity, FRMT/RCCVER change or end of supplied input SHALL stop joining with the actual boundary evidence retained; none of those stop reasons alone SHALL be reported as a complete record, a proven missing fragment or a chosen adjacent-record split.*
+
+ADR-0031 supersedes ADR-0025's ending rule, not its joining prerequisites.
+A run ending at EOF still needs the separately reviewed completeness rule;
+sequence gaps can mean loss or separate records. Keep unreadable/untrusted
+fragment evidence rather than silently joining around it. This child selects
+no recovery policy or complete/incomplete/ambiguous result for that evidence.
+
+**L3-CH10-012** · Parent: L2-CH10-004 · Verification: T
+*The candidate text SHALL be the exact concatenation, in recording order, of each joined fragment's supplied text slice after its own CSDW; no CSDW, header, filler, packet checksum or separator SHALL be inserted into that text, and no code name, value or encoding marker SHALL be interpreted separately merely because it crosses a fragment boundary.*
+
+Chapter 11 Figure 11-34/section 11.2.7.2 page 11-50 and ADR-0025 establish
+per-packet CSDWs followed by fragment text. Boundaries do not add a newline,
+colon or semicolon. Once completeness is established by its own reviewed
+contract, scanner/INT-035 framing, INT-037 offset-zero marker recognition and
+checksum exclusion rules use assembled text coordinates, not packet-local
+coordinates. This authorizes no parse/checksum of a run as if proven complete.
+
+**L3-CH10-013** · Parent: L2-CH10-005 · Verification: T
+*Every assembled text byte SHALL map to exactly its original packet and byte offset, retaining the corresponding recording/file identity and fragment identity; the mapping SHALL cover the concatenated text without gaps or fabricated bytes and SHALL preserve all supplied fragment metadata independently of any record-level summary.*
+
+ADR-0025 requires offset provenance; ADR-0003 retains original source bytes.
+Packet-relative text starts include that fragment's own four-byte CSDW.
+The mapping uses supplied packet/body bounds, not a guessed fixed header
+length, since optional secondary headers alter offsets (ADR-0025). Empty
+text contributes no byte interval but does not discard fragment metadata.
+
+**L3-CH10-014** · Parent: L2-CH10-005 · Verification: T
+*A requested half-open assembled-text range SHALL map to its ordered source subranges, splitting only at fragment boundaries and retaining every contributing byte; an invalid/out-of-bounds range SHALL report its invalid request rather than clamp, wrap or identify unrelated packet bytes.*
+
+This is an offset-mapping contract, not text normalization. A boundary offset
+belongs to the following nonempty interval for byte lookup; the end offset
+of the whole body is not a byte. Range [k,k) contains no source bytes. No
+numeric width or public Rust type is frozen here. Arithmetic must respect
+L1-ROB-001; resource-policy thresholds remain a separate bounded design.
+
+**L3-CH10-015** · Parent: L2-CH10-005 · Verification: T
+*Located scanner/value findings over an assembled span SHALL retain that assembled span and all contributing packet subranges, without selecting only the first or last fragment; missing/defaulted values without input spans SHALL NOT acquire invented packet locations.*
+
+ADR-0025's provenance map serves L1-READ-003 diagnostics; effective-field
+provenance follows INT-041. A field split in a code name, value or terminator
+is still located in the one assembled text. Raw byte spans, not interpreted
+character counts, determine the subranges after INT-036 control projection.
+This does not change finding severity or authorize scanning incomplete data
+as a usable document.
+
+**L3-CH10-016** · Parent: L2-CH10-004 · Verification: T
+*The joining report SHALL retain candidate-run identity, fragment membership, stop reasons and the status of its joining interpretation separately from later completeness, declaration and checksum results; successful concatenation SHALL NOT claim a usable document, authoritative digest, governing configuration or interpretation approval.*
+
+INT-011 needs its pending independent check before implementation. INT-034
+requires its own owner sign-off and independent check for the precise rules;
+INT-039 duplicate classification applies to a document only after assembly
+scope is established. Cross-fragment duplicate evidence must not silently
+select a split or a scalar winner. These dependencies remain visible even
+when fixture-provided reviewed bindings make individual joining tests pass.

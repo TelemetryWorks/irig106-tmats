@@ -14,7 +14,9 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
-| [2026-11-23-int044-owner-decision.md](2026-11-23-int044-owner-decision.md) | Joey's Option B labelled fallback decision, five conditions and rejected Option A; amended wording awaits AI recheck |
+| [2026-11-23-assembly-contracts-draft.md](2026-11-23-assembly-contracts-draft.md) | Batch 14 candidate joining/provenance, exact mapping oracle and pending INT-011/034 gates |
+| [2026-11-23-int044-owner-signoff.md](2026-11-23-int044-owner-signoff.md) | INT-044 Option B approval, #36 AI concurrence, mixed duplicates and structured JSON reason |
+| [2026-11-23-int044-owner-decision.md](2026-11-23-int044-owner-decision.md) | Joey's Option B labelled fallback decision, five conditions and rejected Option A; AI-recheck status superseded by the INT-044 approval record |
 | [2026-11-23-edition-basis-draft.md](2026-11-23-edition-basis-draft.md) | Batch 13 declaration/basis separation, three code spaces, fallback-policy dependencies and original proposed INT-044 ambiguity guard (Option A superseded by the Option B owner decision) |
 | [2026-11-23-int012-owner-signoff.md](2026-11-23-int012-owner-signoff.md) | Joey's INT-012 reconfirmation, exact #34 AI concurrence and Format 1-only/code-space/policy notes |
 | [2026-11-23-setup-payload-draft.md](2026-11-23-setup-payload-draft.md) | Batch 12 Format 1 payload/CSDW source review, independent byte constants and INT-012 review summary (pending-review status superseded by the INT-012 reconfirmation record) |

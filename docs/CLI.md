@@ -64,11 +64,13 @@ a command computes, the library can compute for other callers.
   recording-format version (CSDW, raw and read), and — for `validate` — the
   edition whose rules were applied with its basis (override, declared, or
   fallback). `--edition` is the override. A compatibility check is labelled
-  as one (ADR-0028). Owner-decided INT-044 Option B (AI recheck pending)
+  as one (ADR-0028). Approved INT-044 Option B (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080)
   keeps duplicate `G\106` Ambiguous and uses the separate label
   `fallback — reason: ambiguous G\106 (n candidates)` without an override.
   Text and JSON make this basis/reason at least as prominent as cannot-evaluate;
-  every occurrence and duplicate finding remains visible.
+  every occurrence and duplicate finding remains visible. JSON carries stable
+  machine code `ambiguous_g106` and numeric `candidates` separately from the
+  display label. Mixed recognised/unrecognised duplicates use this reason too.
 - **Both versions in every report.** `tmats --version` prints
   `tmats X.Y.Z (irig106-tmats X.Y.Z)`; JSON output carries both.
 - **Every reference-tool defect is a regression test** (D1–D7,
