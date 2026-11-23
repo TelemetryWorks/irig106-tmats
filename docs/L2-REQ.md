@@ -1,9 +1,14 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations, framing and character batch drafted (family 2, batches 1-3).**
+> **Status: foundations through completeness-contract batches drafted (family 2, batches 1-15).**
+> INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
+> INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
+> INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
 > Foundations derive the approved restructure/source store; framing and
-> recovery use owner-approved INT-035. Character policies INT-036/037 are
-> proposed and require owner sign-off; code-name grammar, CLI and later areas follow;
+> recovery use owner-approved INT-035. Character policies INT-036/037 were
+> approved by Joey, 2026-11-22, under ADR-0033. Name structure follows here;
+> INT-038/039/040 were approved by Joey, 2026-11-22; INT-041 was approved
+> by Joey, 2026-11-23; remaining registry/conditions, views, CLI and later areas follow;
 > a parent with children here is not necessarily fully decomposed yet.
 
 ## Purpose
@@ -195,10 +200,12 @@ and suspect-semicolon suggestions remain separate obligations.
 
 ## Character batch 3: interpreted bytes and source identity
 
-INT-036 and INT-037 are proposals under ADR-0033. They do not amend the
-owner-approved INT-035 framing/run policy or authorize implementation before
-review, owner sign-off, required analysis and tests. Full code-name grammar,
-indices, duplicate classification and known-code validation remain next work.
+INT-036 and INT-037 were approved by Joey, 2026-11-22, under ADR-0033,
+with the independent AI recheck concurring on PR #16 head `891f77f` (see the
+[sign-off record](research/2026-11-22-int036-int037-owner-signoff.md)). They do
+not amend the approved INT-035 framing/run policy or supply implementation,
+completed analysis or tests. Name structure is derived in batch 4; duplicate
+classification and full known-code validation remain subsequent work.
 
 #### L2-READ-007
 
@@ -206,7 +213,7 @@ indices, duplicate classification and known-code validation remain next work.
 
 **Statement**: The reader SHALL retain original source bytes while obtaining interpreted field bytes through a separate projection, preserving the association of every interpreted field and character finding with original source ranges; discarding characters for interpretation SHALL NOT discard them from storage or default output, and human-display renderers SHALL use raw text rather than the filtered semantic projection.
 
-**Rationale**: ADR-0002/0003 and proposed INT-036 reconcile 106-24R1 Chapter 9 section 9.4.1, page 9-2, with lossless retention. This is not a normalization edit, and semantic projection does not change the actual colon/semicolon framing of INT-035.
+**Rationale**: ADR-0002/0003 and approved INT-036 reconcile 106-24R1 Chapter 9 section 9.4.1, page 9-2, with lossless retention. This is not a normalization edit, and semantic projection does not change the actual colon/semicolon framing of INT-035.
 
 **Verification Method**: Test (T)
 
@@ -216,7 +223,7 @@ indices, duplicate classification and known-code validation remain next work.
 
 **Statement**: Code-name interpretation SHALL ignore the approved nonprintable set and surrounding ordinary blanks without removing embedded ordinary blanks; value interpretation SHALL retain ordinary blanks; controls omitted between printable bytes inside a code name SHALL produce a located information finding, NUL SHALL produce one located information finding per affected field, and the ASCII comparator SHALL operate only on the interpreted input supplied to it without trimming source itself.
 
-**Rationale**: Proposed INT-036 supplies the character-class details for section 9.4.1; section 9.4.2, page 9-2, treats blanks as intentional. L1-READ-006 already requires surrounding code-name blanks to be ignored. Internal blanks still need code-name-validity findings; they are not silently erased to repair a key.
+**Rationale**: Approved INT-036 supplies the character-class details for section 9.4.1; section 9.4.2, page 9-2, treats blanks as intentional. L1-READ-006 already requires surrounding code-name blanks to be ignored. Internal blanks still need code-name-validity findings; they are not silently erased to repair a key.
 
 **Verification Method**: Test (T)
 
@@ -226,6 +233,472 @@ indices, duplicate classification and known-code validation remain next work.
 
 **Statement**: Non-ASCII field bytes and supported detections of incompatible encoding markers SHALL produce located findings while original bytes remain available; the reader SHALL NOT silently strip a BOM, transcode input, guess UTF-16 from zero-byte patterns or treat failed character interpretation as an explicit usable field value.
 
-**Rationale**: Chapter 9 section 9.4.1 specifies 7-bit ASCII. Proposed INT-037 defines the limited marker policy, not a Unicode TMATS format. Ordinary unmarked raw input can remain partly interpretable; a detected leading unsupported marker blocks semantic lookup for that document as specified in the draft, without dropping its source. Marker detection uses assembled-text offset zero before padding/control omission; fields containing high bytes are Invalid for semantic use, while ADR-0003's explicitly labelled on-request Latin-1/lossy views remain available.
+**Rationale**: Chapter 9 section 9.4.1 specifies 7-bit ASCII. Approved INT-037 defines the limited marker policy, not a Unicode TMATS format. Ordinary unmarked raw input can remain partly interpretable; a detected leading unsupported marker blocks semantic lookup for that document as specified in the approved interpretation, without dropping its source. Marker detection uses assembled-text offset zero before padding/control omission; fields containing high bytes are Invalid for semantic use, while ADR-0003's explicitly labelled on-request Latin-1/lossy views remain available.
+
+**Verification Method**: Test (T)
+
+
+## Code-name batch 4: structure before semantic validation
+
+This batch derives L1-READ-002/005 and the code-name-diagnostic part of
+L1-READ-003. INT-035/036/037 remain approved and unchanged; INT-038 was
+approved by Joey, 2026-11-22, under ADR-0033, with the independent AI recheck
+concurring on PR #20 head `29707da` (see the
+[sign-off record](research/2026-11-22-int038-owner-signoff.md)). Approval does
+not supply implementation, full development analysis or executable tests.
+The examples establish structural obligations, not a completed catalogue,
+registry matcher, counter validator, duplicate classifier or extension resolver.
+
+#### L2-READ-010
+
+**Parent**: L1-READ-002
+
+**Statement**: Code-name interpretation SHALL preserve the group, any supplied occurrence index, ordered path segments and every index attached to each segment, with original-source correspondence; literal digits in a code element SHALL NOT be mistaken for indices, and absent components SHALL NOT be invented; approved INT-038 identity equality and hashing SHALL use canonical decimal strings, including when X carried indices are compared with the original indices.
+
+**Rationale**: 106-24R1 Chapter 9 section 9.4.2, pages 9-2/3, and section 9.5.1 a with Table 9-1, page 9-5, establish hierarchical code names and multiple entries. Table 9-7 MEASUREMENT NAME `D-x\MN-y-n`, page 9-115, demonstrates nested indices; NUMBER OF FRAGMENTS `D-x\MNF\N-y-n-m`, page 9-117, demonstrates multiple path levels. Approved INT-038 specifies index spelling/identity; neither syntax nor a parsed number proves validity in a counter's scope.
+
+**Verification Method**: Test (T)
+
+#### L2-READ-011
+
+**Parent**: L1-READ-005
+
+**Statement**: The reader SHALL recognize the baseline Chapter 9 group identifiers and standalone COMMENT code independently of whether an individual name matches a known definition, retaining unknown names and H/V/X material without claiming that recognition establishes conformance or extension association.
+
+**Rationale**: 106-24R1 Table 9-1, page 9-5, enumerates the thirteen identifiers; section 9.4.2, page 9-3, defines COMMENT. Sections 9.5.12/13, page 9-171, and 9.5.14, page 9-172, reserve H and define vendor/extension conventions that a restrictive generic grammar must not erase. Detailed extension behavior remains a later derivation under L1-EXT; ADR-0002 still retains everything.
+
+**Verification Method**: Test (T)
+
+#### L2-READ-012
+
+**Parent**: L1-READ-003
+
+**Statement**: Code-name interpretation failures SHALL produce located diagnostics while preserving the framed item's raw name, value and order; incomplete or failed structural matches SHALL NOT become usable partial keys, and absence of a known definition alone SHALL NOT be equated with malformed code-name syntax; approved INT-038 noncanonical index spellings and normalization-only full-key collisions SHALL produce located information findings during reading, without selecting or rewriting an item; the collision finding SHALL trigger for a canonical-key group with two or more distinct raw index-spelling tuples and list every occurrence in that group, exact repeats included.
+
+**Rationale**: L1-READ-001/003, ADR-0002/0003 and INT-035 retain source even when meaning fails. Chapter 9 section 9.4.2, page 9-2, advises against blanks in code names; approved INT-036 ignores only surrounding blanks and controls for meaning. Thus a damaged `G\COM Time 12:30;` cannot be silently accepted as `G\COM`. Unknown definitions and open H/V/X naming space require a distinct outcome from a demonstrated syntax error.
+
+**Verification Method**: Test (T)
+
+
+## Candidate batch 5: duplicate classification and exact lookup
+
+This derives the duplicate part of L1-READ-003, exact-name lookup under
+L1-VIEW-001 and the multiplicity part of L1-VIEW-004. INT-039 was approved
+by Joey, 2026-11-22, under ADR-0033, with independent AI concurrence on
+PR #22 head `b22d45c` (see the
+[sign-off record](research/2026-11-22-int039-owner-signoff.md)). INT-035/036/037/038
+remain approved unchanged. Full development analysis and executable tests
+remain outstanding; approval does not provide implementation evidence.
+Pattern-query grammar, complete effective-value resolution, link selection, time association, counter rules and edits remain
+subsequent derivations; these children do not complete those L1 parents.
+
+#### L2-READ-013
+
+**Parent**: L1-READ-003
+
+**Statement**: The reader SHALL classify repeated instances of a definition-bound scalar attribute by complete canonical key, report the duplicate with every occurrence located, and preserve all items; unknown cardinality and standalone COMMENT collections SHALL NOT be silently treated as duplicate scalar definitions, nor SHALL duplicate classification suppress approved normalization findings.
+
+**Rationale**: 106-24R1 Chapter 9 section 9.4.2, page 9-2, describes unique names and single/multiple-entry attributes; page 9-3 introduces COMMENT for interjected comments. Approved INT-039 settles repeat handling where that text does not specify recovery. Scalar cardinality must come from a cited, reviewed definition for the applicable edition, not a missing/assumed suffix. Group \COM fields remain single-entry per the standard (Table 9-2 G\COM, page 9-13; Table 9-4 R-x\COM, page 9-84), unlike standalone COMMENT. The owner knowingly retained duplicate handling for writers that repeat long remarks; raw lookup keeps every line. ADR-0002 retains source; INT-038's early collision finding remains distinct.
+
+**Verification Method**: Test (T)
+
+#### L2-VIEW-001
+
+**Parent**: L1-VIEW-001
+
+**Statement**: Exact-name lookup SHALL return every item matching the complete canonical key within one document, in input order, with item identity, original name/value bytes and locations; it SHALL distinguish no match from a present empty value and SHALL NOT discard candidates because their values fail interpretation.
+
+**Rationale**: ADR-0002/0003 keep source items authoritative; approved INT-036/038 define projection and key equality. The first-child scope is exact lookup only, not a pattern language or an implementation choice of index data structure. Chapter 9 section 9.4.2, page 9-2, permits any source order; preserving that order for reporting must not make it a winner-selection rule.
+
+**Verification Method**: Test (T)
+
+#### L2-VIEW-002
+
+**Parent**: L1-VIEW-004
+
+**Statement**: A singular effective-value request for a definition-bound scalar slot with two or more matching items SHALL return ambiguous with every original candidate and its findings, without collapsing equal values, filtering invalid candidates, falling back to a default or selecting by source order; one candidate SHALL still require ordinary validity checks before being called explicit.
+
+**Rationale**: ADR-0023 supplies explicit/defaulted/missing/invalid/ambiguous states. Approved INT-039 chooses conservative multiplicity even for equal repeats; this is not a new default or an assertion that Chapter 9 explicitly specifies resolver precedence. Batch 7 derives the zero/one-candidate core; complete condition/type rules and scope-dependent definition coverage remain later work. Owner-approved F1 (Joey, 2026-11-23; INT-021, originally ADR-0034 coordinator direction) keeps duplicate SHA integrity indeterminate independently of generic view states.
+
+**Verification Method**: Test (T)
+
+
+## Counter batch 6: declared scope and distinct entry identities
+
+This batch derives the counter portion of L1-REG-005, L1-VAL-002 and
+L1-VAL-006, following ADR-0023/0026 and approved INT-038/039. INT-040 was
+approved by Joey, 2026-11-22, under ADR-0033, with independent AI recheck
+concurrence at PR #24 head `176fdf4` (see the
+[sign-off record](research/2026-11-23-int040-owner-signoff.md)). Full analysis
+and executable tests remain outstanding; approval is not implementation. These are
+requirements for the existing planned validation scope, not a promotion of
+the general registry/validator into 0.1. Link metadata, complete rule/type
+interpretations and other family-2 areas remain separate derivations.
+
+#### L2-REG-001
+
+**Parent**: L1-REG-005
+
+**Statement**: Each counter rule SHALL identify its edition/citation, counter pattern, governed member patterns and index position, fixed parent-index tuple and contiguity policy or cited exception; applicability and membership SHALL come from a reviewed declaration rather than a global suffix or group-name heuristic.
+
+**Rationale**: 106-24R1 Chapter 9 section 9.5.1 a after Table 9-1, page 9-5, supplies the 1-to-N rule; ADR-0026 requires parent scope. Table 9-7 NUMBER OF MEASUREMENT LOCATIONS `D-x\MML\N-y-n` and NUMBER OF FRAGMENTS `D-x\MNF\N-y-n-m`, page 9-117, illustrate different governed positions. Section 9.5.14, page 9-172, exempts X occurrence indices from contiguity, not every nested index in an extension. No counter is created merely because a path ends in N.
+
+**Verification Method**: Test (T)
+
+#### L2-VAL-001
+
+**Parent**: L1-VAL-002
+
+**Statement**: For each applicable reviewed counter rule and fixed parent tuple, validation SHALL compare the usable declared count with DISTINCT canonical numeric identities of governed entries, checking both cardinality and the declared index-domain/contiguity rule while retaining all occurrence evidence; it SHALL NOT substitute raw item count, greatest observed index or another parent's entries for that set.
+
+**Rationale**: ADR-0026 and approved INT-038 already require scoped distinct numeric identities. Approved INT-040 counts structurally identified entries independently of payload validity and duplicate declarations; other findings remain visible. Chapter 9 section 9.5.1 a, page 9-5, requires no missing values, so equal cardinality alone is insufficient. A counter result is not whole-document conformance or permission to repair source. Explicit child scopes remain evaluable despite parent-domain violations or unusable ancestor counts; the child's own rule/count and membership prerequisites still apply, without an ancestor-validity gate. X attachment does not create D membership, and WFP value uniqueness remains a separate value rule.
+
+**Verification Method**: Test (T)
+
+#### L2-VAL-002
+
+**Parent**: L1-VAL-006
+
+**Statement**: Counter evaluation SHALL report its counter/indices pass, rule citation, parent scope and supporting locations, and SHALL report cannot-evaluate when applicability, the effective counter value or required membership cannot be established without guessing; it SHALL NOT infer a missing count or claim success from an incomplete member set, and every scope compatible with unassigned evidence's readable canonical parent facts SHALL report partial/cannot-evaluate, never pass.
+
+**Rationale**: ADR-0022/0023 already require cannot-evaluate for unavailable operands. INT-039 makes duplicate scalar counters Ambiguous even when values agree. A cited default may be used only through a reviewed effective-value rule that permits it; neither suffix spelling nor the largest member supplies one. Approved INT-040 preserves structural evidence separately from blocked or failing semantic checks.
+
+**Verification Method**: Test (T)
+
+
+## Effective-value batch 7: evidence before fallback
+
+These requirements extend L1-VIEW-004's zero/one-candidate branches and the
+source/default portion of L1-REG-002. ADR-0023 and RELEASE-0.1.md already
+settle the five semantic states and non-inserting defaults. INT-041 was
+approved by Joey, 2026-11-23, under ADR-0033, with independent AI concurrence
+on PR #26 head `0fc0bc8` (see the
+[sign-off record](research/2026-11-23-int041-owner-signoff.md)). INT-039/040
+remain approved; full analysis and executable tests remain outstanding.
+Edition selection, complete condition grammar, dynamic range rules, the
+registry generator, presence/profile validation and time-channel APIs remain
+separate derivations. General effective values/registry keep their existing
+release scope; this batch does not promote them wholesale into 0.1.
+
+#### L2-REG-002
+
+**Parent**: L1-REG-002
+
+**Statement**: Field/default interpretation SHALL retain the source text and edition/table/row citation, distinguish a Default-field origin from a prose origin, and distinguish reviewed absence of a default from unavailable interpretation; applying a default SHALL require a reviewed value, applicability rule and identified edition basis.
+
+**Rationale**: 106-24R1 Chapter 9 section 9.5.1 a, page 9-6, defines defaults for absent attributes. ADR-0022 requires source and interpretation layers; ADR-0023 carries default evidence without inserting it. Table 9-4 TIME FORMAT, page 9-72, gives Default A with TIMEIN applicability; other editions or fields must not inherit it by analogy.
+
+**Verification Method**: Test (T)
+
+#### L2-VIEW-003
+
+**Parent**: L1-VIEW-004
+
+**Statement**: For a supported reviewed scalar definition and identified document/scope/basis, a singular read SHALL preserve INT-039 multiplicity, return Explicit only for one usable locally interpreted value, and return Invalid with raw evidence for one demonstrated character/type/range failure; present empty content SHALL NOT be treated as absence, and unavailable decision prerequisites SHALL be reported without guessing a semantic value state.
+
+**Rationale**: Approved INT-035/036 retain present empty values; INT-037 makes high-byte fields Invalid; INT-039 preserves every scalar duplicate. ADR-0023 separates effective values from whole-document validation. Approved INT-041 distinguishes unavailable knowledge from proved invalid data, without choosing a Rust enum/wrapper or revising the five supported-field states.
+
+**Verification Method**: Test (T)
+
+#### L2-VIEW-004
+
+**Parent**: L1-VIEW-004
+
+**Statement**: With zero actual candidates for a supported field, resolution SHALL return Defaulted only from a verified applicable default and otherwise Missing with the absence/default-unavailability reason; default evidence SHALL include its origin, edition citation and basis without a fabricated input span, and resolution SHALL NOT insert or replace bytes or suppress independent findings.
+
+**Rationale**: Chapter 9 section 9.5.1 a, page 9-6, conditions default use on absence; RELEASE-0.1.md requires verified TIMEIN applicability and edition basis for TFMT A. Invalid or ambiguous present fields do not become absence. ADR-0028 labels edition basis; missing physical required attributes, cross-field inconsistencies and packet evidence remain separate from a Defaulted value.
+
+**Verification Method**: Test (T)
+
+
+## Condition batch 8: declared operands and visible uncertainty
+
+This derives condition metadata under L1-REG-004 and reporting under
+L1-VAL-006. ADR-0022/0023 already require a shared evaluator and visible
+cannot-evaluate outcomes. INT-042 Option A was approved by Joey, 2026-11-23,
+under ADR-0033, with independent AI recheck concurrence on PR #28 head
+`d69d275` (see the [sign-off record](research/2026-11-23-int042-owner-signoff.md)).
+Existing INT-035 through INT-041 approvals are unchanged. Full development
+analysis and executable tests remain outstanding; these are planned obligations,
+not implemented checks.
+
+Complete condition grammar, compound operators/precedence, cyclic default
+or condition dependencies, link construction, edition selection and the full
+presence/profile validator remain later derivations. This batch does not
+promote general registry/validation into 0.1; the bounded time view consumes
+only its reviewed applicable subset. See the
+[draft source review](research/2026-11-23-condition-scope-draft.md).
+
+#### L2-REG-003
+
+**Parent**: L1-REG-004
+
+**Statement**: Every executable condition SHALL bind its source/citation and reviewed interpretation to declared operand scopes, link traversal and default visibility, and SHALL distinguish a physical-presence predicate from a predicate requiring an interpreted value; unreviewed mappings SHALL remain unavailable rather than be inferred from a source-name abbreviation or another occurrence.
+
+**Rationale**: ADR-0022 defines the shared condition contract. 106-24R1 Chapter 9 section 9.5.1 a, page 9-6, distinguishes Allowed/Required usage from defaults. Table 9-3 TRANSMIT ANTENNA TYPE T-x\AN1, page 9-18, uses an explicit T-x\ID presence condition; Table 9-4 TIME FORMAT R-x\TFMT-n, page 9-72, instead compares R\CDT with TIMEIN. Approved INT-042 makes presence/value operands distinct without treating a missing value operand as false. INT-008/009's existing abbreviated-reference interpretations keep their own pending review obligations.
+
+**Verification Method**: Test (T)
+
+#### L2-VAL-003
+
+**Parent**: L1-VAL-006
+
+**Statement**: Evaluating a reviewed condition SHALL produce true, false or cannot-evaluate with its rule, scope, operand evidence and edition basis; unavailable scope, link selection or required value operands, and zero exact presence matches with compatible related damaged evidence, SHALL produce cannot-evaluate with a separate pass-labelled finding, never a false-condition verdict, winner selection or silent default activation.
+
+**Rationale**: L1-REG-004 and ADR-0022 already forbid true/false for missing or invalid value operands; INT-039/041 extend the visible guard to ambiguity and unavailable interpretation. Section 9.5.1 a, page 9-6, states: "If the attribute is specified in the TMATS file, it must contain valid information". This sentence sits within the R/R Ch 10 Status bullet: strong evidence separating physical specification from validity in that context, not a general definition of specified. Approved INT-042 Option A interprets presence separately. INT-042 permits proved absence to answer a reviewed physical-presence predicate, but zero exact matches alone cannot prove absence when related damaged evidence remains. A condition result is not whole-document validity, and a true presence predicate does not certify its present values.
+
+**Verification Method**: Test (T)
+
+
+## Registry batch 9: source provenance and interpretation gates
+
+This batch derives L1-REG-001/003/006 from ADR-0004/0005/0022/0027 and
+ADR-0033's owner-approved review rule. No new standard interpretation is
+proposed. It specifies evidence obligations, not an existing registry,
+extractor, hash implementation or CI job. INT-042's separately requested
+matching detail is derived in L3-VAL-012, with its approved states unchanged.
+
+A semantic approval does not imply completed development analysis or tests.
+The requirements below keep those gates separate and keep source coverage
+visible without manufacturing executable interpretations. Complete extraction,
+relationship generation, edition deltas and condition grammar remain later
+batches. General registry scope stays at its existing roadmap releases; only
+the reviewed bounded time-view subset is brought forward to 0.1.
+See the [source/gate derivation record](research/2026-11-23-registry-gates-draft.md).
+
+#### L2-REG-004
+
+**Parent**: L1-REG-001
+
+**Statement**: Every built-in definition and executable rule SHALL retain an edition-specific source identity and section or table/row citation, with the source text supporting its keywords, ranges, conditions and defaults; source coverage SHALL distinguish an executable reviewed interpretation, a visibly not-yet-interpreted source entry and an explicit exclusion with its reason.
+
+**Rationale**: ADR-0004/0022 require cited source and interpretation layers; Chapter 9 section 9.5.1 a, pages 9-5–9-6 (106-24R1), identifies usage fields, while definition prose is also authoritative. ADR-0022's completeness/coverage check must not silently drop rows or turn raw extraction into permission to execute a rule. Existing L2-REG-002 preserves default origin. Full table extraction and relationship completeness are not completed by this provenance child.
+
+**Verification Method**: Test (T)
+
+#### L2-REG-005
+
+**Parent**: L1-REG-003
+
+**Statement**: Each executable registry interpretation SHALL bind its draft author, dated owner sign-off, independent AI review evidence and source-text hash to the exact source and interpretation revision reviewed; a source change SHALL flag re-review and SHALL NOT inherit executable approval merely because its code-name pattern or interpretation identifier is unchanged.
+
+**Rationale**: ADR-0033 supersedes only the two-human rule; L1-REG-003 and ADR-0022 retain source-hash freshness. A semantic decision's date and an exact-head AI-check reference are evidence, not completion of implementation analysis/tests. Source changes are not erased by recalculating a digest or carrying forward an approved label.
+
+**Verification Method**: Test (T)
+
+#### L2-REG-006
+
+**Parent**: L1-REG-006
+
+**Statement**: Every executable nonliteral interpretation SHALL resolve to its permanent interpretation-register entry, cited sources, chosen behaviour/reason, design and review evidence, completed development analysis and required executable verification; generation SHALL NOT silently activate an unlisted, open, proposed, stale or otherwise unready interpretation, while retaining its source and explicit unavailable status for coverage reporting.
+
+**Rationale**: ADR-0027 and the register's existing development convention require deep analysis and intensive tests before implementation, in addition to ADR-0033 approval. A planned test name or research draft is not passing verification. This derives the dependency/evidence gate, not a new review policy or permission to implement the current approved-but-unanalyzed entries. These gates also apply to reader/validator behaviour tied to register entries, including hand-written implementations: INT-021 (F1) and INT-030 (F7) are subject to ADR-0033, not exceptions. Joey's 2026-11-23 approval plus AI concurrence at #30 head 13173b0 complete their semantic review; freshness, analysis and verification remain.
+
+**Verification Method**: Test (T)
+
+
+## Checksum batch 10: recognition and authoritative verification
+
+This initial checksum slice derives L1-SUM-001/002 using reconfirmed
+INT-018/019/020 and approved INT-021/F1. Joey's 2026-11-23 reconfirmation
+and AI concurrence at main 30e42a3 clear INT-018/019/020's semantic review,
+not their development analysis or tests. These are planned obligations.
+Full stamping/edit derivation, flex compatibility and checksum API/exit-code
+shapes remain later batches. INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
+
+#### L2-SUM-001
+
+**Parent**: L1-SUM-001
+
+**Statement**: Authoritative checksum computation SHALL identify the G\SHA item through the approved projected code name, exclude its original raw name-to-terminator interval, and hash every other supplied document byte unchanged; unavailable framing/completeness or an ambiguous exclusion SHALL refuse an authoritative checksum instead of guessing a byte domain.
+
+**Rationale**: 106-24R1 Chapter 9 Table 9-2 MESSAGE DIGEST/CHECKSUM, page 9-13; Chapter 6 section 6.2.3.11 f, page 6-22; INT-018/019/021. Projection recognizes meaning but does not normalize the hashed document. A complete terminated malformed VALUE does not by itself invalidate the exclusion: VERIFY may be malformed while COMPUTE is allowed. Raw-byte hashes may be separately labelled; they cannot substitute for an authoritative TMATS checksum with an undefined exclusion. This does not implement setup-record assembly or declare unknown completeness complete.
+
+**Verification Method**: Test (T)
+
+#### L2-SUM-002
+
+**Parent**: L1-SUM-002
+
+**Statement**: Checksum verification SHALL preserve raw candidates, framing/character findings and completeness evidence while applying reviewed value projection and digest rules; it SHALL distinguish a matching digest from malformed input, indeterminate exclusion, unavailable interpretation and an unverified placeholder, never present those as positive integrity or silently repair the input.
+
+**Rationale**: Reconfirmed INT-018/019/020 and approved F1/INT-021 preserve the lossless source and separate missing knowledge from invalidity. Chapter 6 section 6.2.3.11 f, pages 6-22–6-23, defines the 2- digest and illustrates G\SHA:0;. This slice fixes no public result enum; INT-043 Option B's semantic review is complete, with development evidence outstanding. Existing absent, mismatch and unknown-algorithm reporting obligations remain.
+
+**Verification Method**: Test (T)
+
+
+## Stamp batch 11: the minimal 0.1 verified transaction
+
+This derives the bounded L1-SUM-004 stamp and transaction prerequisites under
+L1-WRT-007 from ADR-0029, approved INT-018/019/020/021/043 and RELEASE-0.1.
+It selects no new standard interpretation. Requirements/cases remain planned;
+semantic approval does not supply completed analysis or executable tests.
+Full editing, X deletion/renumbering (F2), repair suggestions (F3), flex and
+CLI/API result schemas remain later work. No broad 0.5 editing feature is
+promoted into 0.1 by this minimal transaction slice.
+
+#### L2-SUM-003
+
+**Parent**: L1-SUM-004
+
+**Statement**: A requested stamp SHALL be the final step of a validated transaction, hashing the final emitted bytes outside one identified SHA item, writing canonical 2- plus 64 lower-case hex digits inside that item and verifying by re-reading the output; unresolved checksum-domain ambiguity SHALL refuse a successful stamp without guessing a target or repairing bytes implicitly.
+
+**Rationale**: ADR-0029 and 106-24R1 Chapter 9 Table 9-2 MESSAGE DIGEST/CHECKSUM, page 9-13; Chapter 6 section 6.2.3.11 f, page 6-22. Separators/newlines outside the excluded item contribute to the digest. F1 permits an exact-item removal repair before stamping, not a duplicate winner chosen by stamp. INT-043's noncanonical input tolerance changes neither emitted algorithm spelling nor final-byte verification.
+
+**Verification Method**: Test (T)
+
+#### L2-WRT-002
+
+**Parent**: L1-WRT-007
+
+**Statement**: The minimal stamp transaction SHALL validate its supplied edit targets against their document revision, reject ambiguous/overlapping/stale explicit edit sets, apply permitted explicit repairs atomically as a new revision and rebuild/re-read affected state before stamping; failure SHALL leave the original document untouched and SHALL NOT return a successfully stamped result.
+
+**Rationale**: ADR-0029 supplies exact-target, atomic, rebuild and re-read semantics; L1-WRT-004 forbids automatic changes. This derives prerequisites for 0.1 stamping only, not all general edit/renumbering operations. Detailed target API shapes and unresolved interpretation-dependent edits require their own reviewed contracts. The library gains no file I/O or promise of rolling back a caller's external writer.
+
+**Verification Method**: Test (T)
+
+
+## Setup-payload batch 12: bounded CSDW decoding before assembly
+
+This derives the payload-boundary part of L1-CH10-001, field reporting under
+L1-CH10-002 and literal version reporting under L1-CH10-006. It does not
+complete those parents or implement assembly, completeness, edition selection,
+session checks, packet slicing/checksums or time views. No packet/file I/O or
+new default is introduced. Requirements and acceptance cases remain planned.
+
+The concrete baseline below is 106-24R1 Chapter 11 Figure 11-34. Historical
+layout routing and the complete declaration/fallback contract remain separate
+batches. INT-012's literal Format 1 decision was reconfirmed by Joey, 2026-11-23,
+with AI concurrence on #34 head e352323 after seven-edition source review.
+Development analysis/tests and the other interpretations' review gates remain. See the
+[source and review note](research/2026-11-23-setup-payload-draft.md).
+
+#### L2-CH10-001
+
+**Parent**: L1-CH10-001
+
+**Statement**: The library SHALL decode a supplied Format 1 packet-body payload under an identified supported CSDW layout, retain the original CSDW and body bytes with locations, reject a payload shorter than that layout's CSDW without fabricating fields, and pass only the bytes after each fragment's CSDW to later assembly/body interpretation.
+
+**Rationale**: 106-24R1 Chapter 11 section 11.2.7.2 a and Figure 11-34, page 11-50, place a 32-bit CSDW at the beginning of each Format 1 body. ADR-0025 separates packet slicing from fragment assembly; a caller supplies body bounds excluding filler/checksum. Sufficient CSDW bytes establish a decodable header, not a complete setup record.
+
+**Verification Method**: Test (T)
+
+#### L2-CH10-002
+
+**Parent**: L1-CH10-002
+
+**Statement**: CSDW reporting SHALL expose raw and interpreted format/change/version fields through the shared irig106-types definitions, preserve all original bits and body bytes, and report an XML body unsupported without parsing it as code-name TMATS; local field decoding SHALL NOT itself assert configuration change, record completeness or session conformance.
+
+**Rationale**: ADR-0009 requires shared packet-level types instead of local copies. Figure 11-34 and its field definitions (106-24R1 Chapter 11 page 11-50) assign FRMT bit 9, SRCC bit 8 and RCCVER bits 7–0. ADR-0015 keeps XML unsupported. Interpreting SRCC against earlier records or disagreement across fragments needs separate reviewed rules; it is not another interpretation of the single bit.
+
+**Verification Method**: Test (T)
+
+#### L2-CH10-003
+
+**Parent**: L1-CH10-006
+
+**Statement**: A supported cited RCCVER reading SHALL preserve the wire byte and report the literal edition assigned by its table, reserved codes as unknown under that reading and any archive-reuse observation separately labelled; it SHALL NOT transform a literal version declaration into a newer edition, an unbounded future claim or a TMATS edition/fallback selection.
+
+**Rationale**: ADR-0032 and INT-012 distinguish table reading from archive observation and fallback policy. 106-24R1 Chapter 11 section 11.2.7.2 a, page 11-51, states 0x0E = RCC 106-22 and 0x0F–0xFF reserved. INT-016's historical not-declared handling and INT-017's fallback remain their own pending-review dependencies; this child does not silently select a historical layout or claim those reviews complete.
+
+**Verification Method**: Test (T)
+
+
+## Edition-basis batch 13: declarations, policy and selection uncertainty
+
+This derives L1-EDN-005's declaration separation and L1-EDN-002's labelled
+basis selection. INT-012 Format 1 literal reading is reconfirmed; INT-014/
+015/016/017 retain their existing decisions and pending review/development
+gates. INT-044 Option B is approved under ADR-0033 (Joey, 2026-11-23;
+AI CONCURS on #36 at 6f6e080). It is not implemented.
+Historical-layout routing, full edition coverage/deltas and compatibility
+validation remain later derivations. No new supported-edition claim is made.
+
+#### L2-EDN-001
+
+**Parent**: L1-EDN-005
+
+**Statement**: Declaration reporting SHALL preserve G\106's raw occurrences, source locations and reviewed candidate-edition reading separately from each setup record's version declaration and its code-space/table basis; ambiguous or unavailable declaration evidence SHALL remain visible and SHALL NOT be replaced by an applied rules edition or a differently scoped version byte.
+
+**Rationale**: 106-24R1 Chapter 9 Table 9-2 RCC IRIG 106 REVISION LEVEL, page 9-10, names the generating edition; Chapter 11 section 11.2.7.2 a page 11-51 describes Format 1 recorded-data compliance. ADR-0028/0032 and L3-CH10-008 preserve these distinct meanings. INT-014/015/016 remain reviewed-rule dependencies rather than a license to infer older formats or silently parse arbitrary year strings.
+
+**Verification Method**: Test (T)
+
+#### L2-EDN-002
+
+**Parent**: L1-EDN-002
+
+**Statement**: Rules-basis selection SHALL apply a valid caller override, else a usable reviewed G\106 declaration, else the reviewed fallback policy for missing/unrecognised declarations or explicitly labelled ambiguous G\106 under INT-044, using eligible Format 1 RCCVER and finally baseline 106-24R1; it SHALL retain the selected edition, basis, reason and supporting evidence without rewriting declarations, conflating code spaces or treating unavailable knowledge as a missing declaration.
+
+**Rationale**: ADR-0028/0032 provide the precedence and labelled fallback; INT-017 chooses 0x0E -> 106-24R1 and 0x0D -> 106-20 as POLICY, distinct from INT-012. Owner-decided INT-044 Option B adds the explicit ambiguous-declaration reason without relabelling it missing/unrecognised or selecting a candidate; its review gate is complete, while analysis/tests remain. Review and rule-coverage gaps stay visible; selecting a basis does not establish that its full validator exists or that the document conforms.
+
+**Verification Method**: Test (T)
+
+## Assembly-contract batch 14: joining and provenance before completeness
+
+This derives only joining and source mapping within L1-CH10-004.
+INT-045 is a separate layered phase-closure rule above INT-011 joining;
+its initial A and guarded owner mid-session extension are approved (AI
+CONCURS on #41 at 79b94eb). A closed phase cannot silently accept later fragments backward.
+A joined candidate run is not proof of one complete setup record. Completeness,
+ambiguous splits and session rules still need subsequent derivations and
+review of INT-034/028/031. INT-011 is reconfirmed by Joey, 2026-11-23, with AI CONCURS on #38 at
+c623b15 under ADR-0033; analysis/tests remain. No interpretation gains
+approval through a requirement or a supplied fixture binding.
+
+#### L2-CH10-004
+
+**Parent**: L1-CH10-004
+
+**Statement**: The library SHALL form independent candidate fragment runs per channel from caller-supplied bytes and provenance in recording order using the INT-011 joining prerequisites, retain each run's start reason and why each join was permitted or stopped, and concatenate only the TMATS text portions without inserting, removing or interpreting text at a packet boundary; a joined run SHALL remain distinct from a completeness or governance verdict.
+
+**Rationale**: 106-24R1 Chapter 11 section 11.2.7.2 page 11-50 states that one setup record may span consecutive packets and that sequence increments n+1 in segmentation order. Section 11.2.1.1 f defines per-channel sequence counters. ADR-0025 supplies the library boundary; INT-011 supplies the additional same-channel/FRMT/RCCVER interpretation. ADR-0031 supersedes the old assumption that stopping a run proves a record finished. Joey's 2026-11-23 INT-011 clarification makes other-channel packets provenance/information only, never a stop condition. Channel-0 conformance is separate from joining. This is not a packet reader or an end-marker invention.
+
+**Verification Method**: Test (T)
+
+#### L2-CH10-005
+
+**Parent**: L1-CH10-004
+
+**Statement**: Each candidate run SHALL preserve all supplied fragment provenance and raw CSDWs and provide an exact mapping from assembled text bytes and ranges back to their originating packet bytes, including ranges crossing packet boundaries; a summary SHALL NOT discard disagreement or substitute one fragment's metadata for another's evidence.
+
+**Rationale**: ADR-0025 and L1-CH10-004 require file offset, channel, sequence, relative time counter, CSDW fields and data-type version plus a body-offset provenance map. ADR-0003's owned bytes/spans and L1-READ-003's located diagnostics require evidence after concatenation. FRMT/RCCVER agreement does not establish SRCC agreement, a valid configuration-change event or a governing record. No new SRCC aggregation policy is selected here.
+
+**Verification Method**: Test (T)
+
+## Completeness-contract batch 15: finality, streaming evidence and budgets
+
+These partial children continue L1-CH10-004 and L1-ROB-001; they do not finish
+family 2 or approve INT-034/028/031. INT-011's reconfirmation covers joining,
+not completeness or governance. The reviewer consequences relayed by the
+owner after #38 are recorded here; unresolved streaming-use policy stays open.
+
+#### L2-CH10-006
+
+**Parent**: L1-CH10-004
+
+**Statement**: A closed per-channel candidate run SHALL carry its final completeness outcome or unavailable-format/rule reason, its START and stop evidence, and all relevant competing readings; an otherwise complete semicolon-terminated run at supplied EOF SHALL be complete with an explicit end-of-input basis, not downgraded solely because EOF cannot prove the recording was never cut.
+
+**Rationale**: ADR-0031/INT-034 distinguish evidence from certainty. Chapter 9 section 9.4.2 page 9-2 supplies semicolon framing and Chapter 11 section 11.2.7.2 page 11-50 supplies fragmentation without an end marker (106-24R1). INT-011's per-channel joining is reconfirmed; "followed by another packet" means same-channel. Precise classification precedence, leading-damage handling and XML's unknown completeness remain review dependencies, not solved by this requirement.
+
+**Verification Method**: Test (T)
+
+#### L2-CH10-007
+
+**Parent**: L1-CH10-004
+
+**Statement**: An open run SHALL expose a PROVISIONAL observation distinct from final completeness, with its channel, observed text extent and boundary evidence; observing a provisional attribute boundary SHALL NOT stop joining, assert a complete record or silently establish a governing configuration.
+
+**Rationale**: Owner-relayed reviewer consequence, 2026-11-23, enables the streaming-consumer design discussion without treating other-channel data as an end marker. INT-034 records the explicit open question of pre-EOF semantic use; INT-028/031 govern final descriptions and remain proposed. A temporary lack of input is not EOF. No current-only-complete parsing rule is silently relaxed by adding an observation.
+
+**Verification Method**: Test (T)
+
+#### L2-ROB-003
+
+**Parent**: L1-ROB-001
+
+**Statement**: The assembler SHALL expose and enforce an explicit finite aggregate memory budget for retained per-channel open-run state and SHALL report a typed limit error when a requested operation would exceed that budget, without silently dropping, merging or finalizing any run.
+
+**Rationale**: Owner-relayed reviewer consequence after #38, 2026-11-23. Independent channels can keep several runs open while unrelated traffic continues. L1-ROB-001 requires bounded, non-aborting handling; lossless retention forbids hidden eviction. Accounting must include retained text and metadata, not just one channel's payload. The accounting model, numeric defaults if any, and post-error resume API require review before implementation; the budget is resource policy, not a TMATS default or record-size rule.
 
 **Verification Method**: Test (T)

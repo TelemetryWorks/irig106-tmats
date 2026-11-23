@@ -55,8 +55,8 @@ a command computes, the library can compute for other callers.
 - **`stamp` is a verified transaction.** It hashes the final output bytes
   outside the `G\SHA` item (a line break it inserts is included), writes
   lower-case hex, re-reads the output, and fails without writing if the
-  result does not verify (ADR-0029). F1 is coordinator-decided, 2026-11-21
-  (owner may override; ADR-0034): duplicate `G\SHA` items are indeterminate;
+  result does not verify (ADR-0029). F1 is owner-approved, 2026-11-23
+  (INT-021; coordinator origin ADR-0034): duplicate `G\SHA` items are indeterminate;
   list every occurrence, preserve every byte, never claim positive verification,
   and refuse stamping until the input is fixed.
 - **Editions shown as the file declares them.** `show` and `validate` print
@@ -64,7 +64,13 @@ a command computes, the library can compute for other callers.
   recording-format version (CSDW, raw and read), and — for `validate` — the
   edition whose rules were applied with its basis (override, declared, or
   fallback). `--edition` is the override. A compatibility check is labelled
-  as one (ADR-0028).
+  as one (ADR-0028). Approved INT-044 Option B (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080)
+  keeps duplicate `G\106` Ambiguous and uses the separate label
+  `fallback — reason: ambiguous G\106 (n candidates)` without an override.
+  Text and JSON make this basis/reason at least as prominent as cannot-evaluate;
+  every occurrence and duplicate finding remains visible. JSON carries stable
+  machine code `ambiguous_g106` and numeric `candidates` separately from the
+  display label. Mixed recognised/unrecognised duplicates use this reason too.
 - **Both versions in every report.** `tmats --version` prints
   `tmats X.Y.Z (irig106-tmats X.Y.Z)`; JSON output carries both.
 - **Every reference-tool defect is a regression test** (D1–D7,

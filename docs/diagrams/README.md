@@ -22,7 +22,7 @@ states the claim.
 | `document-model.svg` | One buffer, spans, keys, index, and the byte range the `G\SHA` digest covers |
 | `link-graph.svg` | The Chapter 9 §9.5.1 b ties between groups, labelled with the value that carries each, and the H group's one tie to G (§9.5.12) |
 | `link-resolution.svg` | How one link resolves: case-folded match, the channel-type selector, resolved / ambiguous (all candidates listed) / unresolved, and keys unique per attribute (P and D data-link names equal by design) |
-| `edit-transaction.svg` | An edit set as one transaction (validate, apply atomically, rebuild, verify; any rejection refuses the whole set) and the stamp hashing the final bytes outside the `G\SHA` item; F1 coordinator-decided (indeterminate duplicates, stamping refused); F2/F3 remain open for the owner |
+| `edit-transaction.svg` | An edit set as one transaction (validate, apply atomically, rebuild, verify; any rejection refuses the whole set) and the stamp hashing the final bytes outside the `G\SHA` item; F1 owner-approved 2026-11-23 (INT-021; indeterminate duplicates, stamping refused until explicit repair); F2/F3 remain open for the owner |
 | `edits-and-checksum.svg` | An edit as a patch, byte-faithful output, and `G\SHA` reported stale and stamped only on request |
 
 ## Conventions
@@ -36,3 +36,9 @@ states the claim.
   crate adds.
 - When a design decision changes a diagram, update the SVG and its caption in
   the same commit.
+
+INT-011 owner clarification (reconfirmed 2026-11-23; AI CONCURS on #38 at c623b15):
+the contiguous example in `setup-record-assembly.svg` is not a global
+adjacency requirement. Joining is independent per channel; other-channel
+packets are provenance/information only and never stop a run. Preserve START
+and stop evidence separately from INT-034 completeness classification.

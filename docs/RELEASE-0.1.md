@@ -145,7 +145,7 @@ Each time-view field reports one of these semantic states:
 | Explicit | Valid interpreted value, original raw value and location |
 | Defaulted | Interpreted value, exact edition/table/row citation, applicability and edition-selection basis; no fabricated input location |
 | Missing | Attribute absent and no verified applicable default available |
-| Invalid | Raw value/location and reason interpretation cannot be used |
+| Invalid | Raw value/location, reason interpretation cannot be used, and applied edition/basis including any fallback label |
 | Ambiguous | Every conflicting candidate and its location; no selected winner |
 
 For example, an explicit `R-1\TFMT-3:A;` and an absent TFMT with an applicable
@@ -153,6 +153,27 @@ For example, an explicit `R-1\TFMT-3:A;` and an absent TFMT with an applicable
 but they have different states and evidence. Defaulting requires the TIMEIN
 applicability condition and an identified edition basis. If either cannot be
 established, report the missing/indeterminate reason instead of inventing A.
+
+Consumers must read the Missing reason. In particular, "default applicability
+not established" means the default condition is unknown, not proven false;
+an Ambiguous CDT operand can cause that result even though TFMT is absent.
+The reason and condition finding must remain visible when deciding how to
+proceed; Missing alone is not proof that a default is inapplicable.
+
+For a present TFMT, lowercase `a` means Explicit A while raw `a` stays intact
+(section 9.4.2, page 9-2). A leading value blank (` A`) stays unavailable
+until a blank-handling rule is reviewed; intentional blanks are neither
+silently trimmed nor automatically Invalid. A present locally valid TFMT on
+a non-TIMEIN channel stays Explicit with an applicability finding. Any Invalid
+verdict reached under a fallback edition keeps its fallback label and basis.
+These are planned-view contracts; their acceptance cases live in TEST-DATA.md.
+
+The full source for the future value-blank review is 106-24R1 Chapter 9 section 9.4.2, page 9-2:
+
+> Leading, trailing, and embedded blanks are assumed to be intentional; they can be ignored in most cases but should not be used in code names, keywords, and data items used as links, such as measurement name.
+
+No general blank-handling policy is approved by quoting this sentence;
+the unavailable-value contract above remains in force until that review.
 
 The TFMT default does not supply a time source, prove an association, or
 change any bytes. Do not default to IRIG-B, UTC, a channel number, or a
@@ -225,6 +246,49 @@ as unsupported for this release. Do not use RCCVER to overwrite the TMATS
 edition declaration, or confuse packet data-type version with either one.
 The packet reader and time decoder remain outside the TMATS library.
 
+INT-011's per-channel joining is reconfirmed by Joey (decision 2026-11-23),
+with independent AI CONCURS on #38 head `c623b15`. Review completion does not
+complete analysis or tests. See the [reconfirmation record](research/2026-11-23-int011-owner-signoff.md).
+INT-034's "followed by another packet" means SAME-CHANNEL; an otherwise
+complete run ending in `;` at EOF stays complete, labelled "end of input".
+An open run may expose PROVISIONAL boundary evidence, never a joining stop.
+Pre-EOF semantic use by irig106-time's CLI, snapshot invalidation and its
+interaction with INT-028/031 remain explicit owner-review items. Recommended
+option: opt-in labelled snapshots; alternative: final-only semantic use. No
+option is selected here or silently relaxes the complete-only contract above.
+Per-channel open-run state needs an explicit finite aggregate memory budget
+and typed limit error, never silent dropping; numeric policy, full accounting
+and recovery/resume details need review before implementation. See the
+[batch 15 review draft](research/2026-11-23-completeness-contracts-draft.md).
+
+INT-045 is approved: Joey signed initial Option A, 2026-11-23 (AI CONCURS
+on #40 at `93eb6e2`); the guarded SRCC=1 mid-session extension has independent
+AI CONCURS on #41 at `79b94eb`.
+It is a separate layered closure rule above INT-011 per-channel joining.
+At a time boundary, cut text is INCOMPLETE with a located finding; a later
+same-channel +1 fragment is continuous-but-split, never silently rejoined.
+If an otherwise Complete semicolon-ending seal has matching-FRMT/RCCVER
+continuation, its FINAL outcome becomes AMBIGUOUS with both readings and a
+located possible-premature-seal finding. Verified G\SHA over the sealed text
+alone can keep it Complete as classification evidence; every mid-session
+Complete under this layer is labelled `time-boundary seal (owner policy)`.
+Findings/revisions remain visible before consumer publication. SRCC=1
+eligibility comes from the FIRST fragment; SRCC=0 retransmissions stay outside.
+Session starts are caller-asserted labelled provenance; non-Format-1 initial
+prefix packets and an untrusted initial first time packet withhold adoption.
+Each asserted session start has its own initial phase. See the
+[layered decision and guard refinements](research/2026-11-23-int045-layered-owner-decision.md).
+Its interpretation-review gate is complete; this does not approve remaining
+INT-034/governance rules or general pre-boundary provisional snapshot use.
+The [original investigation](research/2026-11-23-initial-time-boundary-proposal.md)
+remains history, including the recommendation overridden by the owner.
+
+See the [approval record](research/2026-11-23-int045-owner-signoff.md) and the
+[mid-session corner-case catalogue](research/2026-11-23-mid-session-setup-corner-cases.md).
+The catalogue's likelihood order is an unmeasured working estimate; every
+new option/recommendation is for owner discussion, not approved policy.
+Source freshness, deep development analysis and executable tests remain gates.
+
 ## Acceptance cases to derive before code
 
 These are test obligations for the next requirements family, not tests already
@@ -265,8 +329,8 @@ does not by itself sign off an executable interpretation.
 | W1: workspace | Owner-decided, 2026-11-21; ADR-0035 supersedes ADR-0034 W1 | Virtual root; library `crates/irig106-tmats/`, CLI `apps/irig106-tmats-cli/`; shared lockstep workspace version and exact-version path dependency in workspace.dependencies |
 | W2: prototype retirement | Coordinator-decided, 2026-11-21; owner may override | Remove the prototype in the restructure change; `prototype-0` retains history. Split an oversized PR or return to the owner |
 | W3: host CLI integration | Coordinator-decided, 2026-11-21; owner may override | Both a host-callable `run(args, stdout, stderr) -> exit class` that never exits the process and individual command/render APIs; thin `main`, matching irig106-time |
-| F1: duplicate SHA items | Coordinator-decided, 2026-11-21; owner may override | Reject as indeterminate, list every occurrence, preserve every byte, refuse stamping until fixed, and never claim positive verification |
-| F7: configuration-change event | Coordinator-decided, 2026-11-21; owner may override | Require verified identification and report indeterminate meanwhile; never guess a packet type |
+| F1: duplicate SHA items | Owner-approved 2026-11-23 under ADR-0033 (INT-021); AI CONCUR at #30 head 13173b0; originally coordinator-decided 2026-11-21 | Reject as indeterminate, list every occurrence, preserve every byte, refuse stamping until fixed, and never claim positive verification |
+| F7: configuration-change event | Owner-approved 2026-11-23 under ADR-0033 (INT-030); AI CONCUR at #30 head 13173b0; originally coordinator-decided 2026-11-21 | Require verified identification and report indeterminate meanwhile; never guess a packet type |
 
 [ADR-0033](adr/0033-owner-signoff-and-independent-ai-interpretation-review.md)
 supersedes the two-human rule. Record the draft author, owner sign-off and
@@ -280,12 +344,61 @@ coordinator decisions. Its W1 alone is superseded by
 owner's virtual crates/apps layout. W2 prototype removal and W3 reusable CLI
 library plus thin binary are unchanged; the full 0.1 scope remains binding.
 
+The readiness gates apply to reader/validator behaviour tied to register
+entries, including hand-written behaviour, not only generated registry rules.
+Joey approved F1 (INT-021) and F7 (INT-030), 2026-11-23, under ADR-0033;
+the independent AI check CONCURRED on both at PR #30 head `13173b0`.
+Their semantic approval/review gates are complete; freshness, development
+analysis and executable verification remain. F7's event identity is still
+unverified, and prior-ordering/fragment-SRCC questions remain analysis work.
+F1 remains in the full 0.1 checksum/stamping scope. See the
+[owner approval record](research/2026-11-23-int021-int030-owner-signoff.md) and the historical
+[review-gate note](research/2026-11-23-f1-f7-review-gates.md).
+
+For pre-ADR-0033 entries INT-001 through INT-034, existing owner acceptance
+with Review: pending is not completed review: the independent AI check is
+still required before implementation. Preserve that owner acceptance; do not
+grandfather the missing check or treat other open/coordinator entries as
+owner-approved. Joey reconfirmed **INT-018** (projected G\SHA name, never
+inside a value), **INT-019** (unterminated SHA is malformed) and **INT-020**
+(upper-case digest digits), 2026-11-23, under ADR-0033. Independent AI CONCUR
+on all three is tied to the register review at main `30e42a3`. Together with
+F1/INT-021, these clear their interpretation-review blockers only; analysis,
+source freshness and tests remain. See the [combined approval record](research/2026-11-23-int021-int030-owner-signoff.md).
+INT-043 Option B is owner-decided (Joey, 2026-11-23): ASCII-digit designators
+whose canonical digit string is 2 are algorithm 2, with a warning for every
+noncanonical spelling and canonical 2- stamping. See the
+[owner decision](research/2026-11-23-int043-owner-decision.md) and
+[approval record](research/2026-11-23-int043-owner-signoff.md). The independent
+AI recheck CONCURS on #32 head 8941ca1; INT-043 is approved under ADR-0033.
+The per-occurrence noncanonical warning still appears when another reason
+blocks verification; it supplies no authority to guess a key/exclusion.
+Development analysis, freshness and executable tests remain outstanding.
+
+INT-044 Option B is approved (Joey, owner decision, 2026-11-23; independent
+AI CONCURS on #36 head `6f6e080`). Duplicate G\106 stays Ambiguous while
+a separate, prominently labelled fallback uses unchanged INT-017 policy;
+mixed recognised/unrecognised occurrences still use the ambiguity reason.
+JSON carries machine code `ambiguous_g106` and numeric `candidates` separately
+from its display label. ADR-0028 already allowed useful checks for missing
+or unrecognised declarations; blocking duplicated good input would have
+been less useful than handling those worse inputs. See the
+[approval record](research/2026-11-23-int044-owner-signoff.md). Analysis,
+source freshness and executable tests remain; INT-017's own review gate and
+INT-034's assembly-scope decision are not cleared by this approval.
+
 F1 deliberately leaves damaged recordings readable but without a positive
 integrity verdict. Fixing duplicates requires an explicit action before
 stamping; verification must not silently choose or consolidate occurrences.
+A damaged name compatible with G\SHA also makes verification indeterminate.
+ADR-0029 still permits an explicit repair removing a duplicate by its exact,
+revision-bound item ID. Rebuild/re-read the edited input; stamp only after
+that repair has resolved the ambiguity, potentially as the transaction's
+last step. Refusal to stamp ambiguous input is not refusal to allow its repair.
+
 F7 decides the uncertainty behavior, not the actual event identity. The latter
 still needs verified evidence before the event-presence check is implementable.
-These decisions do not mark requirements implemented or interpretations reviewed.
+These approvals do not mark requirements implemented or development evidence complete.
 F2/F3 and other unreviewed interpretations remain open where already recorded.
 
 ## Delivery and release gates

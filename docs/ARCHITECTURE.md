@@ -419,14 +419,28 @@ and reported when present.
   packet and offset, so every diagnostic can name the packet it came from.
 - **Boundary rule** (reviewed interpretations, because the standard defines
   no end-of-record marker): fragments are joined while they are consecutive
-  data type `0x01` packets on one channel whose sequence numbers increase by
-  one modulo 256 and whose CSDWs agree on FRMT and RCCVER (INT-011). Each
+  data type `0x01` packets within each channel, independently, whose sequence
+  numbers increase by one modulo 256 and whose CSDWs agree on FRMT/RCCVER.
+  INT-011's owner clarification (reconfirmed 2026-11-23; AI CONCURS on #38 at c623b15) makes
+  other-channel packets provenance/information only, never a stop condition;
+  a same-channel intervening packet stops that channel's joining. Retain
+  each run's START reason alongside its stop evidence for leading-truncation
+  review. Channel-0 conformance from 106-17 is separate from joining. Each
   joined run is then **complete**, **incomplete**, or **ambiguous**, with the
   evidence that decided it — the body's final byte, gaps, CSDW changes,
   repeated single-entry attributes (ADR-0031, INT-034). Only complete records
   govern by default; uncertainty is reported, never guessed.
 - **Checksums:** `G\SHA` and the flex signature are computed over the
   assembled body.
+
+Completeness follow-up (2026-11-23): INT-034's "followed by another packet"
+means SAME-CHANNEL. An otherwise complete boundary-ending EOF run remains
+complete with its labelled basis. PROVISIONAL open-run observations never
+stop joining. Pre-EOF semantic snapshot use and invalidation are open owner
+choices, not an approved exception to complete-only parsing/governance.
+Finite aggregate open-run retention and a typed limit error are required;
+accounting, numeric policy and recovery details remain review work. See the
+[batch 15 draft](research/2026-11-23-completeness-contracts-draft.md).
 
 ### 6.5 Session rules and edition codes
 

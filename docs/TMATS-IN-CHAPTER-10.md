@@ -771,8 +771,8 @@ the sequence.
 - **A change is announced.** "Prior to the new setup record being committed
   to the stream, a setup record configuration change event packet shall be
   inserted into the stream" (§11.2.7.2). The standard does not say which
-  packet type or format that event packet is. F7 is coordinator-decided,
-  2026-11-21 (owner may override; INT-030, ADR-0034): require verified
+  packet type or format that event packet is. F7 is owner-approved,
+  2026-11-23 (INT-030; coordinator origin ADR-0034): require verified
   identification and report indeterminate meanwhile; never guess a packet
   type. The event identity remains unverified.
 - **Every record stands alone.** "Each new setup record packet must adhere to
@@ -893,7 +893,9 @@ proposed).
 
 The standard has no end-of-record marker, so each joined run is classified
 with its evidence (ADR-0031, INT-034): **complete** when its text ends at an
-attribute boundary and another packet or the end of input follows;
+attribute boundary and a SAME-CHANNEL packet or the end of input follows;
+EOF alone does not downgrade an otherwise complete boundary-ending run,
+which retains the labelled "end of input" basis;
 **incomplete** when its text is cut inside an attribute, a fragment cannot
 be trusted (a header checksum that fails before a length can be trusted), or
 a sequence gap splits an attribute; **ambiguous** when a gap or a CSDW
@@ -1082,7 +1084,7 @@ for the owner to say where they are written.
 |------|------|-------|
 | Decisions | F5: `irig106-core` does not depend on `irig106-tmats` (option A); F6: the library builds for WebAssembly | ADR-0030; L1-REL-003 |
 | Requirements | L1-CH10-007 (the packet check, widened in section 6), L1-CH10-008 (the configuration timeline), L1-REL-003 | `docs/L1-REQ.md` |
-| Register | INT-024 to INT-029 and INT-031 to INT-033 (proposed); INT-030 (F7 coordinator-decided, 2026-11-21; event identity unverified) | `docs/INTERPRETATIONS.md` |
+| Register | INT-024 to INT-029 and INT-031 to INT-033 (proposed); INT-030 (F7 owner-approved, 2026-11-23; event identity unverified) | `docs/INTERPRETATIONS.md` |
 | Acceptance test | `appendix_9c_channel_2_trace` | `docs/TEST-DATA.md` |
 | Diagrams | `packet-vs-setup-record`, `tmats-in-the-pipeline`, `joining-loop`, `configuration-timeline`, `degraded-cases`, `worked-example-82aj01` | `docs/diagrams/` |
 | Other repositories | the studio's TMATS issues, TI-1 to TI-10 (committed locally there) | `irig106-studio/docs/TMATS-ISSUES.md` |
@@ -1159,12 +1161,12 @@ themselves, where and when the owner directs:
 | `irig106-ch10-reader` | its contract (section 4.7) and ROADMAP X4 |
 | `irig106-index` | catalogues keyed by setup record (sections 4.9 and 5) |
 | `irig106-cli` | mounting `irig106-tmats-cli` and the joining loop (sections 4.2 and 4.10) |
-| `irig106-write` | its contract (section 4.11): splitting records, SRCC, the event packet (F7 coordinator-decided, 2026-11-21; identity unverified), channel `0x0000` |
+| `irig106-write` | its contract (section 4.11): splitting records, SRCC, the event packet (F7 owner-approved, 2026-11-23; identity unverified), channel `0x0000` |
 | `irig106-docs` | the ecosystem overview: this document's picture of where TMATS sits (section 2) |
 
 ### 8.7 Recorded direction and remaining owner decisions
 
-- **F7 (coordinator-decided, 2026-11-21; owner may override)** — require
+- **F7 (owner-approved, 2026-11-23; INT-030)** — require
   verified identification of the configuration-change event and report
   indeterminate meanwhile; never guess a packet type (INT-030, ADR-0034).
   The event identity remains unverified; this decision does not supply one.
