@@ -1259,24 +1259,26 @@ under L1-EDN-006 is a later derivation, not an implied fallback here.
 
 ## Assembly-contract batch 14: candidate runs and exact source mapping
 
-Planned, not implemented. INT-011's independent AI review remains pending;
+Planned, not implemented. INT-011's 2026-11-23 owner clarification is
+recorded; AI recheck of amended wording remains pending;
 INT-034's precise completeness rules remain proposed under ADR-0031/0033.
 These children describe the joining/provenance stage only. They do not settle
 complete/incomplete/ambiguous classification, adjacent-record splits, SRCC
 aggregation, configuration-event identity or a configuration timeline.
 
 **L3-CH10-009** · Parent: L2-CH10-004 · Verification: T
-*Assembly input SHALL retain caller-supplied recording order and evidence of packet adjacency, data type, channel, sequence, raw CSDW and fragment text bounds; absent adjacency evidence SHALL NOT be interpreted as proof that two setup fragments were consecutive packets.*
+*Assembly input SHALL retain caller-supplied recording order, channel identity, per-channel sequence evidence, data type, raw CSDW and fragment text bounds; joining SHALL maintain each channel's independent run(s), and SHALL retain intervening OTHER-channel packets as provenance/information only, never as a stop condition.*
 
-INT-011 joins consecutive packets, not merely consecutive entries in a list
-filtered to data type 0x01. The caller may supply intervening-packet evidence
-or explicit adjacency metadata; this does not freeze a Rust API. Missing
-input evidence stays unavailable rather than being manufactured from file
-offset proximity or equal timestamps. Packet slicing remains outside the
-library (ADR-0010/0025); L3-CH10-001/002 supply its bounded body interface.
+INT-011's owner clarification (Joey, 2026-11-23) interprets consecutiveness
+per channel, not globally. The +1 modulo-256 test detects a same-channel
+packet's consumed sequence number; a setup-only filtered list must not hide
+that evidence. No global packet-adjacency predicate is required. Missing
+channel/sequence evidence stays unavailable, not fabricated from file-offset
+proximity or equal timestamps. This freezes no API shape. Packet slicing
+remains outside the library (ADR-0010/0025); L3-CH10-001/002 supply its bounds.
 
 **L3-CH10-010** · Parent: L2-CH10-004 · Verification: T
-*Under an available reviewed INT-011 binding, two adjacent fragments SHALL join only when both have data type 0x01, the same channel, sequence numbers differing by +1 modulo 256, and matching decoded FRMT and RCCVER; the assembler SHALL record the source evidence for those predicates without replacing either raw CSDW.*
+*Under an available reviewed INT-011 binding, two consecutive fragments within the same channel SHALL join only when both have data type 0x01, the same channel, sequence numbers differing by +1 modulo 256, and matching decoded FRMT and RCCVER; the assembler SHALL record the source evidence for those predicates without replacing either raw CSDW.*
 
 Source: Chapter 11 section 11.2.7.2 and section 11.2.1.1 f (106-24R1),
 ADR-0025 and INT-011. Sequence 255 then 0 satisfies +1; 255 then 1 does not.
@@ -1285,13 +1287,16 @@ SRCC is not an added joining predicate; preserve each SRCC reading and leave
 its disagreement/summary interpretation visibly unresolved for later review.
 
 **L3-CH10-011** · Parent: L2-CH10-004 · Verification: T
-*An intervening packet, channel change, sequence discontinuity, FRMT/RCCVER change or end of supplied input SHALL stop joining with the actual boundary evidence retained; none of those stop reasons alone SHALL be reported as a complete record, a proven missing fragment or a chosen adjacent-record split.*
+*A SAME-CHANNEL intervening packet, per-channel sequence discontinuity, FRMT/RCCVER change or end of supplied input SHALL stop the affected channel's joining with its actual evidence retained; OTHER-channel packets SHALL NEVER stop, mix or interrupt that run; none of those stop reasons alone SHALL prove a complete record, a missing fragment or a chosen adjacent-record split.*
 
-ADR-0031 supersedes ADR-0025's ending rule, not its joining prerequisites.
-A run ending at EOF still needs the separately reviewed completeness rule;
-sequence gaps can mean loss or separate records. Keep unreadable/untrusted
-fragment evidence rather than silently joining around it. This child selects
-no recovery policy or complete/incomplete/ambiguous result for that evidence.
+INT-011's 2026-11-23 owner clarification makes an intervening packet
+same-channel only; the +1 sequence test already detects it. Other channels
+continue their own runs independently. Channel 0x0000 from 106-17 is an
+edition-dependent conformance check (Chapter 11 section 11.2.1.1 b), not a
+joining rule; nonzero setup-channel evidence is preserved in every edition.
+ADR-0031 still governs completeness. Keep unreadable/untrusted evidence;
+this selects no recovery or completeness result. INT-034 needs run-start
+as well as stop evidence to consider leading truncation (L3-CH10-016).
 
 **L3-CH10-012** · Parent: L2-CH10-004 · Verification: T
 *The candidate text SHALL be the exact concatenation, in recording order, of each joined fragment's supplied text slice after its own CSDW; no CSDW, header, filler, packet checksum or separator SHALL be inserted into that text, and no code name, value or encoding marker SHALL be interpreted separately merely because it crosses a fragment boundary.*
@@ -1332,9 +1337,13 @@ This does not change finding severity or authorize scanning incomplete data
 as a usable document.
 
 **L3-CH10-016** · Parent: L2-CH10-004 · Verification: T
-*The joining report SHALL retain candidate-run identity, fragment membership, stop reasons and the status of its joining interpretation separately from later completeness, declaration and checksum results; successful concatenation SHALL NOT claim a usable document, authoritative digest, governing configuration or interpretation approval.*
+*The joining report SHALL retain candidate-run identity, fragment membership, START reason alongside stop reasons and the status of its joining interpretation separately from later completeness, declaration and checksum results; successful concatenation SHALL NOT claim a usable document, authoritative digest, governing configuration or interpretation approval.*
 
-INT-011 needs its pending independent check before implementation. INT-034
+Each run retains an evidenced START reason, e.g. "start of supplied input"
+or restart after a same-channel interruption/sequence or FRMT/RCCVER change;
+these reasons do not assert that the beginning is intact. Other-channel
+traffic never creates a new start for an existing run. INT-011 needs its
+pending AI recheck before implementation. INT-034
 requires its own owner sign-off and independent check for the precise rules;
 INT-039 duplicate classification applies to a document only after assembly
 scope is established. Cross-fragment duplicate evidence must not silently

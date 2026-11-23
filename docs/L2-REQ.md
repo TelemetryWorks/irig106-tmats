@@ -639,17 +639,17 @@ validation remain later derivations. No new supported-edition claim is made.
 This derives only joining and source mapping within L1-CH10-004. A joined
 candidate run is not proof of one complete setup record. Completeness,
 ambiguous splits and session rules still need subsequent derivations and
-review of INT-034/028/031. INT-011's existing owner acceptance is preserved;
-its independent AI check is pending under ADR-0033. No interpretation gains
+review of INT-034/028/031. INT-011 records Joey's 2026-11-23 per-channel clarification;
+AI recheck of amended wording is pending under ADR-0033. No interpretation gains
 approval through a requirement or a supplied fixture binding.
 
 #### L2-CH10-004
 
 **Parent**: L1-CH10-004
 
-**Statement**: The library SHALL form candidate fragment runs from caller-supplied bytes and provenance in recording order using the INT-011 joining prerequisites, retain why each join was permitted or stopped, and concatenate only the TMATS text portions without inserting, removing or interpreting text at a packet boundary; a joined run SHALL remain distinct from a completeness or governance verdict.
+**Statement**: The library SHALL form independent candidate fragment runs per channel from caller-supplied bytes and provenance in recording order using the INT-011 joining prerequisites, retain each run's start reason and why each join was permitted or stopped, and concatenate only the TMATS text portions without inserting, removing or interpreting text at a packet boundary; a joined run SHALL remain distinct from a completeness or governance verdict.
 
-**Rationale**: 106-24R1 Chapter 11 section 11.2.7.2 page 11-50 states that one setup record may span consecutive packets and that sequence increments n+1 in segmentation order. Section 11.2.1.1 f defines per-channel sequence counters. ADR-0025 supplies the library boundary; INT-011 supplies the additional same-channel/FRMT/RCCVER interpretation. ADR-0031 supersedes the old assumption that stopping a run proves a record finished. This is not a packet reader or an end-marker invention.
+**Rationale**: 106-24R1 Chapter 11 section 11.2.7.2 page 11-50 states that one setup record may span consecutive packets and that sequence increments n+1 in segmentation order. Section 11.2.1.1 f defines per-channel sequence counters. ADR-0025 supplies the library boundary; INT-011 supplies the additional same-channel/FRMT/RCCVER interpretation. ADR-0031 supersedes the old assumption that stopping a run proves a record finished. Joey's 2026-11-23 INT-011 clarification makes other-channel packets provenance/information only, never a stop condition. Channel-0 conformance is separate from joining. This is not a packet reader or an end-marker invention.
 
 **Verification Method**: Test (T)
 

@@ -81,7 +81,8 @@ irig106-tmats/
 │   │                          2026-11-23-edition-basis-draft.md derives labelled edition-basis selection and drafts INT-044;
 │   │                          2026-11-23-int044-owner-decision.md records Option B, conditions and rejected Option A;
 │   │                          2026-11-23-int044-owner-signoff.md records approval and structured reason follow-ups;
-│   │                          2026-11-23-assembly-contracts-draft.md derives candidate joining and byte provenance
+│   │                          2026-11-23-assembly-contracts-draft.md derives candidate joining and byte provenance;
+│   │                          2026-11-23-int011-per-channel-owner-decision.md records independent joining and START evidence
 │   ├── API_GUIDE.md           prototype: usage examples for the prototype API
 │   ├── REQUIREMENTS.md        prototype: single-file requirements; replaced by L1/L2/L3-REQ.md
 │   └── FOR_IRIG106_DOCS_REPO.md  prototype: cross-crate contract notes intended for irig106-docs
