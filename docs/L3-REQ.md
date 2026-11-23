@@ -1065,6 +1065,10 @@ the projected/normalized source. An accepted 02/002 algorithm token in input
 does not change canonical output; noncanonical diagnostics remain available
 for the input on which they were observed.
 
+**Analysis note — flex boundary:** Under L1-SUM-003, the irig106.org flex
+signature stays a separately labelled, non-standard compatibility value.
+A stamp never writes it into G\SHA or treats it as the SHA-256 digest.
+
 **L3-SUM-009** · Parent: L2-SUM-003 · Verification: T
 *Successful stamping SHALL require re-reading and verifying the actual final output bytes against the stamped digest, with retained output/revision provenance; any target, emission, reconstruction or verification failure SHALL return failure without claiming a verified stamp or mutating the original input.*
 
@@ -1082,3 +1086,10 @@ BOM or undefined-exclusion paths. Diagnostic-only token observations remain
 located evidence, not usable lookup keys or exclusions. A stamp that emits
 canonical 2- need not fabricate a noncanonical warning for its new value;
 retain input warnings with their original-revision provenance.
+
+
+**Analysis note — noncanonical name slots:** Stamping a value into `g\sha:`
+or `G\S\r\nHA:` keeps INT-018's located noncanonical-name finding prominent
+in the stamp result. Recommend an explicit rename edit first; a stamp alone
+never silently renames the slot or makes the name canonical. This recommendation
+adds no automatic repair or new refusal gate when stamping is otherwise eligible.

@@ -511,8 +511,8 @@ allows COMPUTE of a checksum independently of the placeholder's value;
 stamping may explicitly replace it and must verify the final output. This
 sets a reported status/reason, not a concrete Rust enum. Source: 106-24R1
 Chapter 6 section 6.2.3.11 f, pages 6-22–6-23, including the placeholder example.
-`02-` spelling is a separate proposed decision in INT-043, not covered by
-this reconfirmation. Fixture digests use independent Python hashlib over
+`02-` spelling is a separate decision in approved INT-043 (Option B), not
+covered by this reconfirmation. Fixture digests use independent Python hashlib over
 exact bytes, not Chapter 6's example digest, reported unreproducible by the
 reviewer. No claim of reproducing that printed digest is made here.
 
