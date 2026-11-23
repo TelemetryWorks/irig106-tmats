@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through condition-scope batches drafted (family 2, batches 1-8).**
+> **Status: foundations through registry-gate batches drafted (family 2, batches 1-9).**
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > Foundations derive the approved restructure/source store; framing and
 > recovery use owner-approved INT-035. Character policies INT-036/037 were
@@ -444,5 +444,52 @@ only its reviewed applicable subset. See the
 **Statement**: Evaluating a reviewed condition SHALL produce true, false or cannot-evaluate with its rule, scope, operand evidence and edition basis; unavailable scope, link selection or required value operands, and zero exact presence matches with compatible related damaged evidence, SHALL produce cannot-evaluate with a separate pass-labelled finding, never a false-condition verdict, winner selection or silent default activation.
 
 **Rationale**: L1-REG-004 and ADR-0022 already forbid true/false for missing or invalid value operands; INT-039/041 extend the visible guard to ambiguity and unavailable interpretation. Section 9.5.1 a, page 9-6, states: "If the attribute is specified in the TMATS file, it must contain valid information". This sentence sits within the R/R Ch 10 Status bullet: strong evidence separating physical specification from validity in that context, not a general definition of specified. Approved INT-042 Option A interprets presence separately. INT-042 permits proved absence to answer a reviewed physical-presence predicate, but zero exact matches alone cannot prove absence when related damaged evidence remains. A condition result is not whole-document validity, and a true presence predicate does not certify its present values.
+
+**Verification Method**: Test (T)
+
+
+## Registry batch 9: source provenance and interpretation gates
+
+This batch derives L1-REG-001/003/006 from ADR-0004/0005/0022/0027 and
+ADR-0033's owner-approved review rule. No new standard interpretation is
+proposed. It specifies evidence obligations, not an existing registry,
+extractor, hash implementation or CI job. INT-042's separately requested
+matching detail is derived in L3-VAL-012, with its approved states unchanged.
+
+A semantic approval does not imply completed development analysis or tests.
+The requirements below keep those gates separate and keep source coverage
+visible without manufacturing executable interpretations. Complete extraction,
+relationship generation, edition deltas and condition grammar remain later
+batches. General registry scope stays at its existing roadmap releases; only
+the reviewed bounded time-view subset is brought forward to 0.1.
+See the [source/gate derivation record](research/2026-11-23-registry-gates-draft.md).
+
+#### L2-REG-004
+
+**Parent**: L1-REG-001
+
+**Statement**: Every built-in definition and executable rule SHALL retain an edition-specific source identity and section or table/row citation, with the source text supporting its keywords, ranges, conditions and defaults; source coverage SHALL distinguish an executable reviewed interpretation, a visibly not-yet-interpreted source entry and an explicit exclusion with its reason.
+
+**Rationale**: ADR-0004/0022 require cited source and interpretation layers; Chapter 9 section 9.5.1 a, pages 9-5–9-6 (106-24R1), identifies usage fields, while definition prose is also authoritative. ADR-0022's completeness/coverage check must not silently drop rows or turn raw extraction into permission to execute a rule. Existing L2-REG-002 preserves default origin. Full table extraction and relationship completeness are not completed by this provenance child.
+
+**Verification Method**: Test (T)
+
+#### L2-REG-005
+
+**Parent**: L1-REG-003
+
+**Statement**: Each executable registry interpretation SHALL bind its draft author, dated owner sign-off, independent AI review evidence and source-text hash to the exact source and interpretation revision reviewed; a source change SHALL flag re-review and SHALL NOT inherit executable approval merely because its code-name pattern or interpretation identifier is unchanged.
+
+**Rationale**: ADR-0033 supersedes only the two-human rule; L1-REG-003 and ADR-0022 retain source-hash freshness. A semantic decision's date and an exact-head AI-check reference are evidence, not completion of implementation analysis/tests. Source changes are not erased by recalculating a digest or carrying forward an approved label.
+
+**Verification Method**: Test (T)
+
+#### L2-REG-006
+
+**Parent**: L1-REG-006
+
+**Statement**: Every executable nonliteral interpretation SHALL resolve to its permanent interpretation-register entry, cited sources, chosen behaviour/reason, design and review evidence, completed development analysis and required executable verification; generation SHALL NOT silently activate an unlisted, open, proposed, stale or otherwise unready interpretation, while retaining its source and explicit unavailable status for coverage reporting.
+
+**Rationale**: ADR-0027 and the register's existing development convention require deep analysis and intensive tests before implementation, in addition to ADR-0033 approval. A planned test name or research draft is not passing verification. This derives the dependency/evidence gate, not a new review policy or permission to implement the current approved-but-unanalyzed entries.
 
 **Verification Method**: Test (T)

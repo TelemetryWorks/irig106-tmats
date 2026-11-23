@@ -1135,6 +1135,17 @@ High bytes anywhere within or adjoining the literal qualify, e.g. both
 bytes. ASCII controls already pass through INT-036's projection. Preserve
 raw bytes; diagnostic relevance neither removes high bytes to form a usable
 key nor permits arbitrary printable-prefix matches or value-text searches.
+
+Implementation clarification requested by the owner, 2026-11-23: after
+INT-036 projection/case folding, readable characters must appear in order;
+each maximal high-byte run stands for zero or more unknown bytes. Match
+whole literals, with no implicit gaps except at those runs; an unterminated
+EOF suffix can also lack its unread remainder. Thus `T-1\I\xFF:a;` is
+compatible with ID (the run can cover D), as are I\xFFD and ID\xFF, while
+D\xFFI is not. This deterministic compatibility check supplies diagnostic
+evidence only, never a repaired key; L3-VAL-012 and its planned cases pin it.
+Readable-parent guards still apply without invented parents or alignments.
+
 Incompatible parents/unrelated families do not block this predicate's false
 answer; keep their findings. One known exact match proves presence even if
 additional damaged evidence exists. INT-035 framing is unchanged.
@@ -1158,7 +1169,7 @@ Boolean semantics or new default is selected by this interpretation.
 
 **Design**: approved (Joey, owner sign-off, 2026-11-23) · **Review**: approved under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-23; independent AI recheck: CONCURS with amended Option A on PR #28 at `d69d275`, relayed by the owner 2026-11-23 · **Origin**: family 2 batch 8
 
-**Test**: `specified_absent_is_false`, `specified_invalid_and_duplicate_stays_true`, `presence_scope_unknown_is_not_absence`, `missing_value_does_not_make_inequality_true`, `default_does_not_make_item_specified`, `unterminated_text_is_not_specified`, `damaged_name_blocks_false_presence`, `presence_uses_canonical_name_identity`, `damaged_child_parent_blocks_compatible_scopes`, `not_specified_preserves_unknown`, `other_document_does_not_supply_presence`, `unterminated_literal_prefix_blocks_compatible_presence`, `high_byte_inside_literal_blocks_false_presence`, `projected_controls_preserve_exact_presence` (planned, not yet written)
+**Test**: `specified_absent_is_false`, `specified_invalid_and_duplicate_stays_true`, `presence_scope_unknown_is_not_absence`, `missing_value_does_not_make_inequality_true`, `default_does_not_make_item_specified`, `unterminated_text_is_not_specified`, `damaged_name_blocks_false_presence`, `presence_uses_canonical_name_identity`, `damaged_child_parent_blocks_compatible_scopes`, `not_specified_preserves_unknown`, `other_document_does_not_supply_presence`, `unterminated_literal_prefix_blocks_compatible_presence`, `high_byte_inside_literal_blocks_false_presence`, `projected_controls_preserve_exact_presence`, `high_byte_run_covers_missing_literal_tail`, `damaged_literal_readable_order_is_required`, `high_byte_run_can_match_empty`, `terminated_literal_has_no_implicit_gap` (planned, not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 

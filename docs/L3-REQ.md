@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through condition-scope batches drafted (family 2, batches 1-8).**
+> **Status: foundations through registry-gate batches drafted (family 2, batches 1-9).**
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > These are implementation obligations, not existing interfaces or completed
 > tests. INT-035/036/037/038/039/040/041/042 are approved; INT-042 sign-off is dated 2026-11-23.
@@ -819,3 +819,103 @@ Do not certify whole-document validity from a locally true condition. This
 batch leaves compound-expression grammar, dependency cycles and budgets to
 subsequent reviewed requirements rather than importing Appendix 9-E's
 measurement-expression operators into usage conditions by analogy.
+
+
+**L3-VAL-012** · Parent: L2-VAL-003 · Verification: T
+*Diagnostic damaged-name matching SHALL preserve the order of every readable character and treat each maximal high-byte run as zero or more unknown bytes, matching the whole candidate literal against the whole declared literal; an unterminated suffix SHALL additionally permit the unread EOF remainder, subject to readable-parent compatibility, without creating a usable key.*
+
+Owner-requested INT-042 implementation clarification, 2026-11-23. Apply
+INT-036 projection and ASCII case folding first; a high byte is 0x80–0xFF,
+not an ASCII control. Keep each intervening readable character as a required
+literal character in order, not a character set or a sortable bag. A run
+can explain missing characters or no characters: `I\xFF` is compatible with
+ID, `I\xFFD` with ID, and `ID\xFF` with ID. `D\xFFI` is incompatible with
+ID because the readable characters are reversed. Without a high-byte run,
+a terminated I is not compatible with ID; ordinary printable suffixes are
+not implicitly optional. Do not turn ID2 into ID or search inside values.
+
+This is deterministic existential matching: compatible if at least one
+whole-literal alignment satisfies those constraints, not a guessed repaired
+spelling. It is a diagnostic uncertainty guard only; none of these damaged
+names becomes an exact lookup match. Preserve source bytes and locations.
+Use declared literal components/index positions and INT-040's readable-parent
+compatibility guard; do not let a literal wildcard override a contradictory
+readable parent, guess wrong-arity alignment or enumerate possible parents.
+An unframed EOF suffix remains diagnostic evidence, not an INT-035 item.
+Work follows supplied name/pattern lengths using bounded matching states,
+without enumerating replacements or recursively exploring an exponential
+number of alignments. Concrete budget values remain a later derivation.
+
+
+
+## Registry batch 9: reviewable source and readiness evidence
+
+Planned obligations deriving existing decisions, not implemented tooling.
+No new interpretation or change to earlier approval statuses is selected.
+The source/gate derivation record lists the authorities and remaining work.
+
+**L3-REG-007** · Parent: L2-REG-004 · Verification: T
+*Each built-in source entry SHALL retain its edition, exact section or table/row identity, source text including usage and definition prose, and the source dependencies of each interpreted keyword/range/condition/default; it SHALL NOT substitute another edition's similarly named row or omit prose merely because a usage field exists.*
+
+Sources: ADR-0004/0022; 106-24R1 Chapter 9 section 9.5.1 a, pages 9-5–9-6.
+A row reference must be identifiable by its code-name pattern and parameter,
+not only an unstable extracted row number. Supporting prose from another
+section keeps its own citation. This sets no new table-extractor file format.
+
+**L3-REG-008** · Parent: L2-REG-004 · Verification: T
+*The registry coverage check SHALL account for each source row in its declared edition/input set as executable, not yet interpreted, or explicitly excluded with a reason, and SHALL report an unaccounted source entry as a coverage failure rather than silently removing it.*
+
+ADR-0022 supplies this completeness/coverage distinction. Exclusion requires
+an identifiable source and reason; it is not a fabricated valid rule or an
+excuse to advertise excluded coverage as supported. This check consumes a
+source inventory; completeness of extracting that inventory from all tables,
+prose-only definitions and relationships remains a separate requirement.
+
+**L3-REG-009** · Parent: L2-REG-005 · Verification: T
+*Review metadata SHALL identify the interpretation revision, draft author, owner and sign-off date, independent AI-check result/date and evidence reference, and the exact source-text dependencies whose hash was reviewed; approval SHALL NOT be inferred from a pending review, a coordinator decision or a link to a moving branch alone.*
+
+Source: ADR-0033 and L1-REG-003. An owner-relayed AI result may identify a
+PR and immutable head as existing sign-off records do; do not fabricate a
+separately posted GitHub review. The owner is the human signatory; the AI
+check is recorded as non-human. This creates no agent-attribution trailers.
+
+**L3-REG-010** · Parent: L2-REG-005 · Verification: T
+*Freshness checking SHALL compare the current cited source dependencies with the source-text hash bound to review, flag every affected interpretation for re-review on a difference or unavailable hash, and prevent the stale interpretation from executing as currently approved.*
+
+Hash input must cover the actual source dependencies, including definition
+prose and any supporting section used by the rule, with a documented stable
+encoding and boundaries; concatenation ambiguity or case/whitespace folding
+must not conceal source changes. Changing the reference edition/source is
+also a dependency change even if some text is identical. Hash algorithm and
+storage format remain implementation choices to document and review; this
+batch selects neither. Old approval evidence stays historical, not deleted.
+
+**L3-REG-011** · Parent: L2-REG-006 · Verification: T
+*Every executable interpretation dependency SHALL name an existing register entry and preserve its chosen behaviour, reason, citations, design/review status and focused test linkage; an unlisted or unresolved dependency SHALL fail executable readiness and remain visible as unavailable rather than be replaced by an inline heuristic.*
+
+ADR-0027 requires no unregistered interpretation. Source-only and excluded
+entries remain reportable; not every extracted row must immediately execute.
+A rule depending on multiple interpretations needs all applicable gates,
+not approval of only one. A test name without an executable test marker is
+planned coverage, not implemented evidence under the trace conventions.
+
+**L3-REG-012** · Parent: L2-REG-006 · Verification: T
+*Executable readiness SHALL distinguish semantic approval, source freshness, completed linked development analysis and required verification evidence, reporting every blocking prerequisite without converting a draft analysis or planned acceptance case into completed evidence.*
+
+Existing development conventions require source re-reading across touched
+editions/handbooks, edge cases, intensive tests and applicable local samples.
+Do not label currently approved INT-035–042 implemented merely because their
+semantic approval is recorded. Required focused/edge/property or fuzz and
+edition fixtures must be traced to the interpretation; applicability of local
+sample evidence stays explicit and samples remain outside CI. This batch
+does not run that analysis, implement those tests or mandate real samples
+where none exercises the interpretation.
+
+**L3-REG-013** · Parent: L2-REG-006 · Verification: T
+*Registry generation/checking SHALL refuse to emit an executable rule with a failed readiness dependency and SHALL report its entry, blocking interpretation/source evidence and reason; its source coverage status SHALL remain visibly non-executable, without replacing a checked-in reviewed rule silently or rewriting source text to make a gate pass.*
+
+ADR-0005 requires checked-in generation and a drift check, not downstream
+build-time generation. This specifies the refusal boundary for unready rules;
+complete output determinism, atomic file replacement, extractor diagnostics,
+user overlays and generator CLI details remain later derivations. No current
+CI workflow, registry artifact or prototype build script changes here.
