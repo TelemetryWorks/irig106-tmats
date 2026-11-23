@@ -108,6 +108,8 @@ jobs:
         with:
           python-version: "3.12"
       - run: python scripts/build-trace-matrix.py --check
+      - name: Retransmission decision matrix up to date
+        run: python docs/research/retransmission-matrix/spec.py --check
 
   deny:
     name: Dependency policy (cargo-deny)

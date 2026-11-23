@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-23-retransmission-decision-matrix.md](2026-11-23-retransmission-decision-matrix.md) | Proposed INT-046; explicit whole-product members/outcomes/tests in `retransmission-matrix/`, owner direction and unresolved questions; no approval or runtime test claim |
 | [2026-11-23-channel-zero-edition-sources.md](2026-11-23-channel-zero-edition-sources.md) | Per-edition channel-ID source passages/scopes for INT-011/045 review; no new cutoff or conformance approval |
 | [2026-11-23-mid-session-setup-corner-cases.md](2026-11-23-mid-session-setup-corner-cases.md) | 22 retained cases plus M1–M3; checksum failure raised with reviewer default-policy disagreement; options unapproved and likelihood unmeasured |
 | [2026-11-23-int045-owner-signoff.md](2026-11-23-int045-owner-signoff.md) | INT-045 approval, exact #40/#41 AI references and continuation-only checksum diagnostic suggestion |

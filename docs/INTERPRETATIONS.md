@@ -1654,3 +1654,56 @@ in the #40 draft; neither the event nor a nearby 0x02 is guessed as an end.
 **Draft analysis**: [original sources/options](research/2026-11-23-initial-time-boundary-proposal.md); [owner layered closure decision, source fingerprint and amended safety cases](research/2026-11-23-int045-layered-owner-decision.md).
 
 **Approval record**: [owner approval and exact AI concurrence](research/2026-11-23-int045-owner-signoff.md). Source freshness, completed development analysis and executable tests remain required. The separate [mid-session corner-case catalogue](research/2026-11-23-mid-session-setup-corner-cases.md) is discussion only, with no approved options.
+
+
+### INT-046
+
+**Title**: Whole-byte retransmission evidence after a time-boundary seal
+
+**Sources**:
+- 106-24R1 Chapter 11 §11.2.7.2 p. 11-50: “0 = Setup record configuration has not changed”; “1 = Setup record configuration has changed”. The first fragment supplies the candidate's SRCC observation, not proof of equality.
+- 106-24R1 Chapter 6 §6.2.3.11 f pp. 6-22–23: 'all text between the "G\SHA" and the following semicolon, inclusive' and 'prefixed with the constant string “2-”'; Chapter 9 Table 9-2 MESSAGE DIGEST/CHECKSUM p. 9-13. Exact raw exclusion follows INT-018/019; value reading follows INT-020/043, never digest equality as byte equality.
+- Owner direction, Joey, 2026-11-23: “a byte-identical following copy keeps the sealed record Complete, labelled 'identical retransmission'”; an SRCC=0 copy “is CHECKED, never assumed unchanged: if it differs, report it and treat it as a change”; every combination must be documented and fully tested.
+
+**Behaviour proposed**: Extend INT-045 with a separately reviewed, bounded
+identity exception: an otherwise Complete time-sealed ASCII candidate with a
+whole bounded, same-channel +1, same-FRMT/RCCVER byte-identical following
+copy remains Complete with `identical retransmission` alongside its closure
+basis. A mid-session basis still says `time-boundary seal (owner policy)`.
+Following SRCC=1 does not manufacture a semantic change when text is equal;
+SRCC=0 differences are reported as changes, including raw SHA/layout changes.
+Never substitute a matching prefix, projected equality, a checksum match or
+an unchanged claim for comparison of EVERY raw TMATS text byte.
+
+This is a proposal, not an approval of all exception limits or governance.
+The [exhaustive matrix](research/2026-11-23-retransmission-decision-matrix.md)
+lists every member, all outcomes, inherited findings and owner questions.
+Already-cut input remains Incomplete; pre-existing ambiguity is not upgraded.
+The matrix separates the INT-045 baseline from QD's proposed duplicate assembly
+hold: F1 alone changes no completeness. Related-follower premature-seal findings
+and byte-identity evidence remain visible even with a duplicated checksum.
+Multiple following copies are explicitly outside this pairwise proposal;
+QM asks which candidate each copy compares against and how outcomes compose
+(B then D, H then B). Recommend both original/previous comparisons with explicit
+identities, without deciding aggregation, finality or governing setup.
+INT-011 joining remains independent; INT-039 duplicates remain document-local.
+INT-021/F1 never selects a checksum duplicate or claims positive verification.
+The checksum on the following copy alone is NOT the sealed-text verification
+exception; a continuation checksum is diagnostic only. Neither identity nor
+classification rejoins records, stamps input, approves INT-034 precedence,
+chooses a governing setup or changes INT-045's approved guard before review.
+
+**Reason**: Whole-byte identity is stronger evidence than an SRCC claim or
+repeating single-entry G attributes. The owner wants the stronger evidence
+used while every combination and uncertainty remains visible. SHA-only/raw
+layout changes are explicit change subtypes; their semantic adoption needs
+review. Distinct integrity, completeness and governance layers prevent a
+retransmission label from laundering F1 or overriding incomplete input.
+
+**Design**: proposed; owner direction recorded, matrix limits/questions undecided · **Review**: pending under ADR-0033; draft author: maintainer agent; Joey's direction, 2026-11-23, is recorded above, not final sign-off of this wording/table; independent AI check pending · **Origin**: corner case 01/M1 and owner whole-matrix request, 2026-11-23
+
+**Test**: `retransmission_matrix_exhaustive_coverage`, `srcc0_different_is_reported_change`, `srcc1_identical_is_not_assumed_change`, `sha_only_following_not_sealed_proof`, `sha_only_sealed_preserves_verified_exception`, plus every explicitly named matrix member (planned; not written/executed)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Draft analysis**: [full product, explicit members, proposed outcomes and owner questions](research/2026-11-23-retransmission-decision-matrix.md). Checking the documentation artifacts is not runtime verification or completed development analysis.

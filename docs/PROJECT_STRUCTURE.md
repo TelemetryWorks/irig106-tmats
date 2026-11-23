@@ -89,7 +89,12 @@ irig106-tmats/
 │   │                          2026-11-23-int045-layered-owner-decision.md records initial sign-off and the owner mid-session extension;
 │   │                          2026-11-23-int045-owner-signoff.md records approval and exact AI concurrence;
 │   │                          2026-11-23-mid-session-setup-corner-cases.md catalogues owner discussion cases and unapproved options;
-│   │                          2026-11-23-channel-zero-edition-sources.md records per-edition channel-use source evidence for review
+│   │                          2026-11-23-channel-zero-edition-sources.md records per-edition channel-use source evidence for review;
+│   │                          2026-11-23-retransmission-decision-matrix.md specifies proposed INT-046's exhaustive review matrix;
+│   │                          retransmission-matrix/spec.py is its stdlib documentation generator/expander (not runtime TMATS code);
+│   │                          retransmission-matrix/members.jsonl.gz lists every explicit tuple, output and planned test;
+│   │                          retransmission-matrix/classes.json.gz lists equivalent complete outputs, explicit member IDs and counts;
+│   │                          retransmission-matrix/manifest.json records domains, counts and artifact fingerprints
 │   ├── API_GUIDE.md           prototype: usage examples for the prototype API
 │   ├── REQUIREMENTS.md        prototype: single-file requirements; replaced by L1/L2/L3-REQ.md
 │   └── FOR_IRIG106_DOCS_REPO.md  prototype: cross-crate contract notes intended for irig106-docs

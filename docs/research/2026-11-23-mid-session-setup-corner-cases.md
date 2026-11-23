@@ -70,17 +70,21 @@ single-entry attributes, not record boundaries. The time-seal guard is policy.
 approved INT-045 unless its own G\SHA verifies. Excluding the following
 SRCC=0 candidate from mid-session closure does NOT exempt the earlier record
 from the premature-seal guard. Both readings and finding remain; no rejoin.
-**Options/recommendation:** A add a BYTE-IDENTICAL following-candidate exception:
-keep the sealed record Complete, labelled `identical retransmission`; B use
-the weaker signal of an SRCC=0 FIRST fragment repeating the single-entry G
-attributes; C retain the approved guard without another exception. Recommend
-A for owner consideration only if the WHOLE following candidate's TMATS byte
-extent is independently established and identical, not a matching prefix.
-Byte identity is literal TMATS text (including layout/unknown/checksum
-bytes), not packet headers/CSDWs or logical field equivalence. Treat B as
-information rather than proof. A/B are UNDECIDED; until decided,
-C applies as approved. Byte identity proves equality, not integrity or full
-required-attribute validity, and chooses no new boundary for the repeat.
+**Owner direction, 2026-11-23 (not final matrix approval):** Joey agrees that
+whole-byte-identical following text keeps an otherwise Complete sealed record
+Complete, labelled `identical retransmission`. An SRCC=0 claim is CHECKED:
+differing content is reported and treated as a change; SRCC=1 does not itself
+make identical bytes different. The owner requires EVERY combination and
+whole-matrix implementation tests before this exception can be implemented.
+**Proposal/review:** [INT-046's exhaustive matrix](2026-11-23-retransmission-decision-matrix.md)
+lists each member, outcome, test and unresolved owner question. It distinguishes
+first-only versus second-only checksums, metadata changes, cut/ambiguous
+candidates, boundary types and initial/mid-session phases. Byte identity is
+literal whole TMATS text, including layout/unknown/checksum bytes, not packet
+headers, a matching prefix or projected equality. Repeating single-entry G
+attributes remains weaker information. Preserve the approved INT-045 guard
+until the new wording/limits pass review; do not treat the owner's direction
+as approval of unresolved governance, scope or integrity options.
 
 ## 09. The update's G\SHA fails
 

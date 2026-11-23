@@ -107,7 +107,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-REG-003 | L2-REG-005 | _(none)_ | Draft |
 | L1-REG-004 | L2-REG-003 | _(none)_ | Draft |
 | L1-REG-005 | L2-REG-001 | _(none)_ | Draft |
-| L1-REG-006 | L2-REG-006 | _(none)_ | Draft |
+| L1-REG-006 | L2-REG-006, L2-REG-007 | _(none)_ | Draft |
 | L1-REG-007 | _(none)_ | _(none)_ | Draft |
 | L1-REG-008 | _(none)_ | _(none)_ | Draft |
 
@@ -121,6 +121,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-REG-004 | L3-REG-007, L3-REG-008 | _(TBD)_ | Draft |
 | L2-REG-005 | L3-REG-009, L3-REG-010 | _(TBD)_ | Draft |
 | L2-REG-006 | L3-REG-011, L3-REG-012, L3-REG-013 | _(TBD)_ | Draft |
+| L2-REG-007 | L3-REG-014, L3-REG-015 | _(TBD)_ | Draft |
 
 ### L1-VIEW: Lookup, structured views, and links
 
@@ -325,7 +326,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | READ | 7 | 13 | 33 | 0 | 0 | 0 | 0 |
 | CH10 | 8 | 7 | 21 | 0 | 0 | 0 | 0 |
 | EDN | 6 | 2 | 7 | 0 | 0 | 0 | 0 |
-| REG | 8 | 6 | 13 | 0 | 0 | 0 | 0 |
+| REG | 8 | 7 | 15 | 0 | 0 | 0 | 0 |
 | VIEW | 9 | 4 | 11 | 0 | 0 | 0 | 0 |
 | VAL | 6 | 3 | 12 | 0 | 0 | 0 | 0 |
 | DER | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -337,13 +338,13 @@ This matrix is the single source of truth for live status; the requirement docum
 | ROB | 3 | 3 | 6 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **47** | **121** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **48** | **123** | **0** | **0** | **0** | **0** |
 
 The countable requirement set is every L2 and L3 requirement plus the 53 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 221 (0.0%).
+**Tested by at least one test marker**: 0 of 224 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 221 (1.4%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 224 (1.3%).
 
 ### Orphan check
 
@@ -401,9 +402,10 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-043 | Leading-zero algorithm 2 designators are accepted with a warning | approved (Joey, Option B, 2026-11-23) | not yet written | _(none)_ |
 | INT-044 | Duplicate G\106 retains ambiguity with an explicitly labelled fallback basis | approved (Joey, Option B, 2026-11-23) | not yet written | _(none)_ |
 | INT-045 | Layered time-packet closure for initial setup and SRCC=1 updates | approved (Joey, initial A and guarded mid-session extension, 2026-11-23) | not yet written | _(none)_ |
+| INT-046 | Whole-byte retransmission evidence after a time-boundary seal | proposed; owner direction recorded, matrix limits/questions undecided | not yet written | _(none)_ |
 
-* Entries without a written analysis: **45** of 45
-* Entries without a test: **45** of 45
+* Entries without a written analysis: **46** of 46
+* Entries without a test: **46** of 46
 * Entries missing the development mark: **0**
 
 ### Marker reference check
