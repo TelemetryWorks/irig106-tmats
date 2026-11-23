@@ -560,9 +560,8 @@ No current build script, CI job, generator or parser test is changed here.
 **Status: planned, not executable tests.** INT-018/019/020 were reconfirmed by
 Joey, 2026-11-23, with independent AI CONCUR in the register review at main
 30e42a3; INT-021/F1 and INT-030/F7 approvals remain recorded. Analysis and
-tests are not complete. INT-043 Option B owner decision is recorded; its
-amended wording awaits independent AI recheck and final approval. The cases
-below specify that decision, not executed behavior or completed review.
+tests are not complete. INT-043 Option B is approved (Joey, 2026-11-23; AI
+CONCURS on #32 at 8941ca1). Cases remain planned, not executed behavior.
 
 Sources: 106-24R1 Chapter 9 section 9.4.2 and Table 9-2 MESSAGE DIGEST/
 CHECKSUM, page 9-13; Chapter 6 section 6.2.3.11 f, pages 6-22–6-23;
@@ -590,12 +589,43 @@ been reproduced. Exact preimages/digests are in the
 | `checksum_value_blanks_are_unavailable` | Independently correct h with leading/embedded/trailing ASCII blanks in separate values | Unavailable until blank rule review; no trim, automatic mismatch or automatic Invalid verdict | L3-SUM-004 |
 | `sha_zero_placeholder_is_unverified` | `G\SHA:0;G\PN:TEST;` | Unverified with placeholder/no-digest reason, never match/mismatch; defined exclusion permits COMPUTE under the general L3-SUM-002 rule (also true for complete malformed digest values), using the note's second preimage; explicit stamp may replace and must verify final output | L3-SUM-005 |
 | `checksum_fixture_uses_independent_digest` | The note's exact byte preimages and hashlib digests | Expected digest comes from independent raw-byte oracle; do not derive expected output through the implementation under test or copy the printed Chapter 6 example | L3-SUM-001, L3-SUM-004 |
-| `zero_padded_sha_algorithm_requires_decision` | Complete unique `G\SHA:2-h;`, `G\SHA:02-h;`, `G\SHA:002-h;` with h independently correct | Under owner-decided Option B, all identify algorithm 2 and may verify positively. Canonical 2- has no designator warning; 02/002 always have located warning NONCANONICAL-DESIGNATOR citing Chapter 6 section 6.2.3.11 f p. 6-22 and Chapter 9 Table 9-2 p. 9-13. Raw bytes unchanged. Amended-wording AI recheck remains pending | L3-SUM-004 |
+| `zero_padded_sha_algorithm_requires_decision` | Complete unique `G\SHA:2-h;`, `G\SHA:02-h;`, `G\SHA:002-h;` with h independently correct | Under owner-decided Option B, all identify algorithm 2 and may verify positively. Canonical 2- has no designator warning; 02/002 always have located warning NONCANONICAL-DESIGNATOR citing Chapter 6 section 6.2.3.11 f p. 6-22 and Chapter 9 Table 9-2 p. 9-13. Raw bytes unchanged. Semantic approval is recorded; analysis/executable tests remain pending | L3-SUM-004 |
 | `sha_algorithm_identity_uses_canonical_string` | 40-digit token of 39 ASCII zeroes followed by 2, plus tokens 2, 02, 002, 000 | Strip leading zeros to canonical digit string, keep 0 for all-zero input; compare strings to 2, no fixed-width/big-integer conversion. First four identify algorithm 2; 000 is unsupported. No input rewriting | L3-SUM-004 |
 | `noncanonical_sha_designator_always_warns` | 02/002 with matching digest, mismatching digest and upper-case matching digest in separate otherwise usable inputs | NONCANONICAL-DESIGNATOR warning always emitted for accepted noncanonical token, independent of match outcome; upper-case matching hex also retains INT-020 warning. Neither warning suppresses the other | L3-SUM-004 |
+| `noncanonical_designator_warns_when_verification_blocked` | Located SHA candidates with readable 02/002 tokens: two duplicates; compatible name damage; leading BOM; unterminated/undefined exclusion in separate supplied raw-evidence fixtures | Every located noncanonical-2 token gets its own located NONCANONICAL-DESIGNATOR warning even though verification remains blocked. Retain all duplicate/damage/BOM/framing findings; no guessed key/exclusion or positive verdict. Diagnostic candidates remain distinct from explicit lookup items; never scan COMMENT/X value text as SHA | L3-SUM-003, L3-SUM-004 |
 | `other_numeric_sha_designators_stay_unsupported` | 0-, 00-, 3-, 20-, 0020- with otherwise in-range hex content | Unknown/unsupported algorithm, never coerced to 2 or positively verified; distinguish 0- plus hex from the no-hyphen G\SHA:0; placeholder. Defined exclusion still allows COMPUTE | L3-SUM-002, L3-SUM-004 |
 | `sha_designator_edge_classification` | Values ` 2-h`, `2–h` (UTF-8 en dash), `+2-h`, `2.0-h`, and `2-H` with independent correct upper-case hex in separate complete terminated items | Leading blank unavailable under blank rule; en dash high bytes Invalid per INT-037; +2/2.0 malformed; valid 2- with upper-case hex follows INT-020 (match with warning). Raw bytes unchanged; defined exclusion permits COMPUTE for all | L3-SUM-002, L3-SUM-004 |
 | `sha_stamp_uses_canonical_designator` | Explicit stamp of eligible repaired/placeholder input, with final output re-read | Always writes `2-` plus lower-case hex, never `02-`/`002-`/`0-`; no stamp on ambiguous input and no positive verification of an unsupported original token | L3-SUM-005 |
+
+## Family 2 batch 11: minimal stamp-transaction acceptance specifications
+
+**Status: planned, not executable tests.** Derives ADR-0029, approved F1/
+INT-021 and INT-043, and L1-SUM-004's already-approved 0.1 minimal transaction.
+Sources: 106-24R1 Chapter 9 Table 9-2 MESSAGE DIGEST/CHECKSUM, page 9-13;
+Chapter 6 section 6.2.3.11 f page 6-22. Supplied insertion/style bindings are
+explicit fixture prerequisites, not a new fallback layout policy. Short
+records do not assert full TMATS conformance. See the
+[derivation/oracle note](research/2026-11-23-stamp-transaction-draft.md).
+
+| Planned check | Fixture or stimulus | Expected observation | Requirement |
+| --- | --- | --- | --- |
+| `stamp_rejects_stale_ambiguous_or_overlapping_targets` | Stale/cross-document item ID, bare duplicate name, overlapping explicit ranges or two explicit edits to one item in separate stimuli | Reject whole explicit edit set with implicated targets/locations; no guessed retarget, partial edit or original mutation | L3-WRT-002 |
+| `stamp_rebuilds_post_edit_revision` | Valid explicit change before stamping, with deliberately stale prior index/offset evidence | New revision/state and reread match actual edited bytes; no old offsets/reports used to hash or choose a SHA slot; original bytes/revision remain available | L3-WRT-003, L3-SUM-008 |
+| `stamp_exact_duplicate_repair_is_allowed` | Two SHA items, caller removes exactly one current-revision item and requests final stamp | Permit explicit repair first; check the rebuilt result, stamp only once ambiguity is fixed; no first/last survivor chosen by stamp | L3-WRT-002, L3-WRT-003, L3-SUM-006 |
+| `stamp_remaining_domain_ambiguity_refuses` | Post-repair revision still has duplicate/compatible damaged SHA evidence, blocking BOM, undefined exclusion or known truncation in separate fixtures | Refuse successful stamp with all evidence retained; exact-item presence alone never clears uncertainty | L3-SUM-006, L3-SUM-010 |
+| `stamp_needs_established_slot_and_style` | Explicit insertion target and known CR/LF style, then unavailable/mixed style prerequisites in a separate fixture | First uses supplied document-style bytes; unavailable style/target reported, no hardcoded LF or implicit insertion-position fallback | L3-SUM-007 |
+| `stamp_hashes_newlines_outside_inserted_item` | Note's exact bytes with CR/LF before and after inserted SHA item, independent expected digest | Both CR/LF sequences outside exclusion are hashed, so pre-insertion or projected-source hash cannot pass; final value canonical 2- plus lower-case hex | L3-SUM-007, L3-SUM-008, L3-SUM-009 |
+| `stamp_accepted_noncanonical_input_emits_canonical_output` | Usable input 02/002 algorithm token, explicit stamp requested | Output writes canonical 2-; input NONCANONICAL-DESIGNATOR warning retained with input revision/location; no invented noncanonical warning for canonical new value | L3-SUM-008, L3-SUM-010 |
+| `stamp_noncanonical_name_finding_stays_prominent` | Otherwise eligible slots `g\sha:2-h;` and `G\S\r\nHA:2-h;`, explicit value-only stamp in separate fixtures | Keep raw name spelling and INT-018's located noncanonical-name finding prominent in the stamp result; recommend an explicit rename edit first. No silent rename or new refusal solely for name spelling | L3-SUM-008, L3-SUM-010 |
+| `stamp_never_writes_flex_into_sha` | Separately requested irig106.org flex compatibility value alongside an explicit SHA stamp | Flex remains separately labelled non-standard under L1-SUM-003; G\SHA contains only the SHA-256 2- digest, never the flex signature or an unlabelled substitution | L1-SUM-003, L3-SUM-008 |
+| `stamp_final_verification_failure_is_atomic` | Valid staged edits with injected final reread/verification failure; separate target/emission/reconstruction failure stimuli | Failure, no successful verified-stamp result, original input unchanged; no assertion that external writer side effects are rolled back | L3-WRT-003, L3-SUM-009 |
+| `stamp_refusal_keeps_per_occurrence_designator_warnings` | Located noncanonical-2 tokens across F1/damage/BOM/undefined-domain refusal fixtures | Warning for every located occurrence and all blockers retained; no positive integrity, guessed exclusion or coalescing of different source locations | L3-SUM-006, L3-SUM-010 |
+| `stamp_preserves_unedited_source_and_findings` | Unknown attributes, raw case/layout and independent findings outside caller edits/SHA value | Bytes/order/spelling unchanged there; findings retain proper revision provenance; a verified stamp claims checksum integrity only | L3-WRT-003, L3-SUM-010 |
+
+No fixture settles X deletion/renumbering (F2), automatic repairs (F3),
+style fallback, general public edit API or file-publication behavior. Future
+tests need independent expected bytes/digests and injected failures, not
+expected answers derived through the stamping implementation itself.
 
 ## Real Chapter 10 recordings (local use only)
 

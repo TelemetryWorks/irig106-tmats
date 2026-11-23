@@ -1,8 +1,8 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through initial checksum batches drafted (family 2, batches 1-10).**
+> **Status: foundations through stamp-transaction batches drafted (family 2, batches 1-11).**
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
-> INT-018/019/020 are reconfirmed; INT-043 Option B owner decision is recorded; amended-wording AI recheck is pending.
+> INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
 > These are implementation obligations, not existing interfaces or completed
 > tests. INT-035/036/037/038/039/040/041/042 are approved; INT-042 sign-off is dated 2026-11-23.
 > Remaining derivations and development evidence still precede implementation.
@@ -998,9 +998,12 @@ and exclusion are usable. INT-043's owner-decided Option B accepts ASCII-digit
 algorithm tokens whose canonical string is 2, without integer conversion.
 Every accepted noncanonical spelling always emits NONCANONICAL-DESIGNATOR
 as a warning citing Chapter 6 section 6.2.3.11 f and Chapter 9 Table 9-2;
-raw bytes stay unchanged and upper-case hex still follows INT-020. The
-amended wording's independent AI recheck remains pending; owner direction
-alone does not complete the ADR-0033 review/development gates.
+raw bytes stay unchanged and upper-case hex still follows INT-020. Option B
+is approved under ADR-0033 (Joey, 2026-11-23; AI CONCURS on #32 at
+8941ca1). Emit the warning for every located noncanonical-2 token even when
+F1 duplicates, damage, BOM or undefined exclusion blocks verification; retain
+all locations/blockers without turning diagnostic recognition into an exact
+key or usable exclusion. Source freshness, analysis and tests remain gates.
 
 **L3-SUM-005** · Parent: L2-SUM-002 · Verification: T
 *G\SHA:0; SHALL be reported unverified with the explicit reason placeholder/no embedded digest, never match or mismatch; as an instance of L3-SUM-002's general defined-exclusion rule its complete unambiguous exclusion SHALL permit COMPUTE, and an explicitly requested stamp MAY replace the placeholder only with final-byte hashing and verification under ADR-0029.*
@@ -1012,3 +1015,81 @@ later slice; placeholders do not bypass F1 or unknown-exclusion guards.
 The placeholder is not a COMPUTE carve-out: complete malformed digest values
 also permit COMPUTE under that general rule. A stamp always writes canonical
 `2-` and lower-case digits, never an input algorithm spelling such as `02-`.
+
+
+## Stamp batch 11: exact targets, final-byte hashing and verified success
+
+Planned obligations deriving ADR-0029 and the approved checksum policies.
+No implementation, completed analysis, broad edit API or new interpretation.
+
+**L3-WRT-002** · Parent: L2-WRT-002 · Verification: T
+*The stamp transaction SHALL validate supplied item identities against the exact input revision and reject stale/cross-document IDs, ambiguous name-only targets and explicit edits touching the same item or overlapping bytes, reporting the implicated edits and locations without retargeting or applying a partial set.*
+
+ADR-0029 permits a caller to identify one exact duplicate or expressly every
+occurrence; bare name ambiguity never implies first/last. This does not
+invent stable IDs across revisions. New supplied text must satisfy the
+existing edit framing/name checks, including no semicolon inside a value;
+failed target/text validation leaves the original intact.
+
+**L3-WRT-003** · Parent: L2-WRT-002 · Verification: T
+*After validating explicit edits, the transaction SHALL apply them to a new revision, rebuild affected derived state and re-read the resulting bytes before final stamping; it SHALL preserve the original revision and all bytes outside explicit edit/stamp ranges, and SHALL NOT silently repair unrelated attributes, counters, links, ordering or spelling.*
+
+Source: ADR-0029 and L1-WRT-007. Rebuilt state reflects edited bytes rather
+than stale offsets or a patched report. A checksum result does not certify
+whole-document conformance or erase existing findings. This fixes no general
+edit-container representation and claims no external-file rollback semantics.
+
+**L3-SUM-006** · Parent: L2-SUM-003 · Verification: T
+*Stamp eligibility SHALL be checked on the post-repair revision: remaining duplicate or compatible damaged SHA evidence, a blocking BOM, undefined exclusion or known truncation SHALL refuse the stamp; a caller's valid explicit removal of one exact duplicate SHALL remain permitted before that eligibility check.*
+
+F1/INT-021 and L3-SUM-002 preserve the uncertainty guards. No blanket refusal
+of a repair solely because its initial revision had duplicates; no silent
+survivor selection. Known exact SHA presence alone does not clear compatible
+damage. Open F2/F3 interpretations are not bypassed by a stamp request.
+
+**L3-SUM-007** · Parent: L2-SUM-003 · Verification: T
+*Before hashing, the transaction SHALL identify the one final SHA slot and its raw exclusion, or an explicitly requested insertion target, with the final separator/line-ending bytes established from the document's applicable style; unavailable insertion/style prerequisites SHALL be reported instead of silently choosing a new layout.*
+
+ADR-0029 requires the document's own separators/line endings. This batch
+selects no mixed/no-style fallback, implicit insertion position or new edit
+syntax; detailed style resolution is later work. An existing complete slot
+can be replaced explicitly, including an unverified placeholder, without
+normalizing unrelated text. No TMATS default or missing field is invented.
+
+**L3-SUM-008** · Parent: L2-SUM-003 · Verification: T
+*The stamp SHALL compute SHA-256 over every final emitted byte outside the identified SHA name-through-semicolon interval, including inserted separators and newlines outside it, and write only canonical 2- plus 64 lower-case hex digits into the final value before verification.*
+
+Sources: 106-24R1 Chapter 9 Table 9-2 page 9-13; Chapter 6 section
+6.2.3.11 f page 6-22; ADR-0029. Never hash an earlier document version or
+the projected/normalized source. An accepted 02/002 algorithm token in input
+does not change canonical output; noncanonical diagnostics remain available
+for the input on which they were observed.
+
+**Analysis note — flex boundary:** Under L1-SUM-003, the irig106.org flex
+signature stays a separately labelled, non-standard compatibility value.
+A stamp never writes it into G\SHA or treats it as the SHA-256 digest.
+
+**L3-SUM-009** · Parent: L2-SUM-003 · Verification: T
+*Successful stamping SHALL require re-reading and verifying the actual final output bytes against the stamped digest, with retained output/revision provenance; any target, emission, reconstruction or verification failure SHALL return failure without claiming a verified stamp or mutating the original input.*
+
+ADR-0029 verifies emitted output, not an earlier in-memory digest or a second
+call over the wrong preimage. This is transactional success, not a promise
+that a caller's external writer can undo partial I/O. Failure injection must
+cover the final verification path. Full writer/CLI publication contracts are
+separate; this library operation performs no file publication.
+
+**L3-SUM-010** · Parent: L2-SUM-003 · Verification: T
+*Stamp verification and diagnostic collection SHALL retain every located noncanonical-2 warning and independent input/blocking finding, even when the transaction is refused; a warning or positive checksum result SHALL NOT be presented as whole-document validation or permission to select an ambiguous source item.*
+
+Approved INT-043's clarification forbids suppressing warnings on F1, damage,
+BOM or undefined-exclusion paths. Diagnostic-only token observations remain
+located evidence, not usable lookup keys or exclusions. A stamp that emits
+canonical 2- need not fabricate a noncanonical warning for its new value;
+retain input warnings with their original-revision provenance.
+
+
+**Analysis note — noncanonical name slots:** Stamping a value into `g\sha:`
+or `G\S\r\nHA:` keeps INT-018's located noncanonical-name finding prominent
+in the stamp result. Recommend an explicit rename edit first; a stamp alone
+never silently renames the slot or makes the name canonical. This recommendation
+adds no automatic repair or new refusal gate when stamping is otherwise eligible.

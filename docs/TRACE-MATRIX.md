@@ -184,13 +184,14 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-WRT-004 | _(none)_ | _(none)_ | Draft |
 | L1-WRT-005 | _(none)_ | _(none)_ | Draft |
 | L1-WRT-006 | _(none)_ | _(none)_ | Draft |
-| L1-WRT-007 | _(none)_ | _(none)_ | Draft |
+| L1-WRT-007 | L2-WRT-002 | _(none)_ | Draft |
 
 **L2 -> L3 -> Verification Artifacts**
 
 | L2 ID | L3 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
 | L2-WRT-001 | L3-WRT-001 | _(TBD)_ | Draft |
+| L2-WRT-002 | L3-WRT-002, L3-WRT-003 | _(TBD)_ | Draft |
 
 ### L1-SUM: TMATS checksums
 
@@ -201,7 +202,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-SUM-001 | L2-SUM-001 | _(none)_ | Draft |
 | L1-SUM-002 | L2-SUM-002 | _(none)_ | Draft |
 | L1-SUM-003 | _(none)_ | _(none)_ | Draft |
-| L1-SUM-004 | _(none)_ | _(none)_ | Draft |
+| L1-SUM-004 | L2-SUM-003 | _(none)_ | Draft |
 
 **L2 -> L3 -> Verification Artifacts**
 
@@ -209,6 +210,7 @@ This matrix is the single source of truth for live status; the requirement docum
 |-------|-------------|----------------|--------|
 | L2-SUM-001 | L3-SUM-001, L3-SUM-002 | _(TBD)_ | Draft |
 | L2-SUM-002 | L3-SUM-003, L3-SUM-004, L3-SUM-005 | _(TBD)_ | Draft |
+| L2-SUM-003 | L3-SUM-006, L3-SUM-007, L3-SUM-008, L3-SUM-009, L3-SUM-010 | _(TBD)_ | Draft |
 
 ### L1-IO: Input/output boundary
 
@@ -308,20 +310,20 @@ This matrix is the single source of truth for live status; the requirement docum
 | VAL | 6 | 3 | 12 | 0 | 0 | 0 | 0 |
 | DER | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EXT | 4 | 0 | 0 | 0 | 0 | 0 | 0 |
-| WRT | 7 | 1 | 1 | 0 | 0 | 0 | 0 |
-| SUM | 4 | 2 | 5 | 0 | 0 | 0 | 0 |
+| WRT | 7 | 2 | 3 | 0 | 0 | 0 | 0 |
+| SUM | 4 | 3 | 10 | 0 | 0 | 0 | 0 |
 | IO | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
 | CLI | 9 | 2 | 3 | 0 | 0 | 0 | 0 |
 | ROB | 3 | 2 | 3 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **35** | **83** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **37** | **90** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 61 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 59 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 179 (0.0%).
+**Tested by at least one test marker**: 0 of 186 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 179 (1.7%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 186 (1.6%).
 
 ### Orphan check
 
@@ -376,7 +378,7 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-040 | Count structurally identified entries independently of value validity | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
 | INT-041 | Unavailable interpretation is not proof of missing or invalid field data | approved (Joey, owner sign-off, 2026-11-23) | not yet written | _(none)_ |
 | INT-042 | A reviewed is-specified predicate tests actual presence, not value usability | approved (Joey, owner sign-off, 2026-11-23) | not yet written | _(none)_ |
-| INT-043 | Leading-zero algorithm 2 designators are accepted with a warning | owner decision recorded, AI recheck of the amended wording pending (Joey, Option B, 2026-11-23) | not yet written | _(none)_ |
+| INT-043 | Leading-zero algorithm 2 designators are accepted with a warning | approved (Joey, Option B, 2026-11-23) | not yet written | _(none)_ |
 
 * Entries without a written analysis: **43** of 43
 * Entries without a test: **43** of 43

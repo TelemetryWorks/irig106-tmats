@@ -135,7 +135,7 @@ architecture must honour:
   index (`docs/adr/README.md`) before changing anything they cover, and
   supersede a record with a new one rather than editing it.
 - `docs/L1-REQ.md`, `docs/L2-REQ.md`, `docs/L3-REQ.md` — requirements (L1
-  drafted; L2/L3 foundations through initial checksum batches drafted, other areas pending); `docs/TRACE-MATRIX.md` — generated live
+  drafted; L2/L3 foundations through stamp-transaction batches drafted, other areas pending); `docs/TRACE-MATRIX.md` — generated live
   status, never edited by hand.
 - `docs/INTERPRETATIONS.md` — the interpretation register (ADR-0027).
 - `docs/TMATS-IN-CHAPTER-10.md` — what the library is for and what it gives
