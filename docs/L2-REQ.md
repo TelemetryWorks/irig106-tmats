@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through stamp-transaction batches drafted (family 2, batches 1-11).**
+> **Status: foundations through setup-payload batches drafted (family 2, batches 1-12).**
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
 > Foundations derive the approved restructure/source store; framing and
@@ -553,5 +553,51 @@ promoted into 0.1 by this minimal transaction slice.
 **Statement**: The minimal stamp transaction SHALL validate its supplied edit targets against their document revision, reject ambiguous/overlapping/stale explicit edit sets, apply permitted explicit repairs atomically as a new revision and rebuild/re-read affected state before stamping; failure SHALL leave the original document untouched and SHALL NOT return a successfully stamped result.
 
 **Rationale**: ADR-0029 supplies exact-target, atomic, rebuild and re-read semantics; L1-WRT-004 forbids automatic changes. This derives prerequisites for 0.1 stamping only, not all general edit/renumbering operations. Detailed target API shapes and unresolved interpretation-dependent edits require their own reviewed contracts. The library gains no file I/O or promise of rolling back a caller's external writer.
+
+**Verification Method**: Test (T)
+
+
+## Setup-payload batch 12: bounded CSDW decoding before assembly
+
+This derives the payload-boundary part of L1-CH10-001, field reporting under
+L1-CH10-002 and literal version reporting under L1-CH10-006. It does not
+complete those parents or implement assembly, completeness, edition selection,
+session checks, packet slicing/checksums or time views. No packet/file I/O or
+new default is introduced. Requirements and acceptance cases remain planned.
+
+The concrete baseline below is 106-24R1 Chapter 11 Figure 11-34. Historical
+layout routing and the complete declaration/fallback contract remain separate
+batches. INT-012 already records the owner's literal-code decision, revised
+by ADR-0032, but its Review is still pending; this PR does not approve it or
+bypass the legacy ADR-0033 AI-check/development gates. See the
+[source and review note](research/2026-11-23-setup-payload-draft.md).
+
+#### L2-CH10-001
+
+**Parent**: L1-CH10-001
+
+**Statement**: The library SHALL decode a supplied Format 1 packet-body payload under an identified supported CSDW layout, retain the original CSDW and body bytes with locations, reject a payload shorter than that layout's CSDW without fabricating fields, and pass only the bytes after each fragment's CSDW to later assembly/body interpretation.
+
+**Rationale**: 106-24R1 Chapter 11 section 11.2.7.2 a and Figure 11-34, page 11-50, place a 32-bit CSDW at the beginning of each Format 1 body. ADR-0025 separates packet slicing from fragment assembly; a caller supplies body bounds excluding filler/checksum. Sufficient CSDW bytes establish a decodable header, not a complete setup record.
+
+**Verification Method**: Test (T)
+
+#### L2-CH10-002
+
+**Parent**: L1-CH10-002
+
+**Statement**: CSDW reporting SHALL expose raw and interpreted format/change/version fields through the shared irig106-types definitions, preserve all original bits and body bytes, and report an XML body unsupported without parsing it as code-name TMATS; local field decoding SHALL NOT itself assert configuration change, record completeness or session conformance.
+
+**Rationale**: ADR-0009 requires shared packet-level types instead of local copies. Figure 11-34 and its field definitions (106-24R1 Chapter 11 page 11-50) assign FRMT bit 9, SRCC bit 8 and RCCVER bits 7–0. ADR-0015 keeps XML unsupported. Interpreting SRCC against earlier records or disagreement across fragments needs separate reviewed rules; it is not another interpretation of the single bit.
+
+**Verification Method**: Test (T)
+
+#### L2-CH10-003
+
+**Parent**: L1-CH10-006
+
+**Statement**: A supported cited RCCVER reading SHALL preserve the wire byte and report the literal edition assigned by its table, reserved codes as unknown under that reading and any archive-reuse observation separately labelled; it SHALL NOT transform a literal version declaration into a newer edition, an unbounded future claim or a TMATS edition/fallback selection.
+
+**Rationale**: ADR-0032 and INT-012 distinguish table reading from archive observation and fallback policy. 106-24R1 Chapter 11 section 11.2.7.2 a, page 11-51, states 0x0E = RCC 106-22 and 0x0F–0xFF reserved. INT-016's historical not-declared handling and INT-017's fallback remain their own pending-review dependencies; this child does not silently select a historical layout or claim those reviews complete.
 
 **Verification Method**: Test (T)

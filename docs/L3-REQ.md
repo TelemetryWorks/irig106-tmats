@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through stamp-transaction batches drafted (family 2, batches 1-11).**
+> **Status: foundations through setup-payload batches drafted (family 2, batches 1-12).**
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
 > These are implementation obligations, not existing interfaces or completed
@@ -1093,3 +1093,80 @@ or `G\S\r\nHA:` keeps INT-018's located noncanonical-name finding prominent
 in the stamp result. Recommend an explicit rename edit first; a stamp alone
 never silently renames the slot or makes the name canonical. This recommendation
 adds no automatic repair or new refusal gate when stamping is otherwise eligible.
+
+
+## Setup-payload batch 12: raw spans and independent field evidence
+
+Planned obligations, not implementation. Baseline layout is explicitly
+106-24R1 Figure 11-34; historical era/declaration routing remains later work.
+INT-012's existing owner decision does not clear its pending independent
+review, source freshness, deep analysis or executable verification gates.
+
+**L3-CH10-001** · Parent: L2-CH10-001 · Verification: T
+*For the identified Figure 11-34 layout, payload decoding SHALL require at least four bytes, preserve the input and supplied provenance on failure and report a located short-CSDW result for lengths 0–3 without reading unavailable bytes, zero-padding or inventing a version/format/change flag.*
+
+Source: 106-24R1 Chapter 11 section 11.2.7.2 a, Figure 11-34, page 11-50.
+The raw CSDW spans payload offsets [0,4). A short CSDW is not a supported
+empty document. Unknown/unavailable layout knowledge is a separate blocked
+interpretation, not proof of malformed bytes or permission to use baseline
+semantics silently. No concrete Rust result/diagnostic enum is fixed here.
+
+**L3-CH10-002** · Parent: L2-CH10-001 · Verification: T
+*With a complete baseline CSDW, the fragment-body span SHALL be exactly [4,payload_length), preserving every byte in that supplied interval including layout, high bytes and trailing NUL/0x1A; removing the CSDW SHALL NOT trim the text, insert separators, transcode it or identify the fragment as a complete setup record.*
+
+The caller supplies a packet-body slice already bounded by Data Length;
+filler and data checksum are outside it (ADR-0025). This function does not
+search raw packets or remove bytes by padding heuristics. Each fragment has
+its own CSDW: later assembly must concatenate bodies, not embedded CSDWs.
+BOM meaning is checked at assembled-text offset zero under INT-037, not
+independently stripped at every fragment boundary.
+
+**L3-CH10-003** · Parent: L2-CH10-002 · Verification: T
+*The baseline CSDW SHALL be read as a little-endian 32-bit wire value using the shared layout definitions, reporting RCCVER bits 7–0, SRCC bit 8 and FRMT bit 9 with their raw word/byte provenance; host-native casts, inferred byte order and duplicate local wire-code types SHALL NOT supply the interpretation.*
+
+Sources: 106-24R1 Chapter 11 section 11.1 page 11-1 (least-significant byte
+first); Figure 11-34 and field text page 11-50; ADR-0009. Shared decoder
+integration needs light adapter tests against independently supplied bytes,
+not expected values computed through the same shared decoder. Shared API
+names/version availability are not asserted by this documentation batch.
+
+**L3-CH10-004** · Parent: L2-CH10-002 · Verification: T
+*Under the baseline layout, FRMT=0 SHALL identify Chapter 9 ASCII-format body bytes for later complete-record processing, while FRMT=1 SHALL report XML unsupported and retain the entire body without feeding it to the code-name scanner or silently returning an empty parsed TMATS document.*
+
+Figure 11-34 field text page 11-50 defines both flag values; ADR-0015 excludes
+XML support. A four-byte-only ASCII payload has an empty fragment body,
+not evidence of complete valid TMATS; a four-byte-only XML payload still
+reports XML unsupported. This selects no XML dialect or conversion policy.
+
+**L3-CH10-005** · Parent: L2-CH10-002 · Verification: T
+*The local SRCC value SHALL be reported as the supplied fragment's change indication, without inferring actual configuration difference, the session's first record, event presence or agreement with other fragments; per-fragment evidence SHALL remain available for later summary/session analysis.*
+
+Source: Figure 11-34 SRCC field definition page 11-50. ADR-0025 requires
+FRMT/RCCVER agreement for joining; it does not require SRCC agreement.
+INT-030's approved uncertainty policy still supplies no event identity or
+meaning of prior. This batch chooses no SRCC aggregation across fragments.
+
+**L3-CH10-006** · Parent: L2-CH10-002 · Verification: T
+*The decoded report SHALL retain reserved bits 31–10 and the original four-byte CSDW unchanged, without clearing them, reconstructing a sanitized word or presenting successful field extraction as packet/document validity.*
+
+Figure 11-34 page 11-50 marks these bits reserved. This preservation child
+selects no new reserved-bit severity/rejection policy and does not waive a
+future cited validator rule. A raw nonzero reserved bit must not shift FRMT,
+SRCC or RCCVER, disappear from source access or trigger a fabricated default.
+
+**L3-CH10-007** · Parent: L2-CH10-003 · Verification: T
+*With the baseline RCCVER table identified, the report SHALL retain its code and literal reading: 0x07 through 0x0E name RCC 106-07, 09, 11, 13, 15, 17, 19 and 22 respectively; 0x00–0x06 and 0x0F–0xFF SHALL retain their reserved/unknown classification under that table, without being rejected or relabelled as a known newer edition merely for being unrecognized.*
+
+Source: 106-24R1 Chapter 11 section 11.2.7.2 a page 11-51; ADR-0032/INT-012.
+Any later archive-reuse note is labelled observation with its source/basis,
+not part of the declared literal. No code 0x0F is invented for 106-23. The
+pre-106-07 absence/CH10VER question (INT-016) is a later declaration wrapper;
+this baseline wire classification does not claim historical-field presence.
+
+**L3-CH10-008** · Parent: L2-CH10-003 · Verification: T
+*Payload/version reporting SHALL keep CSDW wire declarations, packet data-type-version metadata, G\106 text and any applied interpretation basis distinct, and SHALL NOT infer one declaration from another, select a fallback edition, report their difference as an automatic conflict or assign a time source/association from the decoded version byte.*
+
+ADR-0028/0032 preserve declaration versus policy. Edition selection and
+historical layouts need separate reviewed requirements and INT-014/015/016/
+017 evidence; this child consumes no fabricated G\106 value. Raw bytes,
+provenance and incomplete/unsupported outcomes stay visible to those callers.
