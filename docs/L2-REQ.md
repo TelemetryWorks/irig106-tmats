@@ -1,10 +1,11 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through counter batches drafted (family 2, batches 1-6).**
+> **Status: foundations through effective-value batches drafted (family 2, batches 1-7).**
 > Foundations derive the approved restructure/source store; framing and
 > recovery use owner-approved INT-035. Character policies INT-036/037 were
 > approved by Joey, 2026-11-22, under ADR-0033. Name structure follows here;
-> INT-038/039/040 were approved by Joey, 2026-11-22; remaining view/registry, CLI and later areas follow;
+> INT-038/039/040 were approved by Joey, 2026-11-22. Batch 7 proposes
+> INT-041; remaining registry/conditions, views, CLI and later areas follow;
 > a parent with children here is not necessarily fully decomposed yet.
 
 ## Purpose
@@ -314,7 +315,7 @@ subsequent derivations; these children do not complete those L1 parents.
 
 **Statement**: A singular effective-value request for a definition-bound scalar slot with two or more matching items SHALL return ambiguous with every original candidate and its findings, without collapsing equal values, filtering invalid candidates, falling back to a default or selecting by source order; one candidate SHALL still require ordinary validity checks before being called explicit.
 
-**Rationale**: ADR-0023 supplies explicit/defaulted/missing/invalid/ambiguous states. Approved INT-039 chooses conservative multiplicity even for equal repeats; this is not a new default or an assertion that Chapter 9 explicitly specifies resolver precedence. Full zero/one-candidate resolution and scope-dependent defaults are later work. Coordinator-decided F1 keeps duplicate SHA integrity indeterminate under ADR-0034, independently of generic view states.
+**Rationale**: ADR-0023 supplies explicit/defaulted/missing/invalid/ambiguous states. Approved INT-039 chooses conservative multiplicity even for equal repeats; this is not a new default or an assertion that Chapter 9 explicitly specifies resolver precedence. Batch 7 derives the zero/one-candidate core; complete condition/type rules and scope-dependent definition coverage remain later work. Coordinator-decided F1 keeps duplicate SHA integrity indeterminate under ADR-0034, independently of generic view states.
 
 **Verification Method**: Test (T)
 
@@ -358,5 +359,47 @@ interpretations and other family-2 areas remain separate derivations.
 **Statement**: Counter evaluation SHALL report its counter/indices pass, rule citation, parent scope and supporting locations, and SHALL report cannot-evaluate when applicability, the effective counter value or required membership cannot be established without guessing; it SHALL NOT infer a missing count or claim success from an incomplete member set, and every scope compatible with unassigned evidence's readable canonical parent facts SHALL report partial/cannot-evaluate, never pass.
 
 **Rationale**: ADR-0022/0023 already require cannot-evaluate for unavailable operands. INT-039 makes duplicate scalar counters Ambiguous even when values agree. A cited default may be used only through a reviewed effective-value rule that permits it; neither suffix spelling nor the largest member supplies one. Approved INT-040 preserves structural evidence separately from blocked or failing semantic checks.
+
+**Verification Method**: Test (T)
+
+
+## Effective-value batch 7: evidence before fallback
+
+These requirements extend L1-VIEW-004's zero/one-candidate branches and the
+source/default portion of L1-REG-002. ADR-0023 and RELEASE-0.1.md already
+settle the five semantic states and non-inserting defaults. INT-039/040 stay
+approved; proposed INT-041 addresses unavailable interpretation prerequisites.
+Edition selection, complete condition grammar, dynamic range rules, the
+registry generator, presence/profile validation and time-channel APIs remain
+separate derivations. General effective values/registry keep their existing
+release scope; this batch does not promote them wholesale into 0.1.
+
+#### L2-REG-002
+
+**Parent**: L1-REG-002
+
+**Statement**: Field/default interpretation SHALL retain the source text and edition/table/row citation, distinguish a Default-field origin from a prose origin, and distinguish reviewed absence of a default from unavailable interpretation; applying a default SHALL require a reviewed value, applicability rule and identified edition basis.
+
+**Rationale**: 106-24R1 Chapter 9 section 9.5.1 a, page 9-6, defines defaults for absent attributes. ADR-0022 requires source and interpretation layers; ADR-0023 carries default evidence without inserting it. Table 9-4 TIME FORMAT, page 9-72, gives Default A with TIMEIN applicability; other editions or fields must not inherit it by analogy.
+
+**Verification Method**: Test (T)
+
+#### L2-VIEW-003
+
+**Parent**: L1-VIEW-004
+
+**Statement**: For a supported reviewed scalar definition and identified document/scope/basis, a singular read SHALL preserve INT-039 multiplicity, return Explicit only for one usable locally interpreted value, and return Invalid with raw evidence for one demonstrated character/type/range failure; present empty content SHALL NOT be treated as absence, and unavailable decision prerequisites SHALL be reported without guessing a semantic value state.
+
+**Rationale**: Approved INT-035/036 retain present empty values; INT-037 makes high-byte fields Invalid; INT-039 preserves every scalar duplicate. ADR-0023 separates effective values from whole-document validation. Proposed INT-041 distinguishes unavailable knowledge from proved invalid data, without choosing a Rust enum/wrapper or revising the five supported-field states.
+
+**Verification Method**: Test (T)
+
+#### L2-VIEW-004
+
+**Parent**: L1-VIEW-004
+
+**Statement**: With zero actual candidates for a supported field, resolution SHALL return Defaulted only from a verified applicable default and otherwise Missing with the absence/default-unavailability reason; default evidence SHALL include its origin, edition citation and basis without a fabricated input span, and resolution SHALL NOT insert or replace bytes or suppress independent findings.
+
+**Rationale**: Chapter 9 section 9.5.1 a, page 9-6, conditions default use on absence; RELEASE-0.1.md requires verified TIMEIN applicability and edition basis for TFMT A. Invalid or ambiguous present fields do not become absence. ADR-0028 labels edition basis; missing physical required attributes, cross-field inconsistencies and packet evidence remain separate from a Defaulted value.
 
 **Verification Method**: Test (T)

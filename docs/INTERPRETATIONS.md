@@ -1040,3 +1040,37 @@ counters or missing entries are repaired.
 
 
 **Sign-off and AI-check reference**: [owner approval record](research/2026-11-23-int040-owner-signoff.md), referencing [PR #24](https://github.com/TelemetryWorks/irig106-tmats/pull/24) at `176fdf4ebe0a69f83da1b12202a462274fe91d8e`, the owner's sign-off dated 2026-11-22 and the relayed independent recheck recorded 2026-11-23. The record identifies the requested compatible-scope tightening. Approval is not implementation, completed analysis or executable tests; those development gates remain outstanding.
+
+
+## Unavailable effective-field interpretation (proposed)
+
+### INT-041
+
+**Title**: Unavailable interpretation is not proof of missing or invalid field data
+
+**Sources**:
+- 106-24R1 Chapter 9 section 9.5.1 a, page 9-6, defines a default for when the file does not contain the attribute; Table 9-4 TIME FORMAT R-x\TFMT-n, page 9-72, supplies Default A with TIMEIN applicability. These passages do not define an API state for an unavailable rule.
+- ADR-0022 requires unreviewed interpretations to stay visibly unavailable and conditions with missing/invalid operands to report cannot-evaluate. ADR-0023 defines five supported-field states; ADR-0028 labels the edition basis.
+- RELEASE-0.1.md requires absent TFMT with unestablished default applicability/basis to report its missing/indeterminate reason, not invent A. Approved INT-037 blocks semantic lookup for leading encoding markers, and INT-039 keeps known scalar multiplicity Ambiguous.
+
+**Behaviour**: **Proposed.** A request whose reviewed field definition/basis is unavailable, or whose required local-validity evidence cannot be evaluated, reports an unavailable/cannot-evaluate read with the reason and retained raw candidates. Do not call unknown data Invalid merely because the decoder/rule is unavailable, and do not label unexamined or uninterpretable presence as Missing. This guards five-state resolution rather than adding a sixth field-value state; the concrete Rust representation remains a later design choice.
+
+Keep any Ambiguous outcome already proved from reviewed scalar cardinality;
+missing value-validation knowledge must not select a candidate or hide that
+multiplicity. Likewise retain a demonstrated Invalid failure even if another
+local constraint is unavailable; cannot-evaluate must not erase proved errors.
+For a supported field actually absent, lack of a verified
+applicable default remains Missing with the default-unavailability reason,
+as the existing release contract requires. Known present empty/invalid data
+never becomes absence for defaulting. A supported local value can be Explicit
+without claiming all other applicability/presence/packet checks have passed.
+
+**Reason**: Missing describes actual absence and Invalid requires evidence about the data; neither is justified solely by missing interpretation knowledge. The alternative is forcing all unsuccessful reads into those states, which conceals unsupported coverage and can trigger a false default or false data-error report. Consumers must handle blocked reads explicitly, at the cost of a guarded result rather than treating every request as a successfully resolved field.
+
+**Design**: proposed (2026-11-23; owner sign-off required) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: pending · **Origin**: family 2 batch 7
+
+**Test**: `unavailable_definition_is_not_data_invalidity`, `unknown_validity_operand_blocks_explicit`, `known_multiplicity_survives_unavailable_value_rule` (planned, not yet written)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Draft analysis**: [sources, alternatives and remaining work](research/2026-11-23-effective-value-draft.md)

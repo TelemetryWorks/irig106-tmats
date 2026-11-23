@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-23-effective-value-draft.md](2026-11-23-effective-value-draft.md) | Batch 7 source review, effective-state/default evidence, proposed INT-041 unavailable-read guard and pending analysis |
 | [2026-11-23-int040-owner-signoff.md](2026-11-23-int040-owner-signoff.md) | Joey's INT-040 sign-off dated 2026-11-22, PR #24 final-head concurrence and compatible-scope tightening |
 | [2026-11-22-counter-membership-draft.md](2026-11-22-counter-membership-draft.md) | Batch 6 counter scope/source review, INT-040 draft membership and review follow-up (sign-off superseded by the INT-040 approval record) |
 | [2026-11-22-int039-owner-signoff.md](2026-11-22-int039-owner-signoff.md) | Joey's INT-039 approval, PR #22 AI concurrence, single-entry group-\COM choice and one-document assembly clarification |

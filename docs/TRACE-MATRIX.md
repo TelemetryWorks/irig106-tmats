@@ -84,7 +84,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
 | L1-REG-001 | _(none)_ | _(none)_ | Draft |
-| L1-REG-002 | _(none)_ | _(none)_ | Draft |
+| L1-REG-002 | L2-REG-002 | _(none)_ | Draft |
 | L1-REG-003 | _(none)_ | _(none)_ | Draft |
 | L1-REG-004 | _(none)_ | _(none)_ | Draft |
 | L1-REG-005 | L2-REG-001 | _(none)_ | Draft |
@@ -97,6 +97,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2 ID | L3 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
 | L2-REG-001 | L3-REG-001, L3-REG-002 | _(TBD)_ | Draft |
+| L2-REG-002 | L3-REG-003, L3-REG-004 | _(TBD)_ | Draft |
 
 ### L1-VIEW: Lookup, structured views, and links
 
@@ -107,7 +108,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-VIEW-001 | L2-VIEW-001 | _(none)_ | Draft |
 | L1-VIEW-002 | _(none)_ | _(none)_ | Draft |
 | L1-VIEW-003 | _(none)_ | _(none)_ | Draft |
-| L1-VIEW-004 | L2-VIEW-002 | _(none)_ | Draft |
+| L1-VIEW-004 | L2-VIEW-002, L2-VIEW-003, L2-VIEW-004 | _(none)_ | Draft |
 | L1-VIEW-005 | _(none)_ | _(none)_ | Draft |
 | L1-VIEW-006 | _(none)_ | _(none)_ | Draft |
 | L1-VIEW-007 | _(none)_ | _(none)_ | Draft |
@@ -120,6 +121,8 @@ This matrix is the single source of truth for live status; the requirement docum
 |-------|-------------|----------------|--------|
 | L2-VIEW-001 | L3-VIEW-001, L3-VIEW-002 | _(TBD)_ | Draft |
 | L2-VIEW-002 | L3-VIEW-003, L3-VIEW-004 | _(TBD)_ | Draft |
+| L2-VIEW-003 | L3-VIEW-005, L3-VIEW-006, L3-VIEW-007, L3-VIEW-011 | _(TBD)_ | Draft |
+| L2-VIEW-004 | L3-VIEW-008, L3-VIEW-009, L3-VIEW-010 | _(TBD)_ | Draft |
 
 ### L1-VAL: Validation
 
@@ -288,8 +291,8 @@ This matrix is the single source of truth for live status; the requirement docum
 | READ | 7 | 13 | 33 | 0 | 0 | 0 | 0 |
 | CH10 | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EDN | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
-| REG | 8 | 1 | 2 | 0 | 0 | 0 | 0 |
-| VIEW | 9 | 2 | 4 | 0 | 0 | 0 | 0 |
+| REG | 8 | 2 | 4 | 0 | 0 | 0 | 0 |
+| VIEW | 9 | 4 | 11 | 0 | 0 | 0 | 0 |
 | VAL | 6 | 2 | 6 | 0 | 0 | 0 | 0 |
 | DER | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EXT | 4 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -300,13 +303,13 @@ This matrix is the single source of truth for live status; the requirement docum
 | ROB | 3 | 2 | 3 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **25** | **54** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **28** | **63** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 68 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 67 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 147 (0.0%).
+**Tested by at least one test marker**: 0 of 158 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 147 (2.0%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 158 (1.9%).
 
 ### Orphan check
 
@@ -359,9 +362,10 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-038 | Decimal index identity without source normalization or machine-word limits | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
 | INT-039 | Repeated scalar slots remain ambiguous even when values agree | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
 | INT-040 | Count structurally identified entries independently of value validity | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
+| INT-041 | Unavailable interpretation is not proof of missing or invalid field data | proposed (2026-11-23; owner sign-off required) | not yet written | _(none)_ |
 
-* Entries without a written analysis: **40** of 40
-* Entries without a test: **40** of 40
+* Entries without a written analysis: **41** of 41
+* Entries without a test: **41** of 41
 * Entries missing the development mark: **0**
 
 ### Marker reference check
