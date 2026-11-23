@@ -83,12 +83,12 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
-| L1-REG-001 | _(none)_ | _(none)_ | Draft |
+| L1-REG-001 | L2-REG-004 | _(none)_ | Draft |
 | L1-REG-002 | L2-REG-002 | _(none)_ | Draft |
-| L1-REG-003 | _(none)_ | _(none)_ | Draft |
+| L1-REG-003 | L2-REG-005 | _(none)_ | Draft |
 | L1-REG-004 | L2-REG-003 | _(none)_ | Draft |
 | L1-REG-005 | L2-REG-001 | _(none)_ | Draft |
-| L1-REG-006 | _(none)_ | _(none)_ | Draft |
+| L1-REG-006 | L2-REG-006 | _(none)_ | Draft |
 | L1-REG-007 | _(none)_ | _(none)_ | Draft |
 | L1-REG-008 | _(none)_ | _(none)_ | Draft |
 
@@ -99,6 +99,9 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-REG-001 | L3-REG-001, L3-REG-002 | _(TBD)_ | Draft |
 | L2-REG-002 | L3-REG-003, L3-REG-004 | _(TBD)_ | Draft |
 | L2-REG-003 | L3-REG-005, L3-REG-006 | _(TBD)_ | Draft |
+| L2-REG-004 | L3-REG-007, L3-REG-008 | _(TBD)_ | Draft |
+| L2-REG-005 | L3-REG-009, L3-REG-010 | _(TBD)_ | Draft |
+| L2-REG-006 | L3-REG-011, L3-REG-012, L3-REG-013 | _(TBD)_ | Draft |
 
 ### L1-VIEW: Lookup, structured views, and links
 
@@ -144,7 +147,7 @@ This matrix is the single source of truth for live status; the requirement docum
 |-------|-------------|----------------|--------|
 | L2-VAL-001 | L3-VAL-001, L3-VAL-002, L3-VAL-003, L3-VAL-006 | _(TBD)_ | Draft |
 | L2-VAL-002 | L3-VAL-004, L3-VAL-005 | _(TBD)_ | Draft |
-| L2-VAL-003 | L3-VAL-007, L3-VAL-008, L3-VAL-009, L3-VAL-010, L3-VAL-011 | _(TBD)_ | Draft |
+| L2-VAL-003 | L3-VAL-007, L3-VAL-008, L3-VAL-009, L3-VAL-010, L3-VAL-011, L3-VAL-012 | _(TBD)_ | Draft |
 
 ### L1-DER: Derived parameters (Appendix 9-E)
 
@@ -293,9 +296,9 @@ This matrix is the single source of truth for live status; the requirement docum
 | READ | 7 | 13 | 33 | 0 | 0 | 0 | 0 |
 | CH10 | 8 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EDN | 6 | 0 | 0 | 0 | 0 | 0 | 0 |
-| REG | 8 | 3 | 6 | 0 | 0 | 0 | 0 |
+| REG | 8 | 6 | 13 | 0 | 0 | 0 | 0 |
 | VIEW | 9 | 4 | 11 | 0 | 0 | 0 | 0 |
-| VAL | 6 | 3 | 11 | 0 | 0 | 0 | 0 |
+| VAL | 6 | 3 | 12 | 0 | 0 | 0 | 0 |
 | DER | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EXT | 4 | 0 | 0 | 0 | 0 | 0 | 0 |
 | WRT | 7 | 1 | 1 | 0 | 0 | 0 | 0 |
@@ -305,13 +308,13 @@ This matrix is the single source of truth for live status; the requirement docum
 | ROB | 3 | 2 | 3 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **30** | **70** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **33** | **78** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 66 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 63 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 166 (0.0%).
+**Tested by at least one test marker**: 0 of 174 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 166 (1.8%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 174 (1.7%).
 
 ### Orphan check
 

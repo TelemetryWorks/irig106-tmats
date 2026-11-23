@@ -471,6 +471,12 @@ this PR does not claim those new fixture wordings have already been independentl
 | `unterminated_literal_prefix_blocks_compatible_presence` | Established T-1 ID predicate, zero exact matches; `COMMENT:x;T-1\I` and `COMMENT:x;T-1\` at EOF in separate stimuli | Cannot-evaluate for predicates whose names each suffix could complete to, with compatible readable parents; T-1 ID cannot be declared absent or T-1\AN1 not allowed. No completed name/lookup item or enumeration of completions; incompatible T-2 parent remains excluded | L3-REG-006, L3-VAL-008, L3-VAL-010 |
 | `high_byte_inside_literal_blocks_false_presence` | Established T-1 ID predicate; `T-1\I\xFFD:a;` and trailing-damage `T-1\ID\xFF:a;` separately | Both cannot-evaluate with located raw damage, neither exact presence nor false absence; high-byte position is not limited to the end, and no byte is removed to manufacture ID | L3-REG-006, L3-VAL-008, L3-VAL-010 |
 | `projected_controls_preserve_exact_presence` | `T-1\I\r\nD:x;`, established T-1 ID predicate | True exact presence from INT-036 projection with raw CR/LF retained and internal-omission information; controls are not high-byte damage and do not block an established exact match | L3-REG-006, L3-VAL-008, L3-VAL-011 |
+| `high_byte_run_covers_missing_literal_tail` | Established T-1 ID predicate; `T-1\I\xFF:a;` with zero exact matches | Cannot-evaluate: I followed by a high-byte run is compatible with ID because the run may stand for D; do not require literal D to be readable, repair the key or report false | L3-VAL-008, L3-VAL-012 |
+| `high_byte_run_can_match_empty` | Same predicate with `T-1\I\xFF\xFED:a;` and, separately, `T-1\ID\xFF:a;` | Each cannot-evaluate with raw damage retained: the adjacent high bytes form one maximal run that can stand for zero unknown bytes; run length is not the number of inferred characters | L3-VAL-012 |
+| `damaged_literal_readable_order_is_required` | T-1 ID predicate, only `T-1\D\xFFI:a;`, no other related evidence | False in this known scope: readable D before I cannot align to literal ID in order; the run cannot reorder/delete either readable character. Retain the independent damaged-name finding | L3-VAL-012 |
+| `terminated_literal_has_no_implicit_gap` | T-1 ID predicate, only `T-1\I:a;` or `T-1\ID2:a;` in separate stimuli | False absent other related evidence: whole terminated literal does not match ID and no high-byte run supplies a gap. Contrast unterminated T-1\I at EOF, which blocks false under the approved prefix rule | L3-VAL-012 |
+| `damaged_literal_matching_does_not_enumerate_replacements` | Supplied long diagnostic literal containing many alternating readable characters/high-byte runs, with compatible and incompatible reviewed target literals | Same whole-literal existential answer regardless of a run's possible expansion count; bounded matching states follow supplied lengths, no replacement enumeration/exponential backtracking or manufactured exact key | L3-VAL-012 |
+| `high_byte_run_hiding_separator_is_unassigned` | T-1 ID presence predicate, zero exact matches; `T-1\xFFD:a;`, where the run could cover `\I` | Cannot-evaluate, not false: component split is UNKNOWN; retain wrong-arity-style unassigned evidence, compatible with every scope readable parts allow under INT-040. Never guess a component split or parent alignment to exclude a compatible scope; no new key or parent/split enumeration | L3-VAL-008, L3-VAL-012 |
 | `exact_match_proves_presence_despite_related_damage` | `T-1\ID:x;T-1\ID\xFF:a;`, requested T-1 ID presence | True from the exact match, keeping damaged-name evidence/finding; neither damage nor an invalid value may erase established physical presence | L3-VAL-008, L3-VAL-011 |
 | `presence_uses_canonical_name_identity` | `t-1\id:x;` and, separately, `T-01\ID:x;`, requested T-1 ID presence | Each matches: true through INT-036/038 projection, ASCII case folding and canonical index 1; raw spelling remains, and leading-zero case retains its normalization information finding (case folding alone needs no new finding) | L3-REG-006, L3-VAL-008, L3-VAL-011 |
 | `damaged_child_parent_blocks_compatible_scopes` | Synthetic reviewed physical-presence predicate for D-1\WP-1-1-m-2, supplied fixed m scopes, no exact matches; `D-1\WP-1-1-x-2:4;` | Every scope (1,1,1,m) compatible with readable parents gives cannot-evaluate, never false; apply INT-040 without choosing x, guessing arity alignment or enumerating hypothetical parents; this tests diagnostic evidence, not a new Chapter 9 presence rule | L3-VAL-007, L3-VAL-008, L3-VAL-010 |
@@ -491,6 +497,62 @@ fixtures and reviewed bindings, not regenerate expected answers through the
 evaluator under test. Complete compound expressions, dependency cycles,
 severity/deduplication, link construction and presence/profile enumeration
 remain later requirements; these cases do not silently settle them.
+
+### Planned F1 repair and uncertainty edges
+
+Review follow-up to INT-021/F1; these are planned, not executable tests and
+not evidence of completed checksum requirements. F1 remains coordinator-
+recommended with owner sign-off pending; AI CONCUR was relayed for #30 head
+`13173b0`. Sources: 106-24R1 Chapter 9 Table 9-2 MESSAGE DIGEST/CHECKSUM,
+page 9-13; L3-VAL-012's reviewed diagnostic rule; ADR-0029's exact-target
+transaction and final-byte stamp. INT-018/019/020 still need their AI checks.
+
+| Planned check | Fixture or stimulus | Expected observation |
+| --- | --- | --- |
+| `damaged_sha_name_is_indeterminate` | `G\SH\xFFA:2-<64 hex digits>;`, separately alone and beside one exact G\SHA item; placeholder expanded to actual hex bytes in future fixture | Verification indeterminate with all raw evidence; never drop high bytes to create a key or claim the exact item proves a unique SHA item |
+| `exact_duplicate_removal_precedes_stamping` | Two G\SHA items; caller explicitly removes one using its exact current-revision item ID, then requests a final stamp | Repair permitted under ADR-0029 without guessed selection; rebuild/re-read the result; stamp only after ambiguity is resolved, as a possible final transaction step; still refuse if duplicates/damaged SHA evidence remain |
+
+F7's first-record SRCC, fragment-disagreement, nearby-event candidate and
+prior-ordering questions are analysis notes in INT-030 and the gate note,
+not newly chosen event-identification or fragment-summary semantics.
+
+## Family 2 batch 9: registry-gate acceptance specifications
+
+**Status: planned, not executable tests.** These derive existing ADR-0004/
+0005/0022/0027/0033 decisions and the interpretation register's development
+gates; they propose no new Chapter 9 interpretation. The synthetic source,
+review, analysis and test artifacts below are isolated gate fixtures, not
+claims of current production registry coverage or completed development work.
+
+Source structure: 106-24R1 Chapter 9 section 9.5.1 a, pages 9-5–9-6,
+usage attributes and definition prose; Table 9-4 TIME FORMAT, page 9-72,
+is a cited row example already used by batch 7. Mutation stimuli below are
+hypothetical source revisions, not assertions of real standard changes.
+See the [derivation record](research/2026-11-23-registry-gates-draft.md).
+
+| Planned check | Fixture or stimulus | Expected observation | Requirement |
+| --- | --- | --- | --- |
+| `registry_citation_identifies_edition_and_row` | TIME FORMAT source fixture versus a citation containing only Table 9-4 without edition/row | Full edition/table/row/code-pattern identity retained; incomplete citation blocks executable readiness, no similarly named edition borrowed | L3-REG-007 |
+| `registry_source_keeps_prose_dependencies` | Source row plus separately cited supporting prose; mutate only the prose text in a fixture | Both sources retained verbatim with dependency links; prose change is visible to freshness even if the usage fields are unchanged | L3-REG-007, L3-REG-010 |
+| `registry_coverage_accounts_for_each_input_row` | Three supplied source rows classified executable, not yet interpreted and excluded with a reason; then one extra unaccounted row | Three accounted statuses remain distinct; added unaccounted row causes coverage failure, not silent omission or inferred semantics | L3-REG-008 |
+| `registry_exclusion_requires_reason` | Source row excluded without a reason, then with a reason and source identity | Missing reason fails coverage check; identified reason accounts for exclusion without claiming executable support | L3-REG-008 |
+| `registry_review_records_human_and_ai_roles` | Complete revision-bound fixture metadata, then owner sign-off missing, AI evidence missing or pending, or only a coordinator decision in separate fixtures | Complete roles/dates/references retained; each missing prerequisite blocks readiness, no coordinator or AI substitutes for owner approval | L3-REG-009, L3-REG-012 |
+| `coordinator_reader_policy_needs_owner_and_ai_review` | Planned reader/validator behaviour tied to INT-021 (F1) or INT-030 (F7), with only the coordinator decision recorded, whether hand-written or generated | Implementation readiness blocked pending ADR-0033 owner sign-off AND independent AI check for each entry. Keep coordinator recommendations and pending reviews; F1 remains a 0.1 blocker. Prior AI checks on other interpretations or this requirement wording do not approve F1/F7 | L3-REG-009, L3-REG-012 |
+| `legacy_owner_acceptance_still_needs_ai_review` | Existing owner-accepted INT-018/019/020 with Review: pending, then a separate supplied complete-review fixture | Preserve historical owner acceptance but block implementation until independent AI check is recorded; do not grandfather pre-ADR-0033 entries or count AI concurrence on F1/F7 as their review | L3-REG-009, L3-REG-012 |
+| `registry_ai_reference_is_revision_bound` | Owner-relayed AI CONCURS with PR and exact head versus only a moving branch URL | Immutable review reference accepted as evidence without fabricating a separately posted review; moving branch alone does not prove which interpretation/source revision was checked | L3-REG-009 |
+| `registry_source_change_requires_rereview` | Reviewed source hash then changed source prose, source dependency edition or unavailable stored hash in separate stimuli | Every affected interpretation flagged stale/re-review; recomputing a digest alone does not renew approval, old sign-off remains historical | L3-REG-010 |
+| `registry_digest_cannot_hide_source_changes` | Dependency strings whose naive concatenations coincide, or source differing only in case/layout | Documented encoding/boundaries distinguish hash input; no normalization that hides a source change; this fixture selects no digest algorithm | L3-REG-010 |
+| `registry_unlisted_interpretation_never_executes` | Rule dependency names a nonexistent INT, then open/proposed/unready entries, plus a source-only entry | Executable rule blocked with precise dependency reason; source-only entry stays accounted and non-executable, no inline fallback interpretation | L3-REG-011, L3-REG-013 |
+| `registry_all_interpretation_dependencies_are_checked` | Synthetic rule with two dependencies, only one ready | Block with the other dependency and source/review evidence listed; one approved entry does not authorize the whole rule | L3-REG-011, L3-REG-012 |
+| `registry_approval_is_not_completed_development` | Approved/current fixture with draft analysis and named-but-unwritten focused/edge tests; then complete evidence supplied in an isolated fixture | First remains unready with every missing prerequisite; second can satisfy the evidence gate without claiming real registry completion. Drafts/planned cases never counted as analysis/test evidence | L3-REG-012 |
+| `registry_test_linkage_requires_real_markers` | Register names a focused test but source has no matching executable test/interpretation marker | Report missing verification linkage, never infer passing coverage from a Markdown test name | L3-REG-011, L3-REG-012 |
+| `registry_generation_refuses_unready_executable_rule` | Generator/check input asks to activate a rule whose source/review/analysis/test gate fails | Refuse activation with entry/dependency/source reason; source remains visibly non-executable, no silent fallback to a different rule, no source-text rewrite or downstream build-script generation | L3-REG-013 |
+
+Future tests must supply independent source and review/evidence fixtures,
+including each missing gate separately. A successful synthetic gate check
+proves only that supplied readiness evidence is accounted for; it cannot
+certify the standard's interpretation or production registry completeness.
+No current build script, CI job, generator or parser test is changed here.
 
 ## Real Chapter 10 recordings (local use only)
 

@@ -14,6 +14,8 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-23-f1-f7-review-gates.md](2026-11-23-f1-f7-review-gates.md) | PR #30 review follow-up: F1/F7 owner summaries and explicit implementation gates; unknown split for separator-spanning high-byte runs |
+| [2026-11-23-registry-gates-draft.md](2026-11-23-registry-gates-draft.md) | Batch 9 provenance/review/development gates and owner-requested INT-042 ordered high-byte-run matching clarification |
 | [2026-11-23-int042-owner-signoff.md](2026-11-23-int042-owner-signoff.md) | Joey's INT-042 amended Option A approval, PR #28 exact-head recheck concurrence, prefix/damaged-name clarifications and R/R-status source caveat |
 | [2026-11-23-condition-scope-draft.md](2026-11-23-condition-scope-draft.md) | Batch 8 condition scope/evidence requirements and proposed INT-042 presence-versus-value choice (sign-off superseded by the INT-042 approval record) |
 | [2026-11-23-int041-owner-signoff.md](2026-11-23-int041-owner-signoff.md) | Joey's INT-041 approval, PR #26 exact-head AI concurrence and effective-value edge notes |
