@@ -68,3 +68,15 @@ sources, the proposed designator choice and independent hashlib preimages.
 Freshness, completed analysis and executable tests remain implementation
 gates. The earlier history is preserved; semantic approval is not completion
 of family 2 or authority to skip development evidence.
+
+
+## Follow-up AI review relay — 2026-11-23
+
+The owner relayed AI CONCUR on INT-018/019/020 follow-up wording in PR #31
+at `b44967341b12425d4380778cf5f7971b211fdb19`, except the COMPUTE eligibility
+rule. That exception is corrected separately: refuse only for undefined or
+ambiguous domain; a complete terminated malformed VALUE permits COMPUTE.
+The placeholder follows that same rule. INT-043's label received CONCERNS
+and remains proposed with the revised unsupported-algorithm wording. This
+records the relay, not an approval of the newly amended head or completed
+analysis/tests; the original owner/AI approval references remain unchanged.

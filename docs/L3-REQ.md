@@ -967,15 +967,20 @@ prior terminator yields a suggestion-only framing finding, never a new
 boundary/exclusion inside the previous value.
 
 **L3-SUM-002** · Parent: L2-SUM-001 · Verification: T
-*Authoritative COMPUTE SHALL refuse for malformed SHA framing/value shape, a missing terminator, known truncation or ambiguous SHA occurrence, retaining all duplicate/framing evidence; it SHALL NOT emit a guessed checksum as authoritative or automatically apply a suggested terminator repair.*
+*Authoritative COMPUTE SHALL refuse only when its document/exclusion domain is undefined or ambiguous, including a missing terminator, known truncation, duplicate SHA occurrences, compatible name damage, a blocking BOM or evidence of an enlarged mid-document value swallowing a following attribute; a complete, terminated SHA item with a malformed VALUE alone SHALL NOT block COMPUTE when that domain is established.*
 
-INT-019's unterminated-item case is normally EOF. Mid-document, the next
-semicolon bounds one enlarged value which must pass its whole value-shape
-check; do not reinterpret embedded code-like text as an attribute. A raw
-hash, if exposed separately, is explicitly non-authoritative and is not the
-TMATS checksum. Mid-document enlarged malformed SHA values likewise refuse an
-authoritative COMPUTE; the separately labelled complete zero placeholder is
-not that malformed-framing case. Other findings, including F1 duplicates, coexist.
+INT-019's unterminated-item case is normally EOF. Missing-delimiter evidence
+such as `G\SHA:2-h\r\nG\PN:TEST;` may leave the intended exclusion ambiguous;
+retain that framing evidence and refuse authoritative COMPUTE without repairing
+or choosing a boundary. Do not infer a missing delimiter or truncated record
+merely from a bad digest length. For complete known input, `G\SHA:2-ABC;`
+or a 63-hex-digit value has a defined raw exclusion: VERIFY is malformed,
+COMPUTE is allowed. Value validity and exclusion identity are separate checks.
+The same general rule permits computing with the zero placeholder, an unknown
+algorithm token or unavailable value interpretation when exclusion/completeness
+are established; none makes verification positive. Other findings coexist.
+A separately exposed raw-byte hash stays non-authoritative when the TMATS
+domain is undefined; never present it as the authoritative document checksum.
 
 **L3-SUM-003** · Parent: L2-SUM-002 · Verification: T
 *Verification SHALL report indeterminate for a compatible damaged SHA name or a leading BOM blocking semantic lookup, preserving raw evidence without a guessed exclusion; it SHALL report an exact unterminated SHA or known truncated record malformed and SHALL retain simultaneous duplicate findings without a positive result.*
@@ -993,9 +998,12 @@ and exclusion are usable. INT-043's proposed 02- rule remains separate and
 cannot be silently treated as approved through index numeric identity.
 
 **L3-SUM-005** · Parent: L2-SUM-002 · Verification: T
-*G\SHA:0; SHALL be reported unverified with the explicit reason placeholder/no embedded digest, never match or mismatch; its complete unambiguous exclusion SHALL permit COMPUTE, and an explicitly requested stamp MAY replace the placeholder only with final-byte hashing and verification under ADR-0029.*
+*G\SHA:0; SHALL be reported unverified with the explicit reason placeholder/no embedded digest, never match or mismatch; as an instance of L3-SUM-002's general defined-exclusion rule its complete unambiguous exclusion SHALL permit COMPUTE, and an explicitly requested stamp MAY replace the placeholder only with final-byte hashing and verification under ADR-0029.*
 
 Source: 106-24R1 Chapter 6 section 6.2.3.11 f, pages 6-22–6-23, and the
 INT-020 follow-up. This is a reported reason, not a fixed Rust representation
 or proof of whole-document validity. Detailed stamp/edit contracts remain a
 later slice; placeholders do not bypass F1 or unknown-exclusion guards.
+The placeholder is not a COMPUTE carve-out: complete malformed digest values
+also permit COMPUTE under that general rule. A stamp always writes canonical
+`2-` and lower-case digits, never an input algorithm spelling such as `02-`.

@@ -57,3 +57,36 @@ No parser/checksum implementation tests ran here. Full touched-edition and
 handbook analysis, intensive tests and stamping/transaction decomposition
 remain outstanding. Family 2 continues; no library code is authorized by a
 sign-off record alone.
+
+
+## PR #31 review amendment — 2026-11-23
+
+This addendum supersedes the earlier proposed malformed label for 02- and
+any overly broad refusal to compute on a malformed stored value. The owner
+relayed AI CONCUR on INT-018/019/020 follow-up wording at #31 head b449673,
+except COMPUTE eligibility; AI CONCERNS on INT-043 concerned the label.
+The amended wording still needs exact-head review; INT-043 remains proposed.
+
+COMPUTE requires a defined, unambiguous exclusion and complete input, not a
+valid stored digest. A terminated 2-ABC or 63-digit digest is malformed for
+VERIFY but permits COMPUTE. The zero placeholder is an instance of the same
+rule, not an exception. Refuse authoritative COMPUTE for missing terminator,
+known truncation, duplicates/compatible damage, blocking BOM or an enlarged
+value with swallowed-attribute evidence; do not infer delimiter loss solely
+from a short digest. All refusal/ambiguity findings stay visible.
+
+Recommend exact supported identity 2-, without numeric equivalence. 02-,
+002- and 0- fit the Table 9-2 integer-hyphen-hex range, so label them unknown/
+unsupported algorithm designators, not malformed on spelling alone. 02/002
+get a finding that they resemble 2 with leading zeros; 0 remains unsupported
+without pretending zero equals 2. No normalization or positive verification.
+Alternative remains numeric acceptance of 02/002 as 2, with a finding; this
+would broaden supported identity and still needs explicit approval. Pending
+owner sign-off/recheck, this proposed classification remains unavailable.
+
+Leading-blank 2- is unavailable under the blank rule. A UTF-8 en dash in 2–
+is Invalid under INT-037, not an unsupported ASCII designator; +2- and 2.0-
+are malformed. Upper-case digits after valid 2- follow INT-020. Stamping
+always writes canonical 2-. A defined exclusion permits COMPUTE irrespective
+of those stored-value classifications. Planned rows pin both sides of this
+compute/verify distinction using the unchanged independent hashlib preimages.

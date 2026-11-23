@@ -511,7 +511,7 @@ shapes remain later batches. INT-043's proposed 02- handling is not approved.
 
 **Statement**: Authoritative checksum computation SHALL identify the G\SHA item through the approved projected code name, exclude its original raw name-to-terminator interval, and hash every other supplied document byte unchanged; unavailable framing/completeness or an ambiguous exclusion SHALL refuse an authoritative checksum instead of guessing a byte domain.
 
-**Rationale**: 106-24R1 Chapter 9 Table 9-2 MESSAGE DIGEST/CHECKSUM, page 9-13; Chapter 6 section 6.2.3.11 f, page 6-22; INT-018/019/021. Projection recognizes meaning but does not normalize the hashed document. Raw-byte hashes may be separately labelled; they cannot substitute for an authoritative TMATS checksum with an undefined exclusion. This does not implement setup-record assembly or declare unknown completeness complete.
+**Rationale**: 106-24R1 Chapter 9 Table 9-2 MESSAGE DIGEST/CHECKSUM, page 9-13; Chapter 6 section 6.2.3.11 f, page 6-22; INT-018/019/021. Projection recognizes meaning but does not normalize the hashed document. A complete terminated malformed VALUE does not by itself invalidate the exclusion: VERIFY may be malformed while COMPUTE is allowed. Raw-byte hashes may be separately labelled; they cannot substitute for an authoritative TMATS checksum with an undefined exclusion. This does not implement setup-record assembly or declare unknown completeness complete.
 
 **Verification Method**: Test (T)
 

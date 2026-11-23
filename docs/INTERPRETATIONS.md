@@ -468,6 +468,12 @@ for authoritative checksum operations, even if a retained SHA item terminates.
 The refusal applies to COMPUTE as well: refuse an authoritative TMATS checksum
 when truncation or an undefined exclusion makes its byte domain unavailable.
 A caller's separately labelled raw-byte hash is not the document checksum.
+A complete, terminated item with a malformed digest value alone does not
+make that raw exclusion undefined: e.g. 2-ABC or 63 hex digits gives VERIFY
+malformed but COMPUTE allowed on complete known input. Refuse COMPUTE only
+for undefined/ambiguous domain, including swallowed-attribute evidence,
+not merely a bad value shape. This general rule also covers the placeholder.
+
 Keep F1 duplicate findings alongside malformed/framing findings, never drop
 one to report successful verification. Suggested repairs remain unapplied.
 
@@ -475,7 +481,7 @@ one to report successful verification. Suggested repairs remain unapplied.
 
 **Design**: approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26) · **Review**: approved under ADR-0033; draft author: maintainer agent; owner reconfirmation: Joey, 2026-11-23; independent AI check: CONCUR on all three in register review at main `30e42a3eac791f2f794e5fe239c59590eb6682b8`, relayed by the owner 2026-11-23; follow-up wording still needs exact-head review · **Origin**: T7
 
-**Test**: `unterminated_g_sha_is_malformed`, `eof_sha_refuses_authoritative_compute`, `mid_document_missing_terminator_fails_value_shape`, `truncated_setup_is_not_authoritative_checksum`, `malformed_sha_keeps_duplicate_finding` (planned; not yet written)
+**Test**: `unterminated_g_sha_is_malformed`, `eof_sha_refuses_authoritative_compute`, `mid_document_missing_terminator_fails_value_shape`, `truncated_setup_is_not_authoritative_checksum`, `malformed_sha_keeps_duplicate_finding`, `complete_bad_digest_value_allows_compute`, `defined_exclusion_with_unusable_value_still_computes` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -1284,19 +1290,31 @@ Boolean semantics or new default is selected by this interpretation.
 - 106-24R1 Chapter 9 Table 9-2 MESSAGE DIGEST/CHECKSUM, page 9-13: "SHA2-256 shall be represented as “2-” followed by 64 hex characters"; its range also describes an integer followed by a hyphen and hex characters. This does not explicitly settle zero-padded input recovery.
 
 **Behaviour**: **Proposed, owner sign-off and independent AI check pending.**
-Recommend requiring exact algorithm designator `2-` for a usable SHA-256
-embedded digest: `02-` is malformed, not normalized to algorithm 2 and not
-verified positively, even if its 64 digits match an independent digest.
-Until this proposal is approved, `02-` handling is unavailable/cannot-evaluate,
-not an already implemented or owner-approved malformed verdict. Raw bytes
-remain accessible. INT-038 numeric identity applies to indices, not this
-value token. The existing INT-020 upper-case-digit rule is unchanged.
+Recommend recognizing only the exact algorithm designator `2-` as supported
+SHA-256. Spellings `02-`, `002-` and `0-` with otherwise in-range hex content
+are **unknown/unsupported algorithm designators** under L1-SUM-002, not
+malformed merely for their designator: they fit Table 9-2's integer-hyphen-
+hex range. Never normalize or verify them as algorithm 2. For 02/002, emit
+a located finding that the designator resembles 2 with leading zeros; for
+0, report unsupported designator 0 without claiming that zero equals 2.
+Until approval, this proposed classification stays unavailable/cannot-evaluate,
+not an already approved or implemented unknown-algorithm verdict. Raw bytes
+remain accessible. INT-038 index identity does not apply to this value token.
 
-**Reason**: The constant spelling supports strict handling and avoids guessing a numeric-equivalence rule for the algorithm token. Alternative: accept 02 as numeric algorithm 2 with a noncanonical-spelling finding; that is more tolerant but requires a new rule beyond the printed constant. Recommend strict malformed handling, at the cost of rejecting an otherwise numerically recognizable spelling. Owner choice remains open.
+A leading blank in ` 2-` is unavailable under the unreviewed blank rule.
+UTF-8 `2–` (en dash) contains high bytes and is Invalid under INT-037, not
+an unsupported ASCII algorithm token. `+2-` and `2.0-` are malformed rather
+than accepted by a permissive number parser. Upper-case digest digits after
+valid `2-` follow INT-020's match-with-warning rule. Stamping always emits
+canonical `2-`; it never preserves/normalizes an unsupported input designator
+into a successful verification. With a defined exclusion, COMPUTE does not
+depend on the stored algorithm token being supported (L3-SUM-002).
 
-**Design**: proposed · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: pending · **Origin**: INT-020 review follow-up, family 2 checksum slice
+**Reason**: Strict algorithm identity need not label in-range data malformed. The printed integer-hyphen-hex range admits these spellings, while the supported SHA-256 representation is the constant 2-. Recommend unsupported-algorithm reporting without numeric equivalence. Alternative: accept 02/002 as numeric algorithm 2 with a spelling finding; more tolerant, but adds normalization and positive verification not established by the constant. Owner choice remains open; the prior malformed label is withdrawn.
 
-**Test**: `zero_padded_sha_algorithm_requires_decision` (planned; not yet written)
+**Design**: proposed · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: CONCERNS on the label at PR #31 head `b449673`, relayed by the owner 2026-11-23; revised-label recheck pending · **Origin**: INT-020 review follow-up, family 2 checksum slice
+
+**Test**: `zero_padded_sha_algorithm_requires_decision`, `sha_designator_edge_classification`, `sha_stamp_uses_canonical_designator` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
