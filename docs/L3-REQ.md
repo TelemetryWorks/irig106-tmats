@@ -1,9 +1,9 @@
 # irig106-tmats — Level 3 Requirements
 
 > **Status: foundations through condition-scope batches drafted (family 2, batches 1-8).**
-> INT-042 is proposed; owner sign-off and independent AI review are pending.
+> INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > These are implementation obligations, not existing interfaces or completed
-> tests. INT-035/036/037/038/039/040/041 are approved; INT-041 sign-off is dated 2026-11-23.
+> tests. INT-035/036/037/038/039/040/041/042 are approved; INT-042 sign-off is dated 2026-11-23.
 > Remaining derivations and development evidence still precede implementation.
 
 ## Purpose
@@ -708,9 +708,11 @@ absent key; raw access stays available. No public enum shape is fixed here.
 
 ## Condition batch 8: scoped evidence and predicate prerequisites
 
-Planned obligations only. INT-042 is proposed for owner sign-off and an
-independent AI check under ADR-0033. The existing approved interpretations
-are not reopened; no complete condition parser or registry is claimed.
+Planned obligations only. INT-042 Option A was approved by Joey, 2026-11-23,
+under ADR-0033, with independent AI recheck concurrence on PR #28 head
+`d69d275` (see the [sign-off record](research/2026-11-23-int042-owner-signoff.md)).
+Earlier approved interpretations are unchanged; full development analysis and
+executable tests remain outstanding. No complete evaluator/registry is claimed.
 
 **L3-REG-005** · Parent: L2-REG-003 · Verification: T
 *Each executable condition SHALL retain its original source text, edition/section/table/row, interpretation/review identity and a declared binding for each operand, including same-occurrence, linked-occurrence or document-wide scope, fixed index relationships, link traversal and whether defaulted values are eligible.*
@@ -725,7 +727,7 @@ Unindexed prose cannot become a wildcard or mean occurrence 1 automatically.
 **L3-REG-006** · Parent: L2-REG-003 · Verification: T
 *The condition representation SHALL distinguish physical-presence predicates from interpreted-value predicates and SHALL reject an unavailable predicate/reference mapping as non-executable until reviewed; presence SHALL read actual framed, canonically matched items, not inserted defaults or value truthiness.*
 
-Proposed INT-042 supplies the distinction. A terminated empty value remains
+Approved INT-042 supplies the distinction. A terminated empty value remains
 present under INT-035; an unterminated suffix is not an explicit item for
 lookups, but related suffix evidence can block a false presence answer. An
 encoding-blocked semantic lookup cannot prove absence (INT-037).
@@ -746,7 +748,7 @@ and linked scopes must not silently degrade to same-occurrence lookup.
 **L3-VAL-008** · Parent: L2-VAL-003 · Verification: T
 *For a reviewed physical-presence predicate in an established lookup scope, one or more actual matches SHALL mean true, zero matches without compatible related damaged evidence SHALL mean false, and zero matches with such evidence SHALL mean cannot-evaluate, retaining every occurrence and its independent findings; empty, Invalid or Ambiguous values SHALL NOT make those actual matches absent, and a default alone SHALL NOT establish physical presence.*
 
-This is proposed INT-042, not a new value-resolution precedence. Duplicate
+This is approved INT-042, not a new value-resolution precedence. Duplicate
 scalar items remain Ambiguous under INT-039 even though their physical
 presence is established. Presence true is not permission to use either value,
 claim local validity or suppress duplicate, invalidity or applicability findings.
@@ -760,11 +762,22 @@ an item. A known exact match still proves presence alongside related damage.
 Use the declared literal family and index positions for diagnostic relevance,
 with INT-040's compatible-scope guard: a scope is compatible when no readable
 canonical parent fact contradicts it; unknown positions impose no restriction and
-wrong arity must not be guessed into an alignment. In the explicit damaged
-ID example, the retained literal ID plus undecodable trailing byte is related
-family evidence, not permission to accept arbitrary printable prefixes such
-as ID2. Do not search inside values or repair names. Unrelated literal families
-and demonstrably incompatible parents do not block false for this predicate;
+wrong arity must not be guessed into an alignment. An unterminated suffix may
+be only a proper prefix of a literal: after `COMMENT:x;`, EOF at `T-1\I`
+or `T-1\` blocks false for each predicate whose name it could complete to,
+subject to readable-parent compatibility. Evaluate compatibility for the
+requested predicate; do not enumerate completions or invent lookup items.
+A readable contradictory literal/parent still excludes that predicate.
+
+For this diagnostic guard, a damaged name has uninterpretable name bytes
+that prevent an exact key while its readable literal/parent facts remain
+compatible with the declared family. High bytes can occur anywhere in the
+literal, including `I\xFFD` and `ID\xFF`, not only at its end. Keep those
+bytes as damage evidence, not as characters to silently drop into a usable
+key. ASCII controls already use the approved INT-036 projection; do not
+reclassify projected controls as high-byte damage. This is not permission
+to accept unrelated printable literals such as ID2. Do not search inside values
+or repair names. Unrelated literal families and demonstrably incompatible parents do not block false for this predicate;
 retain their independent findings. Do not enumerate hypothetical parents.
 
 Match exact items through INT-036/038 projection, ASCII case folding and

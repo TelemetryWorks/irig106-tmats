@@ -438,9 +438,11 @@ do not claim those validators exist or complete the parent requirements.
 
 ## Family 2 batch 8: condition-scope acceptance specifications
 
-**Status: planned, not executable tests.** INT-042 is proposed; owner sign-off
-and independent AI review under ADR-0033 are pending. These cases do not
-claim a complete registry, evaluator, presence validator or time-view API.
+**Status: planned, not executable tests.** INT-042 Option A was approved by
+Joey, 2026-11-23, under ADR-0033, with independent AI recheck concurrence on
+PR #28 head `d69d275` (see the [sign-off record](research/2026-11-23-int042-owner-signoff.md)).
+Full development analysis and executable tests remain outstanding. These cases
+do not claim a complete registry, evaluator, presence validator or time-view API.
 Fixtures supply reviewed predicate/scope/type bindings and edition basis
 unless their absence is the stimulus. Short snippets are not full conforming
 files. Escapes denote raw bytes; synthetic conditions/link results test the
@@ -451,7 +453,8 @@ ANTENNA TYPE T-x\AN1, page 9-18; Table 9-4 TIME FORMAT R-x\TFMT-n, page
 9-72; CHANNEL DATA TYPE R-x\CDT-n, page 9-50; approved INT-035/036/037/038/039/040/041
 and ADR-0022/0023/0033. See the
 [draft review and options](research/2026-11-23-condition-scope-draft.md).
-All presence truth-table expectations below remain subject to INT-042 approval.
+The prefix/damaged-name cases below record clarifications requested with sign-off;
+this PR does not claim those new fixture wordings have already been independently reviewed.
 
 | Planned check | Fixture or stimulus | Expected observation | Requirement |
 | --- | --- | --- | --- |
@@ -465,6 +468,9 @@ All presence truth-table expectations below remain subject to INT-042 approval.
 | `encoding_blocked_lookup_does_not_prove_absence` | Assembled text starts with UTF-8 BOM; requested physical-presence predicate | Cannot-evaluate under INT-037, raw bytes still accessible; blocked semantic lookup is not a known empty set | L3-REG-006, L3-VAL-007 |
 | `unterminated_text_is_not_specified` | Established T-1 scope; only unterminated suffix `T-1\ID:a` | No explicit lookup item from suffix under unchanged INT-035; presence cannot-evaluate with suffix location/framing finding retained, never false or true; dependent T-1\AN1 is not judged not allowed from this condition | L3-REG-006, L3-VAL-008, L3-VAL-011 |
 | `damaged_name_blocks_false_presence` | Established T-1 scope, only `T-1\ID\xFF:a;` | Zero exact matches but related damaged-name evidence; cannot-evaluate with raw name/location and failure retained, never repair to ID or judge T-1\AN1 not allowed | L3-REG-006, L3-VAL-008, L3-VAL-010 |
+| `unterminated_literal_prefix_blocks_compatible_presence` | Established T-1 ID predicate, zero exact matches; `COMMENT:x;T-1\I` and `COMMENT:x;T-1\` at EOF in separate stimuli | Cannot-evaluate for predicates whose names each suffix could complete to, with compatible readable parents; T-1 ID cannot be declared absent or T-1\AN1 not allowed. No completed name/lookup item or enumeration of completions; incompatible T-2 parent remains excluded | L3-REG-006, L3-VAL-008, L3-VAL-010 |
+| `high_byte_inside_literal_blocks_false_presence` | Established T-1 ID predicate; `T-1\I\xFFD:a;` and trailing-damage `T-1\ID\xFF:a;` separately | Both cannot-evaluate with located raw damage, neither exact presence nor false absence; high-byte position is not limited to the end, and no byte is removed to manufacture ID | L3-REG-006, L3-VAL-008, L3-VAL-010 |
+| `projected_controls_preserve_exact_presence` | `T-1\I\r\nD:x;`, established T-1 ID predicate | True exact presence from INT-036 projection with raw CR/LF retained and internal-omission information; controls are not high-byte damage and do not block an established exact match | L3-REG-006, L3-VAL-008, L3-VAL-011 |
 | `exact_match_proves_presence_despite_related_damage` | `T-1\ID:x;T-1\ID\xFF:a;`, requested T-1 ID presence | True from the exact match, keeping damaged-name evidence/finding; neither damage nor an invalid value may erase established physical presence | L3-VAL-008, L3-VAL-011 |
 | `presence_uses_canonical_name_identity` | `t-1\id:x;` and, separately, `T-01\ID:x;`, requested T-1 ID presence | Each matches: true through INT-036/038 projection, ASCII case folding and canonical index 1; raw spelling remains, and leading-zero case retains its normalization information finding (case folding alone needs no new finding) | L3-REG-006, L3-VAL-008, L3-VAL-011 |
 | `damaged_child_parent_blocks_compatible_scopes` | Synthetic reviewed physical-presence predicate for D-1\WP-1-1-m-2, supplied fixed m scopes, no exact matches; `D-1\WP-1-1-x-2:4;` | Every scope (1,1,1,m) compatible with readable parents gives cannot-evaluate, never false; apply INT-040 without choosing x, guessing arity alignment or enumerating hypothetical parents; this tests diagnostic evidence, not a new Chapter 9 presence rule | L3-VAL-007, L3-VAL-008, L3-VAL-010 |

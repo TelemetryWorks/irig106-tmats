@@ -1093,19 +1093,19 @@ basis. These edge notes were requested with the 2026-11-23 sign-off.
 **Sign-off and AI-check reference**: [owner approval record](research/2026-11-23-int041-owner-signoff.md), referencing [PR #26](https://github.com/TelemetryWorks/irig106-tmats/pull/26) at `0fc0bc8917d4e80d1c0c3274bc8868083afb1a28` and the owner's 2026-11-23 relay of the independent check. The record includes the requested edge notes; approval is not implementation, completed analysis or passing tests, and this new PR still needs independent review.
 
 
-## Presence predicates versus value predicates (proposed, 2026-11-23)
+## Presence predicates versus value predicates (approved, 2026-11-23)
 
 ### INT-042
 
 **Title**: A reviewed is-specified predicate tests actual presence, not value usability
 
 **Sources**:
-- 106-24R1 Chapter 9 section 9.5.1 a, page 9-6, states: "If the attribute is specified in the TMATS file, it must contain valid information". This distinguishes physical specification from the separate validity obligation and is the textual basis for Option A; the section also describes defaults for absent attributes. It does not formally define recovery semantics for a presence condition whose named item is malformed or duplicated.
+- 106-24R1 Chapter 9 section 9.5.1 a, page 9-6, states: "If the attribute is specified in the TMATS file, it must contain valid information". The sentence sits within the R/R Ch 10 Status bullet: it is strong evidence separating physical specification from the validity obligation in that context, not a general definition of specified. It is the textual basis supporting Option A; the section also describes defaults for absent attributes. It does not formally define recovery semantics for a presence condition whose named item is malformed or duplicated.
 - Table 9-3 TRANSMIT ANTENNA TYPE T-x\AN1, page 9-18: "Allowed when: T-x\ID is specified". This explicit indexed reference supplies a presence example without resolving an omitted index by guess.
 - Table 9-4 TIME FORMAT R-x\TFMT-n, page 9-72, compares R\CDT with TIMEIN; that needs a usable value, unlike the presence example. Its occurrence mapping requires its own reviewed binding.
-- L1-REG-004, ADR-0022/0023 and approved INT-035/036/037/038/039/040/041 require declared scope, retained actual items and visible uncertainty. This proposal clarifies that a known absence is evidence for a presence predicate, while a missing VALUE operand still blocks comparison.
+- L1-REG-004, ADR-0022/0023 and approved INT-035/036/037/038/039/040/041 require declared scope, retained actual items and visible uncertainty. This approved interpretation clarifies that a known absence is evidence for a presence predicate, while a missing VALUE operand still blocks comparison.
 
-**Behaviour**: **Proposed; owner sign-off and independent AI check pending.**
+**Behaviour**: **Approved Option A by Joey, 2026-11-23, under ADR-0033.**
 When a reviewed condition explicitly tests physical presence in an established
 scope, one or more actual lookup matches means true, even
 if their values are empty, Invalid or Ambiguous. Retain all candidates and
@@ -1121,8 +1121,20 @@ must not receive a not-allowed verdict from that unknown condition.
 Use INT-040's diagnostic compatible-scope guard for readable canonical parent
 facts, including multiple-entry child scopes with damaged parents; unknown
 positions impose no restriction and wrong arity does not justify guessed
-alignment. The explicit ID-plus-high-byte case is related diagnostic damage,
-not an arbitrary printable-prefix match, name repair or value-text search.
+alignment. An unterminated suffix that is a proper prefix of the literal also
+blocks false for any predicate it could complete to: `COMMENT:x;T-1\I` or
+`COMMENT:x;T-1\` at EOF gives cannot-evaluate for compatible T-1 ID presence,
+without completing the text or creating a lookup item. Readable contradictory
+literal/parent facts exclude incompatible predicates; evaluate a requested
+predicate's compatibility without enumerating possible completions.
+
+A damaged name generally has uninterpretable bytes preventing an exact key,
+with readable literal/parent facts compatible with the declared family.
+High bytes anywhere within or adjoining the literal qualify, e.g. both
+`T-1\I\xFFD:a;` and `T-1\ID\xFF:a;`; this is not restricted to trailing
+bytes. ASCII controls already pass through INT-036's projection. Preserve
+raw bytes; diagnostic relevance neither removes high bytes to form a usable
+key nor permits arbitrary printable-prefix matches or value-text searches.
 Incompatible parents/unrelated families do not block this predicate's false
 answer; keep their findings. One known exact match proves presence even if
 additional damaged evidence exists. INT-035 framing is unchanged.
@@ -1140,14 +1152,17 @@ lookup scope, blocked lookup or an unresolved/ambiguous required link target
 also gives cannot-evaluate; it is not proof that the target item is absent.
 Do not infer true presence from an unterminated suffix or repair a code name.
 No general rule inferring reference scope from abbreviated prose, compound
-Boolean semantics or new default is approved by this proposal.
+Boolean semantics or new default is selected by this interpretation.
 
-**Reason**: Physical absence is an answer to a presence question but cannot supply a value for equality. Requiring a valid singular value for is-specified hides actual supplied fields, while treating every failed value comparison as false hides uncertainty. The recommended distinction keeps both facts visible; its cost is that presence can be true while the same field is invalid or ambiguous, so consumers must not mistake presence for validity. The alternative is cannot-evaluate for presence whenever the named field lacks a usable singular value; that is conservative but conflates presence with usability. Related damaged evidence prevents a false absence verdict at the cost of additional cannot-evaluate outcomes until the input is fixed. Owner choice remains open.
+**Reason**: Physical absence is an answer to a presence question but cannot supply a value for equality. Requiring a valid singular value for is-specified hides actual supplied fields, while treating every failed value comparison as false hides uncertainty. The approved distinction keeps both facts visible; its cost is that presence can be true while the same field is invalid or ambiguous, so consumers must not mistake presence for validity. The alternative is cannot-evaluate for presence whenever the named field lacks a usable singular value; that is conservative but conflates presence with usability. Related damaged evidence prevents a false absence verdict at the cost of additional cannot-evaluate outcomes until the input is fixed. Joey approved amended Option A, 2026-11-23; the owner-requested prefix/damage clarifications are recorded with sign-off.
 
-**Design**: proposed · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: CONCERNS on PR #28 at `07a21a3`, relayed by the owner 2026-11-23; amendment recheck pending · **Origin**: family 2 batch 8
+**Design**: approved (Joey, owner sign-off, 2026-11-23) · **Review**: approved under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-23; independent AI recheck: CONCURS with amended Option A on PR #28 at `d69d275`, relayed by the owner 2026-11-23 · **Origin**: family 2 batch 8
 
-**Test**: `specified_absent_is_false`, `specified_invalid_and_duplicate_stays_true`, `presence_scope_unknown_is_not_absence`, `missing_value_does_not_make_inequality_true`, `default_does_not_make_item_specified`, `unterminated_text_is_not_specified`, `damaged_name_blocks_false_presence`, `presence_uses_canonical_name_identity`, `damaged_child_parent_blocks_compatible_scopes`, `not_specified_preserves_unknown`, `other_document_does_not_supply_presence` (planned, not yet written)
+**Test**: `specified_absent_is_false`, `specified_invalid_and_duplicate_stays_true`, `presence_scope_unknown_is_not_absence`, `missing_value_does_not_make_inequality_true`, `default_does_not_make_item_specified`, `unterminated_text_is_not_specified`, `damaged_name_blocks_false_presence`, `presence_uses_canonical_name_identity`, `damaged_child_parent_blocks_compatible_scopes`, `not_specified_preserves_unknown`, `other_document_does_not_supply_presence`, `unterminated_literal_prefix_blocks_compatible_presence`, `high_byte_inside_literal_blocks_false_presence`, `projected_controls_preserve_exact_presence` (planned, not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
 **Draft analysis**: [sources, alternatives and remaining work](research/2026-11-23-condition-scope-draft.md)
+
+
+**Sign-off and AI-check reference**: [owner approval record](research/2026-11-23-int042-owner-signoff.md), referencing [PR #28](https://github.com/TelemetryWorks/irig106-tmats/pull/28) at `d69d275340d1773d9548cf365d57db8fc05822f1` and the owner's 2026-11-23 relay of independent recheck concurrence. The record includes the requested prefix/damaged-name clarifications and source-context caveat. Approval is not implementation, completed analysis or passing tests; this sign-off-record PR still needs independent review.

@@ -14,7 +14,8 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
-| [2026-11-23-condition-scope-draft.md](2026-11-23-condition-scope-draft.md) | Batch 8 condition scope/evidence requirements and proposed INT-042 presence-versus-value choice |
+| [2026-11-23-int042-owner-signoff.md](2026-11-23-int042-owner-signoff.md) | Joey's INT-042 amended Option A approval, PR #28 exact-head recheck concurrence, prefix/damaged-name clarifications and R/R-status source caveat |
+| [2026-11-23-condition-scope-draft.md](2026-11-23-condition-scope-draft.md) | Batch 8 condition scope/evidence requirements and proposed INT-042 presence-versus-value choice (sign-off superseded by the INT-042 approval record) |
 | [2026-11-23-int041-owner-signoff.md](2026-11-23-int041-owner-signoff.md) | Joey's INT-041 approval, PR #26 exact-head AI concurrence and effective-value edge notes |
 | [2026-11-23-effective-value-draft.md](2026-11-23-effective-value-draft.md) | Batch 7 source review, effective-state/default evidence and INT-041 draft guard (sign-off superseded by the INT-041 approval record) |
 | [2026-11-23-int040-owner-signoff.md](2026-11-23-int040-owner-signoff.md) | Joey's INT-040 sign-off dated 2026-11-22, PR #24 final-head concurrence and compatible-scope tightening |
