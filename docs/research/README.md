@@ -14,7 +14,8 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
-| [2026-11-23-int021-int030-owner-signoff.md](2026-11-23-int021-int030-owner-signoff.md) | Joey's F1/INT-021 and F7/INT-030 approval with exact-head AI concurrence and remaining checksum/analysis gates |
+| [2026-11-23-checksum-followups-draft.md](2026-11-23-checksum-followups-draft.md) | Batch 10 checksum follow-ups, proposed INT-043 designator handling and independent hashlib fixture oracles |
+| [2026-11-23-int021-int030-owner-signoff.md](2026-11-23-int021-int030-owner-signoff.md) | Joey's F1/INT-021 and F7/INT-030 approval plus INT-018/019/020 reconfirmation, exact AI references and remaining analysis/test gates |
 | [2026-11-23-f1-f7-review-gates.md](2026-11-23-f1-f7-review-gates.md) | PR #30 review follow-up: F1/F7 owner summaries and explicit implementation gates; unknown split for separator-spanning high-byte runs (pending-owner status superseded by the INT-021/030 approval record) |
 | [2026-11-23-registry-gates-draft.md](2026-11-23-registry-gates-draft.md) | Batch 9 provenance/review/development gates and owner-requested INT-042 ordered high-byte-run matching clarification |
 | [2026-11-23-int042-owner-signoff.md](2026-11-23-int042-owner-signoff.md) | Joey's INT-042 amended Option A approval, PR #28 exact-head recheck concurrence, prefix/damaged-name clarifications and R/R-status source caveat |

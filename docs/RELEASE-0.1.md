@@ -316,11 +316,14 @@ For pre-ADR-0033 entries INT-001 through INT-034, existing owner acceptance
 with Review: pending is not completed review: the independent AI check is
 still required before implementation. Preserve that owner acceptance; do not
 grandfather the missing check or treat other open/coordinator entries as
-owner-approved. With F1/INT-021 now approved, remaining 0.1 checksum review blockers explicitly
-include **INT-018** (G\SHA code name in any case, never inside a value),
-**INT-019** (an unterminated G\SHA is malformed) and **INT-020** (upper-case
-hex in the value). The owner will route those three AI checks next; they
-remain pending. Analysis, freshness and executable verification still apply.
+owner-approved. Joey reconfirmed **INT-018** (projected G\SHA name, never
+inside a value), **INT-019** (unterminated SHA is malformed) and **INT-020**
+(upper-case digest digits), 2026-11-23, under ADR-0033. Independent AI CONCUR
+on all three is tied to the register review at main `30e42a3`. Together with
+F1/INT-021, these clear their interpretation-review blockers only; analysis,
+source freshness and tests remain. See the [combined approval record](research/2026-11-23-int021-int030-owner-signoff.md).
+INT-043's proposed `02-` algorithm-token handling remains a separate open
+review decision, not implicitly approved by INT-020's reconfirmation.
 
 F1 deliberately leaves damaged recordings readable but without a positive
 integrity verdict. Fixing duplicates requires an explicit action before

@@ -136,3 +136,16 @@ This supersedes the earlier pending-owner descriptions above. See the
 repair, nearby candidate-only events and remaining evidence. INT-018/019/020
 still need their separate AI checks; source freshness, analysis and executable
 verification remain. No completed implementation or new-head review is claimed.
+
+
+## INT-018/019/020 reconfirmation recorded — 2026-11-23
+
+Joey reconfirmed all three under ADR-0033, preserving their original
+2026-09-26 owner acceptance, with independent AI CONCUR at register-review
+main `30e42a3eac791f2f794e5fe239c59590eb6682b8`. This supersedes the
+earlier descriptions of their pending AI checks and removes their 0.1
+checksum blockers at the interpretation-review gate only. The combined
+[approval record](2026-11-23-int021-int030-owner-signoff.md) holds both this
+reconfirmation and F1/F7's approval with its separate #30-head AI reference.
+Analysis, freshness and executable tests remain. INT-043's proposed 02-
+algorithm-token decision is separate and still pending owner/AI review.

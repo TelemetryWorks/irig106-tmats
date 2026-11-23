@@ -421,15 +421,33 @@ Complete records govern (INT-028); incomplete and ambiguous records do not by de
 - §9.4.2: "For alphanumeric data items, including keywords, either upper or lower case is allowed; TMATS is not case sensitive."
 - Chapter 6 §6.2.3.11 f: "If the TMATS includes a G\SHA code name, all text between the "G\SHA" and the following semicolon, inclusive, shall be discarded for the purposes of digest calculation."
 
-**Behaviour**: The excluded range starts at a `G\SHA` **code name** — the start of an attribute, in any letter case (`g\sha`, `G\sha`) — and never at the same characters inside another attribute's value, such as a comment.
+**Behaviour**: **Reconfirmed by Joey, 2026-11-23, under ADR-0033.** The excluded range starts at a `G\SHA` **code name** — the start of an attribute, in any letter case (`g\sha`, `G\sha`) — and never at the same characters inside another attribute's value, such as a comment.
+
+**Review follow-up notes (2026-11-23)**: Recognise the complete code name
+using INT-036/038's projected name, not a substring search. Exclude RAW bytes
+from the first contributing name byte (G/g at its retained source location)
+through the terminating semicolon inclusive; internal omitted controls and
+name-edge trailing blanks inside that interval stay excluded as raw bytes.
+Leading layout before that first name byte is hashed. Emit a located finding
+when the raw name spelling differs from `G\SHA`; preserve all original bytes.
+
+A compatible damaged name under L3-VAL-012 makes verification indeterminate,
+never a repaired key or a positive result. X paths carrying G/SHA and COMMENT
+value text are not the code name. If the preceding semicolon is missing,
+`COMMENT:x\r\nG\SHA:...;` is still one COMMENT value; a located suspect-
+terminator/framing finding is suggestion-only, never a repaired boundary.
+A leading encoding marker/BOM blocks semantic identification under INT-037,
+so checksum verification is indeterminate rather than guessing the exclusion.
 
 **Reason**: The standard speaks of the code name; `irig106lib`'s substring search treats text in a value as the item (defect D6).
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: pending under ADR-0033; existing owner acceptance: 2026-09-26; independent AI check: pending (owner will route); required before implementation; 0.1 checksum review blocker · **Origin**: T7
+**Design**: approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26) · **Review**: approved under ADR-0033; draft author: maintainer agent; owner reconfirmation: Joey, 2026-11-23; independent AI check: CONCUR on all three in register review at main `30e42a3eac791f2f794e5fe239c59590eb6682b8`, relayed by the owner 2026-11-23; follow-up wording still needs exact-head review · **Origin**: T7
 
-**Test**: `g_sha_code_name_in_any_case_and_not_in_values`
+**Test**: `g_sha_code_name_in_any_case_and_not_in_values`, `projected_sha_name_excludes_raw_span`, `missing_previous_semicolon_does_not_create_sha`, `x_and_comment_sha_text_is_not_item`, `leading_bom_blocks_sha_verification` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Reconfirmation and AI-check reference**: [combined owner approval record](research/2026-11-23-int021-int030-owner-signoff.md); the register review at main `30e42a3eac791f2f794e5fe239c59590eb6682b8` is the AI-check reference. Analysis and executable tests remain outstanding.
 
 ### INT-019
 
@@ -439,15 +457,29 @@ Complete records govern (INT-028); incomplete and ambiguous records do not by de
 - Table 9-2: "except the characters from "G\SHA:" to the following ";" (inclusive)".
 - Chapter 6 §6.2.3.11 f: "all text between the "G\SHA" and the following semicolon, inclusive".
 
-**Behaviour**: An error. Verification reports "malformed" and never "match"; a suggested edit adds the terminator. No digest is presented as the document's checksum.
+**Behaviour**: **Reconfirmed by Joey, 2026-11-23, under ADR-0033.** An error. Verification reports "malformed" and never "match"; a suggested edit adds the terminator. No digest is presented as the document's checksum.
+
+**Review follow-up notes (2026-11-23)**: The missing following semicolon
+is ordinarily an EOF case. Mid-document, a missing semicolon before another
+item lets the first semicolon terminate one enlarged value; validate that
+whole projected value's shape, report malformed, and never insert a boundary
+or terminator automatically. A known truncated setup record is also malformed
+for authoritative checksum operations, even if a retained SHA item terminates.
+The refusal applies to COMPUTE as well: refuse an authoritative TMATS checksum
+when truncation or an undefined exclusion makes its byte domain unavailable.
+A caller's separately labelled raw-byte hash is not the document checksum.
+Keep F1 duplicate findings alongside malformed/framing findings, never drop
+one to report successful verification. Suggested repairs remain unapplied.
 
 **Reason**: Without a following semicolon the excluded range is undefined, so any digest would rest on a guess.
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: pending under ADR-0033; existing owner acceptance: 2026-09-26; independent AI check: pending (owner will route); required before implementation; 0.1 checksum review blocker · **Origin**: T7
+**Design**: approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26) · **Review**: approved under ADR-0033; draft author: maintainer agent; owner reconfirmation: Joey, 2026-11-23; independent AI check: CONCUR on all three in register review at main `30e42a3eac791f2f794e5fe239c59590eb6682b8`, relayed by the owner 2026-11-23; follow-up wording still needs exact-head review · **Origin**: T7
 
-**Test**: `unterminated_g_sha_is_malformed`
+**Test**: `unterminated_g_sha_is_malformed`, `eof_sha_refuses_authoritative_compute`, `mid_document_missing_terminator_fails_value_shape`, `truncated_setup_is_not_authoritative_checksum`, `malformed_sha_keeps_duplicate_finding` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Reconfirmation and AI-check reference**: [combined owner approval record](research/2026-11-23-int021-int030-owner-signoff.md); the register review at main `30e42a3eac791f2f794e5fe239c59590eb6682b8` is the AI-check reference. Analysis and executable tests remain outstanding.
 
 ### INT-020
 
@@ -457,15 +489,36 @@ Complete records govern (INT-028); incomplete and ambiguous records do not by de
 - Chapter 6 §6.2.3.11 f: "The message digest is a string of 64 lower-case hexadecimal characters, prefixed with the constant string "2-"".
 - Table 9-2: "SHA2-256 shall be represented as "2-" followed by 64 hex characters." "Range: integer followed by "-" followed by hex characters".
 
-**Behaviour**: A value whose digits match the computed digest except for letter case is reported as a match with a warning that Chapter 6 requires lower case. A stamp always writes lower case.
+**Behaviour**: **Reconfirmed by Joey, 2026-11-23, under ADR-0033.** A value whose digits match the computed digest except for letter case is reported as a match with a warning that Chapter 6 requires lower case. A stamp always writes lower case.
+
+**Review follow-up notes (2026-11-23)**: CR/LF within the checksum value
+uses INT-036 projection; otherwise matching digits yield match plus the
+located omission information (and the upper-case warning where applicable).
+Hash raw bytes outside the exclusion, never the projected document. Blanks
+within a value are unavailable until the value-blank rule is reviewed; do
+not trim, declare an automatic mismatch or report Invalid from that missing
+rule (INT-041).
+
+`G\SHA:0;` is explicitly reported unverified with reason placeholder/no
+embedded digest, never match or mismatch. Its complete exclusion range still
+allows COMPUTE of a checksum independently of the placeholder's value;
+stamping may explicitly replace it and must verify the final output. This
+sets a reported status/reason, not a concrete Rust enum. Source: 106-24R1
+Chapter 6 section 6.2.3.11 f, pages 6-22–6-23, including the placeholder example.
+`02-` spelling is a separate proposed decision in INT-043, not covered by
+this reconfirmation. Fixture digests use independent Python hashlib over
+exact bytes, not Chapter 6's example digest, reported unreproducible by the
+reviewer. No claim of reproducing that printed digest is made here.
 
 **Reason**: Table 9-2 allows hex characters without a case; Chapter 6 fixes lower case; §9.4.2 makes letter case insignificant.
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: pending under ADR-0033; existing owner acceptance: 2026-09-26; independent AI check: pending (owner will route); required before implementation; 0.1 checksum review blocker · **Origin**: T7
+**Design**: approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26) · **Review**: approved under ADR-0033; draft author: maintainer agent; owner reconfirmation: Joey, 2026-11-23; independent AI check: CONCUR on all three in register review at main `30e42a3eac791f2f794e5fe239c59590eb6682b8`, relayed by the owner 2026-11-23; follow-up wording still needs exact-head review · **Origin**: T7
 
-**Test**: `upper_case_g_sha_matches_with_warning`
+**Test**: `upper_case_g_sha_matches_with_warning`, `checksum_value_controls_keep_omission_information`, `checksum_value_blanks_are_unavailable`, `sha_zero_placeholder_is_unverified`, `checksum_fixture_uses_independent_digest` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Reconfirmation and AI-check reference**: [combined owner approval record](research/2026-11-23-int021-int030-owner-signoff.md); the register review at main `30e42a3eac791f2f794e5fe239c59590eb6682b8` is the AI-check reference. Analysis and executable tests remain outstanding.
 
 ### INT-021
 
@@ -1218,3 +1271,33 @@ Boolean semantics or new default is selected by this interpretation.
 
 
 **Sign-off and AI-check reference**: [owner approval record](research/2026-11-23-int042-owner-signoff.md), referencing [PR #28](https://github.com/TelemetryWorks/irig106-tmats/pull/28) at `d69d275340d1773d9548cf365d57db8fc05822f1` and the owner's 2026-11-23 relay of independent recheck concurrence. The record includes the requested prefix/damaged-name clarifications and source-context caveat. Approval is not implementation, completed analysis or passing tests; this sign-off-record PR still needs independent review.
+
+
+## Noncanonical SHA algorithm designator (proposed, 2026-11-23)
+
+### INT-043
+
+**Title**: A zero-padded SHA algorithm designator is not silently normalized
+
+**Sources**:
+- 106-24R1 Chapter 6 section 6.2.3.11 f, page 6-22: "prefixed with the constant string “2-”".
+- 106-24R1 Chapter 9 Table 9-2 MESSAGE DIGEST/CHECKSUM, page 9-13: "SHA2-256 shall be represented as “2-” followed by 64 hex characters"; its range also describes an integer followed by a hyphen and hex characters. This does not explicitly settle zero-padded input recovery.
+
+**Behaviour**: **Proposed, owner sign-off and independent AI check pending.**
+Recommend requiring exact algorithm designator `2-` for a usable SHA-256
+embedded digest: `02-` is malformed, not normalized to algorithm 2 and not
+verified positively, even if its 64 digits match an independent digest.
+Until this proposal is approved, `02-` handling is unavailable/cannot-evaluate,
+not an already implemented or owner-approved malformed verdict. Raw bytes
+remain accessible. INT-038 numeric identity applies to indices, not this
+value token. The existing INT-020 upper-case-digit rule is unchanged.
+
+**Reason**: The constant spelling supports strict handling and avoids guessing a numeric-equivalence rule for the algorithm token. Alternative: accept 02 as numeric algorithm 2 with a noncanonical-spelling finding; that is more tolerant but requires a new rule beyond the printed constant. Recommend strict malformed handling, at the cost of rejecting an otherwise numerically recognizable spelling. Owner choice remains open.
+
+**Design**: proposed · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: pending · **Origin**: INT-020 review follow-up, family 2 checksum slice
+
+**Test**: `zero_padded_sha_algorithm_requires_decision` (planned; not yet written)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Draft analysis**: [source, alternatives and independent fixture oracle](research/2026-11-23-checksum-followups-draft.md)

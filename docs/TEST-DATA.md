@@ -505,7 +505,8 @@ not evidence of completed checksum requirements. F1 was approved by Joey,
 2026-11-23, under ADR-0033, with AI CONCUR at #30 head `13173b0` (see the
 [owner approval record](research/2026-11-23-int021-int030-owner-signoff.md)). Sources: 106-24R1 Chapter 9 Table 9-2 MESSAGE DIGEST/CHECKSUM,
 page 9-13; L3-VAL-012's reviewed diagnostic rule; ADR-0029's exact-target
-transaction and final-byte stamp. INT-018/019/020 still need their AI checks.
+transaction and final-byte stamp. INT-018/019/020 were reconfirmed by Joey,
+2026-11-23, with independent AI CONCUR at main `30e42a3`; analysis/tests remain.
 
 | Planned check | Fixture or stimulus | Expected observation |
 | --- | --- | --- |
@@ -538,7 +539,7 @@ See the [derivation record](research/2026-11-23-registry-gates-draft.md).
 | `registry_exclusion_requires_reason` | Source row excluded without a reason, then with a reason and source identity | Missing reason fails coverage check; identified reason accounts for exclusion without claiming executable support | L3-REG-008 |
 | `registry_review_records_human_and_ai_roles` | Complete revision-bound fixture metadata, then owner sign-off missing, AI evidence missing or pending, or only a coordinator decision in separate fixtures | Complete roles/dates/references retained; each missing prerequisite blocks readiness, no coordinator or AI substitutes for owner approval | L3-REG-009, L3-REG-012 |
 | `coordinator_reader_policy_needs_owner_and_ai_review` | Planned reader/validator behaviour tied to INT-021 (F1) or INT-030 (F7), with only the coordinator decision recorded, whether hand-written or generated | Implementation readiness blocked pending ADR-0033 owner sign-off AND independent AI check for each entry. This is a synthetic missing-review fixture, not current F1/F7 status: both now have owner approval and AI concurrence recorded. Prior checks on other interpretations or requirement wording alone never approve the fixture | L3-REG-009, L3-REG-012 |
-| `legacy_owner_acceptance_still_needs_ai_review` | Existing owner-accepted INT-018/019/020 with Review: pending, then a separate supplied complete-review fixture | Preserve historical owner acceptance but block implementation until independent AI check is recorded; do not grandfather pre-ADR-0033 entries or count AI concurrence on F1/F7 as their review | L3-REG-009, L3-REG-012 |
+| `legacy_owner_acceptance_still_needs_ai_review` | Synthetic pre-ADR-0033 owner-accepted entry with Review: pending, then a separate supplied complete-review fixture | Preserve historical owner acceptance but block implementation until independent AI check is recorded; do not grandfather pre-ADR-0033 entries or reuse unrelated AI checks; actual INT-018/019/020 now have their own reconfirmation and AI concurrence recorded | L3-REG-009, L3-REG-012 |
 | `registry_ai_reference_is_revision_bound` | Owner-relayed AI CONCURS with PR and exact head versus only a moving branch URL | Immutable review reference accepted as evidence without fabricating a separately posted review; moving branch alone does not prove which interpretation/source revision was checked | L3-REG-009 |
 | `registry_source_change_requires_rereview` | Reviewed source hash then changed source prose, source dependency edition or unavailable stored hash in separate stimuli | Every affected interpretation flagged stale/re-review; recomputing a digest alone does not renew approval, old sign-off remains historical | L3-REG-010 |
 | `registry_digest_cannot_hide_source_changes` | Dependency strings whose naive concatenations coincide, or source differing only in case/layout | Documented encoding/boundaries distinguish hash input; no normalization that hides a source change; this fixture selects no digest algorithm | L3-REG-010 |
@@ -553,6 +554,40 @@ including each missing gate separately. A successful synthetic gate check
 proves only that supplied readiness evidence is accounted for; it cannot
 certify the standard's interpretation or production registry completeness.
 No current build script, CI job, generator or parser test is changed here.
+
+## Family 2 batch 10: checksum follow-up acceptance specifications
+
+**Status: planned, not executable tests.** INT-018/019/020 were reconfirmed by
+Joey, 2026-11-23, with independent AI CONCUR in the register review at main
+30e42a3; INT-021/F1 and INT-030/F7 approvals remain recorded. Analysis and
+tests are not complete. INT-043 remains proposed, with its case conditional
+on owner sign-off and independent AI review.
+
+Sources: 106-24R1 Chapter 9 section 9.4.2 and Table 9-2 MESSAGE DIGEST/
+CHECKSUM, page 9-13; Chapter 6 section 6.2.3.11 f, pages 6-22–6-23;
+INT-035/036/037/038, reconfirmed INT-018/019/020 and approved F1. Snippets
+are focused fixtures, not complete conforming TMATS files. Escapes mean raw
+bytes; h denotes an independently generated 64-digit digest for the exact
+raw preimage. Use Python hashlib, never production checksum code or Chapter
+6's printed example digest as the expected oracle; its bytes/digest have not
+been reproduced. Exact preimages/digests are in the
+[derivation note](research/2026-11-23-checksum-followups-draft.md).
+
+| Planned check | Fixture or stimulus | Expected observation | Requirement |
+| --- | --- | --- | --- |
+| `projected_sha_name_excludes_raw_span` | `\r\n g\s\r\nha:2-h;\nG\PN:TEST;`, h from the note's first preimage | Recognize projected G\SHA; raw spelling finding; exclude raw g through semicolon, including internal CR/LF; leading CR/LF/space and following newline are hashed, not trimmed | L3-SUM-001 |
+| `missing_previous_semicolon_does_not_create_sha` | `COMMENT:x\r\nG\SHA:2-h;`, preceding terminator intentionally omitted | One COMMENT value under INT-035; no SHA exclusion inside it; located suspect-terminator/framing finding is suggestion-only, no repair or invented item | L3-SUM-001 |
+| `x_and_comment_sha_text_is_not_item` | X carried path with G/SHA, and COMMENT text containing G\SHA in separate fixtures | Neither is the complete projected checksum code name; raw bytes hashed unchanged, no substring exclusion | L3-SUM-001 |
+| `leading_bom_blocks_sha_verification` | UTF-8 BOM at assembled-text offset zero before an otherwise valid checksum fixture | Indeterminate semantic exclusion under INT-037; raw access retained, no BOM removal or positive verification | L3-SUM-003 |
+| `eof_sha_refuses_authoritative_compute` | `G\SHA:2-` plus 64 digits at EOF without semicolon | Malformed verification; authoritative COMPUTE refused, no guessed end/exclusion, suggested terminator remains unapplied | L3-SUM-002, L3-SUM-003 |
+| `mid_document_missing_terminator_fails_value_shape` | `G\SHA:2-h\r\nG\PN:TEST;` | The sole framed value includes G\PN:TEST and fails digest shape; malformed, authoritative COMPUTE refused, never split or repaired; do not treat the later semicolon as proof of a usable SHA item | L3-SUM-002, L3-SUM-003 |
+| `truncated_setup_is_not_authoritative_checksum` | Known truncated setup record, with SHA terminating before the truncation | Malformed checksum verification and authoritative COMPUTE refusal; complete SHA syntax cannot make the record complete | L3-SUM-002, L3-SUM-003 |
+| `malformed_sha_keeps_duplicate_finding` | Two complete SHA items plus a third unterminated SHA suffix | Retain the two framed duplicates/F1 evidence and the additional malformed/framing finding together; no positive result or authoritative checksum, no fabricated second lookup item | L3-SUM-002, L3-SUM-003 |
+| `checksum_value_controls_keep_omission_information` | Independently correct h with CR/LF inserted between its hex digits, also with upper-case letters | Projected digits match; located omission information and applicable upper-case warning retained; emission unchanged | L3-SUM-004 |
+| `checksum_value_blanks_are_unavailable` | Independently correct h with leading/embedded/trailing ASCII blanks in separate values | Unavailable until blank rule review; no trim, automatic mismatch or automatic Invalid verdict | L3-SUM-004 |
+| `sha_zero_placeholder_is_unverified` | `G\SHA:0;G\PN:TEST;` | Unverified with placeholder/no-digest reason, never match/mismatch; defined exclusion permits COMPUTE using the note's second preimage; explicit stamp may replace and must verify final output | L3-SUM-005 |
+| `checksum_fixture_uses_independent_digest` | The note's exact byte preimages and hashlib digests | Expected digest comes from independent raw-byte oracle; do not derive expected output through the implementation under test or copy the printed Chapter 6 example | L3-SUM-001, L3-SUM-004 |
+| `zero_padded_sha_algorithm_requires_decision` | `G\SHA:02-h;`, h otherwise independently correct | Currently unavailable pending INT-043. Proposed strict option: malformed, not normalized or positive verification; alternative tolerant option requires its own approval | L3-SUM-004 |
 
 ## Real Chapter 10 recordings (local use only)
 

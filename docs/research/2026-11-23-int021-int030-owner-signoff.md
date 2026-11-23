@@ -42,3 +42,29 @@ Requirements and acceptance cases remain Draft/planned. Source-hash freshness,
 completed deep analysis and required executable verification remain additional
 implementation gates for both approved policies. No code or tests are delivered
 by this sign-off record; the amended PR still needs exact-head independent review.
+
+
+## Combined reconfirmation: INT-018/019/020 — 2026-11-23
+
+Joey reconfirmed INT-018, INT-019 and INT-020 under ADR-0033, preserving
+original owner acceptance dated 2026-09-26. Independent AI CONCUR on all
+three is tied to the register review at main
+`30e42a3eac791f2f794e5fe239c59590eb6682b8`, as relayed by the owner.
+This supersedes their pending-AI descriptions above and removes only their
+0.1 checksum interpretation-review blockers. F1/INT-021 and F7/INT-030
+remain approved with their separate AI reference at #30 head 13173b0.
+No approval of later follow-up wording or this amended PR is claimed.
+
+INT-018 recognises the projected complete name but excludes raw bytes,
+keeping leading layout in the hash. INT-019 malformed/truncated exclusions
+also refuse authoritative COMPUTE. INT-020 permits case-insensitive digest
+comparison with its warning, keeps omission information and reports the
+zero placeholder unverified; blank handling remains unavailable. The
+reviewer's notes and planned cases live in the register and TEST-DATA.
+INT-043's proposed 02- handling is not included in this reconfirmation.
+
+The [checksum derivation note](2026-11-23-checksum-followups-draft.md) records
+sources, the proposed designator choice and independent hashlib preimages.
+Freshness, completed analysis and executable tests remain implementation
+gates. The earlier history is preserved; semantic approval is not completion
+of family 2 or authority to skip development evidence.

@@ -1,7 +1,8 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through registry-gate batches drafted (family 2, batches 1-9).**
+> **Status: foundations through initial checksum batches drafted (family 2, batches 1-10).**
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
+> INT-018/019/020 are reconfirmed; INT-043 algorithm-token handling remains proposed.
 > These are implementation obligations, not existing interfaces or completed
 > tests. INT-035/036/037/038/039/040/041/042 are approved; INT-042 sign-off is dated 2026-11-23.
 > Remaining derivations and development evidence still precede implementation.
@@ -935,8 +936,9 @@ No coordinator policy, including F1/F7, bypasses the approval/AI-review gate.
 Earlier owner-accepted entries (INT-001–034) with Review: pending still need
 the independent AI check before implementation. Existing owner acceptance
 is preserved, not treated as completing the missing check. For 0.1 checksums,
-INT-018/019/020 remain explicit pending AI-review dependencies; F1 itself
-now has owner approval and the independent AI check recorded.
+INT-018/019/020 were reconfirmed by Joey, 2026-11-23, with independent AI
+CONCUR at main `30e42a3`; F1 also has its owner/AI approval recorded. Their
+semantic review gates are complete, while analysis/freshness/tests remain.
 
 **L3-REG-013** · Parent: L2-REG-006 · Verification: T
 *Registry generation/checking SHALL refuse to emit an executable rule with a failed readiness dependency and SHALL report its entry, blocking interpretation/source evidence and reason; its source coverage status SHALL remain visibly non-executable, without replacing a checked-in reviewed rule silently or rewriting source text to make a gate pass.*
@@ -946,3 +948,54 @@ build-time generation. This specifies the refusal boundary for unready rules;
 complete output determinism, atomic file replacement, extractor diagnostics,
 user overlays and generator CLI details remain later derivations. No current
 CI workflow, registry artifact or prototype build script changes here.
+
+
+## Checksum batch 10: projected recognition, raw exclusion and guards
+
+Planned obligations, not executable checks. INT-018/019/020 were reconfirmed
+by Joey, 2026-11-23, under ADR-0033, with AI CONCUR at main 30e42a3.
+Source freshness, deep development analysis and executable tests remain gates.
+
+**L3-SUM-001** · Parent: L2-SUM-001 · Verification: T
+*Checksum recognition SHALL match the complete projected G\SHA name under INT-036/038, map it to the raw first contributing G/g byte through its following semicolon inclusive, exclude exactly that raw interval and hash all bytes outside it, including leading layout; noncanonical raw name spelling SHALL produce a located finding without rewriting it.*
+
+Source: INT-018 and 106-24R1 Chapter 9 Table 9-2 page 9-13; Chapter 6
+section 6.2.3.11 f page 6-22. Internal omitted name controls remain inside
+raw exclusion; leading layout before the name is outside. X carried paths
+and COMMENT value text are not this complete name. A suspected missing
+prior terminator yields a suggestion-only framing finding, never a new
+boundary/exclusion inside the previous value.
+
+**L3-SUM-002** · Parent: L2-SUM-001 · Verification: T
+*Authoritative COMPUTE SHALL refuse for malformed SHA framing/value shape, a missing terminator, known truncation or ambiguous SHA occurrence, retaining all duplicate/framing evidence; it SHALL NOT emit a guessed checksum as authoritative or automatically apply a suggested terminator repair.*
+
+INT-019's unterminated-item case is normally EOF. Mid-document, the next
+semicolon bounds one enlarged value which must pass its whole value-shape
+check; do not reinterpret embedded code-like text as an attribute. A raw
+hash, if exposed separately, is explicitly non-authoritative and is not the
+TMATS checksum. Mid-document enlarged malformed SHA values likewise refuse an
+authoritative COMPUTE; the separately labelled complete zero placeholder is
+not that malformed-framing case. Other findings, including F1 duplicates, coexist.
+
+**L3-SUM-003** · Parent: L2-SUM-002 · Verification: T
+*Verification SHALL report indeterminate for a compatible damaged SHA name or a leading BOM blocking semantic lookup, preserving raw evidence without a guessed exclusion; it SHALL report an exact unterminated SHA or known truncated record malformed and SHALL retain simultaneous duplicate findings without a positive result.*
+
+Sources: INT-018/019/021, INT-037/042 and L3-VAL-012. An exact item's known
+presence does not establish checksum-item uniqueness beside compatible damage.
+No common status precedence hiding a proved error is chosen by this batch.
+
+**L3-SUM-004** · Parent: L2-SUM-002 · Verification: T
+*For a reviewed usable SHA-256 value, verification SHALL use INT-036's value projection, compare against an independently computed digest, report matching upper-case hex with its lower-case warning, retain located CR/LF omission information, and leave raw input unchanged; value blanks without a reviewed handling rule SHALL remain unavailable rather than be trimmed or automatically rejected.*
+
+INT-020 reconfirmation does not choose blank handling or normalize the hashed
+bytes. A projected value mismatch can be reported only when its interpretation
+and exclusion are usable. INT-043's proposed 02- rule remains separate and
+cannot be silently treated as approved through index numeric identity.
+
+**L3-SUM-005** · Parent: L2-SUM-002 · Verification: T
+*G\SHA:0; SHALL be reported unverified with the explicit reason placeholder/no embedded digest, never match or mismatch; its complete unambiguous exclusion SHALL permit COMPUTE, and an explicitly requested stamp MAY replace the placeholder only with final-byte hashing and verification under ADR-0029.*
+
+Source: 106-24R1 Chapter 6 section 6.2.3.11 f, pages 6-22–6-23, and the
+INT-020 follow-up. This is a reported reason, not a fixed Rust representation
+or proof of whole-document validity. Detailed stamp/edit contracts remain a
+later slice; placeholders do not bypass F1 or unknown-exclusion guards.

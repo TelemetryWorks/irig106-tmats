@@ -1,7 +1,8 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through registry-gate batches drafted (family 2, batches 1-9).**
+> **Status: foundations through initial checksum batches drafted (family 2, batches 1-10).**
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
+> INT-018/019/020 are reconfirmed; INT-043 algorithm-token handling remains proposed.
 > Foundations derive the approved restructure/source store; framing and
 > recovery use owner-approved INT-035. Character policies INT-036/037 were
 > approved by Joey, 2026-11-22, under ADR-0033. Name structure follows here;
@@ -491,5 +492,35 @@ See the [source/gate derivation record](research/2026-11-23-registry-gates-draft
 **Statement**: Every executable nonliteral interpretation SHALL resolve to its permanent interpretation-register entry, cited sources, chosen behaviour/reason, design and review evidence, completed development analysis and required executable verification; generation SHALL NOT silently activate an unlisted, open, proposed, stale or otherwise unready interpretation, while retaining its source and explicit unavailable status for coverage reporting.
 
 **Rationale**: ADR-0027 and the register's existing development convention require deep analysis and intensive tests before implementation, in addition to ADR-0033 approval. A planned test name or research draft is not passing verification. This derives the dependency/evidence gate, not a new review policy or permission to implement the current approved-but-unanalyzed entries. These gates also apply to reader/validator behaviour tied to register entries, including hand-written implementations: INT-021 (F1) and INT-030 (F7) are subject to ADR-0033, not exceptions. Joey's 2026-11-23 approval plus AI concurrence at #30 head 13173b0 complete their semantic review; freshness, analysis and verification remain.
+
+**Verification Method**: Test (T)
+
+
+## Checksum batch 10: recognition and authoritative verification
+
+This initial checksum slice derives L1-SUM-001/002 using reconfirmed
+INT-018/019/020 and approved INT-021/F1. Joey's 2026-11-23 reconfirmation
+and AI concurrence at main 30e42a3 clear INT-018/019/020's semantic review,
+not their development analysis or tests. These are planned obligations.
+Full stamping/edit derivation, flex compatibility and checksum API/exit-code
+shapes remain later batches. INT-043's proposed 02- handling is not approved.
+
+#### L2-SUM-001
+
+**Parent**: L1-SUM-001
+
+**Statement**: Authoritative checksum computation SHALL identify the G\SHA item through the approved projected code name, exclude its original raw name-to-terminator interval, and hash every other supplied document byte unchanged; unavailable framing/completeness or an ambiguous exclusion SHALL refuse an authoritative checksum instead of guessing a byte domain.
+
+**Rationale**: 106-24R1 Chapter 9 Table 9-2 MESSAGE DIGEST/CHECKSUM, page 9-13; Chapter 6 section 6.2.3.11 f, page 6-22; INT-018/019/021. Projection recognizes meaning but does not normalize the hashed document. Raw-byte hashes may be separately labelled; they cannot substitute for an authoritative TMATS checksum with an undefined exclusion. This does not implement setup-record assembly or declare unknown completeness complete.
+
+**Verification Method**: Test (T)
+
+#### L2-SUM-002
+
+**Parent**: L1-SUM-002
+
+**Statement**: Checksum verification SHALL preserve raw candidates, framing/character findings and completeness evidence while applying reviewed value projection and digest rules; it SHALL distinguish a matching digest from malformed input, indeterminate exclusion, unavailable interpretation and an unverified placeholder, never present those as positive integrity or silently repair the input.
+
+**Rationale**: Reconfirmed INT-018/019/020 and approved F1/INT-021 preserve the lossless source and separate missing knowledge from invalidity. Chapter 6 section 6.2.3.11 f, pages 6-22–6-23, defines the 2- digest and illustrates G\SHA:0;. This slice does not fix a public result enum or settle INT-043's proposed algorithm-token recovery. Existing absent, mismatch and unknown-algorithm reporting obligations remain.
 
 **Verification Method**: Test (T)
