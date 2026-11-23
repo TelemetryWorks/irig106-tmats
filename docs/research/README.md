@@ -14,7 +14,9 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
-| [2026-11-23-int043-owner-decision.md](2026-11-23-int043-owner-decision.md) | Joey's Option B leading-zero algorithm-2 acceptance decision and rejected strict option; amended-wording AI recheck pending |
+| [2026-11-23-stamp-transaction-draft.md](2026-11-23-stamp-transaction-draft.md) | Batch 11 minimal 0.1 stamp-transaction derivation, boundaries and independent final-byte digest oracle |
+| [2026-11-23-int043-owner-signoff.md](2026-11-23-int043-owner-signoff.md) | INT-043 Option B approval, exact #32 AI concurrence and per-occurrence warnings even when verification is blocked |
+| [2026-11-23-int043-owner-decision.md](2026-11-23-int043-owner-decision.md) | Joey's Option B leading-zero algorithm-2 acceptance decision and rejected strict option (pending-review status superseded by the INT-043 approval record) |
 | [2026-11-23-checksum-followups-draft.md](2026-11-23-checksum-followups-draft.md) | Batch 10 checksum follow-ups, historical INT-043 alternatives and independent hashlib fixture oracles (strict recommendation superseded by the Option B owner decision; AI recheck pending) |
 | [2026-11-23-int021-int030-owner-signoff.md](2026-11-23-int021-int030-owner-signoff.md) | Joey's F1/INT-021 and F7/INT-030 approval plus INT-018/019/020 reconfirmation, exact AI references and remaining analysis/test gates |
 | [2026-11-23-f1-f7-review-gates.md](2026-11-23-f1-f7-review-gates.md) | PR #30 review follow-up: F1/F7 owner summaries and explicit implementation gates; unknown split for separator-spanning high-byte runs (pending-owner status superseded by the INT-021/030 approval record) |

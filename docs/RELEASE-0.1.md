@@ -325,9 +325,12 @@ source freshness and tests remain. See the [combined approval record](research/2
 INT-043 Option B is owner-decided (Joey, 2026-11-23): ASCII-digit designators
 whose canonical digit string is 2 are algorithm 2, with a warning for every
 noncanonical spelling and canonical 2- stamping. See the
-[owner decision](research/2026-11-23-int043-owner-decision.md). Independent
-AI recheck of the amended wording remains pending; final approval is not
-implied by INT-020's reconfirmation or the earlier strict-option review.
+[owner decision](research/2026-11-23-int043-owner-decision.md) and
+[approval record](research/2026-11-23-int043-owner-signoff.md). The independent
+AI recheck CONCURS on #32 head 8941ca1; INT-043 is approved under ADR-0033.
+The per-occurrence noncanonical warning still appears when another reason
+blocks verification; it supplies no authority to guess a key/exclusion.
+Development analysis, freshness and executable tests remain outstanding.
 
 F1 deliberately leaves damaged recordings readable but without a positive
 integrity verdict. Fixing duplicates requires an explicit action before

@@ -1,8 +1,8 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through initial checksum batches drafted (family 2, batches 1-10).**
+> **Status: foundations through stamp-transaction batches drafted (family 2, batches 1-11).**
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
-> INT-018/019/020 are reconfirmed; INT-043 Option B owner decision is recorded; amended-wording AI recheck is pending.
+> INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
 > Foundations derive the approved restructure/source store; framing and
 > recovery use owner-approved INT-035. Character policies INT-036/037 were
 > approved by Joey, 2026-11-22, under ADR-0033. Name structure follows here;
@@ -503,7 +503,7 @@ INT-018/019/020 and approved INT-021/F1. Joey's 2026-11-23 reconfirmation
 and AI concurrence at main 30e42a3 clear INT-018/019/020's semantic review,
 not their development analysis or tests. These are planned obligations.
 Full stamping/edit derivation, flex compatibility and checksum API/exit-code
-shapes remain later batches. INT-043's Option B owner decision is recorded; amended-wording AI recheck is pending.
+shapes remain later batches. INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
 
 #### L2-SUM-001
 
@@ -521,6 +521,37 @@ shapes remain later batches. INT-043's Option B owner decision is recorded; amen
 
 **Statement**: Checksum verification SHALL preserve raw candidates, framing/character findings and completeness evidence while applying reviewed value projection and digest rules; it SHALL distinguish a matching digest from malformed input, indeterminate exclusion, unavailable interpretation and an unverified placeholder, never present those as positive integrity or silently repair the input.
 
-**Rationale**: Reconfirmed INT-018/019/020 and approved F1/INT-021 preserve the lossless source and separate missing knowledge from invalidity. Chapter 6 section 6.2.3.11 f, pages 6-22–6-23, defines the 2- digest and illustrates G\SHA:0;. This slice does not fix a public result enum or complete INT-043's amended-wording AI recheck. Existing absent, mismatch and unknown-algorithm reporting obligations remain.
+**Rationale**: Reconfirmed INT-018/019/020 and approved F1/INT-021 preserve the lossless source and separate missing knowledge from invalidity. Chapter 6 section 6.2.3.11 f, pages 6-22–6-23, defines the 2- digest and illustrates G\SHA:0;. This slice fixes no public result enum; INT-043 Option B's semantic review is complete, with development evidence outstanding. Existing absent, mismatch and unknown-algorithm reporting obligations remain.
+
+**Verification Method**: Test (T)
+
+
+## Stamp batch 11: the minimal 0.1 verified transaction
+
+This derives the bounded L1-SUM-004 stamp and transaction prerequisites under
+L1-WRT-007 from ADR-0029, approved INT-018/019/020/021/043 and RELEASE-0.1.
+It selects no new standard interpretation. Requirements/cases remain planned;
+semantic approval does not supply completed analysis or executable tests.
+Full editing, X deletion/renumbering (F2), repair suggestions (F3), flex and
+CLI/API result schemas remain later work. No broad 0.5 editing feature is
+promoted into 0.1 by this minimal transaction slice.
+
+#### L2-SUM-003
+
+**Parent**: L1-SUM-004
+
+**Statement**: A requested stamp SHALL be the final step of a validated transaction, hashing the final emitted bytes outside one identified SHA item, writing canonical 2- plus 64 lower-case hex digits inside that item and verifying by re-reading the output; unresolved checksum-domain ambiguity SHALL refuse a successful stamp without guessing a target or repairing bytes implicitly.
+
+**Rationale**: ADR-0029 and 106-24R1 Chapter 9 Table 9-2 MESSAGE DIGEST/CHECKSUM, page 9-13; Chapter 6 section 6.2.3.11 f, page 6-22. Separators/newlines outside the excluded item contribute to the digest. F1 permits an exact-item removal repair before stamping, not a duplicate winner chosen by stamp. INT-043's noncanonical input tolerance changes neither emitted algorithm spelling nor final-byte verification.
+
+**Verification Method**: Test (T)
+
+#### L2-WRT-002
+
+**Parent**: L1-WRT-007
+
+**Statement**: The minimal stamp transaction SHALL validate its supplied edit targets against their document revision, reject ambiguous/overlapping/stale explicit edit sets, apply permitted explicit repairs atomically as a new revision and rebuild/re-read affected state before stamping; failure SHALL leave the original document untouched and SHALL NOT return a successfully stamped result.
+
+**Rationale**: ADR-0029 supplies exact-target, atomic, rebuild and re-read semantics; L1-WRT-004 forbids automatic changes. This derives prerequisites for 0.1 stamping only, not all general edit/renumbering operations. Detailed target API shapes and unresolved interpretation-dependent edits require their own reviewed contracts. The library gains no file I/O or promise of rolling back a caller's external writer.
 
 **Verification Method**: Test (T)

@@ -1279,7 +1279,7 @@ Boolean semantics or new default is selected by this interpretation.
 **Sign-off and AI-check reference**: [owner approval record](research/2026-11-23-int042-owner-signoff.md), referencing [PR #28](https://github.com/TelemetryWorks/irig106-tmats/pull/28) at `d69d275340d1773d9548cf365d57db8fc05822f1` and the owner's 2026-11-23 relay of independent recheck concurrence. The record includes the requested prefix/damaged-name clarifications and source-context caveat. Approval is not implementation, completed analysis or passing tests; this sign-off-record PR still needs independent review.
 
 
-## Noncanonical SHA algorithm designator (owner decision recorded, AI recheck pending)
+## Noncanonical SHA algorithm designator (approved, 2026-11-23)
 
 ### INT-043
 
@@ -1289,7 +1289,7 @@ Boolean semantics or new default is selected by this interpretation.
 - 106-24R1 Chapter 6 section 6.2.3.11 f, page 6-22: "prefixed with the constant string “2-”".
 - 106-24R1 Chapter 9 Table 9-2 MESSAGE DIGEST/CHECKSUM, page 9-13: "SHA2-256 shall be represented as “2-” followed by 64 hex characters"; its range also describes an integer followed by a hyphen and hex characters. This does not explicitly settle zero-padded input recovery.
 
-**Behaviour**: **Owner decision recorded, AI recheck of the amended wording pending.** Joey chose **Option B**, 2026-11-23, overriding the strict recommendation.
+**Behaviour**: **Approved under ADR-0033: Joey, Option B, 2026-11-23; independent AI recheck CONCURS on PR #32 head `8941ca1`.** The owner chose Option B, overriding the strict recommendation.
 
 From the INT-036 projected value, read a nonempty ASCII-digit algorithm
 designator before the ASCII hyphen.
@@ -1309,6 +1309,17 @@ CHECKSUM, page 9-13. The warning is independent of whether the digest matches;
 acceptance never suppresses it. Retain the original token and every raw byte.
 Canonical-string comparison is an interpreted view, not an input rewrite.
 
+Review clarification recorded with approval: emit NONCANONICAL-DESIGNATOR
+for every located SHA item/candidate whose readable token is a noncanonical
+2, even when verification is blocked by other reasons: F1 duplicates,
+compatible damage, a blocking BOM or undefined exclusion. Do not short-circuit
+the warning with the integrity verdict or collapse occurrences into one.
+Diagnostic token recognition under a BOM/damaged-name guard does not restore
+semantic lookup, create an exact key, choose an exclusion or permit positive
+verification. Keep item/token locations and all blocking findings; never
+search COMMENT values or X paths for a fictitious checksum occurrence.
+
+
 `0-` (including all-zero spellings) and other numeric designators whose
 canonical string is not `2` are unknown/unsupported algorithms under
 L1-SUM-002; never map them to algorithm 2. The distinct no-hyphen `G\SHA:0;`
@@ -1322,14 +1333,14 @@ additional upper-case warning alongside NONCANONICAL-DESIGNATOR for 02/002.
 A defined exclusion permits COMPUTE independently of the stored token's
 verification status (L3-SUM-002). No source bytes are repaired or dropped.
 
-**Reason**: Joey chose tolerance of real-world writers: leading zeros still identify numeric algorithm 2, with an unavoidable warning exposing the deviation from the printed constant. The rejected strict option supported only literal 2- and reported 02/002 as unknown algorithms; its reasoning was that Chapter 6's constant spelling avoids adding numeric equivalence beyond the printed representation. The owner explicitly preferred tolerant identity with preserved raw bytes and warning, accepting the broader verification behavior. This records the owner decision, not completed ADR-0033 approval or implementation.
+**Reason**: Joey chose tolerance of real-world writers: leading zeros still identify numeric algorithm 2, with an unavoidable warning exposing the deviation from the printed constant. The rejected strict option supported only literal 2- and reported 02/002 as unknown algorithms; its reasoning was that Chapter 6's constant spelling avoids adding numeric equivalence beyond the printed representation. The owner explicitly preferred tolerant identity with preserved raw bytes and warning, accepting the broader verification behavior. Owner approval and AI concurrence now complete the semantic review gate; analysis and implementation evidence remain outstanding.
 
-**Design**: owner decision recorded, AI recheck of the amended wording pending (Joey, Option B, 2026-11-23) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner decision: Joey, Option B, 2026-11-23; independent AI recheck of Option B wording: pending (owner will route); prior strict-option review is not concurrence on this choice · **Origin**: INT-020 review follow-up, family 2 checksum slice
+**Design**: approved (Joey, Option B, 2026-11-23) · **Review**: approved under ADR-0033; draft author: maintainer agent; owner decision: Joey, Option B, 2026-11-23; independent AI recheck: CONCURS on PR #32 head `8941ca1c2c436ca453f09e7fd530031136f84c57`, relayed by the owner 2026-11-23; later clarification wording still requires exact-head review · **Origin**: INT-020 review follow-up, family 2 checksum slice
 
-**Test**: `zero_padded_sha_algorithm_requires_decision`, `sha_designator_edge_classification`, `sha_stamp_uses_canonical_designator`, `sha_algorithm_identity_uses_canonical_string`, `noncanonical_sha_designator_always_warns`, `other_numeric_sha_designators_stay_unsupported` (planned; not yet written)
+**Test**: `zero_padded_sha_algorithm_requires_decision`, `sha_designator_edge_classification`, `sha_stamp_uses_canonical_designator`, `sha_algorithm_identity_uses_canonical_string`, `noncanonical_sha_designator_always_warns`, `other_numeric_sha_designators_stay_unsupported`, `noncanonical_designator_warns_when_verification_blocked` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
 **Draft analysis**: [source, alternatives and independent fixture oracle](research/2026-11-23-checksum-followups-draft.md)
 
-**Owner decision record**: [Option B, rationale and rejected alternative](research/2026-11-23-int043-owner-decision.md). The owner will route the amended wording for independent AI recheck; final approval has not been recorded. Analysis, source freshness and executable verification remain additional gates.
+**Owner decision record**: [Option B, rationale and rejected alternative](research/2026-11-23-int043-owner-decision.md). Owner Option B, 2026-11-23, is now approved with AI concurrence at #32 head `8941ca1`; see the [approval record](research/2026-11-23-int043-owner-signoff.md). The earlier decision record remains history; analysis, freshness and executable tests are still outstanding.
