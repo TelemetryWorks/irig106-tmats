@@ -672,8 +672,8 @@ layout mapping; those are not silently claimed by a green CSDW adapter test.
 11-51, Format 4 Figure 11-43/table page 11-62 and packet-header Data Type
 Version section 11.2.1.1 e page 11-6; ADR-0028/0032. INT-012 is reconfirmed.
 INT-014/015/016/017 keep pending review; fixtures explicitly supply reviewed
-bindings/policy to isolate these contracts. INT-044 remains proposed and its
-branch cases require owner sign-off/AI check. No full edition-coverage claim.
+bindings/policy to isolate these contracts. INT-044 Option B is owner-decided (Joey, 2026-11-23); its amended wording
+awaits independent AI recheck. No full edition-coverage claim.
 
 | Planned check | Fixture or stimulus | Expected observation | Requirement |
 | --- | --- | --- | --- |
@@ -685,11 +685,15 @@ branch cases require owner sign-off/AI check. No full edition-coverage claim.
 | `fallback_policy_is_not_literal_rccver` | No override, G\106 missing or reviewed unrecognised, Format 1 0D then 0E; supplied reviewed INT-017 policy | Literal remains RCC 106-19/22; separate fallback rule edition is 106-20/24R1 with policy reason. These outputs do not extend INT-012 approval to INT-017 | L3-EDN-005 |
 | `non_format1_codes_do_not_supply_fallback` | Only Format 4 reserved 0D/0E or header Data Type Version 0A metadata, no eligible Format 1 declaration; missing G\106/no override | Do not reinterpret either code space as a Format 1 operand; reviewed baseline fallback, if available, stays labelled policy with missing-eligible-RCCVER reason | L3-EDN-005, L3-EDN-007 |
 | `baseline_fallback_stays_labelled` | Missing G\106 and no usable eligible Format 1 RCCVER, supplied baseline policy | Selected 106-24R1 fallback with reason, not a declared year/revision; effective defaults/findings retain that label | L3-EDN-005, L3-EDN-007 |
-| `ambiguous_g106_requires_override` | G\106:19;G\106:24; with usable Format 1 0E, no override | Proposed INT-044: Ambiguous declaration, automatic selection unavailable/cannot-evaluate with both candidates; no first/last winner or fallback via relabelled missing input | L3-EDN-001, L3-EDN-006 |
-| `identical_g106_duplicates_do_not_select` | G\106:24;G\106:24;, no override | Proposed INT-044 guard still applies: equal values remain scalar duplicates under INT-039, not one usable year/candidate set | L3-EDN-006 |
+| `ambiguous_g106_uses_labelled_fallback` | G\106:19;G\106:24; with usable Format 1 0E, no override | Ambiguous with both occurrences/duplicate findings, no selected candidate; separate 106-24R1 basis labelled `fallback — reason: ambiguous G\106 (2 candidates)`, never missing/unrecognised | L3-EDN-001, L3-EDN-006 |
+| `identical_g106_duplicates_still_fall_back` | G\106:24;G\106:24;, no override | Still Ambiguous with two occurrences/duplicate findings; same explicit fallback reason with 2 candidates, agreement information only, no collapse or declared basis | L3-EDN-006 |
 | `override_keeps_ambiguous_declaration_evidence` | Either duplicate fixture with valid explicit override | Select override-labelled basis, keep every ambiguous raw candidate/duplicate finding; no implicit source repair or conversion to one declared item | L3-EDN-003, L3-EDN-006 |
+| `ambiguous_fallback_uses_existing_policy` | Two G\106 occurrences; supplied reviewed INT-017 policy, eligible Format 1 0E, 0D, lower usable codes, then no usable eligible code in separate stimuli | Same policy outputs (24R1, 20, existing lower-code readings, else baseline), unchanged literal wire readings; every basis keeps the ambiguous-G\106 reason, never a new mapping | L3-EDN-005, L3-EDN-006 |
+| `ambiguous_fallback_labels_defaults_and_findings` | Duplicate declaration fixture; applicable default and a separate invalid field under supplied fallback rules | Defaulted value and validation findings both retain applied edition, fallback label and ambiguity reason; no false declared-edition validity | L3-EDN-006, L3-EDN-007 |
+| `single_damaged_or_blank_g106_is_not_duplicate` | One G\106 with high byte, then one with intentional blank, under supplied INT-037/041 bindings | High-byte value Invalid; blank handling unavailable until reviewed; keep reasons/raw evidence, do not invent duplicate ambiguity or missing data | L3-EDN-002, L3-EDN-006 |
+| `ambiguous_fallback_is_prominent` | Duplicate fixture rendered as CLI text and JSON alongside a cannot-evaluate result | Fallback basis and full ambiguity reason at least as prominent as cannot-evaluate; all occurrences/findings retained and no declaration candidate selected | L3-EDN-006, L3-EDN-007 |
 | `selected_basis_does_not_claim_rule_coverage` | Valid explicit selected edition whose requested reviewed definitions are unavailable | Keep selection/basis and coverage limitation distinct; no claim of validation or borrowing baseline definitions without a compatibility contract | L3-EDN-007 |
-| `separate_records_keep_separate_edition_evidence` | Two successive records with one G\106 each | Separate declaration/basis requests, not one duplicate set or propagated version byte; preserve document/revision and record provenance | L3-EDN-001, L3-EDN-006, L3-EDN-007 |
+| `separate_records_keep_separate_edition_evidence` | Two successive records, or separate standalone documents, with one G\106 each | Separate declaration/basis requests, not one duplicate set or propagated version byte; preserve document/revision and record provenance | L3-EDN-001, L3-EDN-006, L3-EDN-007 |
 
 Future tests must keep literal-code fixtures, declaration interpretations and
 fallback policy fixtures independent. A source table lookup passing cannot

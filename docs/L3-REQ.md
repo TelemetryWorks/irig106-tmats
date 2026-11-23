@@ -1,7 +1,7 @@
 # irig106-tmats — Level 3 Requirements
 
 > **Status: foundations through edition-basis batches drafted (family 2, batches 1-13).**
-> INT-012 is reconfirmed; INT-044 duplicate-declaration selection remains proposed.
+> INT-012 is reconfirmed; INT-044 Option B is owner-decided; amended wording awaits independent AI recheck.
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
 > These are implementation obligations, not existing interfaces or completed
@@ -1185,8 +1185,8 @@ not literal decoding, and require their own review/evidence before execution.
 
 ## Edition-basis batch 13: evidence before precedence
 
-Planned obligations. INT-044 is proposed; existing INT-014/015/016/017 review
-statuses are unchanged. Tests below supply reviewed fixture bindings where
+Planned obligations. INT-044 Option B is owner-decided, AI recheck pending;
+existing INT-014/015/016/017 review statuses are unchanged. Tests below supply reviewed fixture bindings where
 necessary; they are not production-registry or cross-edition analysis evidence.
 
 **L3-EDN-001** · Parent: L2-EDN-001 · Verification: T
@@ -1231,17 +1231,24 @@ and header Data Type Version cannot supply this Format 1 policy operand.
 Unknown interpretation knowledge is not proof of missing/unrecognised data.
 
 **L3-EDN-006** · Parent: L2-EDN-002 · Verification: T
-*Under proposed INT-044, Ambiguous G\106 without a valid explicit override SHALL leave automatic rules selection unavailable/cannot-evaluate with every declaration candidate/finding; identical duplicate values SHALL NOT bypass this guard or trigger a relabelled missing/unrecognised RCCVER/baseline fallback.*
+*Under owner-decided INT-044 Option B, Ambiguous G\106 without an explicit override SHALL retain every occurrence and duplicate finding, select no declaration candidate, and use the unchanged INT-017 fallback policy with the explicit label `fallback — reason: ambiguous G\106 (n candidates)`; n SHALL count every scalar occurrence, including identical duplicates, not distinct values or edition readings.*
 
-This is the proposed owner choice, not an approved implementation rule. A
-single year with several edition candidates remains INT-014's different
-case. Separate setup records/documents do not become one duplicate set.
-With an explicit override, preserve ambiguity alongside the override basis.
+This NEW reason is never missing/unrecognised. INT-017 supplies the same
+Format 1 0x0E -> 106-24R1 and 0x0D -> 106-20 policy, its existing lower-code
+readings, else baseline when no usable eligible RCCVER exists; no new mapping.
+Identical-value agreement is information only, not a declared basis. A valid
+override takes precedence while preserving ambiguity. Separate records or
+documents do not form duplicates. A single high-byte/blank value remains
+subject to INT-037/041, not this branch. One year with several candidate
+editions remains INT-014's separate case. AI recheck of the amended wording
+is pending; this does not clear any implementation gate.
 
 **L3-EDN-007** · Parent: L2-EDN-002 · Verification: T
 *Every selection result or blocked selection SHALL carry its document/record scope, relevant caller/declaration/policy evidence, applied edition if selected, basis label and precise reason; a selected edition without available reviewed rule coverage SHALL remain a coverage limitation, never a false claim of validation or a silently substituted supported edition.*
 
 Defaulted views and validation findings keep the basis/fallback label under
-ADR-0023/0028 and INT-041. Edition selection changes no source bytes and
+ADR-0023/0028 and INT-041, including INT-044's explicit ambiguity reason.
+CLI text and JSON SHALL make that fallback basis/reason at least as prominent
+as a cannot-evaluate result. Edition selection changes no source bytes and
 clears no other findings. Full out-of-range compatibility-check selection
 under L1-EDN-006 is a later derivation, not an implied fallback here.
