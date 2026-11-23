@@ -1377,13 +1377,15 @@ verification status (L3-SUM-002). No source bytes are repaired or dropped.
 - Approved INT-039 makes repeated scalar fields Ambiguous even when values agree. ADR-0028 selects override, declared edition, then labelled fallback for missing/unrecognised G\106; it does not explicitly classify ambiguous G\106 as missing/unrecognised.
 - Owner decision, Joey, 2026-11-23: Option B following the independent reviewer's recommendation, with a new explicit ambiguity reason and the existing INT-017 policy unchanged.
 
-**Behaviour**: **Owner decision recorded, AI recheck of the amended wording pending.**
+**Behaviour**: **Approved: Joey, owner Option B decision, 2026-11-23; independent AI recheck CONCURS on #36 at 6f6e080, under ADR-0033.**
 With duplicate G\106, keep the declaration Ambiguous with every occurrence
 and all duplicate findings; select no candidate. Without an explicit
 override, select a separate rules basis labelled
 `fallback — reason: ambiguous G\106 (n candidates)`, where n counts all
 scalar occurrences, including identical ones, not distinct years or edition
-readings. This is a NEW reason, never missing or unrecognised.
+readings. This is a NEW reason, never missing or unrecognised. Mixed duplicates such
+as `G\106:zz;G\106:24;` remain Ambiguous first, with n=2; an individual
+unrecognised value does not replace the duplicate reason.
 
 Use the SAME INT-017 policy, not a new mapping: eligible Format 1 RCCVER
 0x0E selects 106-24R1 rules, 0x0D selects 106-20 rules; otherwise use the
@@ -1400,17 +1402,21 @@ claim a declared basis. Separate records/documents do not form duplicates.
 A single G\106 with a high byte or blank follows INT-037/041 and the
 reviewed declaration binding; it does not acquire this duplicate reason.
 CLI text and JSON make the fallback basis/reason at least as prominent as
-a cannot-evaluate result. No source bytes change.
+a cannot-evaluate result. JSON uses stable machine code `ambiguous_g106`
+and a numeric `candidates` field, separate from the display label; that
+count follows the same occurrence rule. No source bytes change.
 
 This differs from one valid year naming several candidate editions under
 INT-014; that rule and all other review/coverage gates remain unchanged.
 
-**Reason**: Joey chose useful, visibly qualified checks over blocking all automatic rules selection, following the independent reviewer's recommendation. Preserving Ambiguous separately from the applied basis avoids pretending the writer selected an edition. **Rejected Option A** blocked automatic selection until an override: ADR-0028 explicitly allowed fallback for missing/unrecognised declarations only, so A avoided expanding that policy and preserved uncertainty by refusing a basis, but required an override even when duplicate years agreed. Option B extends the eligible reason explicitly, preserving that uncertainty in every report rather than selecting a candidate.
+**Reason**: ADR-0028 rejected "validate nothing edition-specific without an override" for missing or unrecognised G\106. Option A would therefore have validated worse inputs but refused duplicated good ones. Joey chose useful, visibly qualified checks over blocking all automatic rules selection, following the independent reviewer's recommendation. Preserving Ambiguous separately from the applied basis avoids pretending the writer selected an edition. **Rejected Option A** blocked automatic selection until an override: ADR-0028 explicitly allowed fallback for missing/unrecognised declarations only, so A avoided expanding that policy and preserved uncertainty by refusing a basis, but required an override even when duplicate years agreed. Option B extends the eligible reason explicitly, preserving that uncertainty in every report rather than selecting a candidate.
 
-**Design**: owner decision recorded, AI recheck of the amended wording pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner decision: Joey, 2026-11-23, Option B; independent AI recheck: pending · **Origin**: family 2 edition-basis batch 13
+**Design**: approved (Joey, Option B, 2026-11-23) · **Review**: complete under ADR-0033; draft author: maintainer agent; owner decision: Joey, 2026-11-23, Option B; independent AI recheck: CONCURS on #36 at 6f6e080 · **Origin**: family 2 edition-basis batch 13
 
-**Test**: `ambiguous_g106_uses_labelled_fallback`, `identical_g106_duplicates_still_fall_back`, `override_keeps_ambiguous_declaration_evidence`, `ambiguous_fallback_uses_existing_policy`, `ambiguous_fallback_labels_defaults_and_findings`, `single_damaged_or_blank_g106_is_not_duplicate`, `ambiguous_fallback_is_prominent` (planned; not yet written)
+**Test**: `ambiguous_g106_uses_labelled_fallback`, `identical_g106_duplicates_still_fall_back`, `override_keeps_ambiguous_declaration_evidence`, `ambiguous_fallback_uses_existing_policy`, `ambiguous_fallback_labels_defaults_and_findings`, `single_damaged_or_blank_g106_is_not_duplicate`, `ambiguous_fallback_is_prominent`, `mixed_g106_duplicates_keep_ambiguity`, `ambiguous_g106_json_reason_is_structured` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
 **Draft analysis**: [original alternatives](research/2026-11-23-edition-basis-draft.md); [owner Option B decision and conditions](research/2026-11-23-int044-owner-decision.md)
+
+**Approval record**: [owner decision and exact AI concurrence](research/2026-11-23-int044-owner-signoff.md). Analysis, source freshness and executable tests remain outstanding.

@@ -672,8 +672,8 @@ layout mapping; those are not silently claimed by a green CSDW adapter test.
 11-51, Format 4 Figure 11-43/table page 11-62 and packet-header Data Type
 Version section 11.2.1.1 e page 11-6; ADR-0028/0032. INT-012 is reconfirmed.
 INT-014/015/016/017 keep pending review; fixtures explicitly supply reviewed
-bindings/policy to isolate these contracts. INT-044 Option B is owner-decided (Joey, 2026-11-23); its amended wording
-awaits independent AI recheck. No full edition-coverage claim.
+bindings/policy to isolate these contracts. INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at
+6f6e080). Analysis/tests remain outstanding. No full edition-coverage claim.
 
 | Planned check | Fixture or stimulus | Expected observation | Requirement |
 | --- | --- | --- | --- |
@@ -692,6 +692,8 @@ awaits independent AI recheck. No full edition-coverage claim.
 | `ambiguous_fallback_labels_defaults_and_findings` | Duplicate declaration fixture; applicable default and a separate invalid field under supplied fallback rules | Defaulted value and validation findings both retain applied edition, fallback label and ambiguity reason; no false declared-edition validity | L3-EDN-006, L3-EDN-007 |
 | `single_damaged_or_blank_g106_is_not_duplicate` | One G\106 with high byte, then one with intentional blank, under supplied INT-037/041 bindings | High-byte value Invalid; blank handling unavailable until reviewed; keep reasons/raw evidence, do not invent duplicate ambiguity or missing data | L3-EDN-002, L3-EDN-006 |
 | `ambiguous_fallback_is_prominent` | Duplicate fixture rendered as CLI text and JSON alongside a cannot-evaluate result | Fallback basis and full ambiguity reason at least as prominent as cannot-evaluate; all occurrences/findings retained and no declaration candidate selected | L3-EDN-006, L3-EDN-007 |
+| `mixed_g106_duplicates_keep_ambiguity` | `G\106:zz;G\106:24;`, no override, supplied reviewed bindings/policy | Ambiguous first with every occurrence/duplicate finding; explicit ambiguous-G\106 fallback reason, n=2, not an unrecognised-declaration fallback or selected good candidate | L3-EDN-006 |
+| `ambiguous_g106_json_reason_is_structured` | Two duplicate occurrences, then three including an exact repeat; JSON and text renderings | Stable machine code `ambiguous_g106`, numeric `candidates` 2 then 3, separate from display label; count is neither distinct years nor a string parsed from the human label | L3-EDN-006, L3-EDN-007 |
 | `selected_basis_does_not_claim_rule_coverage` | Valid explicit selected edition whose requested reviewed definitions are unavailable | Keep selection/basis and coverage limitation distinct; no claim of validation or borrowing baseline definitions without a compatibility contract | L3-EDN-007 |
 | `separate_records_keep_separate_edition_evidence` | Two successive records, or separate standalone documents, with one G\106 each | Separate declaration/basis requests, not one duplicate set or propagated version byte; preserve document/revision and record provenance | L3-EDN-001, L3-EDN-006, L3-EDN-007 |
 
@@ -699,6 +701,50 @@ Future tests must keep literal-code fixtures, declaration interpretations and
 fallback policy fixtures independent. A source table lookup passing cannot
 prove a fallback policy correct, and synthetic reviewed fixtures do not mark
 pending interpretations implemented or production coverage complete.
+
+## Family 2 batch 14: joining and provenance acceptance specifications
+
+**Status: planned, not executable tests.** Sources: 106-24R1 Chapter 11
+section 11.2.7.2/Figure 11-34 page 11-50 and section 11.2.1.1 f; ADR-0025,
+ADR-0031 and INT-011. Fixtures supply a reviewed joining binding to isolate
+this contract; INT-011's independent check remains pending. No fixture here
+approves INT-034 or establishes complete/governing records just by joining.
+
+For the exact map oracle below, supply fragment 1 text `G\COM:a` in a
+packet beginning at file offset 100 with a 24-byte header, and fragment 2
+text `b;` in a packet beginning at offset 136 with a 36-byte combined
+primary/secondary header. Each has its own four-byte CSDW. They are adjacent
+same-channel 0x01 packets, sequence 255 then 0, matching FRMT=0/RCCVER=0E.
+Expected assembled bytes are `G\COM:ab;` (9 bytes); its value is [6,8).
+Packet 1 has length 36: header 24 + CSDW 4 + text 7 + filler 1, no
+packet data checksum; packet 2 begins immediately at 136. Packet 2 has
+length 44: combined headers 36 + CSDW 4 + text 2 + filler 2, no packet
+data checksum. Header checksums and slicing bounds are supplied verified;
+mapping/join tests do not establish packet validity.
+
+| Planned check | Fixture or stimulus | Expected observation | Requirement |
+| --- | --- | --- | --- |
+| `joining_requires_packet_adjacency_evidence` | Two otherwise matching setup fragments with unknown adjacency, then explicit intervening non-setup packet evidence | No invented adjacency from a filtered setup-only list; missing evidence stays unavailable, explicit intervening packet stops joining | L3-CH10-009, L3-CH10-011 |
+| `joining_sequence_wrap_is_modulo_256` | Exact map fixture, then second sequence changed from 0 to 1 | 255 -> 0 joins; 255 -> 1 stops with discontinuity evidence, without declaring completeness or proving packet loss | L3-CH10-010, L3-CH10-011 |
+| `joining_compares_channel_format_and_wire_version` | Independently change second fragment's channel, FRMT, RCCVER, or data type | Each failed prerequisite stops joining; never use equivalent interpreted editions to equate different RCCVER wire bytes | L3-CH10-009, L3-CH10-010, L3-CH10-011 |
+| `srcc_disagreement_survives_joining` | Matching joining operands but SRCC=0 then 1 | No extra SRCC joining predicate; both raw CSDWs/readings retained, no invented aggregate change bit/event or completeness claim | L3-CH10-010, L3-CH10-013, L3-CH10-016 |
+| `fragment_text_concatenation_adds_no_bytes` | Exact map fixture, plus metadata/sentinel header, CSDW, filler and packet-checksum slices outside supplied text bounds | Exactly nine assembled bytes `G\COM:ab;`, no inserted delimiter/layout or nontext packet bytes | L3-CH10-012 |
+| `assembled_byte_map_has_exact_packet_offsets` | Exact map fixture; assembled offsets 0,6,7,8 | File offsets 128,134,176,177 respectively; offset 7 maps to fragment 2, not fragment 1's one-past-end; retain packet/recording identities | L3-CH10-013, L3-CH10-014 |
+| `cross_fragment_ranges_keep_all_sources` | Exact map fixture; item [0,9), value [6,8), empty [7,7) | Item maps [128,135) then [176,178); value maps [134,135) then [176,177); empty range has no bytes; raw spans unaffected by display/projection | L3-CH10-014, L3-CH10-015 |
+| `mapping_rejects_invalid_ranges` | Exact map fixture; reversed [8,6), range [0,10), byte offset 9, and overflowing external offset input | Invalid requests reported, never clamped/wrapped or mapped to filler/CSDW; no end-of-body byte invented | L3-CH10-014 |
+| `empty_fragment_retains_metadata` | Three qualifying fragments with zero text in the middle | Empty fragment contributes no byte interval; metadata/CSDW/order retained, surrounding text concatenated exactly, no source bytes invented | L3-CH10-012, L3-CH10-013 |
+| `split_marker_uses_assembled_offset_zero` | First text slice EF BB, next starts BF followed by code-name text; separately marker after one assembled padding byte | If a separate reviewed completeness decision permits scanning, first marker recognised at assembled offset zero per INT-037; padding case is midstream; joining itself decodes neither | L3-CH10-012, L3-CH10-016 |
+| `joining_eof_is_not_completeness` | One joined candidate ending in `;` then EOF; separately a candidate ending inside a value | Both retain EOF stop reason; classification requires INT-034 rather than assigning complete/incomplete from this joining test | L3-CH10-011, L3-CH10-016 |
+| `joining_does_not_hide_untrusted_fragment` | Readable fragment, explicit unreadable/untrusted middle fragment, readable fragment | Trust/gap evidence retained; never silently concatenate readable neighbors as a proven intact record; no new recovery/classification policy | L3-CH10-011, L3-CH10-016 |
+| `located_finding_spans_multiple_packets` | Exact map fixture with a supplied located finding over value [6,8); separately a Defaulted field with no source span | Finding retains assembled span and both packet ranges; Defaulted field keeps its citation/basis but no fictional packet span | L3-CH10-015 |
+| `candidate_join_does_not_approve_interpretations` | Successful joining with fixture binding and duplicate scalar text across fragments | Candidate report retains membership/evidence; no claim that INT-011 review passed, INT-034 selected a split, checksum verified or configuration governs; INT-039 document-local duplicate evidence remains | L3-CH10-016 |
+
+The existing `multi_packet_setup_record_is_assembled` end-to-end specification
+still needs independent completeness, packet-slicing and digest oracles; these
+focused cases do not replace it. The cross-fragment duplicate fixture already
+records same channel, sequence +1 and matching FRMT/RCCVER as ONE candidate
+run's prerequisites, without assuming that repeated scalar text proves its
+completeness. No new test marker or implementation status is added here.
 
 ## Real Chapter 10 recordings (local use only)
 

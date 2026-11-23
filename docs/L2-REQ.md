@@ -1,7 +1,7 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through edition-basis batches drafted (family 2, batches 1-13).**
-> INT-012 is reconfirmed; INT-044 Option B is owner-decided; amended wording awaits independent AI recheck.
+> **Status: foundations through assembly-contract batches drafted (family 2, batches 1-14).**
+> INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
 > Foundations derive the approved restructure/source store; framing and
@@ -609,8 +609,8 @@ Development analysis/tests and the other interpretations' review gates remain. S
 This derives L1-EDN-005's declaration separation and L1-EDN-002's labelled
 basis selection. INT-012 Format 1 literal reading is reconfirmed; INT-014/
 015/016/017 retain their existing decisions and pending review/development
-gates. INT-044 records Joey's 2026-11-23 Option B decision; its amended wording
-awaits independent AI recheck. It is not implemented or fully approved.
+gates. INT-044 Option B is approved under ADR-0033 (Joey, 2026-11-23;
+AI CONCURS on #36 at 6f6e080). It is not implemented.
 Historical-layout routing, full edition coverage/deltas and compatibility
 validation remain later derivations. No new supported-edition claim is made.
 
@@ -630,6 +630,35 @@ validation remain later derivations. No new supported-edition claim is made.
 
 **Statement**: Rules-basis selection SHALL apply a valid caller override, else a usable reviewed G\106 declaration, else the reviewed fallback policy for missing/unrecognised declarations or explicitly labelled ambiguous G\106 under INT-044, using eligible Format 1 RCCVER and finally baseline 106-24R1; it SHALL retain the selected edition, basis, reason and supporting evidence without rewriting declarations, conflating code spaces or treating unavailable knowledge as a missing declaration.
 
-**Rationale**: ADR-0028/0032 provide the precedence and labelled fallback; INT-017 chooses 0x0E -> 106-24R1 and 0x0D -> 106-20 as POLICY, distinct from INT-012. Owner-decided INT-044 Option B adds the explicit ambiguous-declaration reason without relabelling it missing/unrecognised or selecting a candidate; its AI recheck remains pending. Review and rule-coverage gaps stay visible; selecting a basis does not establish that its full validator exists or that the document conforms.
+**Rationale**: ADR-0028/0032 provide the precedence and labelled fallback; INT-017 chooses 0x0E -> 106-24R1 and 0x0D -> 106-20 as POLICY, distinct from INT-012. Owner-decided INT-044 Option B adds the explicit ambiguous-declaration reason without relabelling it missing/unrecognised or selecting a candidate; its review gate is complete, while analysis/tests remain. Review and rule-coverage gaps stay visible; selecting a basis does not establish that its full validator exists or that the document conforms.
+
+**Verification Method**: Test (T)
+
+## Assembly-contract batch 14: joining and provenance before completeness
+
+This derives only joining and source mapping within L1-CH10-004. A joined
+candidate run is not proof of one complete setup record. Completeness,
+ambiguous splits and session rules still need subsequent derivations and
+review of INT-034/028/031. INT-011's existing owner acceptance is preserved;
+its independent AI check is pending under ADR-0033. No interpretation gains
+approval through a requirement or a supplied fixture binding.
+
+#### L2-CH10-004
+
+**Parent**: L1-CH10-004
+
+**Statement**: The library SHALL form candidate fragment runs from caller-supplied bytes and provenance in recording order using the INT-011 joining prerequisites, retain why each join was permitted or stopped, and concatenate only the TMATS text portions without inserting, removing or interpreting text at a packet boundary; a joined run SHALL remain distinct from a completeness or governance verdict.
+
+**Rationale**: 106-24R1 Chapter 11 section 11.2.7.2 page 11-50 states that one setup record may span consecutive packets and that sequence increments n+1 in segmentation order. Section 11.2.1.1 f defines per-channel sequence counters. ADR-0025 supplies the library boundary; INT-011 supplies the additional same-channel/FRMT/RCCVER interpretation. ADR-0031 supersedes the old assumption that stopping a run proves a record finished. This is not a packet reader or an end-marker invention.
+
+**Verification Method**: Test (T)
+
+#### L2-CH10-005
+
+**Parent**: L1-CH10-004
+
+**Statement**: Each candidate run SHALL preserve all supplied fragment provenance and raw CSDWs and provide an exact mapping from assembled text bytes and ranges back to their originating packet bytes, including ranges crossing packet boundaries; a summary SHALL NOT discard disagreement or substitute one fragment's metadata for another's evidence.
+
+**Rationale**: ADR-0025 and L1-CH10-004 require file offset, channel, sequence, relative time counter, CSDW fields and data-type version plus a body-offset provenance map. ADR-0003's owned bytes/spans and L1-READ-003's located diagnostics require evidence after concatenation. FRMT/RCCVER agreement does not establish SRCC agreement, a valid configuration-change event or a governing record. No new SRCC aggregation policy is selected here.
 
 **Verification Method**: Test (T)

@@ -332,6 +332,18 @@ The per-occurrence noncanonical warning still appears when another reason
 blocks verification; it supplies no authority to guess a key/exclusion.
 Development analysis, freshness and executable tests remain outstanding.
 
+INT-044 Option B is approved (Joey, owner decision, 2026-11-23; independent
+AI CONCURS on #36 head `6f6e080`). Duplicate G\106 stays Ambiguous while
+a separate, prominently labelled fallback uses unchanged INT-017 policy;
+mixed recognised/unrecognised occurrences still use the ambiguity reason.
+JSON carries machine code `ambiguous_g106` and numeric `candidates` separately
+from its display label. ADR-0028 already allowed useful checks for missing
+or unrecognised declarations; blocking duplicated good input would have
+been less useful than handling those worse inputs. See the
+[approval record](research/2026-11-23-int044-owner-signoff.md). Analysis,
+source freshness and executable tests remain; INT-017's own review gate and
+INT-034's assembly-scope decision are not cleared by this approval.
+
 F1 deliberately leaves damaged recordings readable but without a positive
 integrity verdict. Fixing duplicates requires an explicit action before
 stamping; verification must not silently choose or consolidate occurrences.
