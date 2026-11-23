@@ -477,9 +477,11 @@ Complete records govern (INT-028); incomplete and ambiguous records do not by de
 
 **Behaviour**: **Coordinator-decided F1, 2026-11-21; owner may override.** Reject duplicate SHA items as indeterminate; list every occurrence, preserve every byte, never claim positive verification, and refuse stamping until the input is fixed (ADR-0034).
 
+**Implementation gate**: Reader/validator behaviour tied to this register entry is subject to L3-REG-009/012 even when hand-written rather than generated. The coordinator decision stands as the recommendation; ADR-0033 owner sign-off and an independent AI check are required before implementation. Source freshness, development analysis and executable verification remain additional gates.
+
 **Reason**: The standard does not say which item, if any, holds the checksum, or which text is excluded, when there are several.
 
-**Design**: coordinator-decided (F1, 2026-11-21; owner may override) · **Review**: pending · **Origin**: T7
+**Design**: coordinator-decided (F1, 2026-11-21; owner may override) · **Review**: pending under ADR-0033; owner sign-off: pending; independent AI check: pending; coordinator decision is the recommendation, not approval; implementation blocked until both checks are recorded · **Origin**: T7
 
 **Test**: `duplicate_g_sha_items` (planned; not yet written)
 
@@ -649,9 +651,11 @@ Findings: SRCC 1 on the first record; SRCC 0 with a changed configuration (an un
 
 **Behaviour**: **Coordinator-decided F7, 2026-11-21; owner may override.** Require verified event identification and report indeterminate meanwhile; never guess a packet type (ADR-0034). This does not identify the event packet or complete L1-CH10-005's check.
 
+**Implementation gate**: Reader/validator behaviour tied to this register entry is subject to L3-REG-009/012 even when hand-written rather than generated. The coordinator decision stands as the recommendation; ADR-0033 owner sign-off and an independent AI check are required before implementation. Source freshness, development analysis and executable verification remain additional gates.
+
 **Reason**: Checking for a packet the standard does not identify would rest on a guess (for example, that it is a Format 2 recording event packet).
 
-**Design**: coordinator-decided (F7, 2026-11-21; owner may override) · **Review**: pending · **Origin**: F4 section 5
+**Design**: coordinator-decided (F7, 2026-11-21; owner may override) · **Review**: pending under ADR-0033; owner sign-off: pending; independent AI check: pending; coordinator decision is the recommendation, not approval; implementation blocked until both checks are recorded · **Origin**: F4 section 5
 
 **Test**: `configuration_change_event_packet` (planned; event identification still unverified)
 
@@ -1145,6 +1149,12 @@ compatible with ID (the run can cover D), as are I\xFFD and ID\xFF, while
 D\xFFI is not. This deterministic compatibility check supplies diagnostic
 evidence only, never a repaired key; L3-VAL-012 and its planned cases pin it.
 Readable-parent guards still apply without invented parents or alignments.
+If a high-byte run can span a component separator, the component split is
+unknown: `T-1\xFFD:a;` could hide `\I` before readable D. Retain this as
+unassigned structural evidence under INT-040's wrong-arity guard, compatible
+with every scope the readable parts allow. Do not guess a split or a parent
+alignment, and do not reject a compatible scope merely because one guessed
+split fails. This does not create a parsed key or require enumerating scopes.
 
 Incompatible parents/unrelated families do not block this predicate's false
 answer; keep their findings. One known exact match proves presence even if
@@ -1169,7 +1179,7 @@ Boolean semantics or new default is selected by this interpretation.
 
 **Design**: approved (Joey, owner sign-off, 2026-11-23) · **Review**: approved under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-23; independent AI recheck: CONCURS with amended Option A on PR #28 at `d69d275`, relayed by the owner 2026-11-23 · **Origin**: family 2 batch 8
 
-**Test**: `specified_absent_is_false`, `specified_invalid_and_duplicate_stays_true`, `presence_scope_unknown_is_not_absence`, `missing_value_does_not_make_inequality_true`, `default_does_not_make_item_specified`, `unterminated_text_is_not_specified`, `damaged_name_blocks_false_presence`, `presence_uses_canonical_name_identity`, `damaged_child_parent_blocks_compatible_scopes`, `not_specified_preserves_unknown`, `other_document_does_not_supply_presence`, `unterminated_literal_prefix_blocks_compatible_presence`, `high_byte_inside_literal_blocks_false_presence`, `projected_controls_preserve_exact_presence`, `high_byte_run_covers_missing_literal_tail`, `damaged_literal_readable_order_is_required`, `high_byte_run_can_match_empty`, `terminated_literal_has_no_implicit_gap` (planned, not yet written)
+**Test**: `specified_absent_is_false`, `specified_invalid_and_duplicate_stays_true`, `presence_scope_unknown_is_not_absence`, `missing_value_does_not_make_inequality_true`, `default_does_not_make_item_specified`, `unterminated_text_is_not_specified`, `damaged_name_blocks_false_presence`, `presence_uses_canonical_name_identity`, `damaged_child_parent_blocks_compatible_scopes`, `not_specified_preserves_unknown`, `other_document_does_not_supply_presence`, `unterminated_literal_prefix_blocks_compatible_presence`, `high_byte_inside_literal_blocks_false_presence`, `projected_controls_preserve_exact_presence`, `high_byte_run_covers_missing_literal_tail`, `damaged_literal_readable_order_is_required`, `high_byte_run_can_match_empty`, `terminated_literal_has_no_implicit_gap`, `high_byte_run_hiding_separator_is_unassigned` (planned, not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 

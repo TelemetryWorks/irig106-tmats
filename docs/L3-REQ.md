@@ -842,6 +842,19 @@ Use declared literal components/index positions and INT-040's readable-parent
 compatibility guard; do not let a literal wildcard override a contradictory
 readable parent, guess wrong-arity alignment or enumerate possible parents.
 An unframed EOF suffix remains diagnostic evidence, not an INT-035 item.
+
+If a run can cover a component separator, do not assume the observed split
+is complete. For example `T-1\xFFD:a;` can hide `\I`, making the component
+split unknown rather than proving a different group/path. Retain unassigned
+structural evidence like wrong arity under INT-040: every scope compatible
+with the readable parts is guarded, never a guessed split, inferred parent
+or false absence from one selected alignment. Use only unambiguously mapped
+readable parent facts to exclude scopes; unknown positions impose no
+restriction. Do not enumerate candidate splits or hypothetical parent values
+or manufacture a usable key. Existing exact-match presence still wins when
+independently established; with zero exact matches, compatible unassigned
+evidence yields cannot-evaluate.
+
 Work follows supplied name/pattern lengths using bounded matching states,
 without enumerating replacements or recursively exploring an exponential
 number of alignments. Concrete budget values remain a later derivation.
@@ -878,6 +891,11 @@ Source: ADR-0033 and L1-REG-003. An owner-relayed AI result may identify a
 PR and immutable head as existing sign-off records do; do not fabricate a
 separately posted GitHub review. The owner is the human signatory; the AI
 check is recorded as non-human. This creates no agent-attribution trailers.
+These gates apply to reader/validator behaviour tied to register entries,
+including hand-written behaviour outside the generator. Coordinator decisions
+F1 (INT-021) and F7 (INT-030) remain recommendations; each needs explicit
+ADR-0033 owner sign-off and an independent AI check before implementation.
+Neither currently records those checks. F1 remains a 0.1 release blocker.
 
 **L3-REG-010** · Parent: L2-REG-005 · Verification: T
 *Freshness checking SHALL compare the current cited source dependencies with the source-text hash bound to review, flag every affected interpretation for re-review on a difference or unavailable hash, and prevent the stale interpretation from executing as currently approved.*
@@ -910,6 +928,10 @@ edition fixtures must be traced to the interpretation; applicability of local
 sample evidence stays explicit and samples remain outside CI. This batch
 does not run that analysis, implement those tests or mandate real samples
 where none exercises the interpretation.
+This readiness boundary also applies before implementing register-dependent
+reader/validator behaviour, not merely before generating a registry rule.
+No coordinator policy, including F1/F7, bypasses the approval/AI-review gate.
+
 
 **L3-REG-013** · Parent: L2-REG-006 · Verification: T
 *Registry generation/checking SHALL refuse to emit an executable rule with a failed readiness dependency and SHALL report its entry, blocking interpretation/source evidence and reason; its source coverage status SHALL remain visibly non-executable, without replacing a checked-in reviewed rule silently or rewriting source text to make a gate pass.*

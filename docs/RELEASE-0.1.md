@@ -286,8 +286,8 @@ does not by itself sign off an executable interpretation.
 | W1: workspace | Owner-decided, 2026-11-21; ADR-0035 supersedes ADR-0034 W1 | Virtual root; library `crates/irig106-tmats/`, CLI `apps/irig106-tmats-cli/`; shared lockstep workspace version and exact-version path dependency in workspace.dependencies |
 | W2: prototype retirement | Coordinator-decided, 2026-11-21; owner may override | Remove the prototype in the restructure change; `prototype-0` retains history. Split an oversized PR or return to the owner |
 | W3: host CLI integration | Coordinator-decided, 2026-11-21; owner may override | Both a host-callable `run(args, stdout, stderr) -> exit class` that never exits the process and individual command/render APIs; thin `main`, matching irig106-time |
-| F1: duplicate SHA items | Coordinator-decided, 2026-11-21; owner may override | Reject as indeterminate, list every occurrence, preserve every byte, refuse stamping until fixed, and never claim positive verification |
-| F7: configuration-change event | Coordinator-decided, 2026-11-21; owner may override | Require verified identification and report indeterminate meanwhile; never guess a packet type |
+| F1: duplicate SHA items | Coordinator recommendation, 2026-11-21; INT-021 requires ADR-0033 owner sign-off + independent AI check before implementation; both pending (0.1 blocker) | Reject as indeterminate, list every occurrence, preserve every byte, refuse stamping until fixed, and never claim positive verification |
+| F7: configuration-change event | Coordinator recommendation, 2026-11-21; INT-030 requires ADR-0033 owner sign-off + independent AI check before implementation; both pending | Require verified identification and report indeterminate meanwhile; never guess a packet type |
 
 [ADR-0033](adr/0033-owner-signoff-and-independent-ai-interpretation-review.md)
 supersedes the two-human rule. Record the draft author, owner sign-off and
@@ -300,6 +300,15 @@ coordinator decisions. Its W1 alone is superseded by
 [ADR-0035](adr/0035-virtual-workspace-with-library-crate-and-cli-app.md), the
 owner's virtual crates/apps layout. W2 prototype removal and W3 reusable CLI
 library plus thin binary are unchanged; the full 0.1 scope remains binding.
+
+The readiness gates apply to reader/validator behaviour tied to register
+entries, including hand-written behaviour, not only generated registry rules.
+F1 (INT-021) and F7 (INT-030) therefore need explicit ADR-0033 owner sign-off
+and an independent AI check before implementation; neither has those checks
+recorded. Coordinator decisions remain the recommendations. F1 is a blocking
+review dependency for 0.1's checksum verification/stamping scope, not a feature
+to silently defer or a gate exception. Review summaries are recorded in the
+[review-gate note](research/2026-11-23-f1-f7-review-gates.md).
 
 F1 deliberately leaves damaged recordings readable but without a positive
 integrity verdict. Fixing duplicates requires an explicit action before
