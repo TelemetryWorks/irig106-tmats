@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-23-initial-time-boundary-proposal.md](2026-11-23-initial-time-boundary-proposal.md) | Verified 106-07–24R1 ordering/time-type sources; proposed INT-045 initial closure, one-pass pipeline, mid-session limits and undecided owner options |
 | [2026-11-23-completeness-contracts-draft.md](2026-11-23-completeness-contracts-draft.md) | Batch 15 finality/provisional evidence and budgets; open owner options for pre-EOF semantic use |
 | [2026-11-23-int011-owner-signoff.md](2026-11-23-int011-owner-signoff.md) | Joey's INT-011 reconfirmation, #38 AI concurrence and three completeness/governance/resource consequences |
 | [2026-11-23-int011-per-channel-owner-decision.md](2026-11-23-int011-per-channel-owner-decision.md) | Joey's independent per-channel joining decision, other-channel provenance, START reasons (pending-review status superseded by the INT-011 reconfirmation record) |

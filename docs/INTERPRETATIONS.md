@@ -1476,3 +1476,69 @@ INT-014; that rule and all other review/coverage gates remain unchanged.
 **Draft analysis**: [original alternatives](research/2026-11-23-edition-basis-draft.md); [owner Option B decision and conditions](research/2026-11-23-int044-owner-decision.md)
 
 **Approval record**: [owner decision and exact AI concurrence](research/2026-11-23-int044-owner-signoff.md). Analysis, source freshness and executable tests remain outstanding.
+
+### INT-045
+
+**Title**: Proposed initial setup closure at the first recognised time packet
+
+**Sources**:
+- 106-24R1 Chapter 11 section 11.2.3.2 p. 11-24: "Only static Computer-Generated Data, Format 1 packets may precede the first time data packet." Section 11.2.3.3 p. 11-26 repeats the rule for network time; Table 11-4 pp. 11-6–7 defines 0x11/0x12 and the reserved time-family codes.
+- Section 11.2.7.2 p. 11-50 puts an updated setup record "prior to any new or changed data packets being committed to the stream"; p. 11-51 puts its configuration-change event before the setup record, not at its end.
+- The [source investigation](research/2026-11-23-initial-time-boundary-proposal.md) checks 106-07/09/11/13/15 Chapter 10 and 106-17/19/20/22/23/24/24R1 Chapter 11, with edition-specific locations, packet-type eligibility and PDF fingerprints.
+
+**Behaviour**: **Proposed Option A; nothing approved.** With known
+recording/session-start provenance, a trusted initial prefix containing only
+static 0x01 setup packets, and a reviewed applicable packet-format binding,
+the first structurally trusted Time Data packet on ANY channel supplies a
+proposed boundary immediately before itself for the initial candidate runs.
+Eligible types: 0x11 Format 1 in all checked editions; 0x12 Format 2 only
+where defined, from 106-17. Reserved/unknown types, timestamps inside other
+packets and later periodic time packets are not this signal. Clock availability
+is separate: source NONE does not disqualify a trusted time packet.
+
+Seal each initial per-channel run separately; retain marker identity, offset,
+type, trust/order/start evidence, citation and a distinct initial-time basis.
+Exclude the marker from TMATS and dispatch that same packet after completeness
+assessment and eligible TMATS parsing. This seals the initial phase, not a
+claim that its candidates are valid or one unique governing description.
+
+Unknown/cropped start, unreadable/corrupt marker or prior ordering violations
+withhold authoritative automatic adoption through this rule, with findings
+and all bytes retained. No time packet: live input remains open/provisional;
+actual EOF uses INT-034's labelled classification, with a separate missing-
+time ordering problem. Never invent EOF, repair cut text or waive ambiguity.
+
+**Interaction/open scope**: If adopted, this would explicitly qualify
+INT-011's current absolute other-channel-never-stops wording for the INITIAL
+session phase only; it is not already approved under INT-011. INT-034 still
+judges completeness; initial-time is an additional reason, not a relabelled
+same-channel stop. INT-039 duplicates remain document-local: later setup
+candidates after the boundary are not appended to the initial one; repeated
+scalars before it remain duplicate/split evidence, never first/last wins.
+Multiple channels do not mix and this rule chooses no governing candidate.
+Existing requirements/ADRs must be reconciled in a reviewed change if adopted.
+
+The mid-session commit-before-changed-data rule is not a universal observable
+terminator: unaffected data/time packets may continue, changed-data identity
+can depend on the new TMATS, and the event precedes the update and remains
+unidentified (INT-030/F7). Mid-session runs retain their existing open/
+provisional behavior pending a justified boundary or a separately reviewed
+snapshot policy. INT-028/031 governance and streaming-use permission remain
+unapproved; this proposal does not silently decide either.
+
+**Reason**: The initial ordering gives a standard-based reason to propose
+closing initial setup before processing the first time packet, avoiding a
+whole-file wait in ordinary conforming input. It is an assembly inference,
+not a standard-defined marker. Alternative B keeps per-channel/EOF-only
+finality and considers opt-in provisional snapshots; that can delay initial
+use. Alternative C closes every mid-session update at the next time/data
+packet; not recommended because the cited rule supplies no such general
+signal. Recommend A with the stated guards; the owner decides.
+
+**Design**: proposed (owner decision pending) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: pending · **Origin**: owner question/coordinator observation after #39, 2026-11-23
+
+**Test**: `initial_first_time_seals_before_dispatch`, `initial_time_type_is_edition_specific`, `non_time_timestamps_do_not_close_setup`, `initial_marker_requires_start_order_and_trust`, `initial_time_does_not_repair_incomplete_setup`, `no_initial_time_uses_eof_or_provisional`, `initial_runs_and_later_documents_do_not_mix`, `mid_session_periodic_time_does_not_seal_update` (planned; not yet written)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Draft analysis**: [verified sources, pipeline, mid-session limits and owner options](research/2026-11-23-initial-time-boundary-proposal.md).
