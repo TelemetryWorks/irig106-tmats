@@ -14,7 +14,8 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
-| [2026-11-22-counter-membership-draft.md](2026-11-22-counter-membership-draft.md) | Batch 6 counter scope/source review, proposed INT-040 structural membership, alternatives and cross-fragment fixture follow-up |
+| [2026-11-23-int040-owner-signoff.md](2026-11-23-int040-owner-signoff.md) | Joey's INT-040 sign-off dated 2026-11-22, PR #24 final-head concurrence and compatible-scope tightening |
+| [2026-11-22-counter-membership-draft.md](2026-11-22-counter-membership-draft.md) | Batch 6 counter scope/source review, INT-040 draft membership and review follow-up (sign-off superseded by the INT-040 approval record) |
 | [2026-11-22-int039-owner-signoff.md](2026-11-22-int039-owner-signoff.md) | Joey's INT-039 approval, PR #22 AI concurrence, single-entry group-\COM choice and one-document assembly clarification |
 | [2026-11-22-scalar-duplicates-draft.md](2026-11-22-scalar-duplicates-draft.md) | Batch 5 source review, INT-039 draft choices, exact lookup and pending evidence (sign-off superseded by the INT-039 approval record) |
 | [2026-11-22-int038-owner-signoff.md](2026-11-22-int038-owner-signoff.md) | Joey's INT-038 sign-off, PR #20 exact-head AI concurrence and collision-group clarification |

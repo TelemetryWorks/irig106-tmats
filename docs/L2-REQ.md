@@ -4,8 +4,7 @@
 > Foundations derive the approved restructure/source store; framing and
 > recovery use owner-approved INT-035. Character policies INT-036/037 were
 > approved by Joey, 2026-11-22, under ADR-0033. Name structure follows here;
-> INT-038/039 were approved by Joey, 2026-11-22. Counter batch 6 proposes
-> INT-040; remaining view/registry, CLI and later areas follow;
+> INT-038/039/040 were approved by Joey, 2026-11-22; remaining view/registry, CLI and later areas follow;
 > a parent with children here is not necessarily fully decomposed yet.
 
 ## Purpose
@@ -323,9 +322,11 @@ subsequent derivations; these children do not complete those L1 parents.
 ## Counter batch 6: declared scope and distinct entry identities
 
 This batch derives the counter portion of L1-REG-005, L1-VAL-002 and
-L1-VAL-006, following ADR-0023/0026 and approved INT-038/039. Proposed
-INT-040 addresses membership when entry values are invalid or duplicated;
-it needs owner sign-off and independent AI review under ADR-0033. These are
+L1-VAL-006, following ADR-0023/0026 and approved INT-038/039. INT-040 was
+approved by Joey, 2026-11-22, under ADR-0033, with independent AI recheck
+concurrence at PR #24 head `176fdf4` (see the
+[sign-off record](research/2026-11-23-int040-owner-signoff.md)). Full analysis
+and executable tests remain outstanding; approval is not implementation. These are
 requirements for the existing planned validation scope, not a promotion of
 the general registry/validator into 0.1. Link metadata, complete rule/type
 interpretations and other family-2 areas remain separate derivations.
@@ -346,7 +347,7 @@ interpretations and other family-2 areas remain separate derivations.
 
 **Statement**: For each applicable reviewed counter rule and fixed parent tuple, validation SHALL compare the usable declared count with DISTINCT canonical numeric identities of governed entries, checking both cardinality and the declared index-domain/contiguity rule while retaining all occurrence evidence; it SHALL NOT substitute raw item count, greatest observed index or another parent's entries for that set.
 
-**Rationale**: ADR-0026 and approved INT-038 already require scoped distinct numeric identities. Proposed INT-040 counts structurally identified entries independently of payload validity and duplicate declarations; other findings remain visible. Chapter 9 section 9.5.1 a, page 9-5, requires no missing values, so equal cardinality alone is insufficient. A counter result is not whole-document conformance or permission to repair source. Explicit child scopes remain evaluable despite parent-domain violations or unusable ancestor counts; the child's own rule/count and membership prerequisites still apply, without an ancestor-validity gate. X attachment does not create D membership, and WFP value uniqueness remains a separate value rule.
+**Rationale**: ADR-0026 and approved INT-038 already require scoped distinct numeric identities. Approved INT-040 counts structurally identified entries independently of payload validity and duplicate declarations; other findings remain visible. Chapter 9 section 9.5.1 a, page 9-5, requires no missing values, so equal cardinality alone is insufficient. A counter result is not whole-document conformance or permission to repair source. Explicit child scopes remain evaluable despite parent-domain violations or unusable ancestor counts; the child's own rule/count and membership prerequisites still apply, without an ancestor-validity gate. X attachment does not create D membership, and WFP value uniqueness remains a separate value rule.
 
 **Verification Method**: Test (T)
 
@@ -354,8 +355,8 @@ interpretations and other family-2 areas remain separate derivations.
 
 **Parent**: L1-VAL-006
 
-**Statement**: Counter evaluation SHALL report its counter/indices pass, rule citation, parent scope and supporting locations, and SHALL report cannot-evaluate when applicability, the effective counter value or required membership cannot be established without guessing; it SHALL NOT infer a missing count or claim success from an incomplete member set.
+**Statement**: Counter evaluation SHALL report its counter/indices pass, rule citation, parent scope and supporting locations, and SHALL report cannot-evaluate when applicability, the effective counter value or required membership cannot be established without guessing; it SHALL NOT infer a missing count or claim success from an incomplete member set, and every scope compatible with unassigned evidence's readable canonical parent facts SHALL report partial/cannot-evaluate, never pass.
 
-**Rationale**: ADR-0022/0023 already require cannot-evaluate for unavailable operands. INT-039 makes duplicate scalar counters Ambiguous even when values agree. A cited default may be used only through a reviewed effective-value rule that permits it; neither suffix spelling nor the largest member supplies one. Proposed INT-040 preserves structural evidence separately from blocked or failing semantic checks.
+**Rationale**: ADR-0022/0023 already require cannot-evaluate for unavailable operands. INT-039 makes duplicate scalar counters Ambiguous even when values agree. A cited default may be used only through a reviewed effective-value rule that permits it; neither suffix spelling nor the largest member supplies one. Approved INT-040 preserves structural evidence separately from blocked or failing semantic checks.
 
 **Verification Method**: Test (T)
