@@ -627,6 +627,42 @@ style fallback, general public edit API or file-publication behavior. Future
 tests need independent expected bytes/digests and injected failures, not
 expected answers derived through the stamping implementation itself.
 
+## Family 2 batch 12: Format 1 payload/CSDW acceptance specifications
+
+**Status: planned, not executable tests.** These use an explicitly identified
+106-24R1 layout, not a guessed historical era. Sources: Chapter 11 section
+11.1 page 11-1 (wire byte orientation), section 11.2.7.2 a/Figure 11-34 page
+11-50 and RCCVER table page 11-51; ADR-0009/0015/0025/0028/0032. Payloads
+start at the CSDW and are already bounded by the caller; snippets are not
+whole packets or complete conforming records. Body/candidate completeness
+is an independent later result. INT-012 keeps its existing owner acceptance
+and pending AI review; this PR grants no semantic or implementation approval.
+See the [source/review note](research/2026-11-23-setup-payload-draft.md).
+
+| Planned check | Fixture or stimulus | Expected observation | Requirement |
+| --- | --- | --- | --- |
+| `short_csdw_has_no_fabricated_fields` | Payload lengths 0, 1, 2 and 3, known baseline layout/provenance | Located short-CSDW result retaining all available bytes; no padded word, host read past end or default flag/version | L3-CH10-001 |
+| `payload_body_starts_after_four_bytes` | `0E 00 00 00` followed by raw `G\PN:x;\r\n\x00\x1A\xFF` | CSDW [0,4), body [4,len); body bytes unchanged, including high byte/padding. No trim, interpretation of padding as packet filler or completeness claim | L3-CH10-001, L3-CH10-002 |
+| `csdw_fields_use_little_endian_wire_bytes` | `0E 00 00 00`, `0E 01 00 00`, `0E 02 00 00`, `0E 03 00 00` separately | RCCVER 0x0E in all; SRCC/FRMT respectively 0/0, 1/0, 0/1, 1/1. Same on any host; independent constants, not shared-decoder-derived expected values | L3-CH10-003, L3-CH10-005 |
+| `body_after_csdw_is_not_byte_swapped` | Baseline word plus mixed text/high bytes, caller supplies exact body slice | Only CSDW interpreted as little endian; body remains its native raw byte order and retains input locations | L3-CH10-002, L3-CH10-003 |
+| `xml_flag_never_enters_ascii_scanner` | `0E 02 00 00` followed by XML-looking text, ASCII-looking text or no bytes in separate fixtures | XML unsupported in each; full raw body retained, no code-name parsing, transcoding or fake empty document | L3-CH10-004 |
+| `empty_ascii_fragment_is_not_complete_record` | Exactly `0E 00 00 00` | Decodable CSDW with empty [4,4) body; no complete/valid setup assertion or inferred required TMATS values | L3-CH10-001, L3-CH10-002, L3-CH10-004 |
+| `reserved_bits_are_retained_not_sanitized` | `0E 03 00 80` | Raw word 0x8000030E and high reserved bit retained; FRMT=1, SRCC=1, RCCVER=0x0E unchanged. No new severity/validity verdict from this preservation test | L3-CH10-003, L3-CH10-006 |
+| `rccver_baseline_literal_codes` | Separate baseline payloads with byte 0 set to 07,08,09,0A,0B,0C,0D,0E | Literal RCC 106-07,09,11,13,15,17,19,22 respectively; raw byte retained, no literal 106-20/23/24 invented | L3-CH10-007 |
+| `rccver_reserved_stays_unknown_under_named_table` | Byte 0 is 00,06,0F or FF in separate baseline payloads | Reserved/unknown under this supplied baseline table; raw retained, no fabricated edition, implicit fallback or historical-field-presence claim | L3-CH10-007, L3-CH10-008 |
+| `rccver_archive_note_is_not_declaration` | Raw 0E plus reviewed archive-note fixture | Literal RCC 106-22 stays distinct from labelled unchanged-through-106-24R1 observation; no unbounded future guarantee or newest-edition declaration | L3-CH10-007 |
+| `local_srcc_is_not_session_validation` | Same readable CSDW supplied in first-record versus later-record contexts; two separate fragments differ only in SRCC | Local bit preserved in each; no invented event verdict, difference/first-record judgement or SRCC consensus. Assembly/session rules remain separate | L3-CH10-005 |
+| `fragment_csdws_do_not_enter_assembled_text` | Two separately supplied baseline payloads, each with its own CSDW and arbitrary body split | Each adapter returns only its body range; later assembly gets original fragments/provenance, not an inserted CSDW in the text. No concatenation or complete-record decision occurs here | L3-CH10-002 |
+| `split_bom_is_not_stripped_per_payload` | Body 1 ends EF, body 2 starts BB BF after its own CSDW | Both retain bytes; no fragment-level BOM removal or encoding guess. INT-037 evaluates markers after assembly, outside this decoder | L3-CH10-002 |
+| `version_metadata_sources_remain_distinct` | Packet data-type-version metadata differs from RCCVER; supplied TMATS G\106:24; with raw RCCVER 0E | Report supplied facts separately; no automatic disagreement finding, G\106 rewrite, fallback selection or time-channel inference | L3-CH10-008 |
+| `unknown_layout_knowledge_does_not_prove_bad_data` | Payload bytes present but requested layout interpretation unavailable | Raw payload and limitation retained; unavailable interpretation, not zero-padded/header-default answer or unsupported-era bytes called malformed by guess | L3-CH10-001 |
+
+Future tests must assert all cases against independent byte fixtures and the
+shared-type adapter, with real unknown-code coverage; none may compute its
+expected masks or version list by calling the decoder being tested. This
+slice does not verify packet checksums, filler removal or the historical
+layout mapping; those are not silently claimed by a green CSDW adapter test.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample
