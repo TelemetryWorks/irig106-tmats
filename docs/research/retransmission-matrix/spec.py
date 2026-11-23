@@ -22,7 +22,7 @@ DOMAINS = {
 
 
 def proposal(v):
-    """Draft column-composition rules R0-R5 and overlays in the companion note."""
+    """Baseline and draft column-composition rules R0-R4 and overlays in the companion note."""
     s, c, pair, cont, versions, own, sep, phase = v
     a, b = pair
     findings, questions, conflicts = ['retain_all_source_findings'], ['QG'], []
@@ -38,8 +38,13 @@ def proposal(v):
         conflicts.append('checksum_value_only_requires_present_matching_item_inventory')
     if own == 'X' and a == 'V':
         conflicts.append('cut_sealed_text_cannot_have_authoritative_verified_status')
-    if c == 'X' and b == 'V':
-        conflicts.append('cut_following_text_cannot_have_authoritative_verified_status')
+    if own == 'X' and a == 'F':
+        conflicts.append('cut_sealed_text_checksum_is_unavailable_not_mismatch')
+    if own == 'X' and c in 'HW':
+        conflicts.append('cut_sealed_text_cannot_have_only_sha_or_layout_difference')
+    if c == 'X' and b in 'VF':
+        conflicts.append('cut_following_text_cannot_have_authoritative_verified_status' if b == 'V'
+                         else 'cut_following_text_checksum_is_unavailable_not_mismatch')
     if s == 'U':
         findings.append('following_first_srcc_unreadable')
         questions.append('QS')
@@ -76,26 +81,37 @@ def proposal(v):
              'E': 'end of input (labelled)'}[sep]
     if own != 'T':
         basis += '; retain pre-existing ' + outcome
-    # R2: duplicate checksum remains blocking; field ambiguity != settled assembly rule.
-    if own == 'T' and a == 'D':
-        outcome, rule = 'Ambiguous', 'R2D'
-        basis += '; duplicate_G_SHA_assembly_precedence_proposed_QD'
-        questions.append('QD')
     guard = sep == 'T' and cont == 'C' and versions == 'SS'
+    # Approved INT-045 baseline, independent of F1 and the draft identity exception.
+    baseline_outcome, baseline_basis = outcome, basis
+    if own == 'T' and guard:
+        if a == 'V':
+            baseline_basis += '; sealed_G_SHA_verified_classification_only'
+        else:
+            baseline_outcome = 'Ambiguous'
+            baseline_basis += '; possible premature time-boundary seal; both readings'
+        if c != 'B':
+            findings.append('possible_premature_time_boundary_seal_both_readings')
+        else:
+            findings.append('byte_identical_retransmission_evidence')
+            questions.append('QI')
+    # R2D: F1 blocks verification/stamping, not completeness by itself.
+    # The broader completeness hold is a separate, unapproved QD column.
+    qd_proposal = None
+    if own == 'T' and a == 'D':
+        outcome, basis, rule = baseline_outcome, baseline_basis, 'R2D'
+        qd_proposal = dict(sealed_outcome='Ambiguous',
+            sealed_basis='duplicate_G_SHA_assembly_hold_proposed_QD',
+            governing_effect='proposed_new_adoption_blocked_no_silent_old_fallback')
+        questions.append('QD')
     if own == 'T' and a != 'D' and guard:
         if c == 'B':
             outcome, rule = 'Complete', 'R3B'
             basis += '; identical retransmission'
-            findings.append('byte_identical_retransmission_evidence')
-            questions.append('QI')
         elif a == 'V':
-            outcome, rule = 'Complete', 'R3V'
-            basis += '; sealed_G_SHA_verified_classification_only'
-            findings.append('possible_premature_time_boundary_seal_both_readings')
+            outcome, basis, rule = baseline_outcome, baseline_basis, 'R3V'
         else:
-            outcome, rule = 'Ambiguous', 'R3A'
-            basis += '; possible premature time-boundary seal; both readings'
-            findings.append('possible_premature_time_boundary_seal_both_readings')
+            outcome, basis, rule = baseline_outcome, baseline_basis, 'R3A'
     # R4: following classification is comparison evidence, not governing permission.
     if c == 'X':
         following = 'continuation_unresolved_cut' if guard else 'incomplete_unresolved_candidate'
@@ -124,9 +140,13 @@ def proposal(v):
         outcome = 'Incomplete' if own == 'X' else 'Ambiguous'
         rule, basis = 'R0', 'inconsistent_observations; proposed_conservative_hold'
         following, governing = 'inconsistent_evidence_not_adopted', 'blocked_pending_evidence_correction'
+        baseline_outcome, baseline_basis = None, 'inconsistent observations; no valid baseline verdict'
+        qd_proposal = None
         questions = ['Q0']
         findings.extend(conflicts)
     return dict(rule=rule, sealed_outcome=outcome, sealed_basis=basis,
+                baseline_sealed_outcome=baseline_outcome, baseline_sealed_basis=baseline_basis,
+                qd_proposal=qd_proposal,
                 following_outcome=following, findings=sorted(set(findings)),
                 governing_effect=governing, owner_questions=sorted(set(questions)),
                 realizability='inconsistent_observations' if conflicts else 'candidate_fixture_required',

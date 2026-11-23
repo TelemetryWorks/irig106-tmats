@@ -852,7 +852,10 @@ and Ch9 Table 9-2 p. 9-13 checksum; INT-011/018–021/034/039/043/045.
 | `srcc1_identical_is_not_assumed_change` | `1.B.NN.C.SS.T.T.M`: same complete raw text, following first SRCC=1 | Proposed Complete, `time-boundary seal (owner policy)` plus `identical retransmission`; report changed claim against identical evidence, no semantic-change assumption (QI/QG) | L3-REG-015 |
 | `sha_only_following_not_sealed_proof` | `0.R.NV.C.SS.T.T.I`: following adds its own well-formed verifying checksum to the sealed text | Not byte-identical. Following-only verification never verifies sealed candidate or cures guard: sealed Ambiguous; report raw change despite SRCC=0; preserve both candidates (QC/QG) | L3-REG-015 |
 | `sha_only_sealed_preserves_verified_exception` | `0.R.VN.C.SS.T.T.I`: following removes the sole checksum; sealed checksum verifies sealed bytes | Sealed Complete ONLY on INT-045's existing sealed-text-verification basis; following absence is explicit, raw change reported; no joined digest/adoption inference (QC/QG) | L3-REG-015 |
-| `identical_duplicate_sha_never_verifies` | `0.B.DD.C.SS.T.T.I`: identical text contains duplicate G\SHA | F1 indeterminate with every occurrence, stamping refusal; proposed assembly hold remains QD, never a positive verification or silently selected duplicate | L3-REG-015 |
+| `identical_duplicate_sha_never_verifies` | `0.B.DD.C.SS.T.T.I`: identical text contains duplicate G\SHA | F1 indeterminate with every occurrence, stamping refusal; retain byte-identity evidence. INT-045 baseline Ambiguous with this related follower; QD assembly hold is a separate proposal, never a positive verification or selected duplicate | L3-REG-015 |
+| `duplicate_sha_does_not_hide_premature_seal` | All 144 previously coherent duplicate-sealed-SHA / nonidentical T/C/SS members (138 coherent now, six R0 cut-following/F observations) | Located premature-seal finding and both readings retained regardless of R2D; coherent baseline Ambiguous, six inconsistent rows explicitly R0 | L3-REG-014 |
+| `duplicate_sha_without_related_follower_keeps_baseline` | `0.D.DN.G.SS.T.T.I`, plus different-channel/profile/explicit-stop/EOF variants | Baseline Complete and F1 indeterminate/refuse-stamp; proposed QD Ambiguous remains a separate column, never imposed as approved completeness | L3-REG-014 |
+| `cut_observation_cannot_claim_mismatch_or_only_sha_layout_delta` | Every sealed X with checksum F or content H/W, plus following X with checksum F, including intersections | Explicit R0 consistency/rejection test, not parser coverage: checksum F must instead be U and bounded H/W cannot explain the cut | L3-REG-014 |
 | `retransmission_boundary_and_projection_mutations` | Mutate named witnesses: partial matching prefix, BOM/damaged/projected names, raw exclusion/leading layout, value-contained G\SHA, missing terminator, uppercase hex, `02-`, layout inside/outside exclusion, channel/FRMT/RCCVER/EOF | Preserve dependency findings, exact raw bytes/spans and every candidate; no normalized equality, silent rejoin or unsupported-format interpretation. Compare independent digests, not production output | L3-REG-015 |
 
 The four owner examples are named regressions in addition to all per-member
@@ -862,6 +865,13 @@ fragments, independently established extents and relevant provenance. Use
 Python hashlib for independent digests. An added/removed checksum belongs to
 R, not H (H changes only existing value bytes). Proper tuple constraints found
 during witness construction must be reported, reviewed and tested, not skipped.
+
+Multiple-following-copy compositions are OUT OF SCOPE of this pairwise
+matrix, not implicit passes: planned `multiple_copies_B_then_D_target_and_composition`
+and `multiple_copies_H_then_B_target_and_composition` await QM's owner decision.
+Recommend recording both original-seal and previous-copy comparisons with
+explicit identities, retaining findings, never automatically switching setups.
+These cases need a reviewed sequence matrix before implementation/coverage claims.
 
 ## Real Chapter 10 recordings (local use only)
 

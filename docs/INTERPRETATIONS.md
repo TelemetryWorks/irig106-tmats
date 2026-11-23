@@ -1679,6 +1679,13 @@ This is a proposal, not an approval of all exception limits or governance.
 The [exhaustive matrix](research/2026-11-23-retransmission-decision-matrix.md)
 lists every member, all outcomes, inherited findings and owner questions.
 Already-cut input remains Incomplete; pre-existing ambiguity is not upgraded.
+The matrix separates the INT-045 baseline from QD's proposed duplicate assembly
+hold: F1 alone changes no completeness. Related-follower premature-seal findings
+and byte-identity evidence remain visible even with a duplicated checksum.
+Multiple following copies are explicitly outside this pairwise proposal;
+QM asks which candidate each copy compares against and how outcomes compose
+(B then D, H then B). Recommend both original/previous comparisons with explicit
+identities, without deciding aggregation, finality or governing setup.
 INT-011 joining remains independent; INT-039 duplicates remain document-local.
 INT-021/F1 never selects a checksum duplicate or claims positive verification.
 The checksum on the following copy alone is NOT the sealed-text verification

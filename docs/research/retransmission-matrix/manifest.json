@@ -1,7 +1,7 @@
 {
   "status": "DRAFT; no approvals",
   "combinations": 139968,
-  "classes": 43486,
+  "classes": 39078,
   "domains": {
     "srcc": [
       "0",
@@ -80,6 +80,6 @@
       "M"
     ]
   },
-  "members_sha256": "8c7d6d86d514f9e76eb37e5b1b6fea7213d2d4cabbbf9f03b3d2d5c338671e3c",
-  "classes_sha256": "2dde1e82df92ee91bad1e60ecd564d2355f289bae03ad64a4f2afed33bb47927"
+  "members_sha256": "0528bde1c53f2782bc1acf0515dc4810873504c961d03b3c29cbed307efaff12",
+  "classes_sha256": "0c782de0f2f57eceb75056add02bb128425a23cbd56959cd2aa26ce476ea2df0"
 }

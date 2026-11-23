@@ -80,7 +80,8 @@ similarly remains a stop even if a later sequence coincidentally compares +1.
 
 Checked-in [members.jsonl.gz](retransmission-matrix/members.jsonl.gz) has one
 record for EVERY member: all inputs, checksum presence, full sealed outcome
-and basis, following outcome, findings, governing effect, owner questions,
+and basis, separately identified baseline outcome/basis and optional QD proposal,
+following outcome, findings, governing effect, owner questions,
 equivalence-class ID and a unique NAMED planned test. Nothing is sampled.
 The [class index](retransmission-matrix/classes.json.gz) collapses only records
 with IDENTICAL complete output columns (excluding member/test identity).
@@ -108,19 +109,49 @@ formula. Class IDs hash the full proposed output; the generator checks collision
 ## Decision columns: compose these disjoint rules and overlays
 
 The following tables explain the complete expanded outputs. R0 dominates;
-otherwise R1, R2, R3 and R4 apply in that order, with ALL findings/questions
-unioned. This is a DRAFT specification for review, not newly approved behavior.
+otherwise R1 supplies the initial state, INT-045 supplies the separate
+baseline/continuity evidence, and R2/R3 and R4 supply the draft columns. ALL
+findings/questions are unioned; R2D never suppresses the INT-045 evidence.
+This is a DRAFT specification for review, not newly approved behavior.
 
 | Rule | Exact members/condition | SEALED outcome and basis |
 | --- | --- | --- |
-| R0 | B with unequal checksum statuses; B with sealed X; H with absent checksum or unequal duplicate multiplicity; sealed X with sealed V; following X with following V | Explicit inconsistent-observation member. Recommend Incomplete if already cut, otherwise Ambiguous/hold; no fabricated usable following candidate. Q0, not a new parser verdict |
+| R0 | B with unequal checksum statuses; B with sealed X; H with absent checksum or unequal duplicate multiplicity; sealed X with sealed V or F; sealed X with content H or W; following X with following V or F | Explicit inconsistent-observation member. Recommend Incomplete if already cut, otherwise Ambiguous/hold; no fabricated usable following candidate. Q0, not a new parser verdict |
 | R1X | sealed X, no R0 | Incomplete, original separator basis plus pre-existing Incomplete; no identity/digest rescue |
 | R1A | sealed A, no R0 | Ambiguous, original separator basis plus pre-existing Ambiguous; never choose a scalar duplicate |
 | R1T | sealed T with no subsequent applicable overlay | Complete on separator evidence; NOT semantic validity, integrity or governing authority |
-| R2D | sealed T and sealed checksum D, no R0 | PROPOSED Ambiguous/hold, QD: F1 itself already makes checksum indeterminate, but assembly versus field ambiguity must be reviewed |
+| R2D | sealed T and sealed checksum D, no R0 | BASELINE preserved: Complete without qualifying time/+1/same-profile following evidence; Ambiguous with it under INT-045. F1 alone changes no completeness. Separate `qd_proposal` column proposes Ambiguous/hold, never silently replacing the baseline |
 | R3B | sealed T; checksum not D; separator T; continuity C; versions SS; content B; no R0 | Owner-direction proposal: Complete, base time basis PLUS `identical retransmission`; QI limits need sign-off |
 | R3V | same R3 boundary conditions; content H/W/D/R/X; sealed V; no R0 | Existing INT-045 Complete exception on sealed-text verification evidence only; retain both readings/finding |
-| R3A | same R3 boundary conditions; content H/W/D/R/X; sealed N/F/M/U; no R0 | Existing INT-045 final Ambiguous with located `possible premature time-boundary seal` and both readings |
+| R3A (R2D tag for duplicates) | sealed T; separator T; continuity C; versions SS; content H/W/D/R/X; sealed N/F/M/D/U; no R0 | Existing INT-045 final Ambiguous with located `possible premature time-boundary seal` and both readings |
+
+Every coherent row has `baseline_sealed_outcome`/`baseline_sealed_basis`:
+the supplied prior classification with ONLY approved INT-045 applied. These
+are conditional on the supplied state and boundary, not approval of open
+INT-034 completeness rules. `sealed_outcome`/`sealed_basis` retain the draft
+identity exception for nonduplicate checksums. For R2D they equal the baseline;
+only the separate `qd_proposal` object carries the proposed broader duplicate
+assembly hold. Without a related follower, duplicated SHA therefore leaves a
+supplied Complete seal Complete, with indeterminate checksum and stamping
+refused. This says nothing about permission to govern. With a related follower,
+INT-045 itself supplies final Ambiguous: duplicate SHA cannot verify its exception.
+The **144** previously coherent, otherwise-Complete, duplicate-SHA/nonidentical
+T/C/SS members retain the located premature-seal finding regardless of R2D.
+Of these, 138 remain coherent; six now have R0-inconsistent cut-following/F
+observations, with that evidence still retained rather than suppressed. The
+**6** coherent byte-identical R2D T/C/SS members retain identity evidence and
+QI/QD questions; the approved baseline remains Ambiguous pending review of
+the identity/duplicate interaction. QD is not an already-approved assembly rule.
+
+R0 also rejects either cut candidate observed as checksum F: authoritative
+verification is unavailable (U) under INT-019, not a proved mismatch. This covers
+9,288 previously non-R0 members (5,832 sealed-cut, 3,672 following-cut,
+216 overlapping), not just the sealed side. A bounded following candidate differing ONLY in a checksum value or layout cannot repair
+a mid-attribute cut: X/H and X/W are inconsistent observations, not Complete
+copies (2,808 and 6,480 previously non-R0 members, respectively; these
+overlap the cut/F set). R0 keeps every nominal tuple/test name, without
+converting the impossible observation to an accepted value. Its baseline columns are null/unavailable;
+the conservative hold is explicitly proposed, not a valid-input baseline verdict.
 
 R1 separator bases: T/I = `initial time seal (INT-045)`; T/M =
 `time-boundary seal (owner policy)`; S = `same-channel stop`; E =
@@ -171,8 +202,9 @@ classification table. Inconsistent evidence instead blocks pending correction.
   as valid byte fixtures? Recommend yes, with named consistency/rejection tests.
   They remain listed/counted, never silently skipped or counted as parser coverage.
 - **QD:** Does duplicate G\SHA or other field ambiguity force assembly Ambiguous,
-  or only checksum/effective-value ambiguity? Recommend hold the ambiguity and
-  never use equality/digest to upgrade pre-existing ambiguity; settle the layers.
+  or only checksum/effective-value ambiguity? F1 alone leaves completeness
+  unchanged in the BASELINE. Recommend the separate QD assembly hold for review;
+  never infer its approval or use equality/digest to upgrade pre-existing ambiguity.
 - **QI:** Is the new exception limited to bounded otherwise-Complete T/C/SS
   candidates, independent of following SRCC 0/1/U? Recommend that limit; retain
   unreadable SRCC and incorrect changed/unchanged claims as separate findings.
@@ -190,6 +222,27 @@ classification table. Inconsistent evidence instead blocks pending correction.
   retain equality as evidence, withhold automatic eligibility/governing inference;
   do not infer the bit. The matrix's proposed Complete label is not adoption.
 
+## Multiple following copies: explicitly outside this pairwise product
+
+This version models EXACTLY ONE following candidate, not an arbitrary stream
+of repeats. In particular **B then D** (first identical, then semantically
+different) and **H then B** (first SHA-value change, then identical) are NOT
+covered compositions of these pairwise outcomes. B/H/D require a stated
+comparison target: equality to the original seal can differ from equality to
+the immediately preceding copy. Never treat the second pairwise result as
+an automatically final aggregate or erase the earlier findings.
+
+**QM — owner question:** Compare each later copy with (A) the original sealed
+candidate, (B) the previous copy, or (C) both with explicit identities? How do
+later evidence and checksum results revise/compose earlier classification and
+governing-setup effects? Recommend C: preserve both comparisons, every source
+identity and finding, with no automatic replacement/upgrade, rejoin or setup
+switch. A future reviewed sequence contract must define precedence/finality
+and enumerate bounded sequences (including B→D, H→B, a third copy bearing the
+only checksum, and changed SRCC claims). Until then, sequence behavior is
+unavailable/out of scope, not proved by the 139,968 pairwise members. This
+question is outside the current row domains; do not count sequence test coverage.
+
 ## Implementation verification required, not performed here
 
 L2-REG-007/L3-REG-014–015 require exhaustive generated enumeration of EVERY
@@ -199,6 +252,8 @@ fixtures and observable assertions for every output column and no byte loss/
 rejoin. Impossible observations need explicit consistency/rejection checks.
 Open owner decisions must fail readiness visibly; do not encode them as passes.
 Property-based mutation complements, never replaces, the full product.
+CI runs `spec.py --check` alongside the trace drift check; this checks checked-in
+documentation only, not library behavior or answers to QM.
 
 Named owner fixtures: `srcc0_different_is_reported_change`,
 `srcc1_identical_is_not_assumed_change`, `sha_only_following_not_sealed_proof`,

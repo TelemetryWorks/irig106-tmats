@@ -1475,4 +1475,8 @@ raw differences, partial-prefix matches, projected G\SHA names, unknown
 attributes, leading layout, value-contained text, missing terminators,
 uppercase hex, noncanonical algorithm 2, BOM/damage, F1 duplicates, differing
 FRMT/RCCVER/channel and actual EOF. Property-based mutation complements the
-full enumeration, never replaces it. This remains planned, not tested today.
+full enumeration, never replaces it. The pairwise artifact separately preserves
+baseline completeness and the unapproved QD hold, with INT-045 findings unaffected
+by F1. Multiple-following-copy composition remains outside this matrix pending
+QM's reviewed sequence contract and coverage; pairwise enumeration SHALL NOT be
+reported as whole-sequence verification. This remains planned, not tested today.
