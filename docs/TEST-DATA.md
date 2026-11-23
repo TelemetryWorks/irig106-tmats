@@ -790,11 +790,12 @@ final state. Existing whole-record acceptance cases remain required.
 
 **Status: planned, not executable tests.** Initial Option A is signed by
 Joey, 2026-11-23, with AI CONCURS on #40 at 93eb6e2. The mid-session
-extension is owner-decided; AI recheck of amended wording is pending.
+extension with the premature-seal guard is approved; independent AI CONCURS
+on #41 at 79b94eb. Analysis/tests remain outstanding.
 INT-011 joining predicates/approval are unchanged. Sources: [source investigation and exact editions/pages](research/2026-11-23-initial-time-boundary-proposal.md).
 These cases supply reviewed packet-type/classification bindings to isolate
-this amended contract; no implementation or governance approval is claimed,
-and amended-wording review remains pending. Parents identify affected obligations,
+this approved closure contract; no implementation or broader governance
+approval is claimed. Parents identify affected obligations,
 not a completed L2/L3 derivation or a new requirement allocation.
 
 | Planned check | Fixture or stimulus | Proposed expected observation | Parent obligations |
@@ -813,6 +814,7 @@ not a completed L2/L3 derivation or a new requirement allocation.
 | `verified_sha_keeps_sealed_candidate_complete` | Same continuity, sealed text `COMMENT:update;G\SHA:2-71cfce9820e746cd612c6bf46e324469f55df274bbb1b7ac53fafe6fd30dc39a;`; independent SHA-256 oracle hashes only `COMMENT:update;` | Reviewed, unambiguous match over the SEALED text keeps Complete, basis `time-boundary seal (owner policy)` plus explicit verified-G\SHA classification evidence; continuity/both readings/finding retained, never hash appended text or stamp to force a match. Minimal fixture makes no required-attribute/conformance claim | L1-CH10-004, L1-SUM-002 |
 | `srcc_eligibility_comes_from_first_fragment` | First fragment SRCC=1 then later SRCC=0; separately SRCC=0 retransmission fragments followed by time, including a later fragment saying 1 | First candidate eligible for the owner extension from FIRST fragment; disagreement retained. SRCC=0-first retransmission stays outside, even with later 1; no majority/last-fragment upgrade or fabricated restart | L1-CH10-004, L1-CH10-005 |
 | `premature_seal_signals_do_not_replace_verified_sha` | Matching continuation plus missing minimum-required evidence, continuation-looking text or high/low packet fill; separately missing/mismatching/malformed/unsupported/indeterminate G\SHA | Support signals labelled with citation and strength (content heuristic, fill weak); none substitutes for reviewed, unambiguous verified G\SHA or allows rejoining. Otherwise Complete candidate is finally AMBIGUOUS, findings/locations preserved; unavailable registry knowledge is not a missing-attribute verdict | L1-CH10-004, L1-SUM-002 |
+| `continuation_sha_is_diagnostic_only` | Seal `COMMENT:up` as cut text; later same-channel +1 fragment contains `date;G\SHA:2-71cfce9820e746cd612c6bf46e324469f55df274bbb1b7ac53fafe6fd30dc39a;`, whose digest would match the unadopted joined hypothesis `COMMENT:update;` | May note the hypothetical match as diagnostic information only; sealed candidate stays Incomplete with its cut finding, never gets the sealed-text exception or a rejoin. For an otherwise Complete prefix with matching continuation, a continuation-only digest likewise cannot remove final Ambiguous | L1-CH10-004, L1-SUM-002 |
 | `all_non_format1_initial_packets_violate_order` | For each type 0x00/02/03/04 and ordinary data, insert it between caller-asserted session start and first time | Every non-Format-1 packet gives an ordering finding and withheld adoption; being Computer-Generated does not exempt Formats 0/2/3/4 | L1-CH10-005 |
 | `session_starts_are_asserted_and_independent` | Caller assertions identify two session starts in one supplied recording stream; separately a file boundary, offset 0, sync, q=0 or SRCC=1 without an assertion | Separate labelled initial phase per assertion; no inferred session start from any of the latter signals; source session/recording wording retained | L1-CH10-004, L1-CH10-005 |
 | `untrusted_first_time_cannot_be_replaced` | Caller-asserted initial phase, setup text, untrusted first 0x11, then trusted 0x11 | Withhold adoption with the first candidate's trust finding/evidence; later trusted time never takes over as a repaired initial-first boundary | L1-CH10-004, L1-CH10-005 |
