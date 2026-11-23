@@ -331,8 +331,11 @@ not completed by these scenarios. No source fixture is changed automatically.
 
 ## Family 2 batch 6: counter acceptance specifications
 
-**Status: planned, not executable tests.** INT-040 needs owner sign-off and
-independent AI review under ADR-0033. Earlier interpretations remain approved.
+**Status: planned, not executable tests.** INT-040 was approved by Joey,
+2026-11-22, under ADR-0033, with independent AI recheck concurrence at
+PR #24 head `176fdf4` (see the [sign-off record](research/2026-11-23-int040-owner-signoff.md)).
+Earlier interpretations remain approved; full analysis and executable tests
+remain outstanding.
 Fixtures supply declared rule bindings/applicability for the stated checks;
 short attribute snippets are not complete conforming configurations or
 production registry evidence. Count-value typing/default resolution remains
@@ -366,7 +369,9 @@ N below denotes a usable effective count only when explicitly stated.
 | `unusable_ancestor_count_does_not_suppress_child` | MML\N missing/Invalid/Ambiguous; explicit m=2, usable child MNF\N=2, WP e={1,2}, with child rule applicable | Ancestor count/domain check cannot-evaluate; child fragment count still evaluates in (x,y,n,m) from explicit indices, no guessed ancestor bound and no parent-validity claim | L3-REG-001, L3-VAL-004 |
 | `zero_parent_spellings_share_one_scope` | `D-1\MNF\N-1-1-0:2;D-1\WP-1-1-00-1:4;D-1\WP-1-1-0-2:5;` | 0 and 00 mean the same parent m=0 under INT-038; one child scope with e={1,2}, not two scopes; retain normalization information and parent-domain violation; no parent repair | L3-REG-001, L3-VAL-001 |
 | `malformed_governed_token_blocks_known_scope` | `D-1\WP-1-1-1-x:4;` or `D-1\WP-1-1-1-:4;` under declared WP rule | Literal group/path and token arity match, parents (1,1,1,1) readable, governed token invalid/empty: related diagnostic evidence blocks that scope's completeness (cannot-evaluate), contributes no fabricated identity/key; readable different parents affect only their own scope | L3-VAL-004 |
-| `malformed_parent_is_unassigned_rule_evidence` | `D-1\WP-1-1-x-2:4;` or wrong-arity `D-1\WP-1-1-1-2-3:4;` under declared WP rule | Literal group/path match, but parent m unreadable or arity wrong: rule-level cannot-evaluate coverage with unassigned evidence, never assign to a guessed parent or certify complete rule coverage; independently located scopes may still report their partial sets | L3-VAL-004, L3-VAL-005 |
+| `malformed_parent_is_unassigned_rule_evidence` | `D-1\WP-1-1-x-2:4;` or wrong-arity `D-1\WP-1-1-1-2-3:4;` under declared WP rule | Literal group/path match, but parent m unreadable or arity wrong: rule-level cannot-evaluate coverage with unassigned evidence, never assign to a guessed parent or certify complete rule coverage; every compatible scope reports partial/cannot-evaluate, NEVER pass even if its observed set already matches N | L3-VAL-004, L3-VAL-005 |
+| `compatible_unassigned_evidence_never_passes` | Known fragment-counter scopes (1,1,1,1) and (1,1,1,2) each have usable N=2 and observed e={1,2}, plus `D-1\WP-1-1-x-2:4;` | Both scopes match readable (x,y,n)=(1,1,1); both report partial/cannot-evaluate, NEVER pass; retain already matching observed sets and unassigned rule-level evidence without choosing m or enumerating possible parents | L3-VAL-004, L3-VAL-005 |
+| `incompatible_parent_does_not_inherit_unassigned_block` | Same unassigned `D-1\WP-1-1-x-2:4;`, alongside a known scope (1,1,2,1) | Readable n=1 contradicts n=2, so that scope is not blocked by this item; it must still satisfy all its own prerequisites/checks, with no whole-document success claim | L3-VAL-004 |
 | `unrelated_malformed_text_does_not_block_counter` | `D-1\WPX-1-1-1-x:v;`, X extension text, an unframed name, or code-like text inside a value | No exact diagnostic literal group/path match as a separately framed D WP name: ignored for this D counter's membership/blocking only; retain all parser/unknown/link findings and never imply document validity | L3-REG-002, L3-VAL-004 |
 | `wfp_value_uniqueness_is_outside_int040` | `D-1\WFP-1-1-1-1:1;D-1\WFP-1-1-1-2:1;`, with distinct e identities {1,2} | Entry identities stay distinct; FRAGMENT POSITION value uniqueness in Table 9-7 p. 9-118 is a separate VALUE rule, not an index-count rule or an INT-040 pass/fail claim; reviewed value validation remains later | L3-VAL-001, L3-VAL-005 |
 | `counter_findings_keep_scope_and_citations` | Mismatch or cannot-evaluate in one parent scope while another has complete correct membership | Counters-and-indices pass, rule/edition/citation, parent tuple and counter/member locations are explicit; unrelated scope is not silently merged or certified as a whole document | L3-VAL-005 |

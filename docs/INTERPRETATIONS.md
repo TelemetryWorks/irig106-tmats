@@ -981,7 +981,7 @@ or a clock association; zero/one-candidate default and validation rules follow.
 **Sign-off and AI-check reference**: [owner approval record](research/2026-11-22-int039-owner-signoff.md), referencing [PR #22](https://github.com/TelemetryWorks/irig106-tmats/pull/22) at `b22d45c4fb49c7b1a43ab6a4fd0a9d142c667f28` and the owner's 2026-11-22 relay of the independent check. The record includes the explicit group-\COM choice and the assembly-scope clarification requested with sign-off. Approval is not implementation, completed analysis or executable tests; those development gates remain outstanding.
 
 
-## Counter membership evidence (proposed)
+## Counter membership evidence (approved, owner sign-off 2026-11-22)
 
 ### INT-040
 
@@ -992,7 +992,7 @@ or a clock association; zero/one-candidate default and validation rules follow.
 - Table 9-7 NUMBER OF MEASUREMENT LOCATIONS `D-x\MML\N-y-n` and NUMBER OF FRAGMENTS `D-x\MNF\N-y-n-m`, page 9-117, count location/fragment definitions rather than arbitrary property lines. Section 9.5.14, page 9-172, exempts X occurrence contiguity.
 - ADR-0023 separates present-value validity from counters/indices; ADR-0026 declares parent scope. Approved INT-038 requires DISTINCT numeric identities; INT-039 retains all duplicate/invalid scalar candidates without selecting one.
 
-**Behaviour**: **Proposed.** Given an applicable reviewed counter/member rule and unambiguously identified parent/index positions, form the observed set from structurally identified entry indices even if a member's payload is Invalid or its scalar slot is Ambiguous. Keep all evidence, but count each canonical numeric identity once across duplicate spellings, repeats and declared member properties. Do not erase an entry because its value is bad. Report value/duplicate findings independently; a matching count is only a structural observation, never a validity verdict for those entries or the document.
+**Behaviour**: **Approved by Joey, 2026-11-22, under ADR-0033.** Given an applicable reviewed counter/member rule and unambiguously identified parent/index positions, form the observed set from structurally identified entry indices even if a member's payload is Invalid or its scalar slot is Ambiguous. Keep all evidence, but count each canonical numeric identity once across duplicate spellings, repeats and declared member properties. Do not erase an entry because its value is bad. Report value/duplicate findings independently; a matching count is only a structural observation, never a validity verdict for those entries or the document.
 
 Retain zero/out-of-domain indices as observed evidence and report domain
 violations separately; do not remove them to manufacture a valid 1-to-N set.
@@ -1006,6 +1006,15 @@ name with exact declared literal group/path. With declared index-token arity, a 
 governed token with readable matching parents blocks that scope; an unreadable
 parent gives unassigned rule-level evidence and cannot-evaluate coverage.
 Wrong arity with matching literals is also unassigned rule-level evidence.
+Every scope compatible with the unassigned item's readable canonical parent
+facts reports partial/cannot-evaluate, NEVER pass, even if its observed set
+already matches N. For `D-1\WP-1-1-x-2`, this includes every scope (1,1,1,m).
+Compatibility means no contradictory readable parent position; use only
+positions mapped unambiguously by the declared pattern, never a guessed
+alignment to exclude a scope. Unknown positions impose no restriction.
+Retain the evidence at rule level and apply this guard to scopes as evaluated;
+do not enumerate hypothetical parent values. This tightening was requested
+with sign-off, recorded 2026-11-23.
 Nonmatching literals, unframed names or code-like value text are ignored
 for that rule's membership/blocking only, with all other findings retained;
 no repair, prefix guess or usable key is manufactured.
@@ -1021,10 +1030,13 @@ counters or missing entries are repaired.
 
 **Reason**: Counting only valid values makes a declared entry disappear when its content is broken, confusing cardinality with validity and obscuring separate defects. Counting raw lines overcounts duplicates and multiple properties. Structural evidence plus independent findings exposes both; its cost is that a count may match while the configuration remains invalid, so reports must not call that whole-document success.
 
-**Design**: proposed (2026-11-22; owner sign-off required) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: CONCURS on PR #24 at `ed4666a` (owner-relayed, 2026-11-22); fixture and edge clarifications added for updated-head review · **Origin**: family 2 batch 6
+**Design**: approved (Joey, owner sign-off, 2026-11-22) · **Review**: approved under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-22; independent AI recheck: CONCURS with clarifications on PR #24 at `176fdf4`, relayed by the owner (recorded 2026-11-23) · **Origin**: family 2 batch 6
 
-**Test**: `invalid_payload_keeps_structural_membership`, `counter_counts_distinct_identities`, `unusable_counter_is_not_inferred`, `incomplete_membership_does_not_pass`, `parsed_counter_outside_own_range_blocks`, `x_extension_does_not_create_d_member`, `invalid_parent_domain_does_not_suppress_child`, `zero_parent_spellings_share_one_scope`, `malformed_governed_token_blocks_known_scope`, `malformed_parent_is_unassigned_rule_evidence` (planned, not yet written)
+**Test**: `invalid_payload_keeps_structural_membership`, `counter_counts_distinct_identities`, `unusable_counter_is_not_inferred`, `incomplete_membership_does_not_pass`, `parsed_counter_outside_own_range_blocks`, `x_extension_does_not_create_d_member`, `invalid_parent_domain_does_not_suppress_child`, `zero_parent_spellings_share_one_scope`, `malformed_governed_token_blocks_known_scope`, `malformed_parent_is_unassigned_rule_evidence`, `compatible_unassigned_evidence_never_passes`, `incompatible_parent_does_not_inherit_unassigned_block` (planned, not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
 **Draft analysis**: [sources, alternatives and remaining work](research/2026-11-22-counter-membership-draft.md)
+
+
+**Sign-off and AI-check reference**: [owner approval record](research/2026-11-23-int040-owner-signoff.md), referencing [PR #24](https://github.com/TelemetryWorks/irig106-tmats/pull/24) at `176fdf4ebe0a69f83da1b12202a462274fe91d8e`, the owner's sign-off dated 2026-11-22 and the relayed independent recheck recorded 2026-11-23. The record identifies the requested compatible-scope tightening. Approval is not implementation, completed analysis or executable tests; those development gates remain outstanding.

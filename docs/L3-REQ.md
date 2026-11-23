@@ -2,7 +2,7 @@
 
 > **Status: foundations through counter batches drafted (family 2, batches 1-6).**
 > These are implementation obligations, not existing interfaces or completed
-> tests. INT-035/036/037/038/039 are approved; INT-040 is proposed, 2026-11-22.
+> tests. INT-035/036/037/038/039/040 are approved; INT-040 sign-off is dated 2026-11-22.
 > Remaining derivations and development evidence still precede implementation.
 
 ## Purpose
@@ -486,8 +486,10 @@ refusal. Checksum mechanics and edits remain later requirements.
 
 ## Counter batch 6: member sets and evaluation evidence
 
-Requirements below remain unimplemented. INT-038/039 are approved; INT-040
-is proposed under ADR-0033. Full analysis and executable tests remain gates.
+Requirements below remain unimplemented. INT-040 was approved by Joey,
+2026-11-22, under ADR-0033; the independent AI recheck concurred on PR #24
+head `176fdf4` (see the [sign-off record](research/2026-11-23-int040-owner-signoff.md)).
+INT-038/039 remain approved; full analysis and executable tests remain gates.
 These obligations do not complete registry generation, link metadata, the
 four-pass validator or the full five-state effective-value resolver.
 
@@ -514,7 +516,7 @@ problems; extension-only indices remain unclassified without their own rule.
 **L3-VAL-001** · Parent: L2-VAL-001 · Verification: T
 *Within each declared scope, governed entries SHALL contribute a set of canonical numeric index identities, retaining all supporting items/locations; repeated spellings, exact repeats and different member properties for the same governed identity SHALL contribute that identity only once.*
 
-Approved INT-038 supplies string identity: 1 and 01 are one index. Proposed
+Approved INT-038 supplies string identity: 1 and 01 are one index. Approved
 INT-040 counts an unambiguously identified entry even when its value is
 Invalid or its scalar slot is Ambiguous; those findings remain independent.
 An index zero remains observed evidence, not a silently discarded or valid
@@ -543,7 +545,7 @@ findings, not a 40-digit index's magnitude. No public ordering API or new
 resource-budget number is selected here; detailed budget policy remains later.
 
 **L3-VAL-004** · Parent: L2-VAL-002 · Verification: T
-*Missing, Invalid or Ambiguous counter operands, unresolved applicability, unreviewed membership rules or required members whose governed identity/scope cannot be established SHALL produce cannot-evaluate with the blocking basis, never a guessed N, fabricated empty member set or positive result from partial evidence.*
+*Missing, Invalid or Ambiguous counter operands, unresolved applicability, unreviewed membership rules or required members whose governed identity/scope cannot be established SHALL produce cannot-evaluate with the blocking basis, never a guessed N, fabricated empty member set or positive result from partial evidence; every scope compatible with unassigned evidence SHALL report partial/cannot-evaluate, NEVER pass.*
 
 A number that parses but violates its own counter range is Invalid and
 blocks that counter's evaluation: Table 9-7 page 9-117 gives MNF\N range
@@ -568,6 +570,15 @@ With the declared arity, readable matching parent tokens plus an unreadable
 (or empty) governed token block that scope with cannot-evaluate. If a parent
 token is unreadable, retain unassigned rule-level evidence and cannot-evaluate
 coverage, without guessing a scope or claiming complete rule coverage.
+A scope is compatible if none of the evidence's readable canonical parent
+facts contradicts that scope at an unambiguously mapped position. Unknown
+positions impose no restriction; wrong arity must not be guessed into an
+alignment to exclude a scope. Thus `D-1\WP-1-1-x-2` blocks pass for every
+scope (1,1,1,m), even if a scope's observed set already equals its usable N.
+Keep those observations as partial evidence, not successful evaluation.
+Apply this guard to evaluated scopes from retained rule-level evidence;
+never enumerate unknown parent values. This is the tightening requested with
+owner sign-off, recorded 2026-11-23.
 Readable zero/excess parents remain explicit scopes, not unreadable ones.
 This diagnostic classification never creates a usable lookup key or an index.
 Exact source witnesses must identify each decision, including unrelatedness.
