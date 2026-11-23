@@ -261,13 +261,26 @@ and typed limit error, never silent dropping; numeric policy, full accounting
 and recovery/resume details need review before implementation. See the
 [batch 15 review draft](research/2026-11-23-completeness-contracts-draft.md).
 
-Proposed INT-045 now examines a distinct initial-only boundary: the first
-recognised time packet after a known clean initial setup prefix. The
-[source investigation and pipeline](research/2026-11-23-initial-time-boundary-proposal.md)
-verify 106-07–24R1 and explain why normal initial TMATS need not wait for the
-whole file. Nothing is approved: INT-011's current wording is unchanged,
-INT-034/governance review remains open, and mid-session provisional-use
-permission is not decided by this proposal.
+INT-045 records initial Option A signed by Joey, 2026-11-23 (AI CONCURS on
+#40 at `93eb6e2`), plus the owner's SRCC=1 mid-session time-boundary extension.
+It is a separate layered closure rule above INT-011 per-channel joining.
+At a time boundary, cut text is INCOMPLETE with a located finding; a later
+same-channel +1 fragment is continuous-but-split, never silently rejoined.
+If an otherwise Complete semicolon-ending seal has matching-FRMT/RCCVER
+continuation, its FINAL outcome becomes AMBIGUOUS with both readings and a
+located possible-premature-seal finding. Verified G\SHA over the sealed text
+alone can keep it Complete as classification evidence; every mid-session
+Complete under this layer is labelled `time-boundary seal (owner policy)`.
+Findings/revisions remain visible before consumer publication. SRCC=1
+eligibility comes from the FIRST fragment; SRCC=0 retransmissions stay outside.
+Session starts are caller-asserted labelled provenance; non-Format-1 initial
+prefix packets and an untrusted initial first time packet withhold adoption.
+Each asserted session start has its own initial phase. See the
+[layered decision and guard refinements](research/2026-11-23-int045-layered-owner-decision.md).
+INT-045's amended wording awaits AI recheck; this does not approve remaining
+INT-034/governance rules or general pre-boundary provisional snapshot use.
+The [original investigation](research/2026-11-23-initial-time-boundary-proposal.md)
+remains history, including the recommendation overridden by the owner.
 
 ## Acceptance cases to derive before code
 

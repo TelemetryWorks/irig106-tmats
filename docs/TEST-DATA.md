@@ -786,31 +786,51 @@ B=64 case. Full timelines remain 0.2; provisional pre-EOF metadata is an open
 0.1 consumer contract, not silently implemented by a timeline or a fourth
 final state. Existing whole-record acceptance cases remain required.
 
-## Proposed INT-045: initial time-boundary acceptance specifications
+## INT-045: layered time-boundary acceptance specifications
 
-**Status: proposed and planned, not executable tests.** INT-045 owner
-sign-off and independent AI check are pending; existing INT-011 approval
-has not changed. Sources: [source investigation and exact editions/pages](research/2026-11-23-initial-time-boundary-proposal.md).
+**Status: planned, not executable tests.** Initial Option A is signed by
+Joey, 2026-11-23, with AI CONCURS on #40 at 93eb6e2. The mid-session
+extension is owner-decided; AI recheck of amended wording is pending.
+INT-011 joining predicates/approval are unchanged. Sources: [source investigation and exact editions/pages](research/2026-11-23-initial-time-boundary-proposal.md).
 These cases supply reviewed packet-type/classification bindings to isolate
-the proposal; none asserts that an implementation, governance rule or new
-boundary is approved. Parents below identify affected existing obligations,
+this amended contract; no implementation or governance approval is claimed,
+and amended-wording review remains pending. Parents identify affected obligations,
 not a completed L2/L3 derivation or a new requirement allocation.
 
 | Planned check | Fixture or stimulus | Proposed expected observation | Parent obligations |
 | --- | --- | --- | --- |
-| `initial_first_time_seals_before_dispatch` | Known session start, trusted matching channel-0 0x01 fragments q=10/11 with `COMMENT:a` + `b;`, then trusted 0x11 on channel 42, then data | Initial boundary before the first time packet, text `COMMENT:ab;`, distinct initial-time evidence; apply supplied completeness binding, then parse eligible TMATS and dispatch the SAME time packet before subsequent data; no rewind or marker bytes in TMATS | L1-CH10-004 |
-| `initial_time_type_is_edition_specific` | Known clean initial prefix; separately first marker 0x11 or 0x12 under supplied 106-15 versus 106-17/24R1 packet bindings, and reserved 0x10/0x13–17 | 0x11 eligible throughout; 0x12 reserved in 106-15, eligible from 106-17; other reserved codes never close positively. Valid structurally trusted source-NONE 0x11 still counts; semantic clock availability is separate | L1-CH10-004, L1-CH10-005 |
+| `initial_first_time_seals_before_dispatch` | CALLER-ASSERTED, labelled session start, trusted matching channel-0 0x01 fragments q=10/11 with `COMMENT:a` + `b;`, then trusted 0x11 on channel 42, then data | Initial boundary before the first time packet, text `COMMENT:ab;`, distinct initial-time evidence; apply supplied completeness binding, then parse eligible TMATS and dispatch the SAME time packet before subsequent data; no rewind or marker bytes in TMATS | L1-CH10-004 |
+| `initial_time_type_is_edition_specific` | Known clean initial prefix; separately first marker 0x11 or 0x12 under supplied 106-15 versus 106-17/24R1 packet bindings, and reserved 0x10/0x13–17 | 0x11 eligible throughout; 0x12 reserved/ineligible in 106-15, eligible from 106-17; other reserved codes never close positively. Valid structurally trusted source-NONE 0x11 still counts; semantic clock availability is separate | L1-CH10-004, L1-CH10-005 |
 | `non_time_timestamps_do_not_close_setup` | Secondary-header timestamp, IPTS, Ethernet-contained NTP/PTP, TFMT text, or unknown time-family packet before the first recognised time packet | None is this closure signal; non-setup traffic in the initial prefix is an ordering problem, not permission to choose an end marker or assume a time-source link | L1-CH10-004, L1-CH10-005 |
-| `initial_marker_requires_start_order_and_trust` | Cropped/unknown session start; prior PCM or unreadable packet; corrupt/unchecked marker; time before any setup; or unsupported edition binding | Keep evidence/bytes, report unavailable boundary/adoption or ordering/missing-setup problem; no clean-prefix assertion, invented document, backfill or silent repair. No positive result merely because a type byte resembles 0x11 | L1-CH10-004, L1-CH10-005 |
+| `initial_marker_requires_start_order_and_trust` | Absent caller assertion/cropped session start; prior PCM or unreadable packet; corrupt/unchecked marker; time before any setup; or unsupported edition binding | Keep evidence/bytes, report unavailable boundary/adoption or ordering/missing-setup problem; no clean-prefix assertion, invented document, backfill or silent repair. No positive result merely because a type byte resembles 0x11 | L1-CH10-004, L1-CH10-005 |
 | `initial_time_does_not_repair_incomplete_setup` | Trusted first time follows cut attribute, gapped/untrusted setup fragments, XML, or unresolved duplicate/split evidence | Boundary evidence does not fabricate Complete/ASCII/unique authority, checksum success or repaired text; INT-034 still supplies the independent verdict or unavailable reason | L1-CH10-004 |
 | `no_initial_time_uses_eof_or_provisional` | Clean exact-semicolon TMATS followed by actual EOF, then same bytes on a paused live source; source-NONE metadata but no time packet | Actual EOF may give Complete labelled end-of-input under INT-034 while recording separately lacks required time; live case remains open/provisional with explicit budget and typed limit error if needed. Pause/limit/NONE never manufactures EOF | L1-CH10-004, L1-CH10-005, L1-ROB-001 |
 | `initial_runs_and_later_documents_do_not_mix` | Pre-106-17 two setup channels before 0x11, each with its own fragments; separately initial `G\PN:a;`, first time, then later `G\PN:b;`; separately repeated G\PN before first time | Seal initial candidates separately without selecting governance; later setup is a separate candidate, not a duplicate added to the initial document. Repeats within one candidate keep every occurrence/duplicate and possible split; first-time boundary chooses no winner | L1-CH10-004 |
-| `mid_session_periodic_time_does_not_seal_update` | After initial first time, new setup fragments interleaved with unchanged-channel packets/periodic 0x11/0x12 and a nearby 0x02 event | No reuse of initial-only closure; update remains open/provisional absent another justified boundary. Nearby event remains only a candidate under INT-030; no proof of changed-data identity or automatically governing snapshot | L1-CH10-004, L1-CH10-005 |
+| `mid_session_time_seals_srcc_update` | After initial closure, channel 0 SRCC=1 candidate `COMMENT:update;`, then trusted recognised 0x11 on channel 42; separately applicable 0x12 | Separate closure layer seals update immediately before that time packet; classify under INT-034 and retain evidence before dispatch. Other unchanged-channel DATA alone is not a terminator. General governance remains separately reviewed | L1-CH10-004, L1-CH10-005 |
+| `mid_session_cut_update_is_incomplete` | Channel 0 SRCC=1 q=10 text `COMMENT:up`, periodic trusted time on channel 42, then channel 0 q=11 text `date;`, same FRMT/RCCVER | First candidate is INCOMPLETE with located cut finding over retained [0,10) text; do not wait for a later marker or concatenate to `COMMENT:update;` to make it complete | L1-CH10-004 |
+| `post_boundary_plus_one_is_continuous_but_split` | Same cut fixture; separately a boundary-ending first candidate with a same-channel +1 fragment after the marker | Record continuous-but-split relation with both candidate/phase IDs, q=10/11, FRMT/RCCVER agreement, marker and source spans; cut text stays INCOMPLETE, otherwise Complete semicolon-ending text becomes finally AMBIGUOUS unless its own G\SHA verifies; never backward rejoin or erase findings | L1-CH10-004 |
+| `semicolon_seal_continuation_is_finally_ambiguous` | Channel 0 first-fragment SRCC=1 q=10 `COMMENT:update;`, trusted time on channel 42, then channel 0 q=11 `COMMENT:more;`, matching FRMT/RCCVER and no verifying G\SHA | Initial seal report uses `time-boundary seal (owner policy)`; FINAL outcome AMBIGUOUS, both separate-record and prematurely-split readings retained, located `possible premature time-boundary seal` finding links marker and following fragment; no rejoin. Report revision can reach irig106-time's spool before publication | L1-CH10-004 |
+| `verified_sha_keeps_sealed_candidate_complete` | Same continuity, sealed text `COMMENT:update;G\SHA:2-71cfce9820e746cd612c6bf46e324469f55df274bbb1b7ac53fafe6fd30dc39a;`; independent SHA-256 oracle hashes only `COMMENT:update;` | Reviewed, unambiguous match over the SEALED text keeps Complete, basis `time-boundary seal (owner policy)` plus explicit verified-G\SHA classification evidence; continuity/both readings/finding retained, never hash appended text or stamp to force a match. Minimal fixture makes no required-attribute/conformance claim | L1-CH10-004, L1-SUM-002 |
+| `srcc_eligibility_comes_from_first_fragment` | First fragment SRCC=1 then later SRCC=0; separately SRCC=0 retransmission fragments followed by time, including a later fragment saying 1 | First candidate eligible for the owner extension from FIRST fragment; disagreement retained. SRCC=0-first retransmission stays outside, even with later 1; no majority/last-fragment upgrade or fabricated restart | L1-CH10-004, L1-CH10-005 |
+| `premature_seal_signals_do_not_replace_verified_sha` | Matching continuation plus missing minimum-required evidence, continuation-looking text or high/low packet fill; separately missing/mismatching/malformed/unsupported/indeterminate G\SHA | Support signals labelled with citation and strength (content heuristic, fill weak); none substitutes for reviewed, unambiguous verified G\SHA or allows rejoining. Otherwise Complete candidate is finally AMBIGUOUS, findings/locations preserved; unavailable registry knowledge is not a missing-attribute verdict | L1-CH10-004, L1-SUM-002 |
+| `all_non_format1_initial_packets_violate_order` | For each type 0x00/02/03/04 and ordinary data, insert it between caller-asserted session start and first time | Every non-Format-1 packet gives an ordering finding and withheld adoption; being Computer-Generated does not exempt Formats 0/2/3/4 | L1-CH10-005 |
+| `session_starts_are_asserted_and_independent` | Caller assertions identify two session starts in one supplied recording stream; separately a file boundary, offset 0, sync, q=0 or SRCC=1 without an assertion | Separate labelled initial phase per assertion; no inferred session start from any of the latter signals; source session/recording wording retained | L1-CH10-004, L1-CH10-005 |
+| `untrusted_first_time_cannot_be_replaced` | Caller-asserted initial phase, setup text, untrusted first 0x11, then trusted 0x11 | Withhold adoption with the first candidate's trust finding/evidence; later trusted time never takes over as a repaired initial-first boundary | L1-CH10-004, L1-CH10-005 |
+| `channel_zero_time_has_conformance_finding` | Structurally trusted 0x11/eligible 0x12 on channel 0 in 106-17+ | Retain closure/type evidence AND separate channel-use conformance finding; do not silently report compliant use, reinterpret as setup, or count a secondary timestamp instead | L1-CH10-004, L1-CH10-005 |
 
 Further adversarial fixtures must test source/session resets and a fragment
 arriving after the proposed seal without merging it backward, plus exact
 packet/provenance boundaries. No late malformed continuation is repaired as
-initial text. No fixture invents a universal mid-session record terminator.
+earlier text. The mid-session time boundary is explicit owner policy, not a
+claim of a printed universal terminator. Event identity remains unverified
+under INT-030; a nearby 0x02 does not satisfy it. SRCC=0-first retransmissions
+remain outside the extension, and fragment-SRCC disagreement retains its
+separate findings. Eligibility comes from the first fragment, not aggregation.
+The verified-G\SHA exception is classification evidence only, not proof that
+minimum required attributes are satisfied. Missing-attribute support cites
+106-24R1 section 11.2.7.2 p. 11-51; continuation content is heuristic and
+packet fill is weak evidence. The digest fixture uses independent Python
+`hashlib.sha256`, never the library under test or Chapter 6's example digest.
 
 ## Real Chapter 10 recordings (local use only)
 

@@ -636,8 +636,11 @@ validation remain later derivations. No new supported-edition claim is made.
 
 ## Assembly-contract batch 14: joining and provenance before completeness
 
-This derives only joining and source mapping within L1-CH10-004. A joined
-candidate run is not proof of one complete setup record. Completeness,
+This derives only joining and source mapping within L1-CH10-004.
+INT-045 is a separate layered phase-closure rule above INT-011 joining;
+its initial A is signed, owner mid-session extension/amended wording awaits
+AI recheck. A closed phase cannot silently accept later fragments backward.
+A joined candidate run is not proof of one complete setup record. Completeness,
 ambiguous splits and session rules still need subsequent derivations and
 review of INT-034/028/031. INT-011 is reconfirmed by Joey, 2026-11-23, with AI CONCURS on #38 at
 c623b15 under ADR-0033; analysis/tests remain. No interpretation gains
