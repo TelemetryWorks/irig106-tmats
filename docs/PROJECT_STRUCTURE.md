@@ -67,7 +67,8 @@ irig106-tmats/
 │   │                          2026-11-23-int040-owner-signoff.md records approval and compatible-scope tightening;
 │   │                          2026-11-23-effective-value-draft.md drafts INT-041 and effective-value evidence;
 │   │                          2026-11-23-int041-owner-signoff.md records approval and the effective-value edge cases;
-│   │                          2026-11-23-condition-scope-draft.md drafts INT-042 and scoped condition evidence
+│   │                          2026-11-23-condition-scope-draft.md drafts INT-042 and scoped condition evidence;
+│   │                          2026-11-23-int042-owner-signoff.md records Option A approval and diagnostic guard clarifications
 │   ├── API_GUIDE.md           prototype: usage examples for the prototype API
 │   ├── REQUIREMENTS.md        prototype: single-file requirements; replaced by L1/L2/L3-REQ.md
 │   └── FOR_IRIG106_DOCS_REPO.md  prototype: cross-crate contract notes intended for irig106-docs
