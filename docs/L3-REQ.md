@@ -1262,8 +1262,11 @@ under L1-EDN-006 is a later derivation, not an implied fallback here.
 Planned, not implemented. INT-011 is reconfirmed by Joey, 2026-11-23,
 with AI CONCURS on #38 at c623b15; development gates remain;
 INT-034's precise completeness rules remain proposed under ADR-0031/0033.
-These children describe the joining/provenance stage only. They do not settle
-complete/incomplete/ambiguous classification, adjacent-record splits, SRCC
+These children describe the joining/provenance stage within a phase only.
+INT-045 separately records time-packet phase closure (amended wording awaits
+AI recheck); it adds no per-channel joining predicate. A later +1 fragment
+across a phase boundary is continuous-but-split, never rejoined backward.
+These children do not settle complete/incomplete/ambiguous classification, adjacent-record splits, SRCC
 aggregation, configuration-event identity or a configuration timeline.
 
 **L3-CH10-009** · Parent: L2-CH10-004 · Verification: T
@@ -1373,7 +1376,11 @@ Owner-relayed review consequence, 2026-11-23. EOF alone must not turn a valid
 final record into incomplete or ambiguous. Preserve the START observation
 without interpreting "start of supplied input" as known leading damage.
 Independently established damage/ambiguous split evidence remains reported;
-its precedence needs review. This case deliberately ends exactly at `;`;
+its precedence needs review. INT-045's layered time boundary is a separate
+reason, not relabelled as this ordinary same-channel joining stop. At that
+boundary, cut text is INCOMPLETE with a located finding, and a later
+same-channel +1 fragment is continuous-but-split, never rejoined backward;
+its amended wording awaits AI recheck. This case ends exactly at `;`;
 trailing padding/controls require reconciliation with INT-035/036, not a new
 unreviewed trim operation. Finality is not proof of source data validity.
 

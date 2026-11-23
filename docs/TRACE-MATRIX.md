@@ -400,7 +400,7 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-042 | A reviewed is-specified predicate tests actual presence, not value usability | approved (Joey, owner sign-off, 2026-11-23) | not yet written | _(none)_ |
 | INT-043 | Leading-zero algorithm 2 designators are accepted with a warning | approved (Joey, Option B, 2026-11-23) | not yet written | _(none)_ |
 | INT-044 | Duplicate G\106 retains ambiguity with an explicitly labelled fallback basis | approved (Joey, Option B, 2026-11-23) | not yet written | _(none)_ |
-| INT-045 | Proposed initial setup closure at the first recognised time packet | proposed (owner decision pending) | not yet written | _(none)_ |
+| INT-045 | Layered time-packet closure for initial setup and SRCC=1 updates | owner decision recorded (initial: A signed; mid-session: owner extension); AI recheck of the amended wording pending | not yet written | _(none)_ |
 
 * Entries without a written analysis: **45** of 45
 * Entries without a test: **45** of 45

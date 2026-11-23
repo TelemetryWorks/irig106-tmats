@@ -304,6 +304,11 @@ record remains; leading-boundary evidence is now retained as well.
 
 **Reconfirmation record**: [owner reconfirmation and exact AI reference](research/2026-11-23-int011-owner-signoff.md). Source freshness, development analysis and executable tests remain required.
 
+**Layered closure cross-reference**: INT-045 is the separate phase-closure
+layer above this per-channel joining rule. Its initial A is signed and its
+owner mid-session extension/amended wording awaits AI recheck. This entry's
+joining predicates and approval are unchanged.
+
 ### INT-012
 
 **Title**: RCCVER codes are read as their table states; later editions' reuse is a note
@@ -370,6 +375,13 @@ at ;, run still open", for streaming consumers. This is never a joining stop
 or an assertion of final completeness. How a consumer may use such data
 before EOF, and invalidate a previously used snapshot after later bytes,
 remain explicit open items below, not an approved governance extension.
+INT-045 now records a separate owner-decided layered closure: initial setup
+and SRCC=1 updates close at their eligible time boundary (amended wording
+awaits AI recheck). At that boundary a mid-attribute suffix is INCOMPLETE
+with a located finding; a same-channel +1 fragment after it is recorded as
+continuous-but-split and never rejoined backward. A boundary does not approve
+all other precise classification/governance rules in this entry.
+
 Aggregate open-run memory needs an explicit budget and typed limit error;
 exhaustion never silently drops a channel's run or synthesizes EOF.
 
@@ -1479,66 +1491,93 @@ INT-014; that rule and all other review/coverage gates remain unchanged.
 
 ### INT-045
 
-**Title**: Proposed initial setup closure at the first recognised time packet
+**Title**: Layered time-packet closure for initial setup and SRCC=1 updates
 
 **Sources**:
-- 106-24R1 Chapter 11 section 11.2.3.2 p. 11-24: "Only static Computer-Generated Data, Format 1 packets may precede the first time data packet." Section 11.2.3.3 p. 11-26 repeats the rule for network time; Table 11-4 pp. 11-6–7 defines 0x11/0x12 and the reserved time-family codes.
-- Section 11.2.7.2 p. 11-50 puts an updated setup record "prior to any new or changed data packets being committed to the stream"; p. 11-51 puts its configuration-change event before the setup record, not at its end.
-- The [source investigation](research/2026-11-23-initial-time-boundary-proposal.md) checks 106-07/09/11/13/15 Chapter 10 and 106-17/19/20/22/23/24/24R1 Chapter 11, with edition-specific locations, packet-type eligibility and PDF fingerprints.
+- 106-24R1 Chapter 11 section 11.2.3.2 p. 11-24: "Only static Computer-Generated Data, Format 1 packets may precede the first time data packet." Section 11.2.3.3 p. 11-26 repeats the rule for network time; Table 11-4 pp. 11-6–7 defines 0x11/0x12 and reserved time-family codes.
+- Archived [106-13 Chapter 10 PDF](https://www.spiraltechinc.com/otis/106-13/chapter10.pdf), section 10.6.3.2, printed p. 10-44 (PDF page 56), contains the same ordering rule. SHA-256: `7722e2fe4a595b507ac14931115174eea2083c46b334bd0c2af2a311d53bc475`. The distinct copy inspected for #40 prints it on p. 10-41; fingerprints are not interchangeable.
+- Section 11.2.7.2 p. 11-50 puts an updated setup record "prior to any new or changed data packets being committed to the stream"; p. 11-51 puts its configuration-change event before the setup record, not at its end. This does not print a universal mid-session time-packet terminator.
+- Joey, 2026-11-23: initial Option A signed under ADR-0033, with independent AI CONCURS on #40 at 93eb6e2; owner extends closure to SRCC=1 mid-recording setup candidates at the next trusted recognised time packet. Amended wording/extension awaits AI recheck.
 
-**Behaviour**: **Proposed Option A; nothing approved.** With known
-recording/session-start provenance, a trusted initial prefix containing only
-static 0x01 setup packets, and a reviewed applicable packet-format binding,
-the first structurally trusted Time Data packet on ANY channel supplies a
-proposed boundary immediately before itself for the initial candidate runs.
-Eligible types: 0x11 Format 1 in all checked editions; 0x12 Format 2 only
-where defined, from 106-17. Reserved/unknown types, timestamps inside other
-packets and later periodic time packets are not this signal. Clock availability
-is separate: source NONE does not disqualify a trusted time packet.
+**Behaviour**: **Owner decision recorded (initial: A signed; mid-session: owner extension); AI recheck of the amended wording pending.**
+This is a SEPARATE LAYERED closure rule on top of INT-011. INT-011 joins
+qualifying fragments independently per channel; INT-045 seals candidate
+phases, after which later fragments cannot be joined backward into them.
+The +1/FRMT/RCCVER joining predicates and INT-011 approval are unchanged.
 
-Seal each initial per-channel run separately; retain marker identity, offset,
-type, trust/order/start evidence, citation and a distinct initial-time basis.
-Exclude the marker from TMATS and dispatch that same packet after completeness
-assessment and eligible TMATS parsing. This seals the initial phase, not a
-claim that its candidates are valid or one unique governing description.
+**Initial phase**: A known session start is a CALLER-ASSERTED, labelled
+provenance fact, never inferred from file offset zero, a filename, sync,
+sequence number, SRCC or the first packet observed. Each asserted session
+start begins its own initial phase; retain session versus recording source
+wording and do not infer a new session at a file boundary. Under an applicable
+reviewed packet-format binding, close the initial candidates immediately
+before that phase's first trusted recognised time packet on ANY channel.
+Every preceding packet must be static Format 1 (0x01): Format 0/2/3/4 or
+any other data is an ordering violation, with a finding and withheld adoption.
 
-Unknown/cropped start, unreadable/corrupt marker or prior ordering violations
-withhold authoritative automatic adoption through this rule, with findings
-and all bytes retained. No time packet: live input remains open/provisional;
-actual EOF uses INT-034's labelled classification, with a separate missing-
-time ordering problem. Never invent EOF, repair cut text or waive ambiguity.
+If the FIRST observed time-packet candidate is untrusted, withhold adoption
+and retain that evidence; the next trusted one does not take over as the
+initial first-time boundary. Unknown/cropped start, untrusted prefix or
+unavailable packet binding likewise withholds authoritative initial adoption.
+Never skip an earlier unreadable region to claim a clean prefix.
 
-**Interaction/open scope**: If adopted, this would explicitly qualify
-INT-011's current absolute other-channel-never-stops wording for the INITIAL
-session phase only; it is not already approved under INT-011. INT-034 still
-judges completeness; initial-time is an additional reason, not a relabelled
-same-channel stop. INT-039 duplicates remain document-local: later setup
-candidates after the boundary are not appended to the initial one; repeated
-scalars before it remain duplicate/split evidence, never first/last wins.
-Multiple channels do not mix and this rule chooses no governing candidate.
-Existing requirements/ADRs must be reconciled in a reviewed change if adopted.
+**Mid-session phase**: An SRCC=1 setup candidate is also sealed immediately
+before the next trusted recognised time packet, on ANY channel, by explicit
+owner extension. Qualifying fragments received before that boundary belong
+to the active candidate; repeated SRCC=1 on its fragments does not itself
+restart it. Retain SRCC disagreement without inventing an aggregation rule.
+The initial-only static-prefix guard is not a ban on ordinary mid-session
+data interleaving. Earlier untrusted observations remain blocking trust
+findings; a later trusted marker does not erase them. SRCC=0-only updates
+and unknown SRCC applicability remain outside this extension, not guessed.
 
-The mid-session commit-before-changed-data rule is not a universal observable
-terminator: unaffected data/time packets may continue, changed-data identity
-can depend on the new TMATS, and the event precedes the update and remains
-unidentified (INT-030/F7). Mid-session runs retain their existing open/
-provisional behavior pending a justified boundary or a separately reviewed
-snapshot policy. INT-028/031 governance and streaming-use permission remain
-unapproved; this proposal does not silently decide either.
+**Marker guards**: 0x11 Format 1 is eligible in all checked 106-07-onward
+editions; 0x12 Format 2 is eligible only where defined, from 106-17. Before
+106-17, 0x12 is reserved and ineligible. Reserved/unknown types, IPTS,
+secondary-header timestamps, TFMT text and Ethernet-contained NTP/PTP never
+count. Framing/bounds and applicable checksums must be trusted; clock
+availability is separate, so source NONE does not disqualify a trusted time
+packet. A time packet on channel 0 in 106-17+ gets the separate channel-use
+conformance finding (Chapter 11 section 11.2.1.1 b), never silent acceptance
+as compliant; channel number does not turn it into setup or another format.
 
-**Reason**: The initial ordering gives a standard-based reason to propose
-closing initial setup before processing the first time packet, avoiding a
-whole-file wait in ordinary conforming input. It is an assembly inference,
-not a standard-defined marker. Alternative B keeps per-channel/EOF-only
-finality and considers opt-in provisional snapshots; that can delay initial
-use. Alternative C closes every mid-session update at the next time/data
-packet; not recommended because the cited rule supplies no such general
-signal. Recommend A with the stated guards; the owner decides.
+**Safe closure and evidence**: Retain the phase, channel/run identities,
+caller assertion, marker offset/type/trust and raw spans; never mix channels,
+include time bytes in TMATS or silently choose a governing candidate. Apply
+INT-034 at the sealed boundary. Text cut mid-attribute is **INCOMPLETE with
+a located finding**, not silently held open until a later time packet. A
+same-channel +1 fragment after the boundary is **continuous-but-split**:
+retain both sides, sequence/CSDW evidence and the boundary link, never rejoin
+or repair the sealed candidate. Continuity is not proof of a new valid record
+or an instruction to choose a split/winner. Preserve duplicate/split and XML
+uncertainty; no boundary alone proves usable metadata or checksum success.
 
-**Design**: proposed (owner decision pending) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: pending · **Origin**: owner question/coordinator observation after #39, 2026-11-23
+INT-039 remains document-local: repeated scalars within a candidate keep
+every occurrence and duplicate finding; a later candidate across an explicit
+closure is not appended to fabricate duplicates in the earlier document.
+No time packet: live input stays open/provisional within its explicit budget;
+actual EOF still uses INT-034's labelled outcome. Pause, budget exhaustion
+and source NONE do not manufacture EOF. Dispatch a trusted boundary packet
+after reporting the candidate's outcome, without requiring a whole-file scan.
+Initial closure and SRCC=1 closure do not decide general snapshot permission,
+INT-028/031 governance, a fallback to an old description or time associations.
 
-**Test**: `initial_first_time_seals_before_dispatch`, `initial_time_type_is_edition_specific`, `non_time_timestamps_do_not_close_setup`, `initial_marker_requires_start_order_and_trust`, `initial_time_does_not_repair_incomplete_setup`, `no_initial_time_uses_eof_or_provisional`, `initial_runs_and_later_documents_do_not_mix`, `mid_session_periodic_time_does_not_seal_update` (planned; not yet written)
+**Reason and rejected recommendation**: Initial Option A is grounded in the
+explicit first-time ordering. The original recommendation rejected a general
+mid-session next-time/data terminator: no observable universal terminator is
+specified, changed-data identity can depend on TMATS, and the configuration
+change event PRECEDES the update (its identity remains unverified, INT-030).
+The owner overrides that recommendation for SRCC=1 using the next trusted
+TIME packet specifically, not arbitrary data. This is owner policy beyond
+the printed ordering; periodic time may split a legitimate multi-fragment
+update. The incomplete finding and continuous-but-split evidence expose that
+cost rather than silently repairing it. The historical alternatives remain
+in the #40 draft; neither the event nor a nearby 0x02 is guessed as an end.
+
+**Design**: owner decision recorded (initial: A signed; mid-session: owner extension); AI recheck of the amended wording pending · **Review**: pending amended-wording recheck under ADR-0033; draft author: maintainer agent; initial owner sign-off: Joey, 2026-11-23, Option A, independent AI CONCURS on #40 at 93eb6e2; mid-session extension: Joey, 2026-11-23; independent AI recheck of this amendment: pending · **Origin**: owner question after #39 and owner extension after #40, 2026-11-23
+
+**Test**: `initial_first_time_seals_before_dispatch`, `initial_time_type_is_edition_specific`, `non_time_timestamps_do_not_close_setup`, `initial_marker_requires_start_order_and_trust`, `initial_time_does_not_repair_incomplete_setup`, `no_initial_time_uses_eof_or_provisional`, `initial_runs_and_later_documents_do_not_mix`, `mid_session_time_seals_srcc_update`, `mid_session_cut_update_is_incomplete`, `post_boundary_plus_one_is_continuous_but_split`, `all_non_format1_initial_packets_violate_order`, `session_starts_are_asserted_and_independent`, `untrusted_first_time_cannot_be_replaced`, `channel_zero_time_has_conformance_finding` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
-**Draft analysis**: [verified sources, pipeline, mid-session limits and owner options](research/2026-11-23-initial-time-boundary-proposal.md).
+**Draft analysis**: [original sources/options](research/2026-11-23-initial-time-boundary-proposal.md); [owner layered closure decision, source fingerprint and amended safety cases](research/2026-11-23-int045-layered-owner-decision.md).
