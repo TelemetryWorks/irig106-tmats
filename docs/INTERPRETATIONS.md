@@ -1091,3 +1091,42 @@ basis. These edge notes were requested with the 2026-11-23 sign-off.
 
 
 **Sign-off and AI-check reference**: [owner approval record](research/2026-11-23-int041-owner-signoff.md), referencing [PR #26](https://github.com/TelemetryWorks/irig106-tmats/pull/26) at `0fc0bc8917d4e80d1c0c3274bc8868083afb1a28` and the owner's 2026-11-23 relay of the independent check. The record includes the requested edge notes; approval is not implementation, completed analysis or passing tests, and this new PR still needs independent review.
+
+
+## Presence predicates versus value predicates (proposed, 2026-11-23)
+
+### INT-042
+
+**Title**: A reviewed is-specified predicate tests actual presence, not value usability
+
+**Sources**:
+- 106-24R1 Chapter 9 section 9.5.1 a, page 9-6, separately describes when an attribute may/must be specified, requires valid supplied information and describes defaults for absent attributes. It does not formally define recovery semantics for a presence condition whose named item is malformed or duplicated.
+- Table 9-3 TRANSMIT ANTENNA TYPE T-x\AN1, page 9-18: "Allowed when: T-x\ID is specified". This explicit indexed reference supplies a presence example without resolving an omitted index by guess.
+- Table 9-4 TIME FORMAT R-x\TFMT-n, page 9-72, compares R\CDT with TIMEIN; that needs a usable value, unlike the presence example. Its occurrence mapping requires its own reviewed binding.
+- L1-REG-004, ADR-0022/0023 and approved INT-035/037/039/041 require declared scope, retained actual items and visible uncertainty. This proposal clarifies that a known absence is evidence for a presence predicate, while a missing VALUE operand still blocks comparison.
+
+**Behaviour**: **Proposed; owner sign-off and independent AI check pending.**
+When a reviewed condition explicitly tests physical presence in an established
+scope, zero actual lookup matches means false; one or more means true, even
+if their values are empty, Invalid or Ambiguous. Retain all candidates and
+independent findings. A default never makes an absent item physically
+specified. True presence does not make any value usable or select a duplicate.
+
+Value comparisons instead require usable Explicit or expressly permitted
+Defaulted operands. Missing, Invalid, Ambiguous, unavailable or disallowed-
+default operands give cannot-evaluate, including for inequality. Unknown
+lookup scope, blocked lookup or an unresolved/ambiguous required link target
+also gives cannot-evaluate; it is not proof that the target item is absent.
+Do not infer presence from an unterminated suffix or repair a code name.
+No general rule inferring reference scope from abbreviated prose, compound
+Boolean semantics or new default is approved by this proposal.
+
+**Reason**: Physical absence is an answer to a presence question but cannot supply a value for equality. Requiring a valid singular value for is-specified hides actual supplied fields, while treating every failed value comparison as false hides uncertainty. The recommended distinction keeps both facts visible; its cost is that presence can be true while the same field is invalid or ambiguous, so consumers must not mistake presence for validity. The alternative is cannot-evaluate for presence whenever the named field lacks a usable singular value; that is conservative but conflates presence with usability. Owner choice remains open.
+
+**Design**: proposed · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: pending · **Origin**: family 2 batch 8
+
+**Test**: `specified_absent_is_false`, `specified_invalid_and_duplicate_stays_true`, `presence_scope_unknown_is_not_absence`, `missing_value_does_not_make_inequality_true`, `default_does_not_make_item_specified` (planned, not yet written)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Draft analysis**: [sources, alternatives and remaining work](research/2026-11-23-condition-scope-draft.md)

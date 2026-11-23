@@ -436,6 +436,49 @@ fields, cross-field consistency, general Allowed/Required conditions and
 packet checks still need their own reviewed implementations; these scenarios
 do not claim those validators exist or complete the parent requirements.
 
+## Family 2 batch 8: condition-scope acceptance specifications
+
+**Status: planned, not executable tests.** INT-042 is proposed; owner sign-off
+and independent AI review under ADR-0033 are pending. These cases do not
+claim a complete registry, evaluator, presence validator or time-view API.
+Fixtures supply reviewed predicate/scope/type bindings and edition basis
+unless their absence is the stimulus. Short snippets are not full conforming
+files. Escapes denote raw bytes; synthetic conditions/link results test the
+contract without claiming new standard fields or association evidence.
+
+Sources: 106-24R1 Chapter 9 section 9.5.1 a, page 9-6; Table 9-3 TRANSMIT
+ANTENNA TYPE T-x\AN1, page 9-18; Table 9-4 TIME FORMAT R-x\TFMT-n, page
+9-72; CHANNEL DATA TYPE R-x\CDT-n, page 9-50; approved INT-035/037/039/041
+and ADR-0022/0023/0033. See the
+[draft review and options](research/2026-11-23-condition-scope-draft.md).
+All presence truth-table expectations below remain subject to INT-042 approval.
+
+| Planned check | Fixture or stimulus | Expected observation | Requirement |
+| --- | --- | --- | --- |
+| `condition_metadata_retains_scope_and_source` | Cited T-1\AN1 presence rule and separately reviewed same-channel TFMT/CDT binding | Keep source text, edition/row, review identity, full bound scope and link/default policy; do not compile from citation alone | L3-REG-005, L3-REG-006 |
+| `unreviewed_reference_is_not_a_wildcard` | A source abbreviation without an available reviewed operand mapping | Non-executable/cannot-evaluate with reference reason, never select occurrence 1 or search all occurrences | L3-REG-005, L3-REG-006, L3-VAL-007 |
+| `specified_absent_is_false` | Established T-1 scope, reviewed T-1\AN1 predicate, no T-1\ID | Physical-presence predicate false with known absence evidence and no fabricated value span; this is not an equality comparison with a Missing value | L3-VAL-008, L3-VAL-011 |
+| `specified_empty_stays_true` | `T-1\ID:;` under that physical-presence binding | True presence with the actual zero-length candidate retained; its local value usability is a separate check | L3-REG-006, L3-VAL-008 |
+| `specified_invalid_and_duplicate_stays_true` | `T-1\ID:\xFF;` and, separately, `T-1\ID:a;T-1\ID:b;` with reviewed scalar binding | True physical presence; retain Invalid high-byte evidence or Ambiguous scalar candidates plus duplicate finding respectively; never select a value | L3-VAL-008, L3-VAL-011 |
+| `other_occurrence_does_not_supply_presence` | Established T-1 scope with only `T-2\ID:a;` | T-1 presence false; no borrowing from T-2 or document-wide fallback | L3-REG-005, L3-VAL-007, L3-VAL-008 |
+| `presence_scope_unknown_is_not_absence` | Supplied linked-scope predicate with unresolved target, then ambiguous target candidates | Cannot-evaluate for each; keep target evidence/reason, never false absence or first/any-target selection | L3-VAL-007, L3-VAL-010 |
+| `encoding_blocked_lookup_does_not_prove_absence` | Assembled text starts with UTF-8 BOM; requested physical-presence predicate | Cannot-evaluate under INT-037, raw bytes still accessible; blocked semantic lookup is not a known empty set | L3-REG-006, L3-VAL-007 |
+| `unterminated_text_is_not_specified` | Established T-1 scope; only unterminated suffix `T-1\ID:a` | No explicit lookup item from suffix under INT-035; presence false with existing framing finding retained, no recovery manufacture | L3-REG-006, L3-VAL-008, L3-VAL-011 |
+| `same_channel_value_not_other_channel` | `R-1\CDT-2:TIMEIN;`, evaluate TFMT-3 condition with reviewed same-channel binding | CDT-3 Missing gives cannot-evaluate, never true from channel 2 or false from missing comparison | L3-REG-005, L3-VAL-007, L3-VAL-009 |
+| `value_comparison_true_false_unknown` | Same-channel CDT-3 is TIMEIN, PCMIN, absent, high-byte Invalid or repeated TIMEIN in separate fixtures | Equality to TIMEIN is true, false, cannot-evaluate, cannot-evaluate, cannot-evaluate respectively; duplicates retain both candidates, no positive default activation from uncertainty | L3-VAL-009, L3-VAL-010 |
+| `missing_value_does_not_make_inequality_true` | Supplied reviewed inequality predicate whose required value is Missing, Invalid or Ambiguous | Each cannot-evaluate, never true because a usable equal value could not be found | L3-VAL-009 |
+| `default_visibility_is_declared` | Synthetic reviewed value predicate with same usable Defaulted operand; policy explicit-only versus defaults-eligible | Explicit-only cannot-evaluate with policy reason; eligible policy compares usable value with default citation and labelled basis retained | L3-REG-005, L3-VAL-009 |
+| `default_does_not_make_item_specified` | Synthetic reviewed presence predicate; no actual item but an available cited default | False physical presence, no insertion or source span for default; default visibility cannot rewrite physical presence | L3-REG-006, L3-VAL-008, L3-VAL-011 |
+| `blank_rule_unavailable_is_not_false` | Value predicate with `R-1\TFMT-3: A;`, blank-handling unavailable | Cannot-evaluate, raw blank retained under INT-041; no trim or automatic mismatch/Invalid claim | L3-VAL-009, L3-VAL-010 |
+| `condition_findings_name_invoking_pass` | Same unavailable dependency invoked from each of ADR-0023's four passes | Separate condition finding identifies actual invoking pass, rule/citation/scope, blocking reason, candidates/locations and edition basis; no fifth pass or fabricated absent-item span | L3-VAL-010 |
+| `condition_results_keep_evidence_without_edits` | True, false and cannot-evaluate stimuli under labelled fallback edition, with earlier findings | Each retains operand provenance and fallback label; byte-for-byte emission, order and prior findings unchanged, no field deletion/default insertion or whole-document success claim | L3-VAL-010, L3-VAL-011 |
+
+Future executable tests must assert these outcomes from independently supplied
+fixtures and reviewed bindings, not regenerate expected answers through the
+evaluator under test. Complete compound expressions, dependency cycles,
+severity/deduplication, link construction and presence/profile enumeration
+remain later requirements; these cases do not silently settle them.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample

@@ -1,6 +1,7 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through effective-value batches drafted (family 2, batches 1-7).**
+> **Status: foundations through condition-scope batches drafted (family 2, batches 1-8).**
+> INT-042 is proposed; owner sign-off and independent AI review are pending.
 > Foundations derive the approved restructure/source store; framing and
 > recovery use owner-approved INT-035. Character policies INT-036/037 were
 > approved by Joey, 2026-11-22, under ADR-0033. Name structure follows here;
@@ -404,5 +405,42 @@ release scope; this batch does not promote them wholesale into 0.1.
 **Statement**: With zero actual candidates for a supported field, resolution SHALL return Defaulted only from a verified applicable default and otherwise Missing with the absence/default-unavailability reason; default evidence SHALL include its origin, edition citation and basis without a fabricated input span, and resolution SHALL NOT insert or replace bytes or suppress independent findings.
 
 **Rationale**: Chapter 9 section 9.5.1 a, page 9-6, conditions default use on absence; RELEASE-0.1.md requires verified TIMEIN applicability and edition basis for TFMT A. Invalid or ambiguous present fields do not become absence. ADR-0028 labels edition basis; missing physical required attributes, cross-field inconsistencies and packet evidence remain separate from a Defaulted value.
+
+**Verification Method**: Test (T)
+
+
+## Condition batch 8: declared operands and visible uncertainty
+
+This derives condition metadata under L1-REG-004 and reporting under
+L1-VAL-006. ADR-0022/0023 already require a shared evaluator and visible
+cannot-evaluate outcomes. INT-042 below is **proposed**, not owner-approved;
+its presence-predicate distinction needs ADR-0033 sign-off and independent
+AI review before implementation. Existing INT-035 through INT-041 approvals
+are unchanged. These are planned obligations, not implemented checks.
+
+Complete condition grammar, compound operators/precedence, cyclic default
+or condition dependencies, link construction, edition selection and the full
+presence/profile validator remain later derivations. This batch does not
+promote general registry/validation into 0.1; the bounded time view consumes
+only its reviewed applicable subset. See the
+[draft source review](research/2026-11-23-condition-scope-draft.md).
+
+#### L2-REG-003
+
+**Parent**: L1-REG-004
+
+**Statement**: Every executable condition SHALL bind its source/citation and reviewed interpretation to declared operand scopes, link traversal and default visibility, and SHALL distinguish a physical-presence predicate from a predicate requiring an interpreted value; unreviewed mappings SHALL remain unavailable rather than be inferred from a source-name abbreviation or another occurrence.
+
+**Rationale**: ADR-0022 defines the shared condition contract. 106-24R1 Chapter 9 section 9.5.1 a, page 9-6, distinguishes Allowed/Required usage from defaults. Table 9-3 TRANSMIT ANTENNA TYPE T-x\AN1, page 9-18, uses an explicit T-x\ID presence condition; Table 9-4 TIME FORMAT R-x\TFMT-n, page 9-72, instead compares R\CDT with TIMEIN. Proposed INT-042 makes presence/value operands distinct without treating a missing value operand as false. INT-008/009's existing abbreviated-reference interpretations keep their own pending review obligations.
+
+**Verification Method**: Test (T)
+
+#### L2-VAL-003
+
+**Parent**: L1-VAL-006
+
+**Statement**: Evaluating a reviewed condition SHALL produce true, false or cannot-evaluate with its rule, scope, operand evidence and edition basis; unavailable scope, link selection or required value operands SHALL produce cannot-evaluate with a separate pass-labelled finding, never a false-condition verdict, winner selection or silent default activation.
+
+**Rationale**: L1-REG-004 and ADR-0022 already forbid true/false for missing or invalid value operands; INT-039/041 extend the visible guard to ambiguity and unavailable interpretation. Proposed INT-042 permits a known absence to answer a reviewed physical-presence predicate because that predicate consumes presence, not a missing value. A condition result is not whole-document validity, and a true presence predicate does not certify its present values.
 
 **Verification Method**: Test (T)

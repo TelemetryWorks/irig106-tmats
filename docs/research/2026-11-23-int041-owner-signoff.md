@@ -55,3 +55,13 @@ planned. Full cross-edition/handbook/sample analysis and executable verification
 remain development gates. The earlier dated effective-value draft is preserved
 as history; its pending sign-off descriptions are superseded here. Remaining
 family-2 batches still precede family 3's ADR-0035 restructure.
+
+## Full blank sentence — owner-requested addition, 2026-11-23
+
+106-24R1 Chapter 9 section 9.4.2, page 9-2, states in full:
+
+> Leading, trailing, and embedded blanks are assumed to be intentional; they can be ignored in most cases but should not be used in code names, keywords, and data items used as links, such as measurement name.
+
+This addition supplies the complete source for a future blank-rule review;
+it approves no new value trimming, acceptance or rejection policy. The
+existing INT-041 sign-off and its exact-head AI-check reference above stand.

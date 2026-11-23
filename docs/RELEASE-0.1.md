@@ -168,6 +168,13 @@ a non-TIMEIN channel stays Explicit with an applicability finding. Any Invalid
 verdict reached under a fallback edition keeps its fallback label and basis.
 These are planned-view contracts; their acceptance cases live in TEST-DATA.md.
 
+The full source for the future value-blank review is 106-24R1 Chapter 9 section 9.4.2, page 9-2:
+
+> Leading, trailing, and embedded blanks are assumed to be intentional; they can be ignored in most cases but should not be used in code names, keywords, and data items used as links, such as measurement name.
+
+No general blank-handling policy is approved by quoting this sentence;
+the unavailable-value contract above remains in force until that review.
+
 The TFMT default does not supply a time source, prove an association, or
 change any bytes. Do not default to IRIG-B, UTC, a channel number, or a
 multiplexer source-bit count. Invalid or conflicting explicit attributes do
