@@ -1380,7 +1380,14 @@ its precedence needs review. INT-045's layered time boundary is a separate
 reason, not relabelled as this ordinary same-channel joining stop. At that
 boundary, cut text is INCOMPLETE with a located finding, and a later
 same-channel +1 fragment is continuous-but-split, never rejoined backward;
-its amended wording awaits AI recheck. This case ends exactly at `;`;
+an otherwise Complete semicolon-ending seal followed by same-channel +1,
+matching-FRMT/RCCVER continuation becomes finally AMBIGUOUS with both
+readings and a located "possible premature time-boundary seal" finding,
+unless reviewed, unambiguous G\SHA verifies the sealed text alone. That exception
+retains Complete as classification evidence, never a backward rejoin; every
+mid-session Complete under this layer carries `time-boundary seal (owner policy)`.
+Revised outcomes/findings remain visible to spool-before-publish consumers.
+INT-045's amended wording awaits AI recheck. This EOF case ends exactly at `;`;
 trailing padding/controls require reconciliation with INT-035/036, not a new
 unreviewed trim operation. Finality is not proof of source data validity.
 

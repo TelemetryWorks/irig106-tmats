@@ -266,6 +266,13 @@ INT-045 records initial Option A signed by Joey, 2026-11-23 (AI CONCURS on
 It is a separate layered closure rule above INT-011 per-channel joining.
 At a time boundary, cut text is INCOMPLETE with a located finding; a later
 same-channel +1 fragment is continuous-but-split, never silently rejoined.
+If an otherwise Complete semicolon-ending seal has matching-FRMT/RCCVER
+continuation, its FINAL outcome becomes AMBIGUOUS with both readings and a
+located possible-premature-seal finding. Verified G\SHA over the sealed text
+alone can keep it Complete as classification evidence; every mid-session
+Complete under this layer is labelled `time-boundary seal (owner policy)`.
+Findings/revisions remain visible before consumer publication. SRCC=1
+eligibility comes from the FIRST fragment; SRCC=0 retransmissions stay outside.
 Session starts are caller-asserted labelled provenance; non-Format-1 initial
 prefix packets and an untrusted initial first time packet withhold adoption.
 Each asserted session start has its own initial phase. See the

@@ -20,12 +20,13 @@ cross-reference there. Candidate phase identity prevents a later otherwise
 joinable fragment from crossing backward over a closure.
 
 The initial phase closes immediately before its first eligible trusted time
-packet. A mid-session SRCC=1 candidate similarly closes before the next
-trusted recognised time packet on any channel. Repeated SRCC=1 fragment bits
+packet. A mid-session candidate whose FIRST fragment has SRCC=1 closes
+before the next trusted recognised time packet on any channel. Repeated SRCC=1 fragment bits
 alone do not restart that candidate; disagreement remains retained and needs
-its own SRCC-summary interpretation. SRCC=0-only candidates are not silently
-included in this owner extension. Data interleaved mid-session is not by
-itself a terminator or an initial-prefix ordering violation.
+its own SRCC-summary interpretation, but eligibility is now explicitly
+first-fragment based. SRCC=0-first retransmissions stay outside this owner
+extension even if a later fragment says 1. Data interleaved mid-session is
+not by itself a terminator or an initial-prefix ordering violation.
 
 At closure, INT-034 assesses the text actually observed. For example:
 
@@ -73,18 +74,24 @@ separately subject to review. General pre-boundary snapshots remain undecided.
 
 ## Archived 106-13 citation with an unambiguous fingerprint
 
-Read [the archived RCC 106-13 Chapter 10 PDF](https://www.spiraltechinc.com/otis/106-13/chapter10.pdf),
-section 10.6.3.2, **printed p. 10-44 / PDF page 56** (191-page copy):
+Source-citation correction during #41 review, 2026-11-23: the primary
+citation is [the PROJECT-ARCHIVED 106-13 chapter10.pdf](https://github.com/TelemetryWorks/rcc-106-standards/releases/download/106-13/chapter10.pdf),
+section 10.6.3.2, **printed p. 10-44 / PDF page 56**:
 
 > Only static Computer-Generated Data, Format 1 packets may precede the first time data packet in the recording.
 
-SHA-256: `7722e2fe4a595b507ac14931115174eea2083c46b334bd0c2af2a311d53bc475`.
-This is RCC publication text served by the archive, not vendor commentary.
-The distinct IRIG-hosted 188-page copy inspected for #40 puts that sentence
-on printed p. 10-41 and has SHA-256
+SHA-256: `e3740c7ac3099236f4e97cbe5b84c169340e6d4a4222769619e83ea0f8176fde`.
+Downloaded that release asset and verified its bytes/fingerprint and passage
+directly; no other repository checkout was accessed.
+
+The [third-party Spiral mirror](https://www.spiraltechinc.com/otis/106-13/chapter10.pdf)
+is SECONDARY only, also printed p. 10-44, SHA-256
+`7722e2fe4a595b507ac14931115174eea2083c46b334bd0c2af2a311d53bc475`.
+The distinct [irig106.org PDF](https://www.irig106.org/docs/106-13/chapter10.pdf)
+inspected for #40 prints the sentence on p. 10-41, SHA-256
 `aeed3ed5e33350e2a3e963809a934c2026113610c2608f56c62f6955bec79aa4`.
-Do not transfer pagination or fingerprints between copies. The earlier
-research record remains unchanged history.
+These are separate copies; pagination/fingerprints are not interchangeable.
+The earlier #40 research record remains unchanged history.
 
 Other cited sources remain 106-24R1 Chapter 11 sections 11.2.3.2 p. 11-24,
 11.2.3.3 p. 11-26, Table 11-4 pp. 11-6–7, and 11.2.7.2 pp. 11-50–51.
@@ -109,3 +116,48 @@ repairing the input. All bytes and uncertainty remain visible. Initial A's
 sign-off/concurrence is recorded; the extension and guard refinements await
 independent AI recheck before final amended approval. Freshness, development
 analysis and executable tests remain required afterward.
+
+## #41 review follow-up: final classification after possible premature closure
+
+Date: 2026-11-23. Independent AI recheck: CONCERNS, narrow. The owner's
+mid-session choice stands; amended-wording recheck remains pending.
+
+For an otherwise Complete semicolon-ending time-sealed candidate followed
+by same-channel +1, SAME FRMT/RCCVER continuous-but-split text, its FINAL
+outcome becomes AMBIGUOUS. Keep both readings (separate candidates versus a
+premature split of one fragmented record) and a located
+`possible premature time-boundary seal` finding linked to the marker and
+following fragment. A cut-mid-attribute candidate instead remains INCOMPLETE;
+no later text repairs it. Neither reading authorises a rejoin.
+
+Exception: a reviewed, unambiguous G\SHA match over the SEALED text alone keeps an
+otherwise Complete candidate Complete on that classification evidence. Every
+mid-session Complete produced by this time-boundary layer carries the basis
+`time-boundary seal (owner policy)`; additionally identify the checksum
+evidence for the exception. Missing/malformed/unsupported/unverified, mismatch
+or indeterminate checks do not qualify. Never stamp or hash a rejoined
+document to obtain the exception. Both readings, continuity and the located
+finding remain visible; checksum classification evidence is not proof of
+minimum-required attributes, semantic validity or governing applicability.
+This fixed-candidate-domain comparison is classification evidence, not an
+authoritative integrity verdict for an unresolved complete-record domain;
+the general checksum gates remain in force.
+
+Supporting evidence: G\SHA verification (classification only); missing
+minimum required attributes (106-24R1 section 11.2.7.2 p. 11-51); continuation
+content (heuristic); packet fill (weak). The latter signals cannot substitute
+for verified G\SHA or bypass the ambiguity guard. Missing attributes require
+actual reviewed evidence; lack of a rule is not evidence of absence.
+
+A seal's Complete report is revisable, not an irrevocable publication verdict.
+Expose revised candidate outcomes/readings/findings so irig106-time's
+spool-before-publish can incorporate the finding before publication. No
+invented timeout or library publication/spooling implementation is selected.
+
+Planned fixtures add the semicolon-ending ambiguity, a verified-G\SHA
+exception, non-verifying support signals and SRCC=0-first retransmissions.
+The positive digest fixture is independently calculated with Python hashlib:
+`SHA256(b"COMMENT:update;") = 71cfce9820e746cd612c6bf46e324469f55df274bbb1b7ac53fafe6fd30dc39a`.
+The G\SHA item's own raw name-through-semicolon range is excluded; later
+fragment text is not hashed. No implementation test or full conformance
+claim follows from this minimal checksum fixture.

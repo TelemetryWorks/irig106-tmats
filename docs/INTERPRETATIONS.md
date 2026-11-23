@@ -379,7 +379,11 @@ INT-045 now records a separate owner-decided layered closure: initial setup
 and SRCC=1 updates close at their eligible time boundary (amended wording
 awaits AI recheck). At that boundary a mid-attribute suffix is INCOMPLETE
 with a located finding; a same-channel +1 fragment after it is recorded as
-continuous-but-split and never rejoined backward. A boundary does not approve
+continuous-but-split and never rejoined backward. A semicolon-ending seal
+followed by matching +1 continuity becomes finally AMBIGUOUS with both
+readings and a located possible-premature-seal finding, unless G\SHA verifies
+the sealed text alone (classification evidence only). Mid-session Complete
+under INT-045 is labelled `time-boundary seal (owner policy)`. A boundary does not approve
 all other precise classification/governance rules in this entry.
 
 Aggregate open-run memory needs an explicit budget and typed limit error;
@@ -1495,7 +1499,7 @@ INT-014; that rule and all other review/coverage gates remain unchanged.
 
 **Sources**:
 - 106-24R1 Chapter 11 section 11.2.3.2 p. 11-24: "Only static Computer-Generated Data, Format 1 packets may precede the first time data packet." Section 11.2.3.3 p. 11-26 repeats the rule for network time; Table 11-4 pp. 11-6–7 defines 0x11/0x12 and reserved time-family codes.
-- Archived [106-13 Chapter 10 PDF](https://www.spiraltechinc.com/otis/106-13/chapter10.pdf), section 10.6.3.2, printed p. 10-44 (PDF page 56), contains the same ordering rule. SHA-256: `7722e2fe4a595b507ac14931115174eea2083c46b334bd0c2af2a311d53bc475`. The distinct copy inspected for #40 prints it on p. 10-41; fingerprints are not interchangeable.
+- Project-archived [106-13 chapter10.pdf](https://github.com/TelemetryWorks/rcc-106-standards/releases/download/106-13/chapter10.pdf), section 10.6.3.2, printed p. 10-44 (PDF page 56), contains the same ordering rule. SHA-256: `e3740c7ac3099236f4e97cbe5b84c169340e6d4a4222769619e83ea0f8176fde`. The third-party Spiral archive is a secondary copy; the distinct p. 10-41 copy inspected for #40 is the irig106.org PDF. Fingerprints/pagination are not interchangeable.
 - Section 11.2.7.2 p. 11-50 puts an updated setup record "prior to any new or changed data packets being committed to the stream"; p. 11-51 puts its configuration-change event before the setup record, not at its end. This does not print a universal mid-session time-packet terminator.
 - Joey, 2026-11-23: initial Option A signed under ADR-0033, with independent AI CONCURS on #40 at 93eb6e2; owner extends closure to SRCC=1 mid-recording setup candidates at the next trusted recognised time packet. Amended wording/extension awaits AI recheck.
 
@@ -1521,15 +1525,18 @@ initial first-time boundary. Unknown/cropped start, untrusted prefix or
 unavailable packet binding likewise withholds authoritative initial adoption.
 Never skip an earlier unreadable region to claim a clean prefix.
 
-**Mid-session phase**: An SRCC=1 setup candidate is also sealed immediately
-before the next trusted recognised time packet, on ANY channel, by explicit
+**Mid-session phase**: A candidate's SRCC=1 status comes from its FIRST
+fragment, not a later fragment, majority vote or an aggregation. Such a setup
+candidate is sealed immediately before the next trusted recognised time packet, on ANY channel, by explicit
 owner extension. Qualifying fragments received before that boundary belong
 to the active candidate; repeated SRCC=1 on its fragments does not itself
-restart it. Retain SRCC disagreement without inventing an aggregation rule.
+restart it. Retain SRCC disagreement as separate evidence; later bits do not
+change this first-fragment eligibility. A first-fragment SRCC=0 retransmission
+stays outside this extension even if a later fragment says 1.
 The initial-only static-prefix guard is not a ban on ordinary mid-session
 data interleaving. Earlier untrusted observations remain blocking trust
-findings; a later trusted marker does not erase them. SRCC=0-only updates
-and unknown SRCC applicability remain outside this extension, not guessed.
+findings; a later trusted marker does not erase them. An unreadable or
+untrusted first-fragment SRCC does not establish eligibility.
 
 **Marker guards**: 0x11 Format 1 is eligible in all checked 106-07-onward
 editions; 0x12 Format 2 is eligible only where defined, from 106-17. Before
@@ -1551,6 +1558,46 @@ retain both sides, sequence/CSDW evidence and the boundary link, never rejoin
 or repair the sealed candidate. Continuity is not proof of a new valid record
 or an instruction to choose a split/winner. Preserve duplicate/split and XML
 uncertainty; no boundary alone proves usable metadata or checksum success.
+
+**Possible premature seal, final outcome**: If an otherwise Complete
+semicolon-ending sealed candidate is followed by a continuous-but-split
+same-channel +1 fragment with the SAME FRMT/RCCVER, its FINAL outcome becomes
+**AMBIGUOUS**. Retain BOTH readings: a complete sealed candidate followed by
+a separate candidate, or one fragmented record prematurely split by time.
+Emit a located **"possible premature time-boundary seal"** finding naming
+the seal and subsequent fragment's locations. Never rejoin either reading.
+The existing cut-mid-attribute case remains INCOMPLETE, not repaired by this
+guard or by later text.
+
+**Exception**: If reviewed, unambiguous G\SHA verification MATCHES the sealed text
+alone, that otherwise Complete candidate stays **Complete**, explicitly on
+that classification evidence. Verification must obey INT-018/019/020/021/043:
+Missing, mismatching, malformed, unsupported, unavailable, unverified or
+indeterminate verification does not qualify. Never stamp, normalise or append later bytes
+to obtain a match. Every mid-session Complete produced by this layer carries
+the distinct basis **`time-boundary seal (owner policy)`**, with verified
+G\SHA evidence additionally named when the exception applies. It does not
+prove all required attributes, record validity or governing applicability.
+The comparison uses the fixed sealed-candidate byte domain as classification
+evidence; it is not an authoritative integrity verdict for an unresolved
+complete-record domain and does not waive the general checksum gates.
+Continuity, both readings and the located finding remain visible even when
+this checksum exception keeps the classification Complete.
+
+Supporting signals are G\SHA verification (classification evidence only,
+never a rejoin); missing minimum required attributes (106-24R1 section
+11.2.7.2 p. 11-51); continuation content (heuristic); and packet fill (weak).
+Missing requirements and heuristic/weak observations do not bypass the final
+ambiguity guard or substitute for verified G\SHA. Identify the actual
+reviewed requirement/locations when reporting missing attributes; unavailable
+registry knowledge is not proof of absence.
+
+A Complete report at seal is revisable when later continuity evidence
+arrives: retain candidate identity and expose the revised outcome, readings
+and finding. Consumers such as irig106-time's spool-before-publish can reflect
+that finding before publishing. No invented lookahead timeout makes the
+classification irrevocable; publication/spooling implementation remains the
+consumer's contract, not library I/O or permission to repair records.
 
 INT-039 remains document-local: repeated scalars within a candidate keep
 every occurrence and duplicate finding; a later candidate across an explicit
@@ -1574,9 +1621,9 @@ update. The incomplete finding and continuous-but-split evidence expose that
 cost rather than silently repairing it. The historical alternatives remain
 in the #40 draft; neither the event nor a nearby 0x02 is guessed as an end.
 
-**Design**: owner decision recorded (initial: A signed; mid-session: owner extension); AI recheck of the amended wording pending · **Review**: pending amended-wording recheck under ADR-0033; draft author: maintainer agent; initial owner sign-off: Joey, 2026-11-23, Option A, independent AI CONCURS on #40 at 93eb6e2; mid-session extension: Joey, 2026-11-23; independent AI recheck of this amendment: pending · **Origin**: owner question after #39 and owner extension after #40, 2026-11-23
+**Design**: owner decision recorded (initial: A signed; mid-session: owner extension); AI recheck of the amended wording pending · **Review**: pending amended-wording recheck under ADR-0033; draft author: maintainer agent; initial owner sign-off: Joey, 2026-11-23, Option A, independent AI CONCURS on #40 at 93eb6e2; mid-session extension: Joey, 2026-11-23; independent AI recheck: CONCERNS on #41; follow-up amended-wording recheck pending · **Origin**: owner question after #39 and owner extension after #40, 2026-11-23
 
-**Test**: `initial_first_time_seals_before_dispatch`, `initial_time_type_is_edition_specific`, `non_time_timestamps_do_not_close_setup`, `initial_marker_requires_start_order_and_trust`, `initial_time_does_not_repair_incomplete_setup`, `no_initial_time_uses_eof_or_provisional`, `initial_runs_and_later_documents_do_not_mix`, `mid_session_time_seals_srcc_update`, `mid_session_cut_update_is_incomplete`, `post_boundary_plus_one_is_continuous_but_split`, `all_non_format1_initial_packets_violate_order`, `session_starts_are_asserted_and_independent`, `untrusted_first_time_cannot_be_replaced`, `channel_zero_time_has_conformance_finding` (planned; not yet written)
+**Test**: `initial_first_time_seals_before_dispatch`, `initial_time_type_is_edition_specific`, `non_time_timestamps_do_not_close_setup`, `initial_marker_requires_start_order_and_trust`, `initial_time_does_not_repair_incomplete_setup`, `no_initial_time_uses_eof_or_provisional`, `initial_runs_and_later_documents_do_not_mix`, `mid_session_time_seals_srcc_update`, `mid_session_cut_update_is_incomplete`, `post_boundary_plus_one_is_continuous_but_split`, `all_non_format1_initial_packets_violate_order`, `session_starts_are_asserted_and_independent`, `untrusted_first_time_cannot_be_replaced`, `channel_zero_time_has_conformance_finding`, `semicolon_seal_continuation_is_finally_ambiguous`, `verified_sha_keeps_sealed_candidate_complete`, `srcc_eligibility_comes_from_first_fragment`, `premature_seal_signals_do_not_replace_verified_sha` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
