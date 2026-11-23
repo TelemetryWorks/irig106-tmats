@@ -1,6 +1,7 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through effective-value batches drafted (family 2, batches 1-7).**
+> **Status: foundations through condition-scope batches drafted (family 2, batches 1-8).**
+> INT-042 is proposed; owner sign-off and independent AI review are pending.
 > These are implementation obligations, not existing interfaces or completed
 > tests. INT-035/036/037/038/039/040/041 are approved; INT-041 sign-off is dated 2026-11-23.
 > Remaining derivations and development evidence still precede implementation.
@@ -637,6 +638,14 @@ are silently combined to obtain a convenient answer. An Invalid result under
 a fallback edition must carry that fallback label, applied edition and basis
 reason; invalidity does not erase the uncertainty of the chosen rule basis.
 
+For future blank-rule review, 106-24R1 Chapter 9 section 9.4.2, page 9-2, states:
+
+> Leading, trailing, and embedded blanks are assumed to be intentional; they can be ignored in most cases but should not be used in code names, keywords, and data items used as links, such as measurement name.
+
+The full sentence is source evidence, not approval of a new value-blank rule.
+Keep raw bytes and the unavailable-rule guard below; name-edge blank handling
+remains the separate approved INT-036 rule.
+
 **L3-VIEW-006** · Parent: L2-VIEW-003 · Verification: T
 *One actual candidate whose reviewed local character/type/range interpretation succeeds SHALL yield Explicit with the interpreted value, original raw value and source location/correspondence, without silently changing its spelling or representing that value as defaulted.*
 
@@ -695,3 +704,105 @@ This is approved INT-041, a guard on attempting a supported-field read, not a
 new semantic field-value state. Preserve any already established INT-039 Ambiguous outcome or demonstrated
 Invalid failure; lack of another rule must not erase known evidence. INT-037 marker blocking likewise is not evidence of an
 absent key; raw access stays available. No public enum shape is fixed here.
+
+
+## Condition batch 8: scoped evidence and predicate prerequisites
+
+Planned obligations only. INT-042 is proposed for owner sign-off and an
+independent AI check under ADR-0033. The existing approved interpretations
+are not reopened; no complete condition parser or registry is claimed.
+
+**L3-REG-005** · Parent: L2-REG-003 · Verification: T
+*Each executable condition SHALL retain its original source text, edition/section/table/row, interpretation/review identity and a declared binding for each operand, including same-occurrence, linked-occurrence or document-wide scope, fixed index relationships, link traversal and whether defaulted values are eligible.*
+
+Source: ADR-0022, L1-REG-004 and 106-24R1 section 9.5.1 a, page 9-6.
+A document-wide binding must identify the intended operand set and reviewed
+selection/aggregation semantics; it is not permission to choose an arbitrary
+match. This batch specifies no aggregation operator. Same occurrence must
+include the relevant nested indices, not only the top-level group index.
+Unindexed prose cannot become a wildcard or mean occurrence 1 automatically.
+
+**L3-REG-006** · Parent: L2-REG-003 · Verification: T
+*The condition representation SHALL distinguish physical-presence predicates from interpreted-value predicates and SHALL reject an unavailable predicate/reference mapping as non-executable until reviewed; presence SHALL read actual framed, canonically matched items, not inserted defaults or value truthiness.*
+
+Proposed INT-042 supplies the distinction. A terminated empty value remains
+present under INT-035; an unterminated suffix is not an explicit item for
+lookups, but related suffix evidence can block a false presence answer. An
+encoding-blocked semantic lookup cannot prove absence (INT-037).
+Known physical absence is usable presence evidence, not a missing VALUE
+operand; equality/inequality still need a usable interpreted value.
+This does not reinterpret every occurrence of the English word specified
+without reviewing the row, predicate and scope binding.
+
+**L3-VAL-007** · Parent: L2-VAL-003 · Verification: T
+*Condition evaluation SHALL use only the declared document/revision, edition basis and scoped operand bindings; missing bindings, unavailable scope or an unresolved/ambiguous required link target SHALL yield cannot-evaluate with the retained reason and available candidates, without searching unrelated scopes for a usable replacement.*
+
+A known empty candidate set in an established scope differs from an unknown
+target scope. Presence at an unresolved linked target is unknown, not false.
+This consumes a supplied reviewed link result; it neither implements link
+resolution nor infers a data-channel/time-channel association. Document-wide
+and linked scopes must not silently degrade to same-occurrence lookup.
+
+**L3-VAL-008** · Parent: L2-VAL-003 · Verification: T
+*For a reviewed physical-presence predicate in an established lookup scope, one or more actual matches SHALL mean true, zero matches without compatible related damaged evidence SHALL mean false, and zero matches with such evidence SHALL mean cannot-evaluate, retaining every occurrence and its independent findings; empty, Invalid or Ambiguous values SHALL NOT make those actual matches absent, and a default alone SHALL NOT establish physical presence.*
+
+This is proposed INT-042, not a new value-resolution precedence. Duplicate
+scalar items remain Ambiguous under INT-039 even though their physical
+presence is established. Presence true is not permission to use either value,
+claim local validity or suppress duplicate, invalidity or applicability findings.
+A blocked lookup cannot establish presence or absence. A related unterminated
+suffix remains outside lookup under INT-035 but blocks false: `T-1\ID:a`
+at EOF gives cannot-evaluate, so a dependent T-1\AN1 is not judged not allowed.
+Likewise `T-1\ID\xFF:a;` is related damaged-name evidence, not an exact match.
+Retain its raw bytes and finding; do not remove the high byte to manufacture
+an item. A known exact match still proves presence alongside related damage.
+
+Use the declared literal family and index positions for diagnostic relevance,
+with INT-040's compatible-scope guard: a scope is compatible when no readable
+canonical parent fact contradicts it; unknown positions impose no restriction and
+wrong arity must not be guessed into an alignment. In the explicit damaged
+ID example, the retained literal ID plus undecodable trailing byte is related
+family evidence, not permission to accept arbitrary printable prefixes such
+as ID2. Do not search inside values or repair names. Unrelated literal families
+and demonstrably incompatible parents do not block false for this predicate;
+retain their independent findings. Do not enumerate hypothetical parents.
+
+Match exact items through INT-036/038 projection, ASCII case folding and
+canonical numeric identities; keep normalization findings and raw spellings.
+All evidence belongs to the same document/setup record under INT-039 and
+ADR-0025/0031 assembly; other records/documents never count or block absence.
+One assembled setup record may span packets without becoming several scopes.
+
+For a reviewed is-not-specified predicate, complement only true and false;
+cannot-evaluate remains cannot-evaluate. This narrow negated-presence rule
+selects no general compound-condition grammar or Boolean precedence.
+
+**L3-VAL-009** · Parent: L2-VAL-003 · Verification: T
+*A predicate requiring a value SHALL consume only a usable Explicit operand or a Defaulted operand permitted by its declared policy; Missing, Invalid, Ambiguous or unavailable operands and disallowed defaults SHALL yield cannot-evaluate with their reasons/evidence, never a guessed comparison result.*
+
+Absence does not make inequality true; invalid content is not an unequal
+usable value. Defaulted provenance and fallback edition labels stay visible.
+An explicit-only policy does not relabel a Defaulted operand as Explicit or
+as physical presence. INT-041 guards unavailable interpretations; blank
+handling not yet reviewed stays unavailable, not an automatic mismatch.
+
+**L3-VAL-010** · Parent: L2-VAL-003 · Verification: T
+*Each cannot-evaluate condition SHALL produce its own finding naming the invoking validation pass, condition/citation, affected scope, blocking operand or dependency, edition basis and available source locations/candidates; known absence and cited defaults SHALL NOT acquire fabricated input spans.*
+
+The invoking pass is one of ADR-0023's four passes, not a new fifth pass.
+An evaluator used outside validation still returns its uncertainty/evidence;
+this obligation does not require a fictitious validation pass for that call.
+Do not flatten unknown into false when feeding Allowed/Required/default
+applicability. Existing independently proved errors remain visible, and an
+unknown condition must not generate a violation claiming the condition was
+proved true or false. Detailed severity/deduplication policy remains later.
+
+**L3-VAL-011** · Parent: L2-VAL-003 · Verification: T
+*Condition evaluation SHALL leave document bytes, occurrence order, raw spellings and earlier findings unchanged and SHALL retain the operand provenance that supports a true or false result as well as a cannot-evaluate result.*
+
+A result supplies evidence to the calling rule, not authority to delete an
+inapplicable field, insert a default, repair a link or select a duplicate.
+Do not certify whole-document validity from a locally true condition. This
+batch leaves compound-expression grammar, dependency cycles and budgets to
+subsequent reviewed requirements rather than importing Appendix 9-E's
+measurement-expression operators into usage conditions by analogy.
