@@ -72,7 +72,8 @@ irig106-tmats/
 │   │                          2026-11-23-registry-gates-draft.md derives registry evidence gates and deterministic damage matching;
 │   │                          2026-11-23-f1-f7-review-gates.md records F1/F7 review history and separator-spanning damage;
 │   │                          2026-11-23-int021-int030-owner-signoff.md records F1/F7 approval and INT-018/019/020 reconfirmation;
-│   │                          2026-11-23-checksum-followups-draft.md derives initial checksum requirements and drafts INT-043
+│   │                          2026-11-23-checksum-followups-draft.md derives initial checksum requirements and records INT-043 alternatives;
+│   │                          2026-11-23-int043-owner-decision.md records Option B with independent AI recheck pending
 │   ├── API_GUIDE.md           prototype: usage examples for the prototype API
 │   ├── REQUIREMENTS.md        prototype: single-file requirements; replaced by L1/L2/L3-REQ.md
 │   └── FOR_IRIG106_DOCS_REPO.md  prototype: cross-crate contract notes intended for irig106-docs

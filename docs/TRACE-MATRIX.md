@@ -376,7 +376,7 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-040 | Count structurally identified entries independently of value validity | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
 | INT-041 | Unavailable interpretation is not proof of missing or invalid field data | approved (Joey, owner sign-off, 2026-11-23) | not yet written | _(none)_ |
 | INT-042 | A reviewed is-specified predicate tests actual presence, not value usability | approved (Joey, owner sign-off, 2026-11-23) | not yet written | _(none)_ |
-| INT-043 | A zero-padded SHA algorithm designator is not silently normalized | proposed | not yet written | _(none)_ |
+| INT-043 | Leading-zero algorithm 2 designators are accepted with a warning | owner decision recorded, AI recheck of the amended wording pending (Joey, Option B, 2026-11-23) | not yet written | _(none)_ |
 
 * Entries without a written analysis: **43** of 43
 * Entries without a test: **43** of 43

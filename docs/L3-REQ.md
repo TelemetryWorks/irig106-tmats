@@ -2,7 +2,7 @@
 
 > **Status: foundations through initial checksum batches drafted (family 2, batches 1-10).**
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
-> INT-018/019/020 are reconfirmed; INT-043 algorithm-token handling remains proposed.
+> INT-018/019/020 are reconfirmed; INT-043 Option B owner decision is recorded; amended-wording AI recheck is pending.
 > These are implementation obligations, not existing interfaces or completed
 > tests. INT-035/036/037/038/039/040/041/042 are approved; INT-042 sign-off is dated 2026-11-23.
 > Remaining derivations and development evidence still precede implementation.
@@ -994,8 +994,13 @@ No common status precedence hiding a proved error is chosen by this batch.
 
 INT-020 reconfirmation does not choose blank handling or normalize the hashed
 bytes. A projected value mismatch can be reported only when its interpretation
-and exclusion are usable. INT-043's proposed 02- rule remains separate and
-cannot be silently treated as approved through index numeric identity.
+and exclusion are usable. INT-043's owner-decided Option B accepts ASCII-digit
+algorithm tokens whose canonical string is 2, without integer conversion.
+Every accepted noncanonical spelling always emits NONCANONICAL-DESIGNATOR
+as a warning citing Chapter 6 section 6.2.3.11 f and Chapter 9 Table 9-2;
+raw bytes stay unchanged and upper-case hex still follows INT-020. The
+amended wording's independent AI recheck remains pending; owner direction
+alone does not complete the ADR-0033 review/development gates.
 
 **L3-SUM-005** · Parent: L2-SUM-002 · Verification: T
 *G\SHA:0; SHALL be reported unverified with the explicit reason placeholder/no embedded digest, never match or mismatch; as an instance of L3-SUM-002's general defined-exclusion rule its complete unambiguous exclusion SHALL permit COMPUTE, and an explicitly requested stamp MAY replace the placeholder only with final-byte hashing and verification under ADR-0029.*
