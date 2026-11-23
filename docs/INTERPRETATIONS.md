@@ -309,6 +309,14 @@ layer above this per-channel joining rule. Its initial A is signed and its
 guarded owner mid-session extension is approved (AI CONCURS on #41 at
 79b94eb). This entry's joining predicates and approval are unchanged.
 
+**Per-edition channel-use review input (not a new approval)**: The separate
+conformance check needs the applicable edition's channel-ID source and scope,
+not one baseline date cutoff. Project-archived 106-13 §10.6.1.1 b, p. 10-29,
+says reserved 0x0000 "as of 106-13"; 106-24R1 §11.2.1.1 b, p. 11-5, says
+"as of 106-17". See the [per-edition source table](research/2026-11-23-channel-zero-edition-sources.md),
+including older single-multiplexer qualifications. This source-review item
+changes no joining predicate, approved status or historical threshold policy.
+
 ### INT-012
 
 **Title**: RCCVER codes are read as their table states; later editions' reuse is a note
@@ -1547,6 +1555,15 @@ availability is separate, so source NONE does not disqualify a trusted time
 packet. A time packet on channel 0 in 106-17+ gets the separate channel-use
 conformance finding (Chapter 11 section 11.2.1.1 b), never silent acceptance
 as compliant; channel number does not turn it into setup or another format.
+
+**Per-edition channel-use review input (not a new approval)**: Bind the
+separate channel-use check to an exact edition/source profile; do not infer
+all historical behavior from the baseline's "as of 106-17" wording. The
+project-archived 106-13 p. 10-29 instead says "as of 106-13". The
+[per-edition source review](research/2026-11-23-channel-zero-edition-sources.md)
+records the passages and scope questions for INT-011/045. It does not change
+the approved marker guards, adopt an older-edition conformance predicate,
+or confuse channel conformance with joining or closure eligibility.
 
 **Safe closure and evidence**: Retain the phase, channel/run identities,
 caller assertion, marker offset/type/trust and raw spans; never mix channels,

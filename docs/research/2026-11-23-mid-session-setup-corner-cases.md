@@ -12,7 +12,9 @@ Order is a tentative estimate of encounter likelihood: routine retransmission
 and interleaving first, then damaged/burst changes, then legacy/specialised
 cases. No real-recording corpus was inspected and no measured frequency is
 claimed. Several cases can occur together; the ordering can be revised with
-field evidence. Numbers are discussion handles, not requirement IDs.
+field evidence. Existing numbers stay stable when moved: 09 is raised for
+early integrity-policy discussion; M1–M3 are additional discussion handles,
+not requirement IDs. No new exception or default is approved here.
 
 ## Sources and the approved baseline
 
@@ -28,6 +30,7 @@ These source keys apply to every case below:
 | S5 | 106-24R1 Ch11 §11.2.7.4, pp. 11-56–61 | File recording-index mechanism; explicitly undefined for Chapter 11 packet streaming |
 | S6 | [106-24R1 Ch6](https://www.trmc.osd.mil/wiki/download/attachments/335389015/chapter6.pdf?api=v2) §6.2.3.11 f, pp. 6-22–23; Ch9 Table 9-2 MESSAGE DIGEST/CHECKSUM, p. 9-13 | G\SHA digest/exclusion rules; checksum and configuration applicability are different questions |
 | S7 | [Project-archived 106-13 Ch10](https://github.com/TelemetryWorks/rcc-106-standards/releases/download/106-13/chapter10.pdf) §10.6.1.1 b, p. 10-29; §10.6.3.2, p. 10-44 | Older channel wording and initial time ordering; SHA-256 e3740c7ac3099236f4e97cbe5b84c169340e6d4a4222769619e83ea0f8176fde |
+| S8 | [106-24R1 Ch9](https://www.trmc.osd.mil/wiki/download/attachments/335389015/Chapter9.pdf?api=v2) Table 9-4, TIME DATA TYPE FORMAT / TIME FORMAT / TIME SOURCE, pp. 9-71–72; Ch11 §11.2.1.1 i, p. 11-9 | `R-x\TTF-n`, `R-x\TFMT-n`, `R-x\TSRC-n` describe time metadata; RTC is free-running during a session, not a TMATS-encoded correlation-reset command |
 
 S1 gives a one-way event-before-update requirement, not an event identity,
 end marker, inverse event-implies-update rule or recovery algorithm. Do not
@@ -55,6 +58,86 @@ candidate under the SRCC=1 rule.
 tracking the repeat's evidence and finality; B suspend semantic output during
 every repeat. Recommend A only through a reviewed equivalence/governance
 contract, never by assuming that SRCC=0 proves unchanged bytes or meaning.
+
+## M1. Unchanged SRCC=0 repeat makes the INITIAL seal ambiguous
+
+**Case:** After the initial time seal, an unchanged SRCC=0 candidate on
+channel 0 continues +1 with the same FRMT/RCCVER.
+**Standard:** S1 permits unchanged setup with cleared SRCC; S3 sequence
+continuity is not a record delimiter. 106-24R1 Ch9 §9.4.2 p. 9-2 governs
+single-entry attributes, not record boundaries. The time-seal guard is policy.
+**Current rule:** The INITIAL sealed record becomes finally Ambiguous under
+approved INT-045 unless its own G\SHA verifies. Excluding the following
+SRCC=0 candidate from mid-session closure does NOT exempt the earlier record
+from the premature-seal guard. Both readings and finding remain; no rejoin.
+**Options/recommendation:** A add a BYTE-IDENTICAL following-candidate exception:
+keep the sealed record Complete, labelled `identical retransmission`; B use
+the weaker signal of an SRCC=0 FIRST fragment repeating the single-entry G
+attributes; C retain the approved guard without another exception. Recommend
+A for owner consideration only if the WHOLE following candidate's TMATS byte
+extent is independently established and identical, not a matching prefix.
+Byte identity is literal TMATS text (including layout/unknown/checksum
+bytes), not packet headers/CSDWs or logical field equivalence. Treat B as
+information rather than proof. A/B are UNDECIDED; until decided,
+C applies as approved. Byte identity proves equality, not integrity or full
+required-attribute validity, and chooses no new boundary for the repeat.
+
+## 09. The update's G\SHA fails
+
+**Case:** A checksum mismatch, malformed checksum or indeterminate exclusion
+appears in otherwise framed text.
+**Standard:** S6 defines the digest over its exact byte domain, not a general
+rule that checksum failure means a truncated configuration.
+**Current rule:** Checksum states remain distinct; failure cannot supply
+INT-045's positive sealed-text exception. With qualifying continuation the
+final outcome is Ambiguous; without it, structural Complete is not integrity.
+**Options/recommendation:** A quarantine semantic adoption on integrity failure
+(the original catalogue recommendation). The independent reviewer DISAGREES
+with A as the default and recommends B: adopt an otherwise eligible setup
+with a PROMINENT integrity finding, consistently for INITIAL and UPDATE
+records; quarantine becomes an opt-in strict caller mode. Carry B as the
+recommendation for owner discussion, retaining A as the strict option. No
+default is decided: B does not waive incomplete/ambiguous/trust guards, change
+a checksum failure to success, or approve the still-open governing setup
+selection. Never restamp/normalise input to pass or silently preserve an old
+setup only for checksum-failing updates. See 03/04 for separate adoption rules.
+
+## M2. A second setup arrives during the initial phase
+
+**Case:** Before the first time packet, the producer writes two complete-looking
+setup records on the same channel with +1 and matching FRMT/RCCVER; the
+second has SRCC=1.
+**Standard:** S1 describes changed setup and its preceding event; S2 allows
+only static Format 1 before first time. Neither supplies a record-start marker
+from the SRCC transition; F7's event encoding remains unidentified.
+**Current rule:** Matching same-channel +1 fragments still join under INT-011
+before the initial seal. The two well-framed payloads are not automatically
+two established documents. Repeated single-entry G attributes retain INT-039
+and proposed INT-034 duplicate/split evidence; no last-record winner. A later
+SRCC=1 does not upgrade a 0-first candidate's extension eligibility.
+**Options/recommendation:** A retain both readings and withhold a guessed
+initial description; B introduce a reviewed SRCC-transition/producer-boundary
+rule; C accept explicit external record boundaries with labelled evidence.
+Recommend A now. B/C need their own owner decision and review; do not invent
+an event type or waive initial ordering to make the sequence look valid.
+
+## M3. Only TFMT/TSRC/TTF changes: does time correlation reset?
+
+**Case:** Channel IDs and data layouts stay the same, but `R-x\TFMT-n`,
+`R-x\TSRC-n` or `R-x\TTF-n` changes.
+**Standard:** S8 Table 9-4 names TIME FORMAT, TIME SOURCE and TIME DATA TYPE
+FORMAT at pp. 9-71–72. Ch11's free-running RTC is not a command to retain or
+reset a consumer correlation model; these rows define no such reset algorithm.
+**Current rule:** FIRST-fragment SRCC=1 uses approved INT-045 closure; a 0-first
+candidate stays outside even if its metadata differs. Governance/correlation
+transition is not decided. TSRC is a category, not a time-channel association;
+TFMT defaults do not prove clock continuity or override packet evidence.
+**Options/recommendation:** A invalidate/re-establish AFFECTED correlation state
+at an explicitly reviewed setup-adoption point, using packet clock evidence;
+B retain correlation only with explicit evidence it is unchanged; C reset
+all time state unconditionally. Recommend A for owner review, allowing B when
+proved. Neither metadata change nor this recommendation resets wire RTC,
+selects an epoch/default clock, or silently adopts a new setup; see 03/04.
 
 ## 02. Update fragments interleaved with periodic time
 
@@ -145,20 +228,6 @@ unqualified publication; B allow a caller's explicit labelled interpretation
 without changing stored candidates. Recommend A. No option reopens the seal
 or adopts the joined reading as an approved repair.
 
-## 09. The update's G\SHA fails
-
-**Case:** A checksum mismatch, malformed checksum or indeterminate exclusion
-appears in otherwise framed text.
-**Standard:** S6 defines the digest over its exact byte domain, not a general
-rule that checksum failure means a truncated configuration.
-**Current rule:** Checksum states remain distinct; failure cannot supply
-INT-045's positive sealed-text exception. With qualifying continuation the
-final outcome is Ambiguous; without it, structural Complete is not integrity.
-**Options/recommendation:** A quarantine semantic adoption on integrity failure;
-B explicit diagnostic use with failure/assumption labels. Recommend A as an
-owner-discussion option, not an already approved adoption rule. Never restamp
-or normalise input to make it pass.
-
 ## 10. Truncated update at EOF
 
 **Case:** Recording stops while an attribute or fragment is incomplete.
@@ -205,6 +274,9 @@ session. S3 per-channel sequence does not override field disagreement.
 **Current rule:** INT-011 stops joining on FRMT/RCCVER change; INT-045's
 matching-field continuation guard is not proof of a split when fields differ.
 XML stays unsupported; version declarations are not inferred from G\106.
+A FRMT 0-to-1 or 1-to-0 change within the SAME asserted session also gives
+the ASCII/XML MIXING VIOLATION finding, independently of boundary/completeness.
+Do not suppress that finding by treating a format change as an inferred session.
 **Options/recommendation:** A retain separate candidates and edition/format
 findings, keeping applicability unresolved; B accept a separately evidenced
 new session only if the caller asserts it. Recommend A by default. Never
@@ -258,7 +330,11 @@ separate; "pre-106-17" alone is not a blanket conformance certificate.
 **Options/recommendation:** A retain separate descriptions and audit the exact
 edition/copy plus producer scope; B assume newest setup on any channel wins.
 Recommend A and bring the source wording difference to owner review. No
-existing channel policy or interpretation is silently changed here.
+existing channel policy or interpretation is silently changed here. The
+[per-edition source review](2026-11-23-channel-zero-edition-sources.md) includes
+the older single-multiplexer scope and exact 106-13 p. 10-29 wording: channel
+0x0000 is reserved "as of 106-13". This is a separate conformance question,
+not a joining rule, cross-channel winner or blanket pre-106-17 exemption.
 
 ## 18. SRCC bits disagree among fragments
 
