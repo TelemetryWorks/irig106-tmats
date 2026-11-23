@@ -78,7 +78,8 @@ irig106-tmats/
 │   │                          2026-11-23-stamp-transaction-draft.md derives the minimal verified stamp transaction;
 │   │                          2026-11-23-setup-payload-draft.md derives payload boundaries and literal CSDW reporting;
 │   │                          2026-11-23-int012-owner-signoff.md records Format 1-only reconfirmation and code-space guards;
-│   │                          2026-11-23-edition-basis-draft.md derives labelled edition-basis selection and drafts INT-044
+│   │                          2026-11-23-edition-basis-draft.md derives labelled edition-basis selection and drafts INT-044;
+│   │                          2026-11-23-int044-owner-decision.md records Option B, conditions and rejected Option A
 │   ├── API_GUIDE.md           prototype: usage examples for the prototype API
 │   ├── REQUIREMENTS.md        prototype: single-file requirements; replaced by L1/L2/L3-REQ.md
 │   └── FOR_IRIG106_DOCS_REPO.md  prototype: cross-crate contract notes intended for irig106-docs

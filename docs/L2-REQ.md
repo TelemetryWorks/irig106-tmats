@@ -1,7 +1,7 @@
 # irig106-tmats — Level 2 Requirements
 
 > **Status: foundations through edition-basis batches drafted (family 2, batches 1-13).**
-> INT-012 is reconfirmed; INT-044 duplicate-declaration selection remains proposed.
+> INT-012 is reconfirmed; INT-044 Option B is owner-decided; amended wording awaits independent AI recheck.
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
 > Foundations derive the approved restructure/source store; framing and
@@ -609,8 +609,8 @@ Development analysis/tests and the other interpretations' review gates remain. S
 This derives L1-EDN-005's declaration separation and L1-EDN-002's labelled
 basis selection. INT-012 Format 1 literal reading is reconfirmed; INT-014/
 015/016/017 retain their existing decisions and pending review/development
-gates. INT-044 proposes the duplicate-G\106 branch and requires owner sign-off
-and an independent AI check; it is not implemented or implicitly approved.
+gates. INT-044 records Joey's 2026-11-23 Option B decision; its amended wording
+awaits independent AI recheck. It is not implemented or fully approved.
 Historical-layout routing, full edition coverage/deltas and compatibility
 validation remain later derivations. No new supported-edition claim is made.
 
@@ -628,8 +628,8 @@ validation remain later derivations. No new supported-edition claim is made.
 
 **Parent**: L1-EDN-002
 
-**Statement**: Rules-basis selection SHALL apply a valid caller override, else a usable reviewed G\106 declaration, else the reviewed missing/unrecognised-declaration fallback policy using eligible Format 1 RCCVER and finally baseline 106-24R1; it SHALL retain the selected edition, basis, reason and supporting evidence without rewriting declarations, conflating code spaces or treating unavailable knowledge as a missing declaration.
+**Statement**: Rules-basis selection SHALL apply a valid caller override, else a usable reviewed G\106 declaration, else the reviewed fallback policy for missing/unrecognised declarations or explicitly labelled ambiguous G\106 under INT-044, using eligible Format 1 RCCVER and finally baseline 106-24R1; it SHALL retain the selected edition, basis, reason and supporting evidence without rewriting declarations, conflating code spaces or treating unavailable knowledge as a missing declaration.
 
-**Rationale**: ADR-0028/0032 provide the precedence and labelled fallback; INT-017 chooses 0x0E -> 106-24R1 and 0x0D -> 106-20 as POLICY, distinct from INT-012. Proposed INT-044 keeps Ambiguous G\106 outside the missing/unrecognised branch without an explicit override. Review and rule-coverage gaps stay visible; selecting a basis does not establish that its full validator exists or that the document conforms.
+**Rationale**: ADR-0028/0032 provide the precedence and labelled fallback; INT-017 chooses 0x0E -> 106-24R1 and 0x0D -> 106-20 as POLICY, distinct from INT-012. Owner-decided INT-044 Option B adds the explicit ambiguous-declaration reason without relabelling it missing/unrecognised or selecting a candidate; its AI recheck remains pending. Review and rule-coverage gaps stay visible; selecting a basis does not establish that its full validator exists or that the document conforms.
 
 **Verification Method**: Test (T)

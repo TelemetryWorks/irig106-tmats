@@ -1370,33 +1370,47 @@ verification status (L3-SUM-002). No source bytes are repaired or dropped.
 
 ### INT-044
 
-**Title**: Duplicate G\106 blocks automatic edition selection unless the caller overrides
+**Title**: Duplicate G\106 retains ambiguity with an explicitly labelled fallback basis
 
 **Sources**:
 - 106-24R1 Chapter 9 section 9.4.2 page 9-2 describes unique names/single-entry attributes; Table 9-2 RCC IRIG 106 REVISION LEVEL G\106, page 9-10, names the generating edition but defines no recovery for duplicate declarations.
 - Approved INT-039 makes repeated scalar fields Ambiguous even when values agree. ADR-0028 selects override, declared edition, then labelled fallback for missing/unrecognised G\106; it does not explicitly classify ambiguous G\106 as missing/unrecognised.
+- Owner decision, Joey, 2026-11-23: Option B following the independent reviewer's recommendation, with a new explicit ambiguity reason and the existing INT-017 policy unchanged.
 
-**Behaviour**: **Proposed; owner sign-off and independent AI check pending.**
-With duplicate G\106, keep the scalar declaration Ambiguous with every
-occurrence and its duplicate findings. Recommend no automatic edition/rules
-selection from this input: report selection unavailable/cannot-evaluate with
-the ambiguity reason until the caller explicitly supplies a valid override.
-Do not first/last-win, collapse identical values or relabel the declaration
-missing/unrecognised to activate RCCVER/baseline fallback. A valid explicit
-override selects its own labelled basis while all ambiguous-declaration
-candidates and findings remain; it does not repair the declaration.
+**Behaviour**: **Owner decision recorded, AI recheck of the amended wording pending.**
+With duplicate G\106, keep the declaration Ambiguous with every occurrence
+and all duplicate findings; select no candidate. Without an explicit
+override, select a separate rules basis labelled
+`fallback — reason: ambiguous G\106 (n candidates)`, where n counts all
+scalar occurrences, including identical ones, not distinct years or edition
+readings. This is a NEW reason, never missing or unrecognised.
 
-This applies to repeated scalar items, not a single valid year naming several
-candidate editions under INT-014. That existing reviewed rule keeps its own
-candidate/basis behavior and pending-review obligations. No duplicate check
-joins separate documents or successive setup records into one declaration.
+Use the SAME INT-017 policy, not a new mapping: eligible Format 1 RCCVER
+0x0E selects 106-24R1 rules, 0x0D selects 106-20 rules; otherwise use the
+existing policy's applicable reading or, with no usable eligible RCCVER,
+the baseline. INT-017's 0x07–0x0C readings remain unchanged. No Format 4
+or packet-header code supplies a Format 1 operand. Defaults and findings
+under this basis carry the fallback label and ambiguity reason.
 
-**Reason**: The recommendation preserves the fact that the writer gave competing declarations instead of borrowing missing-input fallback semantics. It costs an explicit override even for identical duplicate years. Alternative: proceed through a labelled RCCVER/baseline fallback with reason ambiguous G\106, retaining all candidates; more convenient, but expands the owner's missing/unrecognised fallback policy. Recommend blocking automatic selection; owner choice remains open.
+A valid explicit override still takes precedence with its override label;
+all ambiguity evidence remains. An unusable override blocks selection under
+L3-EDN-003, rather than silently activating fallback. Identical duplicates also fall back: their
+agreement is information only, never permission to collapse occurrences or
+claim a declared basis. Separate records/documents do not form duplicates.
+A single G\106 with a high byte or blank follows INT-037/041 and the
+reviewed declaration binding; it does not acquire this duplicate reason.
+CLI text and JSON make the fallback basis/reason at least as prominent as
+a cannot-evaluate result. No source bytes change.
 
-**Design**: proposed · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: pending · **Origin**: family 2 edition-basis batch 13
+This differs from one valid year naming several candidate editions under
+INT-014; that rule and all other review/coverage gates remain unchanged.
 
-**Test**: `ambiguous_g106_requires_override`, `identical_g106_duplicates_do_not_select`, `override_keeps_ambiguous_declaration_evidence` (planned; not yet written)
+**Reason**: Joey chose useful, visibly qualified checks over blocking all automatic rules selection, following the independent reviewer's recommendation. Preserving Ambiguous separately from the applied basis avoids pretending the writer selected an edition. **Rejected Option A** blocked automatic selection until an override: ADR-0028 explicitly allowed fallback for missing/unrecognised declarations only, so A avoided expanding that policy and preserved uncertainty by refusing a basis, but required an override even when duplicate years agreed. Option B extends the eligible reason explicitly, preserving that uncertainty in every report rather than selecting a candidate.
+
+**Design**: owner decision recorded, AI recheck of the amended wording pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner decision: Joey, 2026-11-23, Option B; independent AI recheck: pending · **Origin**: family 2 edition-basis batch 13
+
+**Test**: `ambiguous_g106_uses_labelled_fallback`, `identical_g106_duplicates_still_fall_back`, `override_keeps_ambiguous_declaration_evidence`, `ambiguous_fallback_uses_existing_policy`, `ambiguous_fallback_labels_defaults_and_findings`, `single_damaged_or_blank_g106_is_not_duplicate`, `ambiguous_fallback_is_prominent` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
-**Draft analysis**: [source, alternatives and pending dependencies](research/2026-11-23-edition-basis-draft.md)
+**Draft analysis**: [original alternatives](research/2026-11-23-edition-basis-draft.md); [owner Option B decision and conditions](research/2026-11-23-int044-owner-decision.md)
