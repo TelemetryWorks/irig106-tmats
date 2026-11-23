@@ -266,7 +266,7 @@ listed here.
 - Chapter 11 section 11.2.1.1 f: "Each channel in a session shall have its own sequence counter providing a unique sequence number for that channel".
 - Owner decision, Joey, 2026-11-23, following AI CONCERNS on #37: intervening means SAME-CHANNEL; joining is per-channel and independent. Section 11.2.1.1 b's channel-0 restriction from 106-17 is a separate edition-dependent check.
 
-**Behaviour**: **Owner decision recorded, AI recheck of amended wording pending.**
+**Behaviour**: **Reconfirmed: Joey, owner decision 2026-11-23; independent AI recheck CONCURS on #38 at c623b15, under ADR-0033.**
 Maintain independent candidate runs for each channel. Join consecutive data
 type 0x01 fragments within that channel when sequence increases by one modulo
 256 and decoded FRMT/RCCVER agree. Runs on different channels never mix or
@@ -294,13 +294,15 @@ this amends the joining interpretation, not the standard's quoted wording.
 The 2026-09-27 distinction between stopping a run and proving a complete
 record remains; leading-boundary evidence is now retained as well.
 
-**Design**: owner decision recorded, AI recheck of amended wording pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner decision: Joey, 2026-11-23; independent AI check: CONCERNS on #37 at fabbc06; AI recheck of amended wording: pending · **Origin**: T3; owner per-channel clarification, 2026-11-23
+**Design**: approved (Joey, owner reconfirmation, 2026-11-23) · **Review**: complete under ADR-0033; draft author: maintainer agent; owner reconfirmation: Joey, decision 2026-11-23; independent AI check: initial CONCERNS on #37 at fabbc06, amended-wording CONCURS on #38 at c623b15 · **Origin**: T3; owner per-channel clarification, 2026-11-23
 
 **Test**: `multi_packet_setup_record_is_assembled`, `other_channel_packets_do_not_stop_joining`, `two_setup_channels_have_independent_runs`, `same_channel_packet_stops_joining`, `run_start_reasons_remain_evidence`, `setup_channel_restriction_is_not_joining` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
 **Decision record**: [owner per-channel clarification and review status](research/2026-11-23-int011-per-channel-owner-decision.md).
+
+**Reconfirmation record**: [owner reconfirmation and exact AI reference](research/2026-11-23-int011-owner-signoff.md). Source freshness, development analysis and executable tests remain required.
 
 ### INT-012
 
@@ -350,18 +352,44 @@ or packet-header byte. Full development analysis and tests remain outstanding.
 - Chapter 9 §9.4.2: each attribute is a code name and data item ended by a semicolon; "Semicolons are not allowed in any data item (including comment items)."
 
 **Behaviour**: For each run joined under INT-011:
-- **complete** — no gap or CSDW change inside it, the body's last non-blank byte is `;`, and the run is followed by another packet (basis "followed by another packet") or by the end of input (basis "end of input", labelled);
+- **complete** — no gap or CSDW change inside it, the body's last non-blank byte is `;`, and the run is followed by a SAME-CHANNEL packet (basis "followed by another packet") or by the end of input (basis "end of input", labelled);
 - **incomplete** — the body is cut inside an attribute (its last non-blank byte is not `;`), a fragment is unreadable or untrusted, or a sequence gap splits text that continues an attribute across it;
 - **ambiguous** — a sequence gap or a CSDW change where the text before it ends at `;`, or a gap-free run whose text repeats a single-entry attribute (for example `G\106` or `G\PN`); both readings and the split point are reported.
+
+**Review consequences (owner-relayed, 2026-11-23)**: "Followed by another
+packet" means SAME-CHANNEL under reconfirmed INT-011. Other-channel traffic
+never closes a run. An otherwise complete run ending at EOF in `;` is
+**complete**, labelled "end of input", not downgraded solely for EOF. Retain
+START evidence without treating an ordinary input-start label as proof of
+leading truncation. Independently established damage, repeated scalar/split
+ambiguity and unusable format evidence still require their own decisions;
+EOF alone does not erase those blockers or choose their precedence.
+
+An open run needs a separate **PROVISIONAL** observation, e.g. "text ends
+at ;, run still open", for streaming consumers. This is never a joining stop
+or an assertion of final completeness. How a consumer may use such data
+before EOF, and invalidate a previously used snapshot after later bytes,
+remain explicit open items below, not an approved governance extension.
+Aggregate open-run memory needs an explicit budget and typed limit error;
+exhaustion never silently drops a channel's run or synthesizes EOF.
+
 Complete records govern (INT-028); incomplete and ambiguous records do not by default (INT-031). An XML body (FRMT 1) is of unknown completeness.
 
 **Reason**: The packets alone cannot tell where a record ends; the text's final byte and repeated single-entry attributes are the only evidence the standard gives, and neither is proof in every case.
 
 **Design**: accepted in principle (three outcomes, owner, 2026-09-27, ADR-0031); these rules proposed · **Review**: pending · **Origin**: team spec alignment review, 2026-09-27
 
-**Test**: `setup_record_completeness_outcomes`
+**Test**: `setup_record_completeness_outcomes`, `eof_boundary_is_complete_and_labelled`, `other_channel_packet_cannot_finalize_run`, `open_boundary_is_provisional_not_complete`, `provisional_extension_never_closes_run` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Open items for owner review**: (a) provisional snapshots for explicit,
+labelled consumer use versus final-only semantic use; recommend opt-in
+snapshots, with their version/evidence and later invalidation visible, never
+silently governing under INT-028/031; (b) precedence for known leading damage,
+empty/padding-only bodies and competing duplicate/split evidence, including
+INT-035/036 padding at EOF. No precise algorithm is approved here. See
+[batch 15 review draft](research/2026-11-23-completeness-contracts-draft.md).
 
 ## Errata in the standard's own examples
 

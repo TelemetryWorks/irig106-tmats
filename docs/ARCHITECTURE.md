@@ -421,7 +421,7 @@ and reported when present.
   no end-of-record marker): fragments are joined while they are consecutive
   data type `0x01` packets within each channel, independently, whose sequence
   numbers increase by one modulo 256 and whose CSDWs agree on FRMT/RCCVER.
-  INT-011's owner clarification (2026-11-23, AI recheck pending) makes
+  INT-011's owner clarification (reconfirmed 2026-11-23; AI CONCURS on #38 at c623b15) makes
   other-channel packets provenance/information only, never a stop condition;
   a same-channel intervening packet stops that channel's joining. Retain
   each run's START reason alongside its stop evidence for leading-truncation
@@ -432,6 +432,15 @@ and reported when present.
   govern by default; uncertainty is reported, never guessed.
 - **Checksums:** `G\SHA` and the flex signature are computed over the
   assembled body.
+
+Completeness follow-up (2026-11-23): INT-034's "followed by another packet"
+means SAME-CHANNEL. An otherwise complete boundary-ending EOF run remains
+complete with its labelled basis. PROVISIONAL open-run observations never
+stop joining. Pre-EOF semantic snapshot use and invalidation are open owner
+choices, not an approved exception to complete-only parsing/governance.
+Finite aggregate open-run retention and a typed limit error are required;
+accounting, numeric policy and recovery details remain review work. See the
+[batch 15 draft](research/2026-11-23-completeness-contracts-draft.md).
 
 ### 6.5 Session rules and edition codes
 

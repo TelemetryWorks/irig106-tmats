@@ -37,7 +37,7 @@ states the claim.
 - When a design decision changes a diagram, update the SVG and its caption in
   the same commit.
 
-INT-011 owner clarification (2026-11-23; amended wording awaits AI recheck):
+INT-011 owner clarification (reconfirmed 2026-11-23; AI CONCURS on #38 at c623b15):
 the contiguous example in `setup-record-assembly.svg` is not a global
 adjacency requirement. Joining is independent per channel; other-channel
 packets are provenance/information only and never stop a run. Preserve START

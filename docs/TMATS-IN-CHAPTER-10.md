@@ -893,7 +893,9 @@ proposed).
 
 The standard has no end-of-record marker, so each joined run is classified
 with its evidence (ADR-0031, INT-034): **complete** when its text ends at an
-attribute boundary and another packet or the end of input follows;
+attribute boundary and a SAME-CHANNEL packet or the end of input follows;
+EOF alone does not downgrade an otherwise complete boundary-ending run,
+which retains the labelled "end of input" basis;
 **incomplete** when its text is cut inside an attribute, a fragment cannot
 be trusted (a header checksum that fails before a length can be trusted), or
 a sequence gap splits an attribute; **ambiguous** when a gap or a CSDW

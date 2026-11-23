@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through assembly-contract batches drafted (family 2, batches 1-14).**
+> **Status: foundations through completeness-contract batches drafted (family 2, batches 1-15).**
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
@@ -1259,8 +1259,8 @@ under L1-EDN-006 is a later derivation, not an implied fallback here.
 
 ## Assembly-contract batch 14: candidate runs and exact source mapping
 
-Planned, not implemented. INT-011's 2026-11-23 owner clarification is
-recorded; AI recheck of amended wording remains pending;
+Planned, not implemented. INT-011 is reconfirmed by Joey, 2026-11-23,
+with AI CONCURS on #38 at c623b15; development gates remain;
 INT-034's precise completeness rules remain proposed under ADR-0031/0033.
 These children describe the joining/provenance stage only. They do not settle
 complete/incomplete/ambiguous classification, adjacent-record splits, SRCC
@@ -1342,10 +1342,95 @@ as a usable document.
 Each run retains an evidenced START reason, e.g. "start of supplied input"
 or restart after a same-channel interruption/sequence or FRMT/RCCVER change;
 these reasons do not assert that the beginning is intact. Other-channel
-traffic never creates a new start for an existing run. INT-011 needs its
-pending AI recheck before implementation. INT-034
+traffic never creates a new start for an existing run. Implementation of
+reconfirmed INT-011 still requires completed analysis and executable checks.
+INT-034
 requires its own owner sign-off and independent check for the precise rules;
 INT-039 duplicate classification applies to a document only after assembly
 scope is established. Cross-fragment duplicate evidence must not silently
 select a split or a scalar winner. These dependencies remain visible even
 when fixture-provided reviewed bindings make individual joining tests pass.
+
+## Completeness-contract batch 15: observation versus authority
+
+Planned obligations; INT-034's precise rules and INT-028/031 governance are
+not approved. Their supplied reviewed fixture bindings isolate the cases
+below without completing any interpretation gate. The open-run observation
+is PROVISIONAL, not a fourth final completeness outcome or a joining stop.
+
+**L3-CH10-017** · Parent: L2-CH10-006 · Verification: T
+*A closed-run report SHALL retain channel/run identity, observed raw text extent, START and stop evidence, final complete/incomplete/ambiguous outcome or unavailable reason, and every competing boundary reading with locations; classification SHALL NOT discard bytes or choose an implicit split.*
+
+ADR-0031/INT-034 define the three final ASCII outcomes in principle. FRMT=1
+remains unsupported/unknown completeness, not parsed as ASCII. An unavailable
+reviewed classification rule cannot be presented as a positive completeness
+verdict. This does not approve the precise proposed branch precedence.
+
+**L3-CH10-018** · Parent: L2-CH10-006 · Verification: T
+*Under a supplied reviewed INT-034 classification binding, an otherwise complete run whose text ends in semicolon at supplied EOF SHALL be Complete with labelled basis "end of input"; "followed by another packet" SHALL refer only to a SAME-CHANNEL packet that actually ends joining, never another channel's traffic.*
+
+Owner-relayed review consequence, 2026-11-23. EOF alone must not turn a valid
+final record into incomplete or ambiguous. Preserve the START observation
+without interpreting "start of supplied input" as known leading damage.
+Independently established damage/ambiguous split evidence remains reported;
+its precedence needs review. This case deliberately ends exactly at `;`;
+trailing padding/controls require reconciliation with INT-035/036, not a new
+unreviewed trim operation. Finality is not proof of source data validity.
+
+**L3-CH10-019** · Parent: L2-CH10-006 · Verification: T
+*Incomplete/ambiguous classification evidence SHALL retain the affected spans, gap/trust/boundary facts and all competing readings without concatenating across a missing segment, synthesizing a terminator or selecting one repeated scalar occurrence as the intended record boundary.*
+
+INT-034's precise branch conditions remain proposed. INT-039's duplicate
+field rule and INT-044's ambiguous-declaration fallback do not establish a
+record split or override assembly ambiguity. Locating evidence is mandatory;
+deciding which classification wins when several kinds coexist is still an
+open owner-review item. No positive governing or checksum verdict follows.
+
+**L3-CH10-020** · Parent: L2-CH10-007 · Verification: T
+*While a run remains open, a boundary observation such as "text ends at ;, run still open" SHALL be labelled PROVISIONAL with its channel, observed extent and current evidence; further qualifying same-channel fragments SHALL remain joinable, and other-channel packets SHALL neither finalize nor restart the run.*
+
+The observation can change when more text arrives; it never asserts EOF or
+closes a run to make a streaming result available. An in-value suffix remains
+visible rather than being discarded to expose the preceding `;`. Proposed
+semantic snapshots would need exact revision/extent and invalidation rules;
+this requirement exposes evidence without approving that interpretation.
+
+**L3-CH10-021** · Parent: L2-CH10-007 · Verification: T
+*Any consumer-facing report carrying provisional setup evidence SHALL retain that provisional status and its basis separately from the governing-record decision; absent a reviewed provisional-use contract, it SHALL NOT present the observation as a complete, verified or automatically governing setup record.*
+
+Open owner choice in INT-034: opt-in, explicitly labelled semantic snapshots
+for irig106-time's CLI versus final-only semantic use. Recommend opt-in
+snapshots to avoid waiting until EOF while requiring later changes and every
+assumption to remain visible. This recommendation is undecided; it requires
+reconciling the current complete-only parse/checksum boundary and INT-028/031,
+including what to do with outputs already emitted when later text invalidates
+a snapshot. No default permission or new public API is selected here.
+
+**L3-ROB-004** · Parent: L2-ROB-003 · Verification: T
+*The open-run budget SHALL be finite and explicit across all retained channels, with a documented byte-accounting model covering retained text, fragment/run metadata, provenance and any assembler-retained snapshots; an operation SHALL use non-wrapping arithmetic to check its additional charge and SHALL NOT accept retained state beyond the budget.*
+
+The model must bound retention, including empty-fragment/empty-text metadata
+and copies, not just concatenate-length totals or one run at a time. Numeric
+limits, allocator overhead accounting and ownership of caller-held snapshots
+remain review work; no implementation may advertise a hard byte bound from
+an incomplete model. A fixture-provided accounting model tests the contract,
+not a production model's accuracy. No Chapter 9 maximum is invented.
+
+**L3-ROB-005** · Parent: L2-ROB-003 · Verification: T
+*Budget exhaustion SHALL return a typed limit error identifying the configured limit, charged state and rejected operation's channel/run evidence, retaining or returning accepted/rejected bytes and provenance through an explicit failure path rather than silently dropping data; arithmetic overflow SHALL report a typed limit failure rather than wrap or panic.*
+
+The operation may not silently evict another channel, truncate its text,
+reclassify a run as complete or pretend an error was EOF. Detailed failure
+atomicity, resumability and caller ownership need review before code; the
+caller must be able to identify what was accepted versus rejected. This
+requirement does not permit unlimited error-buffer retention or local spill
+I/O (ADR-0010). It selects no concrete Rust error name or numeric threshold.
+
+**L3-ROB-006** · Parent: L2-ROB-003 · Verification: T
+*A caller-visible budget failure SHALL remain distinct from TMATS malformed-data findings and complete/incomplete/ambiguous/provisional observations, and reporting the failure SHALL NOT manufacture a joining stop, a governing record or a successful checksum result.*
+
+Resource exhaustion is an operational limitation, not evidence that the
+recording ended or was invalid. Other runs may be reported only with their
+retained actual state; no hidden "keep the first channel" policy is allowed.
+Recovery/resume and any opt-in disposal action need their own explicit
+contract. Passing a limit test does not prove all L1-ROB-001 input handling.

@@ -707,8 +707,8 @@ pending interpretations implemented or production coverage complete.
 **Status: planned, not executable tests.** Sources: 106-24R1 Chapter 11
 section 11.2.7.2/Figure 11-34 page 11-50 and section 11.2.1.1 f; ADR-0025,
 ADR-0031 and INT-011. Fixtures supply a reviewed joining binding to isolate
-this contract; INT-011 records Joey's 2026-11-23 per-channel decision and
-its amended wording awaits AI recheck. No fixture here
+this contract; INT-011 is reconfirmed by Joey, 2026-11-23, with AI CONCURS
+on #38 at c623b15; analysis/tests remain. No fixture here
 approves INT-034 or establishes complete/governing records just by joining.
 
 For the exact map oracle below, supply fragment 1 text `G\COM:a` in a
@@ -751,6 +751,40 @@ focused cases do not replace it. The cross-fragment duplicate fixture already
 records same channel, sequence +1 and matching FRMT/RCCVER as ONE candidate
 run's prerequisites, without assuming that repeated scalar text proves its
 completeness. No new test marker or implementation status is added here.
+
+## Family 2 batch 15: finality, provisional evidence and limit specifications
+
+**Status: planned, not executable tests.** Sources: 106-24R1 Chapter 9
+section 9.4.2 page 9-2; Chapter 11 section 11.2.7.2 page 11-50 and
+section 11.2.1.1 f; ADR-0031; reviewer consequences relayed by the owner
+2026-11-23 after #38. INT-011 is reconfirmed (AI CONCURS on #38 at c623b15).
+INT-034's precise classification and INT-028/031 governance remain proposed.
+Fixtures supply reviewed classification/accounting bindings; their success
+cannot approve those bindings or close the open streaming-use question.
+
+| Planned check | Fixture or stimulus | Expected observation | Requirement |
+| --- | --- | --- | --- |
+| `closed_run_classification_retains_evidence` | Supplied complete, incomplete and ambiguous classification bindings for distinct runs | Retain each channel/run, raw extent, START/stop evidence, verdict and all competing readings/spans; never imply semantic approval from fixture success | L3-CH10-017, L3-CH10-019 |
+| `eof_boundary_is_complete_and_labelled` | Trusted ASCII run `COMMENT:x;`, normal `start of supplied input` START reason, no independent gap/damage/duplicate evidence, then supplied EOF | Complete, basis `end of input`, labelled; neither EOF nor ordinary START alone downgrades it or proves leading truncation | L3-CH10-017, L3-CH10-018 |
+| `same_channel_stop_supplies_followed_packet_basis` | Trusted boundary-ending run, then a non-setup packet on that same channel; supplied reviewed classification binding | Closed-run report uses same-channel stop evidence; if otherwise complete, basis `followed by another packet`; independent conformance findings remain | L3-CH10-018 |
+| `other_channel_packet_cannot_finalize_run` | Channel 0 run `COMMENT:x;` remains open while other-channel data packets continue, no EOF | Still open; other-channel provenance/information retained, never final Complete merely from another channel's packet | L3-CH10-018, L3-CH10-020 |
+| `open_boundary_is_provisional_not_complete` | Open channel run currently ends in `;`; temporarily no more packets available | PROVISIONAL `text ends at ;, run still open`, observed extent/channel retained; temporary input starvation is not EOF, finality or a join stop | L3-CH10-020, L3-CH10-021 |
+| `provisional_extension_never_closes_run` | Observe open `COMMENT:x;`, then append qualifying same-channel fragment `COMMENT:y;`, separately an in-value suffix | Same run extends without a manufactured boundary; updated extent/evidence retained; suffix is not discarded to reuse the older boundary observation | L3-CH10-020 |
+| `provisional_use_policy_remains_explicit` | Streaming irig106-time consumer asks to use open setup data; no reviewed provisional-use binding, separately a future opt-in binding | Without binding, no claim of complete/governing authority; opt-in snapshot revision, invalidation and already-emitted-output expectations are open acceptance items, not a selected implementation | L3-CH10-021 |
+| `xml_completeness_stays_unavailable` | FRMT=1 run, body happens to end in `;`, then EOF | Unsupported/unknown completeness, not ASCII Complete inferred from one byte; bytes/evidence remain | L3-CH10-017 |
+| `competing_split_evidence_is_not_repaired` | Supplied ambiguous classification for repeated single-entry fields or a gap at `;` | All candidates, possible split points and raw bytes retained; neither an INT-044 fallback nor EOF erases independent split evidence or selects a winner | L3-CH10-019 |
+| `padding_and_known_leading_damage_need_review` | Boundary text plus trailing CR/LF/NUL padding; separately explicit leading-loss evidence | Retain evidence and open classification-precedence question; no invented trim or settled precedence. Different from normal input-start/clean exact-semicolon EOF case | L3-CH10-017, L3-CH10-018 |
+| `aggregate_open_run_budget_is_enforced` | Supplied finite byte-accounting model; two channels each below budget individually, their combined retained charge exceeds it | Typed limit error with channel/run/limit/charge evidence, no hidden per-channel-only test, eviction or cross-channel merge | L3-ROB-004, L3-ROB-005 |
+| `budget_boundary_and_overflow_are_typed` | Supplied independently charged state C=60, budget B=64, delta=4 then 5 in separate trials; separately overflowing charge arithmetic | Exact boundary fits; over-boundary operation reports typed limit error; overflow cannot wrap into acceptance or panic. These are contract stimuli, not a production accounting oracle | L3-ROB-004, L3-ROB-005 |
+| `metadata_and_snapshots_are_charged` | Empty-text fragments and additional channel/run/provenance metadata; separately assembler-retained provisional copies under supplied model | Charge grows even without text growth and includes retained copies; declared byte bound cannot omit metadata. Concrete accounting/defaults remain review work | L3-ROB-004 |
+| `limit_error_is_not_eof_or_data_invalidity` | Open runs on channels 1/2, operation on channel 1 exceeds aggregate budget | Typed operational failure; identify accepted/rejected data and ownership path, no silent loss of either run, fabricated EOF/completeness/governance or checksum success | L3-ROB-005, L3-ROB-006 |
+
+Resource-policy defaults, exact memory accounting/allocator overhead, failure
+atomicity and resume behavior must be reviewed before executable tests claim
+a hard memory bound. No numeric production limit is proposed by the synthetic
+B=64 case. Full timelines remain 0.2; provisional pre-EOF metadata is an open
+0.1 consumer contract, not silently implemented by a timeline or a fourth
+final state. Existing whole-record acceptance cases remain required.
 
 ## Real Chapter 10 recordings (local use only)
 

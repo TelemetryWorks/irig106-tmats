@@ -58,7 +58,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-CH10-001 | L2-CH10-001 | _(none)_ | Draft |
 | L1-CH10-002 | L2-CH10-002 | _(none)_ | Draft |
 | L1-CH10-003 | _(none)_ | _(none)_ | Draft |
-| L1-CH10-004 | L2-CH10-004, L2-CH10-005 | _(none)_ | Draft |
+| L1-CH10-004 | L2-CH10-004, L2-CH10-005, L2-CH10-006, L2-CH10-007 | _(none)_ | Draft |
 | L1-CH10-005 | _(none)_ | _(none)_ | Draft |
 | L1-CH10-006 | L2-CH10-003 | _(none)_ | Draft |
 | L1-CH10-007 | _(none)_ | _(none)_ | Draft |
@@ -73,6 +73,8 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-CH10-003 | L3-CH10-007, L3-CH10-008 | _(TBD)_ | Draft |
 | L2-CH10-004 | L3-CH10-009, L3-CH10-010, L3-CH10-011, L3-CH10-012, L3-CH10-016 | _(TBD)_ | Draft |
 | L2-CH10-005 | L3-CH10-013, L3-CH10-014, L3-CH10-015 | _(TBD)_ | Draft |
+| L2-CH10-006 | L3-CH10-017, L3-CH10-018, L3-CH10-019 | _(TBD)_ | Draft |
+| L2-CH10-007 | L3-CH10-020, L3-CH10-021 | _(TBD)_ | Draft |
 
 ### L1-EDN: IRIG 106 editions
 
@@ -272,7 +274,7 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
-| L1-ROB-001 | L2-ROB-001, L2-ROB-002 | _(none)_ | Draft |
+| L1-ROB-001 | L2-ROB-001, L2-ROB-002, L2-ROB-003 | _(none)_ | Draft |
 | L1-ROB-002 | _(none)_ | _(none)_ | Draft |
 | L1-ROB-003 | _(none)_ | _(none)_ | Draft |
 
@@ -282,6 +284,7 @@ This matrix is the single source of truth for live status; the requirement docum
 |-------|-------------|----------------|--------|
 | L2-ROB-001 | L3-ROB-001, L3-ROB-002 | _(TBD)_ | Draft |
 | L2-ROB-002 | L3-ROB-003 | _(TBD)_ | Draft |
+| L2-ROB-003 | L3-ROB-004, L3-ROB-005, L3-ROB-006 | _(TBD)_ | Draft |
 
 ### L1-PERF: Performance
 
@@ -320,7 +323,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | Category | L1 | L2 | L3 | L2 tested | L3 tested | L2 verified | L3 verified |
 |----------|----|----|----|-----------|-----------|-------------|-------------|
 | READ | 7 | 13 | 33 | 0 | 0 | 0 | 0 |
-| CH10 | 8 | 5 | 16 | 0 | 0 | 0 | 0 |
+| CH10 | 8 | 7 | 21 | 0 | 0 | 0 | 0 |
 | EDN | 6 | 2 | 7 | 0 | 0 | 0 | 0 |
 | REG | 8 | 6 | 13 | 0 | 0 | 0 | 0 |
 | VIEW | 9 | 4 | 11 | 0 | 0 | 0 | 0 |
@@ -331,16 +334,16 @@ This matrix is the single source of truth for live status; the requirement docum
 | SUM | 4 | 3 | 10 | 0 | 0 | 0 | 0 |
 | IO | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
 | CLI | 9 | 2 | 3 | 0 | 0 | 0 | 0 |
-| ROB | 3 | 2 | 3 | 0 | 0 | 0 | 0 |
+| ROB | 3 | 3 | 6 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **44** | **113** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **47** | **121** | **0** | **0** | **0** | **0** |
 
 The countable requirement set is every L2 and L3 requirement plus the 53 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 210 (0.0%).
+**Tested by at least one test marker**: 0 of 221 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 210 (1.4%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 221 (1.4%).
 
 ### Orphan check
 
@@ -363,7 +366,7 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-008 | `C-d\DPNO`'s condition names `C\DCT` without an index | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-009 | Counters named without indices in conditions | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-010 | Equality is `==`, although Table E-3 prints `= =` | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
-| INT-011 | Per-channel joining of multi-packet setup-record fragments | owner decision recorded, AI recheck of amended wording pending | not yet written | _(none)_ |
+| INT-011 | Per-channel joining of multi-packet setup-record fragments | approved (Joey, owner reconfirmation, 2026-11-23) | not yet written | _(none)_ |
 | INT-012 | RCCVER codes are read as their table states; later editions' reuse is a note | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26, revised 2026-09-27) | not yet written | _(none)_ |
 | INT-034 | A joined run is complete, incomplete, or ambiguous | accepted in principle (three outcomes, owner, 2026-09-27, ADR-0031); these rules proposed | not yet written | _(none)_ |
 | INT-013 | Appendix 9-C ends 18 attributes with `:` instead of `;` | suspect (owner, 2026-09-26; `docs/ROADMAP.md`, S1) | not yet written | _(none)_ |
