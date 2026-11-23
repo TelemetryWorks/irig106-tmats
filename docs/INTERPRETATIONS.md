@@ -425,7 +425,7 @@ Complete records govern (INT-028); incomplete and ambiguous records do not by de
 
 **Reason**: The standard speaks of the code name; `irig106lib`'s substring search treats text in a value as the item (defect D6).
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T7
+**Design**: accepted (owner, 2026-09-26) · **Review**: pending under ADR-0033; existing owner acceptance: 2026-09-26; independent AI check: pending (owner will route); required before implementation; 0.1 checksum review blocker · **Origin**: T7
 
 **Test**: `g_sha_code_name_in_any_case_and_not_in_values`
 
@@ -443,7 +443,7 @@ Complete records govern (INT-028); incomplete and ambiguous records do not by de
 
 **Reason**: Without a following semicolon the excluded range is undefined, so any digest would rest on a guess.
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T7
+**Design**: accepted (owner, 2026-09-26) · **Review**: pending under ADR-0033; existing owner acceptance: 2026-09-26; independent AI check: pending (owner will route); required before implementation; 0.1 checksum review blocker · **Origin**: T7
 
 **Test**: `unterminated_g_sha_is_malformed`
 
@@ -461,7 +461,7 @@ Complete records govern (INT-028); incomplete and ambiguous records do not by de
 
 **Reason**: Table 9-2 allows hex characters without a case; Chapter 6 fixes lower case; §9.4.2 makes letter case insignificant.
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T7
+**Design**: accepted (owner, 2026-09-26) · **Review**: pending under ADR-0033; existing owner acceptance: 2026-09-26; independent AI check: pending (owner will route); required before implementation; 0.1 checksum review blocker · **Origin**: T7
 
 **Test**: `upper_case_g_sha_matches_with_warning`
 
@@ -477,13 +477,28 @@ Complete records govern (INT-028); incomplete and ambiguous records do not by de
 
 **Behaviour**: **Coordinator-decided F1, 2026-11-21; owner may override.** Reject duplicate SHA items as indeterminate; list every occurrence, preserve every byte, never claim positive verification, and refuse stamping until the input is fixed (ADR-0034).
 
+**F1 edge cases (review follow-up, 2026-11-23)**: A damaged name compatible
+with G\SHA under L3-VAL-012, such as `G\SH\xFFA`, also makes verification
+indeterminate, including alongside one exact SHA item: the exact item's
+presence does not prove no further damaged SHA occurrence exists. Keep all
+raw evidence, never manufacture an exact key or a positive verification.
+INT-019's exact unterminated G\SHA remains malformed, not silently promoted
+to an exclusion with a guessed end.
+
+Refusing to stamp does not forbid the ADR-0029 repair transaction: the caller
+may remove a duplicate by naming one exact item ID bound to the document
+revision. No first/last winner or implicit deletion is chosen. Apply the
+explicit edit, rebuild/re-read the result, and stamp only after the resulting
+input has no blocking duplicate/damaged-SHA ambiguity. A stamp may be the
+last step of that transaction, never run over the still-ambiguous input.
+
 **Implementation gate**: Reader/validator behaviour tied to this register entry is subject to L3-REG-009/012 even when hand-written rather than generated. The coordinator decision stands as the recommendation; ADR-0033 owner sign-off and an independent AI check are required before implementation. Source freshness, development analysis and executable verification remain additional gates.
 
 **Reason**: The standard does not say which item, if any, holds the checksum, or which text is excluded, when there are several.
 
-**Design**: coordinator-decided (F1, 2026-11-21; owner may override) · **Review**: pending under ADR-0033; owner sign-off: pending; independent AI check: pending; coordinator decision is the recommendation, not approval; implementation blocked until both checks are recorded · **Origin**: T7
+**Design**: coordinator-decided (F1, 2026-11-21; owner may override) · **Review**: pending under ADR-0033; owner sign-off: pending; independent AI check: CONCUR, relayed by the owner 2026-11-23 for PR #30 head `13173b04faac989fa581b8e9ebbd0df6c80d6b98`; coordinator decision is the recommendation, not approval; implementation still blocked pending owner sign-off · **Origin**: T7
 
-**Test**: `duplicate_g_sha_items` (planned; not yet written)
+**Test**: `duplicate_g_sha_items`, `damaged_sha_name_is_indeterminate`, `exact_duplicate_removal_precedes_stamping` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -653,9 +668,21 @@ Findings: SRCC 1 on the first record; SRCC 0 with a changed configuration (an un
 
 **Implementation gate**: Reader/validator behaviour tied to this register entry is subject to L3-REG-009/012 even when hand-written rather than generated. The coordinator decision stands as the recommendation; ADR-0033 owner sign-off and an independent AI check are required before implementation. Source freshness, development analysis and executable verification remain additional gates.
 
+**Analysis notes (review follow-up, 2026-11-23; not completed analysis)**:
+- Report SRCC=1 on the session's first setup record separately; do not merge
+  it into, or claim it is settled by, the event-identification result.
+- Preserve fragments' individual SRCC values and disagreement. ADR-0025's
+  CSDW agreement check covers FRMT/RCCVER, not SRCC; do not infer SRCC
+  agreement from successful assembly or silently choose one fragment's bit.
+  A summary/validation rule needs its own reviewed analysis.
+- Show a nearby Format 2 recording-event packet as a candidate only, never
+  as satisfying the configuration-change event rule without verified identity.
+- Once the packet is identified, what prior means needs its own cited,
+  reviewed interpretation (ordering/scope); proximity alone chooses none.
+
 **Reason**: Checking for a packet the standard does not identify would rest on a guess (for example, that it is a Format 2 recording event packet).
 
-**Design**: coordinator-decided (F7, 2026-11-21; owner may override) · **Review**: pending under ADR-0033; owner sign-off: pending; independent AI check: pending; coordinator decision is the recommendation, not approval; implementation blocked until both checks are recorded · **Origin**: F4 section 5
+**Design**: coordinator-decided (F7, 2026-11-21; owner may override) · **Review**: pending under ADR-0033; owner sign-off: pending; independent AI check: CONCUR, relayed by the owner 2026-11-23 for PR #30 head `13173b04faac989fa581b8e9ebbd0df6c80d6b98`; coordinator decision is the recommendation, not approval; implementation still blocked pending owner sign-off · **Origin**: F4 section 5
 
 **Test**: `configuration_change_event_packet` (planned; event identification still unverified)
 

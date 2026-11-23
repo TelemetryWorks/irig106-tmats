@@ -286,8 +286,8 @@ does not by itself sign off an executable interpretation.
 | W1: workspace | Owner-decided, 2026-11-21; ADR-0035 supersedes ADR-0034 W1 | Virtual root; library `crates/irig106-tmats/`, CLI `apps/irig106-tmats-cli/`; shared lockstep workspace version and exact-version path dependency in workspace.dependencies |
 | W2: prototype retirement | Coordinator-decided, 2026-11-21; owner may override | Remove the prototype in the restructure change; `prototype-0` retains history. Split an oversized PR or return to the owner |
 | W3: host CLI integration | Coordinator-decided, 2026-11-21; owner may override | Both a host-callable `run(args, stdout, stderr) -> exit class` that never exits the process and individual command/render APIs; thin `main`, matching irig106-time |
-| F1: duplicate SHA items | Coordinator recommendation, 2026-11-21; INT-021 requires ADR-0033 owner sign-off + independent AI check before implementation; both pending (0.1 blocker) | Reject as indeterminate, list every occurrence, preserve every byte, refuse stamping until fixed, and never claim positive verification |
-| F7: configuration-change event | Coordinator recommendation, 2026-11-21; INT-030 requires ADR-0033 owner sign-off + independent AI check before implementation; both pending | Require verified identification and report indeterminate meanwhile; never guess a packet type |
+| F1: duplicate SHA items | Coordinator recommendation, 2026-11-21; INT-021 requires ADR-0033 owner sign-off + independent AI check before implementation; AI CONCUR relayed 2026-11-23, owner sign-off pending (0.1 blocker) | Reject as indeterminate, list every occurrence, preserve every byte, refuse stamping until fixed, and never claim positive verification |
+| F7: configuration-change event | Coordinator recommendation, 2026-11-21; INT-030 requires ADR-0033 owner sign-off + independent AI check before implementation; AI CONCUR relayed 2026-11-23, owner sign-off pending | Require verified identification and report indeterminate meanwhile; never guess a packet type |
 
 [ADR-0033](adr/0033-owner-signoff-and-independent-ai-interpretation-review.md)
 supersedes the two-human rule. Record the draft author, owner sign-off and
@@ -304,15 +304,32 @@ library plus thin binary are unchanged; the full 0.1 scope remains binding.
 The readiness gates apply to reader/validator behaviour tied to register
 entries, including hand-written behaviour, not only generated registry rules.
 F1 (INT-021) and F7 (INT-030) therefore need explicit ADR-0033 owner sign-off
-and an independent AI check before implementation; neither has those checks
-recorded. Coordinator decisions remain the recommendations. F1 is a blocking
-review dependency for 0.1's checksum verification/stamping scope, not a feature
+and an independent AI check before implementation. The owner relayed AI
+CONCUR for both at PR #30 head `13173b0`, 2026-11-23; owner sign-off
+remains pending for each. Coordinator decisions remain the recommendations.
+F1 is a blocking review dependency for 0.1's checksum verification/stamping scope, not a feature
 to silently defer or a gate exception. Review summaries are recorded in the
 [review-gate note](research/2026-11-23-f1-f7-review-gates.md).
+
+For pre-ADR-0033 entries INT-001 through INT-034, existing owner acceptance
+with Review: pending is not completed review: the independent AI check is
+still required before implementation. Preserve that owner acceptance; do not
+grandfather the missing check or treat other open/coordinator entries as
+owner-approved. Beside F1/INT-021, 0.1 checksum review blockers explicitly
+include **INT-018** (G\SHA code name in any case, never inside a value),
+**INT-019** (an unterminated G\SHA is malformed) and **INT-020** (upper-case
+hex in the value). The owner will route those three AI checks next; they
+remain pending. Analysis, freshness and executable verification still apply.
 
 F1 deliberately leaves damaged recordings readable but without a positive
 integrity verdict. Fixing duplicates requires an explicit action before
 stamping; verification must not silently choose or consolidate occurrences.
+A damaged name compatible with G\SHA also makes verification indeterminate.
+ADR-0029 still permits an explicit repair removing a duplicate by its exact,
+revision-bound item ID. Rebuild/re-read the edited input; stamp only after
+that repair has resolved the ambiguity, potentially as the transaction's
+last step. Refusal to stamp ambiguous input is not refusal to allow its repair.
+
 F7 decides the uncertainty behavior, not the actual event identity. The latter
 still needs verified evidence before the event-presence check is implementable.
 These decisions do not mark requirements implemented or interpretations reviewed.

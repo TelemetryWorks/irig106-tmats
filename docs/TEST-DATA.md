@@ -498,6 +498,24 @@ evaluator under test. Complete compound expressions, dependency cycles,
 severity/deduplication, link construction and presence/profile enumeration
 remain later requirements; these cases do not silently settle them.
 
+### Planned F1 repair and uncertainty edges
+
+Review follow-up to INT-021/F1; these are planned, not executable tests and
+not evidence of completed checksum requirements. F1 remains coordinator-
+recommended with owner sign-off pending; AI CONCUR was relayed for #30 head
+`13173b0`. Sources: 106-24R1 Chapter 9 Table 9-2 MESSAGE DIGEST/CHECKSUM,
+page 9-13; L3-VAL-012's reviewed diagnostic rule; ADR-0029's exact-target
+transaction and final-byte stamp. INT-018/019/020 still need their AI checks.
+
+| Planned check | Fixture or stimulus | Expected observation |
+| --- | --- | --- |
+| `damaged_sha_name_is_indeterminate` | `G\SH\xFFA:2-<64 hex digits>;`, separately alone and beside one exact G\SHA item; placeholder expanded to actual hex bytes in future fixture | Verification indeterminate with all raw evidence; never drop high bytes to create a key or claim the exact item proves a unique SHA item |
+| `exact_duplicate_removal_precedes_stamping` | Two G\SHA items; caller explicitly removes one using its exact current-revision item ID, then requests a final stamp | Repair permitted under ADR-0029 without guessed selection; rebuild/re-read the result; stamp only after ambiguity is resolved, as a possible final transaction step; still refuse if duplicates/damaged SHA evidence remain |
+
+F7's first-record SRCC, fragment-disagreement, nearby-event candidate and
+prior-ordering questions are analysis notes in INT-030 and the gate note,
+not newly chosen event-identification or fragment-summary semantics.
+
 ## Family 2 batch 9: registry-gate acceptance specifications
 
 **Status: planned, not executable tests.** These derive existing ADR-0004/
@@ -520,6 +538,7 @@ See the [derivation record](research/2026-11-23-registry-gates-draft.md).
 | `registry_exclusion_requires_reason` | Source row excluded without a reason, then with a reason and source identity | Missing reason fails coverage check; identified reason accounts for exclusion without claiming executable support | L3-REG-008 |
 | `registry_review_records_human_and_ai_roles` | Complete revision-bound fixture metadata, then owner sign-off missing, AI evidence missing or pending, or only a coordinator decision in separate fixtures | Complete roles/dates/references retained; each missing prerequisite blocks readiness, no coordinator or AI substitutes for owner approval | L3-REG-009, L3-REG-012 |
 | `coordinator_reader_policy_needs_owner_and_ai_review` | Planned reader/validator behaviour tied to INT-021 (F1) or INT-030 (F7), with only the coordinator decision recorded, whether hand-written or generated | Implementation readiness blocked pending ADR-0033 owner sign-off AND independent AI check for each entry. Keep coordinator recommendations and pending reviews; F1 remains a 0.1 blocker. Prior AI checks on other interpretations or this requirement wording do not approve F1/F7 | L3-REG-009, L3-REG-012 |
+| `legacy_owner_acceptance_still_needs_ai_review` | Existing owner-accepted INT-018/019/020 with Review: pending, then a separate supplied complete-review fixture | Preserve historical owner acceptance but block implementation until independent AI check is recorded; do not grandfather pre-ADR-0033 entries or count AI concurrence on F1/F7 as their review | L3-REG-009, L3-REG-012 |
 | `registry_ai_reference_is_revision_bound` | Owner-relayed AI CONCURS with PR and exact head versus only a moving branch URL | Immutable review reference accepted as evidence without fabricating a separately posted review; moving branch alone does not prove which interpretation/source revision was checked | L3-REG-009 |
 | `registry_source_change_requires_rereview` | Reviewed source hash then changed source prose, source dependency edition or unavailable stored hash in separate stimuli | Every affected interpretation flagged stale/re-review; recomputing a digest alone does not renew approval, old sign-off remains historical | L3-REG-010 |
 | `registry_digest_cannot_hide_source_changes` | Dependency strings whose naive concatenations coincide, or source differing only in case/layout | Documented encoding/boundaries distinguish hash input; no normalization that hides a source change; this fixture selects no digest algorithm | L3-REG-010 |

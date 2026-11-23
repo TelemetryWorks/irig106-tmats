@@ -895,7 +895,8 @@ These gates apply to reader/validator behaviour tied to register entries,
 including hand-written behaviour outside the generator. Coordinator decisions
 F1 (INT-021) and F7 (INT-030) remain recommendations; each needs explicit
 ADR-0033 owner sign-off and an independent AI check before implementation.
-Neither currently records those checks. F1 remains a 0.1 release blocker.
+The owner relayed AI CONCUR for both at PR #30 head `13173b0`, 2026-11-23;
+owner sign-off remains pending. F1 remains a 0.1 release blocker.
 
 **L3-REG-010** · Parent: L2-REG-005 · Verification: T
 *Freshness checking SHALL compare the current cited source dependencies with the source-text hash bound to review, flag every affected interpretation for re-review on a difference or unavailable hash, and prevent the stale interpretation from executing as currently approved.*
@@ -931,7 +932,10 @@ where none exercises the interpretation.
 This readiness boundary also applies before implementing register-dependent
 reader/validator behaviour, not merely before generating a registry rule.
 No coordinator policy, including F1/F7, bypasses the approval/AI-review gate.
-
+Earlier owner-accepted entries (INT-001–034) with Review: pending still need
+the independent AI check before implementation. Existing owner acceptance
+is preserved, not treated as completing the missing check. For 0.1 checksums,
+INT-018/019/020 are explicit pending AI-review dependencies alongside F1.
 
 **L3-REG-013** · Parent: L2-REG-006 · Verification: T
 *Registry generation/checking SHALL refuse to emit an executable rule with a failed readiness dependency and SHALL report its entry, blocking interpretation/source evidence and reason; its source coverage status SHALL remain visibly non-executable, without replacing a checked-in reviewed rule silently or rewriting source text to make a gate pass.*
