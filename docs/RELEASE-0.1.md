@@ -246,6 +246,21 @@ as unsupported for this release. Do not use RCCVER to overwrite the TMATS
 edition declaration, or confuse packet data-type version with either one.
 The packet reader and time decoder remain outside the TMATS library.
 
+INT-011's per-channel joining is reconfirmed by Joey (decision 2026-11-23),
+with independent AI CONCURS on #38 head `c623b15`. Review completion does not
+complete analysis or tests. See the [reconfirmation record](research/2026-11-23-int011-owner-signoff.md).
+INT-034's "followed by another packet" means SAME-CHANNEL; an otherwise
+complete run ending in `;` at EOF stays complete, labelled "end of input".
+An open run may expose PROVISIONAL boundary evidence, never a joining stop.
+Pre-EOF semantic use by irig106-time's CLI, snapshot invalidation and its
+interaction with INT-028/031 remain explicit owner-review items. Recommended
+option: opt-in labelled snapshots; alternative: final-only semantic use. No
+option is selected here or silently relaxes the complete-only contract above.
+Per-channel open-run state needs an explicit finite aggregate memory budget
+and typed limit error, never silent dropping; numeric policy, full accounting
+and recovery/resume details need review before implementation. See the
+[batch 15 review draft](research/2026-11-23-completeness-contracts-draft.md).
+
 ## Acceptance cases to derive before code
 
 These are test obligations for the next requirements family, not tests already

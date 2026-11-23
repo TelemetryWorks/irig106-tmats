@@ -43,6 +43,19 @@ interpretation-review rule; ADR-0035 records the owner's W1 override.
 ADR-0034's W2/W3 remain coordinator-decided. Joey approved F1/F7 under ADR-0033,
 2026-11-23 (INT-021/030); development evidence remains outstanding. No implementation is claimed.
 
+### Streaming setup-record follow-ups
+
+Carry the reviewer consequences relayed by the owner after INT-011's
+reconfirmation on 2026-11-23: same-channel completeness boundaries; labelled
+complete EOF records; provisional open-run observations that never stop
+joining; and an explicit aggregate open-run memory budget with a typed limit
+error, never silently dropped runs. INT-034's precise completeness rules and
+INT-028/031 governance still need review. Decide how irig106-time's CLI may
+use and later invalidate provisional snapshots before EOF, plus resource
+accounting/defaults and recovery semantics, before implementation. The
+[batch 15 draft](research/2026-11-23-completeness-contracts-draft.md) presents
+opt-in labelled snapshots versus final-only semantic use; no choice is made.
+
 ### Planned scanner suggestion after framing
 
 Record the independent reviewer's note carried forward by the owner on
@@ -397,8 +410,8 @@ assembler takes bytes, not files. Plan:
 2. *Assembly rules* (a reviewed interpretation, because the standard defines
    no end marker): fragments of one record are consecutive data type `0x01`
    packets within each channel independently, sequence +1 modulo 256 and
-   matching FRMT/RCCVER. Owner clarification 2026-11-23 (INT-011, AI recheck
-   pending): other-channel packets are provenance/information only and never
+   matching FRMT/RCCVER. Owner clarification 2026-11-23 (INT-011, reconfirmed;
+   AI CONCURS on #38 at c623b15): other-channel packets are provenance/information only and never
    stop joining; a same-channel interruption, sequence discontinuity, field
    change or end of input stops the affected run, not proves completeness.
    Retain START and stop reasons for INT-034, including leading-truncation

@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through assembly-contract batches drafted (family 2, batches 1-14).**
+> **Status: foundations through completeness-contract batches drafted (family 2, batches 1-15).**
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
@@ -639,8 +639,8 @@ validation remain later derivations. No new supported-edition claim is made.
 This derives only joining and source mapping within L1-CH10-004. A joined
 candidate run is not proof of one complete setup record. Completeness,
 ambiguous splits and session rules still need subsequent derivations and
-review of INT-034/028/031. INT-011 records Joey's 2026-11-23 per-channel clarification;
-AI recheck of amended wording is pending under ADR-0033. No interpretation gains
+review of INT-034/028/031. INT-011 is reconfirmed by Joey, 2026-11-23, with AI CONCURS on #38 at
+c623b15 under ADR-0033; analysis/tests remain. No interpretation gains
 approval through a requirement or a supplied fixture binding.
 
 #### L2-CH10-004
@@ -660,5 +660,42 @@ approval through a requirement or a supplied fixture binding.
 **Statement**: Each candidate run SHALL preserve all supplied fragment provenance and raw CSDWs and provide an exact mapping from assembled text bytes and ranges back to their originating packet bytes, including ranges crossing packet boundaries; a summary SHALL NOT discard disagreement or substitute one fragment's metadata for another's evidence.
 
 **Rationale**: ADR-0025 and L1-CH10-004 require file offset, channel, sequence, relative time counter, CSDW fields and data-type version plus a body-offset provenance map. ADR-0003's owned bytes/spans and L1-READ-003's located diagnostics require evidence after concatenation. FRMT/RCCVER agreement does not establish SRCC agreement, a valid configuration-change event or a governing record. No new SRCC aggregation policy is selected here.
+
+**Verification Method**: Test (T)
+
+## Completeness-contract batch 15: finality, streaming evidence and budgets
+
+These partial children continue L1-CH10-004 and L1-ROB-001; they do not finish
+family 2 or approve INT-034/028/031. INT-011's reconfirmation covers joining,
+not completeness or governance. The reviewer consequences relayed by the
+owner after #38 are recorded here; unresolved streaming-use policy stays open.
+
+#### L2-CH10-006
+
+**Parent**: L1-CH10-004
+
+**Statement**: A closed per-channel candidate run SHALL carry its final completeness outcome or unavailable-format/rule reason, its START and stop evidence, and all relevant competing readings; an otherwise complete semicolon-terminated run at supplied EOF SHALL be complete with an explicit end-of-input basis, not downgraded solely because EOF cannot prove the recording was never cut.
+
+**Rationale**: ADR-0031/INT-034 distinguish evidence from certainty. Chapter 9 section 9.4.2 page 9-2 supplies semicolon framing and Chapter 11 section 11.2.7.2 page 11-50 supplies fragmentation without an end marker (106-24R1). INT-011's per-channel joining is reconfirmed; "followed by another packet" means same-channel. Precise classification precedence, leading-damage handling and XML's unknown completeness remain review dependencies, not solved by this requirement.
+
+**Verification Method**: Test (T)
+
+#### L2-CH10-007
+
+**Parent**: L1-CH10-004
+
+**Statement**: An open run SHALL expose a PROVISIONAL observation distinct from final completeness, with its channel, observed text extent and boundary evidence; observing a provisional attribute boundary SHALL NOT stop joining, assert a complete record or silently establish a governing configuration.
+
+**Rationale**: Owner-relayed reviewer consequence, 2026-11-23, enables the streaming-consumer design discussion without treating other-channel data as an end marker. INT-034 records the explicit open question of pre-EOF semantic use; INT-028/031 govern final descriptions and remain proposed. A temporary lack of input is not EOF. No current-only-complete parsing rule is silently relaxed by adding an observation.
+
+**Verification Method**: Test (T)
+
+#### L2-ROB-003
+
+**Parent**: L1-ROB-001
+
+**Statement**: The assembler SHALL expose and enforce an explicit finite aggregate memory budget for retained per-channel open-run state and SHALL report a typed limit error when a requested operation would exceed that budget, without silently dropping, merging or finalizing any run.
+
+**Rationale**: Owner-relayed reviewer consequence after #38, 2026-11-23. Independent channels can keep several runs open while unrelated traffic continues. L1-ROB-001 requires bounded, non-aborting handling; lossless retention forbids hidden eviction. Accounting must include retained text and metadata, not just one channel's payload. The accounting model, numeric defaults if any, and post-error resume API require review before implementation; the budget is resource policy, not a TMATS default or record-size rule.
 
 **Verification Method**: Test (T)
