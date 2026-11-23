@@ -707,7 +707,8 @@ pending interpretations implemented or production coverage complete.
 **Status: planned, not executable tests.** Sources: 106-24R1 Chapter 11
 section 11.2.7.2/Figure 11-34 page 11-50 and section 11.2.1.1 f; ADR-0025,
 ADR-0031 and INT-011. Fixtures supply a reviewed joining binding to isolate
-this contract; INT-011's independent check remains pending. No fixture here
+this contract; INT-011 records Joey's 2026-11-23 per-channel decision and
+its amended wording awaits AI recheck. No fixture here
 approves INT-034 or establishes complete/governing records just by joining.
 
 For the exact map oracle below, supply fragment 1 text `G\COM:a` in a
@@ -724,9 +725,14 @@ mapping/join tests do not establish packet validity.
 
 | Planned check | Fixture or stimulus | Expected observation | Requirement |
 | --- | --- | --- | --- |
-| `joining_requires_packet_adjacency_evidence` | Two otherwise matching setup fragments with unknown adjacency, then explicit intervening non-setup packet evidence | No invented adjacency from a filtered setup-only list; missing evidence stays unavailable, explicit intervening packet stops joining | L3-CH10-009, L3-CH10-011 |
+| `joining_requires_per_channel_sequence_evidence` | Two setup fragments with missing channel/sequence evidence, then complete per-channel evidence in a stream interleaved with another channel | Missing prerequisites stay unavailable; global adjacency is not required once the per-channel +1 and other joining predicates are established | L3-CH10-009, L3-CH10-010 |
+| `other_channel_packets_do_not_stop_joining` | Channel 0 setup q=255 text `G\COM:a`, channel 3 PCM q=50, channel 7 time q=8, channel 0 setup q=0 text `b;`, matching FRMT/RCCVER | One channel-0 candidate `G\COM:ab;`; other-channel packets retained as provenance/information only, neither stops nor starts that run; no claim of completeness | L3-CH10-009, L3-CH10-010, L3-CH10-011, L3-CH10-016 |
+| `two_setup_channels_have_independent_runs` | Pre-106-17 context: channel 1 setup q=10 `G\COM:a`, channel 2 setup q=20 `G\COM:c`, channel 1 setup q=11 `b;`, channel 2 setup q=21 `d;`; each channel's FRMT/RCCVER match | Two independent candidates: channel 1 `G\COM:ab;`, channel 2 `G\COM:cd;`; no mixing or cross-channel interruption; source byte maps retain only their own text, with interleaving provenance retained | L3-CH10-009, L3-CH10-010, L3-CH10-011, L3-CH10-013 |
+| `same_channel_packet_stops_joining` | Channel 1 setup q=10, channel 1 non-setup q=11, channel 1 setup q=12; separately interrupt channel 1 while channel 2 continues q=20 -> 21 | First channel has two candidate runs, interruption/sequence evidence retained; no silent 10 -> 12 join. Channel 2 remains one independent run | L3-CH10-009, L3-CH10-011, L3-CH10-016 |
+| `run_start_reasons_remain_evidence` | First observed fragment at start of supplied input, then restart after same-channel interruption or FRMT/RCCVER change | Every run has its own evidenced START reason alongside stop evidence; first reason `start of supplied input` does not prove intact beginning; other-channel traffic never causes a restart | L3-CH10-011, L3-CH10-016 |
+| `setup_channel_restriction_is_not_joining` | Same-channel nonzero setup fragments with sequence +1, matching FRMT/RCCVER; supplied pre-106-17 and 106-17+ edition contexts | Both join under the same rule; channel-0 conformance is a separate edition-dependent check for the latter context, not rejection, mixing or loss of the candidate run | L3-CH10-009, L3-CH10-010, L3-CH10-011 |
 | `joining_sequence_wrap_is_modulo_256` | Exact map fixture, then second sequence changed from 0 to 1 | 255 -> 0 joins; 255 -> 1 stops with discontinuity evidence, without declaring completeness or proving packet loss | L3-CH10-010, L3-CH10-011 |
-| `joining_compares_channel_format_and_wire_version` | Independently change second fragment's channel, FRMT, RCCVER, or data type | Each failed prerequisite stops joining; never use equivalent interpreted editions to equate different RCCVER wire bytes | L3-CH10-009, L3-CH10-010, L3-CH10-011 |
+| `joining_compares_channel_format_and_wire_version` | Independently change second same-channel fragment's FRMT, RCCVER, or data type; separately supply a different-channel setup fragment | Same-channel failed prerequisites stop that channel's join; different-channel fragment belongs to its own independent run and leaves the first open; never equate different RCCVER wire bytes via fallback editions | L3-CH10-009, L3-CH10-010, L3-CH10-011 |
 | `srcc_disagreement_survives_joining` | Matching joining operands but SRCC=0 then 1 | No extra SRCC joining predicate; both raw CSDWs/readings retained, no invented aggregate change bit/event or completeness claim | L3-CH10-010, L3-CH10-013, L3-CH10-016 |
 | `fragment_text_concatenation_adds_no_bytes` | Exact map fixture, plus metadata/sentinel header, CSDW, filler and packet-checksum slices outside supplied text bounds | Exactly nine assembled bytes `G\COM:ab;`, no inserted delimiter/layout or nontext packet bytes | L3-CH10-012 |
 | `assembled_byte_map_has_exact_packet_offsets` | Exact map fixture; assembled offsets 0,6,7,8 | File offsets 128,134,176,177 respectively; offset 7 maps to fragment 2, not fragment 1's one-past-end; retain packet/recording identities | L3-CH10-013, L3-CH10-014 |
@@ -734,7 +740,7 @@ mapping/join tests do not establish packet validity.
 | `mapping_rejects_invalid_ranges` | Exact map fixture; reversed [8,6), range [0,10), byte offset 9, and overflowing external offset input | Invalid requests reported, never clamped/wrapped or mapped to filler/CSDW; no end-of-body byte invented | L3-CH10-014 |
 | `empty_fragment_retains_metadata` | Three qualifying fragments with zero text in the middle | Empty fragment contributes no byte interval; metadata/CSDW/order retained, surrounding text concatenated exactly, no source bytes invented | L3-CH10-012, L3-CH10-013 |
 | `split_marker_uses_assembled_offset_zero` | First text slice EF BB, next starts BF followed by code-name text; separately marker after one assembled padding byte | If a separate reviewed completeness decision permits scanning, first marker recognised at assembled offset zero per INT-037; padding case is midstream; joining itself decodes neither | L3-CH10-012, L3-CH10-016 |
-| `joining_eof_is_not_completeness` | One joined candidate ending in `;` then EOF; separately a candidate ending inside a value | Both retain EOF stop reason; classification requires INT-034 rather than assigning complete/incomplete from this joining test | L3-CH10-011, L3-CH10-016 |
+| `joining_eof_is_not_completeness` | One joined candidate ending in `;` then EOF; separately a candidate ending inside a value | Both retain their evidenced START reason and EOF stop reason; classification, including possible leading truncation, requires INT-034 rather than assigning complete/incomplete from this joining test | L3-CH10-011, L3-CH10-016 |
 | `joining_does_not_hide_untrusted_fragment` | Readable fragment, explicit unreadable/untrusted middle fragment, readable fragment | Trust/gap evidence retained; never silently concatenate readable neighbors as a proven intact record; no new recovery/classification policy | L3-CH10-011, L3-CH10-016 |
 | `located_finding_spans_multiple_packets` | Exact map fixture with a supplied located finding over value [6,8); separately a Defaulted field with no source span | Finding retains assembled span and both packet ranges; Defaulted field keeps its citation/basis but no fictional packet span | L3-CH10-015 |
 | `candidate_join_does_not_approve_interpretations` | Successful joining with fixture binding and duplicate scalar text across fragments | Candidate report retains membership/evidence; no claim that INT-011 review passed, INT-034 selected a split, checksum verified or configuration governs; INT-039 document-local duplicate evidence remains | L3-CH10-016 |
@@ -872,8 +878,10 @@ Every header and secondary-header checksum is correct.
 
 *Companion cases* (same fixture builder): the same record with a sequence gap
 (`0xFE`, `0x00`) is reported as two incomplete records with a diagnostic;
-fragment 2 with a different RCCVER ends the record and is reported; a PCM
-packet between fragments 1 and 2 ends the record; a corrupted header
+fragment 2 with a different RCCVER stops that channel's joining and is reported;
+a SAME-CHANNEL PCM packet between fragments 1 and 2 stops that join,
+while an OTHER-channel PCM packet is provenance/information only and never
+stops it; completeness still needs INT-034; a corrupted header
 checksum on fragment 2 is reported and the record is not assembled from
 untrusted lengths.
 
@@ -944,7 +952,7 @@ L1-CH10-008.
 
 | Case | Input | Expected |
 |------|-------|----------|
-| a | a record in two fragments ending with `;`, then a time packet | complete, "followed by another packet" |
+| a | a record in two fragments ending with `;`, then a SAME-CHANNEL time packet (channel conformance checked separately) | complete, "followed by another packet" |
 | b | the same record as the last packets of the input | complete, "end of input" (labelled) |
 | c | the same record with its last fragment cut inside an attribute, at the end of input | incomplete; no description |
 | d | three fragments with the middle one missing (sequence jumps by 2) and an attribute split across the gap | incomplete; no description |

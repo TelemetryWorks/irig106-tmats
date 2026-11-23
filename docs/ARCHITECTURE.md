@@ -419,8 +419,13 @@ and reported when present.
   packet and offset, so every diagnostic can name the packet it came from.
 - **Boundary rule** (reviewed interpretations, because the standard defines
   no end-of-record marker): fragments are joined while they are consecutive
-  data type `0x01` packets on one channel whose sequence numbers increase by
-  one modulo 256 and whose CSDWs agree on FRMT and RCCVER (INT-011). Each
+  data type `0x01` packets within each channel, independently, whose sequence
+  numbers increase by one modulo 256 and whose CSDWs agree on FRMT/RCCVER.
+  INT-011's owner clarification (2026-11-23, AI recheck pending) makes
+  other-channel packets provenance/information only, never a stop condition;
+  a same-channel intervening packet stops that channel's joining. Retain
+  each run's START reason alongside its stop evidence for leading-truncation
+  review. Channel-0 conformance from 106-17 is separate from joining. Each
   joined run is then **complete**, **incomplete**, or **ambiguous**, with the
   evidence that decided it — the body's final byte, gaps, CSDW changes,
   repeated single-entry attributes (ADR-0031, INT-034). Only complete records

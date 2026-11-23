@@ -363,7 +363,7 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-008 | `C-d\DPNO`'s condition names `C\DCT` without an index | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-009 | Counters named without indices in conditions | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-010 | Equality is `==`, although Table E-3 prints `= =` | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
-| INT-011 | Where one multi-packet setup record ends | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-011 | Per-channel joining of multi-packet setup-record fragments | owner decision recorded, AI recheck of amended wording pending | not yet written | _(none)_ |
 | INT-012 | RCCVER codes are read as their table states; later editions' reuse is a note | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26, revised 2026-09-27) | not yet written | _(none)_ |
 | INT-034 | A joined run is complete, incomplete, or ambiguous | accepted in principle (three outcomes, owner, 2026-09-27, ADR-0031); these rules proposed | not yet written | _(none)_ |
 | INT-013 | Appendix 9-C ends 18 attributes with `:` instead of `;` | suspect (owner, 2026-09-26; `docs/ROADMAP.md`, S1) | not yet written | _(none)_ |

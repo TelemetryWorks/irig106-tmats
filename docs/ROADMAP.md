@@ -396,10 +396,14 @@ assembler takes bytes, not files. Plan:
    diagnostics). Only complete records enter the document parser.
 2. *Assembly rules* (a reviewed interpretation, because the standard defines
    no end marker): fragments of one record are consecutive data type `0x01`
-   packets on one channel whose sequence numbers increase by one modulo 256
-   and whose CSDWs agree on FRMT and RCCVER; a record ends at an intervening
-   packet, a sequence discontinuity, a CSDW change, or end of input. Anything
-   ambiguous is reported, never guessed.
+   packets within each channel independently, sequence +1 modulo 256 and
+   matching FRMT/RCCVER. Owner clarification 2026-11-23 (INT-011, AI recheck
+   pending): other-channel packets are provenance/information only and never
+   stop joining; a same-channel interruption, sequence discontinuity, field
+   change or end of input stops the affected run, not proves completeness.
+   Retain START and stop reasons for INT-034, including leading-truncation
+   evidence. Channel-0 conformance from 106-17 is a separate edition check.
+   Anything ambiguous is reported, never guessed.
 3. *Slicing rules* for the packet reader: body after the header and the
    optional secondary header; TMATS = body from offset 4 to Data Length;
    filler and data checksum excluded; header and secondary-header checksums

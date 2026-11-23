@@ -259,20 +259,48 @@ listed here.
 
 ### INT-011
 
-**Title**: Where one multi-packet setup record ends
+**Title**: Per-channel joining of multi-packet setup-record fragments
 
 **Sources**:
-- Chapter 11 §11.2.7.2: "A single setup record may span multiple consecutive packets. When spanning multiple packets, the sequence counter shall increment in the order of segmentation of the setup record, n+1". No end-of-record marker is defined.
+- 106-24R1 Chapter 11 section 11.2.7.2, page 11-50: "A single setup record may span multiple consecutive packets. When spanning multiple packets, the sequence counter shall increment in the order of segmentation of the setup record, n+1". No end-of-record marker is defined.
+- Chapter 11 section 11.2.1.1 f: "Each channel in a session shall have its own sequence counter providing a unique sequence number for that channel".
+- Owner decision, Joey, 2026-11-23, following AI CONCERNS on #37: intervening means SAME-CHANNEL; joining is per-channel and independent. Section 11.2.1.1 b's channel-0 restriction from 106-17 is a separate edition-dependent check.
 
-**Behaviour**: Fragments are joined while they are consecutive data type `0x01` packets on one channel whose sequence numbers increase by one modulo 256 and whose CSDWs agree on FRMT and RCCVER. Whether the joined run is a complete record is decided by INT-034 (ADR-0031): an intervening packet, a sequence gap, a CSDW change, or the end of input stops the joining, but none of them alone proves the record complete. *(Revised 2026-09-27: the earlier text also made these conditions the record's end, which contradicted INT-031; team spec alignment review.)*
+**Behaviour**: **Owner decision recorded, AI recheck of amended wording pending.**
+Maintain independent candidate runs for each channel. Join consecutive data
+type 0x01 fragments within that channel when sequence increases by one modulo
+256 and decoded FRMT/RCCVER agree. Runs on different channels never mix or
+interrupt one another, including older recordings with nonzero setup channels.
 
-**Reason**: The standard says how fragments follow each other but not how a record ends (ADR-0025, ADR-0031).
+An "intervening packet" means a SAME-CHANNEL packet only; the +1 sequence
+test already detects the consumed sequence number. Such a packet stops that
+channel's join. Packets from OTHER channels between fragments are recorded
+as provenance and information only and NEVER stop the join. Do not turn a
+change of channel in global input order into a boundary for an open run.
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T3
+Retain each run's START reason, e.g. "start of supplied input", alongside
+stop reasons and their source evidence, so INT-034 can consider leading
+truncation. A same-channel interruption, sequence discontinuity, FRMT/RCCVER
+change or end of supplied input stops the relevant joining; no such reason
+alone proves completeness. INT-034's precise completeness rules under
+ADR-0031 remain separately pending. Channel 0x0000 from 106-17 is an edition-dependent
+conformance check, never a joining predicate or reason to merge/drop runs.
+SRCC disagreement remains preserved without a new joining/aggregation rule.
 
-**Test**: `multi_packet_setup_record_is_assembled` (`docs/TEST-DATA.md`)
+**Reason**: Sequence counters are per channel. Treating multiplexed traffic
+on other channels as a boundary would split valid fragments and couple
+independent setup runs. The owner clarifies "consecutive" within a channel;
+this amends the joining interpretation, not the standard's quoted wording.
+The 2026-09-27 distinction between stopping a run and proving a complete
+record remains; leading-boundary evidence is now retained as well.
+
+**Design**: owner decision recorded, AI recheck of amended wording pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner decision: Joey, 2026-11-23; independent AI check: CONCERNS on #37 at fabbc06; AI recheck of amended wording: pending · **Origin**: T3; owner per-channel clarification, 2026-11-23
+
+**Test**: `multi_packet_setup_record_is_assembled`, `other_channel_packets_do_not_stop_joining`, `two_setup_channels_have_independent_runs`, `same_channel_packet_stops_joining`, `run_start_reasons_remain_evidence`, `setup_channel_restriction_is_not_joining` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Decision record**: [owner per-channel clarification and review status](research/2026-11-23-int011-per-channel-owner-decision.md).
 
 ### INT-012
 
