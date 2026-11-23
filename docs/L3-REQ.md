@@ -1,6 +1,7 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through setup-payload batches drafted (family 2, batches 1-12).**
+> **Status: foundations through edition-basis batches drafted (family 2, batches 1-13).**
+> INT-012 is reconfirmed; INT-044 duplicate-declaration selection remains proposed.
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
 > These are implementation obligations, not existing interfaces or completed
@@ -1099,8 +1100,8 @@ adds no automatic repair or new refusal gate when stamping is otherwise eligible
 
 Planned obligations, not implementation. Baseline layout is explicitly
 106-24R1 Figure 11-34; historical era/declaration routing remains later work.
-INT-012's existing owner decision does not clear its pending independent
-review, source freshness, deep analysis or executable verification gates.
+INT-012 was reconfirmed by Joey, 2026-11-23, with AI CONCURRED at #34 head
+e352323. Source freshness, deep analysis and executable verification remain.
 
 **L3-CH10-001** · Parent: L2-CH10-001 · Verification: T
 *For the identified Figure 11-34 layout, payload decoding SHALL require at least four bytes, preserve the input and supplied provenance on failure and report a located short-CSDW result for lengths 0–3 without reading unavailable bytes, zero-padding or inventing a version/format/change flag.*
@@ -1157,7 +1158,7 @@ SRCC or RCCVER, disappear from source access or trigger a fabricated default.
 **L3-CH10-007** · Parent: L2-CH10-003 · Verification: T
 *With the baseline RCCVER table identified, the report SHALL retain its code and literal reading: 0x07 through 0x0E name RCC 106-07, 09, 11, 13, 15, 17, 19 and 22 respectively; 0x00–0x06 and 0x0F–0xFF SHALL retain their reserved/unknown classification under that table, without being rejected or relabelled as a known newer edition merely for being unrecognized.*
 
-Source: 106-24R1 Chapter 11 section 11.2.7.2 a page 11-51; ADR-0032/INT-012.
+Source: 106-24R1 Chapter 11 section 11.2.7.2 a/Figure 11-34, pages 11-50–11-51; ADR-0032/INT-012. This mapping is Format 1 only.
 Any later archive-reuse note is labelled observation with its source/basis,
 not part of the declared literal. No code 0x0F is invented for 106-23. The
 pre-106-07 absence/CH10VER question (INT-016) is a later declaration wrapper;
@@ -1170,3 +1171,77 @@ ADR-0028/0032 preserve declaration versus policy. Edition selection and
 historical layouts need separate reviewed requirements and INT-014/015/016/
 017 evidence; this child consumes no fabricated G\106 value. Raw bytes,
 provenance and incomplete/unsupported outcomes stay visible to those callers.
+
+Code-space guard: Format 4 uses its own stale RCCVER table (106-24R1
+section 11.2.7.5/Figure 11-43, page 11-62), 0x0C = RCC-106-17 and
+0x0D–0xFF reserved; never borrow Format 1's table. The packet-header Data
+Type Version table (section 11.2.1.1 e, page 11-6) separately maps 0x0A to
+RCC 106-22, while Format 1 maps that byte to RCC 106-13. Figure 11-41 in
+106-24R1 is an index header; use the correct edition/structure citation.
+Fallback rules 0x0E -> 106-24R1 and 0x0D -> 106-20 belong to INT-017 policy,
+not literal decoding, and require their own review/evidence before execution.
+
+
+
+## Edition-basis batch 13: evidence before precedence
+
+Planned obligations. INT-044 is proposed; existing INT-014/015/016/017 review
+statuses are unchanged. Tests below supply reviewed fixture bindings where
+necessary; they are not production-registry or cross-edition analysis evidence.
+
+**L3-EDN-001** · Parent: L2-EDN-001 · Verification: T
+*The declaration report SHALL retain document/revision and occurrence identity, each raw G\106 value and location, candidate editions or unrecognised/unavailable/ambiguous reason, and the separate setup-record version reading with code-space/table citation and original wire code; a rules-basis decision SHALL NOT overwrite those observations.*
+
+Sources: Chapter 9 Table 9-2 page 9-10 and Chapter 11 section 11.2.7.2 a
+page 11-51 (106-24R1); ADR-0028. Same-year candidate editions from one
+attribute are not repeated scalar items. INT-039 still makes actual repeated
+G\106 items Ambiguous, even when values agree; raw lookup keeps every item.
+
+**L3-EDN-002** · Parent: L2-EDN-001 · Verification: T
+*G\106 reading SHALL use only an available reviewed edition-specific binding and retain all candidate editions it establishes; one year naming multiple editions SHALL use a newest shared-rules basis only when reviewed evidence establishes those candidates share the applicable Chapter 9 rules, not by arbitrarily choosing a candidate or borrowing a baseline parser.*
+
+INT-014 covers the year/candidate decision; INT-015 covers unrecognised older
+spellings. Their owner decisions are recorded but independent review remains
+pending. No unknown value format, high-byte/blank projection or missing rule
+is silently reclassified as a known year or data-level unrecognised verdict.
+Historical absence/CH10VER semantics remain INT-016's separate dependency.
+
+**L3-EDN-003** · Parent: L2-EDN-002 · Verification: T
+*A valid explicit caller override SHALL take precedence as an override-labelled rules basis while retaining every declaration/candidate and independent finding; an unusable override SHALL report its blocking reason rather than silently fall through or pretend the caller declared G\106.*
+
+ADR-0028 supplies override precedence. An override resolves the caller's
+choice of rules, not source ambiguity or data validity. It supplies no
+permission to mutate G\106, RCCVER, body bytes or their provenance.
+
+**L3-EDN-004** · Parent: L2-EDN-002 · Verification: T
+*Without an override, a usable reviewed G\106 rule basis SHALL be selected as declared with the original declaration and candidate/shared-rule evidence; a differing Format 1 RCCVER SHALL remain separately reported and SHALL NOT automatically produce a conflict finding or change that declared basis.*
+
+Source: ADR-0028/0032. A raw year that cannot distinguish revisions is not
+rewritten as a direct revision declaration merely because one shared-rules
+basis is applied. User-defined discrepancy rules are separate from automatic
+edition selection. Unsupported candidate interpretation remains unavailable.
+
+**L3-EDN-005** · Parent: L2-EDN-002 · Verification: T
+*With no override and an established missing or reviewed unrecognised G\106 declaration, fallback SHALL be labelled policy with its reason: eligible Format 1 RCCVER 0x0D selects 106-20 rules and 0x0E selects 106-24R1 rules under INT-017; without a usable eligible RCCVER the baseline fallback SHALL remain labelled 106-24R1 policy, not a declaration.*
+
+ADR-0032/INT-017 are the policy authority; INT-017's own review gate remains
+pending and is not cleared by INT-012 reconfirmation. Test raw 0D/0E literal
+readings independently from these supplied policy outputs. Format 4's table
+and header Data Type Version cannot supply this Format 1 policy operand.
+Unknown interpretation knowledge is not proof of missing/unrecognised data.
+
+**L3-EDN-006** · Parent: L2-EDN-002 · Verification: T
+*Under proposed INT-044, Ambiguous G\106 without a valid explicit override SHALL leave automatic rules selection unavailable/cannot-evaluate with every declaration candidate/finding; identical duplicate values SHALL NOT bypass this guard or trigger a relabelled missing/unrecognised RCCVER/baseline fallback.*
+
+This is the proposed owner choice, not an approved implementation rule. A
+single year with several edition candidates remains INT-014's different
+case. Separate setup records/documents do not become one duplicate set.
+With an explicit override, preserve ambiguity alongside the override basis.
+
+**L3-EDN-007** · Parent: L2-EDN-002 · Verification: T
+*Every selection result or blocked selection SHALL carry its document/record scope, relevant caller/declaration/policy evidence, applied edition if selected, basis label and precise reason; a selected edition without available reviewed rule coverage SHALL remain a coverage limitation, never a false claim of validation or a silently substituted supported edition.*
+
+Defaulted views and validation findings keep the basis/fallback label under
+ADR-0023/0028 and INT-041. Edition selection changes no source bytes and
+clears no other findings. Full out-of-range compatibility-check selection
+under L1-EDN-006 is a later derivation, not an implied fallback here.
