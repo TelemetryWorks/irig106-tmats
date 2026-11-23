@@ -387,8 +387,10 @@ link validation, the four-pass validator or broader release evidence.
 
 ## Family 2 batch 7: effective-value acceptance specifications
 
-**Status: planned, not executable tests.** INT-041 needs owner sign-off and
-independent AI review under ADR-0033. Fixtures explicitly supply reviewed
+**Status: planned, not executable tests.** INT-041 was approved by Joey,
+2026-11-23, under ADR-0033, with independent AI concurrence on PR #26 head
+`0fc0bc8` (see the [sign-off record](research/2026-11-23-int041-owner-signoff.md)).
+Full analysis and executable tests remain outstanding. Fixtures explicitly supply reviewed
 field/scalar/type/default bindings, known scopes and edition basis except
 where unavailable knowledge is the stimulus. These are not evidence of a
 completed production registry, condition evaluator or channel/time API.
@@ -404,6 +406,11 @@ Escapes denote fixture bytes; short records are not full conforming files.
 | `default_source_and_review_are_separate` | Cited TIME FORMAT row versus an unreviewed extracted row containing text Default A | Keep source/provenance for both; only a reviewed binding can authorize a default; source extraction alone is not executable permission | L3-REG-003, L3-REG-004 |
 | `default_field_and_prose_origins_remain_distinct` | TIME FORMAT Default A and NUMBER OF OCCURRENCES prose default 1, with applicable reviewed fixture rules | Metadata and any Defaulted result cite the correct edition/table/row and field/prose origin; no regex scan through arbitrary comments establishes a default | L3-REG-003, L3-VIEW-008 |
 | `explicit_a_differs_from_defaulted_a` | `R-1\TFMT-3:A;` versus no TFMT-3, with baseline TIMEIN/default applicability and edition basis established | Explicit A has original value span `[11, 12)`; absent-field result is Defaulted A with Table 9-4 p. 9-72 origin/applicability/basis and no input value span; each emits its original bytes unchanged | L3-VIEW-005, L3-VIEW-006, L3-VIEW-008, L3-VIEW-010 |
+| `lowercase_tfmt_keeps_raw_case` | `R-1\TFMT-3:a;`, reviewed baseline enum rule | Explicit A under section 9.4.2 case-insensitive meaning; raw value `a` at `[11, 12)` and emitted bytes unchanged, never Defaulted merely because spelling differs | L3-VIEW-006 |
+| `blank_enum_requires_reviewed_handling` | `R-1\TFMT-3: A;`, blank-handling rule unavailable | Unavailable/cannot-evaluate, NOT Invalid; preserve raw ` A` at `[11, 13)`, no trim, absence/default conversion or unreviewed blank rejection | L3-VIEW-007, L3-VIEW-011 |
+| `present_non_timein_tfmt_is_not_absence` | `R-1\CDT-3:PCMIN;R-1\TFMT-3:A;`, reviewed local enum rules | Present TFMT is Explicit A locally plus an applicability finding; never ignored as absent, Defaulted or mistaken for a valid whole-channel configuration | L3-VIEW-006, L3-VIEW-010 |
+| `ambiguous_cdt_makes_default_condition_unknown` | `R-1\CDT-3:TIMEIN;R-1\CDT-3:TIMEIN;`, TFMT absent | CDT remains Ambiguous even with identical values; TFMT is Missing with unknown-condition reason and cannot-evaluate finding citing both CDT candidates, never Defaulted A or a proven false condition | L3-VIEW-005, L3-VIEW-009 |
+| `invalid_under_fallback_keeps_basis` | `R-1\TFMT-3:Z;`, local baseline rule selected under a supplied labelled fallback | Invalid with raw Z/reason AND fallback label, applied edition/citation and basis reason; no rewrite of declarations or false claim of declared-edition validity | L3-VIEW-005, L3-VIEW-007 |
 | `bad_present_enum_does_not_default` | `R-1\TFMT-3:Z;` with the cited baseline enum rule | Invalid with original raw Z and reason, never Defaulted A | L3-VIEW-007 |
 | `present_empty_is_not_absent` | `R-1\TFMT-3:;` and `R-1\TFMT-3:\x00;` | Both present; empty enumeration projection is Invalid under that rule, never absence/default; NUL case retains its information finding and raw byte | L3-VIEW-007 |
 | `valid_empty_text_is_not_blanket_invalid` | Synthetic reviewed text rule explicitly allowing empty text, one present zero-length value | Explicit empty with its original zero-length span, not Missing or automatically Invalid; this test rule is not a new Chapter 9 default | L3-VIEW-006, L3-VIEW-007 |

@@ -145,7 +145,7 @@ Each time-view field reports one of these semantic states:
 | Explicit | Valid interpreted value, original raw value and location |
 | Defaulted | Interpreted value, exact edition/table/row citation, applicability and edition-selection basis; no fabricated input location |
 | Missing | Attribute absent and no verified applicable default available |
-| Invalid | Raw value/location and reason interpretation cannot be used |
+| Invalid | Raw value/location, reason interpretation cannot be used, and applied edition/basis including any fallback label |
 | Ambiguous | Every conflicting candidate and its location; no selected winner |
 
 For example, an explicit `R-1\TFMT-3:A;` and an absent TFMT with an applicable
@@ -153,6 +153,20 @@ For example, an explicit `R-1\TFMT-3:A;` and an absent TFMT with an applicable
 but they have different states and evidence. Defaulting requires the TIMEIN
 applicability condition and an identified edition basis. If either cannot be
 established, report the missing/indeterminate reason instead of inventing A.
+
+Consumers must read the Missing reason. In particular, "default applicability
+not established" means the default condition is unknown, not proven false;
+an Ambiguous CDT operand can cause that result even though TFMT is absent.
+The reason and condition finding must remain visible when deciding how to
+proceed; Missing alone is not proof that a default is inapplicable.
+
+For a present TFMT, lowercase `a` means Explicit A while raw `a` stays intact
+(section 9.4.2, page 9-2). A leading value blank (` A`) stays unavailable
+until a blank-handling rule is reviewed; intentional blanks are neither
+silently trimmed nor automatically Invalid. A present locally valid TFMT on
+a non-TIMEIN channel stays Explicit with an applicability finding. Any Invalid
+verdict reached under a fallback edition keeps its fallback label and basis.
+These are planned-view contracts; their acceptance cases live in TEST-DATA.md.
 
 The TFMT default does not supply a time source, prove an association, or
 change any bytes. Do not default to IRIG-B, UTC, a channel number, or a

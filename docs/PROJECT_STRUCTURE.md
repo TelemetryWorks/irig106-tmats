@@ -65,7 +65,8 @@ irig106-tmats/
 │   │                          2026-11-22-int039-owner-signoff.md records approval, group-\COM policy and assembly scope;
 │   │                          2026-11-22-counter-membership-draft.md drafts INT-040 and counter scope/evidence;
 │   │                          2026-11-23-int040-owner-signoff.md records approval and compatible-scope tightening;
-│   │                          2026-11-23-effective-value-draft.md drafts INT-041 and effective-value evidence
+│   │                          2026-11-23-effective-value-draft.md drafts INT-041 and effective-value evidence;
+│   │                          2026-11-23-int041-owner-signoff.md records approval and the effective-value edge cases
 │   ├── API_GUIDE.md           prototype: usage examples for the prototype API
 │   ├── REQUIREMENTS.md        prototype: single-file requirements; replaced by L1/L2/L3-REQ.md
 │   └── FOR_IRIG106_DOCS_REPO.md  prototype: cross-crate contract notes intended for irig106-docs

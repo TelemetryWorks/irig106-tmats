@@ -1042,7 +1042,7 @@ counters or missing entries are repaired.
 **Sign-off and AI-check reference**: [owner approval record](research/2026-11-23-int040-owner-signoff.md), referencing [PR #24](https://github.com/TelemetryWorks/irig106-tmats/pull/24) at `176fdf4ebe0a69f83da1b12202a462274fe91d8e`, the owner's sign-off dated 2026-11-22 and the relayed independent recheck recorded 2026-11-23. The record identifies the requested compatible-scope tightening. Approval is not implementation, completed analysis or executable tests; those development gates remain outstanding.
 
 
-## Unavailable effective-field interpretation (proposed)
+## Unavailable effective-field interpretation (approved, 2026-11-23)
 
 ### INT-041
 
@@ -1053,7 +1053,7 @@ counters or missing entries are repaired.
 - ADR-0022 requires unreviewed interpretations to stay visibly unavailable and conditions with missing/invalid operands to report cannot-evaluate. ADR-0023 defines five supported-field states; ADR-0028 labels the edition basis.
 - RELEASE-0.1.md requires absent TFMT with unestablished default applicability/basis to report its missing/indeterminate reason, not invent A. Approved INT-037 blocks semantic lookup for leading encoding markers, and INT-039 keeps known scalar multiplicity Ambiguous.
 
-**Behaviour**: **Proposed.** A request whose reviewed field definition/basis is unavailable, or whose required local-validity evidence cannot be evaluated, reports an unavailable/cannot-evaluate read with the reason and retained raw candidates. Do not call unknown data Invalid merely because the decoder/rule is unavailable, and do not label unexamined or uninterpretable presence as Missing. This guards five-state resolution rather than adding a sixth field-value state; the concrete Rust representation remains a later design choice.
+**Behaviour**: **Approved by Joey, 2026-11-23, under ADR-0033.** A request whose reviewed field definition/basis is unavailable, or whose required local-validity evidence cannot be evaluated, reports an unavailable/cannot-evaluate read with the reason and retained raw candidates. Do not call unknown data Invalid merely because the decoder/rule is unavailable, and do not label unexamined or uninterpretable presence as Missing. This guards five-state resolution rather than adding a sixth field-value state; the concrete Rust representation remains a later design choice.
 
 Keep any Ambiguous outcome already proved from reviewed scalar cardinality;
 missing value-validation knowledge must not select a candidate or hide that
@@ -1064,13 +1064,30 @@ applicable default remains Missing with the default-unavailability reason,
 as the existing release contract requires. Known present empty/invalid data
 never becomes absence for defaulting. A supported local value can be Explicit
 without claiming all other applicability/presence/packet checks have passed.
+Thus TFMT present on a non-TIMEIN channel is Explicit locally plus an
+applicability finding, never ignored as absent. ASCII case-insensitive `a`
+means Explicit A with the original `a` retained (section 9.4.2, page 9-2).
+A value ` A` instead stays unavailable until a blank-handling rule is reviewed;
+blanks are assumed intentional, so do not trim them or declare Invalid by
+an unreviewed strict comparison. This does not change name-edge blank rules.
+
+Absent TFMT with an Ambiguous CDT operand is Missing with an unknown-condition
+reason and the condition finding, not Defaulted and not a proven false
+condition. Consumers must read the Missing reason: unestablished default
+applicability is uncertainty, not permission to infer an inapplicable default.
+Invalid results reached under a fallback edition keep that fallback label,
+applied edition and reason, just as other results keep their interpretation
+basis. These edge notes were requested with the 2026-11-23 sign-off.
 
 **Reason**: Missing describes actual absence and Invalid requires evidence about the data; neither is justified solely by missing interpretation knowledge. The alternative is forcing all unsuccessful reads into those states, which conceals unsupported coverage and can trigger a false default or false data-error report. Consumers must handle blocked reads explicitly, at the cost of a guarded result rather than treating every request as a successfully resolved field.
 
-**Design**: proposed (2026-11-23; owner sign-off required) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: pending · **Origin**: family 2 batch 7
+**Design**: approved (Joey, owner sign-off, 2026-11-23) · **Review**: approved under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-23; independent AI check: CONCURS on PR #26 at `0fc0bc8`, relayed by the owner 2026-11-23 · **Origin**: family 2 batch 7
 
-**Test**: `unavailable_definition_is_not_data_invalidity`, `unknown_validity_operand_blocks_explicit`, `known_multiplicity_survives_unavailable_value_rule` (planned, not yet written)
+**Test**: `unavailable_definition_is_not_data_invalidity`, `unknown_validity_operand_blocks_explicit`, `known_multiplicity_survives_unavailable_value_rule`, `lowercase_tfmt_keeps_raw_case`, `blank_enum_requires_reviewed_handling`, `present_non_timein_tfmt_is_not_absence`, `ambiguous_cdt_makes_default_condition_unknown`, `invalid_under_fallback_keeps_basis` (planned, not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
 **Draft analysis**: [sources, alternatives and remaining work](research/2026-11-23-effective-value-draft.md)
+
+
+**Sign-off and AI-check reference**: [owner approval record](research/2026-11-23-int041-owner-signoff.md), referencing [PR #26](https://github.com/TelemetryWorks/irig106-tmats/pull/26) at `0fc0bc8917d4e80d1c0c3274bc8868083afb1a28` and the owner's 2026-11-23 relay of the independent check. The record includes the requested edge notes; approval is not implementation, completed analysis or passing tests, and this new PR still needs independent review.

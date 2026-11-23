@@ -15,6 +15,11 @@
 > rebuilt documentation first (`docs/ROADMAP.md`); the features listed below
 > describe the prototype, not the design.
 
+The [planned 0.1 field-state contract](docs/RELEASE-0.1.md#effective-values-and-default-evidence)
+requires consumers to read each Missing reason: "default applicability not
+established" signals uncertainty, not a proven inapplicable default. Value
+states, raw evidence and interpretation-basis labels travel together.
+
 Part of the [TelemetryWorks](https://github.com/TelemetryWorks) organization — open, high-performance telemetry tooling for flight test and range instrumentation, built in Rust.  
 
 ## What is TMATS?

@@ -362,7 +362,7 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-038 | Decimal index identity without source normalization or machine-word limits | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
 | INT-039 | Repeated scalar slots remain ambiguous even when values agree | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
 | INT-040 | Count structurally identified entries independently of value validity | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
-| INT-041 | Unavailable interpretation is not proof of missing or invalid field data | proposed (2026-11-23; owner sign-off required) | not yet written | _(none)_ |
+| INT-041 | Unavailable interpretation is not proof of missing or invalid field data | approved (Joey, owner sign-off, 2026-11-23) | not yet written | _(none)_ |
 
 * Entries without a written analysis: **41** of 41
 * Entries without a test: **41** of 41
