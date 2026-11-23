@@ -2,7 +2,7 @@
 
 > **Status: foundations through initial checksum batches drafted (family 2, batches 1-10).**
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
-> INT-018/019/020 are reconfirmed; INT-043 algorithm-token handling remains proposed.
+> INT-018/019/020 are reconfirmed; INT-043 Option B owner decision is recorded; amended-wording AI recheck is pending.
 > Foundations derive the approved restructure/source store; framing and
 > recovery use owner-approved INT-035. Character policies INT-036/037 were
 > approved by Joey, 2026-11-22, under ADR-0033. Name structure follows here;
@@ -503,7 +503,7 @@ INT-018/019/020 and approved INT-021/F1. Joey's 2026-11-23 reconfirmation
 and AI concurrence at main 30e42a3 clear INT-018/019/020's semantic review,
 not their development analysis or tests. These are planned obligations.
 Full stamping/edit derivation, flex compatibility and checksum API/exit-code
-shapes remain later batches. INT-043's proposed 02- handling is not approved.
+shapes remain later batches. INT-043's Option B owner decision is recorded; amended-wording AI recheck is pending.
 
 #### L2-SUM-001
 
@@ -521,6 +521,6 @@ shapes remain later batches. INT-043's proposed 02- handling is not approved.
 
 **Statement**: Checksum verification SHALL preserve raw candidates, framing/character findings and completeness evidence while applying reviewed value projection and digest rules; it SHALL distinguish a matching digest from malformed input, indeterminate exclusion, unavailable interpretation and an unverified placeholder, never present those as positive integrity or silently repair the input.
 
-**Rationale**: Reconfirmed INT-018/019/020 and approved F1/INT-021 preserve the lossless source and separate missing knowledge from invalidity. Chapter 6 section 6.2.3.11 f, pages 6-22–6-23, defines the 2- digest and illustrates G\SHA:0;. This slice does not fix a public result enum or settle INT-043's proposed algorithm-token recovery. Existing absent, mismatch and unknown-algorithm reporting obligations remain.
+**Rationale**: Reconfirmed INT-018/019/020 and approved F1/INT-021 preserve the lossless source and separate missing knowledge from invalidity. Chapter 6 section 6.2.3.11 f, pages 6-22–6-23, defines the 2- digest and illustrates G\SHA:0;. This slice does not fix a public result enum or complete INT-043's amended-wording AI recheck. Existing absent, mismatch and unknown-algorithm reporting obligations remain.
 
 **Verification Method**: Test (T)

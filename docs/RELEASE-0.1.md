@@ -322,8 +322,12 @@ inside a value), **INT-019** (unterminated SHA is malformed) and **INT-020**
 on all three is tied to the register review at main `30e42a3`. Together with
 F1/INT-021, these clear their interpretation-review blockers only; analysis,
 source freshness and tests remain. See the [combined approval record](research/2026-11-23-int021-int030-owner-signoff.md).
-INT-043's proposed `02-` algorithm-token handling remains a separate open
-review decision, not implicitly approved by INT-020's reconfirmation.
+INT-043 Option B is owner-decided (Joey, 2026-11-23): ASCII-digit designators
+whose canonical digit string is 2 are algorithm 2, with a warning for every
+noncanonical spelling and canonical 2- stamping. See the
+[owner decision](research/2026-11-23-int043-owner-decision.md). Independent
+AI recheck of the amended wording remains pending; final approval is not
+implied by INT-020's reconfirmation or the earlier strict-option review.
 
 F1 deliberately leaves damaged recordings readable but without a positive
 integrity verdict. Fixing duplicates requires an explicit action before

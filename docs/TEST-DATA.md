@@ -560,8 +560,9 @@ No current build script, CI job, generator or parser test is changed here.
 **Status: planned, not executable tests.** INT-018/019/020 were reconfirmed by
 Joey, 2026-11-23, with independent AI CONCUR in the register review at main
 30e42a3; INT-021/F1 and INT-030/F7 approvals remain recorded. Analysis and
-tests are not complete. INT-043 remains proposed, with its case conditional
-on owner sign-off and independent AI review.
+tests are not complete. INT-043 Option B owner decision is recorded; its
+amended wording awaits independent AI recheck and final approval. The cases
+below specify that decision, not executed behavior or completed review.
 
 Sources: 106-24R1 Chapter 9 section 9.4.2 and Table 9-2 MESSAGE DIGEST/
 CHECKSUM, page 9-13; Chapter 6 section 6.2.3.11 f, pages 6-22–6-23;
@@ -589,8 +590,11 @@ been reproduced. Exact preimages/digests are in the
 | `checksum_value_blanks_are_unavailable` | Independently correct h with leading/embedded/trailing ASCII blanks in separate values | Unavailable until blank rule review; no trim, automatic mismatch or automatic Invalid verdict | L3-SUM-004 |
 | `sha_zero_placeholder_is_unverified` | `G\SHA:0;G\PN:TEST;` | Unverified with placeholder/no-digest reason, never match/mismatch; defined exclusion permits COMPUTE under the general L3-SUM-002 rule (also true for complete malformed digest values), using the note's second preimage; explicit stamp may replace and must verify final output | L3-SUM-005 |
 | `checksum_fixture_uses_independent_digest` | The note's exact byte preimages and hashlib digests | Expected digest comes from independent raw-byte oracle; do not derive expected output through the implementation under test or copy the printed Chapter 6 example | L3-SUM-001, L3-SUM-004 |
-| `zero_padded_sha_algorithm_requires_decision` | `G\SHA:02-h;`, `G\SHA:002-h;` and `G\SHA:0-h;`, h otherwise independently correct | Currently unavailable pending INT-043. Proposed label: unknown/unsupported algorithm designator, NOT malformed or normalized/verified. 02/002 get a leading-zero resemblance finding; 0 gets unsupported-0 reason, not a claim it equals 2. Defined exclusion still allows COMPUTE | L3-SUM-002, L3-SUM-004 |
-| `sha_designator_edge_classification` | Values ` 2-h`, `2–h` (UTF-8 en dash), `+2-h`, `2.0-h`, and `2-H` with independent correct upper-case hex in separate complete terminated items | Leading blank unavailable under blank rule; en dash high bytes Invalid per INT-037; +2/2.0 malformed; valid 2- with upper-case hex follows INT-020 (match with warning). No normalization; defined exclusion permits COMPUTE for all | L3-SUM-002, L3-SUM-004 |
+| `zero_padded_sha_algorithm_requires_decision` | Complete unique `G\SHA:2-h;`, `G\SHA:02-h;`, `G\SHA:002-h;` with h independently correct | Under owner-decided Option B, all identify algorithm 2 and may verify positively. Canonical 2- has no designator warning; 02/002 always have located warning NONCANONICAL-DESIGNATOR citing Chapter 6 section 6.2.3.11 f p. 6-22 and Chapter 9 Table 9-2 p. 9-13. Raw bytes unchanged. Amended-wording AI recheck remains pending | L3-SUM-004 |
+| `sha_algorithm_identity_uses_canonical_string` | 40-digit token of 39 ASCII zeroes followed by 2, plus tokens 2, 02, 002, 000 | Strip leading zeros to canonical digit string, keep 0 for all-zero input; compare strings to 2, no fixed-width/big-integer conversion. First four identify algorithm 2; 000 is unsupported. No input rewriting | L3-SUM-004 |
+| `noncanonical_sha_designator_always_warns` | 02/002 with matching digest, mismatching digest and upper-case matching digest in separate otherwise usable inputs | NONCANONICAL-DESIGNATOR warning always emitted for accepted noncanonical token, independent of match outcome; upper-case matching hex also retains INT-020 warning. Neither warning suppresses the other | L3-SUM-004 |
+| `other_numeric_sha_designators_stay_unsupported` | 0-, 00-, 3-, 20-, 0020- with otherwise in-range hex content | Unknown/unsupported algorithm, never coerced to 2 or positively verified; distinguish 0- plus hex from the no-hyphen G\SHA:0; placeholder. Defined exclusion still allows COMPUTE | L3-SUM-002, L3-SUM-004 |
+| `sha_designator_edge_classification` | Values ` 2-h`, `2–h` (UTF-8 en dash), `+2-h`, `2.0-h`, and `2-H` with independent correct upper-case hex in separate complete terminated items | Leading blank unavailable under blank rule; en dash high bytes Invalid per INT-037; +2/2.0 malformed; valid 2- with upper-case hex follows INT-020 (match with warning). Raw bytes unchanged; defined exclusion permits COMPUTE for all | L3-SUM-002, L3-SUM-004 |
 | `sha_stamp_uses_canonical_designator` | Explicit stamp of eligible repaired/placeholder input, with final output re-read | Always writes `2-` plus lower-case hex, never `02-`/`002-`/`0-`; no stamp on ambiguous input and no positive verification of an unsupported original token | L3-SUM-005 |
 
 ## Real Chapter 10 recordings (local use only)

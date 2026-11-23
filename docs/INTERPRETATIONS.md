@@ -1279,43 +1279,57 @@ Boolean semantics or new default is selected by this interpretation.
 **Sign-off and AI-check reference**: [owner approval record](research/2026-11-23-int042-owner-signoff.md), referencing [PR #28](https://github.com/TelemetryWorks/irig106-tmats/pull/28) at `d69d275340d1773d9548cf365d57db8fc05822f1` and the owner's 2026-11-23 relay of independent recheck concurrence. The record includes the requested prefix/damaged-name clarifications and source-context caveat. Approval is not implementation, completed analysis or passing tests; this sign-off-record PR still needs independent review.
 
 
-## Noncanonical SHA algorithm designator (proposed, 2026-11-23)
+## Noncanonical SHA algorithm designator (owner decision recorded, AI recheck pending)
 
 ### INT-043
 
-**Title**: A zero-padded SHA algorithm designator is not silently normalized
+**Title**: Leading-zero algorithm 2 designators are accepted with a warning
 
 **Sources**:
 - 106-24R1 Chapter 6 section 6.2.3.11 f, page 6-22: "prefixed with the constant string “2-”".
 - 106-24R1 Chapter 9 Table 9-2 MESSAGE DIGEST/CHECKSUM, page 9-13: "SHA2-256 shall be represented as “2-” followed by 64 hex characters"; its range also describes an integer followed by a hyphen and hex characters. This does not explicitly settle zero-padded input recovery.
 
-**Behaviour**: **Proposed, owner sign-off and independent AI check pending.**
-Recommend recognizing only the exact algorithm designator `2-` as supported
-SHA-256. Spellings `02-`, `002-` and `0-` with otherwise in-range hex content
-are **unknown/unsupported algorithm designators** under L1-SUM-002, not
-malformed merely for their designator: they fit Table 9-2's integer-hyphen-
-hex range. Never normalize or verify them as algorithm 2. For 02/002, emit
-a located finding that the designator resembles 2 with leading zeros; for
-0, report unsupported designator 0 without claiming that zero equals 2.
-Until approval, this proposed classification stays unavailable/cannot-evaluate,
-not an already approved or implemented unknown-algorithm verdict. Raw bytes
-remain accessible. INT-038 index identity does not apply to this value token.
+**Behaviour**: **Owner decision recorded, AI recheck of the amended wording pending.** Joey chose **Option B**, 2026-11-23, overriding the strict recommendation.
 
-A leading blank in ` 2-` is unavailable under the unreviewed blank rule.
-UTF-8 `2–` (en dash) contains high bytes and is Invalid under INT-037, not
-an unsupported ASCII algorithm token. `+2-` and `2.0-` are malformed rather
-than accepted by a permissive number parser. Upper-case digest digits after
-valid `2-` follow INT-020's match-with-warning rule. Stamping always emits
-canonical `2-`; it never preserves/normalizes an unsupported input designator
-into a successful verification. With a defined exclusion, COMPUTE does not
-depend on the stored algorithm token being supported (L3-SUM-002).
+From the INT-036 projected value, read a nonempty ASCII-digit algorithm
+designator before the ASCII hyphen.
+Use the INT-038 canonical-string approach: strip leading zero digits,
+retaining `0` for an all-zero spelling, then compare the resulting string
+with `2`. Do not use fixed-width integers, big integers or numeric conversion.
+This applies the owner's explicit value-token decision; INT-038 alone did
+not previously authorize algorithm-value equivalence.
 
-**Reason**: Strict algorithm identity need not label in-range data malformed. The printed integer-hyphen-hex range admits these spellings, while the supported SHA-256 representation is the constant 2-. Recommend unsupported-algorithm reporting without numeric equivalence. Alternative: accept 02/002 as numeric algorithm 2 with a spelling finding; more tolerant, but adds normalization and positive verification not established by the constant. Owner choice remains open; the prior malformed label is withdrawn.
+`2-`, `02-`, `002-` and any other all-digit spelling whose canonical string
+is `2` identify algorithm 2. Verification may be positive if the digest
+matches and all other verification/exclusion prerequisites are met. For every
+accepted spelling other than `2-`, always emit a located warning with code
+**NONCANONICAL-DESIGNATOR**, citing 106-24R1 Chapter 6 section 6.2.3.11 f,
+page 6-22 (the constant string `2-`) and Chapter 9 Table 9-2 MESSAGE DIGEST/
+CHECKSUM, page 9-13. The warning is independent of whether the digest matches;
+acceptance never suppresses it. Retain the original token and every raw byte.
+Canonical-string comparison is an interpreted view, not an input rewrite.
 
-**Design**: proposed · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: pending; independent AI check: CONCERNS on the label at PR #31 head `b449673`, relayed by the owner 2026-11-23; revised-label recheck pending · **Origin**: INT-020 review follow-up, family 2 checksum slice
+`0-` (including all-zero spellings) and other numeric designators whose
+canonical string is not `2` are unknown/unsupported algorithms under
+L1-SUM-002; never map them to algorithm 2. The distinct no-hyphen `G\SHA:0;`
+placeholder retains its INT-020 status. Stamping always writes canonical
+`2-` and lower-case hex, regardless of an accepted input spelling.
 
-**Test**: `zero_padded_sha_algorithm_requires_decision`, `sha_designator_edge_classification`, `sha_stamp_uses_canonical_designator` (planned; not yet written)
+Edge cases are unchanged: leading-blank ` 2-` is unavailable until the blank
+rule is reviewed; UTF-8 `2–` (en dash) is Invalid under INT-037; `+2-` and
+`2.0-` are malformed. Upper-case digest digits follow INT-020, including an
+additional upper-case warning alongside NONCANONICAL-DESIGNATOR for 02/002.
+A defined exclusion permits COMPUTE independently of the stored token's
+verification status (L3-SUM-002). No source bytes are repaired or dropped.
+
+**Reason**: Joey chose tolerance of real-world writers: leading zeros still identify numeric algorithm 2, with an unavoidable warning exposing the deviation from the printed constant. The rejected strict option supported only literal 2- and reported 02/002 as unknown algorithms; its reasoning was that Chapter 6's constant spelling avoids adding numeric equivalence beyond the printed representation. The owner explicitly preferred tolerant identity with preserved raw bytes and warning, accepting the broader verification behavior. This records the owner decision, not completed ADR-0033 approval or implementation.
+
+**Design**: owner decision recorded, AI recheck of the amended wording pending (Joey, Option B, 2026-11-23) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner decision: Joey, Option B, 2026-11-23; independent AI recheck of Option B wording: pending (owner will route); prior strict-option review is not concurrence on this choice · **Origin**: INT-020 review follow-up, family 2 checksum slice
+
+**Test**: `zero_padded_sha_algorithm_requires_decision`, `sha_designator_edge_classification`, `sha_stamp_uses_canonical_designator`, `sha_algorithm_identity_uses_canonical_string`, `noncanonical_sha_designator_always_warns`, `other_numeric_sha_designators_stay_unsupported` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
 **Draft analysis**: [source, alternatives and independent fixture oracle](research/2026-11-23-checksum-followups-draft.md)
+
+**Owner decision record**: [Option B, rationale and rejected alternative](research/2026-11-23-int043-owner-decision.md). The owner will route the amended wording for independent AI recheck; final approval has not been recorded. Analysis, source freshness and executable verification remain additional gates.
