@@ -14,7 +14,8 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
-| [2026-11-23-mid-session-setup-corner-cases.md](2026-11-23-mid-session-setup-corner-cases.md) | 22 ordered discussion cases: cited standard/current rules, unapproved options and recommendations; likelihood is an unmeasured estimate |
+| [2026-11-23-channel-zero-edition-sources.md](2026-11-23-channel-zero-edition-sources.md) | Per-edition channel-ID source passages/scopes for INT-011/045 review; no new cutoff or conformance approval |
+| [2026-11-23-mid-session-setup-corner-cases.md](2026-11-23-mid-session-setup-corner-cases.md) | 22 retained cases plus M1–M3; checksum failure raised with reviewer default-policy disagreement; options unapproved and likelihood unmeasured |
 | [2026-11-23-int045-owner-signoff.md](2026-11-23-int045-owner-signoff.md) | INT-045 approval, exact #40/#41 AI references and continuation-only checksum diagnostic suggestion |
 | [2026-11-23-int045-layered-owner-decision.md](2026-11-23-int045-layered-owner-decision.md) | Initial A sign-off, owner SRCC=1 extension, layered safety/guard cases and archived p. 10-44 fingerprint (pending-review status superseded by INT-045 sign-off record) |
 | [2026-11-23-initial-time-boundary-proposal.md](2026-11-23-initial-time-boundary-proposal.md) | Verified 106-07–24R1 ordering/time-type sources; proposed INT-045 initial closure, one-pass pipeline, mid-session limits and original owner options (initial A signed; mid-session recommendation superseded by owner extension) |
