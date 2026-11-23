@@ -139,9 +139,12 @@ The **144** previously coherent, otherwise-Complete, duplicate-SHA/nonidentical
 T/C/SS members retain the located premature-seal finding regardless of R2D.
 Of these, 138 remain coherent; six now have R0-inconsistent cut-following/F
 observations, with that evidence still retained rather than suppressed. The
-**6** coherent byte-identical R2D T/C/SS members retain identity evidence and
-QI/QD questions; the approved baseline remains Ambiguous pending review of
-the identity/duplicate interaction. QD is not an already-approved assembly rule.
+**6** coherent byte-identical R2D T/C/SS members retain identity evidence,
+the located premature-seal finding and QI/QD questions; the approved baseline remains Ambiguous pending review of
+the identity/duplicate interaction. The **30** coherent R3B members also keep
+the premature-seal finding visible on their Complete proposal, just as R3V
+does. Identity evidence never suppresses this finding. QD is not an
+already-approved assembly rule.
 
 R0 also rejects either cut candidate observed as checksum F: authoritative
 verification is unavailable (U) under INT-019, not a proved mismatch. This covers
@@ -208,6 +211,8 @@ classification table. Inconsistent evidence instead blocks pending correction.
 - **QI:** Is the new exception limited to bounded otherwise-Complete T/C/SS
   candidates, independent of following SRCC 0/1/U? Recommend that limit; retain
   unreadable SRCC and incorrect changed/unchanged claims as separate findings.
+  Does the identity exception keep the INT-045 premature-seal finding visible?
+  Recommend yes, including the Complete proposal and duplicate-SHA cases.
 - **QB/QE:** May identity/adoption extend across channel, FRMT/RCCVER change,
   sequence gaps, explicit stop or actual EOF? Recommend no automatic extension;
   retain raw identity as information and require explicit scope/source evidence.

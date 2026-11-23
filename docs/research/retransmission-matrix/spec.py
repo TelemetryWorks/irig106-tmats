@@ -90,9 +90,8 @@ def proposal(v):
         else:
             baseline_outcome = 'Ambiguous'
             baseline_basis += '; possible premature time-boundary seal; both readings'
-        if c != 'B':
-            findings.append('possible_premature_time_boundary_seal_both_readings')
-        else:
+        findings.append('possible_premature_time_boundary_seal_both_readings')
+        if c == 'B':
             findings.append('byte_identical_retransmission_evidence')
             questions.append('QI')
     # R2D: F1 blocks verification/stamping, not completeness by itself.
