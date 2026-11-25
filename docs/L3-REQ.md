@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through bounded time-view metadata drafted (family 2, batches 1-16).**
+> **Status: foundations through explicit source-bit splitting drafted (family 2, batches 1-17).**
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
@@ -1612,3 +1612,78 @@ it does not reopen retransmission decisions. Local diagnostic/raw inspection
 is not semantic adoption. A supplied governing context is retained as such,
 not independently selected or upgraded by a time-field read. The later
 association/NSB and general governance derivations remain separate work.
+
+
+## Source-bit batch 17: validated declaration and lossless numerical partition
+
+These are future obligations, not a new implementation or passing tests.
+The [batch note](research/2026-11-25-source-bit-requirements.md) records source
+inspection, arithmetic examples and remaining DSI/CHE boundaries. This slice
+splits a supplied identity; it does not decide which channels to enumerate.
+
+**L3-VIEW-023** · Parent: L2-VIEW-008 · Verification: T
+*The source-bit declaration SHALL bind to the same document/revision and canonical recorder x as the supplied entry, use only the recorder-level R-x\NSB scalar and its own reviewed definition/applicability evidence, and SHALL NOT be borrowed from another recorder, record, revision, entry-suffixed lookalike or unrelated raw attribute.*
+
+Citation: 106-24R1 Table 9-4 NUMBER OF SOURCE BITS, page 9-33; its condition
+uses specified R\ID. Apply existing scoped conditions/INT-042 and report
+unknown applicability rather than assuming true. INT-036/038 name projection
+retains source spellings and findings; it does not change NSB value bytes.
+
+**L3-VIEW-024** · Parent: L2-VIEW-008 · Verification: T
+*A declaration SHALL supply a source-bit count only when its field result is Explicit, locally valid in the supported reviewed 0–13 domain and applicable in the supplied scope; out-of-range, malformed, blank-unavailable, ambiguous or unsupported-definition evidence SHALL block derivation with its own raw candidates/reason, without clipping, wrapping, trimming or selecting one occurrence.*
+
+Citation: Table 9-4 NUMBER OF SOURCE BITS, page 9-33. Generic effective states
+and INT-041 remain authoritative; lack of a rule is not proved Invalid data.
+Identical NSB repeats still have INT-039 field ambiguity and INT-048 assembly
+consequences. The baseline definition is not silently borrowed for other editions.
+
+**L3-VIEW-025** · Parent: L2-VIEW-008 · Verification: T
+*The full channel-ID operand SHALL be the usable actual channel ID of the supplied recorder/entry, retaining its field state and provenance; entry index n, an already split local ID or an inferred packet value SHALL NOT substitute for missing, invalid or ambiguous R-x\TK1-n evidence.*
+
+Citation: Table 9-4 TRACK NUMBER/CHANNEL ID, page 9-48, range 1–65535;
+Chapter 11 section 11.2.1.1 b, page 11-5, supplies the 16-bit field width.
+This does not parse packet headers or make reserved full ID zero a valid
+TK1 value. Derived zero-valued components are separate numerical results.
+
+**L3-VIEW-026** · Parent: L2-VIEW-008 · Verification: T
+*For valid explicit N and full 16-bit numeric channel ID C, the result SHALL use source width N and local width W=16-N, with source ID floor(C/2^W) and local ID C modulo 2^W, preserving C; N=0 SHALL yield source ID 0 and local ID C, and calculation SHALL NOT overflow, wrap or perform an invalid native-width shift.*
+
+Citation: Chapter 11 section 11.2.1.1 b(1), page 11-5, specifies high bits
+for source and remaining low bits for local channel; Table 9-4 NSB p. 9-33
+bounds N. Zero components, including local ID 0 for a nonzero full ID, are
+not revalidated as standalone TK1 fields or reclassified as reserved full
+channel zero. This fixes numeric meaning, not a public Rust integer type.
+
+**L3-VIEW-027** · Parent: L2-VIEW-008 · Verification: T
+*With no usable explicit declaration or full-ID operand, the view SHALL retain the unsplit full-ID evidence and the precise blocking state/reason without fabricated source/local components, and SHALL NOT interpret absent NSB as explicit zero, a defaulted count, or proof of a single source.*
+
+The explicit-zero case is an actual declaration under RELEASE-0.1, not a
+sentinel for unknown metadata. A caller assumption is not relabelled Explicit
+TMATS; assumption APIs need their separate derivation. Keep every independent
+required-presence, applicability, duplication and encoding finding.
+
+**L3-VIEW-028** · Parent: L2-VIEW-009 · Verification: T
+*Each derived split SHALL retain the full C, source/local widths and values, original NSB and TK1 evidence, document/revision and recorder/entry scope, definition citation, edition-selection basis and any supplied fragment provenance, without editing source bytes or silently carrying the split to another revision or recorder.*
+
+Standalone text acquires no packet provenance. A labelled fallback basis
+stays labelled, and unknown supported-layout/definition knowledge blocks a
+qualified split rather than being replaced by the baseline. No document or
+source-layout cache may obscure which explicit declaration supplied N.
+
+**L3-VIEW-029** · Parent: L2-VIEW-009 · Verification: T
+*Equal derived local IDs or source IDs SHALL NOT merge otherwise distinct full/scoped channel identities or establish a data-channel/time-channel association; source-bit results SHALL NOT select a time channel, assign TSRC/DSI semantics to numeric components, reset correlation or prove that the supplied setup governs.*
+
+RELEASE-0.1 explicitly rejects association inference from multiplexer grouping.
+This derives no DSI field reader or global channel-uniqueness rule. Assembly,
+retained-cut and governing-context limitations remain visible under batch 16;
+a locally calculable partition alone does not make an unusable setup usable.
+
+**L3-VIEW-030** · Parent: L2-VIEW-009 · Verification: T
+*Verification SHALL include focused parsed-input fixtures plus a bounded generated check of every valid full ID 1–65535 with explicit N=0–13 against an independently specified 16-character bit-string partition oracle; it SHALL assert width/range bounds, exact reconstruction of C and unchanged raw identity/provenance without deriving expected values from the production split routine.*
+
+The finite arithmetic product is 917,490 cases, streamed rather than retained
+as a large matrix. Exercise the real reviewed numerical derivation, with
+focused field/scope cases separately covering parse and qualifier behavior;
+exhaustive arithmetic alone cannot verify that binding. Run substantive
+verification in CI after implementation exists. No such runtime check is
+implemented or claimed by this documentation batch.

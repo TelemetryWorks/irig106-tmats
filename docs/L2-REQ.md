@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through bounded time-view metadata drafted (family 2, batches 1-16).**
+> **Status: foundations through explicit source-bit splitting drafted (family 2, batches 1-17).**
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
@@ -760,5 +760,34 @@ Source: 106-24R1 Chapter 9 section 9.5.4, Table 9-4, rows/pages cited below.
 **Statement**: Every bounded time-view result SHALL retain its source document/revision, recorder/entry scope, source locations and supplied assembly/edition context or explicit limitations, preserve every original byte and finding, and keep locally read metadata separate from any claim that a setup governs or a data channel has an evidenced time-source association.
 
 **Rationale**: RELEASE-0.1's API/uncertainty contract and ADR-0002/0003 require byte-faithful views and stable source ownership. L1-VIEW-004 effective values are brought forward for this subset. Incomplete, retained-cut, ambiguous or unsupported setup evidence cannot become an unqualified usable view; INT-048's cut facet keeps its blocking force. This does not select open INT-028/031 general governance, create a timeline, approve provisional semantic use, or expose a stable Rust symbol before API review.
+
+**Verification Method**: Test (T)
+
+
+## Source-bit batch 17: explicit recorder declaration before derivation
+
+This derives L1-VIEW-005's owner-approved 0.1 subset. It composes the
+existing effective-field/canonical-scope contracts and approved
+INT-035–039/041/042. No Rust API or new interpretation is implemented.
+Sources: 106-24R1 Chapter 9 section 9.5.4 Table 9-4 NUMBER OF SOURCE BITS,
+page 9-33; Chapter 11 section 11.2.1.1 b(1), page 11-5.
+
+#### L2-VIEW-008
+
+**Parent**: L1-VIEW-005
+
+**Statement**: For a supplied recorder/entry identity and full channel-ID result, the bounded view SHALL derive multiplexer source ID and source-local channel ID only from one explicit, usable, applicable R-x\NSB declaration in that recorder/document/revision scope and a usable full channel ID; missing, invalid, ambiguous, unsupported or otherwise unavailable declaration evidence SHALL preserve uncertainty without applying a default source-bit count.
+
+**Rationale**: NUMBER OF SOURCE BITS defines 0–13 most-significant channel-ID bits and permits explicit zero for one source; Chapter 11 defines the 2-byte channel-ID field and remaining low bits. RELEASE-0.1 permits splitting only on a valid explicit declaration. Approved INT-039 keeps identical scalar repeats Ambiguous; INT-041 preserves unavailable prerequisites. Presence applicability uses the reviewed INT-042 condition contract, not a guessed R-x\ID value or a borrowed recorder. This does not select a governing setup or change channel enumeration.
+
+**Verification Method**: Test (T)
+
+#### L2-VIEW-009
+
+**Parent**: L1-VIEW-005
+
+**Statement**: A source-bit result SHALL retain the original full channel ID, the independently identified recorder/entry and document/revision, the explicit declaration and its source/basis, the derived widths/values or blocking reason, and all qualification/findings; it SHALL NOT rewrite channel identifiers, coalesce channels by a derived local ID, infer a clock association or silently select governing context.
+
+**Rationale**: The same Chapter 9/11 rows define a numerical partition, not a clock reference or time-source association. RELEASE-0.1 forbids association inference from multiplexer grouping and requires declaration provenance. Batch 16 already distinguishes actual TK1 from entry n. This contract operates on supplied identity/context; DSI context remains a separate derivation and CHE enumeration handling awaits an owner decision.
 
 **Verification Method**: Test (T)

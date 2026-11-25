@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-25-source-bit-requirements.md](2026-11-25-source-bit-requirements.md) | Family 2 batch 17: explicit NSB partition contract, bounded planned oracle, DSI context queued and CHE owner decision pending; no implementation |
 | [2026-11-25-time-view-metadata-requirements.md](2026-11-25-time-view-metadata-requirements.md) | Family 2 batch 16: source-verified bounded TIMEIN/SHTF metadata decomposition and named planned acceptance cases; no new interpretation or implementation |
 | [2026-11-25-retained-cut-and-qm-review-followups.md](2026-11-25-retained-cut-and-qm-review-followups.md) | Exact db1dbf7 independent review; retained-cut blocking amendment, unresolved→resolved and non-takeover fixtures, D notation; recheck pending |
 | [2026-11-25-qm-governing-comparison-owner-decision.md](2026-11-25-qm-governing-comparison-owner-decision.md) | QM owner sign-off as INT-053: currently governing comparison target, unresolved-target guard, previous-copy information only, retained history; bounded planned fixtures, AI pending |
