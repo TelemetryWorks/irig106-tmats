@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-25-dsi-context-requirements.md](2026-11-25-dsi-context-requirements.md) | Family 2 batch 18: scoped DSI context, NSB required-presence assertion and explicit pending-owner numeric-field fixture blockers; CHE unchanged |
 | [2026-11-25-source-bit-requirements.md](2026-11-25-source-bit-requirements.md) | Family 2 batch 17: explicit NSB partition contract, bounded planned oracle, DSI context queued and CHE owner decision pending; no implementation |
 | [2026-11-25-time-view-metadata-requirements.md](2026-11-25-time-view-metadata-requirements.md) | Family 2 batch 16: source-verified bounded TIMEIN/SHTF metadata decomposition and named planned acceptance cases; no new interpretation or implementation |
 | [2026-11-25-retained-cut-and-qm-review-followups.md](2026-11-25-retained-cut-and-qm-review-followups.md) | Exact db1dbf7 independent review; retained-cut blocking amendment, unresolved→resolved and non-takeover fixtures, D notation; recheck pending |

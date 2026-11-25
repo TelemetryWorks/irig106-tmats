@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through explicit source-bit splitting drafted (family 2, batches 1-17).**
+> **Status: foundations through scoped DSI context drafted (family 2, batches 1-18).**
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
@@ -1620,6 +1620,10 @@ These are future obligations, not a new implementation or passing tests.
 The [batch note](research/2026-11-25-source-bit-requirements.md) records source
 inspection, arithmetic examples and remaining DSI/CHE boundaries. This slice
 splits a supplied identity; it does not decide which channels to enumerate.
+General numeric FIELD-VALUE syntax (NSB/TK1, R\N condition operands and
+numeric-looking TTF/SHTF/TFMT codes; sign, leading zeros, blanks, digit limit) is
+pending owner review. Dependent parsed-value fixtures are BLOCKED until that
+decision and ADR-0033 check; no code-name-index policy is borrowed for values.
 
 **L3-VIEW-023** · Parent: L2-VIEW-008 · Verification: T
 *The source-bit declaration SHALL bind to the same document/revision and canonical recorder x as the supplied entry, use only the recorder-level R-x\NSB scalar and its own reviewed definition/applicability evidence, and SHALL NOT be borrowed from another recorder, record, revision, entry-suffixed lookalike or unrelated raw attribute.*
@@ -1660,7 +1664,10 @@ channel zero. This fixes numeric meaning, not a public Rust integer type.
 The explicit-zero case is an actual declaration under RELEASE-0.1, not a
 sentinel for unknown metadata. A caller assumption is not relabelled Explicit
 TMATS; assumption APIs need their separate derivation. Keep every independent
-required-presence, applicability, duplication and encoding finding.
+required-presence, applicability, duplication and encoding finding. In the
+reviewed baseline, absent NSB with specified R\ID SHALL also retain the
+required-presence finding: Table 9-4 NUMBER OF SOURCE BITS p. 9-33 has
+Required when: Allowed. A no-split result does not suppress that finding.
 
 **L3-VIEW-028** · Parent: L2-VIEW-009 · Verification: T
 *Each derived split SHALL retain the full C, source/local widths and values, original NSB and TK1 evidence, document/revision and recorder/entry scope, definition citation, edition-selection basis and any supplied fragment provenance, without editing source bytes or silently carrying the split to another revision or recorder.*
@@ -1687,3 +1694,68 @@ focused field/scope cases separately covering parse and qualifier behavior;
 exhaustive arithmetic alone cannot verify that binding. Run substantive
 verification in CI after implementation exists. No such runtime check is
 implemented or claimed by this documentation batch.
+
+
+## DSI-context batch 18: entry-scoped source evidence
+
+Future obligations only. See the [batch note](research/2026-11-25-dsi-context-requirements.md)
+for source inspection, numeric-fixture blockers and the unselected CHE policy.
+DSI context reads take canonical recorder/entry scope, not a parsed TK1 ID;
+no new numeric parser, field syntax, clock link or stable Rust API is defined.
+
+The pending general numeric field-value decision includes R-x\N, NUMBER OF
+TRACKS/CHANNELS (106-24R1 Chapter 9 section 9.5.4 Table 9-4 p. 9-32,
+range 1–65536). TK1/CDT/SHTF/DSI/CHE applicability uses R\N > 0
+(pp. 9-48–51). Supplied canonical entry scope does not settle that operand's
+syntax. Isolated context-composition units receive a scoped evaluated
+condition; parsed-R\N integration variants remain BLOCKED. Numeric-looking
+TTF/SHTF/TFMT codes (pp. 9-51, 9-71–72), including whether 02 matches 2,
+are likewise pending. Neither INT-038 nor INT-043 supplies their grammar.
+
+**L3-VIEW-031** · Parent: L2-VIEW-010 · Verification: T
+*The context read SHALL bind to the supplied document/revision and canonical recorder/entry pair (x,n) for R-x\DSI-n, preserving raw code-name spellings and index-normalisation evidence; recorder-level R-x\ID, G\DSI-n, another entry's DSI or a matching TK1/DSI value SHALL NOT substitute for that native scoped field.*
+
+Citation: 106-24R1 Table 9-4 DATA SOURCE ID p. 9-49. INT-036/038 govern
+code-name projection/identity, not arbitrary numeric field-value syntax.
+The operation requires no value-based channel lookup; incomplete actual-ID
+interpretation remains a separate limitation, not a fabricated ID.
+
+**L3-VIEW-032** · Parent: L2-VIEW-010 · Verification: T
+*DSI context SHALL compose the existing scalar effective-read contract, retaining every matching occurrence and independent finding; duplicates, even equal, SHALL stay Ambiguous with INT-048 assembly consequences, and missing or unavailable DSI evidence SHALL NOT be filled from recorder, time-source or neighbouring-channel values.*
+
+Use L2-VIEW-001–004 and approved INT-039/041. Physical absence differs from
+present empty text (INT-035). No new DSI default is introduced. Keep
+required-presence/applicability findings where the reviewed rule establishes
+them; this context read does not run or replace a complete link validator.
+
+**L3-VIEW-033** · Parent: L2-VIEW-010 · Verification: T
+*Raw DSI context SHALL remain available with original value bytes/location and the existing strict-character projection/effective-state evidence; a semantic string SHALL be exposed as usable only under its own supported reviewed definition, and unknown blank/length/definition prerequisites SHALL report unavailability rather than trimming, truncating, guessing a rule or manufacturing Explicit/Invalid.*
+
+Citation: Table 9-4 DATA SOURCE ID p. 9-49; approved INT-036/037/041 and
+Chapter 9 section 9.4.1–2. This batch does not select a new length-counting
+or link-value blank policy. Labelled raw/display views are not a usable
+semantic value; controls, high-byte findings and raw text remain preserved.
+
+**L3-VIEW-034** · Parent: L2-VIEW-010 · Verification: T
+*DSI context SHALL NOT be interpreted as a channel ID, multiplexer source-bit count/component, TSRC category, time-format code or clock-selection reference, even if its text resembles such a value; equal DSI strings across entries SHALL retain independent scopes without proving a data-channel/time-channel association or authorising a merge.*
+
+RELEASE-0.1 explicitly rejects clock association from equal DSI, recorder
+occurrence or multiplexer grouping. Keep any independently reported key/link
+findings; this is not a claim that arbitrary duplicates conform to the
+standard. General link relationships remain their separate derivation.
+
+**L3-VIEW-035** · Parent: L2-VIEW-010 · Verification: T
+*DSI results SHALL retain source document/revision, recorder/entry identity, raw item locations and any supplied fragment provenance, edition/definition basis and limitations without rewriting source bytes, normalising display text, reordering/dropping candidates or silently carrying values to another revision.*
+
+Standalone data acquires no packet locations. Supplied incomplete,
+retained-cut, ambiguous or unsupported setup context retains batch 16's
+qualification and blocking force; a plausible source label does not make
+such input usable or select which record governs.
+
+**L3-VIEW-036** · Parent: L2-VIEW-010 · Verification: T
+*The DSI context read SHALL report its supplied entry's field evidence independently of a complete clock-association/link traversal result and SHALL NOT choose a referenced time entry, infer source continuity or select a governing setup because a DSI field is present, missing, duplicated or locally usable.*
+
+The standard row's Links from/to remain cited evidence, not an implemented
+time-reference algorithm. This requirement defines a context operation on
+an already supplied entry; it specifies no CHE-dependent enumeration or
+filter policy and no unreviewed numeric field conversion.

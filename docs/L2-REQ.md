@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through explicit source-bit splitting drafted (family 2, batches 1-17).**
+> **Status: foundations through scoped DSI context drafted (family 2, batches 1-18).**
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
@@ -769,6 +769,10 @@ Source: 106-24R1 Chapter 9 section 9.5.4, Table 9-4, rows/pages cited below.
 This derives L1-VIEW-005's owner-approved 0.1 subset. It composes the
 existing effective-field/canonical-scope contracts and approved
 INT-035–039/041/042. No Rust API or new interpretation is implemented.
+General numeric FIELD-VALUE syntax (including NSB/TK1, R\N condition
+operands and numeric-looking TTF/SHTF/TFMT codes; sign, leading zeros, blanks
+and digit limit) awaits an owner decision. Dependent parser/integration
+fixtures are blocked; mathematical domain/partition obligations do not choose that syntax.
 Sources: 106-24R1 Chapter 9 section 9.5.4 Table 9-4 NUMBER OF SOURCE BITS,
 page 9-33; Chapter 11 section 11.2.1.1 b(1), page 11-5.
 
@@ -789,5 +793,34 @@ page 9-33; Chapter 11 section 11.2.1.1 b(1), page 11-5.
 **Statement**: A source-bit result SHALL retain the original full channel ID, the independently identified recorder/entry and document/revision, the explicit declaration and its source/basis, the derived widths/values or blocking reason, and all qualification/findings; it SHALL NOT rewrite channel identifiers, coalesce channels by a derived local ID, infer a clock association or silently select governing context.
 
 **Rationale**: The same Chapter 9/11 rows define a numerical partition, not a clock reference or time-source association. RELEASE-0.1 forbids association inference from multiplexer grouping and requires declaration provenance. Batch 16 already distinguishes actual TK1 from entry n. This contract operates on supplied identity/context; DSI context remains a separate derivation and CHE enumeration handling awaits an owner decision.
+
+**Verification Method**: Test (T)
+
+
+## DSI-context batch 18: source identification without clock selection
+
+The owner-directed bounded time view includes DATA SOURCE ID as context
+(RELEASE-0.1 Table 9-4 source list; follow-up to #48). This derives that
+context read for a supplied recorder/entry, not a general link graph or a
+channel-enumeration policy. Approved INT-035–039/041 and existing effective
+reads apply. CHE policy and general numeric FIELD-VALUE syntax remain pending;
+neither is selected by this scoped text-context contract.
+
+The pending general numeric field-value decision includes R-x\N, NUMBER OF
+TRACKS/CHANNELS (106-24R1 Chapter 9 section 9.5.4 Table 9-4 p. 9-32,
+range 1–65536). TK1/CDT/SHTF/DSI/CHE applicability uses R\N > 0
+(pp. 9-48–51). Supplied canonical entry scope does not settle that operand's
+syntax. Isolated context-composition units receive a scoped evaluated
+condition; parsed-R\N integration variants remain BLOCKED. Numeric-looking
+TTF/SHTF/TFMT codes (pp. 9-51, 9-71–72), including whether 02 matches 2,
+are likewise pending. Neither INT-038 nor INT-043 supplies their grammar.
+
+#### L2-VIEW-010
+
+**Parent**: L1-VIEW-007
+
+**Statement**: A bounded time-view entry SHALL expose its own R-x\DSI-n DATA SOURCE ID as located source context or its raw evidence and unavailable/state reason, preserving document/revision and recorder/entry scope and the existing effective-field rules; equal or suggestively named DSI text SHALL NOT select or evidence a clock, substitute for channel identity, merge entries or establish that a setup governs.
+
+**Rationale**: 106-24R1 Chapter 9 section 9.5.4 Table 9-4 DATA SOURCE ID, page 9-49, defines the source identifier with its own usage/link fields; RELEASE-0.1 explicitly treats it as context, not a time-channel reference. Batch 16 binds fields by canonical x,n rather than TK1, so isolated context composition can receive evaluated applicability without parsing numeric field values. Parsed-R\N applicability remains blocked by the pending syntax decision. Raw lookup and locally usable supported-field results remain distinct from general link resolution, length/blank rule interpretation or whole-document authority.
 
 **Verification Method**: Test (T)
