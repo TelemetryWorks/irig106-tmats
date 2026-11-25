@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through completeness-contract batches drafted (family 2, batches 1-15).**
+> **Status: foundations through bounded time-view metadata drafted (family 2, batches 1-16).**
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
@@ -1512,3 +1512,103 @@ provenance, not a production state machine as its own oracle. These are
 planned tests; independent AI CONCUR is recorded at PR #45 head `73396bc312e24cfccaf16de9ae7a72609faf75b6`.
 Source freshness, development analysis and executable verification remain
 required before implementation.
+
+
+## Time-view metadata batch 16: scoped channel and format reads
+
+These are future implementation/test obligations for the owner-approved 0.1
+subset, not existing time-view interfaces or passing coverage. Their sources
+and boundary are recorded in the [batch note](research/2026-11-25-time-view-metadata-requirements.md).
+INT-035–039/041 are approved. No value-blank interpretation, association field,
+packet-type correspondence or general governing algorithm is chosen here.
+
+**L3-VIEW-012** · Parent: L2-VIEW-005 · Verification: T
+*Time-view field binding SHALL use the same source document/revision and the full canonical recorder/entry index pair (x,n), using the INT-036/038 projected code-name identity while retaining each raw spelling and normalization finding; neither equal suffixes on different recorders nor equal IDs in different documents SHALL combine field evidence.*
+
+An entry's code-name index is not its actual channel ID. Location and raw
+lookup still return every occurrence. Index canonicalisation never rewrites
+the input, changes value bytes or authorises a record/revision join.
+
+**L3-VIEW-013** · Parent: L2-VIEW-005 · Verification: T
+*An entry SHALL be classified as confirmed TIMEIN only from a singular usable CHANNEL DATA TYPE result equal to TIMEIN in its own scope; missing, invalid, ambiguous or unavailable CDT evidence SHALL remain explicitly unconfirmed with its candidates/reason, without inferring TIMEIN from TTF/TFMT/TSRC presence, an ID or source order.*
+
+Citation: 106-24R1 Table 9-4 CHANNEL DATA TYPE, page 9-50. Approved INT-039
+multiplicity applies even to identical CDT repeats; INT-041's unavailable
+read is not Missing or a fabricated Invalid verdict. Relevant unconfirmed
+entry evidence stays inspectable rather than disappearing as empty success.
+
+**L3-VIEW-014** · Parent: L2-VIEW-005 · Verification: T
+*The channel identity result SHALL read R-x\TK1-n from the entry's own scope, preserve its effective state and original value/location, and require a usable in-range declaration before exposing an actual channel ID; a missing, invalid or ambiguous ID SHALL NOT be replaced by n, zero, a neighbouring entry or a packet's ID.*
+
+Citation: Table 9-4 TRACK NUMBER/CHANNEL ID, page 9-48, range 1–65535.
+An entry can have a confirmed TIMEIN CDT while its actual ID is unusable;
+keep that scoped evidence with the identity limitation. Known counter or
+other findings are retained, not silently used to create missing entries.
+
+**L3-VIEW-015** · Parent: L2-VIEW-005 · Verification: T
+*A request to identify time metadata by an actual channel ID SHALL retain all matching scoped entry candidates and any required recorder/source-scope limitation; multiple candidates SHALL NOT be merged, deduplicated or selected by first/last occurrence, and an absent match SHALL NOT synthesize an entry.*
+
+This is an uncertain selection contract, not a new standards conformance
+rule asserting global TK1 uniqueness across recorders. Each candidate keeps
+its own CDT/format results; do not manufacture scalar-value ambiguity by
+merging independent scopes. Caller context cannot silently cross a revision.
+
+**L3-VIEW-016** · Parent: L2-VIEW-006 · Verification: T
+*For a confirmed TIMEIN entry, reads of R-x\TTF-n, R-x\TFMT-n and R-x\TSRC-n SHALL bind separately to that exact recorder/entry scope and use their own reviewed definitions, states and raw locations; duplicate or missing evidence in one field SHALL NOT replace the other fields or be repaired with data from recorder-level extras or another entry.*
+
+Citation: Table 9-4 TIME DATA TYPE FORMAT, pages 9-71–72; TIME FORMAT and
+TIME SOURCE, page 9-72. A typed view cannot depend on prototype extra-vector
+routing. Supported local reads remain available with independent findings;
+they do not claim whole-document validity or a governing record.
+
+**L3-VIEW-017** · Parent: L2-VIEW-006 · Verification: T
+*The view SHALL keep time data type format, time representation, source category and secondary-header representation distinct, and SHALL NOT use one field's code as another field's interpretation, a packet data-type byte, a time-channel ID, a correlation reset or an epoch/default clock.*
+
+The four distinct Table 9-4 rows above are the citations; SHTF is on page
+9-51. For example TTF=2 and TFMT=2 are different declarations. Reporting an
+applicable TFMT default alongside a cross-field/network inconsistency never
+overrides packet evidence (RELEASE-0.1); this batch does not define a new
+packet mapping or inconsistencies not already reviewed.
+
+**L3-VIEW-018** · Parent: L2-VIEW-006 · Verification: T
+*Each time-field read SHALL compose L3-VIEW-005–011 without weakening multiplicity, character validity or unavailable-prerequisite handling, preserving Explicit, Defaulted, Missing, Invalid and Ambiguous evidence and any separate cannot-evaluate reason; no default SHALL replace a present invalid, blank-unavailable or duplicate value.*
+
+INT-036 controls are projected without changing raw bytes; INT-037 high
+bytes are Invalid; INT-039 duplicates remain Ambiguous. A leading value
+blank remains unavailable under approved INT-041/RELEASE-0.1 until the blank
+rule is reviewed. This does not introduce a sixth semantic field state or
+settle that rule. An explicit local TFMT on non-TIMEIN retains its field
+result and applicability finding, not a false absence or confirmed TIMEIN.
+
+**L3-VIEW-019** · Parent: L2-VIEW-006 · Verification: T
+*Absent TFMT SHALL yield Defaulted A only with a supported reviewed Table 9-4 TIME FORMAT definition, identified edition/basis and established TIMEIN applicability; otherwise it SHALL preserve the absence/default-unavailability reason, and any default SHALL retain its exact edition/table/row citation without an input span or inserted bytes.*
+
+Citation: 106-24R1 Table 9-4 TIME FORMAT, page 9-72; apply INT-041 and
+L3-VIEW-008–011. An ambiguous CDT operand leaves applicability unknown;
+Missing with that reason is not proof that the default is inapplicable.
+Keep required-presence and other independent findings. No TSRC, TTF, SHTF,
+UTC/IRIG-B, association or NSB default is invented by this TFMT rule.
+
+**L3-VIEW-020** · Parent: L2-VIEW-006 · Verification: T
+*The secondary-header time-format read SHALL address R-x\SHTF-n in each observed channel entry independently of whether its CDT is TIMEIN, preserve that field's own effective state and definition evidence, and SHALL NOT treat declaration presence as proof that a packet has a secondary header or supplies a clock association.*
+
+Citation: Table 9-4 SECONDARY HEADER TIME FORMAT, page 9-51. A non-TIMEIN
+channel can expose SHTF; an absent/unusable declaration stays absent/unusable,
+not a value inferred from a nearby time channel or packet header.
+
+**L3-VIEW-021** · Parent: L2-VIEW-007 · Verification: T
+*Every field/candidate result SHALL retain the source document/revision, recorder/entry identity, original item spans and any supplied assembled-body-to-fragment mapping, together with edition-selection basis, default citation or limitation; invoking the view SHALL NOT change bytes, item ordering, multiplicity or findings, or silently reuse results on a different revision.*
+
+For standalone TMATS, no packet provenance is fabricated. For assembled
+input, use the existing provenance map rather than inventing a packet-local
+span for a field crossing fragments. Rust ownership/types remain a later
+reviewed API choice; revision identity and no stale interpretation are binding.
+
+**L3-VIEW-022** · Parent: L2-VIEW-007 · Verification: T
+*A view obtained with incomplete, retained-cut, ambiguous, unsupported-format or otherwise unestablished setup eligibility SHALL preserve that limitation and SHALL NOT present local metadata as an unqualified usable or governing time setup; no metadata result SHALL prove a data-channel/time-source association or select a governing candidate from competing records.*
+
+This composes RELEASE-0.1 and approved INT-048's retained-cut blocking force;
+it does not reopen retransmission decisions. Local diagnostic/raw inspection
+is not semantic adoption. A supplied governing context is retained as such,
+not independently selected or upgraded by a time-field read. The later
+association/NSB and general governance derivations remain separate work.
