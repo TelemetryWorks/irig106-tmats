@@ -14,7 +14,8 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
-| [2026-11-23-retransmission-decision-matrix.md](2026-11-23-retransmission-decision-matrix.md) | Proposed INT-046; explicit whole-product members/outcomes/tests in `retransmission-matrix/`, owner direction and unresolved questions; no approval or runtime test claim |
+| [2026-11-25-retransmission-owner-signoffs.md](2026-11-25-retransmission-owner-signoffs.md) | Verbatim Joey sign-offs for Q0/QD/QI/QB/QE/QC/QP/QH/QG/QS; INT-046–052; independent AI pending, QM undecided |
+| [2026-11-23-retransmission-decision-matrix.md](2026-11-23-retransmission-decision-matrix.md) | Current pairwise matrix and artifacts; owner-signed INT-046–052 dated 2026-11-25, QD before QI; AI pending, QM outside scope, no runtime coverage claim |
 | [2026-11-23-channel-zero-edition-sources.md](2026-11-23-channel-zero-edition-sources.md) | Per-edition channel-ID source passages/scopes for INT-011/045 review; no new cutoff or conformance approval |
 | [2026-11-23-mid-session-setup-corner-cases.md](2026-11-23-mid-session-setup-corner-cases.md) | 22 retained cases plus M1–M3; checksum failure raised with reviewer default-policy disagreement; options unapproved and likelihood unmeasured |
 | [2026-11-23-int045-owner-signoff.md](2026-11-23-int045-owner-signoff.md) | INT-045 approval, exact #40/#41 AI references and continuation-only checksum diagnostic suggestion |

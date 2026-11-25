@@ -1,7 +1,9 @@
 # Mid-session setup changes: corner-case catalogue for owner discussion
 
-Date: 2026-11-23. **Discussion only: no option or recommendation in this
-catalogue is approved.** It records the existing rules separately. INT-045
+Created 2026-11-23; updated 2026-11-25. **Discussion catalogue with dated
+owner sign-offs for M1 and the integrity mode in 09.** See the
+[verbatim sign-offs](2026-11-25-retransmission-owner-signoffs.md); independent
+AI review of INT-046–052 is pending. Remaining options stay undecided. INT-045
 itself is approved: initial Option A plus the guarded owner mid-session
 extension, AI CONCURS on #41 at 79b94eb. That does not approve INT-028/029/
 031/032 governance proposals, remaining INT-034 details, or implementation.
@@ -14,7 +16,8 @@ cases. No real-recording corpus was inspected and no measured frequency is
 claimed. Several cases can occur together; the ordering can be revised with
 field evidence. Existing numbers stay stable when moved: 09 is raised for
 early integrity-policy discussion; M1–M3 are additional discussion handles,
-not requirement IDs. No new exception or default is approved here.
+not requirement IDs. Only the explicitly dated owner-signed choices are
+recorded as decisions; catalogue recommendations do not authorise implementation.
 
 ## Sources and the approved baseline
 
@@ -70,21 +73,17 @@ single-entry attributes, not record boundaries. The time-seal guard is policy.
 approved INT-045 unless its own G\SHA verifies. Excluding the following
 SRCC=0 candidate from mid-session closure does NOT exempt the earlier record
 from the premature-seal guard. Both readings and finding remain; no rejoin.
-**Owner direction, 2026-11-23 (not final matrix approval):** Joey agrees that
-whole-byte-identical following text keeps an otherwise Complete sealed record
-Complete, labelled `identical retransmission`. An SRCC=0 claim is CHECKED:
-differing content is reported and treated as a change; SRCC=1 does not itself
-make identical bytes different. The owner requires EVERY combination and
-whole-matrix implementation tests before this exception can be implemented.
-**Proposal/review:** [INT-046's exhaustive matrix](2026-11-23-retransmission-decision-matrix.md)
-lists each member, outcome, test and unresolved owner question. It distinguishes
-first-only versus second-only checksums, metadata changes, cut/ambiguous
-candidates, boundary types and initial/mid-session phases. Byte identity is
-literal whole TMATS text, including layout/unknown/checksum bytes, not packet
-headers, a matching prefix or projected equality. Repeating single-entry G
-attributes remains weaker information. Preserve the approved INT-045 guard
-until the new wording/limits pass review; do not treat the owner's direction
-as approval of unresolved governance, scope or integrity options.
+**Owner sign-offs, 2026-11-25:** Joey signed the bounded identity exception
+(INT-046) and strict field-ambiguity precedence (INT-048). A byte-identical
+copy keeps an otherwise-Complete sealed record Complete with the identity
+label AND the INT-045 finding. Duplicate G\SHA or other established field
+ambiguity instead forces assembly Ambiguous, with no identity/digest upgrade.
+SRCC=0 differences are reported as changes; SRCC=1 alone proves no change.
+Independent AI review of this amended wording is pending under ADR-0033.
+**Scope/review:** [Current pairwise matrix](2026-11-23-retransmission-decision-matrix.md)
+and [verbatim owner record](2026-11-25-retransmission-owner-signoffs.md).
+No new code or runtime coverage is claimed. Multiple following copies (QM)
+remain undecided and outside this matrix; no governing switch is inferred.
 
 ## 09. The update's G\SHA fails
 
@@ -95,16 +94,14 @@ rule that checksum failure means a truncated configuration.
 **Current rule:** Checksum states remain distinct; failure cannot supply
 INT-045's positive sealed-text exception. With qualifying continuation the
 final outcome is Ambiguous; without it, structural Complete is not integrity.
-**Options/recommendation:** A quarantine semantic adoption on integrity failure
-(the original catalogue recommendation). The independent reviewer DISAGREES
-with A as the default and recommends B: adopt an otherwise eligible setup
-with a PROMINENT integrity finding, consistently for INITIAL and UPDATE
-records; quarantine becomes an opt-in strict caller mode. Carry B as the
-recommendation for owner discussion, retaining A as the strict option. No
-default is decided: B does not waive incomplete/ambiguous/trust guards, change
-a checksum failure to success, or approve the still-open governing setup
-selection. Never restamp/normalise input to pass or silently preserve an old
-setup only for checksum-failing updates. See 03/04 for separate adoption rules.
+**Owner sign-off, 2026-11-25:** Joey accepted B, the reviewer's default:
+prominent integrity findings for otherwise eligible INITIAL and UPDATE
+records (INT-051); strict quarantine is opt-in only after its own review.
+A (the original quarantine default recommendation) is rejected as the default.
+This does not waive F1, framing, trust, QD ambiguity or scope checks; no
+integrity result selects a governing setup or silently preserves an old one.
+Independent AI review is pending. The remaining general applicability and
+provisional-use contracts are not decided by this integrity-mode choice.
 
 ## M2. A second setup arrives during the initial phase
 

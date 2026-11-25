@@ -834,28 +834,34 @@ minimum required attributes are satisfied. Missing-attribute support cites
 packet fill is weak evidence. The digest fixture uses independent Python
 `hashlib.sha256`, never the library under test or Chapter 6's example digest.
 
-## Planned exhaustive retransmission matrix (INT-046 proposed)
+## Planned exhaustive retransmission matrix (owner-signed INT-046–052)
 
 Owner direction dated 2026-11-23 requires every combination, not a sample.
 The [matrix and owner questions](research/2026-11-23-retransmission-decision-matrix.md)
 list all 139,968 members and their individual planned test names in the
-compressed artifact. All are PLANNED, not existing tests. Table answers still
-need interpretation review and owner decisions; unresolved rows block
-implementation readiness. The documentation expander checks only the artifact.
+compressed artifact. All are PLANNED, not existing tests. Joey signed the
+pairwise decisions on 2026-11-25; the independent AI check remains pending and
+blocks implementation readiness. QM remains outside scope and undecided.
+The documentation expander checks only the artifact.
 Sources: 106-24R1 Ch11 §11.2.7.2 p. 11-50 SRCC; Ch6 §6.2.3.11 f pp. 6-22–23
-and Ch9 Table 9-2 p. 9-13 checksum; INT-011/018–021/034/039/043/045.
+and Ch9 Table 9-2 p. 9-13 checksum; INT-011/018–021/034/039/043/045 and owner-signed INT-046–052.
 
-| Named planned test | Fixture / explicit matrix member | Proposed assertions / open question | Requirements |
+| Named planned test | Fixture / explicit matrix member | Owner-signed assertions / pending independent AI check | Requirements |
 | --- | --- | --- | --- |
 | `retransmission_matrix_exhaustive_coverage` | Every tuple in the versioned domains, including inconsistent observations and every class member; 139,968 currently | Independently exercise all observable output columns; no sampled substitute, missing case, silent owner choice or generator-as-oracle. Count realizable byte fixtures separately from observation consistency/rejection checks | L3-REG-014 |
 | `srcc0_different_is_reported_change` | `0.D.NN.C.SS.T.T.I`: bounded following text changes `G\PN:one;` to `G\PN:two;` despite SRCC=0 | Changed claim discrepancy; sealed Ambiguous under existing premature-seal guard; both readings retained, no rejoin. No automatic governing switch (QG) | L3-REG-015 |
-| `srcc1_identical_is_not_assumed_change` | `1.B.NN.C.SS.T.T.M`: same complete raw text, following first SRCC=1 | Proposed Complete, `time-boundary seal (owner policy)` plus `identical retransmission`; report changed claim against identical evidence, no semantic-change assumption; keep the located INT-045 premature-seal finding visible (QI/QG) | L3-REG-015 |
+| `srcc1_identical_is_not_assumed_change` | `1.B.NN.C.SS.T.T.M`: same complete raw text, following first SRCC=1 | Complete on signed QI, `time-boundary seal (owner policy)` plus `identical retransmission`; report changed claim against identical evidence, no semantic-change assumption; keep the located INT-045 premature-seal finding visible (QI/QG) | L3-REG-015 |
 | `sha_only_following_not_sealed_proof` | `0.R.NV.C.SS.T.T.I`: following adds its own well-formed verifying checksum to the sealed text | Not byte-identical. Following-only verification never verifies sealed candidate or cures guard: sealed Ambiguous; report raw change despite SRCC=0; preserve both candidates (QC/QG) | L3-REG-015 |
 | `sha_only_sealed_preserves_verified_exception` | `0.R.VN.C.SS.T.T.I`: following removes the sole checksum; sealed checksum verifies sealed bytes | Sealed Complete ONLY on INT-045's existing sealed-text-verification basis; following absence is explicit, raw change reported; no joined digest/adoption inference (QC/QG) | L3-REG-015 |
-| `identical_duplicate_sha_never_verifies` | `0.B.DD.C.SS.T.T.I`: identical text contains duplicate G\SHA | F1 indeterminate with every occurrence, stamping refusal; retain byte-identity evidence AND the located INT-045 premature-seal finding. INT-045 baseline Ambiguous with this related follower; QD assembly hold is a separate proposal, never a positive verification or selected duplicate | L3-REG-015 |
+| `identical_duplicate_sha_never_verifies` | `0.B.DD.C.SS.T.T.I`: identical text contains duplicate G\SHA | F1 indeterminate with every occurrence, stamping refusal; retain byte-identity evidence AND the located INT-045 premature-seal finding. INT-045 baseline Ambiguous with this related follower; owner-signed QD forces assembly Ambiguous independently of the follower and takes precedence over QI; never positive verification or a selected duplicate | L3-REG-015 |
 | `duplicate_sha_does_not_hide_premature_seal` | All 144 previously coherent duplicate-sealed-SHA / nonidentical T/C/SS members (138 coherent now, six R0 cut-following/F observations) | Located premature-seal finding and both readings retained regardless of R2D; coherent baseline Ambiguous, six inconsistent rows explicitly R0 | L3-REG-014 |
-| `duplicate_sha_without_related_follower_keeps_baseline` | `0.D.DN.G.SS.T.T.I`, plus different-channel/profile/explicit-stop/EOF variants | Baseline Complete and F1 indeterminate/refuse-stamp; proposed QD Ambiguous remains a separate column, never imposed as approved completeness | L3-REG-014 |
+| `duplicate_sha_without_related_follower_is_ambiguous` | `0.D.DN.G.SS.T.T.I`, plus different-channel/profile/explicit-stop/EOF variants | Owner-signed QD baseline Ambiguous, even without related follower; F1 stays indeterminate/refuse-stamp. No equality or digest upgrade | L3-REG-014 |
 | `cut_observation_cannot_claim_mismatch_or_only_sha_layout_delta` | Every sealed X with checksum F or content H/W, plus following X with checksum F, including intersections | Explicit R0 consistency/rejection test, not parser coverage: checksum F must instead be U and bounded H/W cannot explain the cut | L3-REG-014 |
+| `other_field_ambiguity_blocks_identity_and_digest` | Repeated definition-bound G\PN within one candidate (INT-039), including identical repeats and sealed G\SHA verification, with byte-identical following text | Supplied A remains assembly Ambiguous under INT-048; no first/last winner or Complete upgrade; retain every item/digest/identity finding | L3-REG-015 |
+| `cut_duplicate_keeps_cut_evidence_and_ambiguity` | `0.D.DN.G.SS.X.T.I` plus cut text containing repeated G\PN | Aggregate Ambiguous under strict QD; preserve cut evidence and both raw occurrences. No invented terminator or usable Complete; fixture remains planned | L3-REG-015 |
+| `duplicate_g106_fallback_does_not_cure_assembly_ambiguity` | Duplicate G\106 with INT-044 labelled fallback | Assembly Ambiguous remains; fallback selects diagnostic rule basis, never a winning declaration or governing setup | L3-REG-015 |
+| `following_duplicate_is_assembly_ambiguous` | `0.D.ND.G.SS.T.T.I`, then cut-following variant X | Following candidate assembly Ambiguous under QD even if sealed candidate is Complete; block following adoption and retain incomplete comparison evidence | L3-REG-015 |
+| `integrity_findings_default_no_silent_quarantine` | Otherwise eligible initial and mid-session setup with checksum F/M, plus separate F1/framing/trust/ambiguous-scope controls | Default prominent findings; no implicit quarantine or silent old fallback. Controls remain blocking; quarantine opt-in requires separate review | L3-REG-015 |
 | `retransmission_boundary_and_projection_mutations` | Mutate named witnesses: partial matching prefix, BOM/damaged/projected names, raw exclusion/leading layout, value-contained G\SHA, missing terminator, uppercase hex, `02-`, layout inside/outside exclusion, channel/FRMT/RCCVER/EOF | Preserve dependency findings, exact raw bytes/spans and every candidate; no normalized equality, silent rejoin or unsupported-format interpretation. Compare independent digests, not production output | L3-REG-015 |
 
 The four owner examples are named regressions in addition to all per-member

@@ -1450,10 +1450,11 @@ Recovery/resume and any opt-in disposal action need their own explicit
 contract. Passing a limit test does not prove all L1-ROB-001 input handling.
 
 
-## Whole-matrix verification contract (proposed INT-046)
+## Whole-matrix verification contract (owner-signed INT-046–052)
 
-These are future implementation obligations. No matrix answer gains approval
-and no executable coverage is claimed by the checked-in documentation artifacts.
+These are future implementation obligations. Owner sign-offs dated 2026-11-25
+are recorded; independent AI review is pending. No executable coverage is
+claimed by the checked-in documentation artifacts.
 
 **L3-REG-014** · Parent: L2-REG-007 · Verification: T
 *The implementation test harness SHALL deterministically enumerate every Cartesian-product member of the versioned retransmission matrix, currently 139,968, and assert exact domain membership, unique case identity and full equivalence-class membership without sampling or omission; each realizable member SHALL exercise actual bytes/provenance and independently checked expected sealed classification/basis, following classification, located findings and governing effect, while inconsistent observations SHALL receive separately counted consistency/rejection tests and unresolved owner questions SHALL fail readiness visibly.*
@@ -1476,7 +1477,11 @@ attributes, leading layout, value-contained text, missing terminators,
 uppercase hex, noncanonical algorithm 2, BOM/damage, F1 duplicates, differing
 FRMT/RCCVER/channel and actual EOF. Property-based mutation complements the
 full enumeration, never replaces it. The pairwise artifact separately preserves
-baseline completeness and the unapproved QD hold, with INT-045 findings unaffected
-by F1. Multiple-following-copy composition remains outside this matrix pending
+owner-signed baseline with QD/INT-048 before QI/INT-046: field ambiguity
+forces assembly Ambiguous, never upgraded by identity/equality/digest, while
+cut evidence and INT-045 findings remain visible. Named compound fixtures
+SHALL cover non-SHA field ambiguity, cut-plus-ambiguity, and both candidates;
+input-state flattening must not be mistaken for exhaustive byte-shape coverage.
+Multiple-following-copy composition remains outside this matrix pending
 QM's reviewed sequence contract and coverage; pairwise enumeration SHALL NOT be
 reported as whole-sequence verification. This remains planned, not tested today.

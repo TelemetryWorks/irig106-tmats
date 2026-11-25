@@ -1,7 +1,7 @@
 {
-  "status": "DRAFT; no approvals",
+  "status": "owner-signed 2026-11-25; independent AI check pending; QM out of scope",
   "combinations": 139968,
-  "classes": 39078,
+  "classes": 39072,
   "domains": {
     "srcc": [
       "0",
@@ -80,6 +80,18 @@
       "M"
     ]
   },
-  "members_sha256": "30efe0d68a2e79466d1aa4965e40debe4df1094d19abd5cfea4773bc8b0d5d95",
-  "classes_sha256": "dba56646989ee7c10c6faf2358bf00e741c90dd33b0f7d208028f0770b5b94d6"
+  "interpretations": {
+    "QI": "INT-046",
+    "Q0": "INT-047",
+    "QD": "INT-048",
+    "QB": "INT-049",
+    "QE": "INT-049",
+    "QC": "INT-050",
+    "QP": "INT-050",
+    "QH": "INT-051",
+    "QG": "INT-051",
+    "QS": "INT-052"
+  },
+  "members_sha256": "67bf5b4b0b968809b00973b16069e1e43074f6a9c2b0d4c59550cedf3883ac75",
+  "classes_sha256": "7b2498018b9c5c64141c2911d633eb48e862520b5e05a0a00d87df20bf57ba1f"
 }

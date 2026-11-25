@@ -704,11 +704,12 @@ owner after #38 are recorded here; unresolved streaming-use policy stays open.
 **Verification Method**: Test (T)
 
 
-## Retransmission interpretation verification (proposed INT-046)
+## Retransmission interpretation verification (owner-signed INT-046–052)
 
 Owner direction, 2026-11-23, requires the whole matrix to be tested. The
-matrix's proposed answers and owner questions remain unapproved; requirements
-for verification do not select those answers or relax ADR-0033 readiness.
+pairwise decisions are now owner-signed, Joey, 2026-11-25, with the
+independent AI check pending. QM remains outside scope and undecided; owner
+sign-off does not relax ADR-0033 implementation readiness.
 
 #### L2-REG-007
 
