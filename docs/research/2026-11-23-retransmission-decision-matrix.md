@@ -2,8 +2,10 @@
 
 Created 2026-11-23; updated 2026-11-25. Joey signed Q0/QD/QI/QB/QE/QC/QP/
 QH/QG/QS on 2026-11-25. [Verbatim record and register mapping](2026-11-25-retransmission-owner-signoffs.md).
-**Independent AI review of INT-046–052 is pending under ADR-0033. No runtime
-implementation or verification is claimed.** QM is undecided and outside scope.
+**Independent AI review of INT-046–053 is pending under ADR-0033. No runtime
+implementation or verification is claimed.** QM is now owner-signed in
+INT-053, with separate bounded sequence fixtures below; the pairwise product
+is unchanged. [QM owner wording](2026-11-25-qm-governing-comparison-owner-decision.md).
 QD is effective in this documented baseline NOW: established field ambiguity
 forces assembly Ambiguous; identity or a digest can never upgrade it. QI is
 limited to otherwise-Complete bounded time/+1/same-channel/same-profile copies,
@@ -200,29 +202,67 @@ are not decided by accepting QH/QG's mode.
 Artifact `owner_decisions` flags refer to this table; manifest maps codes to
 entries. `owner_questions` is empty for this PAIRWISE product: the choices
 above are signed, not open. Their **independent AI check is pending**; readiness
-must remain blocked. QM is outside the row domains, undecided, and has no
-owner-signed behaviour or sequence-coverage claim.
+must remain blocked. QM/INT-053 is owner-signed as a separate sequence layer
+outside the pairwise row domains; no runtime sequence coverage is claimed.
 
-## Multiple following copies: explicitly outside this pairwise product
+## Multiple following copies: owner-signed QM sequence contract
 
-This version models EXACTLY ONE following candidate, not an arbitrary stream
-of repeats. In particular **B then D** (first identical, then semantically
-different) and **H then B** (first SHA-value change, then identical) are NOT
-covered compositions of these pairwise outcomes. B/H/D require a stated
-comparison target: equality to the original seal can differ from equality to
-the immediately preceding copy. Never treat the second pairwise result as
-an automatically final aggregate or erase the earlier findings.
+Joey signed QM on 2026-11-25 (INT-053; independent AI check pending). Each
+later copy compares with the **currently governing setup**, G: the original
+sealed record if it governs, or the latest copy that validly took control.
+A received copy does not become G merely because it is newest, Complete,
+SRCC=0/1, byte-identical or checksum-verifying. Adoption evidence comes from
+the separately reviewed transition/applicability rules, not this table.
 
-**QM — owner question:** Compare each later copy with (A) the original sealed
-candidate, (B) the previous copy, or (C) both with explicit identities? How do
-later evidence and checksum results revise/compose earlier classification and
-governing-setup effects? Recommend C: preserve both comparisons, every source
-identity and finding, with no automatic replacement/upgrade, rejoin or setup
-switch. A future reviewed sequence contract must define precedence/finality
-and enumerate bounded sequences (including B→D, H→B, a third copy bearing the
-only checksum, and changed SRCC claims). Until then, sequence behavior is
-unavailable/out of scope, not proved by the 139,968 pairwise members. This
-question is outside the current row domains; do not count sequence test coverage.
+| Established control evidence for a copy C | Comparison target for later copies |
+| --- | --- |
+| C validly took control | C, with its identity and supporting evidence |
+| C definitely did not take control | The existing G, which may itself be unresolved; C is not promoted |
+| Whether C took control is unresolved | Unresolved; retain the evidence and possible identities, never choose one |
+
+A changed copy failing integrity in warn mode, or an Ambiguous copy, must
+leave the target unresolved WHEN its takeover is unresolved. Do not convert
+QD's adoption prohibition into proof of the recorder's actual old setup.
+Nor does prominent-finding mode prove that the changed setup took control.
+An unresolved target stays unresolved until reviewed evidence actually
+establishes governing identity; a later apparently good/equal copy alone
+cannot repair it. Report local framing/ambiguity findings independently.
+
+Raw equality to the **immediately previous** copy is a separate INFORMATION
+comparison, naming both copies. It never changes eligibility, governing or
+classification. In particular, previous-copy equality cannot substitute for
+an unavailable G comparison or invoke QI. If G is known, apply the pairwise
+contract to the independently identified G/copy comparison with its guards;
+do not treat the immediately previous copy as G by position.
+
+Preserve every earlier copy's located findings without overwrite. Retain old
+governing setup identities/descriptions for data already decoded under them;
+a later takeover or unresolved target does not retrospectively relabel that
+data. Retaining historical G does not make it the current comparison target.
+
+**Bounded verification choice:** keep the pairwise product unchanged at
+139,968 members / 39,072 classes. QM needs state and historical evidence,
+so it has separate named fixtures with an established original G0 and at
+most **three later copies**, not a Cartesian multiplication or a runtime
+implementation. This is a fixture bound, not a recording/history limit or
+claim of exhaustive arbitrary-length coverage. B/H/D below always identify
+their comparison target explicitly; no arrow silently switches targets.
+
+| Named planned test | Bounded sequence and established control evidence | Required observation |
+| --- | --- | --- |
+| `qm_B_then_D_uses_governing_target` | C1=B(G0), definitely no takeover; C2=D(G0) | C2 targets G0, not C1 by position; report D and preserve C1 findings; do not invent C2 adoption |
+| `qm_H_then_B_previous_identity_is_information_only` | C1=H(G0), definitely no takeover; C2=B(C1) | Previous B is information only; governing comparison remains H(G0), never classified as unchanged because C1 repeated |
+| `qm_third_copy_only_checksum_does_not_select_target` | C1/C2 no SHA and definitely no takeover; C3 adds the only SHA, verifying C3 | G0 remains the target until valid takeover evidence; C3's SHA verifies neither G0 nor earlier copies. Adding an item is R, not H |
+| `qm_changed_srcc_claims_never_select_target` | C1/C2/C3 carry changed/unchanged/unreadable first-fragment claims against fixed control evidence | Target follows control evidence, never the bits; retain changed-claim discrepancy/unreadable findings |
+| `qm_unresolved_governing_blocks_later_target` | C1=D(G0) with failed integrity in warn mode AND unresolved takeover; C2=B(C1) | Target unresolved, neither G0 nor C1 selected; previous equality is information only, governing comparison unavailable |
+| `qm_ambiguous_copy_does_not_prove_old_target` | C1 has QD field ambiguity and unresolved actual takeover; C2 follows | Keep QD Ambiguous and unresolved target; adoption prohibition is not proof that G0 governed later recorded data |
+| `qm_valid_takeover_updates_governing_target` | C1 has independently established valid takeover as G1; C2 differs from G1 even if equal to old G0 | Target G1; G0 equality is not a governing comparison. Historical G0 still identifies previously decoded data |
+| `qm_previous_identity_mutation_preserves_decisions` | Fix G, candidate C and adoption evidence; vary only whether an unadopted immediate predecessor equals C | Only previous-comparison information changes; eligibility, governing and classification are unchanged, with each history's findings retained |
+| `qm_findings_and_prior_decoding_provenance_are_persistent` | Decode under G0; valid G1 takeover; then a rejected or unresolved C2 | Retain all prior findings and both governing descriptions/packet references; do not overwrite or relabel prior decoding |
+
+All cases are PLANNED and require markers for INT-053 and L3-REG-016 plus
+applicable dependencies. They do not decide the remaining adoption algorithm,
+permit an unreviewed strict-quarantine mode or claim runtime verification.
 
 ## Implementation verification required, not performed here
 
@@ -234,7 +274,7 @@ rejoin. Impossible observations need explicit consistency/rejection checks.
 Open owner decisions must fail readiness visibly; do not encode them as passes.
 Property-based mutation complements, never replaces, the full product.
 CI runs `spec.py --check` alongside the trace drift check; this checks checked-in
-documentation only, not library behavior or answers to QM.
+documentation only, not library behavior or the planned QM sequence tests.
 
 Named owner fixtures: `srcc0_different_is_reported_change`,
 `srcc1_identical_is_not_assumed_change`, `sha_only_following_not_sealed_proof`,

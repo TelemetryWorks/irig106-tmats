@@ -187,8 +187,10 @@ def generate():
     with gzip.GzipFile(filename='', fileobj=compressed_index, mode='wb', mtime=0) as z:
         z.write(index)
     index = compressed_index.getvalue()
-    manifest = dict(status='owner-signed 2026-11-25; independent AI check pending; QM out of scope', combinations=count, classes=len(classes),
-                    domains=DOMAINS, interpretations={'QI': 'INT-046', 'Q0': 'INT-047', 'QD': 'INT-048',
+    manifest = dict(status='owner-signed 2026-11-25; independent AI check pending; QM uses separate bounded sequence fixtures', combinations=count, classes=len(classes),
+                    domains=DOMAINS, sequence_contract={'interpretation': 'INT-053',
+                    'scope': 'separate named planned fixtures; pairwise product unchanged',
+                    'max_later_copies_in_named_fixtures': 3}, interpretations={'QI': 'INT-046', 'Q0': 'INT-047', 'QD': 'INT-048',
                     'QB': 'INT-049', 'QE': 'INT-049', 'QC': 'INT-050', 'QP': 'INT-050',
                     'QH': 'INT-051', 'QG': 'INT-051', 'QS': 'INT-052'}, members_sha256=hashlib.sha256(buf.getvalue()).hexdigest(),
                     classes_sha256=hashlib.sha256(index).hexdigest())

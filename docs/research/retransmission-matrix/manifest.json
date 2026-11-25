@@ -1,5 +1,5 @@
 {
-  "status": "owner-signed 2026-11-25; independent AI check pending; QM out of scope",
+  "status": "owner-signed 2026-11-25; independent AI check pending; QM uses separate bounded sequence fixtures",
   "combinations": 139968,
   "classes": 39072,
   "domains": {
@@ -79,6 +79,11 @@
       "I",
       "M"
     ]
+  },
+  "sequence_contract": {
+    "interpretation": "INT-053",
+    "scope": "separate named planned fixtures; pairwise product unchanged",
+    "max_later_copies_in_named_fixtures": 3
   },
   "interpretations": {
     "QI": "INT-046",

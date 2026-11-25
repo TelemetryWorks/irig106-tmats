@@ -834,17 +834,18 @@ minimum required attributes are satisfied. Missing-attribute support cites
 packet fill is weak evidence. The digest fixture uses independent Python
 `hashlib.sha256`, never the library under test or Chapter 6's example digest.
 
-## Planned exhaustive retransmission matrix (owner-signed INT-046–052)
+## Planned exhaustive retransmission matrix (owner-signed INT-046–053)
 
 Owner direction dated 2026-11-23 requires every combination, not a sample.
 The [matrix and owner questions](research/2026-11-23-retransmission-decision-matrix.md)
 list all 139,968 members and their individual planned test names in the
 compressed artifact. All are PLANNED, not existing tests. Joey signed the
 pairwise decisions on 2026-11-25; the independent AI check remains pending and
-blocks implementation readiness. QM remains outside scope and undecided.
+blocks implementation readiness. QM/INT-053 has separate bounded sequence
+fixtures below; the pairwise product is unchanged.
 The documentation expander checks only the artifact.
 Sources: 106-24R1 Ch11 §11.2.7.2 p. 11-50 SRCC; Ch6 §6.2.3.11 f pp. 6-22–23
-and Ch9 Table 9-2 p. 9-13 checksum; INT-011/018–021/034/039/043/045 and owner-signed INT-046–052.
+and Ch9 Table 9-2 p. 9-13 checksum; INT-011/018–021/034/039/043/045 and owner-signed INT-046–053.
 
 | Named planned test | Fixture / explicit matrix member | Owner-signed assertions / pending independent AI check | Requirements |
 | --- | --- | --- | --- |
@@ -872,12 +873,32 @@ Python hashlib for independent digests. An added/removed checksum belongs to
 R, not H (H changes only existing value bytes). Proper tuple constraints found
 during witness construction must be reported, reviewed and tested, not skipped.
 
-Multiple-following-copy compositions are OUT OF SCOPE of this pairwise
-matrix, not implicit passes: planned `multiple_copies_B_then_D_target_and_composition`
-and `multiple_copies_H_then_B_target_and_composition` await QM's owner decision.
-Recommend recording both original-seal and previous-copy comparisons with
-explicit identities, retaining findings, never automatically switching setups.
-These cases need a reviewed sequence matrix before implementation/coverage claims.
+### Planned QM sequences (INT-053 owner-signed, independent AI pending)
+
+Joey's QM decision, 2026-11-25, compares each copy with the CURRENTLY
+GOVERNING setup; an unresolved takeover leaves later comparison targets
+unresolved, never guessed. Immediate-previous equality is information only.
+Preserve every earlier finding and historical governing setup for already
+decoded data. [Full sequence contract, explicit targets and control evidence](research/2026-11-23-retransmission-decision-matrix.md#multiple-following-copies-owner-signed-qm-sequence-contract).
+
+Keep the 139,968-member / 39,072-class pairwise product unchanged. The cases
+below use an established G0 and up to THREE later copies; this is a fixture
+bound, not a limit on recording length/history or arbitrary-length coverage.
+All are PLANNED, not executed parser/consumer tests. Control/adoption evidence
+must be independently established under reviewed rules, not inferred from
+Complete, a checksum, an SRCC bit or previous-copy equality.
+
+| Named planned test | Sequence obligation | Requirements |
+| --- | --- | --- |
+| `qm_B_then_D_uses_governing_target` | C1 identical to G0 but definitely not adopted; C2 differs from G0. C2 still targets G0; retain C1 findings | L3-REG-016 |
+| `qm_H_then_B_previous_identity_is_information_only` | C1 is SHA-value-only change from G0, definitely unadopted; C2 equals C1. Governing comparison is H(G0), not B(C1) as an eligibility/classification input | L3-REG-016 |
+| `qm_third_copy_only_checksum_does_not_select_target` | Two unadopted copies then C3 with the only checksum: no retroactive verification or inferred target switch. Addition of a checksum item is R, not H | L3-REG-016 |
+| `qm_changed_srcc_claims_never_select_target` | Three copies with 0/1/U claims and fixed control evidence; preserve claim/discrepancy findings without switching target from bits | L3-REG-016 |
+| `qm_unresolved_governing_blocks_later_target` | Changed warn-mode integrity-failing C1 with unresolved takeover, then identical C2: target remains unresolved, neither G0 nor C1 selected | L3-REG-016 |
+| `qm_ambiguous_copy_does_not_prove_old_target` | QD Ambiguous C1 with unresolved actual takeover, then C2: preserve ambiguity and unknown target, never infer that the old setup governed from an adoption block | L3-REG-016 |
+| `qm_valid_takeover_updates_governing_target` | Independently established valid G1 takeover; C2 may equal old G0 yet must compare with G1. Keep G0 for earlier decoded packets | L3-REG-016 |
+| `qm_previous_identity_mutation_preserves_decisions` | Fix G/candidate/adoption evidence; mutate only immediate-predecessor equality. Eligibility, governing and classification unchanged, with each history's findings retained | L3-REG-016 |
+| `qm_findings_and_prior_decoding_provenance_are_persistent` | G0 decoding, G1 valid takeover, then rejected/unresolved copy: preserve every earlier located finding, governing description and packet-to-setup identity | L3-REG-016 |
 
 ## Real Chapter 10 recordings (local use only)
 

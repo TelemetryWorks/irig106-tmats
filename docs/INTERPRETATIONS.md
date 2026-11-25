@@ -1666,7 +1666,7 @@ in the #40 draft; neither the event nor a nearby 0x02 is guessed as an end.
 - INT-011's per-channel joining and INT-045's layered time closure retain their cited Ch11 sources. Ch6 §6.2.3.11 f pp. 6-22–23: 'all text between the "G\SHA" and the following semicolon, inclusive'; digest equality is not equality of every raw byte.
 - Owner sign-off, Joey, 2026-11-25: [verbatim decision record](research/2026-11-25-retransmission-owner-signoffs.md). This is owner policy where the standard supplies no recovery/adoption rule.
 
-**Behaviour**: QI is owner-signed: only a bounded, otherwise-Complete candidate, time-sealed and followed on the same channel at sequence +1 with the same FRMT/RCCVER, may stay Complete on whole raw-text identity, labelled `identical retransmission` alongside its closure basis. This holds for following first-fragment SRCC 0/1/U, never by inferring a bit. Keep the located `possible_premature_time_boundary_seal_both_readings` finding, including on Complete and duplicate-SHA outcomes. **QD/INT-048 takes precedence**: field ambiguity, including duplicate G\SHA, is assembly Ambiguous and cannot be upgraded by identity, equality or a digest. Already-cut text never becomes Complete through matching a prefix. The mid-session label remains `time-boundary seal (owner policy)`. A following-only checksum cannot verify the sealed text. No backward rejoin, stamping, governing switch or cross-channel extension is authorised. QM (multiple following copies and composition) remains out of scope and undecided.
+**Behaviour**: QI is owner-signed: only a bounded, otherwise-Complete candidate, time-sealed and followed on the same channel at sequence +1 with the same FRMT/RCCVER, may stay Complete on whole raw-text identity, labelled `identical retransmission` alongside its closure basis. This holds for following first-fragment SRCC 0/1/U, never by inferring a bit. Keep the located `possible_premature_time_boundary_seal_both_readings` finding, including on Complete and duplicate-SHA outcomes. **QD/INT-048 takes precedence**: field ambiguity, including duplicate G\SHA, is assembly Ambiguous and cannot be upgraded by identity, equality or a digest. Already-cut text never becomes Complete through matching a prefix. The mid-session label remains `time-boundary seal (owner policy)`. A following-only checksum cannot verify the sealed text. No backward rejoin, stamping, governing switch or cross-channel extension is authorised. QM is now owner-signed in INT-053: compare with the currently governing setup, never choose an unresolved target; immediately previous-copy equality is information only.
 
 **Reason**: Whole-byte identity supports the bounded exception, while the retained finding exposes its uncertainty. The stricter QD owner decision explicitly overrides any interpretation that identity could rescue field ambiguity.
 
@@ -1799,3 +1799,29 @@ in the #40 draft; neither the event nor a nearby 0x02 is guessed as an end.
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
 **Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, independent review, development analysis and executable tests still block implementation.
+
+
+### INT-053
+
+**Title**: Later copies compare with the currently governing setup, never a guessed target (QM)
+
+**Sources**:
+- 106-24R1 Ch11 §11.2.7.2 pp. 11-50–51: “0 = Setup record configuration has not changed”; changed setup is committed “prior to any new or changed data packets”. The prose does not supply a universal adoption/ambiguity recovery algorithm.
+- Ch11 §11.2.1.1 f p. 11-8: “Each channel in a session shall have its own sequence counter”; INT-011 joining, INT-045 closure, INT-039 document-local duplicates and INT-046/048/051/052 retain their separate contracts. Ch6 §6.2.3.11 f checksum verification does not establish governing identity.
+- Joey's 2026-11-25 QM sign-off: [verbatim record](research/2026-11-25-qm-governing-comparison-owner-decision.md).
+
+**Behaviour**: Compare each later setup copy with the **currently governing setup**: the original sealed record, or the latest copy that validly took control. Retain that candidate's identity and supporting adoption evidence. A copy known not to have taken control never becomes the comparison target. If whether it took control is unresolved (including changed/integrity-failing warn-mode or Ambiguous evidence where adoption is unresolved), report the target for subsequent copies as **unresolved**; never choose the old, newest, first or best-checksum copy. QD still blocks new adoption of field-ambiguous input; that block alone does not prove the actual governing recorder setup.
+
+Compute raw equality with the immediately previous copy as **information only**, with its separate pair of identities. It must never change eligibility, governing or classification, including when the governing target is unresolved. Apply QI only to an independently established governing-target comparison with its own guards, not to previous-copy equality. Governing-target comparison remains unavailable while the target is unresolved; local framing/ambiguity findings remain reportable. A valid takeover changes the target only on separately established reviewed adoption evidence, not because this rule sees Complete, SRCC, a digest or equal bytes.
+
+Preserve every earlier copy's located findings without overwrite. Earlier governing setups and their identities remain available for data already decoded under them; do not relabel those packets when a later setup takes control or becomes unresolved. QM specifies comparison and evidence retention, not all open INT-028/031 applicability or provisional-use rules.
+
+**Reason**: The last received copy and the original seal can both differ from the governing setup. Guessing one would launder an unresolved change, while treating previous-copy equality as authority would make an unadopted copy control later interpretation. Retained history keeps earlier decoding auditable.
+
+**Design**: owner-signed (Joey, 2026-11-25); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25, QM follow-up relayed in this thread; independent AI check: pending, no concurrence claimed · **Origin**: QM follow-up to PR #45, 2026-11-25
+
+**Test**: `qm_B_then_D_uses_governing_target`, `qm_H_then_B_previous_identity_is_information_only`, `qm_third_copy_only_checksum_does_not_select_target`, `qm_changed_srcc_claims_never_select_target`, `qm_unresolved_governing_blocks_later_target`, `qm_ambiguous_copy_does_not_prove_old_target`, `qm_valid_takeover_updates_governing_target`, `qm_previous_identity_mutation_preserves_decisions`, `qm_findings_and_prior_decoding_provenance_are_persistent` (planned; not implemented or executed)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Decision record**: [owner wording and bounded scope](research/2026-11-25-qm-governing-comparison-owner-decision.md); [sequence contract and named fixtures](research/2026-11-23-retransmission-decision-matrix.md#multiple-following-copies-owner-signed-qm-sequence-contract). The pairwise product stays unchanged; sequence coverage is separate, bounded and planned. Independent AI review, source freshness, development analysis and executable verification remain required before implementation.

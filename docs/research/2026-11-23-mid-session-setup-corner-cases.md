@@ -3,7 +3,7 @@
 Created 2026-11-23; updated 2026-11-25. **Discussion catalogue with dated
 owner sign-offs for M1 and the integrity mode in 09.** See the
 [verbatim sign-offs](2026-11-25-retransmission-owner-signoffs.md); independent
-AI review of INT-046–052 is pending. Remaining options stay undecided. INT-045
+AI review of INT-046–053 is pending. Remaining options stay undecided. INT-045
 itself is approved: initial Option A plus the guarded owner mid-session
 extension, AI CONCURS on #41 at 79b94eb. That does not approve INT-028/029/
 031/032 governance proposals, remaining INT-034 details, or implementation.
@@ -82,8 +82,11 @@ SRCC=0 differences are reported as changes; SRCC=1 alone proves no change.
 Independent AI review of this amended wording is pending under ADR-0033.
 **Scope/review:** [Current pairwise matrix](2026-11-23-retransmission-decision-matrix.md)
 and [verbatim owner record](2026-11-25-retransmission-owner-signoffs.md).
-No new code or runtime coverage is claimed. Multiple following copies (QM)
-remain undecided and outside this matrix; no governing switch is inferred.
+No new code or runtime coverage is claimed. QM is now owner-signed in
+INT-053: compare with the currently governing setup, preserve an unresolved
+target when takeover is unresolved, and retain previous-copy equality as
+information only. Keep earlier findings and setups used for already decoded
+data. Named bounded sequence cases supplement the unchanged pairwise product.
 
 ## 09. The update's G\SHA fails
 

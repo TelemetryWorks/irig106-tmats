@@ -121,7 +121,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-REG-004 | L3-REG-007, L3-REG-008 | _(TBD)_ | Draft |
 | L2-REG-005 | L3-REG-009, L3-REG-010 | _(TBD)_ | Draft |
 | L2-REG-006 | L3-REG-011, L3-REG-012, L3-REG-013 | _(TBD)_ | Draft |
-| L2-REG-007 | L3-REG-014, L3-REG-015 | _(TBD)_ | Draft |
+| L2-REG-007 | L3-REG-014, L3-REG-015, L3-REG-016 | _(TBD)_ | Draft |
 
 ### L1-VIEW: Lookup, structured views, and links
 
@@ -326,7 +326,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | READ | 7 | 13 | 33 | 0 | 0 | 0 | 0 |
 | CH10 | 8 | 7 | 21 | 0 | 0 | 0 | 0 |
 | EDN | 6 | 2 | 7 | 0 | 0 | 0 | 0 |
-| REG | 8 | 7 | 15 | 0 | 0 | 0 | 0 |
+| REG | 8 | 7 | 16 | 0 | 0 | 0 | 0 |
 | VIEW | 9 | 4 | 11 | 0 | 0 | 0 | 0 |
 | VAL | 6 | 3 | 12 | 0 | 0 | 0 | 0 |
 | DER | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -338,13 +338,13 @@ This matrix is the single source of truth for live status; the requirement docum
 | ROB | 3 | 3 | 6 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **48** | **123** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **48** | **124** | **0** | **0** | **0** | **0** |
 
 The countable requirement set is every L2 and L3 requirement plus the 53 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 224 (0.0%).
+**Tested by at least one test marker**: 0 of 225 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 224 (1.3%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 225 (1.3%).
 
 ### Orphan check
 
@@ -409,9 +409,10 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-050 | Raw changes do not invent semantic resets or resolve incomplete comparisons (QC/QP) | owner-signed (Joey, 2026-11-25); independent AI check pending | not yet written | _(none)_ |
 | INT-051 | Prominent integrity findings are the default, subject to eligibility guards (QH/QG) | owner-signed (Joey, 2026-11-25); independent AI check pending | not yet written | _(none)_ |
 | INT-052 | Unreadable SRCC never becomes an eligibility or governing inference (QS) | owner-signed (Joey, 2026-11-25); independent AI check pending | not yet written | _(none)_ |
+| INT-053 | Later copies compare with the currently governing setup, never a guessed target (QM) | owner-signed (Joey, 2026-11-25); independent AI check pending | not yet written | _(none)_ |
 
-* Entries without a written analysis: **52** of 52
-* Entries without a test: **52** of 52
+* Entries without a written analysis: **53** of 53
+* Entries without a test: **53** of 53
 * Entries missing the development mark: **0**
 
 ### Marker reference check

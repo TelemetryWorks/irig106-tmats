@@ -1450,7 +1450,7 @@ Recovery/resume and any opt-in disposal action need their own explicit
 contract. Passing a limit test does not prove all L1-ROB-001 input handling.
 
 
-## Whole-matrix verification contract (owner-signed INT-046–052)
+## Whole-matrix verification contract (owner-signed INT-046–053)
 
 These are future implementation obligations. Owner sign-offs dated 2026-11-25
 are recorded; independent AI review is pending. No executable coverage is
@@ -1482,6 +1482,22 @@ forces assembly Ambiguous, never upgraded by identity/equality/digest, while
 cut evidence and INT-045 findings remain visible. Named compound fixtures
 SHALL cover non-SHA field ambiguity, cut-plus-ambiguity, and both candidates;
 input-state flattening must not be mistaken for exhaustive byte-shape coverage.
-Multiple-following-copy composition remains outside this matrix pending
-QM's reviewed sequence contract and coverage; pairwise enumeration SHALL NOT be
-reported as whole-sequence verification. This remains planned, not tested today.
+QM composition is owner-signed in INT-053 and verified separately by
+L3-REG-016; pairwise enumeration SHALL NOT be reported as whole-sequence
+verification. This remains planned, not tested today.
+
+
+**L3-REG-016** · Parent: L2-REG-007 · Verification: T
+*The implementation SHALL verify INT-053 with named bounded sequence fixtures of an original established governing setup and up to three later copies, comparing each with the currently governing identity or explicitly unresolved target, promoting only a copy established to have validly taken control, and preserving every prior finding and historical governing setup used for earlier decoded data; equality to the immediately previous copy SHALL be information only and SHALL NOT change eligibility, governing or classification.*
+
+Fixtures SHALL cover B→D, H→B with a definitely unadopted H copy, a third-only
+checksum, changed SRCC claims, verified takeover, definite non-takeover and
+unresolved takeover (warn-mode integrity failure and Ambiguous). A mutation
+holding governing/candidate/adoption evidence fixed while changing only
+previous-copy equality SHALL leave decision outputs unchanged. Evidence of
+unresolved takeover SHALL NOT select an old/new target by position or checksum;
+QD's adoption block alone is not proof of the recorded data's old governor.
+The three-copy bound is a test bound, not a production history/memory default.
+Assertions use independently specified control evidence and observable
+provenance, not a production state machine as its own oracle. These are
+planned tests with independent AI review and development gates still pending.
