@@ -903,6 +903,51 @@ Complete, a checksum, an SRCC bit or previous-copy equality.
 | `qm_previous_identity_mutation_preserves_decisions` | Fix G/candidate/adoption evidence; mutate only immediate-predecessor equality. Eligibility, governing and classification unchanged, with each history's findings retained | L3-REG-016 |
 | `qm_findings_and_prior_decoding_provenance_are_persistent` | G0 decoding, G1 valid takeover, then rejected/unresolved copy: preserve every earlier located finding, governing description and packet-to-setup identity | L3-REG-016 |
 
+## Planned time-view metadata batch 16 (0.1 bounded subset)
+
+These are PLANNED tests for L2-VIEW-005–007 / L3-VIEW-012–022, not existing
+interfaces or executed coverage. Sources: 106-24R1 Ch9 section 9.5.4,
+Table 9-4 TRACK NUMBER/CHANNEL ID p. 9-48; CHANNEL DATA TYPE p. 9-50;
+SECONDARY HEADER TIME FORMAT p. 9-51; TIME DATA TYPE FORMAT pp. 9-71–72;
+TIME FORMAT and TIME SOURCE p. 9-72. The [batch note](research/2026-11-25-time-view-metadata-requirements.md)
+records the source fingerprint, approved INT-035–039/041 and scope.
+
+Unless varied, fixtures supply a reviewed baseline definition/basis and
+record/source context plus the required condition evidence. Fragments below
+isolate assertions; they are not claimed to be complete conforming setups.
+Preserve separate counter/presence/applicability findings. Known scalar
+duplicates also impose INT-048 assembly ambiguity: local field reads below
+are diagnostic, never permission to govern or bypass retained-cut blocking.
+
+| Named planned test | Stimulus / independent expectation | Requirements |
+| --- | --- | --- |
+| `time_view_entry_index_is_not_channel_id` | Entry n=3 has TK1=42 and CDT=TIMEIN; return scope n=3 and actual ID 42, never ID 3 | L3-VIEW-012, L3-VIEW-014 |
+| `time_view_never_borrows_other_scope` | R-1 entry 3 has TIMEIN with absent TFMT; R-2 entry 3 explicitly has TFMT=B. R-1's own applicable default is A, never borrowed B; repeat across document/revision boundaries | L3-VIEW-012, L3-VIEW-016 |
+| `time_view_projected_indices_keep_evidence` | `r-01\cdt-003:timein;R-1\TK1-3:42;`: same numeric scope with raw spelling and noncanonical-index information retained; no rewrite or case-sensitive failure | L3-VIEW-012, L3-VIEW-013 |
+| `time_view_unknown_cdt_is_not_confirmed_timein` | CDT absent, high-byte Invalid, duplicate TIMEIN or blank-unavailable in separate cases, with a present TFMT: Confirm no TIMEIN by inference; retain each state/reason, raw candidates and format evidence | L3-VIEW-013 |
+| `time_view_unusable_id_is_not_fabricated` | Confirmed TIMEIN with TK1 absent, 0, or duplicate 42/43: Retain entry scope and Missing/Invalid/Ambiguous identity; never n/0/first/last substitution | L3-VIEW-014 |
+| `time_view_actual_id_selection_keeps_all_candidates` | Two entries (or recorder scopes) each explicitly identify 42; query with insufficient scope: Return all scoped candidates/selection limitation; no merge or conformance claim of global uniqueness. No match fabricates nothing | L3-VIEW-015 |
+| `time_view_formats_bind_to_entry_not_extras` | Adjacent entries carry differing TTF/TFMT/TSRC; raw unrelated recorder extras also present: Each field binds to its full entry key; unrelated extras do not supply metadata or disappear | L3-VIEW-016 |
+| `time_view_format_roles_are_distinct` | TIMEIN entry has TTF=2, TFMT=2, TSRC=E and SHTF=1: Keep four roles and independent locations; neither numeric 2 nor E becomes a channel ID, packet-type byte or reset command | L3-VIEW-017 |
+| `time_view_duplicate_field_does_not_default` | One entry contains TFMT=A and TFMT=B, then canonical-index collision spellings of the same TFMT key: Field Ambiguous with every occurrence and normalization/collision findings; no first/last/default A rescue; assembly ambiguity retained | L3-VIEW-018 |
+| `time_view_explicit_and_default_a_are_distinct` | Explicit TFMT=A versus absent TFMT with known TIMEIN/baseline; repeat explicit lowercase a: Explicit raw value/span versus Defaulted A with citation/basis and no input span; same original bytes before/after view | L3-VIEW-018, L3-VIEW-019 |
+| `time_view_blank_and_high_byte_keep_existing_policy` | TFMT=` A` versus a value containing 0xFF: Blank-unavailable per INT-041, not automatic Invalid/trim; high-byte Invalid per INT-037; no default replacement | L3-VIEW-018 |
+| `time_view_unknown_condition_or_edition_never_borrows_a` | Absent TFMT with ambiguous CDT or unavailable reviewed edition rule: Missing/default-unavailability or unavailable read with precise reason, not assumed A or data Invalid merely from unknown rules | L3-VIEW-019 |
+| `time_view_default_keeps_independent_findings` | TIMEIN, TTF=2, no TFMT, with the RELEASE-0.1 network-time inconsistency finding: Defaulted A stays labelled and the independent finding remains; never override packet evidence, infer UTC or suppress required-presence findings | L3-VIEW-017, L3-VIEW-019 |
+| `time_view_local_format_on_non_timein_is_not_absent` | Non-TIMEIN entry explicitly contains locally valid TFMT: Not a confirmed TIMEIN entry; local field remains Explicit with applicability finding, not silently absent | L3-VIEW-013, L3-VIEW-018 |
+| `time_view_missing_source_does_not_default` | Confirmed TIMEIN with absent TSRC/TTF: Missing with reason and independent required-presence findings; do not infer external/internal source, default format or an association | L3-VIEW-016, L3-VIEW-018 |
+| `time_view_shtf_on_non_timein_does_not_enable_header` | A non-TIMEIN entry has SHTF=2; compare absent and unusable cases: Expose that entry's own field state; no TIMEIN prerequisite, enabled-header inference or neighbouring-channel fallback | L3-VIEW-020 |
+| `time_view_provenance_and_revision_are_preserved` | Assembled field crosses fragments; repeat on standalone input and an edited revision: Original spans and supplied fragment map retained; no packet provenance on standalone text and no stale results after revision change | L3-VIEW-021 |
+| `time_view_retains_qualification_without_adoption` | Incomplete, cut-plus-ambiguity, other assembly ambiguity or unsupported XML context: Preserve limitation; raw/diagnostic access never becomes unqualified usable metadata, a governing setup or an evidenced clock association | L3-VIEW-022 |
+| `time_view_fallback_basis_is_visible` | A field failure or applicable default under supplied labelled fallback edition: Keep fallback edition/basis and field evidence, never a claimed explicit G\106 declaration or input location for a default | L3-VIEW-019, L3-VIEW-021 |
+
+The expected field facts are sourced independently from the cited rows and
+approved interpretations. Future Rust fixtures must name the relevant
+requirements/interpretations in markers and exercise the real API, including
+byte identity after viewing. This table does not create executable tests or
+complete the NSB, association, general channel/link or measurement views.
+
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample

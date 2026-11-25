@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through completeness-contract batches drafted (family 2, batches 1-15).**
+> **Status: foundations through bounded time-view metadata drafted (family 2, batches 1-16).**
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
@@ -720,5 +720,45 @@ verification remain required before implementation.
 **Statement**: Implementation of retransmission interpretations INT-046–053 SHALL verify every member of the versioned exhaustive pairwise decision matrix and the named bounded QM sequence cases, asserting sealed outcome/basis, following outcome, findings and governing effect against independently established expectations; unresolved owner decisions SHALL block readiness rather than count as passing implementation coverage, and named fixtures SHALL cover the owner's explicit examples.
 
 **Rationale**: Joey's 2026-11-23 whole-matrix direction extends ADR-0027's interpretation verification and ADR-0033's review gate. The matrix cites 106-24R1 Chapter 11 section 11.2.7.2 SRCC and Chapter 6 section 6.2.3.11 f checksum domain, with INT-011/018–021/034/039/043/045 dependencies. A documentation expander, sampled property test or oracle sharing the implementation path cannot demonstrate these outcomes. Physically inconsistent input observations need explicit rejection/consistency checks, separately reported from realizable byte/provenance fixtures.
+
+**Verification Method**: Test (T)
+
+
+## Time-view metadata batch 16: channel scope and field evidence
+
+This derives the 0.1 TIMEIN/secondary-header subset of L1-VIEW-007 from the
+owner direction of 2026-11-21 and RELEASE-0.1. It composes approved
+INT-035–039/041 and the existing effective-value requirements; it implements
+no Rust API. No new interpretation or owner choice is selected. Association,
+NSB splitting and the remaining general views need separate derivations.
+Source: 106-24R1 Chapter 9 section 9.5.4, Table 9-4, rows/pages cited below.
+
+#### L2-VIEW-005
+
+**Parent**: L1-VIEW-007
+
+**Statement**: Within a supplied document/revision and recorder occurrence, the bounded view SHALL identify confirmed TIMEIN entries from a usable CHANNEL DATA TYPE result and retain their recorder/entry identity separately from the actual TRACK NUMBER/CHANNEL ID result; all relevant unresolved or duplicate candidates SHALL remain inspectable without fabricating a channel ID, merging entries or selecting a winner from source order.
+
+**Rationale**: Table 9-4 CHANNEL DATA TYPE R-x\CDT-n, page 9-50, supplies TIMEIN; TRACK NUMBER/CHANNEL ID R-x\TK1-n, page 9-48, supplies the actual ID. RELEASE-0.1 explicitly separates x, n and the wire channel ID. INT-038 canonicalises code-name indices, while INT-039 preserves scalar ambiguity. A declared entry index or the first matching channel is not a substitute for the TK1 value. This derives metadata selection, not the whole general channel/link view in L1-VIEW-002.
+
+**Verification Method**: Test (T)
+
+#### L2-VIEW-006
+
+**Parent**: L1-VIEW-007
+
+**Statement**: Each confirmed TIMEIN entry SHALL expose its time data type format, time format and time source as separate located effective-field results in that same recorder/entry scope, and every observed channel entry SHALL support its own secondary-header time-format read without requiring TIMEIN; all reads SHALL retain applicable edition/definition evidence and independent applicability or consistency findings without inferring a packet format, clock association or enabled secondary header from a different field.
+
+**Rationale**: Table 9-4 TIME DATA TYPE FORMAT R-x\TTF-n, pages 9-71–72; TIME FORMAT R-x\TFMT-n and TIME SOURCE R-x\TSRC-n, page 9-72; SECONDARY HEADER TIME FORMAT R-x\SHTF-n, page 9-51. The first three use the TIMEIN condition; SHTF is a per-channel declaration. ADR-0023 and L2-VIEW-003/004 supply field states and default evidence. The owner brought these fields forward to 0.1, while measurement time-word views remain 0.2.
+
+**Verification Method**: Test (T)
+
+#### L2-VIEW-007
+
+**Parent**: L1-VIEW-007
+
+**Statement**: Every bounded time-view result SHALL retain its source document/revision, recorder/entry scope, source locations and supplied assembly/edition context or explicit limitations, preserve every original byte and finding, and keep locally read metadata separate from any claim that a setup governs or a data channel has an evidenced time-source association.
+
+**Rationale**: RELEASE-0.1's API/uncertainty contract and ADR-0002/0003 require byte-faithful views and stable source ownership. L1-VIEW-004 effective values are brought forward for this subset. Incomplete, retained-cut, ambiguous or unsupported setup evidence cannot become an unqualified usable view; INT-048's cut facet keeps its blocking force. This does not select open INT-028/031 general governance, create a timeline, approve provisional semantic use, or expose a stable Rust symbol before API review.
 
 **Verification Method**: Test (T)

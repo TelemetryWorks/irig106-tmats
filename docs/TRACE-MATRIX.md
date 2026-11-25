@@ -135,7 +135,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-VIEW-004 | L2-VIEW-002, L2-VIEW-003, L2-VIEW-004 | _(none)_ | Draft |
 | L1-VIEW-005 | _(none)_ | _(none)_ | Draft |
 | L1-VIEW-006 | _(none)_ | _(none)_ | Draft |
-| L1-VIEW-007 | _(none)_ | _(none)_ | Draft |
+| L1-VIEW-007 | L2-VIEW-005, L2-VIEW-006, L2-VIEW-007 | _(none)_ | Draft |
 | L1-VIEW-008 | _(none)_ | _(none)_ | Draft |
 | L1-VIEW-009 | _(none)_ | _(none)_ | Draft |
 
@@ -147,6 +147,9 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-VIEW-002 | L3-VIEW-003, L3-VIEW-004 | _(TBD)_ | Draft |
 | L2-VIEW-003 | L3-VIEW-005, L3-VIEW-006, L3-VIEW-007, L3-VIEW-011 | _(TBD)_ | Draft |
 | L2-VIEW-004 | L3-VIEW-008, L3-VIEW-009, L3-VIEW-010 | _(TBD)_ | Draft |
+| L2-VIEW-005 | L3-VIEW-012, L3-VIEW-013, L3-VIEW-014, L3-VIEW-015 | _(TBD)_ | Draft |
+| L2-VIEW-006 | L3-VIEW-016, L3-VIEW-017, L3-VIEW-018, L3-VIEW-019, L3-VIEW-020 | _(TBD)_ | Draft |
+| L2-VIEW-007 | L3-VIEW-021, L3-VIEW-022 | _(TBD)_ | Draft |
 
 ### L1-VAL: Validation
 
@@ -327,7 +330,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | CH10 | 8 | 7 | 21 | 0 | 0 | 0 | 0 |
 | EDN | 6 | 2 | 7 | 0 | 0 | 0 | 0 |
 | REG | 8 | 7 | 16 | 0 | 0 | 0 | 0 |
-| VIEW | 9 | 4 | 11 | 0 | 0 | 0 | 0 |
+| VIEW | 9 | 7 | 22 | 0 | 0 | 0 | 0 |
 | VAL | 6 | 3 | 12 | 0 | 0 | 0 | 0 |
 | DER | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EXT | 4 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -338,13 +341,13 @@ This matrix is the single source of truth for live status; the requirement docum
 | ROB | 3 | 3 | 6 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **48** | **124** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **51** | **135** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 53 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 52 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 225 (0.0%).
+**Tested by at least one test marker**: 0 of 238 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 225 (1.3%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 238 (1.3%).
 
 ### Orphan check
 
