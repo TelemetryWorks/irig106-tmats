@@ -1,11 +1,12 @@
-# Exhaustive retransmission matrix: owner-signed baseline, AI check pending
+# Exhaustive retransmission matrix: approved baseline, implementation gates remain
 
 Created 2026-11-23; updated 2026-11-25. Joey signed Q0/QD/QI/QB/QE/QC/QP/
 QH/QG/QS on 2026-11-25. [Verbatim record and register mapping](2026-11-25-retransmission-owner-signoffs.md).
-**Independent AI CONCUR at db1dbf7 covers INT-046/047/049/050/051/052
-and INT-053 wording. INT-048's cut-facet amendment and the updated sequence
-fixtures await recheck under ADR-0033. No runtime implementation or verification
-is claimed.** [Exact-head review follow-up](2026-11-25-retained-cut-and-qm-review-followups.md).
+**Independent AI CONCUR under ADR-0033 covers INT-046–053 at
+[PR #45 head `73396bc312e24cfccaf16de9ae7a72609faf75b6`](https://github.com/TelemetryWorks/irig106-tmats/pull/45/commits/73396bc312e24cfccaf16de9ae7a72609faf75b6).
+Source freshness, development analysis and executable verification remain
+required before implementation. No runtime implementation or verification is
+claimed.** [Earlier review follow-up (history)](2026-11-25-retained-cut-and-qm-review-followups.md).
 QM is now owner-signed in
 INT-053, with separate bounded sequence fixtures below; the pairwise product
 is unchanged. [QM owner wording](2026-11-25-qm-governing-comparison-owner-decision.md).
@@ -120,7 +121,8 @@ R0 rejects/holds mutually inconsistent observations first. For coherent input,
 retain prior evidence and apply **QD before QI or verified-digest exceptions**.
 `sealed_outcome`/`sealed_basis` now equal the baseline columns. The former
 `qd_proposal` column is removed: QD is the owner-signed baseline, not deferred.
-Owner sign-off changes this documentation now; AI review still gates implementation.
+Semantic review is complete at the exact head cited above; development
+analysis, source freshness and executable verification still gate implementation.
 
 | Rule | Exact condition (after R0) | SEALED outcome and basis |
 | --- | --- | --- |
@@ -207,14 +209,15 @@ are not decided by accepting QH/QG's mode.
 
 Artifact `owner_decisions` flags refer to this table; manifest maps codes to
 entries. `owner_questions` is empty for this PAIRWISE product: the choices
-above are signed, not open. The independent check CONCURS on INT-046/047/049/050/051/052 and
-INT-053 wording at db1dbf7; INT-048 and updated fixture follow-ups await
-recheck. Implementation readiness remains blocked. QM/INT-053 is owner-signed as a separate sequence layer
+above are signed, not open. The independent check CONCURS on INT-046–053
+at PR #45 head `73396bc312e24cfccaf16de9ae7a72609faf75b6`. Development analysis,
+source freshness and executable verification still block implementation.
+QM/INT-053 is approved as a separate sequence layer
 outside the pairwise row domains; no runtime sequence coverage is claimed.
 
 ## Multiple following copies: owner-signed QM sequence contract
 
-Joey signed QM on 2026-11-25 (INT-053; independent AI check pending). Each
+Joey signed QM on 2026-11-25 (INT-053; independent AI CONCUR at 73396bc). Each
 later copy compares with the **currently governing setup**, G: the original
 sealed record if it governs, or the latest copy that validly took control.
 A received copy does not become G merely because it is newest, Complete,
@@ -296,6 +299,7 @@ unterminated G\SHA; uppercase hex and noncanonical `02-` warning; BOM/damaged
 name; and EOF or unsupported-format boundaries. Digests use independent
 Python hashlib, never the implementation or the unreproducible chapter example.
 
-All owner-signed pairwise behavior is recorded in INT-046–052, AI check pending. The documentation
+All pairwise behavior is recorded in approved INT-046–052, with QM in
+approved INT-053; independent AI CONCUR is recorded at 73396bc. The documentation
 coverage/expansion check is not an executed library/CLI test, completed
 interpretation analysis, or a substitute for independent AI review and development gates.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Expand/check an owner-signed documentation matrix (AI review pending); not a TMATS implementation/oracle."""
+"""Expand/check an approved documentation matrix; implementation gates remain, not a TMATS implementation/oracle."""
 import argparse
 import gzip
 import hashlib
@@ -159,7 +159,7 @@ def proposal(v):
                 following_outcome=following, findings=sorted(set(findings)),
                 governing_effect=governing, owner_questions=[], owner_decisions=sorted(set(questions)),
                 realizability='inconsistent_observations' if conflicts else 'candidate_fixture_required',
-                authority='OWNER_SIGNED Joey 2026-11-25; independent AI check pending; implementation blocked')
+                authority='OWNER_SIGNED Joey 2026-11-25; independent AI CONCUR PR #45 head 73396bc312e24cfccaf16de9ae7a72609faf75b6; source freshness, development analysis and executable tests required; implementation blocked')
 
 
 def generate():
@@ -187,7 +187,7 @@ def generate():
     with gzip.GzipFile(filename='', fileobj=compressed_index, mode='wb', mtime=0) as z:
         z.write(index)
     index = compressed_index.getvalue()
-    manifest = dict(status='owner-signed 2026-11-25; independent AI check pending; QM uses separate bounded sequence fixtures', combinations=count, classes=len(classes),
+    manifest = dict(status='owner-signed 2026-11-25; independent AI CONCUR PR #45 head 73396bc312e24cfccaf16de9ae7a72609faf75b6; implementation gates remain; QM uses separate bounded sequence fixtures', combinations=count, classes=len(classes),
                     domains=DOMAINS, sequence_contract={'interpretation': 'INT-053',
                     'scope': 'separate named planned fixtures; pairwise product unchanged',
                     'max_later_copies_in_named_fixtures': 3}, interpretations={'QI': 'INT-046', 'Q0': 'INT-047', 'QD': 'INT-048',
