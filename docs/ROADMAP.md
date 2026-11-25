@@ -58,12 +58,14 @@ opt-in labelled snapshots versus final-only semantic use; no choice is made.
 
 ### Remaining bounded time-view derivations
 
-Derive scoped DATA SOURCE ID (`R-x\DSI-n`, 106-24R1 Chapter 9 Table 9-4
-p. 9-49) as context, never a clock reference,
-and the association-uncertainty/caller-assumption contract. CHANNEL ENABLE
-(`R-x\CHE-n`, same table/page) handling awaits an owner decision: no
-TIMEIN enumeration/filter policy is selected until that confirmation.
-Keep this pending choice separate from numerical splitting of a supplied ID.
+Derive the association-uncertainty/caller-assumption contract while keeping
+DATA SOURCE ID (`R-x\DSI-n`, 106-24R1 Chapter 9 Table 9-4 p. 9-49) as
+source context, never a clock reference. NSB/TK1 numeric FIELD-VALUE syntax
+(sign, leading zeros, blanks, digit limit) awaits an owner decision; dependent
+parsed-value fixtures remain blocked, distinct from mathematical bit ranges
+and approved code-name-index identity. CHANNEL ENABLE (`R-x\CHE-n`, same
+table/page) also awaits an owner decision: no TIMEIN enumeration/filter
+policy is selected until confirmation.
 
 ### Planned scanner suggestion after framing
 
