@@ -1450,10 +1450,11 @@ Recovery/resume and any opt-in disposal action need their own explicit
 contract. Passing a limit test does not prove all L1-ROB-001 input handling.
 
 
-## Whole-matrix verification contract (proposed INT-046)
+## Whole-matrix verification contract (owner-signed INT-046–053)
 
-These are future implementation obligations. No matrix answer gains approval
-and no executable coverage is claimed by the checked-in documentation artifacts.
+These are future implementation obligations. Owner sign-offs dated 2026-11-25
+are recorded; independent AI review is pending. No executable coverage is
+claimed by the checked-in documentation artifacts.
 
 **L3-REG-014** · Parent: L2-REG-007 · Verification: T
 *The implementation test harness SHALL deterministically enumerate every Cartesian-product member of the versioned retransmission matrix, currently 139,968, and assert exact domain membership, unique case identity and full equivalence-class membership without sampling or omission; each realizable member SHALL exercise actual bytes/provenance and independently checked expected sealed classification/basis, following classification, located findings and governing effect, while inconsistent observations SHALL receive separately counted consistency/rejection tests and unresolved owner questions SHALL fail readiness visibly.*
@@ -1476,7 +1477,34 @@ attributes, leading layout, value-contained text, missing terminators,
 uppercase hex, noncanonical algorithm 2, BOM/damage, F1 duplicates, differing
 FRMT/RCCVER/channel and actual EOF. Property-based mutation complements the
 full enumeration, never replaces it. The pairwise artifact separately preserves
-baseline completeness and the unapproved QD hold, with INT-045 findings unaffected
-by F1. Multiple-following-copy composition remains outside this matrix pending
-QM's reviewed sequence contract and coverage; pairwise enumeration SHALL NOT be
-reported as whole-sequence verification. This remains planned, not tested today.
+owner-signed baseline with QD/INT-048 before QI/INT-046: field ambiguity
+forces assembly Ambiguous, never upgraded by identity/equality/digest, while
+cut evidence and INT-045 findings remain visible. A retained cut facet SHALL
+keep Incomplete's full blocking force: no ambiguous-split acceptance, including
+proposed INT-031 if later approved, SHALL make that cut text usable or governing. Named compound fixtures
+SHALL cover non-SHA field ambiguity, cut-plus-ambiguity, and both candidates;
+input-state flattening must not be mistaken for exhaustive byte-shape coverage.
+QM composition is owner-signed in INT-053 and verified separately by
+L3-REG-016; pairwise enumeration SHALL NOT be reported as whole-sequence
+verification. This remains planned, not tested today.
+
+
+**L3-REG-016** · Parent: L2-REG-007 · Verification: T
+*The implementation SHALL verify INT-053 with named bounded sequence fixtures of an original established governing setup and up to three later copies, comparing each with the currently governing identity or explicitly unresolved target, promoting only a copy established to have validly taken control, and preserving every prior finding and historical governing setup used for earlier decoded data; equality to the immediately previous copy SHALL be information only and SHALL NOT change eligibility, governing or classification.*
+
+Fixtures SHALL cover B→D, H→B with a definitely unadopted H copy, a third-only
+checksum, changed SRCC claims, verified takeover, definite non-takeover and
+unresolved takeover (warn-mode integrity failure and Ambiguous). Named
+`qm_unresolved_then_valid_takeover_resolves_target` SHALL cover unresolved C1
+followed by independently established valid takeover C2, then C3 comparing
+with C2 while C1 findings and unresolved history remain preserved. Named
+`qm_unresolved_persists_through_non_takeover` SHALL cover unresolved C1,
+definite non-takeover C2 and an unresolved target for C3. A mutation
+holding governing/candidate/adoption evidence fixed while changing only
+previous-copy equality SHALL leave decision outputs unchanged. Evidence of
+unresolved takeover SHALL NOT select an old/new target by position or checksum;
+QD's adoption block alone is not proof of the recorded data's old governor.
+The three-copy bound is a test bound, not a production history/memory default.
+Assertions use independently specified control evidence and observable
+provenance, not a production state machine as its own oracle. These are
+planned tests with independent AI review and development gates still pending.

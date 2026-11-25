@@ -121,7 +121,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-REG-004 | L3-REG-007, L3-REG-008 | _(TBD)_ | Draft |
 | L2-REG-005 | L3-REG-009, L3-REG-010 | _(TBD)_ | Draft |
 | L2-REG-006 | L3-REG-011, L3-REG-012, L3-REG-013 | _(TBD)_ | Draft |
-| L2-REG-007 | L3-REG-014, L3-REG-015 | _(TBD)_ | Draft |
+| L2-REG-007 | L3-REG-014, L3-REG-015, L3-REG-016 | _(TBD)_ | Draft |
 
 ### L1-VIEW: Lookup, structured views, and links
 
@@ -326,7 +326,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | READ | 7 | 13 | 33 | 0 | 0 | 0 | 0 |
 | CH10 | 8 | 7 | 21 | 0 | 0 | 0 | 0 |
 | EDN | 6 | 2 | 7 | 0 | 0 | 0 | 0 |
-| REG | 8 | 7 | 15 | 0 | 0 | 0 | 0 |
+| REG | 8 | 7 | 16 | 0 | 0 | 0 | 0 |
 | VIEW | 9 | 4 | 11 | 0 | 0 | 0 | 0 |
 | VAL | 6 | 3 | 12 | 0 | 0 | 0 | 0 |
 | DER | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -338,13 +338,13 @@ This matrix is the single source of truth for live status; the requirement docum
 | ROB | 3 | 3 | 6 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **48** | **123** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **48** | **124** | **0** | **0** | **0** | **0** |
 
 The countable requirement set is every L2 and L3 requirement plus the 53 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 224 (0.0%).
+**Tested by at least one test marker**: 0 of 225 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 224 (1.3%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 225 (1.3%).
 
 ### Orphan check
 
@@ -402,10 +402,17 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-043 | Leading-zero algorithm 2 designators are accepted with a warning | approved (Joey, Option B, 2026-11-23) | not yet written | _(none)_ |
 | INT-044 | Duplicate G\106 retains ambiguity with an explicitly labelled fallback basis | approved (Joey, Option B, 2026-11-23) | not yet written | _(none)_ |
 | INT-045 | Layered time-packet closure for initial setup and SRCC=1 updates | approved (Joey, initial A and guarded mid-session extension, 2026-11-23) | not yet written | _(none)_ |
-| INT-046 | Whole-byte retransmission evidence after a time-boundary seal | proposed; owner direction recorded, matrix limits/questions undecided | not yet written | _(none)_ |
+| INT-046 | Bounded byte-identity exception retains the premature-seal finding (QI) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) | not yet written | _(none)_ |
+| INT-047 | Inconsistent matrix observations remain counted but never parser coverage (Q0) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) | not yet written | _(none)_ |
+| INT-048 | Field ambiguity forces assembly Ambiguous before identity or digest exceptions (QD) | owner-signed (Joey, 2026-11-25); independent AI recheck pending | not yet written | _(none)_ |
+| INT-049 | Identity does not automatically extend across candidate boundaries (QB/QE) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) | not yet written | _(none)_ |
+| INT-050 | Raw changes do not invent semantic resets or resolve incomplete comparisons (QC/QP) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) | not yet written | _(none)_ |
+| INT-051 | Prominent integrity findings are the default, subject to eligibility guards (QH/QG) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) | not yet written | _(none)_ |
+| INT-052 | Unreadable SRCC never becomes an eligibility or governing inference (QS) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) | not yet written | _(none)_ |
+| INT-053 | Later copies compare with the currently governing setup, never a guessed target (QM) | owner-signed (Joey, 2026-11-25); independent AI wording CONCUR at db1dbf7, fixture follow-up pending | not yet written | _(none)_ |
 
-* Entries without a written analysis: **46** of 46
-* Entries without a test: **46** of 46
+* Entries without a written analysis: **53** of 53
+* Entries without a test: **53** of 53
 * Entries missing the development mark: **0**
 
 ### Marker reference check

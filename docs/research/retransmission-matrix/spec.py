@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Expand/check a DRAFT documentation matrix; not a TMATS implementation/oracle."""
+"""Expand/check an owner-signed documentation matrix (AI review pending); not a TMATS implementation/oracle."""
 import argparse
 import gzip
 import hashlib
@@ -22,7 +22,7 @@ DOMAINS = {
 
 
 def proposal(v):
-    """Baseline and draft column-composition rules R0-R4 and overlays in the companion note."""
+    """Owner-signed baseline column-composition rules R0-R4 and overlays in the companion note."""
     s, c, pair, cont, versions, own, sep, phase = v
     a, b = pair
     findings, questions, conflicts = ['retain_all_source_findings'], ['QG'], []
@@ -82,36 +82,38 @@ def proposal(v):
     if own != 'T':
         basis += '; retain pre-existing ' + outcome
     guard = sep == 'T' and cont == 'C' and versions == 'SS'
-    # Approved INT-045 baseline, independent of F1 and the draft identity exception.
-    baseline_outcome, baseline_basis = outcome, basis
+    # INT-045 evidence survives every later owner-policy overlay.
     if own == 'T' and guard:
-        if a == 'V':
-            baseline_basis += '; sealed_G_SHA_verified_classification_only'
-        else:
-            baseline_outcome = 'Ambiguous'
-            baseline_basis += '; possible premature time-boundary seal; both readings'
         findings.append('possible_premature_time_boundary_seal_both_readings')
         if c == 'B':
             findings.append('byte_identical_retransmission_evidence')
             questions.append('QI')
-    # R2D: F1 blocks verification/stamping, not completeness by itself.
-    # The broader completeness hold is a separate, unapproved QD column.
-    qd_proposal = None
-    if own == 'T' and a == 'D':
-        outcome, basis, rule = baseline_outcome, baseline_basis, 'R2D'
-        qd_proposal = dict(sealed_outcome='Ambiguous',
-            sealed_basis='duplicate_G_SHA_assembly_hold_proposed_QD',
-            governing_effect='proposed_new_adoption_blocked_no_silent_old_fallback')
+    if c == 'B' and not conflicts:
+        findings.append('byte_identical_retransmission_evidence')
+        if not guard or own != 'T' or a == 'D':
+            findings.append('identity_information_only_no_assembly_upgrade')
+    # QD/INT-048 takes precedence, including known duplicates in cut text.
+    # Keep the cut as evidence; no equality or digest may upgrade Ambiguous.
+    if a == 'D':
+        outcome, rule = 'Ambiguous', 'R2D'
+        basis += '; owner_QD_duplicate_G_SHA_forces_assembly_Ambiguous'
+        if own == 'X':
+            findings.append('cut_text_evidence_retained_under_QD_ambiguity')
         questions.append('QD')
-    if own == 'T' and a != 'D' and guard:
+    elif own == 'A':
+        basis += '; owner_QD_pre_existing_field_or_split_ambiguity_not_upgraded'
+        questions.append('QD')
+    elif own == 'T' and guard:
         if c == 'B':
             outcome, rule = 'Complete', 'R3B'
             basis += '; identical retransmission'
         elif a == 'V':
-            outcome, basis, rule = baseline_outcome, baseline_basis, 'R3V'
+            outcome, rule = 'Complete', 'R3V'
+            basis += '; sealed_G_SHA_verified_classification_only'
         else:
-            outcome, basis, rule = baseline_outcome, baseline_basis, 'R3A'
-    # R4: following classification is comparison evidence, not governing permission.
+            outcome, rule = 'Ambiguous', 'R3A'
+            basis += '; possible premature time-boundary seal; both readings'
+    # R4: raw comparison is evidence, not governing permission; QD applies to both copies.
     if c == 'X':
         following = 'continuation_unresolved_cut' if guard else 'incomplete_unresolved_candidate'
     elif versions != 'SS':
@@ -130,26 +132,34 @@ def proposal(v):
         following += '; duplicate_SHA_indeterminate'
     if any(x in pair for x in 'FMDU'):
         questions.append('QH')
-    governing = ('eligible_for_review_no_automatic_switch' if outcome == 'Complete'
+    following_assembly = 'Ambiguous' if b == 'D' else 'Incomplete' if c == 'X' else 'Complete'
+    if b == 'D':
+        questions.append('QD')
+    governing = ('eligible_after_framing_trust_scope_checks_no_automatic_switch' if outcome == 'Complete'
                  else 'new_adoption_blocked_no_silent_old_fallback')
+    if following_assembly == 'Ambiguous':
+        governing += '; following_adoption_blocked_ambiguous'
     if c == 'X' or versions[0] == 'D' or s == 'U':
         governing += '; following_usability_unresolved'
+    baseline_outcome, baseline_basis = outcome, basis
+    integrity_policy = 'prominent_integrity_findings_default; strict_quarantine_requires_separate_review'
     if conflicts:
         # R0 precedence: explicitly enumerate impossible observations; never prune them.
         outcome = 'Incomplete' if own == 'X' else 'Ambiguous'
-        rule, basis = 'R0', 'inconsistent_observations; proposed_conservative_hold'
+        rule, basis = 'R0', 'inconsistent_observations; owner_Q0_rejected_or_held'
         following, governing = 'inconsistent_evidence_not_adopted', 'blocked_pending_evidence_correction'
         baseline_outcome, baseline_basis = None, 'inconsistent observations; no valid baseline verdict'
-        qd_proposal = None
+        following_assembly = None
+        integrity_policy = 'inconsistent_evidence_rejected_or_held'
         questions = ['Q0']
         findings.extend(conflicts)
     return dict(rule=rule, sealed_outcome=outcome, sealed_basis=basis,
                 baseline_sealed_outcome=baseline_outcome, baseline_sealed_basis=baseline_basis,
-                qd_proposal=qd_proposal,
+                following_assembly_outcome=following_assembly, integrity_policy=integrity_policy,
                 following_outcome=following, findings=sorted(set(findings)),
-                governing_effect=governing, owner_questions=sorted(set(questions)),
+                governing_effect=governing, owner_questions=[], owner_decisions=sorted(set(questions)),
                 realizability='inconsistent_observations' if conflicts else 'candidate_fixture_required',
-                authority='DRAFT; existing_rules_and_owner_direction; NOT_APPROVED')
+                authority='OWNER_SIGNED Joey 2026-11-25; independent AI check pending; implementation blocked')
 
 
 def generate():
@@ -177,8 +187,12 @@ def generate():
     with gzip.GzipFile(filename='', fileobj=compressed_index, mode='wb', mtime=0) as z:
         z.write(index)
     index = compressed_index.getvalue()
-    manifest = dict(status='DRAFT; no approvals', combinations=count, classes=len(classes),
-                    domains=DOMAINS, members_sha256=hashlib.sha256(buf.getvalue()).hexdigest(),
+    manifest = dict(status='owner-signed 2026-11-25; independent AI check pending; QM uses separate bounded sequence fixtures', combinations=count, classes=len(classes),
+                    domains=DOMAINS, sequence_contract={'interpretation': 'INT-053',
+                    'scope': 'separate named planned fixtures; pairwise product unchanged',
+                    'max_later_copies_in_named_fixtures': 3}, interpretations={'QI': 'INT-046', 'Q0': 'INT-047', 'QD': 'INT-048',
+                    'QB': 'INT-049', 'QE': 'INT-049', 'QC': 'INT-050', 'QP': 'INT-050',
+                    'QH': 'INT-051', 'QG': 'INT-051', 'QS': 'INT-052'}, members_sha256=hashlib.sha256(buf.getvalue()).hexdigest(),
                     classes_sha256=hashlib.sha256(index).hexdigest())
     return {'members.jsonl.gz': buf.getvalue(), 'classes.json.gz': index,
             'manifest.json': (json.dumps(manifest, indent=2) + '\n').encode()}, count, len(classes)

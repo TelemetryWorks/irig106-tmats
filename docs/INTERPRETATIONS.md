@@ -399,6 +399,14 @@ exhaustion never silently drops a channel's run or synthesizes EOF.
 
 Complete records govern (INT-028); incomplete and ambiguous records do not by default (INT-031). An XML body (FRMT 1) is of unknown completeness.
 
+**INT-048 amendment (review clarification, 2026-11-25)**: The cut-text rule
+above means **Incomplete, or aggregate Ambiguous WITH A RETAINED CUT FACET**
+when established field ambiguity (including duplicate G\SHA) invokes
+INT-048. The cut facet keeps Incomplete's FULL blocking force. No acceptance
+of an ambiguous split, including proposed INT-031's labelled option if later
+approved, can make cut text usable or governing. Retain the cut location and
+blocking reason; the aggregate label does not relax incomplete-input policy.
+
 **Reason**: The packets alone cannot tell where a record ends; the text's final byte and repeated single-entry attributes are the only evidence the standard gives, and neither is proof in every case.
 
 **Design**: accepted in principle (three outcomes, owner, 2026-09-27, ADR-0031); these rules proposed · **Review**: pending · **Origin**: team spec alignment review, 2026-09-27
@@ -860,6 +868,11 @@ Findings: SRCC 1 on the first record; SRCC 0 with a changed configuration (an un
 - The standard does not say what applies after a record that cannot be read.
 
 **Behaviour**: A setup record INT-034 finds incomplete or ambiguous is reported and builds no description by default (a caller may accept an ambiguous split, labelled); the previous description is not carried forward, and packets after it are ungoverned until the next complete record. The fragment bytes are kept.
+
+**INT-048 limit on the proposed acceptance option (2026-11-25)**: A retained
+cut facet keeps Incomplete's full blocking force even if the aggregate
+outcome is Ambiguous. The labelled ambiguous-split option above, if later
+approved, cannot make cut text usable or governing.
 
 **Reason**: A new setup record means the configuration may have changed; applying the old description to data the new one describes would decode it wrongly without a word.
 
@@ -1633,6 +1646,15 @@ exception, authorises a rejoin/adoption, upgrades Incomplete/Ambiguous, or
 claims authoritative integrity for the joined reading. Keep locations and
 the unadopted hypothesis label; the original candidates stay separate.
 
+**INT-048 amendment (review clarification, 2026-11-25)**: References above
+to a mid-attribute cut remaining INCOMPLETE have the strict precedence
+**Incomplete, or aggregate Ambiguous WITH A RETAINED CUT FACET** under
+INT-048 when duplicate SHA or other established field ambiguity is present.
+This is not completion or a weaker blocker: the cut facet retains ALL of
+Incomplete's blocking force. No ambiguous-acceptance option, including
+proposed INT-031's labelled split if approved, can make such cut text usable
+or governing. Neither identity, digest evidence nor a time seal waives it.
+
 **Reason and rejected recommendation**: Initial Option A is grounded in the
 explicit first-time ordering. The original recommendation rejected a general
 mid-session next-time/data terminator: no observable universal terminator is
@@ -1656,54 +1678,181 @@ in the #40 draft; neither the event nor a nearby 0x02 is guessed as an end.
 **Approval record**: [owner approval and exact AI concurrence](research/2026-11-23-int045-owner-signoff.md). Source freshness, completed development analysis and executable tests remain required. The separate [mid-session corner-case catalogue](research/2026-11-23-mid-session-setup-corner-cases.md) is discussion only, with no approved options.
 
 
+
 ### INT-046
 
-**Title**: Whole-byte retransmission evidence after a time-boundary seal
+**Title**: Bounded byte-identity exception retains the premature-seal finding (QI)
 
 **Sources**:
-- 106-24R1 Chapter 11 §11.2.7.2 p. 11-50: “0 = Setup record configuration has not changed”; “1 = Setup record configuration has changed”. The first fragment supplies the candidate's SRCC observation, not proof of equality.
-- 106-24R1 Chapter 6 §6.2.3.11 f pp. 6-22–23: 'all text between the "G\SHA" and the following semicolon, inclusive' and 'prefixed with the constant string “2-”'; Chapter 9 Table 9-2 MESSAGE DIGEST/CHECKSUM p. 9-13. Exact raw exclusion follows INT-018/019; value reading follows INT-020/043, never digest equality as byte equality.
-- Owner direction, Joey, 2026-11-23: “a byte-identical following copy keeps the sealed record Complete, labelled 'identical retransmission'”; an SRCC=0 copy “is CHECKED, never assumed unchanged: if it differs, report it and treat it as a change”; every combination must be documented and fully tested.
+- 106-24R1 Ch11 §11.2.7.2 p. 11-50: “0 = Setup record configuration has not changed”; “1 = Setup record configuration has changed”. SRCC is a declaration, not a byte comparison.
+- INT-011's per-channel joining and INT-045's layered time closure retain their cited Ch11 sources. Ch6 §6.2.3.11 f pp. 6-22–23: 'all text between the "G\SHA" and the following semicolon, inclusive'; digest equality is not equality of every raw byte.
+- Owner sign-off, Joey, 2026-11-25: [verbatim decision record](research/2026-11-25-retransmission-owner-signoffs.md). This is owner policy where the standard supplies no recovery/adoption rule.
 
-**Behaviour proposed**: Extend INT-045 with a separately reviewed, bounded
-identity exception: an otherwise Complete time-sealed ASCII candidate with a
-whole bounded, same-channel +1, same-FRMT/RCCVER byte-identical following
-copy remains Complete with `identical retransmission` alongside its closure
-basis. A mid-session basis still says `time-boundary seal (owner policy)`.
-Following SRCC=1 does not manufacture a semantic change when text is equal;
-SRCC=0 differences are reported as changes, including raw SHA/layout changes.
-Never substitute a matching prefix, projected equality, a checksum match or
-an unchanged claim for comparison of EVERY raw TMATS text byte.
+**Behaviour**: QI is owner-signed: only a bounded, otherwise-Complete candidate, time-sealed and followed on the same channel at sequence +1 with the same FRMT/RCCVER, may stay Complete on whole raw-text identity, labelled `identical retransmission` alongside its closure basis. This holds for following first-fragment SRCC 0/1/U, never by inferring a bit. Keep the located `possible_premature_time_boundary_seal_both_readings` finding, including on Complete and duplicate-SHA outcomes. **QD/INT-048 takes precedence**: field ambiguity, including duplicate G\SHA, is assembly Ambiguous and cannot be upgraded by identity, equality or a digest. Already-cut text never becomes Complete through matching a prefix. The mid-session label remains `time-boundary seal (owner policy)`. A following-only checksum cannot verify the sealed text. No backward rejoin, stamping, governing switch or cross-channel extension is authorised. QM is now owner-signed in INT-053: compare with the currently governing setup, never choose an unresolved target; immediately previous-copy equality is information only.
 
-This is a proposal, not an approval of all exception limits or governance.
-The [exhaustive matrix](research/2026-11-23-retransmission-decision-matrix.md)
-lists every member, all outcomes, inherited findings and owner questions.
-Already-cut input remains Incomplete; pre-existing ambiguity is not upgraded.
-The matrix separates the INT-045 baseline from QD's proposed duplicate assembly
-hold: F1 alone changes no completeness. Related-follower premature-seal findings
-and byte-identity evidence remain visible even with a duplicated checksum.
-Multiple following copies are explicitly outside this pairwise proposal;
-QM asks which candidate each copy compares against and how outcomes compose
-(B then D, H then B). Recommend both original/previous comparisons with explicit
-identities, without deciding aggregation, finality or governing setup.
-INT-011 joining remains independent; INT-039 duplicates remain document-local.
-INT-021/F1 never selects a checksum duplicate or claims positive verification.
-The checksum on the following copy alone is NOT the sealed-text verification
-exception; a continuation checksum is diagnostic only. Neither identity nor
-classification rejoins records, stamps input, approves INT-034 precedence,
-chooses a governing setup or changes INT-045's approved guard before review.
+**Reason**: Whole-byte identity supports the bounded exception, while the retained finding exposes its uncertainty. The stricter QD owner decision explicitly overrides any interpretation that identity could rescue field ambiguity.
 
-**Reason**: Whole-byte identity is stronger evidence than an SRCC claim or
-repeating single-entry G attributes. The owner wants the stronger evidence
-used while every combination and uncertainty remains visible. SHA-only/raw
-layout changes are explicit change subtypes; their semantic adoption needs
-review. Distinct integrity, completeness and governance layers prevent a
-retransmission label from laundering F1 or overriding incomplete input.
+**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) · **Review**: semantic gate complete under ADR-0033 for wording at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244, reviewer @thread:thr_qsvwmtnn8f, relayed 2026-11-25; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; development analysis, source freshness and executable tests remain required; this does not approve the PR's remaining changes · **Origin**: #44 matrix decisions, 2026-11-25
 
-**Design**: proposed; owner direction recorded, matrix limits/questions undecided · **Review**: pending under ADR-0033; draft author: maintainer agent; Joey's direction, 2026-11-23, is recorded above, not final sign-off of this wording/table; independent AI check pending · **Origin**: corner case 01/M1 and owner whole-matrix request, 2026-11-23
-
-**Test**: `retransmission_matrix_exhaustive_coverage`, `srcc0_different_is_reported_change`, `srcc1_identical_is_not_assumed_change`, `sha_only_following_not_sealed_proof`, `sha_only_sealed_preserves_verified_exception`, plus every explicitly named matrix member (planned; not written/executed)
+**Test**: `srcc1_identical_is_not_assumed_change`, `identical_duplicate_sha_never_verifies`, `identity_keeps_premature_seal_finding` (planned; not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
-**Draft analysis**: [full product, explicit members, proposed outcomes and owner questions](research/2026-11-23-retransmission-decision-matrix.md). Checking the documentation artifacts is not runtime verification or completed development analysis.
+**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; this entry's wording check does not approve the other pending PR changes.
+
+### INT-047
+
+**Title**: Inconsistent matrix observations remain counted but never parser coverage (Q0)
+
+**Sources**:
+- Ch11 §11.2.7.2 p. 11-50: “A single setup record may span multiple consecutive packets”; INT-019 and Ch6 §6.2.3.11 f require a defined checksum exclusion. Neither supplies a recovery rule for mutually inconsistent caller observations.
+- Owner sign-off, Joey, 2026-11-25: [verbatim decision record](research/2026-11-25-retransmission-owner-signoffs.md). This is owner policy where the standard supplies no recovery/adoption rule.
+
+**Behaviour**: Reject or hold inconsistent observations with named consistency/rejection tests. Keep every nominal matrix member listed and counted; never fabricate a realizable byte fixture or count rejection/consistency checks as parser coverage. R0 keeps an explicit conservative hold and an unavailable valid-input baseline, not a successful document verdict.
+
+**Reason**: An exhaustive Cartesian product contains impossible observations; honest coverage separates their rejection from actual parser witnesses.
+
+**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) · **Review**: semantic gate complete under ADR-0033 for wording at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244, reviewer @thread:thr_qsvwmtnn8f, relayed 2026-11-25; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; development analysis, source freshness and executable tests remain required; this does not approve the PR's remaining changes · **Origin**: #44 matrix decisions, 2026-11-25
+
+**Test**: `cut_observation_cannot_claim_mismatch_or_only_sha_layout_delta`, `matrix_inconsistent_observations_never_parser_coverage` (planned; not implemented or executed)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; this entry's wording check does not approve the other pending PR changes.
+
+### INT-048
+
+**Title**: Field ambiguity forces assembly Ambiguous before identity or digest exceptions (QD)
+
+**Sources**:
+- 106-24R1 Ch9 §9.4.2 p. 9-2: “Each attribute appears in the file as a unique code name”; INT-039 establishes definition-bound scalar duplicates and retains every occurrence.
+- Ch6 §6.2.3.11 f: “If the TMATS includes a G\SHA code name”; INT-021/F1 makes duplicates indeterminate and refuses stamping. These sources did not themselves settle assembly precedence.
+- Owner sign-off, Joey, 2026-11-25: [verbatim decision record](research/2026-11-25-retransmission-owner-signoffs.md). This is owner policy where the standard supplies no recovery/adoption rule.
+
+**Behaviour**: The owner overrides the prior deferred QD proposal NOW: a duplicate G\SHA **or other established field ambiguity forces assembly Ambiguous**, even without a related follower. Apply to each candidate independently. Byte identity, equality and a digest must NEVER upgrade that Ambiguous to Complete; QI/INT-046 is subordinate. Preserve every occurrence, raw byte, cut-text evidence and INT-045 finding. If cut text also has a known duplicate, aggregate Ambiguous records that ambiguity while retaining the cut facet; it never becomes usable Complete. R0 first rejects contradictory observations rather than inventing such facts. Unknown cardinality is not established field ambiguity; use INT-039's reviewed definitions. The former `qd_proposal` becomes the ordinary baseline, not an optional/deferred column. INT-044's labelled edition fallback does not resolve duplicate G\106 or cure this assembly hold; diagnostic validation may still use that labelled basis. F1's exact-item removal edit remains allowed; reassess the explicit edited revision before stamping.
+
+**Retained-cut blocking rule (review clarification, 2026-11-25)**: An
+aggregate Ambiguous outcome with a retained cut facet remains unusable and
+ineligible to govern with Incomplete's FULL blocking force. Relabelling it
+Ambiguous does not create an ambiguous-acceptance escape hatch. No option
+that accepts an ambiguous split, including proposed INT-031 if later
+approved, may make the cut text usable or governing. This amends the cut
+wording in INT-034/045 by cross-reference, without repairing or discarding
+any bytes, cut locations or findings. See the [exact-head review follow-up](research/2026-11-25-retained-cut-and-qm-review-followups.md).
+
+**Reason**: The owner chose strict assembly safety immediately, overriding deferral. Integrity and field ambiguity now impose an assembly hold independently of time-continuation evidence; the prior less-strict baseline remains in #44 history.
+
+**Design**: owner-signed (Joey, 2026-11-25); independent AI recheck pending · **Review**: CONCERNS at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244 (reviewer @thread:thr_qsvwmtnn8f), cut-facet amendment added; updated-head independent AI recheck pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25, as relayed in the owner decision; independent AI check: pending, no concurrence claimed · **Origin**: #44 matrix decisions, 2026-11-25
+
+**Test**: `duplicate_sha_without_related_follower_is_ambiguous`, `identical_duplicate_sha_never_verifies`, `cut_duplicate_keeps_cut_evidence_and_ambiguity`, `cut_facet_blocks_ambiguous_acceptance`, `other_field_ambiguity_blocks_identity_and_digest`, `following_duplicate_is_assembly_ambiguous` (planned; not implemented or executed)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, independent review, development analysis and executable tests still block implementation.
+
+### INT-049
+
+**Title**: Identity does not automatically extend across candidate boundaries (QB/QE)
+
+**Sources**:
+- Ch11 §11.2.1.1 f p. 11-8: “Each channel in a session shall have its own sequence counter”; §11.2.7.2 p. 11-50 gives segmentation sequence n+1. INT-011 joins per channel, not across caller input boundaries.
+- Owner sign-off, Joey, 2026-11-25: [verbatim decision record](research/2026-11-25-retransmission-owner-signoffs.md). This is owner policy where the standard supplies no recovery/adoption rule.
+
+**Behaviour**: No automatic extension of identity/adoption across channels, FRMT/RCCVER change, sequence gaps, explicit same-channel stops or actual EOF. Retain raw identity as information only. EOF comparisons are cross-input comparisons, never bytes secretly joined after EOF. No guessed governing setup follows from the comparison.
+
+**Reason**: Raw equality does not establish shared scope, format interpretation or a continuous complete record.
+
+**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) · **Review**: semantic gate complete under ADR-0033 for wording at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244, reviewer @thread:thr_qsvwmtnn8f, relayed 2026-11-25; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; development analysis, source freshness and executable tests remain required; this does not approve the PR's remaining changes · **Origin**: #44 matrix decisions, 2026-11-25
+
+**Test**: `identity_outside_guard_is_information_only`, `EOF_comparison_never_rejoins_inputs` (planned; not implemented or executed)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; this entry's wording check does not approve the other pending PR changes.
+
+### INT-050
+
+**Title**: Raw changes do not invent semantic resets or resolve incomplete comparisons (QC/QP)
+
+**Sources**:
+- Ch9 §9.4.2 pp. 9-2–3 permits attribute ordering and defines framing; Ch6 §6.2.3.11 f pp. 6-22–23 hashes raw bytes with the stated exclusion. Neither specifies a consumer reset on a raw-only change.
+- Owner sign-off, Joey, 2026-11-25: [verbatim decision record](research/2026-11-25-retransmission-owner-signoffs.md). This is owner policy where the standard supplies no recovery/adoption rule.
+
+**Behaviour**: Report the raw change subtype (SHA-value-only, layout/whitespace-only, independently established semantic difference, or other raw difference), including discrepancies against SRCC=0. Do not speculate about semantic equivalence, a time-correlation reset or adoption. An incomplete following comparison remains unresolved; a matching prefix is not whole-copy identity.
+
+**Reason**: Distinct bytes need not mean changed time semantics, and cut input cannot prove an unchanged complete copy.
+
+**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) · **Review**: semantic gate complete under ADR-0033 for wording at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244, reviewer @thread:thr_qsvwmtnn8f, relayed 2026-11-25; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; development analysis, source freshness and executable tests remain required; this does not approve the PR's remaining changes · **Origin**: #44 matrix decisions, 2026-11-25
+
+**Test**: `srcc0_different_is_reported_change`, `raw_change_subtype_never_resets_time`, `partial_copy_never_proves_identity` (planned; not implemented or executed)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; this entry's wording check does not approve the other pending PR changes.
+
+### INT-051
+
+**Title**: Prominent integrity findings are the default, subject to eligibility guards (QH/QG)
+
+**Sources**:
+- Ch6 §6.2.3.11 f pp. 6-22–23: 'all text between the "G\SHA" and the following semicolon, inclusive'; Ch9 Table 9-2 MESSAGE DIGEST/CHECKSUM p. 9-13. These define checksum evidence, not an automatic quarantine/adoption policy.
+- Ch11 §11.2.7.2 pp. 11-50–51 describes configuration and changed-data ordering; it does not select a governing setup for ambiguous scope.
+- Owner sign-off, Joey, 2026-11-25: [verbatim decision record](research/2026-11-25-retransmission-owner-signoffs.md). This is owner policy where the standard supplies no recovery/adoption rule.
+
+**Behaviour**: Use prominent integrity-finding mode by default for otherwise eligible candidates, consistently for initial and mid-session records. Integrity failure alone does not silently impose quarantine or preserve an old governing setup. Strict quarantine is opt-in and requires its own review before use. Do not waive F1, framing, trust or ambiguous scope: QD/INT-048 still forces Ambiguous and blocks new adoption. This is the default integrity policy after eligibility/applicability checks, not permission to guess which setup governs a packet, to rejoin records or to publish provisional output. Unresolved general governance contracts remain unresolved.
+
+**Reason**: The owner accepted the reviewer-recommended default while preserving eligibility safeguards and a separate review gate for stricter caller modes.
+
+**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) · **Review**: semantic gate complete under ADR-0033 for wording at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244, reviewer @thread:thr_qsvwmtnn8f, relayed 2026-11-25; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; development analysis, source freshness and executable tests remain required; this does not approve the PR's remaining changes · **Origin**: #44 matrix decisions, 2026-11-25
+
+**Test**: `integrity_findings_default_no_silent_quarantine`, `quarantine_opt_in_requires_review`, `integrity_mode_never_waives_framing_trust_or_ambiguity` (planned; not implemented or executed)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; this entry's wording check does not approve the other pending PR changes.
+
+### INT-052
+
+**Title**: Unreadable SRCC never becomes an eligibility or governing inference (QS)
+
+**Sources**:
+- Ch11 §11.2.7.2 p. 11-50: “0 = Setup record configuration has not changed”; “1 = Setup record configuration has changed”. An unreadable bit establishes neither value.
+- Owner sign-off, Joey, 2026-11-25: [verbatim decision record](research/2026-11-25-retransmission-owner-signoffs.md). This is owner policy where the standard supplies no recovery/adoption rule.
+
+**Behaviour**: Keep independently proven equality as evidence when following SRCC is U. Withhold automatic eligibility or governing inference; never infer SRCC=0/1. QI can preserve an otherwise-Complete seal classification in its bounded scope, with the finding visible, but equality is not adoption permission and QD remains dominant.
+
+**Reason**: Known raw equality and unknown wire metadata are different evidence; consumers must see both.
+
+**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) · **Review**: semantic gate complete under ADR-0033 for wording at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244, reviewer @thread:thr_qsvwmtnn8f, relayed 2026-11-25; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; development analysis, source freshness and executable tests remain required; this does not approve the PR's remaining changes · **Origin**: #44 matrix decisions, 2026-11-25
+
+**Test**: `unreadable_srcc_identity_is_evidence_not_eligibility` (planned; not implemented or executed)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; this entry's wording check does not approve the other pending PR changes.
+
+
+### INT-053
+
+**Title**: Later copies compare with the currently governing setup, never a guessed target (QM)
+
+**Sources**:
+- 106-24R1 Ch11 §11.2.7.2 pp. 11-50–51: “0 = Setup record configuration has not changed”; changed setup is committed “prior to any new or changed data packets”. The prose does not supply a universal adoption/ambiguity recovery algorithm.
+- Ch11 §11.2.1.1 f p. 11-8: “Each channel in a session shall have its own sequence counter”; INT-011 joining, INT-045 closure, INT-039 document-local duplicates and INT-046/048/051/052 retain their separate contracts. Ch6 §6.2.3.11 f checksum verification does not establish governing identity.
+- Joey's 2026-11-25 QM sign-off: [verbatim record](research/2026-11-25-qm-governing-comparison-owner-decision.md).
+
+**Behaviour**: Compare each later setup copy with the **currently governing setup**: the original sealed record, or the latest copy that validly took control. Retain that candidate's identity and supporting adoption evidence. A copy known not to have taken control never becomes the comparison target. If whether it took control is unresolved (including changed/integrity-failing warn-mode or Ambiguous evidence where adoption is unresolved), report the target for subsequent copies as **unresolved**; never choose the old, newest, first or best-checksum copy. QD still blocks new adoption of field-ambiguous input; that block alone does not prove the actual governing recorder setup.
+
+Compute raw equality with the immediately previous copy as **information only**, with its separate pair of identities. It must never change eligibility, governing or classification, including when the governing target is unresolved. Apply QI only to an independently established governing-target comparison with its own guards, not to previous-copy equality. Governing-target comparison remains unavailable while the target is unresolved; local framing/ambiguity findings remain reportable. A valid takeover changes the target only on separately established reviewed adoption evidence, not because this rule sees Complete, SRCC, a digest or equal bytes.
+
+Preserve every earlier copy's located findings without overwrite. Earlier governing setups and their identities remain available for data already decoded under them; do not relabel those packets when a later setup takes control or becomes unresolved. QM specifies comparison and evidence retention, not all open INT-028/031 applicability or provisional-use rules.
+
+**Reason**: The last received copy and the original seal can both differ from the governing setup. Guessing one would launder an unresolved change, while treating previous-copy equality as authority would make an unadopted copy control later interpretation. Retained history keeps earlier decoding auditable.
+
+**Design**: owner-signed (Joey, 2026-11-25); independent AI wording CONCUR at db1dbf7, fixture follow-up pending · **Review**: wording CONCUR under ADR-0033 at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244, reviewer @thread:thr_qsvwmtnn8f; required unresolved-to-valid-takeover fixture and optional non-takeover edge added, updated-head PR review pending; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25 · **Origin**: QM follow-up to PR #45, 2026-11-25
+
+**Test**: `qm_B_then_D_uses_governing_target`, `qm_H_then_B_previous_identity_is_information_only`, `qm_third_copy_only_checksum_does_not_select_target`, `qm_changed_srcc_claims_never_select_target`, `qm_unresolved_governing_blocks_later_target`, `qm_ambiguous_copy_does_not_prove_old_target`, `qm_valid_takeover_updates_governing_target`, `qm_unresolved_then_valid_takeover_resolves_target`, `qm_unresolved_persists_through_non_takeover`, `qm_previous_identity_mutation_preserves_decisions`, `qm_findings_and_prior_decoding_provenance_are_persistent` (planned; not implemented or executed)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Decision record**: [owner wording and bounded scope](research/2026-11-25-qm-governing-comparison-owner-decision.md); [sequence contract and named fixtures](research/2026-11-23-retransmission-decision-matrix.md#multiple-following-copies-owner-signed-qm-sequence-contract). The pairwise product stays unchanged; sequence coverage is separate, bounded and planned. Independent AI review, source freshness, development analysis and executable verification remain required before implementation.
