@@ -96,6 +96,7 @@ irig106-tmats/
 │   │                          2026-11-25-retained-cut-and-qm-review-followups.md records the independent review and narrow blocking/test amendments;
 │   │                          2026-11-25-time-view-metadata-requirements.md derives bounded channel/time-field requirements and acceptance scope;
 │   │                          2026-11-25-source-bit-requirements.md derives explicit NSB splitting and records DSI/CHE remaining boundaries;
+│   │                          2026-11-25-che-numeric-syntax-owner-decisions.md records owner-signed INT-054/055 and planned lexical/CHE cases;
 │   │                          2026-11-25-dsi-context-requirements.md derives scoped source context and records required-presence/numeric-syntax fixture gates;
 │   │                          retransmission-matrix/spec.py is its stdlib documentation generator/expander (not runtime TMATS code);
 │   │                          retransmission-matrix/members.jsonl.gz lists every explicit tuple, output and planned test;

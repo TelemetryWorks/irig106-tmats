@@ -1286,6 +1286,13 @@ Invalid results reached under a fallback edition keep that fallback label,
 applied edition and reason, just as other results keep their interpretation
 basis. These edge notes were requested with the 2026-11-23 sign-off.
 
+**Numeric-policy follow-up (owner, 2026-11-25)**: INT-055 records the
+numeric field-value rule, pending independent AI check. Its Invalid result
+for disallowed numeric syntax does not erase the existing leading-blank
+unavailable guard (e.g. TFMT ` 2` / ` A`). Other numeric blanks now have an
+owner-specified outcome; letter-value and structured G\SHA blank rules are
+not silently changed. Demonstrated high-byte/other failures remain visible.
+
 **Reason**: Missing describes actual absence and Invalid requires evidence about the data; neither is justified solely by missing interpretation knowledge. The alternative is forcing all unsuccessful reads into those states, which conceals unsupported coverage and can trigger a false default or false data-error report. Consumers must handle blocked reads explicitly, at the cost of a guarded result rather than treating every request as a successfully resolved field.
 
 **Design**: approved (Joey, owner sign-off, 2026-11-23) · **Review**: approved under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-23; independent AI check: CONCURS on PR #26 at `0fc0bc8`, relayed by the owner 2026-11-23 · **Origin**: family 2 batch 7
@@ -1856,3 +1863,91 @@ Preserve every earlier copy's located findings without overwrite. Earlier govern
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
 **Decision record**: [owner wording and bounded scope](research/2026-11-25-qm-governing-comparison-owner-decision.md); [sequence contract and named fixtures](research/2026-11-23-retransmission-decision-matrix.md#multiple-following-copies-owner-signed-qm-sequence-contract). The pairwise product stays unchanged; sequence coverage is separate, bounded and planned. Independent AI review is complete at the exact head cited above; source freshness, development analysis and executable verification remain required before implementation.
+
+
+## Bounded time-view enable context and numeric field-value syntax
+
+### INT-054
+
+**Title**: Disabled TIMEIN entries remain enumerated with CHE context (Option A)
+
+**Sources**:
+- 106-24R1 Chapter 9 section 9.5.4 Table 9-4 CHANNEL ENABLE R-x\CHE-n, p. 9-49: "Indicate if source is enabled. Source must be enabled to generate data packets." Usage: "Allowed when: R\N > 0", "Required when: Allowed"; enumeration T True / F False.
+- Same table CHANNEL DATA TYPE, p. 9-50: TIMEIN is IRIG Time Input. The packet-generation condition does not define a library enumeration/filter policy.
+- Joey, owner decision, 2026-11-25: Option A; [dated decision record](research/2026-11-25-che-numeric-syntax-owner-decisions.md).
+
+**Behaviour**: Still enumerate a confirmed TIMEIN entry whose own R-x\CHE-n
+is disabled (F), with CHE exposed as located context. Never silently filter
+it; callers may filter explicitly. Enabled (T), disabled, missing, duplicate
+or invalid CHE does not replace CDT's TIMEIN classification. Missing CHE
+uses existing absent/default-evidence rules, not fabricated enabled/disabled;
+known scalar duplicates stay Ambiguous with every occurrence (INT-039/048),
+and a demonstrated invalid CHE stays Invalid. Unavailable reviewed rules
+retain INT-041's guard. Retain independent applicability/presence findings,
+raw bytes, scope and setup qualifications. Enumeration is diagnostic, not
+permission to govern, generate packets or bypass assembly ambiguity/cuts.
+
+**Reason**: The owner chose caller-controlled filtering with visible context;
+a recorder's enable declaration must not hide the setup information a
+consumer needs to inspect.
+
+**Design**: owner decision recorded (Joey, Option A, 2026-11-25); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; independent AI check: pending on this wording · **Origin**: owner CHE direction after #50
+
+**Test**: `che_disabled_timein_is_still_enumerated`, `che_missing_duplicate_invalid_preserve_entry`, `che_caller_filter_is_explicit_and_nonmutating` (planned, not implemented or executed)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+### INT-055
+
+**Title**: Numeric field values use bounded ASCII digits with visible zero-padding (Option A)
+
+**Sources**:
+- 106-24R1 Chapter 9 section 9.5.4 Table 9-4 NUMBER OF SOURCE BITS p. 9-33: "Range: 0 to 13"; TRACK NUMBER/CHANNEL ID p. 9-48: "Range: 1 to 65535"; NUMBER OF TRACKS/CHANNELS p. 9-32: "Range: 1 to 65536". These ranges do not supply a general lexical grammar or digit limit.
+- Table 9-4 SECONDARY HEADER TIME FORMAT p. 9-51, TIME DATA TYPE FORMAT pp. 9-71–72 and TIME FORMAT p. 9-72 contain numeric-looking enumeration codes; TK1/CDT/SHTF/DSI/CHE applicability uses R\N > 0 (pp. 9-48–51).
+- Section 9.4.1 p. 9-2 governs character projection (INT-036/037); section 9.4.2 p. 9-2 calls value blanks intentional (INT-041). The owner supplies the policy below, not a claim that the standard mandates it.
+- Joey, owner decision, 2026-11-25: Option A; [dated decision record](research/2026-11-25-che-numeric-syntax-owner-decisions.md). INT-038 and INT-043 are related canonical-string decisions, not independent authority for this extension.
+
+**Behaviour**: For all numeric field values (NSB, TK1, R\N as a condition
+operand, and others) and numeric-looking enumeration codes (including
+TTF/SHTF/TFMT 0/1/2), require a nonempty run of ASCII digits only, at most
+TEN digits before stripping zeros. A sign (+/-), any blank (leading,
+trailing or embedded), any non-digit, empty value or more than ten digits
+is Invalid; never repair, clip, wrap or silently trim it. Preserve the
+existing INT-041 leading-blank guard WHERE IT ALREADY APPLIES: e.g. TFMT
+` 2` remains unavailable, not Invalid, as does the existing leading-blank
+NSB case (` 4`, L3-VIEW-024). That exception does not invent a leading-blank
+exemption beyond existing INT-041 guards. Letter TFMT codes remain
+on their existing supported enumeration path (e.g. `B`, or unavailable ` A`).
+
+Compose approved INT-036/037 projection/character findings before the local
+numeric read; omitted controls are not replaced with spaces, and high bytes
+stay Invalid. Check the digit limit before canonicalisation: even eleven
+zeros are Invalid. Strip leading zeros for interpreted comparison, retaining
+`0` for an all-zero spelling, without changing source bytes. Accepted
+noncanonical spellings emit a located WARNING; `04` equals 4 and `02`
+matches code 2. Preserve that warning if a later range/membership check
+fails. Check the cited field range/enumeration after canonicalisation;
+out-of-range is Invalid, not wrapped. Compare canonical strings by length
+and lexicographic order where useful, following INT-038/043 without an
+unbounded integer conversion. Numeric-looking codes do not change letter
+keywords, code-name indices or G\SHA's separately reviewed structured syntax.
+
+An Invalid/unavailable R\N cannot be used to conclude R\N > 0: conditions
+report cannot-evaluate, retaining operand and independent findings. Missing
+and duplicate operands retain existing Missing/Ambiguous behavior; numeric
+conversion cannot select a winner or trigger an absence default. Raw and
+located binding remain available independently of local conversion.
+
+**Reason**: The owner chose tolerant, visible zero-padding with a bounded
+strict grammar. This is an explicit field-value policy, not permission to
+normalise input or derive field grammar from index identity. The broad
+"all numeric field values" scope is retained; conflicts with printed
+hexadecimal/floating-point definitions need development analysis and review,
+not a silent exemption (see the dated note). The existing INT-043 algorithm
+rule is not silently amended by a generic whole-field parser.
+
+**Design**: owner decision recorded (Joey, Option A, 2026-11-25); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; independent AI check: pending on this wording · **Origin**: owner numeric field-value direction after #50
+
+**Test**: `numeric_ascii_syntax_and_digit_limit`, `numeric_zero_padding_keeps_warning_and_raw`, `numeric_ranges_follow_canonicalisation`, `numeric_codes_accept_02_without_changing_letters`, `numeric_leading_blank_keeps_int041_exception`, `numeric_rn_condition_never_guesses`, `numeric_projection_keeps_character_findings` (planned, not implemented or executed)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written

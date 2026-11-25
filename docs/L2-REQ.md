@@ -1,6 +1,7 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through scoped DSI context drafted (family 2, batches 1-18).**
+> **Status: foundations through CHE/numeric syntax drafted (family 2, batches 1-19).**
+> INT-054/055 are owner-signed (Joey, 2026-11-25); independent AI check pending.
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
@@ -769,10 +770,11 @@ Source: 106-24R1 Chapter 9 section 9.5.4, Table 9-4, rows/pages cited below.
 This derives L1-VIEW-005's owner-approved 0.1 subset. It composes the
 existing effective-field/canonical-scope contracts and approved
 INT-035–039/041/042. No Rust API or new interpretation is implemented.
-General numeric FIELD-VALUE syntax (including NSB/TK1, R\N condition
-operands and numeric-looking TTF/SHTF/TFMT codes; sign, leading zeros, blanks
-and digit limit) awaits an owner decision. Dependent parser/integration
-fixtures are blocked; mathematical domain/partition obligations do not choose that syntax.
+Owner-signed INT-055 supplies the numeric field-value expectations, including
+R\N condition operands and numeric-looking enumeration codes. The former
+pending-owner fixture blocker is removed; ADR-0033 independent review,
+source freshness, development analysis and executable tests still gate
+implementation. INT-054 similarly records CHE context without silent filtering.
 Sources: 106-24R1 Chapter 9 section 9.5.4 Table 9-4 NUMBER OF SOURCE BITS,
 page 9-33; Chapter 11 section 11.2.1.1 b(1), page 11-5.
 
@@ -792,7 +794,7 @@ page 9-33; Chapter 11 section 11.2.1.1 b(1), page 11-5.
 
 **Statement**: A source-bit result SHALL retain the original full channel ID, the independently identified recorder/entry and document/revision, the explicit declaration and its source/basis, the derived widths/values or blocking reason, and all qualification/findings; it SHALL NOT rewrite channel identifiers, coalesce channels by a derived local ID, infer a clock association or silently select governing context.
 
-**Rationale**: The same Chapter 9/11 rows define a numerical partition, not a clock reference or time-source association. RELEASE-0.1 forbids association inference from multiplexer grouping and requires declaration provenance. Batch 16 already distinguishes actual TK1 from entry n. This contract operates on supplied identity/context; DSI context remains a separate derivation and CHE enumeration handling awaits an owner decision.
+**Rationale**: The same Chapter 9/11 rows define a numerical partition, not a clock reference or time-source association. RELEASE-0.1 forbids association inference from multiplexer grouping and requires declaration provenance. Batch 16 already distinguishes actual TK1 from entry n. This contract operates on supplied identity/context; DSI context is derived in batch 18 and CHE enumeration follows owner-signed INT-054, pending independent review.
 
 **Verification Method**: Test (T)
 
@@ -803,17 +805,17 @@ The owner-directed bounded time view includes DATA SOURCE ID as context
 (RELEASE-0.1 Table 9-4 source list; follow-up to #48). This derives that
 context read for a supplied recorder/entry, not a general link graph or a
 channel-enumeration policy. Approved INT-035–039/041 and existing effective
-reads apply. CHE policy and general numeric FIELD-VALUE syntax remain pending;
-neither is selected by this scoped text-context contract.
+reads apply. CHE and numeric field-value choices are recorded in owner-signed INT-054/055;
+independent review remains pending. This context contract does not choose
+a general link graph or governing setup.
 
-The pending general numeric field-value decision includes R-x\N, NUMBER OF
-TRACKS/CHANNELS (106-24R1 Chapter 9 section 9.5.4 Table 9-4 p. 9-32,
-range 1–65536). TK1/CDT/SHTF/DSI/CHE applicability uses R\N > 0
-(pp. 9-48–51). Supplied canonical entry scope does not settle that operand's
-syntax. Isolated context-composition units receive a scoped evaluated
-condition; parsed-R\N integration variants remain BLOCKED. Numeric-looking
-TTF/SHTF/TFMT codes (pp. 9-51, 9-71–72), including whether 02 matches 2,
-are likewise pending. Neither INT-038 nor INT-043 supplies their grammar.
+INT-055 covers R-x\N, NUMBER OF TRACKS/CHANNELS (106-24R1 Chapter 9
+section 9.5.4 Table 9-4 p. 9-32, range 1–65536), whose R\N > 0 condition
+is used by TK1/CDT/SHTF/DSI/CHE (pp. 9-48–51). Tests may now specify parsed
+operand expectations as well as isolated supplied-condition units; neither
+may assume an absent/unknown condition true. Numeric codes TTF/SHTF/TFMT
+(pp. 9-51, 9-71–72) accept 02 as 2 with a warning under this owner decision,
+not by borrowing index syntax. Independent AI review is still pending.
 
 #### L2-VIEW-010
 
@@ -821,6 +823,33 @@ are likewise pending. Neither INT-038 nor INT-043 supplies their grammar.
 
 **Statement**: A bounded time-view entry SHALL expose its own R-x\DSI-n DATA SOURCE ID as located source context or its raw evidence and unavailable/state reason, preserving document/revision and recorder/entry scope and the existing effective-field rules; equal or suggestively named DSI text SHALL NOT select or evidence a clock, substitute for channel identity, merge entries or establish that a setup governs.
 
-**Rationale**: 106-24R1 Chapter 9 section 9.5.4 Table 9-4 DATA SOURCE ID, page 9-49, defines the source identifier with its own usage/link fields; RELEASE-0.1 explicitly treats it as context, not a time-channel reference. Batch 16 binds fields by canonical x,n rather than TK1, so isolated context composition can receive evaluated applicability without parsing numeric field values. Parsed-R\N applicability remains blocked by the pending syntax decision. Raw lookup and locally usable supported-field results remain distinct from general link resolution, length/blank rule interpretation or whole-document authority.
+**Rationale**: 106-24R1 Chapter 9 section 9.5.4 Table 9-4 DATA SOURCE ID, page 9-49, defines the source identifier with its own usage/link fields; RELEASE-0.1 explicitly treats it as context, not a time-channel reference. Batch 16 binds fields by canonical x,n rather than TK1, so isolated context composition can receive evaluated applicability without parsing numeric field values. Parsed-R\N applicability expectations now follow owner-signed INT-055, pending independent review. Raw lookup and locally usable supported-field results remain distinct from general link resolution, length/blank rule interpretation or whole-document authority.
+
+**Verification Method**: Test (T)
+
+## Owner-signed CHE and numeric syntax (family 2, batch 19)
+
+INT-054/055: Joey, Option A, 2026-11-25; independent AI check pending.
+These specify local effective reads/enumeration, not the full later validator.
+Source freshness, development analysis and executable verification still gate
+implementation; no new requirement is verified by this documentation.
+
+#### L2-VIEW-011
+
+**Parent**: L1-VIEW-004
+
+**Statement**: Numeric effective reads, including condition operands and numeric-looking enumeration codes, SHALL apply INT-055's bounded ASCII-digit grammar and canonical comparison, preserve raw values/locations and warning findings, check the field's cited range after canonicalisation, and retain existing multiplicity, character and INT-041 leading-blank guards without repairing source or guessing unusable operands.
+
+**Rationale**: Owner Option A supplies lexical policy absent from the cited ranges, including NSB/TK1/R\N and TTF/SHTF/TFMT codes (106-24R1 Table 9-4 pp. 9-32–33, 9-48, 9-51, 9-71–72). It extends canonical-string comparison to values expressly; it does not change the code-name-index grammar or G\SHA's structured rule. See INT-055 for the all-numeric scope and analysis of conflicting representation families.
+
+**Verification Method**: Test (T)
+
+#### L2-VIEW-012
+
+**Parent**: L1-VIEW-007
+
+**Statement**: The time view SHALL still enumerate a confirmed TIMEIN entry with disabled CHE, reporting its own located CHE context and effective state without implicit filtering; missing, duplicate, invalid or unavailable CHE SHALL retain the existing state/evidence rules and independent findings, and any caller filter SHALL be explicit without changing the underlying entries.
+
+**Rationale**: Owner Option A, INT-054, distinguishes inspection from generation of packets. Table 9-4 CHANNEL ENABLE p. 9-49 describes T/F and packet generation, not a library's enumeration API. CHE never substitutes for TIMEIN classification or overrides setup qualification.
 
 **Verification Method**: Test (T)
