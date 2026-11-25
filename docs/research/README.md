@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-25-retained-cut-and-qm-review-followups.md](2026-11-25-retained-cut-and-qm-review-followups.md) | Exact db1dbf7 independent review; retained-cut blocking amendment, unresolved→resolved and non-takeover fixtures, D notation; recheck pending |
 | [2026-11-25-qm-governing-comparison-owner-decision.md](2026-11-25-qm-governing-comparison-owner-decision.md) | QM owner sign-off as INT-053: currently governing comparison target, unresolved-target guard, previous-copy information only, retained history; bounded planned fixtures, AI pending |
 | [2026-11-25-retransmission-owner-signoffs.md](2026-11-25-retransmission-owner-signoffs.md) | Verbatim Joey sign-offs for Q0/QD/QI/QB/QE/QC/QP/QH/QG/QS; INT-046–052; independent AI pending; dated QM-pending status superseded by the QM follow-up |
 | [2026-11-23-retransmission-decision-matrix.md](2026-11-23-retransmission-decision-matrix.md) | Current pairwise matrix and artifacts; owner-signed INT-046–052 dated 2026-11-25, QD before QI; AI pending; QM/INT-053 has separate bounded fixtures, no runtime coverage claim |

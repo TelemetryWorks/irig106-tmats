@@ -93,6 +93,7 @@ irig106-tmats/
 │   │                          2026-11-23-retransmission-decision-matrix.md specifies the owner-signed pairwise review matrix;
 │   │                          2026-11-25-retransmission-owner-signoffs.md records verbatim Q0–QS decisions and pending AI review;
 │   │                          2026-11-25-qm-governing-comparison-owner-decision.md records QM, its guards and bounded sequence scope;
+│   │                          2026-11-25-retained-cut-and-qm-review-followups.md records the independent review and narrow blocking/test amendments;
 │   │                          retransmission-matrix/spec.py is its stdlib documentation generator/expander (not runtime TMATS code);
 │   │                          retransmission-matrix/members.jsonl.gz lists every explicit tuple, output and planned test;
 │   │                          retransmission-matrix/classes.json.gz lists equivalent complete outputs, explicit member IDs and counts;

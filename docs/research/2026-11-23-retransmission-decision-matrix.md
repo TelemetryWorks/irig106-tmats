@@ -2,8 +2,11 @@
 
 Created 2026-11-23; updated 2026-11-25. Joey signed Q0/QD/QI/QB/QE/QC/QP/
 QH/QG/QS on 2026-11-25. [Verbatim record and register mapping](2026-11-25-retransmission-owner-signoffs.md).
-**Independent AI review of INT-046–053 is pending under ADR-0033. No runtime
-implementation or verification is claimed.** QM is now owner-signed in
+**Independent AI CONCUR at db1dbf7 covers INT-046/047/049/050/051/052
+and INT-053 wording. INT-048's cut-facet amendment and the updated sequence
+fixtures await recheck under ADR-0033. No runtime implementation or verification
+is claimed.** [Exact-head review follow-up](2026-11-25-retained-cut-and-qm-review-followups.md).
+QM is now owner-signed in
 INT-053, with separate bounded sequence fixtures below; the pairwise product
 is unchanged. [QM owner wording](2026-11-25-qm-governing-comparison-owner-decision.md).
 QD is effective in this documented baseline NOW: established field ambiguity
@@ -133,7 +136,10 @@ Owner sign-off changes this documentation now; AI review still gates implementat
 The baseline is conditional on supplied state, framing and scope, not an
 approval of all open INT-034 predicates. R2D now applies even when cut text
 contains a known duplicate: aggregate Ambiguous does not discard the cut or
-make the record usable. Other established field ambiguity is represented by
+make the record usable. The retained cut facet keeps Incomplete's FULL
+blocking force: no ambiguous-acceptance option, including proposed INT-031's
+labelled split if approved, can make cut text usable or governing. INT-034
+and INT-045 carry explicit amendment notes pointing to INT-048. Other established field ambiguity is represented by
 supplied A. A cut AND other-field ambiguity requires named compound fixtures;
 the flattened input state is not an assertion of exhaustive byte-level shapes.
 Unknown/unreviewed cardinality must not be invented to trigger QD (INT-039).
@@ -201,8 +207,9 @@ are not decided by accepting QH/QG's mode.
 
 Artifact `owner_decisions` flags refer to this table; manifest maps codes to
 entries. `owner_questions` is empty for this PAIRWISE product: the choices
-above are signed, not open. Their **independent AI check is pending**; readiness
-must remain blocked. QM/INT-053 is owner-signed as a separate sequence layer
+above are signed, not open. The independent check CONCURS on INT-046/047/049/050/051/052 and
+INT-053 wording at db1dbf7; INT-048 and updated fixture follow-ups await
+recheck. Implementation readiness remains blocked. QM/INT-053 is owner-signed as a separate sequence layer
 outside the pairwise row domains; no runtime sequence coverage is claimed.
 
 ## Multiple following copies: owner-signed QM sequence contract
@@ -246,7 +253,9 @@ so it has separate named fixtures with an established original G0 and at
 most **three later copies**, not a Cartesian multiplication or a runtime
 implementation. This is a fixture bound, not a recording/history limit or
 claim of exhaustive arbitrary-length coverage. B/H/D below always identify
-their comparison target explicitly; no arrow silently switches targets.
+their comparison target explicitly; no arrow silently switches targets. In
+this SEQUENCE table, D means a semantic content difference (content code D),
+not a duplicate checksum (SHA-status code D); duplicate SHA is stated by name.
 
 | Named planned test | Bounded sequence and established control evidence | Required observation |
 | --- | --- | --- |
@@ -257,6 +266,8 @@ their comparison target explicitly; no arrow silently switches targets.
 | `qm_unresolved_governing_blocks_later_target` | C1=D(G0) with failed integrity in warn mode AND unresolved takeover; C2=B(C1) | Target unresolved, neither G0 nor C1 selected; previous equality is information only, governing comparison unavailable |
 | `qm_ambiguous_copy_does_not_prove_old_target` | C1 has QD field ambiguity and unresolved actual takeover; C2 follows | Keep QD Ambiguous and unresolved target; adoption prohibition is not proof that G0 governed later recorded data |
 | `qm_valid_takeover_updates_governing_target` | C1 has independently established valid takeover as G1; C2 differs from G1 even if equal to old G0 | Target G1; G0 equality is not a governing comparison. Historical G0 still identifies previously decoded data |
+| `qm_unresolved_then_valid_takeover_resolves_target` | C1 takeover unresolved; C2 has independently established valid takeover; C3 follows | Target becomes C2 and C3 compares with C2; unresolved is not permanent. Preserve C1 findings and the unresolved history; no inference from C2 merely being Complete/equal/good |
+| `qm_unresolved_persists_through_non_takeover` | C1 takeover unresolved; C2 definitely did not take control; C3 follows | Target remains unresolved, never promoted to C2 or restored to a guessed G0; keep the non-takeover evidence and prior findings |
 | `qm_previous_identity_mutation_preserves_decisions` | Fix G, candidate C and adoption evidence; vary only whether an unadopted immediate predecessor equals C | Only previous-comparison information changes; eligibility, governing and classification are unchanged, with each history's findings retained |
 | `qm_findings_and_prior_decoding_provenance_are_persistent` | Decode under G0; valid G1 takeover; then a rejected or unresolved C2 | Retain all prior findings and both governing descriptions/packet references; do not overwrite or relabel prior decoding |
 

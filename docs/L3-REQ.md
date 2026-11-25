@@ -1479,7 +1479,9 @@ FRMT/RCCVER/channel and actual EOF. Property-based mutation complements the
 full enumeration, never replaces it. The pairwise artifact separately preserves
 owner-signed baseline with QD/INT-048 before QI/INT-046: field ambiguity
 forces assembly Ambiguous, never upgraded by identity/equality/digest, while
-cut evidence and INT-045 findings remain visible. Named compound fixtures
+cut evidence and INT-045 findings remain visible. A retained cut facet SHALL
+keep Incomplete's full blocking force: no ambiguous-split acceptance, including
+proposed INT-031 if later approved, SHALL make that cut text usable or governing. Named compound fixtures
 SHALL cover non-SHA field ambiguity, cut-plus-ambiguity, and both candidates;
 input-state flattening must not be mistaken for exhaustive byte-shape coverage.
 QM composition is owner-signed in INT-053 and verified separately by
@@ -1492,7 +1494,12 @@ verification. This remains planned, not tested today.
 
 Fixtures SHALL cover B→D, H→B with a definitely unadopted H copy, a third-only
 checksum, changed SRCC claims, verified takeover, definite non-takeover and
-unresolved takeover (warn-mode integrity failure and Ambiguous). A mutation
+unresolved takeover (warn-mode integrity failure and Ambiguous). Named
+`qm_unresolved_then_valid_takeover_resolves_target` SHALL cover unresolved C1
+followed by independently established valid takeover C2, then C3 comparing
+with C2 while C1 findings and unresolved history remain preserved. Named
+`qm_unresolved_persists_through_non_takeover` SHALL cover unresolved C1,
+definite non-takeover C2 and an unresolved target for C3. A mutation
 holding governing/candidate/adoption evidence fixed while changing only
 previous-copy equality SHALL leave decision outputs unchanged. Evidence of
 unresolved takeover SHALL NOT select an old/new target by position or checksum;

@@ -399,6 +399,14 @@ exhaustion never silently drops a channel's run or synthesizes EOF.
 
 Complete records govern (INT-028); incomplete and ambiguous records do not by default (INT-031). An XML body (FRMT 1) is of unknown completeness.
 
+**INT-048 amendment (review clarification, 2026-11-25)**: The cut-text rule
+above means **Incomplete, or aggregate Ambiguous WITH A RETAINED CUT FACET**
+when established field ambiguity (including duplicate G\SHA) invokes
+INT-048. The cut facet keeps Incomplete's FULL blocking force. No acceptance
+of an ambiguous split, including proposed INT-031's labelled option if later
+approved, can make cut text usable or governing. Retain the cut location and
+blocking reason; the aggregate label does not relax incomplete-input policy.
+
 **Reason**: The packets alone cannot tell where a record ends; the text's final byte and repeated single-entry attributes are the only evidence the standard gives, and neither is proof in every case.
 
 **Design**: accepted in principle (three outcomes, owner, 2026-09-27, ADR-0031); these rules proposed · **Review**: pending · **Origin**: team spec alignment review, 2026-09-27
@@ -860,6 +868,11 @@ Findings: SRCC 1 on the first record; SRCC 0 with a changed configuration (an un
 - The standard does not say what applies after a record that cannot be read.
 
 **Behaviour**: A setup record INT-034 finds incomplete or ambiguous is reported and builds no description by default (a caller may accept an ambiguous split, labelled); the previous description is not carried forward, and packets after it are ungoverned until the next complete record. The fragment bytes are kept.
+
+**INT-048 limit on the proposed acceptance option (2026-11-25)**: A retained
+cut facet keeps Incomplete's full blocking force even if the aggregate
+outcome is Ambiguous. The labelled ambiguous-split option above, if later
+approved, cannot make cut text usable or governing.
 
 **Reason**: A new setup record means the configuration may have changed; applying the old description to data the new one describes would decode it wrongly without a word.
 
@@ -1633,6 +1646,15 @@ exception, authorises a rejoin/adoption, upgrades Incomplete/Ambiguous, or
 claims authoritative integrity for the joined reading. Keep locations and
 the unadopted hypothesis label; the original candidates stay separate.
 
+**INT-048 amendment (review clarification, 2026-11-25)**: References above
+to a mid-attribute cut remaining INCOMPLETE have the strict precedence
+**Incomplete, or aggregate Ambiguous WITH A RETAINED CUT FACET** under
+INT-048 when duplicate SHA or other established field ambiguity is present.
+This is not completion or a weaker blocker: the cut facet retains ALL of
+Incomplete's blocking force. No ambiguous-acceptance option, including
+proposed INT-031's labelled split if approved, can make such cut text usable
+or governing. Neither identity, digest evidence nor a time seal waives it.
+
 **Reason and rejected recommendation**: Initial Option A is grounded in the
 explicit first-time ordering. The original recommendation rejected a general
 mid-session next-time/data terminator: no observable universal terminator is
@@ -1670,13 +1692,13 @@ in the #40 draft; neither the event nor a nearby 0x02 is guessed as an end.
 
 **Reason**: Whole-byte identity supports the bounded exception, while the retained finding exposes its uncertainty. The stricter QD owner decision explicitly overrides any interpretation that identity could rescue field ambiguity.
 
-**Design**: owner-signed (Joey, 2026-11-25); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25, as relayed in the owner decision; independent AI check: pending, no concurrence claimed · **Origin**: #44 matrix decisions, 2026-11-25
+**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) · **Review**: semantic gate complete under ADR-0033 for wording at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244, reviewer @thread:thr_qsvwmtnn8f, relayed 2026-11-25; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; development analysis, source freshness and executable tests remain required; this does not approve the PR's remaining changes · **Origin**: #44 matrix decisions, 2026-11-25
 
 **Test**: `srcc1_identical_is_not_assumed_change`, `identical_duplicate_sha_never_verifies`, `identity_keeps_premature_seal_finding` (planned; not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
-**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, independent review, development analysis and executable tests still block implementation.
+**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; this entry's wording check does not approve the other pending PR changes.
 
 ### INT-047
 
@@ -1690,13 +1712,13 @@ in the #40 draft; neither the event nor a nearby 0x02 is guessed as an end.
 
 **Reason**: An exhaustive Cartesian product contains impossible observations; honest coverage separates their rejection from actual parser witnesses.
 
-**Design**: owner-signed (Joey, 2026-11-25); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25, as relayed in the owner decision; independent AI check: pending, no concurrence claimed · **Origin**: #44 matrix decisions, 2026-11-25
+**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) · **Review**: semantic gate complete under ADR-0033 for wording at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244, reviewer @thread:thr_qsvwmtnn8f, relayed 2026-11-25; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; development analysis, source freshness and executable tests remain required; this does not approve the PR's remaining changes · **Origin**: #44 matrix decisions, 2026-11-25
 
 **Test**: `cut_observation_cannot_claim_mismatch_or_only_sha_layout_delta`, `matrix_inconsistent_observations_never_parser_coverage` (planned; not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
-**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, independent review, development analysis and executable tests still block implementation.
+**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; this entry's wording check does not approve the other pending PR changes.
 
 ### INT-048
 
@@ -1709,11 +1731,20 @@ in the #40 draft; neither the event nor a nearby 0x02 is guessed as an end.
 
 **Behaviour**: The owner overrides the prior deferred QD proposal NOW: a duplicate G\SHA **or other established field ambiguity forces assembly Ambiguous**, even without a related follower. Apply to each candidate independently. Byte identity, equality and a digest must NEVER upgrade that Ambiguous to Complete; QI/INT-046 is subordinate. Preserve every occurrence, raw byte, cut-text evidence and INT-045 finding. If cut text also has a known duplicate, aggregate Ambiguous records that ambiguity while retaining the cut facet; it never becomes usable Complete. R0 first rejects contradictory observations rather than inventing such facts. Unknown cardinality is not established field ambiguity; use INT-039's reviewed definitions. The former `qd_proposal` becomes the ordinary baseline, not an optional/deferred column. INT-044's labelled edition fallback does not resolve duplicate G\106 or cure this assembly hold; diagnostic validation may still use that labelled basis. F1's exact-item removal edit remains allowed; reassess the explicit edited revision before stamping.
 
+**Retained-cut blocking rule (review clarification, 2026-11-25)**: An
+aggregate Ambiguous outcome with a retained cut facet remains unusable and
+ineligible to govern with Incomplete's FULL blocking force. Relabelling it
+Ambiguous does not create an ambiguous-acceptance escape hatch. No option
+that accepts an ambiguous split, including proposed INT-031 if later
+approved, may make the cut text usable or governing. This amends the cut
+wording in INT-034/045 by cross-reference, without repairing or discarding
+any bytes, cut locations or findings. See the [exact-head review follow-up](research/2026-11-25-retained-cut-and-qm-review-followups.md).
+
 **Reason**: The owner chose strict assembly safety immediately, overriding deferral. Integrity and field ambiguity now impose an assembly hold independently of time-continuation evidence; the prior less-strict baseline remains in #44 history.
 
-**Design**: owner-signed (Joey, 2026-11-25); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25, as relayed in the owner decision; independent AI check: pending, no concurrence claimed · **Origin**: #44 matrix decisions, 2026-11-25
+**Design**: owner-signed (Joey, 2026-11-25); independent AI recheck pending · **Review**: CONCERNS at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244 (reviewer @thread:thr_qsvwmtnn8f), cut-facet amendment added; updated-head independent AI recheck pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25, as relayed in the owner decision; independent AI check: pending, no concurrence claimed · **Origin**: #44 matrix decisions, 2026-11-25
 
-**Test**: `duplicate_sha_without_related_follower_is_ambiguous`, `identical_duplicate_sha_never_verifies`, `cut_duplicate_keeps_cut_evidence_and_ambiguity`, `other_field_ambiguity_blocks_identity_and_digest`, `following_duplicate_is_assembly_ambiguous` (planned; not implemented or executed)
+**Test**: `duplicate_sha_without_related_follower_is_ambiguous`, `identical_duplicate_sha_never_verifies`, `cut_duplicate_keeps_cut_evidence_and_ambiguity`, `cut_facet_blocks_ambiguous_acceptance`, `other_field_ambiguity_blocks_identity_and_digest`, `following_duplicate_is_assembly_ambiguous` (planned; not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -1731,13 +1762,13 @@ in the #40 draft; neither the event nor a nearby 0x02 is guessed as an end.
 
 **Reason**: Raw equality does not establish shared scope, format interpretation or a continuous complete record.
 
-**Design**: owner-signed (Joey, 2026-11-25); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25, as relayed in the owner decision; independent AI check: pending, no concurrence claimed · **Origin**: #44 matrix decisions, 2026-11-25
+**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) · **Review**: semantic gate complete under ADR-0033 for wording at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244, reviewer @thread:thr_qsvwmtnn8f, relayed 2026-11-25; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; development analysis, source freshness and executable tests remain required; this does not approve the PR's remaining changes · **Origin**: #44 matrix decisions, 2026-11-25
 
 **Test**: `identity_outside_guard_is_information_only`, `EOF_comparison_never_rejoins_inputs` (planned; not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
-**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, independent review, development analysis and executable tests still block implementation.
+**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; this entry's wording check does not approve the other pending PR changes.
 
 ### INT-050
 
@@ -1751,13 +1782,13 @@ in the #40 draft; neither the event nor a nearby 0x02 is guessed as an end.
 
 **Reason**: Distinct bytes need not mean changed time semantics, and cut input cannot prove an unchanged complete copy.
 
-**Design**: owner-signed (Joey, 2026-11-25); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25, as relayed in the owner decision; independent AI check: pending, no concurrence claimed · **Origin**: #44 matrix decisions, 2026-11-25
+**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) · **Review**: semantic gate complete under ADR-0033 for wording at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244, reviewer @thread:thr_qsvwmtnn8f, relayed 2026-11-25; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; development analysis, source freshness and executable tests remain required; this does not approve the PR's remaining changes · **Origin**: #44 matrix decisions, 2026-11-25
 
 **Test**: `srcc0_different_is_reported_change`, `raw_change_subtype_never_resets_time`, `partial_copy_never_proves_identity` (planned; not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
-**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, independent review, development analysis and executable tests still block implementation.
+**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; this entry's wording check does not approve the other pending PR changes.
 
 ### INT-051
 
@@ -1772,13 +1803,13 @@ in the #40 draft; neither the event nor a nearby 0x02 is guessed as an end.
 
 **Reason**: The owner accepted the reviewer-recommended default while preserving eligibility safeguards and a separate review gate for stricter caller modes.
 
-**Design**: owner-signed (Joey, 2026-11-25); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25, as relayed in the owner decision; independent AI check: pending, no concurrence claimed · **Origin**: #44 matrix decisions, 2026-11-25
+**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) · **Review**: semantic gate complete under ADR-0033 for wording at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244, reviewer @thread:thr_qsvwmtnn8f, relayed 2026-11-25; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; development analysis, source freshness and executable tests remain required; this does not approve the PR's remaining changes · **Origin**: #44 matrix decisions, 2026-11-25
 
 **Test**: `integrity_findings_default_no_silent_quarantine`, `quarantine_opt_in_requires_review`, `integrity_mode_never_waives_framing_trust_or_ambiguity` (planned; not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
-**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, independent review, development analysis and executable tests still block implementation.
+**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; this entry's wording check does not approve the other pending PR changes.
 
 ### INT-052
 
@@ -1792,13 +1823,13 @@ in the #40 draft; neither the event nor a nearby 0x02 is guessed as an end.
 
 **Reason**: Known raw equality and unknown wire metadata are different evidence; consumers must see both.
 
-**Design**: owner-signed (Joey, 2026-11-25); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25, as relayed in the owner decision; independent AI check: pending, no concurrence claimed · **Origin**: #44 matrix decisions, 2026-11-25
+**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) · **Review**: semantic gate complete under ADR-0033 for wording at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244, reviewer @thread:thr_qsvwmtnn8f, relayed 2026-11-25; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; development analysis, source freshness and executable tests remain required; this does not approve the PR's remaining changes · **Origin**: #44 matrix decisions, 2026-11-25
 
 **Test**: `unreadable_srcc_identity_is_evidence_not_eligibility` (planned; not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
-**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, independent review, development analysis and executable tests still block implementation.
+**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; this entry's wording check does not approve the other pending PR changes.
 
 
 ### INT-053
@@ -1818,9 +1849,9 @@ Preserve every earlier copy's located findings without overwrite. Earlier govern
 
 **Reason**: The last received copy and the original seal can both differ from the governing setup. Guessing one would launder an unresolved change, while treating previous-copy equality as authority would make an unadopted copy control later interpretation. Retained history keeps earlier decoding auditable.
 
-**Design**: owner-signed (Joey, 2026-11-25); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25, QM follow-up relayed in this thread; independent AI check: pending, no concurrence claimed · **Origin**: QM follow-up to PR #45, 2026-11-25
+**Design**: owner-signed (Joey, 2026-11-25); independent AI wording CONCUR at db1dbf7, fixture follow-up pending · **Review**: wording CONCUR under ADR-0033 at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244, reviewer @thread:thr_qsvwmtnn8f; required unresolved-to-valid-takeover fixture and optional non-takeover edge added, updated-head PR review pending; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25 · **Origin**: QM follow-up to PR #45, 2026-11-25
 
-**Test**: `qm_B_then_D_uses_governing_target`, `qm_H_then_B_previous_identity_is_information_only`, `qm_third_copy_only_checksum_does_not_select_target`, `qm_changed_srcc_claims_never_select_target`, `qm_unresolved_governing_blocks_later_target`, `qm_ambiguous_copy_does_not_prove_old_target`, `qm_valid_takeover_updates_governing_target`, `qm_previous_identity_mutation_preserves_decisions`, `qm_findings_and_prior_decoding_provenance_are_persistent` (planned; not implemented or executed)
+**Test**: `qm_B_then_D_uses_governing_target`, `qm_H_then_B_previous_identity_is_information_only`, `qm_third_copy_only_checksum_does_not_select_target`, `qm_changed_srcc_claims_never_select_target`, `qm_unresolved_governing_blocks_later_target`, `qm_ambiguous_copy_does_not_prove_old_target`, `qm_valid_takeover_updates_governing_target`, `qm_unresolved_then_valid_takeover_resolves_target`, `qm_unresolved_persists_through_non_takeover`, `qm_previous_identity_mutation_preserves_decisions`, `qm_findings_and_prior_decoding_provenance_are_persistent` (planned; not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
