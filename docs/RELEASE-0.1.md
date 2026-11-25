@@ -144,7 +144,8 @@ nonempty ASCII digits, at most ten before canonicalisation, leading zeros
 accepted with warning, range checked afterward. Existing INT-041 leading-blank
 unavailable cases keep precedence; other disallowed syntax/range is Invalid,
 never repaired/clipped. Raw binding alone asserts no usable numeric state.
-Independent AI checks under ADR-0033 remain pending; these decisions remove
+INT-054 has AI CONCUR at #51 ebf9ec4; INT-055 has CONCERNS and requires
+owner clarification/recheck under ADR-0033. These decisions remove
 the owner-choice blockers, not development/source/test gates. See the
 [record](research/2026-11-25-che-numeric-syntax-owner-decisions.md), including
 review of the broad numeric scope against other representation families.

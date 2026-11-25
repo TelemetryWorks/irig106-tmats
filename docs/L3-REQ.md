@@ -1,7 +1,8 @@
 # irig106-tmats — Level 3 Requirements
 
 > **Status: foundations through CHE/numeric syntax drafted (family 2, batches 1-19).**
-> INT-054/055 are owner-signed (Joey, 2026-11-25); independent AI check pending.
+> INT-054 is approved (Joey, 2026-11-25; AI CONCUR at #51 ebf9ec4).
+> INT-055 has AI CONCERNS at that head; three owner clarifications remain.
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
@@ -1766,8 +1767,8 @@ filter policy and no unreviewed numeric field conversion.
 
 ## Owner-signed CHE and numeric syntax (family 2, batch 19)
 
-INT-054/055 carry owner sign-off, Joey, 2026-11-25, Option A; independent
-AI review pending. Implementation/development gates remain in force.
+INT-054/055 carry owner sign-off, Joey, 2026-11-25, Option A. INT-054 has
+AI CONCUR at #51 ebf9ec4; INT-055 has CONCERNS and three owner choices open. Implementation/development gates remain in force.
 
 **L3-VIEW-037** · Parent: L2-VIEW-011 · Verification: T
 *After approved character projection/guards, a numeric field-value or numeric-code read SHALL require 1–10 ASCII digits before zero-stripping, rejecting empty, signed, blank-containing, non-digit or longer values as Invalid without clipping, wrapping or repair, except where INT-041 already requires a leading-blank unavailable result.*
@@ -1781,8 +1782,9 @@ Letter enum codes and G\SHA structured syntax retain their separate rules.
 *A syntactically accepted numeric spelling SHALL compare by its canonical digit string with leading zeros stripped (all zero becomes 0), emit a located warning for each noncanonical spelling, retain raw bytes and warnings through later range/membership failures, and check the applicable cited range or enumeration before yielding Explicit.*
 
 Thus NSB 04 is 4 and numeric enum 02 matches 2 with warning, not by repair.
-No host parser may accept extra syntax; no unbounded integer conversion is
-needed. Field ranges remain Table 9-4 NSB 0–13, TK1 1–65535, R\N 1–65536
+No host parser may accept extra syntax; use u64 or canonical-string
+comparison. u32 is insufficient for ten digits (maximum 9,999,999,999);
+no unbounded integer conversion is needed. Field ranges remain Table 9-4 NSB 0–13, TK1 1–65535, R\N 1–65536
 (pp. 9-33, 9-48, 9-32); unsupported definitions stay unavailable.
 
 **L3-VIEW-039** · Parent: L2-VIEW-011 · Verification: T

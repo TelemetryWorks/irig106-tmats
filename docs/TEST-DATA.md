@@ -30,7 +30,8 @@ locally; CI runs on synthesized examples and fuzzing only.
 
 INT-054/055 record Joey's Option A decisions of 2026-11-25. The former
 pending-OWNER blockers are removed and expected results below are specified.
-Independent AI review under ADR-0033 is PENDING for both; source freshness,
+INT-054 has AI CONCUR at #51 ebf9ec4; INT-055 has CONCERNS requiring
+three owner clarifications before independent recheck; source freshness,
 written development analysis and executable verification remain required.
 These are PLANNED tests, not enabled runtime coverage or approval to implement.
 

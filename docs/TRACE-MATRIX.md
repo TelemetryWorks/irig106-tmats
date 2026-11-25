@@ -418,8 +418,8 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-051 | Prominent integrity findings are the default, subject to eligibility guards (QH/QG) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) | not yet written | _(none)_ |
 | INT-052 | Unreadable SRCC never becomes an eligibility or governing inference (QS) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) | not yet written | _(none)_ |
 | INT-053 | Later copies compare with the currently governing setup, never a guessed target (QM) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) | not yet written | _(none)_ |
-| INT-054 | Disabled TIMEIN entries remain enumerated with CHE context (Option A) | owner decision recorded (Joey, Option A, 2026-11-25); independent AI check pending | not yet written | _(none)_ |
-| INT-055 | Numeric field values use bounded ASCII digits with visible zero-padding (Option A) | owner decision recorded (Joey, Option A, 2026-11-25); independent AI check pending | not yet written | _(none)_ |
+| INT-054 | Disabled TIMEIN entries remain enumerated with CHE context (Option A) | approved (Joey, Option A, 2026-11-25; independent AI CONCUR at ebf9ec454da6107e73d27c928390b25025cb9b57) | not yet written | _(none)_ |
+| INT-055 | Numeric field values use bounded ASCII digits with visible zero-padding (Option A) | owner decision recorded (Joey, Option A, 2026-11-25); independent AI CONCERNS; owner clarification required | not yet written | _(none)_ |
 
 * Entries without a written analysis: **55** of 55
 * Entries without a test: **55** of 55

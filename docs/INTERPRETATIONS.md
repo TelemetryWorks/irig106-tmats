@@ -1891,7 +1891,7 @@ permission to govern, generate packets or bypass assembly ambiguity/cuts.
 a recorder's enable declaration must not hide the setup information a
 consumer needs to inspect.
 
-**Design**: owner decision recorded (Joey, Option A, 2026-11-25); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; independent AI check: pending on this wording · **Origin**: owner CHE direction after #50
+**Design**: approved (Joey, Option A, 2026-11-25; independent AI CONCUR at ebf9ec454da6107e73d27c928390b25025cb9b57) · **Review**: complete under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; independent AI check: CONCUR on PR #51 at `ebf9ec454da6107e73d27c928390b25025cb9b57`, reviewer @thread:thr_qsvwmtnn8f; source freshness, development analysis and executable tests remain required · **Origin**: owner CHE direction after #50
 
 **Test**: `che_disabled_timein_is_still_enumerated`, `che_missing_duplicate_invalid_preserve_entry`, `che_caller_filter_is_explicit_and_nonmutating` (planned, not implemented or executed)
 
@@ -1946,8 +1946,10 @@ hexadecimal/floating-point definitions need development analysis and review,
 not a silent exemption (see the dated note). The existing INT-043 algorithm
 rule is not silently amended by a generic whole-field parser.
 
-**Design**: owner decision recorded (Joey, Option A, 2026-11-25); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; independent AI check: pending on this wording · **Origin**: owner numeric field-value direction after #50
+**Design**: owner decision recorded (Joey, Option A, 2026-11-25); independent AI CONCERNS; owner clarification required · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; independent AI check: CONCERNS on PR #51 at `ebf9ec454da6107e73d27c928390b25025cb9b57`, reviewer @thread:thr_qsvwmtnn8f; three owner choices unresolved · **Origin**: owner numeric field-value direction after #50
 
 **Test**: `numeric_ascii_syntax_and_digit_limit`, `numeric_zero_padding_keeps_warning_and_raw`, `numeric_ranges_follow_canonicalisation`, `numeric_codes_accept_02_without_changing_letters`, `numeric_leading_blank_keeps_int041_exception`, `numeric_rn_condition_never_guesses`, `numeric_projection_keeps_character_findings` (planned, not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Independent review follow-up (2026-11-25)**: The [review record](research/2026-11-25-che-numeric-independent-review.md) lists three owner choices: the full leading-blank exception set, projected versus raw-byte numeric checks, and decimal-only versus all-numeric scope. Current wording/fixture expectations are retained for discussion, NOT approved implementation authority. The reviewer recommends leading-blank unavailability for every numeric field/code and decimal-integer/numeric-code scope; control handling needs an explicit choice. No recommendation is silently adopted.

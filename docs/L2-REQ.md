@@ -1,7 +1,8 @@
 # irig106-tmats — Level 2 Requirements
 
 > **Status: foundations through CHE/numeric syntax drafted (family 2, batches 1-19).**
-> INT-054/055 are owner-signed (Joey, 2026-11-25); independent AI check pending.
+> INT-054 is approved (Joey, 2026-11-25; AI CONCUR at #51 ebf9ec4).
+> INT-055 has AI CONCERNS at that head; three owner clarifications remain.
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
@@ -829,7 +830,8 @@ not by borrowing index syntax. Independent AI review is still pending.
 
 ## Owner-signed CHE and numeric syntax (family 2, batch 19)
 
-INT-054/055: Joey, Option A, 2026-11-25; independent AI check pending.
+INT-054/055: Joey, Option A, 2026-11-25. INT-054 has AI CONCUR at #51
+ebf9ec4; INT-055 has CONCERNS with three owner choices unresolved.
 These specify local effective reads/enumeration, not the full later validator.
 Source freshness, development analysis and executable verification still gate
 implementation; no new requirement is verified by this documentation.
