@@ -1692,13 +1692,13 @@ in the #40 draft; neither the event nor a nearby 0x02 is guessed as an end.
 
 **Reason**: Whole-byte identity supports the bounded exception, while the retained finding exposes its uncertainty. The stricter QD owner decision explicitly overrides any interpretation that identity could rescue field ambiguity.
 
-**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) · **Review**: semantic gate complete under ADR-0033 for wording at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244, reviewer @thread:thr_qsvwmtnn8f, relayed 2026-11-25; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; development analysis, source freshness and executable tests remain required; this does not approve the PR's remaining changes · **Origin**: #44 matrix decisions, 2026-11-25
+**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) · **Review**: complete under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; independent AI check: CONCUR on [PR #45 head 73396bc312e24cfccaf16de9ae7a72609faf75b6](https://github.com/TelemetryWorks/irig106-tmats/pull/45/commits/73396bc312e24cfccaf16de9ae7a72609faf75b6), reviewer @thread:thr_qsvwmtnn8f, approval relayed by the owner 2026-11-25; source freshness, development analysis and executable tests remain required before implementation · **Origin**: #44 matrix decisions, 2026-11-25
 
 **Test**: `srcc1_identical_is_not_assumed_change`, `identical_duplicate_sha_never_verifies`, `identity_keeps_premature_seal_finding` (planned; not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
-**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; this entry's wording check does not approve the other pending PR changes.
+**Decision record**: [dated owner sign-off and alternatives](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; completed semantic review does not waive these gates.
 
 ### INT-047
 
@@ -1712,13 +1712,13 @@ in the #40 draft; neither the event nor a nearby 0x02 is guessed as an end.
 
 **Reason**: An exhaustive Cartesian product contains impossible observations; honest coverage separates their rejection from actual parser witnesses.
 
-**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) · **Review**: semantic gate complete under ADR-0033 for wording at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244, reviewer @thread:thr_qsvwmtnn8f, relayed 2026-11-25; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; development analysis, source freshness and executable tests remain required; this does not approve the PR's remaining changes · **Origin**: #44 matrix decisions, 2026-11-25
+**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) · **Review**: complete under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; independent AI check: CONCUR on [PR #45 head 73396bc312e24cfccaf16de9ae7a72609faf75b6](https://github.com/TelemetryWorks/irig106-tmats/pull/45/commits/73396bc312e24cfccaf16de9ae7a72609faf75b6), reviewer @thread:thr_qsvwmtnn8f, approval relayed by the owner 2026-11-25; source freshness, development analysis and executable tests remain required before implementation · **Origin**: #44 matrix decisions, 2026-11-25
 
 **Test**: `cut_observation_cannot_claim_mismatch_or_only_sha_layout_delta`, `matrix_inconsistent_observations_never_parser_coverage` (planned; not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
-**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; this entry's wording check does not approve the other pending PR changes.
+**Decision record**: [dated owner sign-off and alternatives](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; completed semantic review does not waive these gates.
 
 ### INT-048
 
@@ -1742,13 +1742,13 @@ any bytes, cut locations or findings. See the [exact-head review follow-up](rese
 
 **Reason**: The owner chose strict assembly safety immediately, overriding deferral. Integrity and field ambiguity now impose an assembly hold independently of time-continuation evidence; the prior less-strict baseline remains in #44 history.
 
-**Design**: owner-signed (Joey, 2026-11-25); independent AI recheck pending · **Review**: CONCERNS at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244 (reviewer @thread:thr_qsvwmtnn8f), cut-facet amendment added; updated-head independent AI recheck pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25, as relayed in the owner decision; independent AI check: pending, no concurrence claimed · **Origin**: #44 matrix decisions, 2026-11-25
+**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) · **Review**: complete under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; independent AI check: CONCUR on [PR #45 head 73396bc312e24cfccaf16de9ae7a72609faf75b6](https://github.com/TelemetryWorks/irig106-tmats/pull/45/commits/73396bc312e24cfccaf16de9ae7a72609faf75b6), reviewer @thread:thr_qsvwmtnn8f, approval relayed by the owner 2026-11-25; source freshness, development analysis and executable tests remain required before implementation · **Origin**: #44 matrix decisions, 2026-11-25
 
 **Test**: `duplicate_sha_without_related_follower_is_ambiguous`, `identical_duplicate_sha_never_verifies`, `cut_duplicate_keeps_cut_evidence_and_ambiguity`, `cut_facet_blocks_ambiguous_acceptance`, `other_field_ambiguity_blocks_identity_and_digest`, `following_duplicate_is_assembly_ambiguous` (planned; not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
-**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, independent review, development analysis and executable tests still block implementation.
+**Decision record**: [dated owner sign-off and alternatives](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; completed semantic review does not waive these gates.
 
 ### INT-049
 
@@ -1762,13 +1762,13 @@ any bytes, cut locations or findings. See the [exact-head review follow-up](rese
 
 **Reason**: Raw equality does not establish shared scope, format interpretation or a continuous complete record.
 
-**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) · **Review**: semantic gate complete under ADR-0033 for wording at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244, reviewer @thread:thr_qsvwmtnn8f, relayed 2026-11-25; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; development analysis, source freshness and executable tests remain required; this does not approve the PR's remaining changes · **Origin**: #44 matrix decisions, 2026-11-25
+**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) · **Review**: complete under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; independent AI check: CONCUR on [PR #45 head 73396bc312e24cfccaf16de9ae7a72609faf75b6](https://github.com/TelemetryWorks/irig106-tmats/pull/45/commits/73396bc312e24cfccaf16de9ae7a72609faf75b6), reviewer @thread:thr_qsvwmtnn8f, approval relayed by the owner 2026-11-25; source freshness, development analysis and executable tests remain required before implementation · **Origin**: #44 matrix decisions, 2026-11-25
 
 **Test**: `identity_outside_guard_is_information_only`, `EOF_comparison_never_rejoins_inputs` (planned; not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
-**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; this entry's wording check does not approve the other pending PR changes.
+**Decision record**: [dated owner sign-off and alternatives](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; completed semantic review does not waive these gates.
 
 ### INT-050
 
@@ -1782,13 +1782,13 @@ any bytes, cut locations or findings. See the [exact-head review follow-up](rese
 
 **Reason**: Distinct bytes need not mean changed time semantics, and cut input cannot prove an unchanged complete copy.
 
-**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) · **Review**: semantic gate complete under ADR-0033 for wording at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244, reviewer @thread:thr_qsvwmtnn8f, relayed 2026-11-25; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; development analysis, source freshness and executable tests remain required; this does not approve the PR's remaining changes · **Origin**: #44 matrix decisions, 2026-11-25
+**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) · **Review**: complete under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; independent AI check: CONCUR on [PR #45 head 73396bc312e24cfccaf16de9ae7a72609faf75b6](https://github.com/TelemetryWorks/irig106-tmats/pull/45/commits/73396bc312e24cfccaf16de9ae7a72609faf75b6), reviewer @thread:thr_qsvwmtnn8f, approval relayed by the owner 2026-11-25; source freshness, development analysis and executable tests remain required before implementation · **Origin**: #44 matrix decisions, 2026-11-25
 
 **Test**: `srcc0_different_is_reported_change`, `raw_change_subtype_never_resets_time`, `partial_copy_never_proves_identity` (planned; not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
-**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; this entry's wording check does not approve the other pending PR changes.
+**Decision record**: [dated owner sign-off and alternatives](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; completed semantic review does not waive these gates.
 
 ### INT-051
 
@@ -1803,13 +1803,13 @@ any bytes, cut locations or findings. See the [exact-head review follow-up](rese
 
 **Reason**: The owner accepted the reviewer-recommended default while preserving eligibility safeguards and a separate review gate for stricter caller modes.
 
-**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) · **Review**: semantic gate complete under ADR-0033 for wording at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244, reviewer @thread:thr_qsvwmtnn8f, relayed 2026-11-25; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; development analysis, source freshness and executable tests remain required; this does not approve the PR's remaining changes · **Origin**: #44 matrix decisions, 2026-11-25
+**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) · **Review**: complete under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; independent AI check: CONCUR on [PR #45 head 73396bc312e24cfccaf16de9ae7a72609faf75b6](https://github.com/TelemetryWorks/irig106-tmats/pull/45/commits/73396bc312e24cfccaf16de9ae7a72609faf75b6), reviewer @thread:thr_qsvwmtnn8f, approval relayed by the owner 2026-11-25; source freshness, development analysis and executable tests remain required before implementation · **Origin**: #44 matrix decisions, 2026-11-25
 
 **Test**: `integrity_findings_default_no_silent_quarantine`, `quarantine_opt_in_requires_review`, `integrity_mode_never_waives_framing_trust_or_ambiguity` (planned; not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
-**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; this entry's wording check does not approve the other pending PR changes.
+**Decision record**: [dated owner sign-off and alternatives](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; completed semantic review does not waive these gates.
 
 ### INT-052
 
@@ -1823,13 +1823,13 @@ any bytes, cut locations or findings. See the [exact-head review follow-up](rese
 
 **Reason**: Known raw equality and unknown wire metadata are different evidence; consumers must see both.
 
-**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) · **Review**: semantic gate complete under ADR-0033 for wording at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244, reviewer @thread:thr_qsvwmtnn8f, relayed 2026-11-25; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; development analysis, source freshness and executable tests remain required; this does not approve the PR's remaining changes · **Origin**: #44 matrix decisions, 2026-11-25
+**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) · **Review**: complete under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; independent AI check: CONCUR on [PR #45 head 73396bc312e24cfccaf16de9ae7a72609faf75b6](https://github.com/TelemetryWorks/irig106-tmats/pull/45/commits/73396bc312e24cfccaf16de9ae7a72609faf75b6), reviewer @thread:thr_qsvwmtnn8f, approval relayed by the owner 2026-11-25; source freshness, development analysis and executable tests remain required before implementation · **Origin**: #44 matrix decisions, 2026-11-25
 
 **Test**: `unreadable_srcc_identity_is_evidence_not_eligibility` (planned; not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
-**Decision record**: [owner sign-off, alternatives and pending AI check](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; this entry's wording check does not approve the other pending PR changes.
+**Decision record**: [dated owner sign-off and alternatives](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; completed semantic review does not waive these gates.
 
 
 ### INT-053
@@ -1849,10 +1849,10 @@ Preserve every earlier copy's located findings without overwrite. Earlier govern
 
 **Reason**: The last received copy and the original seal can both differ from the governing setup. Guessing one would launder an unresolved change, while treating previous-copy equality as authority would make an unadopted copy control later interpretation. Retained history keeps earlier decoding auditable.
 
-**Design**: owner-signed (Joey, 2026-11-25); independent AI wording CONCUR at db1dbf7, fixture follow-up pending · **Review**: wording CONCUR under ADR-0033 at PR #45 head db1dbf7c645930f52849bee742963dcc25f68244, reviewer @thread:thr_qsvwmtnn8f; required unresolved-to-valid-takeover fixture and optional non-takeover edge added, updated-head PR review pending; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25 · **Origin**: QM follow-up to PR #45, 2026-11-25
+**Design**: approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) · **Review**: complete under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; independent AI check: CONCUR on [PR #45 head 73396bc312e24cfccaf16de9ae7a72609faf75b6](https://github.com/TelemetryWorks/irig106-tmats/pull/45/commits/73396bc312e24cfccaf16de9ae7a72609faf75b6), reviewer @thread:thr_qsvwmtnn8f, approval relayed by the owner 2026-11-25; source freshness, development analysis and executable tests remain required before implementation · **Origin**: QM follow-up to PR #45, 2026-11-25
 
 **Test**: `qm_B_then_D_uses_governing_target`, `qm_H_then_B_previous_identity_is_information_only`, `qm_third_copy_only_checksum_does_not_select_target`, `qm_changed_srcc_claims_never_select_target`, `qm_unresolved_governing_blocks_later_target`, `qm_ambiguous_copy_does_not_prove_old_target`, `qm_valid_takeover_updates_governing_target`, `qm_unresolved_then_valid_takeover_resolves_target`, `qm_unresolved_persists_through_non_takeover`, `qm_previous_identity_mutation_preserves_decisions`, `qm_findings_and_prior_decoding_provenance_are_persistent` (planned; not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
-**Decision record**: [owner wording and bounded scope](research/2026-11-25-qm-governing-comparison-owner-decision.md); [sequence contract and named fixtures](research/2026-11-23-retransmission-decision-matrix.md#multiple-following-copies-owner-signed-qm-sequence-contract). The pairwise product stays unchanged; sequence coverage is separate, bounded and planned. Independent AI review, source freshness, development analysis and executable verification remain required before implementation.
+**Decision record**: [owner wording and bounded scope](research/2026-11-25-qm-governing-comparison-owner-decision.md); [sequence contract and named fixtures](research/2026-11-23-retransmission-decision-matrix.md#multiple-following-copies-owner-signed-qm-sequence-contract). The pairwise product stays unchanged; sequence coverage is separate, bounded and planned. Independent AI review is complete at the exact head cited above; source freshness, development analysis and executable verification remain required before implementation.

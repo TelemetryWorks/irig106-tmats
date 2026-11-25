@@ -402,14 +402,14 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-043 | Leading-zero algorithm 2 designators are accepted with a warning | approved (Joey, Option B, 2026-11-23) | not yet written | _(none)_ |
 | INT-044 | Duplicate G\106 retains ambiguity with an explicitly labelled fallback basis | approved (Joey, Option B, 2026-11-23) | not yet written | _(none)_ |
 | INT-045 | Layered time-packet closure for initial setup and SRCC=1 updates | approved (Joey, initial A and guarded mid-session extension, 2026-11-23) | not yet written | _(none)_ |
-| INT-046 | Bounded byte-identity exception retains the premature-seal finding (QI) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) | not yet written | _(none)_ |
-| INT-047 | Inconsistent matrix observations remain counted but never parser coverage (Q0) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) | not yet written | _(none)_ |
-| INT-048 | Field ambiguity forces assembly Ambiguous before identity or digest exceptions (QD) | owner-signed (Joey, 2026-11-25); independent AI recheck pending | not yet written | _(none)_ |
-| INT-049 | Identity does not automatically extend across candidate boundaries (QB/QE) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) | not yet written | _(none)_ |
-| INT-050 | Raw changes do not invent semantic resets or resolve incomplete comparisons (QC/QP) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) | not yet written | _(none)_ |
-| INT-051 | Prominent integrity findings are the default, subject to eligibility guards (QH/QG) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) | not yet written | _(none)_ |
-| INT-052 | Unreadable SRCC never becomes an eligibility or governing inference (QS) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at db1dbf7) | not yet written | _(none)_ |
-| INT-053 | Later copies compare with the currently governing setup, never a guessed target (QM) | owner-signed (Joey, 2026-11-25); independent AI wording CONCUR at db1dbf7, fixture follow-up pending | not yet written | _(none)_ |
+| INT-046 | Bounded byte-identity exception retains the premature-seal finding (QI) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) | not yet written | _(none)_ |
+| INT-047 | Inconsistent matrix observations remain counted but never parser coverage (Q0) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) | not yet written | _(none)_ |
+| INT-048 | Field ambiguity forces assembly Ambiguous before identity or digest exceptions (QD) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) | not yet written | _(none)_ |
+| INT-049 | Identity does not automatically extend across candidate boundaries (QB/QE) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) | not yet written | _(none)_ |
+| INT-050 | Raw changes do not invent semantic resets or resolve incomplete comparisons (QC/QP) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) | not yet written | _(none)_ |
+| INT-051 | Prominent integrity findings are the default, subject to eligibility guards (QH/QG) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) | not yet written | _(none)_ |
+| INT-052 | Unreadable SRCC never becomes an eligibility or governing inference (QS) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) | not yet written | _(none)_ |
+| INT-053 | Later copies compare with the currently governing setup, never a guessed target (QM) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) | not yet written | _(none)_ |
 
 * Entries without a written analysis: **53** of 53
 * Entries without a test: **53** of 53
