@@ -56,6 +56,15 @@ accounting/defaults and recovery semantics, before implementation. The
 [batch 15 draft](research/2026-11-23-completeness-contracts-draft.md) presents
 opt-in labelled snapshots versus final-only semantic use; no choice is made.
 
+### Remaining bounded time-view derivations
+
+Derive scoped DATA SOURCE ID (`R-x\DSI-n`, 106-24R1 Chapter 9 Table 9-4
+p. 9-49) as context, never a clock reference,
+and the association-uncertainty/caller-assumption contract. CHANNEL ENABLE
+(`R-x\CHE-n`, same table/page) handling awaits an owner decision: no
+TIMEIN enumeration/filter policy is selected until that confirmation.
+Keep this pending choice separate from numerical splitting of a supplied ID.
+
 ### Planned scanner suggestion after framing
 
 Record the independent reviewer's note carried forward by the owner on

@@ -948,6 +948,45 @@ byte identity after viewing. This table does not create executable tests or
 complete the NSB, association, general channel/link or measurement views.
 
 
+## Planned source-bit batch 17 (explicit NSB only)
+
+PLANNED acceptance cases for L2-VIEW-008/009 and L3-VIEW-023–030; no source-bit
+implementation or passing runtime coverage is claimed. Sources: 106-24R1
+Ch9 section 9.5.4 Table 9-4 NUMBER OF SOURCE BITS p. 9-33, TRACK NUMBER/
+CHANNEL ID p. 9-48; Ch11 section 11.2.1.1 b(1), p. 11-5. The [batch note](research/2026-11-25-source-bit-requirements.md)
+records the inspected sources and independent bit-string vector checks.
+
+Unless varied, use a supported reviewed baseline definition and explicit
+recorder/document/revision scope, applicable R\ID condition and usable full
+TK1 operand. Values shown as hex below are numeric fixture notation, not
+an asserted TMATS lexical format. Partial text snippets are not conforming
+full-setup fixtures. Retain independent source/assembly/usage findings.
+
+| Named planned test | Independent stimulus / expectation | Requirements |
+| --- | --- | --- |
+| `nsb_explicit_zero_preserves_full_id` | Explicit NSB=0, full ID 42: source width 0/value 0, local width 16/value 42; retain the actual declaration, never confuse it with absence | L3-VIEW-024, L3-VIEW-026 |
+| `nsb_high_bits_not_low_bits` | NSB=4, C=0xA02A: source 10, local 42, widths 4/12, full 41002 unchanged | L3-VIEW-026 |
+| `nsb_upper_count_and_id_boundaries` | NSB=13, C=0xFFFF: source 8191, local 7, widths 13/3, full 65535 retained | L3-VIEW-024, L3-VIEW-026 |
+| `nsb_zero_local_component_is_not_full_zero` | NSB=13/C=0xA000 gives source 5120/local 0; NSB=1/C=0x8000 gives source 1/local 0. No reserved-full-ID or TK1-range error is manufactured for the derived zero | L3-VIEW-025, L3-VIEW-026 |
+| `nsb_absence_is_not_explicit_zero` | Missing NSB with usable full ID: no fabricated components or count, preserve absence/reason and full ID | L3-VIEW-027 |
+| `nsb_bad_count_never_clips_or_wraps` | NSB=-1, 14 or a demonstrated invalid numeric value under a supported definition: no split, no modulo/clamp/default; raw Invalid evidence remains | L3-VIEW-024, L3-VIEW-027 |
+| `nsb_duplicate_even_equal_blocks_split` | NSB=4 repeated identically, then 4/5: Ambiguous with every occurrence, no chosen count or split; assembly ambiguity remains | L3-VIEW-024, L3-VIEW-027 |
+| `nsb_blank_or_unsupported_rule_is_unavailable` | Leading-blank count or unavailable historical definition/layout: preserve unavailable reason rather than trim, assume baseline, invent zero or prove data Invalid from unknown rules | L3-VIEW-024, L3-VIEW-027 |
+| `nsb_unknown_applicability_does_not_enable_split` | Explicit local count with unestablished specified-R\ID condition evidence: no guessed applicability; retain the field and blocking condition evidence | L3-VIEW-023, L3-VIEW-024 |
+| `nsb_recorder_scope_is_not_borrowed` | Recorder 1 lacks NSB, recorder 2 has 4; repeat across record/revision. Recorder 1 does not borrow 4; entry-suffixed R-1\NSB-3 is not the native recorder-level declaration | L3-VIEW-023, L3-VIEW-027 |
+| `nsb_canonical_recorder_keeps_raw_spelling` | R-01\NSB binds selected canonical recorder 1, with the spelling/normalization information retained | L3-VIEW-023, L3-VIEW-028 |
+| `nsb_actual_id_not_entry_index` | Entry n=3 has TK1=41002 and NSB=4: split actual C=0xA02A into 10/42, never split n=3 | L3-VIEW-025 |
+| `nsb_unusable_id_is_not_coerced` | Missing, duplicate or out-of-range TK1=0/65536 with valid NSB: retain full-ID state, no n/packet-ID/local-ID substitution or split | L3-VIEW-025, L3-VIEW-027 |
+| `nsb_local_id_collision_does_not_merge_channels` | NSB=4, full IDs 0xA02A/0xB02A both have local 42, sources 10/11. Keep both full/scoped identities; no channel merge or evidenced clock association | L3-VIEW-029 |
+| `nsb_provenance_and_qualification_survive_read` | Declaration/ID spans in assembled or standalone input, labelled edition basis, then revision change and retained-cut/ambiguous context: preserve evidence, raw bytes and limitations without stale results or governing promotion | L3-VIEW-028, L3-VIEW-029 |
+| `nsb_all_valid_partitions_match_bitstring_oracle` | Future CI arithmetic test streams C=1–65535 × explicit N=0–13; partition independent 16-character strings, assert 917,490 pairs, widths/ranges and exact reconstruction. Parse/scope assertions use focused cases above | L3-VIEW-026, L3-VIEW-030 |
+
+These cases specify no CHE enumeration/filter behavior; that owner choice
+is pending and no expected disabled-entry policy is recorded as approved.
+DSI source context is in the remaining-derivations list, not implemented
+here or used as a clock reference. No association/correlation or governing
+inference follows from common multiplexer source/local values.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample
