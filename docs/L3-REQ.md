@@ -1620,7 +1620,8 @@ These are future obligations, not a new implementation or passing tests.
 The [batch note](research/2026-11-25-source-bit-requirements.md) records source
 inspection, arithmetic examples and remaining DSI/CHE boundaries. This slice
 splits a supplied identity; it does not decide which channels to enumerate.
-NSB/TK1 field-value syntax (sign, leading zeros, blanks, digit limit) is
+General numeric FIELD-VALUE syntax (NSB/TK1, R\N condition operands and
+numeric-looking TTF/SHTF/TFMT codes; sign, leading zeros, blanks, digit limit) is
 pending owner review. Dependent parsed-value fixtures are BLOCKED until that
 decision and ADR-0033 check; no code-name-index policy is borrowed for values.
 
@@ -1701,6 +1702,15 @@ Future obligations only. See the [batch note](research/2026-11-25-dsi-context-re
 for source inspection, numeric-fixture blockers and the unselected CHE policy.
 DSI context reads take canonical recorder/entry scope, not a parsed TK1 ID;
 no new numeric parser, field syntax, clock link or stable Rust API is defined.
+
+The pending general numeric field-value decision includes R-x\N, NUMBER OF
+TRACKS/CHANNELS (106-24R1 Chapter 9 section 9.5.4 Table 9-4 p. 9-32,
+range 1–65536). TK1/CDT/SHTF/DSI/CHE applicability uses R\N > 0
+(pp. 9-48–51). Supplied canonical entry scope does not settle that operand's
+syntax. Isolated context-composition units receive a scoped evaluated
+condition; parsed-R\N integration variants remain BLOCKED. Numeric-looking
+TTF/SHTF/TFMT codes (pp. 9-51, 9-71–72), including whether 02 matches 2,
+are likewise pending. Neither INT-038 nor INT-043 supplies their grammar.
 
 **L3-VIEW-031** · Parent: L2-VIEW-010 · Verification: T
 *The context read SHALL bind to the supplied document/revision and canonical recorder/entry pair (x,n) for R-x\DSI-n, preserving raw code-name spellings and index-normalisation evidence; recorder-level R-x\ID, G\DSI-n, another entry's DSI or a matching TK1/DSI value SHALL NOT substitute for that native scoped field.*

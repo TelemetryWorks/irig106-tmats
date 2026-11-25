@@ -10,7 +10,8 @@ required NSB presence and pending numeric field-value syntax.
 Derive DATA SOURCE ID context with L2-VIEW-010 and L3-VIEW-031–036 under
 L1-VIEW-007's bounded time-view contract. Queries use a supplied canonical
 recorder/entry scope; they need no parsed TK1 operand or channel-enumeration
-policy. Reuse L1-VIEW-004 support and approved INT-035–039/041. No new
+policy. Applicability still depends on R\N > 0; isolated units receive its
+evaluated result, while parsed-R\N integration is blocked below. Reuse L1-VIEW-004 support and approved INT-035–039/041. No new
 interpretation, stable Rust type or lookup-selection grammar is introduced.
 
 Inspected [106-24R1 Chapter 9](https://www.trmc.osd.mil/wiki/download/attachments/335389015/Chapter9.pdf?api=v2),
@@ -60,26 +61,34 @@ presence/absence assertion needs no numeric-field conversion; any parsed
 TK1 variant of its full-ID setup remains subject to the blocker below.
 An unavailable condition is not silently turned true to force that finding.
 
-## Pending owner decision: NSB/TK1 field-value syntax
+## Pending owner decision: general numeric FIELD-VALUE syntax
 
-The owner has not decided sign handling, leading zeros, blanks or a digit
-limit for NUMERIC FIELD VALUES of NSB/TK1. Do not borrow INT-038's accepted
-numeric CODE-NAME INDEX identity or a host language's integer parser.
-No acceptance of '+', '-', zeros, whitespace or an arbitrary digit cap is
-selected by this PR. Preserve the existing mathematical ranges separately.
+The #50 review widens the pending decision beyond NSB/TK1: sign, leading
+zeros, blanks and digit limit apply to numeric FIELD VALUES generally,
+including counts/condition operands and numeric-looking enumeration codes.
+Table 9-4 NUMBER OF TRACKS/CHANNELS R-x\N (p. 9-32) has range 1–65536;
+TK1/CDT/SHTF/DSI/CHE are Allowed when R\N > 0 (pp. 9-48–51). A text DSI
+read's applicability therefore still depends on this numeric operand.
+TTF/SHTF/TFMT include numeric-looking codes (pp. 9-51, 9-71–72); whether
+`02` matches `2` is undecided. Do not borrow INT-038 index identity, INT-043's
+algorithm-specific tolerance or a host integer parser for these values.
 
-TEST-DATA labels the four batch-16 TK1-dependent cases and fourteen batch-17
-parsed numeric cases BLOCKED. This includes `nsb_bad_count_never_clips_or_wraps`,
-TK1 identity/range cases and the parsed arms of vector/provenance fixtures.
-Any other end-to-end case that parses those fields inherits the blocker even
-if its standalone field assertion is not individually tagged. Known states,
-canonical name keys and already numerical arithmetic operands can still be
-specified independently; they are not passing parser/integration coverage.
+TEST-DATA marks seven batch-16 parsed numeric cases and fourteen batch-17
+cases BLOCKED. The other twelve batch-16 cases and all eleven DSI cases
+explicitly receive scoped evaluated R\N applicability for isolated unit
+assertions; they do not parse R\N. Every parsed-text variant inherits the
+general blocker, including the missing-DSI required-presence assertion.
+Supplied true applicability is synthetic scoped evidence, never a runtime
+default for missing or unknown conditions or coverage of their evaluator.
+This corrects the earlier claim that avoiding TK1 parsing alone removed
+the DSI fixtures' numeric dependency. No grammar acceptance is selected.
 
-The 917,490-pair future numerical oracle and fixed mathematical vectors are
-unchanged. No exhaustive runtime check is executed here. Resolve the owner
-choice, record its interpretation and obtain the ADR-0033 independent check
-before implementing the dependent parser/integration expectations.
+The missing-NSB assertion instead receives the specified-R\ID predicate and
+usable full-ID evidence; it needs no numeric conversion. The 917,490-pair
+future numerical oracle and fixed mathematical vectors are unchanged.
+Existing approved field-specific interpretations remain in force. No runtime
+checks are executed here. Resolve the generic owner choice and ADR-0033
+check before implementing dependent parser/integration expectations.
 
 ## Remaining boundaries and checks
 
