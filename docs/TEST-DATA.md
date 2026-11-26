@@ -1324,7 +1324,7 @@ cover destinations the tool opens itself, not shell redirection.
 |---|---|---|
 | `extract_selected_text_is_byte_exact` | Supplied text `COMMENT:a;` is delivered exactly, with no newline, terminator change, label or wrapper | L3-CLI-030, L3-CLI-031 |
 | `extract_fragment_text_excludes_each_csdw` | Two packet text fragments `COMMENT:a;` and `COMMENT:b;` yield literal `COMMENT:a;COMMENT:b;`; exclude both CSDWs and every header/trailer byte | L3-CLI-030 |
-| `extract_csdw_split_is_removed_once` | Synthetic arbitrary-span partition: four logical CSDW bytes straddle spans; expected text excludes four bytes total, not four per span. With the reviewer's 512 KiB block layout the CSDW is always in the first block; this is not a production-layout claim | L3-CLI-030, L3-CLI-037 |
+| `extract_csdw_split_is_removed_once` | Synthetic arbitrary-span partition: four logical CSDW bytes straddle spans; expected text excludes four bytes total, not four per span. With core 0.2 default 512 KiB blocks the CSDW is always in the first block; this is not a production-layout claim | L3-CLI-030, L3-CLI-037 |
 | `extract_text_split_does_not_change_bytes` | A text fragment crosses several span boundaries including inside a name/value; compare to the same independent literal | L3-CLI-030, L3-CLI-037 |
 | `extract_layout_and_case_survive` | Mixed case, leading/inter-item layout and CR/LF are replayed exactly; no canonical case, order or newline conversion | L3-CLI-031 |
 | `extract_comment_control_is_view_only` | Mechanical source `COMMENT:a\tb;` with a real TAB: INT-036 interpreted value is `ab` but extraction keeps `a\tb` byte-for-byte; the same applies to an omitted CR/LF/control; eligibility remains owner-pending | L3-CLI-031 |
@@ -1357,6 +1357,45 @@ coverage, not a safety pass. No existing unrelated-file overwrite policy,
 cleanup/atomicity/durability promise or report/rendered format is selected.
 Actual record eligibility, selection and XML behavior require their own
 reviewed fixtures before end-to-end extraction implementation is accepted.
+
+## Planned raw pattern lookup batch 26
+
+These are planned cases for L2-VIEW-015/L3-VIEW-058–064, not executable
+coverage. Query notation below describes bindings, not a public string
+syntax: use the cited R-x\TK1-n pattern from 106-24R1 Ch9 Table 9-4
+TRACK NUMBER/CHANNEL ID p. 9-48. Named items A/B/C are independent fixture
+identities with explicit literal source ranges. Values are raw candidates,
+not interpreted TK1 verdicts. Existing findings remain located/observable.
+
+| Planned test | Independent source/bindings and expected candidate result | Requirements |
+|---|---|---|
+| `pattern_bound_recorder_keeps_all_entries` | A=`R-1\TK1-3:a;`, B=`R-2\TK1-1:b;`, C=`R-1\TK1-1:c;`; bind x=1, n unbound: [A,C] in source order, not [C,A] | L3-VIEW-058, L3-VIEW-060 |
+| `pattern_unbound_occurrence_is_not_default_one` | Same A/B/C; both positions unbound: [A,B,C]; bind x=3: empty collection, never reuse recorder 1 | L3-VIEW-059, L3-VIEW-063 |
+| `pattern_literal_path_is_not_substring` | TK1 query does not match literal TK10, another path segment or TK1-like bytes inside a COMMENT/value; original items remain retained | L3-VIEW-058, L3-VIEW-061 |
+| `pattern_full_arity_never_matches_extra_index` | A complete key under the cited pattern matches; extra/missing index or path component is not guessed into that pattern; retain unusable raw source | L3-VIEW-058 |
+| `pattern_bound_index_uses_numeric_identity` | A=`R-01\TK1-003:a;`, B=`R-1\TK1-3:b;`; bind x=1,n=3 returns [A,B] with raw spellings and INT-038 normalization/collision findings | L3-VIEW-059, L3-VIEW-060 |
+| `pattern_name_projection_keeps_internal_omission` | Name `r-01\T
+K1-003` contains real CR/LF; approved projection matches x=1,n=3 and retains internal-omission/normalization findings and raw bytes | L3-VIEW-059, L3-VIEW-061 |
+| `pattern_long_index_never_uses_field_digit_limit` | Entry index is 40 ASCII digits; same literal canonical-string binding matches without integer conversion or INT-055 ten-digit cutoff; index range validity is not asserted | L3-VIEW-059 |
+| `pattern_absent_occurrence_is_not_invented` | Name without the required occurrence cannot match by supplying occurrence 1 implicitly | L3-VIEW-058, L3-VIEW-059 |
+| `pattern_exact_repeats_are_not_deduplicated` | Three repeated source occurrences of one complete key return all three IDs in order, with INT-039 duplicate and INT-038 collision findings where applicable | L3-VIEW-060 |
+| `pattern_fully_bound_agrees_with_exact_and_literal_oracle` | Fully bind x/n: pattern and exact lookup both return independently listed IDs/ranges in source order; neither path calculates the expected list | L3-VIEW-060, L3-VIEW-064 |
+| `pattern_empty_value_is_a_present_candidate` | Matching `R-1\TK1-3:;` returns one raw item with an empty value range; not zero matches or a valid/defaulted TK1 | L3-VIEW-061, L3-VIEW-062 |
+| `pattern_invalid_numeric_value_is_not_filtered` | Matching name with value `+2` or raw control bytes remains a raw candidate despite any INT-055 Invalid verdict; no value repair/query filtering | L3-VIEW-061 |
+| `pattern_high_value_byte_keeps_candidate` | Matching name with value byte FF retains candidate/raw byte and INT-037 Invalid field evidence; not a leading document marker | L3-VIEW-061 |
+| `pattern_damaged_name_is_not_fabricated` | Name includes a high byte and has no complete usable key: keep raw item/diagnostics but do not invent a match; collection alone makes no absence claim | L3-VIEW-061, L3-VIEW-062 |
+| `pattern_leading_bom_is_unavailable_not_empty` | Leading assembled EF BB BF blocks interpreted matching under INT-037; expose unavailable reason/finding and raw source, never successful zero matches | L3-VIEW-062 |
+| `pattern_unavailable_binding_is_not_zero_matches` | Query lacks usable reviewed pattern/binding metadata: observable unavailable reason, not a manufactured empty success | L3-VIEW-062 |
+| `pattern_suffix_is_not_item_but_can_block_presence_false` | Unterminated compatible suffix is not returned as an item under INT-035; independent INT-042 predicate keeps cannot-evaluate rather than inferring false from empty query | L3-VIEW-062 |
+| `pattern_cross_fragment_duplicates_share_document` | Same channel, sequence +1, same FRMT/RCCVER form ONE ADR-0025/INT-011 record; matches on each fragment both appear with packet/body provenance and duplicate evidence | L3-VIEW-060, L3-VIEW-061, L3-VIEW-063 |
+| `pattern_other_document_never_supplies_missing_match` | No match in supplied document; a later separate record/document contains the key: query does not borrow it or choose a governing record | L3-VIEW-063 |
+| `pattern_defaults_never_create_source_items` | A view cache contains an effective/defaulted value; raw pattern retrieval still returns only actual source occurrences and never mutates source bytes | L3-VIEW-061, L3-VIEW-063 |
+| `pattern_permutation_partition_oracle_preserves_multiplicity` | Bounded CI permutations/span partitions: independently permuted literal IDs/ranges determine result; retain every occurrence and source bytes, not production-matcher-derived expectations | L3-VIEW-064 |
+
+Encoding availability, raw candidates and effective/association/presence
+answers remain distinct. No query glob/regex syntax, private-code grammar,
+link inference, renderer/schema/error spelling or output policy is chosen.
+No fixture or executable test marker is claimed as implemented by this table.
 
 ## Real Chapter 10 recordings (local use only)
 

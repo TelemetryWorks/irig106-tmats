@@ -101,9 +101,9 @@ several positions, including synthetic arbitrary partitions inside CSDW and insi
 an independently written expected byte literal, not production extraction.
 Inject bounded partial writes and failures using the existing writer oracle.
 No extra packet reader or packet-checksum implementation is permitted.
-The CSDW-straddling fixture is synthetic: in the reviewer-specified 512 KiB
-block layout the CSDW is always in the first block. It is not a claim that
-production block boundaries split the CSDW.
+The CSDW-straddling fixture is synthetic. With core 0.2 default 512 KiB blocks,
+the CSDW is always in the first block. It is not a claim that production
+block boundaries split the CSDW.
 
 Filesystem integration uses isolated temporary files and supported
 relative/absolute/symbolic/hard-link aliases; record exact input bytes

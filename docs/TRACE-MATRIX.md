@@ -129,7 +129,7 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
-| L1-VIEW-001 | L2-VIEW-001 | _(none)_ | Draft |
+| L1-VIEW-001 | L2-VIEW-001, L2-VIEW-015 | _(none)_ | Draft |
 | L1-VIEW-002 | _(none)_ | _(none)_ | Draft |
 | L1-VIEW-003 | _(none)_ | _(none)_ | Draft |
 | L1-VIEW-004 | L2-VIEW-002, L2-VIEW-003, L2-VIEW-004, L2-VIEW-011 | _(none)_ | Draft |
@@ -157,6 +157,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-VIEW-012 | L3-VIEW-040, L3-VIEW-041, L3-VIEW-042 | _(TBD)_ | Draft |
 | L2-VIEW-013 | L3-VIEW-043, L3-VIEW-044, L3-VIEW-045, L3-VIEW-046, L3-VIEW-047, L3-VIEW-056 | _(TBD)_ | Draft |
 | L2-VIEW-014 | L3-VIEW-048, L3-VIEW-049, L3-VIEW-050, L3-VIEW-051, L3-VIEW-052, L3-VIEW-053, L3-VIEW-054, L3-VIEW-055, L3-VIEW-057 | _(TBD)_ | Draft |
+| L2-VIEW-015 | L3-VIEW-058, L3-VIEW-059, L3-VIEW-060, L3-VIEW-061, L3-VIEW-062, L3-VIEW-063, L3-VIEW-064 | _(TBD)_ | Draft |
 
 ### L1-VAL: Validation
 
@@ -346,7 +347,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | CH10 | 8 | 7 | 21 | 0 | 0 | 0 | 0 |
 | EDN | 6 | 2 | 7 | 0 | 0 | 0 | 0 |
 | REG | 8 | 7 | 16 | 0 | 0 | 0 | 0 |
-| VIEW | 9 | 14 | 57 | 0 | 0 | 0 | 0 |
+| VIEW | 9 | 15 | 64 | 0 | 0 | 0 | 0 |
 | VAL | 6 | 3 | 12 | 0 | 0 | 0 | 0 |
 | DER | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EXT | 4 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -357,13 +358,13 @@ This matrix is the single source of truth for live status; the requirement docum
 | ROB | 3 | 3 | 6 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **67** | **212** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **68** | **219** | **0** | **0** | **0** | **0** |
 
 The countable requirement set is every L2 and L3 requirement plus the 45 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 324 (0.0%).
+**Tested by at least one test marker**: 0 of 332 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 324 (0.9%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 332 (0.9%).
 
 ### Orphan check
 
