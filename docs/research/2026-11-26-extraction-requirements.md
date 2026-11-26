@@ -3,6 +3,19 @@
 Date: 2026-11-26. Family 2 batch 25; proposed requirements for independent
 review, not an implemented command or approval of unresolved record policy.
 
+## Review follow-up: owner decisions blocking implementation
+
+The coordinator is asking the owner about three choices. All three are
+BLOCKING implementation, not settled defaults:
+
+- `-o` overwrite policy for an existing destination.
+- Fail-closed identity checking for pipes/devices/stdout/network shares.
+- Extraction eligibility under integrity/encoding findings.
+
+The raw-byte fixtures establish preservation only; they do not approve
+extraction in the presence of those findings. Existing source, development,
+independent review and executable-test gates remain.
+
 ## Existing authority
 
 L1-CLI-004 requires extracting setup-record TMATS bytes to a file;
@@ -28,13 +41,20 @@ extraction-eligibility basis. Append its original text spans in fragment
 order. Remove the four-byte CSDW once per packet through the existing
 adapter, not once per physical block. Do not include headers, packet fill,
 checksums or another setup record. Do not add a newline, label, BOM, JSON
-wrapper or human-readable diagnostic to the extracted text bytes.
+wrapper or human-readable diagnostic to the extracted text bytes. Do not
+strip a BOM, including EF BB BF immediately after the first CSDW when the
+marker is split across fragment packets: INT-037 detects it at offset zero
+of the assembled text. Detection/eligibility is separate from byte replay.
 
 This is byte replay, not a rendered report format. Malformed names, unknown
 attributes, non-ASCII bytes, original layout and preserved padding cannot
 vanish merely because a view cannot interpret them. In particular, do not
 reconstruct output from typed fields, canonicalize values, stamp a checksum
-or invoke normalization as a side effect of extraction.
+or invoke normalization as a side effect of extraction. INT-036/037
+projections and INT-055 raw-byte numeric checks are VIEW-ONLY. A TAB/control
+byte omitted from a COMMENT interpreted value is still extracted; a numeric
+value made Invalid by a raw control retains every byte. No projection or
+verdict authorizes a source rewrite.
 
 Raw byte preservation and record eligibility are separate. Mechanical sink
 fixtures may contain malformed text without asserting that the CLI may
@@ -47,17 +67,23 @@ when the requested selection is absent or unresolved.
 ## Input-file safety and failure
 
 The CLI, rather than the library serializer, owns destination acquisition.
-It must enforce the existing prohibition on modifying input files before
-opening a destination in a way that could truncate or overwrite one.
+For destinations the tool opens itself, it must enforce the existing
+prohibition on modifying input files before destructive access. Shell
+redirection outside the tool is out of scope for this acquisition guarantee;
+the tool cannot reverse truncation a shell performed before invocation.
 Checking only whether two path strings differ is insufficient: relative
 and absolute names, links and platform aliases can name the same file.
 
-L3-CLI-034 requires input preservation, not a particular filesystem API.
-Implementation analysis must cover the supported platforms' file-identity,
-link and acquisition/race behavior. A preflight path lookup alone is not a
-proof of safe acquisition. If preservation cannot be established, do not
-proceed destructively. A known alias produces an observable refusal; public
-error names, output rendering and numeric process status remain undecided.
+L3-CLI-034 specifies the race-free order for tool-opened regular files:
+open without truncating, compare the opened handle's identity with the
+inputs, and only if distinct and permitted by the approved overwrite policy,
+truncate through that SAME handle. Never close and reopen the pathname
+between checking identity and truncating/writing. A preflight pathname check
+alone is insufficient. A known alias produces an observable refusal before
+any destructive access. Platform APIs and acquisition analysis remain work;
+no general pipe/device/stdout/network-share identity policy is approved by
+this regular-file ordering. That policy and `-o` overwrite are owner blockers.
+Public error names, rendering and numeric process status remain undecided.
 
 A sink/acquisition failure is not extraction success. Keep the source and
 its provenance unchanged, preserve the writer failure and return to the
@@ -71,17 +97,22 @@ existing destination is not selected by forbidding input aliases.
 
 L2-CLI-008/009 and L3-CLI-030–037 derive this boundary. TEST-DATA lists
 named planned cases with literal source/fragment oracles. Split DATA at
-several positions, including inside CSDW and inside text, then compare to
+several positions, including synthetic arbitrary partitions inside CSDW and inside text, then compare to
 an independently written expected byte literal, not production extraction.
 Inject bounded partial writes and failures using the existing writer oracle.
 No extra packet reader or packet-checksum implementation is permitted.
+The CSDW-straddling fixture is synthetic: in the reviewer-specified 512 KiB
+block layout the CSDW is always in the first block. It is not a claim that
+production block boundaries split the CSDW.
 
 Filesystem integration uses isolated temporary files and supported
 relative/absolute/symbolic/hard-link aliases; record exact input bytes
 before and after success and failure. Use platform-specific capability
 checks for link fixtures rather than treating an unsupported link operation
 as a successful safety test. Hosts and standalone tools share the same
-command computation and input-preservation obligation.
+command computation and input-preservation obligation for destinations they
+open themselves. Instrument non-truncating open, identity comparison and
+same-handle truncation; a pathname reopen must fail the ordering check.
 
 The docs PR runs only trace/whitespace/link/source-hash checks locally.
 Executable commands, platform safety and actual extraction coverage remain

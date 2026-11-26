@@ -1004,6 +1004,9 @@ No report/rendered format or new interpretation is selected here.
 These decompose L1-CLI-004/007 using the existing byte-faithful output and
 caller-owned I/O contracts. They take one explicitly selected, eligible
 record as input; they do not select an eligibility or ordinal policy.
+Implementation is BLOCKED on owner decisions for `-o` overwrite, fail-closed
+identity checking on pipes/devices/stdout/network shares, and extraction
+eligibility under integrity/encoding findings; no pending option is approved.
 See the [scope and remaining-work audit](research/2026-11-26-extraction-requirements.md).
 
 #### L2-CLI-008
@@ -1020,8 +1023,8 @@ See the [scope and remaining-work audit](research/2026-11-26-extraction-requirem
 
 **Parent**: L1-CLI-007
 
-**Statement**: CLI output acquisition and delivery SHALL preserve every input file unchanged, including when a requested destination identifies that same file through a different path; input-alias rejection SHALL occur before destructive destination access, and output failure SHALL remain distinguishable from successful delivery without modifying or repairing the input.
+**Statement**: For output destinations the tool opens itself, CLI output acquisition and delivery SHALL preserve every input file unchanged, including when a requested destination identifies that same file through a different path; input-alias rejection SHALL occur before destructive destination access, and output failure SHALL remain distinguishable from successful delivery without modifying or repairing the input.
 
-**Rationale**: L1-CLI-007 prohibits modifying input files and requires changed results in a new output. ADR-0010 assigns filesystem safety to CLI/caller glue, not library serialization. Path strings alone do not establish distinct files. This obligation does not select a general existing-destination overwrite policy, atomic replacement, durability guarantee or new rendering/exit mapping; those require separate reviewed definitions where applicable.
+**Rationale**: L1-CLI-007 prohibits modifying input files and requires changed results in a new output. ADR-0010 assigns filesystem safety to CLI/caller glue, not library serialization. Path strings alone do not establish distinct files. This obligation does not select a general existing-destination overwrite policy, atomic replacement, durability guarantee or new rendering/exit mapping; those require separate reviewed definitions where applicable. Shell redirection outside the tool is out of scope for its file-acquisition guarantee.
 
 **Verification Method**: Test (T)
