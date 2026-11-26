@@ -2,7 +2,7 @@
 
 > **Status: foundations through CHE/numeric syntax drafted (family 2, batches 1-19).**
 > INT-054 is approved (Joey, 2026-11-25; AI CONCUR at #51 ebf9ec4).
-> INT-055 has AI CONCERNS at that head; three owner clarifications remain.
+> INT-055 owner answers are recorded (Joey, 2026-11-25); AI recheck pending.
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
@@ -1578,11 +1578,12 @@ packet mapping or inconsistencies not already reviewed.
 **L3-VIEW-018** · Parent: L2-VIEW-006 · Verification: T
 *Each time-field read SHALL compose L3-VIEW-005–011 without weakening multiplicity, character validity or unavailable-prerequisite handling, preserving Explicit, Defaulted, Missing, Invalid and Ambiguous evidence and any separate cannot-evaluate reason; no default SHALL replace a present invalid, blank-unavailable or duplicate value.*
 
-INT-036 controls are projected without changing raw bytes; INT-037 high
-bytes are Invalid; INT-039 duplicates remain Ambiguous. A leading value
-blank remains unavailable under approved INT-041/RELEASE-0.1 until the blank
-rule is reviewed. This does not introduce a sixth semantic field state or
-settle that rule. An explicit local TFMT on non-TIMEIN retains its field
+General text projection remains INT-036 without byte edits; numeric
+values instead use INT-055 raw-byte checks: every control is Invalid.
+INT-037 high bytes remain Invalid; INT-039 duplicates remain Ambiguous.
+INT-055 uniformly retains leading-blank unavailability for decimal-integer
+values/numeric codes; trailing/embedded blanks are Invalid. Other letter-value
+blank handling remains separate, without a sixth semantic field state. An explicit local TFMT on non-TIMEIN retains its field
 result and applicability finding, not a false absence or confirmed TIMEIN.
 
 **L3-VIEW-019** · Parent: L2-VIEW-006 · Verification: T
@@ -1768,15 +1769,17 @@ filter policy and no unreviewed numeric field conversion.
 ## Owner-signed CHE and numeric syntax (family 2, batch 19)
 
 INT-054/055 carry owner sign-off, Joey, 2026-11-25, Option A. INT-054 has
-AI CONCUR at #51 ebf9ec4; INT-055 has CONCERNS and three owner choices open. Implementation/development gates remain in force.
+AI CONCUR at #51 ebf9ec4; INT-055 owner answers are recorded; AI recheck pending. Implementation/development gates remain in force.
 
 **L3-VIEW-037** · Parent: L2-VIEW-011 · Verification: T
-*After approved character projection/guards, a numeric field-value or numeric-code read SHALL require 1–10 ASCII digits before zero-stripping, rejecting empty, signed, blank-containing, non-digit or longer values as Invalid without clipping, wrapping or repair, except where INT-041 already requires a leading-blank unavailable result.*
+*A decimal-integer field-value or numeric-code read SHALL check the raw value bytes for 1–10 ASCII digits before zero-stripping; a leading blank SHALL be unavailable uniformly under INT-041, trailing/embedded blanks SHALL be Invalid, and any raw control, non-digit, sign, empty or longer value SHALL be Invalid without clipping, wrapping, repair or INT-036 omission into usable numeric data.*
 
 INT-055 is owner policy, not a ten-digit limit printed in Chapter 9.
-INT-036 omissions retain their findings; INT-037 high bytes remain Invalid.
-An eleven-digit all-zero spelling fails even though its canonical value is 0.
-Letter enum codes and G\SHA structured syntax retain their separate rules.
+Keep independent character findings and proved Invalid failures visible;
+INT-037 high bytes remain Invalid. Eleven zeros fail before canonicalisation.
+Floating-point/hexadecimal fields are excluded for later reviewed rules,
+including their numeric-only spellings; see the owner-answer inventory.
+Letter enum codes and G\SHA structured syntax keep separate rules.
 
 **L3-VIEW-038** · Parent: L2-VIEW-011 · Verification: T
 *A syntactically accepted numeric spelling SHALL compare by its canonical digit string with leading zeros stripped (all zero becomes 0), emit a located warning for each noncanonical spelling, retain raw bytes and warnings through later range/membership failures, and check the applicable cited range or enumeration before yielding Explicit.*

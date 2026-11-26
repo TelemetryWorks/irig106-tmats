@@ -140,15 +140,17 @@ No CI or manifest change is made in this documentation family.
 
 INT-054/055 (Joey, Option A, 2026-11-25) retain disabled TIMEIN entries with
 located CHE context and specify numeric field-value/enum-code grammar:
-nonempty ASCII digits, at most ten before canonicalisation, leading zeros
-accepted with warning, range checked afterward. Existing INT-041 leading-blank
-unavailable cases keep precedence; other disallowed syntax/range is Invalid,
+raw nonempty ASCII digits for decimal-integer fields/numeric codes only,
+at most ten before canonicalisation, leading zeros accepted with warning,
+range checked afterward. Every leading blank is unavailable under INT-041;
+trailing/embedded blanks and any raw control byte are Invalid. Float/hex
+fields are excluded for their own later reviewed rules; other failed syntax/range is Invalid,
 never repaired/clipped. Raw binding alone asserts no usable numeric state.
-INT-054 has AI CONCUR at #51 ebf9ec4; INT-055 has CONCERNS and requires
-owner clarification/recheck under ADR-0033. These decisions remove
+INT-054 has AI CONCUR at #51 ebf9ec4; INT-055 owner answers are
+recorded; amended wording awaits recheck under ADR-0033. These decisions remove
 the owner-choice blockers, not development/source/test gates. See the
-[record](research/2026-11-25-che-numeric-syntax-owner-decisions.md), including
-review of the broad numeric scope against other representation families.
+[original record](research/2026-11-25-che-numeric-syntax-owner-decisions.md)
+and [owner answers with floating-point/hex exclusions](research/2026-11-25-int055-owner-answers.md).
 
 ## Effective values and default evidence
 

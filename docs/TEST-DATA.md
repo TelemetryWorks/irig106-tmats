@@ -30,17 +30,18 @@ locally; CI runs on synthesized examples and fuzzing only.
 
 INT-054/055 record Joey's Option A decisions of 2026-11-25. The former
 pending-OWNER blockers are removed and expected results below are specified.
-INT-054 has AI CONCUR at #51 ebf9ec4; INT-055 has CONCERNS requiring
-three owner clarifications before independent recheck; source freshness,
+INT-054 has AI CONCUR at #51 ebf9ec4; INT-055 owner answers are recorded, with independent recheck pending; source freshness,
 written development analysis and executable verification remain required.
 These are PLANNED tests, not enabled runtime coverage or approval to implement.
 
-Numeric fields, including R\N condition operands and numeric-looking
-TTF/SHTF/TFMT codes, use nonempty ASCII digits, maximum ten before stripping
+Decimal-integer fields, including R\N condition operands and numeric-looking
+TTF/SHTF/TFMT codes, use RAW nonempty ASCII digits, maximum ten before stripping
 zeros. Leading zeros give a located warning and canonical comparison; 04=4,
 02 matches code 2. Invalid syntax/range never repairs/clips/wraps input.
-INT-041's existing leading-blank unavailable cases retain precedence.
-INT-036/037 projection findings, missing/duplicate states, field-specific
+A leading blank is uniformly unavailable under INT-041; trailing/embedded
+blanks are Invalid. Any raw control makes a number Invalid; INT-036 never
+repairs it. Float/hex fields are out of scope (inventory in the owner-answer
+record), even with numeric-only spelling. Character findings, missing/duplicate states, field-specific
 ranges and independently supplied unit premises retain their contracts.
 Raw binding does not assert a usable numeric value. See the new focused
 fixture table below for lexical/range/condition expectations.
@@ -1073,13 +1074,14 @@ Every case preserves raw bytes, source locations and warning evidence.
 | `numeric_zero_padding_keeps_warning_and_raw` | NSB 04 and 00: Explicit 4/0 with located warnings and unchanged raw strings; 014: Invalid range with warning retained; canonical 4 and 0 have no zero-padding warning | L3-VIEW-038 |
 | `numeric_ranges_follow_canonicalisation` | NSB 0/13 valid, 14 invalid; TK1 1/65535 valid, 0/65536 invalid; R\N 1/65536 valid, 0/65537 invalid. Repeat with zero-padding within ten digits: same mathematical outcome, warning retained, no wrap | L3-VIEW-038 |
 | `numeric_codes_accept_02_without_changing_letters` | Supported TIMEIN: TTF 02 and TFMT 02 match code 2 Explicit with warning; SHTF 00/01/02 match 0/1/2 with warning. Letter TFMT B stays Explicit B with raw spelling, no numeric-code warning; no default replacement | L3-VIEW-037, L3-VIEW-038 |
-| `numeric_leading_blank_keeps_int041_exception` | TFMT ` 2`, existing ` A`, and the existing NSB ` 4` case unavailable per INT-041/L3-VIEW-024. Numeric TFMT `2 ` or `0 2` Invalid. Nothing trimmed or defaulted; retain independently proved character failures | L3-VIEW-037 |
+| `numeric_leading_blank_keeps_int041_exception` | Leading blank in NSB ` 4`, TK1 ` 42`, R\N ` 1`, SHTF ` 1`, TTF ` 2`, TFMT ` 2`: all unavailable under uniform INT-041; existing letter TFMT ` A` unchanged. Trailing/embedded blanks in each numeric field/code are Invalid. Never trim/default; retain independent proved failures | L3-VIEW-037, L3-VIEW-039 |
 | `numeric_rn_condition_never_guesses` | R\N=01: Explicit 1/warning, condition >0 true for TK1/CDT/SHTF/DSI/CHE; 0/65537/+1 invalid => cannot-evaluate, not false; missing or duplicate 1/1 => cannot-evaluate with Missing/Ambiguous evidence; unavailable rule likewise. No borrowed count; DSI absence finding only when Allowed established | L3-VIEW-039 |
-| `numeric_projection_keeps_character_findings` | NSB `0\r\n4` (actual CR/LF bytes) projects to 04 => Explicit 4 with zero-padding warning and approved omission findings as applicable; NUL retains its information finding; a high byte is Invalid under INT-037, never guessed as a digit | L3-VIEW-037, L3-VIEW-038 |
+| `numeric_projection_keeps_character_findings` | NSB `0\r\n4` (actual CR/LF bytes) is Invalid on RAW bytes, never Explicit 4; repeat TAB, NUL, lone CR/LF and each control at start/middle/end of a numeric value. Retain located character/NUL findings, raw bytes and no default. A high byte remains INT-037 Invalid. INT-036 projection cannot make any arm usable | L3-VIEW-037, L3-VIEW-038 |
+| `numeric_exclusions_dispatch_by_definition` | Float R-x\ITH-n=-12.5, R-x\TC6=12.5 and hex R-x\MRC\SPM=0A3F, plus digits-only variants: no INT-055 validity verdict or digit-limit/zero-padding warning solely from that rule. Dispatch to the field's own reviewed representation rule; unavailable if it is unreviewed, not a fabricated Explicit/Invalid. Retain existing G\SHA rules separately | L3-VIEW-037, L3-VIEW-038 |
 
 These are named PLANNED tests. Future property tests should independently
 mutate digit runs, signs, blanks, lengths, range boundaries and control/high
-bytes, assert canonical equivalence only for admitted strings, and check
+bytes, assert canonical equivalence only for admitted raw strings, and check
 warnings, raw identity and unusable-condition propagation. No full grammar
 coverage or implementation readiness is claimed by this table.
 

@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-25-int055-owner-answers.md](2026-11-25-int055-owner-answers.md) | Verbatim owner A/A/A answers: uniform leading-blank guard, raw numeric checks, decimal-only scope; complete float/hex exclusion inventory; AI recheck pending |
 | [2026-11-25-che-numeric-independent-review.md](2026-11-25-che-numeric-independent-review.md) | #51 exact-head review: INT-054 CONCUR, INT-055 three unresolved owner choices, u64/string bound clarification |
 | [2026-11-25-che-numeric-syntax-owner-decisions.md](2026-11-25-che-numeric-syntax-owner-decisions.md) | Owner Option A CHE/numeric decisions as INT-054/055, expected fixtures and source breadth; independent AI review pending |
 | [2026-11-25-dsi-context-requirements.md](2026-11-25-dsi-context-requirements.md) | Family 2 batch 18: scoped DSI context, NSB required-presence assertion and explicit pending-owner numeric-field fixture blockers; CHE unchanged |

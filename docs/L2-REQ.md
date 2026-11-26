@@ -2,7 +2,7 @@
 
 > **Status: foundations through CHE/numeric syntax drafted (family 2, batches 1-19).**
 > INT-054 is approved (Joey, 2026-11-25; AI CONCUR at #51 ebf9ec4).
-> INT-055 has AI CONCERNS at that head; three owner clarifications remain.
+> INT-055 owner answers are recorded (Joey, 2026-11-25); AI recheck pending.
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
@@ -831,7 +831,7 @@ not by borrowing index syntax. Independent AI review is still pending.
 ## Owner-signed CHE and numeric syntax (family 2, batch 19)
 
 INT-054/055: Joey, Option A, 2026-11-25. INT-054 has AI CONCUR at #51
-ebf9ec4; INT-055 has CONCERNS with three owner choices unresolved.
+ebf9ec4; INT-055 owner answers are recorded; AI recheck pending.
 These specify local effective reads/enumeration, not the full later validator.
 Source freshness, development analysis and executable verification still gate
 implementation; no new requirement is verified by this documentation.
@@ -840,9 +840,9 @@ implementation; no new requirement is verified by this documentation.
 
 **Parent**: L1-VIEW-004
 
-**Statement**: Numeric effective reads, including condition operands and numeric-looking enumeration codes, SHALL apply INT-055's bounded ASCII-digit grammar and canonical comparison, preserve raw values/locations and warning findings, check the field's cited range after canonicalisation, and retain existing multiplicity, character and INT-041 leading-blank guards without repairing source or guessing unusable operands.
+**Statement**: Decimal-integer effective reads, including condition operands and numeric-looking enumeration codes, SHALL apply INT-055's bounded raw ASCII-digit grammar and canonical comparison, preserve raw values/locations and warning findings, check the field's cited range after canonicalisation, and retain existing multiplicity/character guards and uniform INT-041 leading-blank unavailability without repairing source or guessing unusable operands.
 
-**Rationale**: Owner Option A supplies lexical policy absent from the cited ranges, including NSB/TK1/R\N and TTF/SHTF/TFMT codes (106-24R1 Table 9-4 pp. 9-32–33, 9-48, 9-51, 9-71–72). It extends canonical-string comparison to values expressly; it does not change the code-name-index grammar or G\SHA's structured rule. See INT-055 for the all-numeric scope and analysis of conflicting representation families.
+**Rationale**: Owner Option A supplies lexical policy absent from the cited ranges, including NSB/TK1/R\N and TTF/SHTF/TFMT codes (106-24R1 Table 9-4 pp. 9-32–33, 9-48, 9-51, 9-71–72). It extends canonical-string comparison to values expressly; it does not change the code-name-index grammar or G\SHA's structured rule. INT-055 excludes floating-point/hex fields, listed in the owner-answer inventory, for separate reviewed rules.
 
 **Verification Method**: Test (T)
 
