@@ -2047,13 +2047,13 @@ family-2 slice. No absent policy is chosen by “canonical” as an output label
 ## Core-backed setup slicing (family 2, batch 22; review correction)
 
 ADR-0036 re-points the former reader requirements to core. These IDs now
-specify integration with PacketFacts/borrowed DATA spans, not a second
+specify integration with header-only PacketFacts, PacketInfo sideband and borrowed DATA spans, not a second
 reader/checksum implementation. Source facts/examples are retained in the
 [original note](research/2026-11-26-packet-slicing-requirements.md) and
 [correction](research/2026-11-26-core-reader-span-rework.md).
 
 **L3-CLI-004** · Parent: L2-CLI-003 · Verification: T
-*The CLI SHALL use irig106-core for packet finding and primary-header trust/checksum results, consuming its PacketFacts/DATA output without a local sync scanner, header-checksum implementation, packet traversal fallback or duplicate reader.*
+*The CLI SHALL use irig106-core for packet finding and primary-header trust/checksum results, consuming header-only PacketFacts (irig106-types), borrowed DATA spans and core-supplied integrity/trust evidence (PacketInfo sideband: secondary_integrity per RDG-008, data-checksum state, admission evidence, ranges) carried ALONGSIDE PacketFacts, without a local sync scanner, header-checksum implementation, packet traversal fallback or duplicate reader.*
 
 The owner one-reader architecture supersedes the temporary ADR-0019 reader.
 The CLI owns acquisition/integration; the TMATS library performs no I/O.
@@ -2097,14 +2097,16 @@ G\SHA/flex over TMATS is separate and unchanged; it does not supply missing
 packet integrity evidence. No optional local checksum fallback is authorised.
 
 **L3-CLI-010** · Parent: L2-CLI-004 · Verification: T
-*Primary/secondary/data integrity and trust evidence in PacketFacts SHALL retain its original values, readings and qualifications through CSDW/text slicing and assembly; logical byte access SHALL NOT promote NotChecked or uncertain/failed evidence to successful verification or infer time closure/governing authority from it.*
+*Core-supplied integrity/trust evidence (PacketInfo sideband: secondary_integrity per RDG-008, data-checksum state, admission evidence, ranges), carried ALONGSIDE header-only PacketFacts, SHALL retain its original values, readings and qualifications through CSDW/text slicing and assembly; logical byte access SHALL NOT promote NotChecked or uncertain/failed evidence to successful verification or infer time closure/governing authority from it.*
 
-Use core's evidence, not a tmats verdict assembled from its subfields. This
+PacketFacts (irig106-types) contains HEADER FACTS ONLY, no trust/integrity
+fields; do not add fields or silently embed sideband state there. Use core's
+PacketInfo evidence, not a tmats verdict assembled from header subfields. This
 selects no failed-payload adoption, report severity/format or RDG-008 rule.
 Core DATA excludes filler/checksum; TMATS neither rechecks nor adds them.
 
 **L3-CLI-011** · Parent: L2-CLI-004 · Verification: T
-*The adapter and assembler SHALL retain the ordered source-span references and PacketFacts-derived packet/CSDW/provenance evidence for every logical text range, splitting mappings at block/span as well as packet-fragment boundaries and preserving exact origin/lifetimes without a contiguous payload intermediate.*
+*The adapter and assembler SHALL retain the ordered source-span references and PacketFacts header metadata, DATA-derived CSDW and PacketInfo sideband/provenance evidence for every logical text range, splitting mappings at block/span as well as packet-fragment boundaries and preserving exact origin/lifetimes without a contiguous payload intermediate.*
 
 An input owner/borrow must keep core blocks alive while spans are used; no
 block recycling or dangling/rebound slice is permitted. Logical adjacency

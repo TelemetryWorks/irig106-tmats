@@ -737,7 +737,7 @@ requirements are added. The requirement entries below and the generated
 
 ### L1-CLI-008
 
-**Statement**: The tmats CLI SHALL depend on irig106-core as the sole Chapter 10 packet reader for packet finding, trust and header/secondary-checksum evidence; SHALL consume core PacketFacts and borrowed, possibly non-contiguous DATA spans for only setup CSDW/fragment slicing; and SHALL pass core's integrity evidence through unchanged, including NotChecked and RDG-008 byte/word readings, without local packet/data-checksum verification or required payload coalescing.
+**Statement**: The tmats CLI SHALL depend on irig106-core as the sole Chapter 10 packet reader for packet finding, trust and header/secondary-checksum evidence; SHALL consume header-only PacketFacts (irig106-types), core PacketInfo integrity/trust sideband carried alongside it, and borrowed, possibly non-contiguous DATA spans for only setup CSDW/fragment slicing; and SHALL pass core's integrity evidence through unchanged, including NotChecked and RDG-008 byte/word readings, without local packet/data-checksum verification or required payload coalescing.
 
 **Rationale**: The owner's 2026-11-22 one-reader architecture supersedes ADR-0019's temporary CLI reader now that core is available; ADR-0036 records this and the coordinator's no-local-data-checksum/direct-span decisions. Chapter 11 sections 11.2.1.1–4 and 11.2.7.2 (106-24R1) still define the packet and CSDW facts, but their reader/checksum implementation belongs to core. Data-checksum verification is a core feature request scheduled by the owner. Delivered in 0.1; no compatible dependency version/API is invented by this requirement.
 

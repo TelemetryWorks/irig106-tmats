@@ -95,7 +95,8 @@ architecture must honour:
   consecutive packets; the library's assembler joins fragments (with their
   provenance) into complete records, and only complete records are parsed or
   checksummed (ADR-0025). ADR-0036 supersedes the temporary CLI reader:
-  core owns packet finding/trust/checksums; tmats consumes PacketFacts and
+  core owns packet finding/trust/checksums; tmats consumes header-only PacketFacts
+  (irig106-types), core PacketInfo trust/integrity sideband alongside it, and
   borrowed non-contiguous DATA spans, with no required coalescing or extra
   payload copy. Data-checksum evidence is passed through as-is (NotChecked
   until core provides it); no local implementation is permitted.

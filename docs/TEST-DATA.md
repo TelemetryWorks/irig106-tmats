@@ -1226,7 +1226,8 @@ marks the full normalization L1, writer family or release complete.
 ## Planned core-backed slicing batch 22 (corrected boundary)
 
 PLANNED cases for L2-CLI-003/004 and L3-CLI-004–013, re-pointed under
-ADR-0036. Use core PacketFacts and borrowed DATA spans; no local packet
+ADR-0036. Use header-only PacketFacts (irig106-types), borrowed DATA spans and core
+PacketInfo integrity/trust sideband ALONGSIDE PacketFacts; no local packet
 finder, header/profile validator or checksum algorithm is under test.
 Chapter 11 facts/reference values remain in the [original source note](research/2026-11-26-packet-slicing-requirements.md);
 the [decision/span note](research/2026-11-26-core-reader-span-rework.md)
@@ -1236,6 +1237,7 @@ below are internal evidence, not report formats or new core API field names.
 | Named planned test | Independent stimulus / expected result | Requirements |
 | --- | --- | --- |
 | `core_is_only_packet_finder_and_reader` | Instrumented core adapter supplies facts/DATA: no local sync scan, header parser, checksum call or fallback reader; missing compatible core capability remains a dependency gap | L3-CLI-004, L3-CLI-012 |
+| `packetfacts_header_only_packetinfo_alongside` | Same header-only PacketFacts with two distinct core PacketInfo sidebands (secondary_integrity/RDG-008 readings, data-checksum state, admission evidence and ranges): each sideband passes unchanged alongside the same header facts, never inserted as new PacketFacts fields or inferred from headers; span/CSDW logic sees the same DATA | L3-CLI-004, L3-CLI-005, L3-CLI-010 |
 | `core_primary_trust_passes_through_unchanged` | Supplied core primary evidence/qualifications survive adapter and assembler exactly; no stronger verified verdict from TMATS or duplicate check of source header bytes | L3-CLI-004, L3-CLI-010 |
 | `core_rdg008_both_readings_are_preserved` | Core evidence includes RDG-008 byte/word readings 0x0024/0x1410 and its own outcome/qualifications: preserve both and outcome unchanged, no preferred reading or local checksum calculation | L3-CLI-005, L3-CLI-010 |
 | `core_data_notchecked_has_no_local_fallback` | Core data evidence NotChecked with checksum-related metadata present or absent: pass NotChecked unchanged; never calculate packet data checksum or synthesize verified/failed/absent from flags | L3-CLI-009, L3-CLI-010 |

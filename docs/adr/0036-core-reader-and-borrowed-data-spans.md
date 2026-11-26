@@ -26,6 +26,13 @@ Coordinator decisions, 2026-11-26 (owner may override):
   Core's evidence, including RDG-008 byte/word secondary-checksum readings,
   passes through unchanged; tmats chooses neither algorithm nor verdict.
 
+PacketFacts is the HEADER-FACTS type from irig106-types; it has no trust or
+integrity fields. Core's PacketInfo sideband carries secondary_integrity
+(RDG-008), data-checksum state, admission evidence and ranges ALONGSIDE
+PacketFacts. Preserve that sideband unchanged; do not add fields to
+PacketFacts. tmats 0.1 release requires types 0.2 and core 0.2 published
+first; the already-published core 0.1.0 is not that prerequisite.
+
 A four-byte CSDW and text may cross block boundaries. Per-channel assembly
 retains ordered borrowed spans and provenance, not a mandatory joined byte
 allocation. Input ownership/lifetimes keep blocks alive until borrows end;

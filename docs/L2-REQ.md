@@ -923,7 +923,8 @@ normalization algorithm, edit API or Rust output signature is selected here.
 ## Core-backed setup slicing (family 2, batch 22; review correction)
 
 ADR-0036 supersedes the temporary tmats reader in ADR-0019/0025. The CLI
-uses core PacketFacts plus borrowed DATA spans; only TMATS CSDW/fragment
+uses header-only PacketFacts (irig106-types), borrowed DATA spans and
+core PacketInfo integrity/trust sideband carried alongside them; only TMATS CSDW/fragment
 slicing and assembly remain here. See the [decision record](research/2026-11-26-core-reader-span-rework.md).
 Existing IDs are re-pointed, not reused for a new local reader. Chapter 11
 facts remain reference evidence. No report/rendered format is selected.
@@ -932,9 +933,9 @@ facts remain reference evidence. No report/rendered format is selected.
 
 **Parent**: L1-CLI-008
 
-**Statement**: The tmats CLI SHALL obtain packet finding, validated DATA extents, packet trust and primary/secondary-header checksum evidence from irig106-core PacketFacts and borrowed spans, without implementing another packet reader, header/profile validator or checksum algorithm, and SHALL preserve core's evidence rather than synthesize a stronger verdict or choose among RDG-008 readings.
+**Statement**: The tmats CLI SHALL obtain packet finding, validated DATA extents, packet trust and primary/secondary-header checksum evidence from core-supplied integrity/trust evidence (PacketInfo sideband: secondary_integrity per RDG-008, data-checksum state, admission evidence, ranges), carried ALONGSIDE header-only PacketFacts from irig106-types and borrowed DATA spans, without implementing another packet reader, header/profile validator or checksum algorithm, and SHALL preserve core's evidence rather than synthesize a stronger verdict or choose among RDG-008 readings.
 
-**Rationale**: Owner architecture 2026-11-22 and coordinator rework decisions, recorded in ADR-0036. Core is available; ADR-0019's temporary-reader condition no longer applies. Exact compatible dependency/API binding remains implementation work. The TMATS library remains I/O-free; the CLI adapter consumes core facts and passes spans/provenance/evidence to it without inventing a duplicate PacketFacts definition.
+**Rationale**: Owner architecture 2026-11-22 and coordinator rework decisions, recorded in ADR-0036. Core is available; ADR-0019's temporary-reader condition no longer applies. Exact compatible dependency/API binding remains implementation work. The TMATS library remains I/O-free; the CLI adapter consumes core facts and passes spans/provenance/evidence to it without inventing a duplicate PacketFacts definition or adding integrity/trust fields to it.
 
 **Verification Method**: Test (T)
 

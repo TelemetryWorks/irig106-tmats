@@ -129,7 +129,8 @@ assembler joins fragments into complete setup records (section 6). CLI and libra
 workspace released in lockstep; the sibling crates, including the complete
 `irig106-cli`, depend on the library; shared types come from
 `irig106-types`; ADR-0036 requires the single packet reader in
-`irig106-core`. Its PacketFacts/evidence and borrowed DATA spans pass into
+`irig106-core`. Header-only PacketFacts (irig106-types), core PacketInfo sideband evidence
+and borrowed DATA spans pass into
 TMATS logical CSDW/text slicing and assembly without coalescing.
 
 ![Legacy pipeline compared with irig106-tmats](diagrams/legacy-vs-new.svg)
@@ -398,7 +399,7 @@ and `G\SHA` covers the assembled body. The acceptance test
 
 | Stage | Owner | Input → output |
 |-------|-------|----------------|
-| Packet finding/trust and DATA spans | `irig106-core`, consumed by the CLI | acquired source → PacketFacts + borrowed DATA spans + unchanged evidence |
+| Packet finding/trust and DATA spans | `irig106-core`, consumed by the CLI | acquired source → header-only PacketFacts + borrowed DATA spans + unchanged PacketInfo sideband |
 | Setup CSDW/text slicing | TMATS adapter/assembler | logical DATA prefix/text spans, no coalescing |
 | Assembly | **the library** (no I/O) | borrowed DATA/text spans + provenance → logical candidate records, no extra payload copy |
 | Reading | the library (scanner, section 2 point 1) | complete record → Document |
@@ -410,8 +411,8 @@ with ADR-0010 and reusable unchanged by `irig106-ch10-reader`,
 ### 6.3 Core-owned DATA boundary (ADR-0036)
 
 Core is the single reader and owns packet finding, bounds/trust and header/
-secondary checksum evidence. The CLI consumes PacketFacts plus borrowed
-DATA spans; tmats does not reconstruct packet/header/trailer extents or
+secondary checksum evidence. The CLI consumes header-only PacketFacts plus borrowed DATA spans and
+PacketInfo integrity/trust sideband ALONGSIDE those facts; tmats does not reconstruct packet/header/trailer extents or
 choose RDG-008 byte/word secondary-checksum readings. All core evidence,
 including data NotChecked, passes through unchanged. Packet data-checksum
 verification is a core feature request scheduled by the owner, with no local
@@ -426,7 +427,7 @@ required. Input owners keep borrowed blocks alive through use.
 ### 6.4 Assembly contract (the library)
 
 - **In:** core DATA in file order as borrowed non-contiguous spans, with
-  PacketFacts-derived evidence and provenance — file
+  header-only PacketFacts, DATA-derived CSDW and PacketInfo sideband/provenance — file
   offset, channel ID, sequence number, relative time counter, the CSDW fields
   (FRMT, SRCC, RCCVER), and the data-type version.
 - **Out:** candidate records with logical TMATS concatenation over borrowed

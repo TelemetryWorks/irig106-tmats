@@ -177,7 +177,8 @@ what crosses each boundary; section 2.3 defines each.
 ### 2.1 Reading a recording
 
 1. **Core's ONE reader finds packets** (A). The CLI consumes core
-   PacketFacts and borrowed DATA spans, with trust/integrity evidence passed
+   header-only PacketFacts and borrowed DATA spans, with core PacketInfo
+   trust/integrity sideband carried alongside and passed
    through unchanged, including RDG-008 readings and NotChecked. TMATS
    logically separates CSDW/text without a local packet/checksum algorithm
    or required payload coalescing (ADR-0036).
@@ -610,7 +611,7 @@ several tools, it moves into a crate of its own (ADR-0030, option C).
 |---|---|
 | **Gives** | setup-record fragments with provenance, and packet summaries, as `irig106-types` data |
 | **Gets from the library** | nothing: it does not depend on `irig106-tmats` (ADR-0030) |
-| **Must** | use core PacketFacts/trust and borrowed DATA spans; pass integrity evidence unchanged (including RDG-008 readings and data NotChecked); let TMATS consume the first four logical DATA bytes as CSDW and retain text spans without coalescing (ADR-0036) |
+| **Must** | use header-only PacketFacts (irig106-types), borrowed DATA and core PacketInfo trust/integrity sideband alongside it; pass integrity evidence unchanged (including RDG-008 readings and data NotChecked); let TMATS consume the first four logical DATA bytes as CSDW and retain text spans without coalescing (ADR-0036) |
 | **Must not** | interpret TMATS |
 | **When** | core is available; use the single reader now, with exact compatible API/dependency binding verified before implementation (ADR-0036) |
 

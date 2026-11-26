@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-26-packetfacts-sideband-correction.md](2026-11-26-packetfacts-sideband-correction.md) | #54 factual correction: header-only types PacketFacts with core PacketInfo integrity/trust sideband alongside; types/core 0.2 publication prerequisites |
 | [2026-11-26-core-reader-span-rework.md](2026-11-26-core-reader-span-rework.md) | #54 correction: ADR-0036 one core reader, unchanged evidence/NotChecked, RDG-008 passthrough, zero-extra-copy borrowed DATA/256-span fixture; core data-checksum request |
 | [2026-11-26-packet-slicing-requirements.md](2026-11-26-packet-slicing-requirements.md) | Original #54 proposal/source facts and checksum values; reader/checksum ownership superseded by the core-reader/span rework; retained as history |
 | [2026-11-26-lossless-output-requirements.md](2026-11-26-lossless-output-requirements.md) | Family 2 batch 21: byte-faithful replay/supplied-sink failure and explicit normalization gate, plus #52 merged-head concurrence; full normalization remains separate |
