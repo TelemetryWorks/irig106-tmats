@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through content-routing boundaries drafted (family 2, batches 1-23).**
+> **Status: foundations through CLI-mounting boundaries drafted (family 2, batches 1-24).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -2191,3 +2191,77 @@ Use bounded synthetic buffers and injected consumer outcomes in CI. Compare
 the selected route with literal source-derived cases, not the production
 selector called again to calculate expectations. Core integration fixtures
 remain separate from this selector's tests.
+
+
+## CLI mounting and orchestration boundary (family 2, batch 24)
+
+These refine the existing runner/individual-API contracts rather than
+select command arguments, report fields or numeric process statuses.
+See the [authority and fixture note](research/2026-11-26-cli-mounting-requirements.md).
+Packet ownership/evidence requirements in L3-CLI-004–013 remain unchanged.
+
+**L3-CLI-022** · Parent: L2-CLI-001 · Verification: T
+*The host-callable runner SHALL use the supplied invocation arguments and writable streams rather than implicitly replacing them with process arguments or process stdout/stderr; successful and unsuccessful invocations SHALL return to the host without terminating its process.*
+
+L3-CLI-001 already establishes `run(args, stdout, stderr) -> ExitClass`.
+Mounting preserves that contract; the host owns its top-level command
+namespace and process status. This selects no argv representation or prefix
+stripping convention and no rendered output or exit-code mapping.
+
+**L3-CLI-023** · Parent: L2-CLI-001 · Verification: T
+*The standalone entry point and mounted whole-runner path SHALL share the public runner's command execution and rendering behavior, without independent copies of command logic; process-status translation SHALL remain at the standalone binary or mounting host's outer process boundary.*
+
+ADR-0034 W3, L3-CLI-002. A host must be able to keep executing after the
+runner returns failure. Future comparison checks use the same supplied
+command inputs, not assumptions about unreviewed CLI syntax or output bytes.
+
+**L3-CLI-024** · Parent: L2-CLI-002 · Verification: T
+*Individual command APIs SHALL be callable without entering `main`, invoking the whole runner or duplicating command computation in the host; their returned report data SHALL remain separate from rendering to supplied writers.*
+
+L3-CLI-003 already requires reports rather than direct printing. Verify a
+real implemented command through both mounting paths once its own contract
+is reviewed; a help-only scaffold is not evidence for all commands.
+Command-specific report types and public signatures remain future work.
+
+**L3-CLI-025** · Parent: L2-CLI-002 · Verification: T
+*Calling a renderer through the reusable API SHALL write through the caller-supplied writer rather than acquire process output streams, and SHALL preserve output failure under the reviewed writer contract without terminating the host or claiming successful delivery.*
+
+ADR-0010, L3-CLI-003 and L2-WRT-003 govern the boundary. This does not pick
+text/JSON formats, finding order, assumption labels, suppression presentation
+or numeric exit mappings. A failing supplied writer exercises delivery only;
+report/output policy still requires the owner's review before derivation.
+
+**L3-CLI-026** · Parent: L2-CLI-007 · Verification: T
+*For a mounting host's packet pipeline, the host SHALL perform data-type dispatch from core-supplied packet facts and route setup fragments to the TMATS adapter; that adapter's Format-1 check SHALL be only an input-kind guard, not a reader, dispatcher, packet-type inference or raw-header reparse.*
+
+ADR-0030/0036 and the post-#55 clarification. Content selection for an
+entire source (L3-CLI-014–021) is a separate CLI boundary, not something
+repeated for each already identified packet. No type is guessed from DATA.
+
+**L3-CLI-027** · Parent: L2-CLI-007 · Verification: T
+*If a non-Format-1 packet is incorrectly supplied to the fragment adapter, the guard SHALL prevent Format-1 CSDW/text slicing and appending from that call, without guessing another packet type, reading another packet or promoting any core trust/integrity state.*
+
+L3-CLI-008 already prevents other types from acquiring Format-1 semantics.
+Format 1 names the packet data type, not a requirement that the CSDW FRMT
+bit be zero. Passing that guard does not establish supported text encoding;
+the separate FRMT/ASCII/XML rules remain in force.
+The guard does not define public error spelling or decide recovery. Header-
+only PacketFacts remains separate from PacketInfo trust/integrity evidence;
+matching a type alone does not establish admission, completeness or governance.
+
+**L3-CLI-028** · Parent: L2-CLI-007 · Verification: T
+*Host orchestration SHALL retain and supply the non-fragment packet observations and caller provenance needed by INT-011/045 separately from Format-1 fragment slicing; dispatch to another consumer SHALL NOT erase a same-channel stop, an applicable time-boundary observation, other-channel provenance or the qualifications on that evidence.*
+
+INT-011 joins per channel; INT-045 adds layered closure. A time observation
+may affect open TMATS candidates even when its payload goes to the time
+consumer. Preserve core's trust and edition qualifications and caller-
+asserted session start. No automatic session inference, new time recognizer,
+new stop rule or provisional/governing-use policy is selected here.
+
+**L3-CLI-029** · Parent: L2-CLI-007 · Verification: T
+*The mounting boundary SHALL retain core-supplied header facts, separate integrity/trust sideband, source identity and ordered borrowed DATA spans through TMATS slicing/assembly, without requiring a second traversal, a full-source copy or payload coalescing merely to mount the CLI library.*
+
+ADR-0036 and L3-CLI-006/010–013 retain ownership and no-extra-copy duties.
+This does not choose an exact cross-crate API or require core to depend on
+TMATS. Published types/core 0.2 compatibility remains a release prerequisite,
+not a claim that dependency APIs were inspected or exercised by this batch.

@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through content-routing boundaries drafted (family 2, batches 1-23).**
+> **Status: foundations through CLI-mounting boundaries drafted (family 2, batches 1-24).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -975,5 +975,25 @@ No command/report format, recovery mode or new interpretation is selected.
 **Statement**: Input acquisition and routing SHALL preserve original bytes and source identity, delegate recording packet work to core and standalone text interpretation to the TMATS reader, and preserve acquisition/downstream failure without manufacturing a successful empty document or silently retrying the other input mode.
 
 **Rationale**: ADR-0003/0010 preserve raw source and keep library I/O caller-owned; ADR-0036 requires one core reader. A successful empty source differs from an acquisition failure. Neither content selection nor forwarding core evidence establishes a complete, trusted or governing setup. Dependency availability and recovery policy remain separate gates; types/core 0.2 must be published before tmats 0.1.
+
+**Verification Method**: Test (T)
+
+
+## Reusable CLI mounting boundary (family 2, batch 24)
+
+This continues L2-CLI-001/002 under L1-CLI-009. The retained runner and
+individual command/render APIs are alternatives for hosts, not two command
+implementations. ADR-0034 W3 and the owner's 2026-09-26 direction remain
+applicable. The [batch note](research/2026-11-26-cli-mounting-requirements.md)
+records the host-dispatch clarification relayed after #55 and review gates.
+No report/rendered format or new interpretation is selected here.
+
+#### L2-CLI-007
+
+**Parent**: L1-CLI-009
+
+**Statement**: A mounting host SHALL own orchestration and packet data-type dispatch using core-supplied facts/evidence; the TMATS Format-1 fragment adapter SHALL check its expected input kind only as a guard, without becoming a packet dispatcher or reader, while preserving host-supplied assembly boundary observations required by the existing joining/closure contracts.
+
+**Rationale**: Owner direction 2026-09-26 and ADR-0034 W3 require reusable CLI behavior; ADR-0030 leaves orchestration in each tool and ADR-0036 puts the single packet reader in core. The clarification relayed after #55 explicitly assigns dispatch to the orchestrating host. Chapter 11 (106-24R1) section 11.2.7.2/Figure 11-34 p. 11-50 supplies Format-1 CSDW slicing, not a second dispatcher. INT-011/045 require provenance and non-fragment observations: guarding fragment input must not hide same-channel stops or recognised time boundaries. This does not delegate time-packet recognition/trust to a local reader or authorize new setup adoption behavior.
 
 **Verification Method**: Test (T)

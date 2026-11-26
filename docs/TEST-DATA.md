@@ -1267,6 +1267,45 @@ safety or large-case performance is claimed as tested here. Report/rendered
 formats remain behind the owner-decision gate. Standard checksum facts and
 example values remain reference evidence, not TMATS acceptance algorithms.
 
+## Planned CLI-mounting batch 24
+
+These fixtures refine L1-CLI-009's accepted reusable runner/command/render
+boundary and the post-#55 host-dispatch clarification. They are planned,
+not executable coverage, and select no text/JSON output or exit mapping.
+Use supplied writers and explicit core facts/sideband/span descriptors;
+spies inspect calls, bytes and retained evidence, not rendered layouts.
+
+| Planned test | Independent input and expected boundary result | Requirements |
+|---|---|---|
+| `mounted_runner_uses_supplied_arguments` | Host process arguments intentionally differ from the supplied invocation; runner uses supplied arguments under the later reviewed argument contract | L3-CLI-022 |
+| `mounted_runner_uses_supplied_streams` | Host-supplied memory streams receive runner writes; process stdout/stderr are not substituted | L3-CLI-022 |
+| `mounted_runner_success_returns_to_host` | Subprocess host driver calls a real successful invocation, then records a sentinel after return; process-exiting code cannot pass | L3-CLI-022, L3-CLI-023 |
+| `mounted_runner_failure_returns_to_host` | Real unsuccessful invocation returns its classification and host executes a later sentinel; no numeric mapping or rendered diagnostic is asserted | L3-CLI-022, L3-CLI-023 |
+| `standalone_and_mounted_runner_share_execution` | Same reviewed command inputs traverse the same public runner/computation; standalone only supplies process inputs and maps status at its outer boundary | L3-CLI-023 |
+| `mounted_command_without_main_or_runner` | A real reviewed individual command executes without entering main or whole-runner parsing and returns its report without direct printing | L3-CLI-024 |
+| `mounted_command_reuses_runner_computation` | Equivalent reviewed inputs through individual command and runner reach the shared computation; no second command implementation in host | L3-CLI-023, L3-CLI-024 |
+| `mounted_renderer_uses_supplied_writer` | Renderer receives an actual command report and supplied memory writer; writes there without acquiring process streams; output format is not pinned here | L3-CLI-025 |
+| `mounted_renderer_failure_returns_to_host` | Supplied writer fails after a bounded prefix; reviewed writer failure remains visible, no delivery success claimed, host continues | L3-CLI-025 |
+| `mounting_host_dispatches_packet_types` | Instrumented host uses core facts to route setup DATA to TMATS and other DATA to their consumers; adapter performs no dispatch or sync scan | L3-CLI-026 |
+| `mounting_adapter_format_guard_is_defensive` | Deliberately misroute non-Format-1 facts with text-like DATA; no CSDW/text interpretation or append, alternate dispatch, raw-header parse or trust upgrade | L3-CLI-026, L3-CLI-027 |
+| `mounting_format1_is_not_csdw_frmt` | Format-1 facts with either CSDW FRMT bit pass the packet-kind guard; FRMT-specific support/interpretation stays separate, never ASCII forced by the guard | L3-CLI-027 |
+| `mounting_format_guard_does_not_admit_packet` | Format-1 facts match but sideband remains qualified/untrusted/NotChecked; matching the guard never establishes trust, completeness or governance | L3-CLI-027, L3-CLI-029 |
+| `mounting_source_route_is_not_packet_dispatch` | A recording-selected source is read by core once; per-packet dispatch never calls the source-prefix selector on each DATA payload | L3-CLI-026, L3-CLI-029 |
+| `mounting_time_consumer_preserves_tmats_boundary` | Host sends recognised trusted time DATA to time consumer and supplies qualified boundary observation to assembler; applicable INT-045 closure still occurs | L3-CLI-028 |
+| `mounting_untrusted_time_keeps_qualification` | Host supplies time observation with original untrusted qualification; dispatch never promotes it to a trusted closure or lets a later packet silently take over | L3-CLI-028, L3-CLI-029 |
+| `mounting_same_channel_stop_is_not_filtered` | Host routes same-channel non-fragment packet to another consumer while preserving interruption observation; INT-011 run stops under its existing rule | L3-CLI-028 |
+| `mounting_other_channel_packet_keeps_provenance` | Interleaved other-channel observation remains provenance without stopping INT-011 join; any INT-045 time closure is evaluated separately | L3-CLI-028 |
+| `mounting_session_start_remains_caller_asserted` | Host supplies or omits labelled session-start provenance; mounting does not infer it from offset zero, filename, sequence or SRCC | L3-CLI-028 |
+| `mounting_borrowed_spans_and_sideband_survive` | Fragment DATA split across blocks retains source identity/ordered spans and PacketInfo sideband alongside header-only PacketFacts; no coalescing, extra traversal or payload copy imposed by mounting | L3-CLI-029 |
+| `mounting_guard_keeps_observation_path` | A guarded misrouted fragment call creates no text append; separately supplied packet observations still reach assembly with their original qualifications | L3-CLI-027, L3-CLI-028 |
+
+Expected packet-level outcomes come from INT-011/045 and existing core/span
+requirements, not a new classifier in the fixture. No local packet or
+secondary/data-checksum verification oracle is permitted. Executable tests
+must cover the actual reviewed commands when implemented; scaffold/help
+success does not demonstrate every command's mountability. Full report
+formats and numeric exit mappings need their own owner-reviewed derivations.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample

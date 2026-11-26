@@ -90,6 +90,12 @@ requirements do not choose those rules or reduce the 0.1 obligations.
 
 ### Remaining CLI input and presentation derivations
 
+Review the reusable mounting boundary before implementation: the host owns
+data-type dispatch, the fragment adapter checks Format 1 only as a guard,
+and assembly still receives required non-fragment boundary observations.
+Runner/individual-command reuse must preserve caller streams and host
+process lifetime without selecting command-specific presentation policies.
+
 Review the retained content selector and acquisition/failure boundary before
 CLI integration; it routes by initial bytes without adding packet finding or
 fallback recovery. Review core-backed borrowed DATA/CSDW slicing before
