@@ -1998,25 +1998,40 @@ not a source edit.
 >    - the selected level is recorded in the result, so suppression is visible to anyone inspecting it.
 >    One fixture per level, for each bad-data kind.
 
-**Behaviour**: For an otherwise eligible selected target with Invalid, duplicate or
-unavailable ID/format, offer three caller-selectable levels. Strict refuses
-with a typed bad-data reason. Warn is DEFAULT and accepts as a labelled
-caller assumption with all bad-data findings attached. Quiet accepts as a
-labelled caller assumption with NO warning findings emitted. Every result
-records the selected level so suppression is visible. Even Quiet retains
-the target's original Invalid/Ambiguous/unavailable state and reason; no
-level upgrades field validity or association evidence. Keep original raw
-bytes and canonical input diagnostics unchanged; Quiet controls warning
-emission on this result, not deletion of source findings. It does not
-silently suppress every non-warning severity. Target eligibility and
-approved-evidence contradictions (INT-057/058) are independent refusals at
-all levels. Accepting a choice is not a usable-field or governing-setup claim.
+**Owner clarification (verbatim; Joey, 2026-11-26; supersedes the initial Quiet-emission wording above)**:
+
+> (1) A: Quiet suppresses EXACTLY the bad-data findings Warn would attach, of ANY severity. They stay readable from the target's field results and source diagnostics.
+> (2) A: every Quiet result carries a marker 'suppressed: N bad-data findings' (N may be 0), so a Quiet result is never confused with clean data.
+
+See the [dated clarification record](research/2026-11-26-int056-quiet-owner-answers.md).
+
+**Behaviour**: For an otherwise eligible selected target with Invalid,
+duplicate or unavailable ID/format, offer three caller-selectable levels.
+Strict refuses with a typed bad-data reason. Warn is DEFAULT and accepts a
+labelled caller assumption with all bad-data findings attached. Quiet accepts
+a labelled caller assumption but suppresses EXACTLY the bad-data findings
+Warn would attach, of ANY severity; unrelated findings are not suppressed
+by this policy. The suppressed findings remain readable from the target's
+field results AND source diagnostics; never delete or downgrade them there.
+
+EVERY Quiet result carries the marker `suppressed: N bad-data findings`,
+where N is the number of findings in that exact suppressed bad-data set;
+N may be 0 and the marker must still appear. Count findings, not invalid
+fields, severity categories or warning-only members. Do not suggest Quiet
+means clean data. Keep the caller-assumption label, selected level and
+original Invalid/Ambiguous/unavailable target states/reasons; no field or
+association evidence is upgraded. Dependent results retain the level and
+Quiet marker. Original bytes, field diagnostics and source findings remain
+unchanged and inspectable. Target eligibility and approved-evidence
+contradictions (INT-057/058) are independent refusals at all levels; neither
+suppression nor its marker hides a typed refusal or makes a choice accepted.
+Accepting a choice is not a usable-field or governing-setup claim.
 
 **Reason**: The owner chose this explicit policy after the #52 independent review identified an unresolved caller-choice decision; these words do not claim the standard mandates the policy.
 
-**Design**: owner decision recorded (Joey, 2026-11-26); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-26; independent AI check: pending on this wording · **Origin**: #52 caller-choice owner answers
+**Design**: owner decision recorded (Joey, 2026-11-26); independent AI recheck pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-26, including both Quiet clarification answers; independent AI recheck: pending on amended wording · **Origin**: #52 caller-choice owner answers
 
-**Test**: `assumption_strict_invalid_target`, `assumption_warn_invalid_target`, `assumption_quiet_invalid_target`, `assumption_strict_duplicate_target`, `assumption_warn_duplicate_target`, `assumption_quiet_duplicate_target`, `assumption_strict_unavailable_target`, `assumption_warn_unavailable_target`, `assumption_quiet_unavailable_target` (planned, not implemented or executed)
+**Test**: `assumption_strict_invalid_target`, `assumption_warn_invalid_target`, `assumption_quiet_invalid_target`, `assumption_strict_duplicate_target`, `assumption_warn_duplicate_target`, `assumption_quiet_duplicate_target`, `assumption_strict_unavailable_target`, `assumption_warn_unavailable_target`, `assumption_quiet_unavailable_target`, `assumption_quiet_suppressed_count_zero`, `assumption_quiet_suppressed_count_nonzero`, `assumption_quiet_marker_survives_derived_result` (planned, not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -2043,7 +2058,7 @@ an unresolvable/nonexistent ID-only selection into an existing candidate.
 
 **Reason**: The owner chose this explicit policy after the #52 independent review identified an unresolved caller-choice decision; these words do not claim the standard mandates the policy.
 
-**Design**: owner decision recorded (Joey, 2026-11-26); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-26; independent AI check: pending on this wording · **Origin**: #52 caller-choice owner answers
+**Design**: approved (Joey, 2026-11-26; independent AI CONCUR at 8ec64115fae70f5e7dc70c744a6964aeebd749bd) · **Review**: complete under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-26; independent AI check: CONCUR on PR #52 at `8ec64115fae70f5e7dc70c744a6964aeebd749bd`, reviewer @thread:thr_qsvwmtnn8f, relayed by the owner; source freshness, development analysis and executable tests remain required · **Origin**: #52 caller-choice owner answers
 
 **Test**: `assumption_refuses_non_timein_target`, `assumption_refuses_other_recorder`, `assumption_refuses_nonexistent_id` (planned, not implemented or executed)
 
@@ -2077,7 +2092,7 @@ resolved; retain INT-059 uncertainty rather than invent a precedence.
 
 **Reason**: The owner chose this explicit policy after the #52 independent review identified an unresolved caller-choice decision; these words do not claim the standard mandates the policy.
 
-**Design**: owner decision recorded (Joey, 2026-11-26); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-26; independent AI check: pending on this wording · **Origin**: #52 caller-choice owner answers
+**Design**: approved (Joey, 2026-11-26; independent AI CONCUR at 8ec64115fae70f5e7dc70c744a6964aeebd749bd) · **Review**: complete under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-26; independent AI check: CONCUR on PR #52 at `8ec64115fae70f5e7dc70c744a6964aeebd749bd`, reviewer @thread:thr_qsvwmtnn8f, relayed by the owner; source freshness, development analysis and executable tests remain required · **Origin**: #52 caller-choice owner answers
 
 **Test**: `assumption_no_01_contradiction_rule`, `assumption_heuristics_never_contradict`, `assumption_future_evidence_requires_own_int` (planned, not implemented or executed)
 
@@ -2105,7 +2120,7 @@ retention; they do not implement or claim an actual baseline evidence path.
 
 **Reason**: The owner chose this explicit policy after the #52 independent review identified an unresolved caller-choice decision; these words do not claim the standard mandates the policy.
 
-**Design**: owner decision recorded (Joey, 2026-11-26); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-26; independent AI check: pending on this wording · **Origin**: #52 caller-choice owner answers
+**Design**: approved (Joey, 2026-11-26; independent AI CONCUR at 8ec64115fae70f5e7dc70c744a6964aeebd749bd) · **Review**: complete under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-26; independent AI check: CONCUR on PR #52 at `8ec64115fae70f5e7dc70c744a6964aeebd749bd`, reviewer @thread:thr_qsvwmtnn8f, relayed by the owner; source freshness, development analysis and executable tests remain required · **Origin**: #52 caller-choice owner answers
 
 **Test**: `association_unproven_multiplicity_is_unestablished`, `association_conflict_requires_competing_evidence` (planned, not implemented or executed)
 
@@ -2132,7 +2147,7 @@ not a default target; it never supplies a missing choice.
 
 **Reason**: The owner chose this explicit policy after the #52 independent review identified an unresolved caller-choice decision; these words do not claim the standard mandates the policy.
 
-**Design**: owner decision recorded (Joey, 2026-11-26); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-26; independent AI check: pending on this wording · **Origin**: #52 caller-choice owner answers
+**Design**: approved (Joey, 2026-11-26; independent AI CONCUR at 8ec64115fae70f5e7dc70c744a6964aeebd749bd) · **Review**: complete under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-26; independent AI check: CONCUR on PR #52 at `8ec64115fae70f5e7dc70c744a6964aeebd749bd`, reviewer @thread:thr_qsvwmtnn8f, relayed by the owner; source freshness, development analysis and executable tests remain required · **Origin**: #52 caller-choice owner answers
 
 **Test**: `assumption_next_query_needs_explicit_choice`, `assumption_warn_default_is_not_target_default` (planned, not implemented or executed)
 

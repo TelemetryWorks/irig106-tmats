@@ -1,7 +1,8 @@
 # irig106-tmats — Level 3 Requirements
 
 > **Status: foundations through bounded association/assumption contracts drafted (family 2, batches 1-20).**
-> INT-056–060 are owner-signed (Joey, 2026-11-26); independent AI check pending.
+> INT-056 Quiet clarifications are owner-signed (Joey, 2026-11-26); AI recheck pending.
+> INT-057–060 are approved; AI CONCUR at #52 8ec6411.
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
@@ -1610,9 +1611,10 @@ input, use the existing provenance map rather than inventing a packet-local
 span for a field crossing fragments. Rust ownership/types remain a later
 reviewed API choice; revision identity and no stale interpretation are binding.
 
-INT-056's later owner policy keeps original findings intact while Quiet
-emits no warning findings on the assumption result; result level and field
-states still expose the suppression/limitations. Independent review pending.
+INT-056's clarified policy keeps findings readable in field results AND
+source diagnostics, while Quiet suppresses exactly Warn's bad-data finding
+set of any severity. Level, states and `suppressed: N bad-data findings`
+(even 0) remain visible on every Quiet result. Independent review pending.
 
 **L3-VIEW-022** · Parent: L2-VIEW-007 · Verification: T
 *A view obtained with incomplete, retained-cut, ambiguous, unsupported-format or otherwise unestablished setup eligibility SHALL preserve that limitation and SHALL NOT present local metadata as an unqualified usable or governing time setup; no metadata result SHALL prove a data-channel/time-source association or select a governing candidate from competing records.*
@@ -1826,8 +1828,8 @@ streaming/adoption rule or permission to override disabled packet findings.
 Future obligations derived from RELEASE-0.1's owner direction, 2026-11-21.
 They specify evidence retention/composition, not a TMATS association field,
 consumer clock-selection algorithm, Rust API or implementation readiness.
-Owner-signed INT-056–060 now settle the caller policies, with independent
-AI check pending. See the [batch note](research/2026-11-26-association-assumption-requirements.md).
+Owner-signed INT-056–060 settle the caller policies; INT-056 Quiet recheck is
+pending and INT-057–060 have CONCUR at #52 8ec6411. See the [batch note](research/2026-11-26-association-assumption-requirements.md).
 
 **L3-VIEW-043** · Parent: L2-VIEW-013 · Verification: T
 *An association query SHALL retain the supplied data-channel identity, its recorder/entry scope where established, setup document/revision and supplied governing-context basis or limitation, without inventing scope, borrowing another record's TIMEIN entries or using entry index n as an actual TK1 channel ID.*
@@ -1869,7 +1871,7 @@ permission to treat a synthetic fixture as standard-defined positive proof.
 No affirmative baseline association-proof fixture is invented in this batch.
 
 **L3-VIEW-047** · Parent: L2-VIEW-013 · Verification: T
-*Association candidates/results SHALL retain every relevant occurrence, original diagnostic evidence and field-state/default/edition evidence, source locations and supplied fragment mapping, and setup eligibility limitations; neither a plausible clock match nor a caller selection SHALL discard ambiguity, retained-cut blocking, invalid metadata or source uncertainty; retained input diagnostics SHALL remain separate from warning emission on an assumption result under INT-056.*
+*Association candidates/results SHALL retain every relevant occurrence, original diagnostic evidence and field-state/default/edition evidence, source locations and supplied fragment mapping, and setup eligibility limitations; neither a plausible clock match nor a caller selection SHALL discard ambiguity, retained-cut blocking, invalid metadata or source uncertainty; retained input diagnostics SHALL remain separate from bad-data finding emission on an assumption result under INT-056.*
 
 INT-039/048 scalar/assembly ambiguity and INT-041 unavailable reads remain
 separate. Source-bit splitting, CHE context and DSI reads are context only.
@@ -1894,7 +1896,7 @@ session-wide default, even for the same setup/revision. Default Warn is
 only a level default and never supplies a target.
 
 **L3-VIEW-050** · Parent: L2-VIEW-014 · Verification: T
-*A caller assumption SHALL preserve the underlying candidate set, association state/reason and original input diagnostics, applying INT-056 warning emission for its selected level while keeping field states unchanged, and SHALL NOT upgrade an invalid, unavailable, ambiguous or cut result, select a governing setup, override packet evidence or establish a time-correlation/reset policy.*
+*A caller assumption SHALL preserve the underlying candidate set, association state/reason and original input diagnostics, applying INT-056 bad-data finding emission for its selected level while keeping field states unchanged, and SHALL NOT upgrade an invalid, unavailable, ambiguous or cut result, select a governing setup, override packet evidence or establish a time-correlation/reset policy.*
 
 An isolated unit fixture may supply a preclassified conflicting association
 and test provenance composition; that is not coverage of a future evidence
@@ -1911,23 +1913,27 @@ historical provenance. Full timelines remain 0.2 and are not constructed here.
 
 ## Owner-signed caller-choice policies (INT-056–060)
 
-Joey, 2026-11-26; independent AI check pending under ADR-0033. The policies
+Joey, 2026-11-26; INT-056 recheck pending under ADR-0033, while
+INT-057–060 have CONCUR at #52 8ec6411. The policies
 are owner decisions, not a new standard field. They do not waive development,
 source freshness or executable-test gates.
 
 **L3-VIEW-052** · Parent: L2-VIEW-014 · Verification: T
-*For an eligible selected target with Invalid, duplicate or unavailable ID/format data, Strict SHALL refuse with a typed bad-data reason; Warn SHALL be the default level and accept as a labelled caller assumption with all bad-data findings attached; Quiet SHALL accept as a labelled caller assumption with no warning findings emitted.*
+*For an eligible selected target with Invalid, duplicate or unavailable ID/format data, Strict SHALL refuse with a typed bad-data reason; Warn SHALL be the default level and accept as a labelled caller assumption with all bad-data findings attached; Quiet SHALL accept as a labelled caller assumption while suppressing exactly the bad-data findings Warn would attach, of any severity, leaving unrelated findings unaffected by this policy.*
 
 INT-056 separates acceptance of a choice from field validity. Each bad-data
 kind has one named fixture per level, with ID and format arms. Typed reason
 categories are semantic obligations, not frozen Rust enum names.
 
 **L3-VIEW-053** · Parent: L2-VIEW-014 · Verification: T
-*Every accepted bad-data choice SHALL retain its assumption label, selected level and target's original Invalid/Ambiguous/unavailable states and reasons; Quiet SHALL make suppression visible through that recorded level without upgrading states, deleting canonical input diagnostics or treating a selected candidate as association evidence.*
+*Every accepted bad-data choice SHALL retain its assumption label, selected level and target's original Invalid/Ambiguous/unavailable states and reasons; Quiet SHALL leave the suppressed findings readable from the target's field results and source diagnostics without upgrading states or association evidence. Every Quiet result SHALL carry `suppressed: N bad-data findings` (including N=0), counting exactly Warn's bad-data findings suppressed on that result, alongside the recorded level and assumption label where accepted.*
 
-INT-056 warning emission is local to the assumption result. It does not
-silently mute non-warning severities or edit the lossless input. Every
-level retains setup/retained-cut qualifications and governing limitations.
+INT-056 suppression is local to the assumption result, not a severity filter
+or a mutation of input/field diagnostics. Information/warning/error findings
+are all suppressed if and only if they belong to Warn's bad-data set.
+The marker is mandatory even with a clean target/zero suppressed findings.
+Dependent results retain it; every level keeps setup/retained-cut and
+governing limitations, and suppression never hides an independent typed refusal.
 
 **L3-VIEW-054** · Parent: L2-VIEW-014 · Verification: T
 *A choice outside the existing scoped TIMEIN candidates of the data channel's recorder SHALL be refused with a typed eligibility reason at every level, including non-TIMEIN entries, another recorder or a nonexistent ID; a valid scoped entry selection with bad ID/format SHALL instead follow INT-056 without fabricating a usable ID.*

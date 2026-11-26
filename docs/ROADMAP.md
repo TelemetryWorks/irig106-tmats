@@ -64,8 +64,8 @@ DATA SOURCE ID (`R-x\DSI-n`, 106-24R1 Chapter 9 Table 9-4 p. 9-49) as
 source context, never a clock reference. Owner-signed INT-054/055 record CHE
 context without silent filtering and general numeric field-value syntax.
 INT-054/055 have final independent AI concurrence. Obtain the ADR-0033
-independent check of owner-signed caller policies INT-056–060 before relying
-on their behaviour. Complete source-freshness
+independent recheck of INT-056's owner-signed Quiet clarifications before
+relying on that behaviour; INT-057–060 already have concurrence. Complete source-freshness
 and development analysis (including the complete non-decimal representation inventory),
 and implement the planned executable tests before relying on them. The owner
 choices are recorded; independent review and development gates remain.

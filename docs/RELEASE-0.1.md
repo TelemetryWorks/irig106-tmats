@@ -247,12 +247,16 @@ with the choice and assumption basis attached to every derived answer
 `association_unestablished` or `association_conflicting`; the override must
 not relabel it as `association_evidenced`.
 
-Owner answers of 2026-11-26 are recorded in INT-056–060 (independent AI
-check pending). An explicit choice must name a scoped TIMEIN candidate in
+Owner answers of 2026-11-26 are recorded in INT-056–060 (INT-056 Quiet
+recheck pending; INT-057–060 CONCUR at #52 8ec6411). An explicit choice must name a scoped TIMEIN candidate in
 the same recorder, otherwise typed refusal. Bad ID/format data has three
 caller levels: Strict typed refusal; Warn DEFAULT accepts a labelled
 assumption with all bad-data findings; Quiet accepts a labelled assumption
-without emitting warning findings. Every accepted result keeps the level,
+suppressing exactly Warn's bad-data findings of any severity. Every Quiet
+result carries `suppressed: N bad-data findings`, including 0; the suppressed
+findings remain readable in target field results and source diagnostics.
+Unrelated findings are not suppressed by this policy. Every accepted result
+keeps the level,
 assumption label and original field states; Quiet does not repair or upgrade
 them. Original input diagnostics remain intact. These levels never bypass
 candidate eligibility, setup qualification or an established contradiction.

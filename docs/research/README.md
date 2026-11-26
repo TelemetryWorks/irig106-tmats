@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-26-int056-quiet-owner-answers.md](2026-11-26-int056-quiet-owner-answers.md) | Verbatim Quiet clarification: exact Warn bad-data set at any severity, readable field/source diagnostics and mandatory zero/positive suppression marker; independent recheck pending |
 | [2026-11-26-caller-choice-owner-answers.md](2026-11-26-caller-choice-owner-answers.md) | Verbatim #52 owner answers as INT-056–060: caller levels, scoped TIMEIN refusal, own-INT evidence gate, unestablished multiplicity and per-query choice; independent check pending |
 | [2026-11-26-association-assumption-requirements.md](2026-11-26-association-assumption-requirements.md) | Family 2 batch 20: scoped association uncertainty and labelled caller choices, source boundary and planned cases; no invented proof rule or new interpretation |
 | [2026-11-26-int054-int055-final-concurrence.md](2026-11-26-int054-int055-final-concurrence.md) | Final INT-054/055 CONCUR at #51 ebd5c98, eight-mask inventory correction, retained development gates; merge reference not yet available |

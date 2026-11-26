@@ -422,11 +422,11 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-053 | Later copies compare with the currently governing setup, never a guessed target (QM) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) | not yet written | _(none)_ |
 | INT-054 | Disabled TIMEIN entries remain enumerated with CHE context (Option A) | approved (Joey, Option A, 2026-11-25; independent AI final CONCUR at ebd5c98a297a2ad1391cabcb24985a8b789e88f1) | not yet written | _(none)_ |
 | INT-055 | Decimal-integer fields and numeric codes use bounded raw ASCII digits (Option A) | approved (Joey, Option A answers, 2026-11-25; independent AI final CONCUR at ebd5c98a297a2ad1391cabcb24985a8b789e88f1) | not yet written | _(none)_ |
-| INT-056 | Bad target data has Strict, Warn-default and Quiet caller levels | owner decision recorded (Joey, 2026-11-26); independent AI check pending | not yet written | _(none)_ |
-| INT-057 | Caller choice must be a scoped TIMEIN candidate in the same recorder | owner decision recorded (Joey, 2026-11-26); independent AI check pending | not yet written | _(none)_ |
-| INT-058 | Only an individually approved evidence rule can contradict a caller choice | owner decision recorded (Joey, 2026-11-26); independent AI check pending | not yet written | _(none)_ |
-| INT-059 | Unproven multiplicity is unestablished, conflicting requires evidence | owner decision recorded (Joey, 2026-11-26); independent AI check pending | not yet written | _(none)_ |
-| INT-060 | Each query supplies its caller choice explicitly | owner decision recorded (Joey, 2026-11-26); independent AI check pending | not yet written | _(none)_ |
+| INT-056 | Bad target data has Strict, Warn-default and Quiet caller levels | owner decision recorded (Joey, 2026-11-26); independent AI recheck pending | not yet written | _(none)_ |
+| INT-057 | Caller choice must be a scoped TIMEIN candidate in the same recorder | approved (Joey, 2026-11-26; independent AI CONCUR at 8ec64115fae70f5e7dc70c744a6964aeebd749bd) | not yet written | _(none)_ |
+| INT-058 | Only an individually approved evidence rule can contradict a caller choice | approved (Joey, 2026-11-26; independent AI CONCUR at 8ec64115fae70f5e7dc70c744a6964aeebd749bd) | not yet written | _(none)_ |
+| INT-059 | Unproven multiplicity is unestablished, conflicting requires evidence | approved (Joey, 2026-11-26; independent AI CONCUR at 8ec64115fae70f5e7dc70c744a6964aeebd749bd) | not yet written | _(none)_ |
+| INT-060 | Each query supplies its caller choice explicitly | approved (Joey, 2026-11-26; independent AI CONCUR at 8ec64115fae70f5e7dc70c744a6964aeebd749bd) | not yet written | _(none)_ |
 
 * Entries without a written analysis: **60** of 60
 * Entries without a test: **60** of 60

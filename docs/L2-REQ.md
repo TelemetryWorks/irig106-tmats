@@ -1,7 +1,8 @@
 # irig106-tmats — Level 2 Requirements
 
 > **Status: foundations through bounded association/assumption contracts drafted (family 2, batches 1-20).**
-> INT-056–060 are owner-signed (Joey, 2026-11-26); independent AI check pending.
+> INT-056 Quiet clarifications are owner-signed (Joey, 2026-11-26); AI recheck pending.
+> INT-057–060 are approved; AI CONCUR at #52 8ec6411.
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
@@ -767,9 +768,11 @@ Source: 106-24R1 Chapter 9 section 9.5.4, Table 9-4, rows/pages cited below.
 
 
 Owner-signed INT-056 (2026-11-26; independent check pending) distinguishes
-preserved source diagnostics from warnings emitted on an assumption result:
-Quiet emits no warning findings while the source findings and field states
-remain unchanged. This later caller policy qualifies result presentation,
+preserved source diagnostics from bad-data findings emitted on an assumption result:
+Quiet suppresses exactly Warn's bad-data findings of any severity, keeping
+them readable from field results/source diagnostics and leaving states
+unchanged. Every Quiet result carries `suppressed: N bad-data findings`, even 0.
+This later caller policy qualifies result presentation,
 not the no-byte-loss/no-state-upgrade obligation.
 
 ## Source-bit batch 17: explicit recorder declaration before derivation
@@ -868,7 +871,7 @@ This derives the owner-approved RELEASE-0.1 association contract of
 and boundaries are in the [batch note](research/2026-11-26-association-assumption-requirements.md).
 INT-039/041/054/055 preserve field evidence; they supply no clock reference.
 Owner answers of 2026-11-26 now specify caller policy in INT-056–060
-(independent check pending); no stable Rust API is selected here.
+(INT-056 recheck pending; INT-057–060 CONCUR at #52 8ec6411); no stable Rust API is selected here.
 
 #### L2-VIEW-013
 
@@ -884,7 +887,7 @@ Owner answers of 2026-11-26 now specify caller policy in INT-056–060
 
 **Parent**: L1-VIEW-008
 
-**Statement**: A time-view answer using an explicit caller choice without association proof SHALL retain the choice, its caller-supplied assumption basis and scoped identities on every answer derived from it, alongside the unchanged underlying association uncertainty, target states and selected Strict/Warn/Quiet level, with warning emission governed by INT-056; it SHALL NOT relabel that choice as association_evidenced, silently propagate it to another setup/revision or make otherwise unusable setup evidence usable or governing.
+**Statement**: A time-view answer using an explicit caller choice without association proof SHALL retain the choice, its caller-supplied assumption basis and scoped identities on every answer derived from it, alongside the unchanged underlying association uncertainty, target states and selected Strict/Warn/Quiet level, with bad-data finding emission governed by INT-056; it SHALL NOT relabel that choice as association_evidenced, silently propagate it to another setup/revision or make otherwise unusable setup evidence usable or governing.
 
 **Rationale**: Owner direction 2026-11-21, the owner answers of 2026-11-26 (INT-056–060, independent review pending), and RELEASE-0.1 permit labelled caller assumptions for the bounded time view, not silent guesses or global configuration overrides. Other assumption uses in L1-VIEW-008 remain 0.2. This does not approve proposed INT-028/031/032/033, select a governing setup or authorise provisional semantic use; source and eligibility limitations remain visible.
 
