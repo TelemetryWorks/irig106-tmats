@@ -148,8 +148,7 @@ and binary/mask fields, plus all other non-decimal representations, are
 excluded for their own reviewed rules; numeric codes must come from explicit
 reviewed enumeration tables, never binary patterns; other failed syntax/range is Invalid,
 never repaired/clipped. Raw binding alone asserts no usable numeric state.
-INT-054 has AI CONCUR at #51 ebf9ec4; INT-055 owner answers are
-recorded; amended wording awaits recheck under ADR-0033. These decisions remove
+INT-054/055 have final AI CONCUR at #51 ebd5c98 under ADR-0033. These decisions remove
 the owner-choice blockers, not development/source/test gates. See the
 [original record](research/2026-11-25-che-numeric-syntax-owner-decisions.md)
 and [owner answers](research/2026-11-25-int055-owner-answers.md), extended by

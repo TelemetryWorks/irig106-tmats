@@ -1,8 +1,7 @@
 # irig106-tmats — Level 2 Requirements
 
 > **Status: foundations through CHE/numeric syntax drafted (family 2, batches 1-19).**
-> INT-054 is approved (Joey, 2026-11-25; AI CONCUR at #51 ebf9ec4).
-> INT-055 owner answers are recorded (Joey, 2026-11-25); AI recheck pending.
+> INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
@@ -773,9 +772,9 @@ existing effective-field/canonical-scope contracts and approved
 INT-035–039/041/042. No Rust API or new interpretation is implemented.
 Owner-signed INT-055 supplies the numeric field-value expectations, including
 R\N condition operands and numeric-looking enumeration codes. The former
-pending-owner fixture blocker is removed; ADR-0033 independent review,
-source freshness, development analysis and executable tests still gate
-implementation. INT-054 similarly records CHE context without silent filtering.
+pending-owner fixture blocker is removed and final ADR-0033 concurrence
+is recorded at #51 ebd5c98; source freshness, development analysis and
+executable tests still gate implementation. INT-054 similarly records CHE context without silent filtering.
 Sources: 106-24R1 Chapter 9 section 9.5.4 Table 9-4 NUMBER OF SOURCE BITS,
 page 9-33; Chapter 11 section 11.2.1.1 b(1), page 11-5.
 
@@ -795,7 +794,7 @@ page 9-33; Chapter 11 section 11.2.1.1 b(1), page 11-5.
 
 **Statement**: A source-bit result SHALL retain the original full channel ID, the independently identified recorder/entry and document/revision, the explicit declaration and its source/basis, the derived widths/values or blocking reason, and all qualification/findings; it SHALL NOT rewrite channel identifiers, coalesce channels by a derived local ID, infer a clock association or silently select governing context.
 
-**Rationale**: The same Chapter 9/11 rows define a numerical partition, not a clock reference or time-source association. RELEASE-0.1 forbids association inference from multiplexer grouping and requires declaration provenance. Batch 16 already distinguishes actual TK1 from entry n. This contract operates on supplied identity/context; DSI context is derived in batch 18 and CHE enumeration follows owner-signed INT-054, pending independent review.
+**Rationale**: The same Chapter 9/11 rows define a numerical partition, not a clock reference or time-source association. RELEASE-0.1 forbids association inference from multiplexer grouping and requires declaration provenance. Batch 16 already distinguishes actual TK1 from entry n. This contract operates on supplied identity/context; DSI context is derived in batch 18 and CHE enumeration follows owner-signed INT-054, with final independent CONCUR at #51 ebd5c98.
 
 **Verification Method**: Test (T)
 
@@ -807,7 +806,7 @@ The owner-directed bounded time view includes DATA SOURCE ID as context
 context read for a supplied recorder/entry, not a general link graph or a
 channel-enumeration policy. Approved INT-035–039/041 and existing effective
 reads apply. CHE and numeric field-value choices are recorded in owner-signed INT-054/055;
-independent review remains pending. This context contract does not choose
+final independent CONCUR is recorded at #51 ebd5c98. This context contract does not choose
 a general link graph or governing setup.
 
 INT-055 covers R-x\N, NUMBER OF TRACKS/CHANNELS (106-24R1 Chapter 9
@@ -816,7 +815,7 @@ is used by TK1/CDT/SHTF/DSI/CHE (pp. 9-48–51). Tests may now specify parsed
 operand expectations as well as isolated supplied-condition units; neither
 may assume an absent/unknown condition true. Numeric codes TTF/SHTF/TFMT
 (pp. 9-51, 9-71–72) accept 02 as 2 with a warning under this owner decision,
-not by borrowing index syntax. Independent AI review is still pending.
+not by borrowing index syntax. Final independent AI CONCUR is recorded at #51 ebd5c98.
 
 #### L2-VIEW-010
 
@@ -824,14 +823,13 @@ not by borrowing index syntax. Independent AI review is still pending.
 
 **Statement**: A bounded time-view entry SHALL expose its own R-x\DSI-n DATA SOURCE ID as located source context or its raw evidence and unavailable/state reason, preserving document/revision and recorder/entry scope and the existing effective-field rules; equal or suggestively named DSI text SHALL NOT select or evidence a clock, substitute for channel identity, merge entries or establish that a setup governs.
 
-**Rationale**: 106-24R1 Chapter 9 section 9.5.4 Table 9-4 DATA SOURCE ID, page 9-49, defines the source identifier with its own usage/link fields; RELEASE-0.1 explicitly treats it as context, not a time-channel reference. Batch 16 binds fields by canonical x,n rather than TK1, so isolated context composition can receive evaluated applicability without parsing numeric field values. Parsed-R\N applicability expectations now follow owner-signed INT-055, pending independent review. Raw lookup and locally usable supported-field results remain distinct from general link resolution, length/blank rule interpretation or whole-document authority.
+**Rationale**: 106-24R1 Chapter 9 section 9.5.4 Table 9-4 DATA SOURCE ID, page 9-49, defines the source identifier with its own usage/link fields; RELEASE-0.1 explicitly treats it as context, not a time-channel reference. Batch 16 binds fields by canonical x,n rather than TK1, so isolated context composition can receive evaluated applicability without parsing numeric field values. Parsed-R\N applicability expectations now follow owner-signed INT-055, with final independent CONCUR at #51 ebd5c98. Raw lookup and locally usable supported-field results remain distinct from general link resolution, length/blank rule interpretation or whole-document authority.
 
 **Verification Method**: Test (T)
 
 ## Owner-signed CHE and numeric syntax (family 2, batch 19)
 
-INT-054/055: Joey, Option A, 2026-11-25. INT-054 has AI CONCUR at #51
-ebf9ec4; INT-055 owner answers are recorded; AI recheck pending.
+INT-054/055: Joey, Option A, 2026-11-25. INT-054/055 have final AI CONCUR at #51 ebd5c98.
 These specify local effective reads/enumeration, not the full later validator.
 Source freshness, development analysis and executable verification still gate
 implementation; no new requirement is verified by this documentation.

@@ -14,7 +14,8 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
-| [2026-11-26-int055-binary-exclusions.md](2026-11-26-int055-binary-exclusions.md) | Binary/non-decimal dispatch exclusions, 27 Binary rows plus 3 D masks, every-Range baseline audit and width-preserving planned cases; AI recheck pending |
+| [2026-11-26-int054-int055-final-concurrence.md](2026-11-26-int054-int055-final-concurrence.md) | Final INT-054/055 CONCUR at #51 ebd5c98, eight-mask inventory correction, retained development gates; merge reference not yet available |
+| [2026-11-26-int055-binary-exclusions.md](2026-11-26-int055-binary-exclusions.md) | Binary/non-decimal dispatch exclusions, 27 Binary rows plus 11 unlabelled P/D masks (corrected after review), every-Range baseline audit and width-preserving planned cases; final concurrence recorded separately |
 | [2026-11-25-int055-owner-answers.md](2026-11-25-int055-owner-answers.md) | Verbatim owner A/A/A answers: uniform leading-blank guard, raw numeric checks, decimal-only scope; complete float/hex exclusion inventory; AI recheck pending |
 | [2026-11-25-che-numeric-independent-review.md](2026-11-25-che-numeric-independent-review.md) | #51 exact-head review: INT-054 CONCUR, INT-055 three unresolved owner choices, u64/string bound clarification |
 | [2026-11-25-che-numeric-syntax-owner-decisions.md](2026-11-25-che-numeric-syntax-owner-decisions.md) | Owner Option A CHE/numeric decisions as INT-054/055, expected fixtures and source breadth; independent AI review pending |

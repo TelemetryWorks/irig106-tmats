@@ -1,8 +1,7 @@
 # irig106-tmats — Level 3 Requirements
 
 > **Status: foundations through CHE/numeric syntax drafted (family 2, batches 1-19).**
-> INT-054 is approved (Joey, 2026-11-25; AI CONCUR at #51 ebf9ec4).
-> INT-055 owner answers are recorded (Joey, 2026-11-25); AI recheck pending.
+> INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
 > INT-018/019/020 are reconfirmed; INT-043 Option B is approved (Joey, 2026-11-23; AI CONCURS at #32 head 8941ca1).
@@ -647,7 +646,7 @@ For future blank-rule review, 106-24R1 Chapter 9 section 9.4.2, page 9-2, states
 > Leading, trailing, and embedded blanks are assumed to be intentional; they can be ignored in most cases but should not be used in code names, keywords, and data items used as links, such as measurement name.
 
 The full sentence is source evidence. Owner-signed INT-055 now supplies a
-numeric blank rule, pending independent check, retaining INT-041's existing
+numeric blank rule, with final independent CONCUR at #51 ebd5c98, retaining INT-041's existing
 leading-blank guard; other letter/structured-field blank rules stay separate.
 Keep raw bytes and the unavailable-rule guard below; name-edge blank handling
 remains the separate approved INT-036 rule.
@@ -1524,7 +1523,7 @@ These are future implementation/test obligations for the owner-approved 0.1
 subset, not existing time-view interfaces or passing coverage. Their sources
 and boundary are recorded in the [batch note](research/2026-11-25-time-view-metadata-requirements.md).
 INT-035–039/041 are approved. Owner-signed INT-055 subsequently supplies the
-numeric field-value rule (independent check pending). This batch does not
+numeric field-value rule (final AI CONCUR at #51 ebd5c98). This batch does not
 choose an association field, packet-type correspondence or governing algorithm.
 
 **L3-VIEW-012** · Parent: L2-VIEW-005 · Verification: T
@@ -1628,9 +1627,9 @@ inspection, arithmetic examples and remaining DSI/CHE boundaries. This slice
 splits a supplied identity; it does not decide which channels to enumerate.
 Owner-signed INT-055 supplies the numeric field-value expectations, including
 R\N condition operands and numeric-looking enumeration codes. The former
-pending-owner fixture blocker is removed; ADR-0033 independent review,
-source freshness, development analysis and executable tests still gate
-implementation. INT-054 similarly records CHE context without silent filtering.
+pending-owner fixture blocker is removed and final ADR-0033 concurrence
+is recorded at #51 ebd5c98; source freshness, development analysis and
+executable tests still gate implementation. INT-054 similarly records CHE context without silent filtering.
 
 **L3-VIEW-023** · Parent: L2-VIEW-008 · Verification: T
 *The source-bit declaration SHALL bind to the same document/revision and canonical recorder x as the supplied entry, use only the recorder-level R-x\NSB scalar and its own reviewed definition/applicability evidence, and SHALL NOT be borrowed from another recorder, record, revision, entry-suffixed lookalike or unrelated raw attribute.*
@@ -1716,7 +1715,7 @@ is used by TK1/CDT/SHTF/DSI/CHE (pp. 9-48–51). Tests may now specify parsed
 operand expectations as well as isolated supplied-condition units; neither
 may assume an absent/unknown condition true. Numeric codes TTF/SHTF/TFMT
 (pp. 9-51, 9-71–72) accept 02 as 2 with a warning under this owner decision,
-not by borrowing index syntax. Independent AI review is still pending.
+not by borrowing index syntax. Final independent AI CONCUR is recorded at #51 ebd5c98.
 
 **L3-VIEW-031** · Parent: L2-VIEW-010 · Verification: T
 *The context read SHALL bind to the supplied document/revision and canonical recorder/entry pair (x,n) for R-x\DSI-n, preserving raw code-name spellings and index-normalisation evidence; recorder-level R-x\ID, G\DSI-n, another entry's DSI or a matching TK1/DSI value SHALL NOT substitute for that native scoped field.*
@@ -1768,8 +1767,8 @@ filter policy and no unreviewed numeric field conversion.
 
 ## Owner-signed CHE and numeric syntax (family 2, batch 19)
 
-INT-054/055 carry owner sign-off, Joey, 2026-11-25, Option A. INT-054 has
-AI CONCUR at #51 ebf9ec4; INT-055 owner answers are recorded; AI recheck pending. Implementation/development gates remain in force.
+INT-054/055 carry owner sign-off, Joey, 2026-11-25, Option A. INT-054/055 have
+final AI CONCUR at #51 ebd5c98. Implementation/development gates remain in force.
 
 **L3-VIEW-037** · Parent: L2-VIEW-011 · Verification: T
 *A decimal-integer field-value or numeric-code read SHALL check the raw value bytes for 1–10 ASCII digits before zero-stripping; a leading blank SHALL be unavailable uniformly under INT-041, trailing/embedded blanks SHALL be Invalid, and any raw control, non-digit, sign, empty or longer value SHALL be Invalid without clipping, wrapping, repair or INT-036 omission into usable numeric data.*
