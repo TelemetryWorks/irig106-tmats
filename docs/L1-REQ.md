@@ -815,7 +815,7 @@ requirements are added. The requirement entries below and the generated
 
 **Verification Method**: Inspection (I)
 
-**Evidence**: `.github/workflows/ci.yml` job `msrv` (`cargo check --workspace --all-features` on Rust 1.85)
+**Prototype configuration (not redesigned acceptance)**: `.github/workflows/ci.yml` job `msrv` (`cargo check --workspace --all-features` on Rust 1.85)
 
 ### L1-REL-003
 
@@ -833,7 +833,7 @@ requirements are added. The requirement entries below and the generated
 
 **Verification Method**: Inspection (I)
 
-**Evidence**: `.github/workflows/ci.yml` job `test` (matrix `ubuntu-latest`, `windows-latest`, `macos-latest`)
+**Prototype configuration (not redesigned acceptance)**: `.github/workflows/ci.yml` job `test` (matrix `ubuntu-latest`, `windows-latest`, `macos-latest`)
 
 ### L1-REL-005
 

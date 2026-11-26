@@ -80,6 +80,16 @@ and development analysis (including the complete non-decimal representation inve
 and implement the planned executable tests before relying on them. The owner
 choices are recorded; independent review and development gates remain.
 
+### Remaining build-compatibility acceptance
+
+Review MSRV, plain-library WASM, native-platform and isolated consumer
+acceptance before implementing their checks against the redesigned packages.
+Add the WASM check with the first new library code and the exact std-only
+consumer build once the time view exists. Inspect actual source/toolchain/
+target/feature binding and completed CI results; prototype checks do not
+verify replacement code. Keep dependency publication/API and semantic-use
+gates separate from compile success.
+
 ### Remaining raw lookup and extension derivations
 
 Owner decisions PENDING before pattern-query implementation: 0.1 pattern

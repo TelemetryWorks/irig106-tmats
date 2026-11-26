@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through pattern-lookup boundaries drafted (family 2, batches 1-26).**
+> **Status: foundations through build-compatibility contracts drafted (family 2, batches 1-27).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -2434,3 +2434,67 @@ Vary supplied bindings, source order, duplicates, spelling and fragment
 partitions in bounded CI. Assert source bytes unchanged. Expected sets/order
 must come from the fixture's independently listed items, not reusing query
 code or guessing standard definitions from the prototype.
+
+
+## Build and consumer compatibility evidence (family 2, batch 27)
+
+These are future inspection obligations. No Evidence line is supplied for
+unexecuted redesigned builds; the [batch note](research/2026-11-26-build-compatibility-requirements.md)
+records source-inspected CI and the planned acceptance cases. No targets,
+workflows, manifests, toolchain installs or dependencies are changed here.
+
+**L3-REL-002** · Parent: L2-REL-002 · Verification: I
+*Both redesigned packages SHALL declare/inherit rust-version 1.85 under the shared workspace package metadata, and inspection SHALL resolve actual TOML inheritance for the library and CLI rather than accept a matching comment or an unrelated package's rust-version.*
+
+ADR-0035/L3-REL-001 give the target crates/ + apps/ layout. Check the
+library and both CLI targets through their package metadata; the virtual
+root is not itself a package. No local manifest change is made in this slice.
+
+**L3-REL-003** · Parent: L2-REL-002 · Verification: I
+*MSRV evidence SHALL include an actual Rust 1.85 build/check of both redesigned packages and their resolved production dependencies in supported 0.1 feature configuration, with the invoked compiler/toolchain, command and exact source head identifiable; a stable-only build or rust-version declaration alone SHALL NOT satisfy the obligation.*
+
+The existing documented baseline is cargo check --workspace --all-features
+on 1.85; inspect its binding to the restructured packages and real supported
+features before acceptance. This is not a requirement to run dev-tooling on
+1.85 or keep retired prototype features. Dependency/toolchain failures are
+compatibility gaps; do not silently drop the CLI or raise the declared floor.
+
+**L3-REL-004** · Parent: L2-REL-003 · Verification: I
+*Plain-WASM evidence SHALL compile the redesigned irig106-tmats library for the explicit wasm32-unknown-unknown target in CI on every change from its first new code, without satisfying the check through a native build, the CLI binary, prototype wasm-bindgen feature or a separate bindings crate.*
+
+ADR-0015 separates bindings from the library; L1-IO-001 remains applicable.
+Record selected features and the library target. No no_std/alloc-only support
+is claimed from a WASM target build or default-features=false with std enabled.
+
+**L3-REL-005** · Parent: L2-REL-004 · Verification: I
+*For Windows, Linux and macOS separately, CI evidence SHALL identify successful redesigned library and CLI build/test execution at the same review head in the applicable supported configurations; a matrix declaration, another platform's success, scaffold-only tests or a cached result from an older head SHALL NOT substitute for completed tests of the implemented behavior.*
+
+The current documented matrix tests --all-features and --no-default-features.
+Verify the redesigned package/feature coverage rather than treating the
+prototype matrix as future evidence. A platform-specific unavailable fixture
+is a coverage gap to record, not a passing execution or silent policy waiver.
+
+**L3-REL-006** · Parent: L2-REL-002 · Verification: I
+*Once the bounded time view exists, CI SHALL build an isolated consumer using exactly irig106-tmats = { version = "0.1", default-features = false, features = ["std"] } and exercise the public parse/time-view API, without workspace feature unification enabling omitted features; source binding SHALL identify the reviewed library head without changing that dependency declaration or pretending an unpublished release exists.*
+
+This is the existing RELEASE-0.1 consumer contract, not a new feature set.
+A CI-only local source override can bind the declaration to the reviewed
+crate before publication; record the override/source identity separately.
+The fixture is in this repo, not a modification of irigtime or its library.
+Concrete API calls must follow the reviewed implemented API, not the prototype.
+
+**L3-REL-007** · Parent: L2-REL-004 · Verification: I
+*Build-compatibility evidence SHALL distinguish the native platform matrix, Rust 1.85 check, explicit WASM target build and isolated consumer build by exact source head, toolchain, target/features, command and completed result, retaining missing, failed, skipped or cancelled obligations as unsatisfied rather than inferring success from an overall green unrelated run.*
+
+Provide CI run/job identifiers and inspected configuration with future
+Evidence. Source-only inspection proves a check is configured, not that it
+ran successfully or that a conditional check was eligible at this head.
+No new report/rendered output format or machine schema is selected here.
+
+**L3-REL-008** · Parent: L2-REL-003 · Verification: I
+*A successful plain-library target build SHALL NOT be represented as WebAssembly bindings, no_std support, executable semantic coverage or compatibility of the CLI/core reader with that target; unresolved dependency publication/API compatibility and owner interpretation/use-policy gates SHALL remain visible independently of compile success.*
+
+ADR-0015 and RELEASE-0.1 keep these distinct. Shared types/core 0.2 must be
+published before tmats 0.1, and actual compatible published APIs must still
+be verified. No passing build can approve pending pattern scope/syntax,
+extraction eligibility/output policies, report formats or governing use.

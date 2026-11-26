@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through pattern-lookup boundaries drafted (family 2, batches 1-26).**
+> **Status: foundations through build-compatibility contracts drafted (family 2, batches 1-27).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -1051,3 +1051,43 @@ reviewed-pattern contract below does not settle either item.
 **Rationale**: UC-03 and L1-VIEW-001 include every R-1\TK1-n. Chapter 9 (106-24R1) section 9.4.2 p. 9-2 defines numbered multiple-entry names and case-insensitive interpretation; Table 9-4 TRACK NUMBER/CHANNEL ID R-x\TK1-n p. 9-48 supplies the example's structural pattern. ADR-0002/0003 make source items authoritative, INT-038 supplies numeric index identity, and INT-039 preserves every duplicate. Pattern lookup is candidate retrieval, not a standard-defined association, cardinality/default decision or public query-string grammar. Concrete query representation and index data structures remain API/implementation review work.
 
 **Verification Method**: Test (T)
+
+
+## Build compatibility acceptance (family 2, batch 27)
+
+These derive the existing release-portability obligations, not a new target,
+feature, dependency policy or CI implementation. The [inspection and evidence
+note](research/2026-11-26-build-compatibility-requirements.md) distinguishes
+current prototype checks from future redesigned-library acceptance. No
+Evidence is claimed for the new requirements until matching configuration
+and actual run artifacts have been inspected.
+
+#### L2-REL-002
+
+**Parent**: L1-REL-002
+
+**Statement**: The redesigned library and CLI SHALL retain Rust 1.85 as their declared minimum and demonstrate compatible builds of the supported 0.1 configuration with actual dependency resolution on that toolchain; once the bounded time view exists, CI SHALL separately compile a consumer of the public library using the exact owner-required default-features=false, features=["std"] declaration, without relying on workspace all-features unification to make that consumer work.
+
+**Rationale**: L1-REL-002 and CLAUDE.md record the owner's edition-2024-floor requirement. RELEASE-0.1's owner-required irigtime declaration and CI consumer build are a separate compatibility obligation. The dependency is CLI-only in irigtime; no time-library dependency or new no_std claim follows. Published types/core 0.2 and actual compatible APIs remain prerequisites; neither published core 0.1.0 nor a merged core 0.2 reader proves compatibility. Distribution/publishing toolchains do not change the consumer MSRV.
+
+**Verification Method**: Inspection (I)
+
+#### L2-REL-003
+
+**Parent**: L1-REL-003
+
+**Statement**: Starting with the first redesigned library code, every change SHALL receive CI compilation of the plain irig106-tmats library for wasm32-unknown-unknown, without requiring the standalone CLI, WebAssembly bindings or the deferred wasm wrapper crate; that target result SHALL remain distinct from a native build or any no_std claim.
+
+**Rationale**: Owner decision F6, L1-REL-003, ADR-0010/0015 and the full 0.1 acceptance scope require plain-library WASM portability, not bindings. ADR-0015's removal of prototype bindings does not remove this build obligation. Feature/target evidence must refer to the redesigned library at the reviewed head; an old wasm feature's presence in the prototype is not evidence. This docs batch changes no workflow or manifest.
+
+**Verification Method**: Inspection (I)
+
+#### L2-REL-004
+
+**Parent**: L1-REL-004
+
+**Statement**: CI acceptance of the redesigned library and CLI SHALL include successful builds and substantive applicable tests on Windows, Linux and macOS, with each platform's toolchain/configuration, exact source head and completed result identifiable; a skipped, cancelled, missing or failed platform check SHALL NOT count as a passing check or be replaced by source inspection or help-only execution.
+
+**Rationale**: L1-REL-004 and RELEASING.md already require all three platforms. Host-callable CLI behavior, borrowed spans and input-preserving file acquisition require their actual applicable tests once implemented; unsupported platform fixture capabilities must remain explicit rather than appear as passes. This does not authorize platform exceptions or choose new filesystem/output policy. Heavy checks remain in bounded GitHub CI, with light local checks only.
+
+**Verification Method**: Inspection (I)

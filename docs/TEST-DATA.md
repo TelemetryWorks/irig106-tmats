@@ -1404,6 +1404,44 @@ answers remain distinct. No query glob/regex syntax, private-code grammar,
 link inference, renderer/schema/error spelling or output policy is chosen.
 No fixture or executable test marker is claimed as implemented by this table.
 
+## Planned build-compatibility inspection batch 27
+
+These are planned inspection/CI acceptance cases for L2-REL-002/003/004,
+not executed Rust tests or Evidence. Inspect actual package/configuration
+binding and completed artifacts at one exact review head. Negative cases
+are future acceptance-oracle examples, not mutations performed by this PR.
+No prototype build is presented as redesigned-library acceptance.
+
+| Planned acceptance case | Evidence required or independent rejection condition | Requirements |
+|---|---|---|
+| `compat_msrv_inherits_both_packages` | Resolve actual library/CLI TOML inheritance to rust-version 1.85 under ADR-0035; comments or virtual-root-only metadata cannot pass | L3-REL-002 |
+| `compat_msrv_detects_one_package_mismatch` | Library inherits 1.85 but CLI declares a different floor: mismatch remains visible, not hidden by the library manifest | L3-REL-002 |
+| `compat_msrv_runs_real_185_check` | Completed Rust 1.85 check includes both redesigned packages and resolved production dependencies/configuration; actual compiler version and head are identifiable | L3-REL-003 |
+| `compat_stable_is_not_msrv_evidence` | Stable succeeds while the 1.85 job is missing/failed: MSRV is unsatisfied; do not infer success or silently raise the floor | L3-REL-003, L3-REL-007 |
+| `compat_dependency_msrv_failure_is_not_waived` | Dependency check fails on 1.85: retain compatibility gap, do not omit CLI/supported features or substitute publishing toolchain | L3-REL-003 |
+| `compat_wasm_targets_plain_library` | Completed CI check explicitly targets wasm32-unknown-unknown and redesigned library with recorded features, not native/default host or CLI | L3-REL-004 |
+| `compat_wasm_bindings_do_not_substitute` | Old wasm-bindgen/prototype feature or wrapper-only success does not satisfy the plain-library target obligation | L3-REL-004, L3-REL-008 |
+| `compat_wasm_runs_from_first_new_code` | Once redesigned library exists, every-change check is present and actually executed; a permanently skipped job is missing evidence | L3-REL-004, L3-REL-007 |
+| `compat_three_platforms_build_and_test` | Completed Windows/Linux/macOS results at the same head cover both packages and implemented tests, not only a matrix declaration | L3-REL-005 |
+| `compat_one_platform_failure_stays_unsatisfied` | Two platforms succeed, third fails/cancels/is absent: that platform is not accepted through another platform's pass | L3-REL-005, L3-REL-007 |
+| `compat_scaffold_tests_do_not_prove_commands` | Help/version-only scaffold passes: substantive redesigned command/library checks are still required once those areas exist | L3-REL-005 |
+| `compat_platform_fixture_unavailable_is_not_pass` | Platform cannot create a required fixture/link: record unavailable coverage without approving an output-safety waiver | L3-REL-005 |
+| `compat_consumer_declaration_is_exact` | Isolated consumer keeps version 0.1, default-features=false, features=[std]; no defaults/all-features substitution; reviewed public parse/time-view calls compile | L3-REL-006 |
+| `compat_workspace_feature_leak_is_not_consumer_success` | Workspace all-features succeeds but isolated exact consumer fails: consumer obligation remains unsatisfied | L3-REL-006, L3-REL-007 |
+| `compat_consumer_uses_reviewed_source` | Before publication, source override separately binds unchanged dependency entry to reviewed head; inspect actual resolved source/version, not a placeholder | L3-REL-006 |
+| `compat_consumer_waits_for_actual_time_view` | Before view exists, requirement is not falsely claimed implemented; after it exists, consumer must call the real reviewed API, not an empty main | L3-REL-006 |
+| `compat_old_head_artifact_does_not_verify_new_head` | Matching command/OS with another source SHA does not satisfy current acceptance | L3-REL-005, L3-REL-007 |
+| `compat_each_check_retains_own_qualifications` | Native success cannot substitute for WASM/MSRV/consumer; retain targets/features, job state and command for every obligation | L3-REL-007 |
+| `compat_compile_does_not_claim_bindings_or_no_std` | Plain-WASM or std consumer compiles: bindings, no_std and semantic parser coverage remain separate/unproved | L3-REL-004, L3-REL-008 |
+| `compat_source_override_is_not_dependency_publication` | Local reviewed source builds: types/core publication/API prerequisites and qualified-record owner gates remain outstanding unless separately satisfied | L3-REL-006, L3-REL-008 |
+
+Future Evidence must name inspected configuration plus the actual run/job
+artifacts; these rows alone provide no evidence. The current docs-only CI
+can check documentation drift and the prototype, but cannot execute an
+unimplemented redesign. Heavy builds/tests remain in bounded GitHub CI;
+local checks for this batch stay lightweight. No feature, workflow or
+manifest is changed, and no publishing/package operation is performed.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample

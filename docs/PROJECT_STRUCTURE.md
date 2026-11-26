@@ -96,6 +96,7 @@ irig106-tmats/
 │   │                          2026-11-25-retained-cut-and-qm-review-followups.md records the independent review and narrow blocking/test amendments;
 │   │                          2026-11-25-time-view-metadata-requirements.md derives bounded channel/time-field requirements and acceptance scope;
 │   │                          2026-11-25-source-bit-requirements.md derives explicit NSB splitting and records DSI/CHE remaining boundaries;
+│   │                          2026-11-26-build-compatibility-requirements.md derives MSRV/WASM/platform/consumer build acceptance and evidence boundaries;
 │   │                          2026-11-26-pattern-lookup-requirements.md derives bound-index raw pattern retrieval and its review/oracle boundaries;
 │   │                          2026-11-26-extraction-requirements.md derives byte extraction/input immutability and audits remaining family-2 work;
 │   │                          2026-11-26-cli-mounting-requirements.md derives reusable mounting, host dispatch, adapter guard and assembly observations;

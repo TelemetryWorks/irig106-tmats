@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-26-build-compatibility-requirements.md](2026-11-26-build-compatibility-requirements.md) | Batch 27 MSRV/plain-WASM/native-platform/exact-consumer acceptance, source-inspected prototype CI and planned evidence boundaries |
 | [2026-11-26-pattern-lookup-requirements.md](2026-11-26-pattern-lookup-requirements.md) | Batch 26 structural raw-pattern retrieval, canonical bindings, all ordered candidates/provenance and independent planned oracles |
 | [2026-11-26-extraction-requirements.md](2026-11-26-extraction-requirements.md) | Batch 25 selected-record byte extraction, input-alias safety, planned fixtures and remaining family-2 planning estimate |
 | [2026-11-26-cli-mounting-requirements.md](2026-11-26-cli-mounting-requirements.md) | Batch 24 runner/individual API mounting, verbatim host-dispatch clarification, defensive Format-1 guard and preserved assembly observations |
