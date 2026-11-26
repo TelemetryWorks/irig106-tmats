@@ -2451,7 +2451,7 @@ library and both CLI targets through their package metadata; the virtual
 root is not itself a package. No local manifest change is made in this slice.
 
 **L3-REL-003** · Parent: L2-REL-002 · Verification: I
-*MSRV evidence SHALL include an actual Rust 1.85 build/check of both redesigned packages and their resolved production dependencies in supported 0.1 feature configuration, with the invoked compiler/toolchain, command and exact source head identifiable; a stable-only build or rust-version declaration alone SHALL NOT satisfy the obligation.*
+*MSRV evidence SHALL include an actual Rust 1.85 build/check of both redesigned packages and their resolved production dependencies in supported 0.1 feature configuration, with the invoked compiler/toolchain, command and exact source head identifiable and the output of `rustc -V` recorded in the evidence; a stable-only build or rust-version declaration alone SHALL NOT satisfy the obligation.*
 
 The existing documented baseline is cargo check --workspace --all-features
 on 1.85; inspect its binding to the restructured packages and real supported
