@@ -35,6 +35,8 @@ a command computes, the library can compute for other callers.
 
 - **Input by content, not extension.** A file that starts with the Chapter 10
   packet sync pattern is a recording; anything else is TMATS text.
+  L2-CLI-005/006 derive this selector and acquisition/failure boundary; route
+  selection is not packet validation or permission to retry the other mode.
 - **The configuration timeline.** From 0.2, `show` lists every setup record
   with its kind (first, repeat, change), its findings, and what changed
   (UC-19; L1-CH10-008), and `check` runs the packet check (UC-18).

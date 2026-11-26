@@ -1488,6 +1488,42 @@ a second complete record. Requirements: L1-CH10-008, L1-READ-004.
 | e | reordered only, SRCC 1 | same configuration; change-bit-with-nothing-changed finding |
 | f | one malformed attribute added, SRCC 0 | not comparable; textual differences; no SRCC finding |
 
+## Planned content-routing batch 23
+
+These are acceptance specifications for L2-CLI-005/006, not executable
+coverage. ADR-0019 supplies the retained selector; ADR-0036 supplies the
+core-only reader boundary. Chapter 11 (106-24R1) section 11.2.1.1 a p. 11-5
+and section 11.1 p. 11-1 supply initial sync bytes 25 EB (hex).
+All buffers here are bounded synthetic inputs. Router spies observe calls,
+forwarded bytes and failures; they do not implement packet finding.
+
+| Planned test | Independent input and expected boundary result | Requirements |
+|---|---|---|
+| `input_sync_prefix_routes_recording` | 25 EB followed by arbitrary bytes selects core exactly once; no text-reader call; no claim that core accepts it | L3-CLI-014, L3-CLI-017 |
+| `input_reversed_sync_routes_text` | EB 25 is not the source-derived prefix; unchanged bytes reach text reader, not core | L3-CLI-014, L3-CLI-018 |
+| `input_sync_only_does_not_prove_packet` | Exactly 25 EB selects recording; injected core rejection is preserved, not converted to text success | L3-CLI-014, L3-CLI-019 |
+| `input_empty_source_is_not_acquisition_failure` | Successful zero bytes select text with no invented document; failed acquisition stays failure and invokes neither consumer | L3-CLI-015, L3-CLI-019 |
+| `input_one_byte_never_fabricates_sync` | Each of 256 one-byte sources selects text; no padded byte or out-of-range read | L3-CLI-015 |
+| `input_prefix_sweep_has_one_recording_pair` | Every two-byte prefix, independently enumerated: only literal 25 EB selects recording; exact unchanged prefix forwarded | L3-CLI-014, L3-CLI-021 |
+| `input_extension_never_selects_mode` | Same bytes under .tmats, .ch10 and no suffix always choose the same route; swap bytes while retaining the name and the route follows bytes | L3-CLI-016 |
+| `input_later_sync_does_not_trigger_scan` | Standalone bytes with 25 EB at offset 1 or later select text; no core search or automatic recovery | L3-CLI-014, L3-CLI-016 |
+| `input_text_bytes_survive_route_probe` | Text source with CR/LF, high bytes, NUL and malformed tail reaches text reader byte-for-byte; reader interpretation remains separate | L3-CLI-018, L3-CLI-020 |
+| `input_bom_is_not_stripped_to_find_sync` | EF BB BF before 25 EB selects text; router neither skips BOM nor changes source mapping | L3-CLI-014, L3-CLI-018 |
+| `input_layout_is_not_skipped_to_find_sync` | Leading spaces/CR/LF before 25 EB select text; no prefix repair or trim | L3-CLI-014, L3-CLI-018 |
+| `input_core_failure_never_retries_text` | Recording prefix plus injected core failure preserves failure; text-consumer call count stays zero | L3-CLI-017, L3-CLI-019 |
+| `input_text_failure_never_retries_core` | Nonmatching prefix plus injected TMATS failure preserves failure; core-consumer call count stays zero | L3-CLI-018, L3-CLI-019 |
+| `input_core_unavailable_is_dependency_gap` | Recording route with unavailable core adapter never substitutes local scanner/checksum/reader or text | L3-CLI-017, L3-CLI-019 |
+| `input_core_evidence_survives_routing` | Inject qualified admission, RDG-008 sideband and data NotChecked alongside header-only PacketFacts; route never upgrades or adds fields | L3-CLI-017, L3-CLI-019 |
+| `input_route_does_not_adopt_setup` | Successful routing/consumer call cannot itself turn Incomplete/Ambiguous or untrusted evidence into a usable governing setup | L3-CLI-019 |
+| `input_probe_preserves_source_origin` | Selected consumer receives offset-zero bytes and same source identity, not bytes starting after the two-byte probe | L3-CLI-018, L3-CLI-020 |
+| `input_router_keeps_borrow_owner_alive` | Borrowed source remains live through selected consumer; no mandatory full-file copy or library-owned file open | L3-CLI-017, L3-CLI-020 |
+| `input_routing_oracle_is_independent` | Prefix expectations are literal source-derived bytes; injecting opposite consumer failures proves selection does not reuse parser success as an oracle | L3-CLI-021 |
+
+These tests do not decide a public error spelling, report schema or numeric
+exit code. Core packet fixtures and TMATS reader fixtures separately verify
+those components; the routing sweep is not parser coverage. No executable
+markers are added until the rebuilt implementation exists.
+
 ## Known defects in the prototype, and the tests that guard the rebuild
 
 The team's spec alignment review (`docs/research/2026-09-27-spec-alignment-review.md`)

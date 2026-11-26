@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through packet-slicing mechanics drafted (family 2, batches 1-22).**
+> **Status: foundations through content-routing boundaries drafted (family 2, batches 1-23).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -2127,3 +2127,67 @@ assemble span-backed input. INT-011/045 logical packet boundaries remain.
 Large backing belongs to bounded GitHub CI, with no 128-MiB local allocation.
 Use arithmetic/descriptor checks locally and core fixtures or explicit facts
 for integration. Metadata allocation is not hidden payload coalescing.
+
+
+## Content selection and acquisition boundary (family 2, batch 23)
+
+Derived from accepted ADR-0019's retained input selector, ADR-0036's
+core-only reader and ADR-0003/0010. Source facts, exclusions and independent
+oracles are in the [batch note](research/2026-11-26-content-routing-requirements.md).
+These are planned contracts, not implemented CLI coverage.
+
+**L3-CLI-014** · Parent: L2-CLI-005 · Verification: T
+*On successfully acquired source bytes, the selector SHALL choose recording exactly when logical source offsets [0,2) equal 25 EB (hex); otherwise it SHALL choose standalone TMATS text, without scanning later offsets or interpreting headers to make that selection.*
+
+Chapter 11 (106-24R1) section 11.2.1.1 a p. 11-5 supplies 0xEB25;
+section 11.1 p. 11-1 supplies structural little-endian order. ADR-0019
+supplies the routing policy. This two-byte selector is not core packet finding.
+
+**L3-CLI-015** · Parent: L2-CLI-005 · Verification: T
+*A successfully acquired empty or one-byte source SHALL take the standalone-text route because it lacks the complete prefix, without padding, reading beyond bounds or treating this route as a successful parse or an empty-document result.*
+
+A lone 25 or EB is insufficient. Any reader framing/encoding findings and
+failure remain that reader's result; selection does not repair partial input.
+
+**L3-CLI-016** · Parent: L2-CLI-005 · Verification: T
+*Renaming the same source, changing its extension or placing sync-like bytes later in it SHALL NOT alter the content-selected route; path metadata SHALL NOT substitute for the initial byte predicate.*
+
+A .tmats file with the prefix selects recording; a .ch10 file without it
+selects text. Handling embedded recordings or damaged prefixes would need
+separate reviewed recovery behavior, not an implicit search here.
+
+**L3-CLI-017** · Parent: L2-CLI-006 · Verification: T
+*Recording-selected input SHALL go to core's packet reader and the existing TMATS integration boundary, preserving core-supplied integrity/trust sideband alongside header-only PacketFacts and borrowed DATA spans, without a local packet scanner, header/checksum validator or mandatory DATA coalescing.*
+
+L3-CLI-004–013 govern the adapter. PacketInfo sideband carries integrity,
+admission and ranges; PacketFacts itself gains no trust fields. Unavailable
+core capability remains a dependency gap, not permission for another reader.
+
+**L3-CLI-018** · Parent: L2-CLI-006 · Verification: T
+*Standalone-text-selected input SHALL reach the TMATS reader with its original byte sequence and source mapping unchanged, without implicit UTF-8 decoding, lossy/Latin-1 conversion, BOM stripping, newline conversion or byte removal in the router.*
+
+ADR-0003 and INT-035–038 govern source preservation and interpreted views.
+Raw routing does not decide whether bytes yield usable interpreted fields.
+L1-CLI-007's prohibition on modifying input files remains applicable.
+
+**L3-CLI-019** · Parent: L2-CLI-006 · Verification: T
+*An acquisition failure SHALL remain distinguishable from successfully acquired empty input, and downstream failure or unavailable trust SHALL remain distinguishable from route selection; neither SHALL manufacture a successful document, trigger an automatic retry as the other input mode or upgrade setup usability/governance.*
+
+The initial predicate in ADR-0019 does not authorize a parse-failure fallback.
+No new recovery/adoption policy, public error spelling or exit-code mapping
+is selected. Existing completeness, integrity and governing gates still apply.
+
+**L3-CLI-020** · Parent: L2-CLI-006 · Verification: T
+*Acquisition SHALL remain at the CLI/caller integration boundary, with the TMATS library I/O-free; routing SHALL preserve the source prefix for the selected consumer rather than consume/drop it, and SHALL keep the source alive for borrowed access under the existing ownership contract.*
+
+ADR-0010 and ADR-0036. The source owner supplies bytes; routing does not
+create a new file reader in the TMATS library or require a full-file copy.
+This does not select a stdin convention, argument syntax or streaming API.
+
+**L3-CLI-021** · Parent: L2-CLI-005 · Verification: T
+*Input-routing verification SHALL use independently specified prefix cases and observable consumer/acquisition boundaries, asserting the selected route, unchanged forwarded bytes and absence of the other consumer on downstream failure, without implementing a second packet reader as its oracle.*
+
+Use bounded synthetic buffers and injected consumer outcomes in CI. Compare
+the selected route with literal source-derived cases, not the production
+selector called again to calculate expectations. Core integration fixtures
+remain separate from this selector's tests.
