@@ -842,7 +842,7 @@ implementation; no new requirement is verified by this documentation.
 
 **Statement**: Decimal-integer effective reads, including condition operands and numeric-looking enumeration codes, SHALL apply INT-055's bounded raw ASCII-digit grammar and canonical comparison, preserve raw values/locations and warning findings, check the field's cited range after canonicalisation, and retain existing multiplicity/character guards and uniform INT-041 leading-blank unavailability without repairing source or guessing unusable operands.
 
-**Rationale**: Owner Option A supplies lexical policy absent from the cited ranges, including NSB/TK1/R\N and TTF/SHTF/TFMT codes (106-24R1 Table 9-4 pp. 9-32–33, 9-48, 9-51, 9-71–72). It extends canonical-string comparison to values expressly; it does not change the code-name-index grammar or G\SHA's structured rule. INT-055 excludes floating-point/hex fields, listed in the owner-answer inventory, for separate reviewed rules.
+**Rationale**: Owner Option A supplies lexical policy absent from the cited ranges, including NSB/TK1/R\N and TTF/SHTF/TFMT codes (106-24R1 Table 9-4 pp. 9-32–33, 9-48, 9-51, 9-71–72). It extends canonical-string comparison to values expressly; it does not change the code-name-index grammar or G\SHA's structured rule. INT-055 excludes binary/masks, floating-point, hex and all other non-decimal representations. Numeric-looking codes require an explicit reviewed enumeration table, never a bit pattern; see the complete exclusion/Range audit inventory.
 
 **Verification Method**: Test (T)
 

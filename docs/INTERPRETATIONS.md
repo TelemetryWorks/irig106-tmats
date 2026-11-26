@@ -1897,7 +1897,7 @@ permission to govern, generate packets or bypass assembly ambiguity/cuts.
 a recorder's enable declaration must not hide the setup information a
 consumer needs to inspect.
 
-**Design**: approved (Joey, Option A, 2026-11-25; independent AI CONCUR at ebf9ec454da6107e73d27c928390b25025cb9b57) · **Review**: complete under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; independent AI check: CONCUR on PR #51 at `ebf9ec454da6107e73d27c928390b25025cb9b57`, reviewer @thread:thr_qsvwmtnn8f; source freshness, development analysis and executable tests remain required · **Origin**: owner CHE direction after #50
+**Design**: approved (Joey, Option A, 2026-11-25; independent AI CONCUR at ebf9ec454da6107e73d27c928390b25025cb9b57) · **Review**: complete under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; independent AI check: CONCUR (final, reaffirmed at `b43a46980386a3fb24d4a09ed547f5ff26fef251`, Behaviour unchanged) on PR #51 at `ebf9ec454da6107e73d27c928390b25025cb9b57`, reviewer @thread:thr_qsvwmtnn8f; source freshness, development analysis and executable tests remain required · **Origin**: owner CHE direction after #50
 
 **Test**: `che_disabled_timein_is_still_enumerated`, `che_missing_duplicate_invalid_preserve_entry`, `che_caller_filter_is_explicit_and_nonmutating` (planned, not implemented or executed)
 
@@ -1917,9 +1917,17 @@ consumer needs to inspect.
 three clarifications; [verbatim answers and exclusion inventory](research/2026-11-25-int055-owner-answers.md).
 This applies ONLY to decimal-integer field values (NSB, TK1, R\N condition
 operands, and other decimal-integer fields) and numeric-looking enumeration
-codes, including TTF/SHTF/TFMT 0/1/2. Floating-point and hexadecimal fields
-are explicitly out of scope and require their own reviewed rules later;
-a numeric-only spelling in such a field does not bring it into this rule.
+codes from explicit reviewed enumeration tables, including TTF/SHTF/TFMT
+0/1/2. A binary pattern is NEVER a numeric-looking enumeration code.
+Floating-point, hexadecimal, binary (including bit strings, patterns and
+masks), and ANY OTHER non-decimal representation are explicitly out of
+scope and require their own reviewed rules; numeric-only spelling does not
+bring an excluded representation into this rule. Choose dispatch from the
+reviewed field/representation definition, never the bytes alone. Preserve
+binary width/leading zeros; no decimal ten-digit limit, canonicalisation,
+warning or range comparison applies. See the [complete exclusion inventory
+and every-Range audit](research/2026-11-26-int055-binary-exclusions.md), which
+extends the dated floating/hex list without rewriting its history.
 
 Check the RAW value bytes, not the INT-036 projection: require a nonempty
 run of ASCII digits, at most TEN before stripping zeros. Any control byte
@@ -1954,12 +1962,12 @@ located binding remain available independently of local conversion.
 
 **Reason**: The owner chose raw-byte strictness over the projection-first
 recommendation, uniform leading-blank unavailability and decimal-only scope.
-This preserves real floating/hex representations for separate review, avoids
-an arbitrary field-by-field blank exception set and never makes a damaged
+This preserves floating/hex/binary and other non-decimal representations
+for separate review, avoids an arbitrary field-by-field blank exception set and never makes a damaged
 number usable by omission. Zero-padding remains visible, bounded comparison,
 not a source edit.
 
-**Design**: owner decision recorded (Joey, Option A answers, 2026-11-25); independent AI recheck pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25, including all three clarification answers; prior independent AI check: CONCERNS on PR #51 at `ebf9ec454da6107e73d27c928390b25025cb9b57`, reviewer @thread:thr_qsvwmtnn8f; owner answers now recorded, independent recheck of amended wording pending · **Origin**: owner numeric field-value direction after #50
+**Design**: owner decision recorded (Joey, Option A answers, 2026-11-25); independent AI recheck pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25, including all three clarification answers; prior independent AI check: CONCERNS on PR #51 at `ebf9ec454da6107e73d27c928390b25025cb9b57`, reviewer @thread:thr_qsvwmtnn8f; owner answers now recorded; latest delta recheck at `b43a46980386a3fb24d4a09ed547f5ff26fef251` had only the binary-exclusion concern, addressed here; independent recheck of this amended wording pending · **Origin**: owner numeric field-value direction after #50
 
 **Test**: `numeric_ascii_syntax_and_digit_limit`, `numeric_zero_padding_keeps_warning_and_raw`, `numeric_ranges_follow_canonicalisation`, `numeric_codes_accept_02_without_changing_letters`, `numeric_leading_blank_keeps_int041_exception`, `numeric_rn_condition_never_guesses`, `numeric_projection_keeps_character_findings`, `numeric_exclusions_dispatch_by_definition` (planned, not implemented or executed)
 

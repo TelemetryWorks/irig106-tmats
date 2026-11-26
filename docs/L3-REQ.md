@@ -1777,8 +1777,10 @@ AI CONCUR at #51 ebf9ec4; INT-055 owner answers are recorded; AI recheck pending
 INT-055 is owner policy, not a ten-digit limit printed in Chapter 9.
 Keep independent character findings and proved Invalid failures visible;
 INT-037 high bytes remain Invalid. Eleven zeros fail before canonicalisation.
-Floating-point/hexadecimal fields are excluded for later reviewed rules,
-including their numeric-only spellings; see the owner-answer inventory.
+Binary/bit-pattern/mask, floating-point, hexadecimal and every other
+non-decimal representation are excluded, including numeric-only spellings.
+Numeric codes require an explicit reviewed enumeration table, never a binary
+pattern; see the complete exclusion inventory/Range audit.
 Letter enum codes and G\SHA structured syntax keep separate rules.
 
 **L3-VIEW-038** · Parent: L2-VIEW-011 · Verification: T
