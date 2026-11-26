@@ -1091,8 +1091,8 @@ coverage or implementation readiness is claimed by this table.
 
 PLANNED acceptance specifications for L2-VIEW-013/014 and L3-VIEW-043–051,
 not runtime tests or an association resolver. Authority: owner direction
-2026-11-21 and owner answers 2026-11-26 (INT-056–060, independent check
-pending) in RELEASE-0.1. Inspected sources: 106-24R1 Chapter 9 section
+2026-11-21 and owner answers 2026-11-26 (INT-056–060, final CONCUR
+at #52 3fcbd2c) in RELEASE-0.1. Inspected sources: 106-24R1 Chapter 9 section
 9.5.4 Table 9-4 NSB p. 9-33, TK1 p. 9-48, DSI/CHE p. 9-49, CDT
 p. 9-50, SHTF p. 9-51, TTF/TFMT/TSRC pp. 9-71–72; [batch note](research/2026-11-26-association-assumption-requirements.md).
 None of those fields is treated as a data-channel -> time-channel reference.
@@ -1131,7 +1131,7 @@ presence/counter findings in snippets that are not complete conforming setups.
 
 ### Owner-signed caller-choice fixture matrix (INT-056–060)
 
-All cases are PLANNED; independent AI check is pending. The nine bad-data
+All cases are PLANNED; final interpretation CONCUR is at #52 3fcbd2c. The nine bad-data
 fixtures enumerate every level x bad-data-kind combination. EACH has both
 ID and format arms (18 focused members): a canonical scoped TIMEIN entry is
 already identified independently of its bad TK1/format value. No nonexistent
@@ -1178,6 +1178,50 @@ labels/qualifications on dependent results. There is no field-code invention,
 synthetic positive-proof claim, evidence weighting rule or fixed Rust symbol
 in this test plan. Meaningful executable markers and source-based oracles
 must accompany implementation later; all requirements here remain Draft.
+
+## Planned lossless-output batch 21
+
+PLANNED tests for L2-WRT-003/004 and L3-WRT-004–011, refining existing
+L3-WRT-001. Sources: ADR-0002/0003/0010/0029, L1-WRT-001/002 and
+106-24R1 Chapter 9 sections 9.4.1–9.4.2 pp. 9-2–3; [batch note](research/2026-11-26-lossless-output-requirements.md).
+Use independent original byte vectors, not normalized text or a second
+serializer. Retained-document fixtures do not require every parse attempt
+to return a document, nor claim malformed inputs conform to the standard.
+
+| Named planned test | Independent stimulus / expected result | Requirements |
+| --- | --- | --- |
+| `unedited_output_keeps_full_byte_vector` | Known original bytes with attribute gaps/layout: output both as bytes and through supplied sink equals the entire input vector, not only interpreted items | L3-WRT-004, L3-WRT-009 |
+| `unedited_output_empty_and_layout_only` | Retained empty, CR/LF, lone-CR and layout-only source: exact original sequence, no synthetic item/newline or fabricated success document on a rejected parse | L3-WRT-004, L3-WRT-005 |
+| `unedited_output_keeps_bad_delimiters_and_cut_suffix` | Missing-colon region, empty name/value, extra semicolons and nonterminated suffix: every retained byte remains; findings/qualification persist, no missing-semicolon repair | L3-WRT-004, L3-WRT-005 |
+| `unedited_output_keeps_unknown_vendor_extension_items` | Unknown/native-looking, V/X and COMMENT items interspersed with known keys: same input order and bytes, no registry-driven omission or schema reconstruction | L3-WRT-004 |
+| `unedited_output_never_coalesces_duplicates` | Equal/conflicting scalar repeats and canonical-index collision spellings: preserve every spelling/occurrence and source position, no chosen winner or deduplication | L3-WRT-004, L3-WRT-006 |
+| `unedited_output_keeps_controls_high_bytes_and_padding` | Retained source contains NUL/0x1A/space EOF padding, internal controls and high bytes: output equals raw vector even when interpreted reads discard/control-find or reject high bytes | L3-WRT-004, L3-WRT-005 |
+| `unedited_output_unsupported_marker_keeps_source` | Retained-source document with leading unsupported marker or format qualification: copy source, not lossy/Latin-1/UTF conversion; no semantic support/conformance or governing claim | L3-WRT-005 |
+| `unedited_output_owns_source_not_mutated_caller_buffer` | Construct owned document from known vector, then modify/release caller buffer: output equals the original known document bytes, not later caller content | L3-WRT-004 |
+| `unedited_output_queries_do_not_change_bytes` | Perform raw/effective lookups, canonical-name/index comparisons and labelled display reads in varied order: replay source unchanged, no cache/model reconstruction | L3-WRT-006 |
+| `unedited_output_defaults_and_fallback_do_not_materialize` | Applicable absent TFMT default and labelled edition fallback: no inserted TFMT/G\106 field, no rewritten explicit declaration, same full source bytes | L3-WRT-006, L3-WRT-010 |
+| `unedited_output_quiet_assumption_does_not_change_source` | Explicit Quiet choice emits its suppression marker/set but retains source diagnostics: output is original vector; suppression never deletes source attributes or repairs invalid numeric data | L3-WRT-006 |
+| `unedited_output_assembly_body_is_not_packets` | Supplied assembled TMATS body with fragment map/CSDW metadata: serialize body only, not CSDWs, packet headers/fillers or recording framing; provenance/qualification remains metadata | L3-WRT-005, L3-WRT-009 |
+| `writer_partial_acceptance_keeps_order` | Supported partial-write adapter with deterministic accepts 1/2/3 bytes: complete vector exactly once in order or explicit failure under its contract; no dropped/duplicated suffix or truncated success | L3-WRT-007 |
+| `writer_no_progress_is_not_unbounded_retry` | Mock destination makes no progress under a fallible adapter contract: terminate with observable failure, never a busy-loop/success; leave document intact, no new retry count/default policy | L3-WRT-007, L3-WRT-008 |
+| `writer_failure_before_first_byte_is_visible` | Caller sink fails before accepting anything: return failure/cause, source/revision/findings unchanged, no fabricated complete-output success | L3-WRT-008 |
+| `writer_failure_after_prefix_has_no_rollback_claim` | Sink accepts known prefix then fails, with error at final boundary as a separate arm: no success even if a full prefix escaped, error observable, source unchanged, no promise sink reverted | L3-WRT-007, L3-WRT-008 |
+| `writer_explicit_retry_uses_fresh_caller_sink` | After reported partial failure caller explicitly retries to a fresh sink: complete original vector, no retained hidden offset or implicit append into the failed external destination | L3-WRT-004, L3-WRT-008 |
+| `writer_destination_is_caller_supplied` | Recording fake/byte destination is supplied directly: no library-selected path, stdout/stderr, network/environment or packet destination; existing no-I/O inspection remains separate evidence | L3-WRT-009 |
+| `normalization_not_requested_means_replay` | Mixed case/order/newlines, inconsistent counters and repair suggestions with no normalization/edit request: exact source bytes, no counter repair, case fold, newline insertion or sorting | L3-WRT-006, L3-WRT-010 |
+| `normalization_is_not_requested_by_view_mode_or_verify` | Tree/pretty presentation preference or checksum verification only: cannot authorize source normalization or stamp; default serialization still byte-identical | L3-WRT-010 |
+| `normalization_request_scope_is_separate` | Isolated operation-dispatch unit receives explicit request for an already-reviewed transform: retain request/scope separately from default replay, never add unrequested repairs. This fixture supplies no canonical transformation algorithm or normalized-byte oracle | L3-WRT-011 |
+| `normalization_unreviewed_transform_is_not_guessed` | Requested transform lacks reviewed semantics/support: do not invent canonical order/counter bytes or report a successful normalized result; source unchanged, limitation/error visible under the eventual reviewed API | L3-WRT-011 |
+| `unedited_replay_generated_vectors_match_original` | Future CI property cases supply bounded independent byte vectors and reader results with retained documents, vary read-only operations and sink paths: complete original-vector equality and source immutability for each; no typed-field/hash-only oracle | L3-WRT-004, L3-WRT-005, L3-WRT-006, L3-WRT-007 |
+
+For generated tests, fix/document a finite seed/vector/operation budget in the
+test harness and publish it with results; do not run a local exhaustive input
+space. Short-write cases apply only to adapters whose supplied interface
+allows partial acceptance. Failure checks observe source and escaped prefix
+independently; they do not pretend external side effects are transactional.
+All normalization transformations still need their own reviewed rules and
+independent byte oracles before those features are implemented. Nothing here
+marks the full normalization L1, writer family or release complete.
 
 ## Real Chapter 10 recordings (local use only)
 

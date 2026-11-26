@@ -1,8 +1,7 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through bounded association/assumption contracts drafted (family 2, batches 1-20).**
-> INT-056 Quiet clarifications are owner-signed (Joey, 2026-11-26); AI recheck pending.
-> INT-057–060 are approved; AI CONCUR at #52 8ec6411.
+> **Status: foundations through lossless-output boundaries drafted (family 2, batches 1-21).**
+> INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
@@ -1614,7 +1613,7 @@ reviewed API choice; revision identity and no stale interpretation are binding.
 INT-056's clarified policy keeps findings readable in field results AND
 source diagnostics, while Quiet suppresses exactly Warn's bad-data finding
 set of any severity. Level, states and `suppressed: N bad-data findings`
-(even 0) remain visible on every Quiet result. Independent review pending.
+(even 0) remain visible on every Quiet result. Final independent CONCUR at #52 3fcbd2c; development gates remain.
 
 **L3-VIEW-022** · Parent: L2-VIEW-007 · Verification: T
 *A view obtained with incomplete, retained-cut, ambiguous, unsupported-format or otherwise unestablished setup eligibility SHALL preserve that limitation and SHALL NOT present local metadata as an unqualified usable or governing time setup; no metadata result SHALL prove a data-channel/time-source association or select a governing candidate from competing records.*
@@ -1828,8 +1827,8 @@ streaming/adoption rule or permission to override disabled packet findings.
 Future obligations derived from RELEASE-0.1's owner direction, 2026-11-21.
 They specify evidence retention/composition, not a TMATS association field,
 consumer clock-selection algorithm, Rust API or implementation readiness.
-Owner-signed INT-056–060 settle the caller policies; INT-056 Quiet recheck is
-pending and INT-057–060 have CONCUR at #52 8ec6411. See the [batch note](research/2026-11-26-association-assumption-requirements.md).
+Owner-signed INT-056–060 settle the caller policies; INT-056–060 have final
+independent CONCUR at #52 3fcbd2c. See the [batch note](research/2026-11-26-association-assumption-requirements.md).
 
 **L3-VIEW-043** · Parent: L2-VIEW-013 · Verification: T
 *An association query SHALL retain the supplied data-channel identity, its recorder/entry scope where established, setup document/revision and supplied governing-context basis or limitation, without inventing scope, borrowing another record's TIMEIN entries or using entry index n as an actual TK1 channel ID.*
@@ -1913,8 +1912,8 @@ historical provenance. Full timelines remain 0.2 and are not constructed here.
 
 ## Owner-signed caller-choice policies (INT-056–060)
 
-Joey, 2026-11-26; INT-056 recheck pending under ADR-0033, while
-INT-057–060 have CONCUR at #52 8ec6411. The policies
+Joey, 2026-11-26; final independent CONCUR under ADR-0033 on #52
+head 3fcbd2c for INT-056–060. Development/source/test gates remain. The policies
 are owner decisions, not a new standard field. They do not waive development,
 source freshness or executable-test gates.
 
@@ -1963,3 +1962,75 @@ not be presented as an actual 0.1 evidence-admission path.
 INT-060 and INT-056 distinguish explicit choice from default warning level.
 Dependent answers from that query still retain its provenance; a new query
 needs its own explicit choice even when it selects the same target.
+
+## Byte-faithful output and normalization boundary (family 2, batch 21)
+
+These refine the batch-1 replay rule L3-WRT-001, not a new writer or edit
+implementation. Accepted ADR-0002/0003/0010 and L1-WRT-001/002 govern;
+see the [batch note](research/2026-11-26-lossless-output-requirements.md).
+No normalizer grammar/default, public Rust signature or implicit repair is
+approved. Existing reader/interpretation states do not authorize byte loss.
+
+**L3-WRT-004** · Parent: L2-WRT-003 · Verification: T
+*Successful unedited default output SHALL equal the original document source sequence byte-for-byte and in full, including source gaps, delimiters, layout/padding, empty values, duplicate/unknown items and retained malformed or unterminated regions, without rebuilding output from indexed keys, projected characters or interpreted values.*
+
+The source is the document's retained buffer, not the caller's later-mutated
+input allocation. A vector comparison is the oracle; matching only a hash,
+item multiset or typed model cannot prove byte identity. This does not
+require the parser to return a document for every unsupported input.
+
+**L3-WRT-005** · Parent: L2-WRT-003 · Verification: T
+*A retained document's unavailable/invalid field evidence, unsupported encoding/format qualification or incomplete/ambiguous setup qualification SHALL NOT cause the unedited output path to discard, replace or semantically re-encode its source; replay SHALL retain the qualification rather than present serialization as conformance, positive integrity or governing-setup evidence.*
+
+INT-035–039/041/048/055 separate raw retention from interpretation. Copying
+bytes does not validate an unknown field, repair a number or complete a
+truncated setup. The requirement applies where a retained document exists;
+it does not require constructing one after an input/format rejection.
+
+**L3-WRT-006** · Parent: L2-WRT-003 · Verification: T
+*Read-only operations, including exact/effective lookup, default resolution, edition fallback, field projection, validation and caller-assumption views, SHALL leave the source bytes used by default output unchanged; neither cached/canonicalized metadata nor suppressed result findings SHALL become the source for serialization.*
+
+INT-056 Quiet affects its result's bad-data findings, not source storage.
+An unedited zero-padded numeric value or defaulted TFMT is never rewritten
+as canonical digits or an inserted attribute by ordinary output. An explicit
+edit creates its own revision under the existing transaction contract.
+
+**L3-WRT-007** · Parent: L2-WRT-003 · Verification: T
+*Output adapters SHALL report success only after the entire original source sequence is delivered according to the caller-supplied writer contract; legal partial acceptance SHALL result in delivery of the remaining bytes in order or an explicit failure, never duplicated/skipped bytes, truncated success or a non-progressing unbounded retry.*
+
+Concrete trait signatures and adapter implementation remain API review work.
+If the supplied interface already guarantees complete writes, test its error
+boundary without inventing a second short-write API. A mock sink with known
+accepted prefixes provides an independent delivery oracle.
+
+**L3-WRT-008** · Parent: L2-WRT-003 · Verification: T
+*A supplied writer's failure SHALL remain an observable output failure with its cause retained rather than success or a fabricated complete buffer; the source document/revision and its findings SHALL remain unchanged, and any bytes already accepted by the caller's sink SHALL NOT be represented as rolled back by the library.*
+
+This refines L3-WRT-001's existing fallible-writer error requirement. A later
+retry is a caller choice with an appropriate sink, not an automatic append
+that hides a partial first attempt. It creates no promise of atomic files,
+flush/durability, filesystem rollback or automatic retry policy.
+
+**L3-WRT-009** · Parent: L2-WRT-003 · Verification: T
+*The serialization operation SHALL use only the supplied document and output destination, without selecting files, standard streams, environment configuration, network endpoints or packet destinations; emitting a document source SHALL NOT add or rebuild setup CSDWs, packet headers, trailers or recording framing.*
+
+ADR-0010 and L2-IO-001 define the I/O boundary. For an assembled document,
+the retained TMATS body is the source; fragment provenance is metadata, not
+bytes automatically reinserted around output. Payload generation and packet
+writing retain their own release scope and component ownership.
+
+**L3-WRT-010** · Parent: L2-WRT-004 · Verification: T
+*Without a distinct explicit caller normalization request, output SHALL remain default replay even when supported metadata suggests canonical case/order, consistent newlines, corrected counters or other repairs; findings, defaults, view/render modes or a checksum verification request SHALL NOT count as authorization to apply them.*
+
+The gate follows L1-WRT-002, not a new implicit repair heuristic. Explicit
+checksum stamping remains its existing separate transaction and must never
+be silently invoked by default serialization. No normalization transform's
+actual byte order/case/counter rules are selected by this gate.
+
+**L3-WRT-011** · Parent: L2-WRT-004 · Verification: T
+*A caller's explicit normalization request SHALL remain a separate operation with its requested transformation scope identifiable; it SHALL NOT silently broaden into unrequested repairs or be reported as default byte-faithful output, and an unreviewed/unsupported transform SHALL NOT be applied by guessing its semantics.*
+
+This specifies authorization/scope separation, not a complete normalizer
+implementation or a particular failure enum/API. Transformation-specific
+rules, source citations and acceptance fixtures remain required in a later
+family-2 slice. No absent policy is chosen by “canonical” as an output label.

@@ -1,8 +1,7 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through bounded association/assumption contracts drafted (family 2, batches 1-20).**
-> INT-056 Quiet clarifications are owner-signed (Joey, 2026-11-26); AI recheck pending.
-> INT-057–060 are approved; AI CONCUR at #52 8ec6411.
+> **Status: foundations through lossless-output boundaries drafted (family 2, batches 1-21).**
+> INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
@@ -767,7 +766,7 @@ Source: 106-24R1 Chapter 9 section 9.5.4, Table 9-4, rows/pages cited below.
 **Verification Method**: Test (T)
 
 
-Owner-signed INT-056 (2026-11-26; independent check pending) distinguishes
+Approved INT-056 (Joey, 2026-11-26; final CONCUR at #52 3fcbd2c) distinguishes
 preserved source diagnostics from bad-data findings emitted on an assumption result:
 Quiet suppresses exactly Warn's bad-data findings of any severity, keeping
 them readable from field results/source diagnostics and leaving states
@@ -871,7 +870,7 @@ This derives the owner-approved RELEASE-0.1 association contract of
 and boundaries are in the [batch note](research/2026-11-26-association-assumption-requirements.md).
 INT-039/041/054/055 preserve field evidence; they supply no clock reference.
 Owner answers of 2026-11-26 now specify caller policy in INT-056–060
-(INT-056 recheck pending; INT-057–060 CONCUR at #52 8ec6411); no stable Rust API is selected here.
+(final independent CONCUR at #52 3fcbd2c); no stable Rust API is selected here.
 
 #### L2-VIEW-013
 
@@ -889,6 +888,34 @@ Owner answers of 2026-11-26 now specify caller policy in INT-056–060
 
 **Statement**: A time-view answer using an explicit caller choice without association proof SHALL retain the choice, its caller-supplied assumption basis and scoped identities on every answer derived from it, alongside the unchanged underlying association uncertainty, target states and selected Strict/Warn/Quiet level, with bad-data finding emission governed by INT-056; it SHALL NOT relabel that choice as association_evidenced, silently propagate it to another setup/revision or make otherwise unusable setup evidence usable or governing.
 
-**Rationale**: Owner direction 2026-11-21, the owner answers of 2026-11-26 (INT-056–060, independent review pending), and RELEASE-0.1 permit labelled caller assumptions for the bounded time view, not silent guesses or global configuration overrides. Other assumption uses in L1-VIEW-008 remain 0.2. This does not approve proposed INT-028/031/032/033, select a governing setup or authorise provisional semantic use; source and eligibility limitations remain visible.
+**Rationale**: Owner direction 2026-11-21, the owner answers of 2026-11-26 (INT-056–060, final CONCUR at #52 3fcbd2c), and RELEASE-0.1 permit labelled caller assumptions for the bounded time view, not silent guesses or global configuration overrides. Other assumption uses in L1-VIEW-008 remain 0.2. This does not approve proposed INT-028/031/032/033, select a governing setup or authorise provisional semantic use; source and eligibility limitations remain visible.
+
+**Verification Method**: Test (T)
+
+## Byte-faithful output and normalization boundary (family 2, batch 21)
+
+This refines L2-WRT-001/L3-WRT-001 from batch 1. Accepted ADR-0002/0003
+make immutable original bytes authoritative; ADR-0010 permits bytes or
+caller-supplied writers, not library-owned I/O. The [batch note](research/2026-11-26-lossless-output-requirements.md)
+records source/contract boundaries and planned oracles. No new interpretation,
+normalization algorithm, edit API or Rust output signature is selected here.
+
+#### L2-WRT-003
+
+**Parent**: L1-WRT-001
+
+**Statement**: Unedited default output through either bytes or a caller-supplied writer SHALL preserve the full original source byte sequence independently of parsed/typed validity or prior read-only operations; success SHALL require complete delivery under the supplied writer's contract, and output failure SHALL leave the document unchanged without claiming successful output or rolling back the caller's external sink.
+
+**Rationale**: ADR-0002 chooses byte-faithful replay instead of reconstructing the typed model; ADR-0003 owns original bytes; ADR-0010 leaves files and output destinations to callers. L3-WRT-001 already requires complete source replay and fallible writer errors. This requirement makes the success/failure and source-versus-sink boundaries testable, without authorising local publishing, packet writing or automatic repair.
+
+**Verification Method**: Test (T)
+
+#### L2-WRT-004
+
+**Parent**: L1-WRT-002
+
+**Statement**: The output boundary SHALL distinguish unedited default replay from a caller's explicit normalization request; parsing, registry loading, validation, effective values, queries and output presentation preferences SHALL NOT implicitly request canonical ordering, line-ending conversion, counter recomputation or other source changes.
+
+**Rationale**: L1-WRT-002 and ADR-0002 require caller authorization before normalization. Chapter 9 section 9.4.2 allows free attribute order and case-insensitive interpretation; neither grants automatic byte rewriting. This is the opt-in gate only. Transformation definitions, canonical ordering and supported counter-rewrite behavior need their own reviewed derivations before the full normalization capability is implemented; this partial child does not complete L1-WRT-002 or reduce the 0.1 scope.
 
 **Verification Method**: Test (T)
