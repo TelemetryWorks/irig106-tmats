@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through extraction/safe-output boundaries drafted (family 2, batches 1-25).**
+> **Status: foundations through pattern-lookup boundaries drafted (family 2, batches 1-26).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -2356,3 +2356,81 @@ Use bounded synthetic spans and injected sink outcomes for mechanical tests;
 use isolated temporary files for CLI identity/acquisition integration. Actual
 record selection/eligibility requires its own approved fixtures. No local
 large-record scan or payload allocation is required by this docs batch.
+
+
+## Pattern candidate retrieval (family 2, batch 26)
+
+These continue L3-VIEW-001/002's exact-key contract with a cited structural
+pattern and explicit bound/unbound index positions. The [batch note](research/2026-11-26-pattern-lookup-requirements.md)
+separates this semantic contract from query spelling, interpretation review
+and unavailable/related-damage evidence. All new cases are planned.
+
+**Owner decisions PENDING; implementation blocked**: the 0.1 pattern scope
+(reviewed registry patterns only is a proposal, not an approved restriction)
+and public query syntax, including wildcards/escaping.
+
+**L3-VIEW-058** · Parent: L2-VIEW-015 · Verification: T
+*Pattern lookup SHALL require a complete match of the supplied reviewed pattern's group, literal path components and number/positions of indices; literal path parts SHALL compare ASCII case-insensitively under Chapter 9 section 9.4.2 p. 9-2, without locale/Unicode folding or high-byte folding; unbound index positions SHALL range over present complete keys, not arbitrary path suffixes, value text, another group or another literal component.*
+
+Source: 106-24R1 Ch9 section 9.4.2 p. 9-2 and Table 9-4 R-x\TK1-n
+p. 9-48. For that row, bind recorder occurrence x=1 and leave entry n
+unbound to retrieve that recorder's entries. This names semantic bindings,
+not a regex/glob syntax, recursive wildcard or CLI argument convention.
+
+**L3-VIEW-059** · Parent: L2-VIEW-015 · Verification: T
+*Bound index comparisons SHALL use INT-038 canonical decimal-string identity, with INT-036's approved name projection and the Chapter 9 section 9.4.2 p. 9-2 ASCII case rule from L3-VIEW-058, without numeric field-value parsing, fixed-width conversion, integer overflow, truncation or a default occurrence for an absent index.*
+
+An occurrence spelled 01 matches a bound identity 1 while original spelling
+and normalization/internal-omission findings remain. INT-055's ten-digit
+limit applies to decimal field values/numeric codes, not name indices or
+their canonical identity; matching does not validate an index's legal range.
+
+**L3-VIEW-060** · Parent: L2-VIEW-015 · Verification: T
+*Pattern retrieval SHALL return matching occurrences in their original document order, including exact repeats and distinct raw spellings of the same canonical key, without numeric sorting, deduplication, first/last selection or collapse of duplicate/collision findings.*
+
+INT-038/039. Equal values do not erase duplicate occurrences. A query with
+all indices bound must retrieve the same ordered items as exact-key lookup
+under L3-VIEW-001, not a separately selected winner. A pattern query does
+not create a scalar effective value merely because it finds one candidate.
+
+**L3-VIEW-061** · Parent: L2-VIEW-015 · Verification: T
+*Each pattern candidate SHALL retain original item identity, raw name/value byte access and locations within the supplied document, including assembled-fragment provenance where present; empty, invalid, high-byte or control-containing values SHALL NOT remove an otherwise matching usable name key, and read-only lookup SHALL NOT alter source bytes.*
+
+ADR-0002/0003, L3-VIEW-001 and INT-035–039. Match code names, never
+substrings in COMMENT or another field's value. A damaged name lacking a
+usable complete key remains raw source, not a fabricated match. A retained
+raw candidate is not proof of a usable Explicit value or extraction eligibility.
+
+**L3-VIEW-062** · Parent: L2-VIEW-015 · Verification: T
+*Pattern matching unavailable because of INT-037 document gating or an unavailable structural pattern/binding SHALL be observable with its reason, not reported as successful empty retrieval; on available matching, an empty collection SHALL remain distinct from a matched zero-length value and SHALL NOT itself prove semantic absence, a false condition or link/association resolution.*
+
+Raw source remains accessible when semantic lookup is blocked. INT-035's
+unterminated suffix is not a lookup item; compatible damaged/suffix evidence
+may still make a separate INT-042 presence predicate cannot-evaluate under
+L3-VAL-010–012. This requirement does not turn query results into that
+predicate or decide a new damaged-name completion/repair rule.
+
+**L3-VIEW-063** · Parent: L2-VIEW-015 · Verification: T
+*Pattern retrieval SHALL be scoped to the supplied document and bindings, without borrowing candidates or missing index values from another recorder/document, a later setup record or a default/effective-value cache; one assembled setup record SHALL remain one document across its fragment packets, and returned candidates SHALL keep the record's qualification (including INT-048 Ambiguous, INT-045 cut and Incomplete evidence) attached and unchanged, never upgrading it because lookup succeeded.*
+
+INT-039 and ADR-0025 define document scope; INT-011 joining and INT-045
+layered closure remain unchanged. Neither packet boundaries inside the
+same assembled record nor source file membership create a new lookup scope.
+INT-048 Ambiguous retains any cut facet; INT-045 cut/Incomplete and other
+established Incomplete evidence remain blocking despite successful lookup,
+equality or a readable value. The cut facet keeps its full blocking
+force; query success does not make the record usable or governing.
+This preservation contract does not settle the [open incomplete/ambiguous
+access and governance item](ROADMAP.md#streaming-setup-record-follow-ups)
+or [proposed INT-031](INTERPRETATIONS.md#int-031). It applies when diagnostic
+candidate retrieval is available, not as a new authorization to access or
+accept a qualified record. The query does not select a governing record or
+establish a time association.
+
+**L3-VIEW-064** · Parent: L2-VIEW-015 · Verification: T
+*Pattern-lookup verification SHALL compare ordered item IDs, raw byte ranges and multiplicity against independent literal fixture expectations, and SHALL cross-check fully bound queries with exact-key lookup, without calculating the oracle through the production matcher or treating that cross-check alone as proof of correctness.*
+
+Vary supplied bindings, source order, duplicates, spelling and fragment
+partitions in bounded CI. Assert source bytes unchanged. Expected sets/order
+must come from the fixture's independently listed items, not reusing query
+code or guessing standard definitions from the prototype.

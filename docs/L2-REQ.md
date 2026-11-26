@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through extraction/safe-output boundaries drafted (family 2, batches 1-25).**
+> **Status: foundations through pattern-lookup boundaries drafted (family 2, batches 1-26).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -1026,5 +1026,28 @@ See the [scope and remaining-work audit](research/2026-11-26-extraction-requirem
 **Statement**: For output destinations the tool opens itself, CLI output acquisition and delivery SHALL preserve every input file unchanged, including when a requested destination identifies that same file through a different path; input-alias rejection SHALL occur before destructive destination access, and output failure SHALL remain distinguishable from successful delivery without modifying or repairing the input.
 
 **Rationale**: L1-CLI-007 prohibits modifying input files and requires changed results in a new output. ADR-0010 assigns filesystem safety to CLI/caller glue, not library serialization. Path strings alone do not establish distinct files. This obligation does not select a general existing-destination overwrite policy, atomic replacement, durability guarantee or new rendering/exit mapping; those require separate reviewed definitions where applicable. Shell redirection outside the tool is out of scope for its file-acquisition guarantee.
+
+**Verification Method**: Test (T)
+
+
+## Raw pattern lookup (family 2, batch 26)
+
+L2-VIEW-001 already covers exact lookup. This child continues L1-VIEW-001
+with definition-bound code-name patterns, using approved name/key policies
+rather than a new glob/regex language. See the [source and scope note](research/2026-11-26-pattern-lookup-requirements.md).
+No value resolution, link inference, rendering or full registry rollout is
+selected; unknown/private grammar is not guessed.
+Owner decisions are PENDING and block implementation: 0.1 pattern scope
+(reviewed registry patterns only is a proposal, not an approved restriction)
+and public query syntax, including wildcards/escaping. The conditional
+reviewed-pattern contract below does not settle either item.
+
+#### L2-VIEW-015
+
+**Parent**: L1-VIEW-001
+
+**Statement**: For a cited, reviewed structural code-name pattern with caller-bound index positions, the library SHALL return every matching source item within the supplied document in input order, matching the complete literal path and index arity under the Chapter 9 section 9.4.2 ASCII case rule and INT-036/038 and retaining raw values, identities, locations, multiplicity and findings; it SHALL distinguish unavailable matching from an available empty candidate collection without inventing defaults, resolving values or claiming absence from damaged evidence.
+
+**Rationale**: UC-03 and L1-VIEW-001 include every R-1\TK1-n. Chapter 9 (106-24R1) section 9.4.2 p. 9-2 defines numbered multiple-entry names and case-insensitive interpretation; Table 9-4 TRACK NUMBER/CHANNEL ID R-x\TK1-n p. 9-48 supplies the example's structural pattern. ADR-0002/0003 make source items authoritative, INT-038 supplies numeric index identity, and INT-039 preserves every duplicate. Pattern lookup is candidate retrieval, not a standard-defined association, cardinality/default decision or public query-string grammar. Concrete query representation and index data structures remain API/implementation review work.
 
 **Verification Method**: Test (T)
