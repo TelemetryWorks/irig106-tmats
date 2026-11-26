@@ -2239,14 +2239,16 @@ entire source (L3-CLI-014–021) is a separate CLI boundary, not something
 repeated for each already identified packet. No type is guessed from DATA.
 
 **L3-CLI-027** · Parent: L2-CLI-007 · Verification: T
-*If a non-Format-1 packet is incorrectly supplied to the fragment adapter, the guard SHALL prevent Format-1 CSDW/text slicing and appending from that call, without guessing another packet type, reading another packet or promoting any core trust/integrity state.*
+*If a non-Format-1 packet is incorrectly supplied to the fragment adapter, the guard SHALL return an observable, typed wrong-input-kind refusal to the calling host, carrying the supplied data type, and SHALL prevent Format-1 CSDW/text slicing and appending from that call; it SHALL NOT return silent success or a silent no-op, guess another packet type, read another packet or promote any core trust/integrity state.*
 
 L3-CLI-008 already prevents other types from acquiring Format-1 semantics.
 Format 1 names the packet data type, not a requirement that the CSDW FRMT
 bit be zero. Passing that guard does not establish supported text encoding;
 the separate FRMT/ASCII/XML rules remain in force.
-The guard does not define public error spelling or decide recovery. Header-
-only PacketFacts remains separate from PacketInfo trust/integrity evidence;
+The typed refusal exposes the wrong-input-kind reason and supplied data type
+without selecting a public variant/field spelling, rendered format or recovery
+policy. Header-only PacketFacts remains separate from PacketInfo
+trust/integrity evidence;
 matching a type alone does not establish admission, completeness or governance.
 
 **L3-CLI-028** · Parent: L2-CLI-007 · Verification: T

@@ -1287,7 +1287,7 @@ spies inspect calls, bytes and retained evidence, not rendered layouts.
 | `mounted_renderer_uses_supplied_writer` | Renderer receives an actual command report and supplied memory writer; writes there without acquiring process streams; output format is not pinned here | L3-CLI-025 |
 | `mounted_renderer_failure_returns_to_host` | Supplied writer fails after a bounded prefix; reviewed writer failure remains visible, no delivery success claimed, host continues | L3-CLI-025 |
 | `mounting_host_dispatches_packet_types` | Instrumented host uses core facts to route setup DATA to TMATS and other DATA to their consumers; adapter performs no dispatch or sync scan | L3-CLI-026 |
-| `mounting_adapter_format_guard_is_defensive` | Deliberately misroute non-Format-1 facts with text-like DATA; no CSDW/text interpretation or append, alternate dispatch, raw-header parse or trust upgrade | L3-CLI-026, L3-CLI-027 |
+| `mounting_adapter_format_guard_is_defensive` | Deliberately misroute non-Format-1 facts with text-like DATA; host receives an observable typed wrong-input-kind refusal carrying the supplied data type, never silent success/no-op; no CSDW/text interpretation or append, alternate dispatch, raw-header parse or trust upgrade; no spelling/rendering assertion | L3-CLI-026, L3-CLI-027 |
 | `mounting_format1_is_not_csdw_frmt` | Format-1 facts with either CSDW FRMT bit pass the packet-kind guard; FRMT-specific support/interpretation stays separate, never ASCII forced by the guard | L3-CLI-027 |
 | `mounting_format_guard_does_not_admit_packet` | Format-1 facts match but sideband remains qualified/untrusted/NotChecked; matching the guard never establishes trust, completeness or governance | L3-CLI-027, L3-CLI-029 |
 | `mounting_source_route_is_not_packet_dispatch` | A recording-selected source is read by core once; per-packet dispatch never calls the source-prefix selector on each DATA payload | L3-CLI-026, L3-CLI-029 |
@@ -1297,7 +1297,7 @@ spies inspect calls, bytes and retained evidence, not rendered layouts.
 | `mounting_other_channel_packet_keeps_provenance` | Interleaved other-channel observation remains provenance without stopping INT-011 join; any INT-045 time closure is evaluated separately | L3-CLI-028 |
 | `mounting_session_start_remains_caller_asserted` | Host supplies or omits labelled session-start provenance; mounting does not infer it from offset zero, filename, sequence or SRCC | L3-CLI-028 |
 | `mounting_borrowed_spans_and_sideband_survive` | Fragment DATA split across blocks retains source identity/ordered spans and PacketInfo sideband alongside header-only PacketFacts; no coalescing, extra traversal or payload copy imposed by mounting | L3-CLI-029 |
-| `mounting_guard_keeps_observation_path` | A guarded misrouted fragment call creates no text append; separately supplied packet observations still reach assembly with their original qualifications | L3-CLI-027, L3-CLI-028 |
+| `mounting_guard_keeps_observation_path` | A guarded misrouted fragment call returns an observable typed wrong-input-kind refusal carrying the supplied data type to the host, never silent success/no-op, and creates no text append; separately supplied packet observations still reach assembly with their original qualifications; no spelling/rendering assertion | L3-CLI-027, L3-CLI-028 |
 
 Expected packet-level outcomes come from INT-011/045 and existing core/span
 requirements, not a new classifier in the fixture. No local packet or
