@@ -1,10 +1,16 @@
 ---
-status: accepted; slicing and header-checksum verification refined by ADR-0025
+status: accepted; reader/checksum ownership superseded by ADR-0036; slicing and header-checksum verification refined by ADR-0025
 date: 2026-09-25
 decision-makers: Joey
 ---
 
 # The CLI carries a minimal Chapter 10 packet reader until `irig106-core` provides one
+
+> **Superseded responsibility:** ADR-0036 records the owner's 2026-11-22
+> ONE-reader architecture and the coordinator's core-evidence/borrowed-DATA
+> integration decisions. The temporary CLI reader below is historical; core
+> now owns packet finding/trust/header checksums. tmats does not verify packet
+> data checksums or coalesce DATA to assemble it. TMATS assembly rules remain.
 
 ## Context and Problem Statement
 

@@ -737,9 +737,9 @@ requirements are added. The requirement entries below and the generated
 
 ### L1-CLI-008
 
-**Statement**: `tmats` SHALL slice each setup-record packet by its 24-byte header, its 12-byte secondary header when packet-flags bit 7 is set, and its Data Length, excluding filler and the data checksum; SHALL verify the header checksum and, when present, the secondary-header checksum before trusting any length field; and SHALL verify and report the data checksum when one is present.
+**Statement**: The tmats CLI SHALL depend on irig106-core as the sole Chapter 10 packet reader for packet finding, trust and header/secondary-checksum evidence; SHALL consume core PacketFacts and borrowed, possibly non-contiguous DATA spans for only setup CSDW/fragment slicing; and SHALL pass core's integrity evidence through unchanged, including NotChecked and RDG-008 byte/word readings, without local packet/data-checksum verification or required payload coalescing.
 
-**Rationale**: Chapter 11 §11.2.1.1–11.2.1.4 (106-24R1): Data Length "does not include packet trailer filler and data checksum"; the checksums are defined for the header, the secondary header, and the data (team review T3; ADR-0025, refining ADR-0019). Delivered in 0.1.
+**Rationale**: The owner's 2026-11-22 one-reader architecture supersedes ADR-0019's temporary CLI reader now that core is available; ADR-0036 records this and the coordinator's no-local-data-checksum/direct-span decisions. Chapter 11 sections 11.2.1.1–4 and 11.2.7.2 (106-24R1) still define the packet and CSDW facts, but their reader/checksum implementation belongs to core. Data-checksum verification is a core feature request scheduled by the owner. Delivered in 0.1; no compatible dependency version/API is invented by this requirement.
 
 **Verification Method**: Test (T)
 

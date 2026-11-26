@@ -47,8 +47,8 @@
   <text x="351" y="156" text-anchor="middle">show · extract</text>
   <text x="351" y="175" text-anchor="middle">checksum · verify · stamp</text>
   <text x="351" y="194" text-anchor="middle">validate · diff (later)</text>
-  <text class="l" x="351" y="222" text-anchor="middle">packet reader and slicing</text>
-  <text class="l" x="351" y="237" text-anchor="middle">(until irig106-core)</text>
+  <text class="l" x="351" y="222" text-anchor="middle">core DATA + PacketFacts</text>
+  <text class="l" x="351" y="237" text-anchor="middle">(borrowed spans)</text>
 
   <rect class="hl" x="486" y="88" width="170" height="160" rx="6"/>
   <text class="b" x="571" y="110" text-anchor="middle">irig106-tmats</text>
@@ -61,11 +61,11 @@
 
   <!-- input arrows -->
   <path class="ln" d="M200,108 L266,130" marker-end="url(#a)"/>
-  <text class="l" x="24" y="154">memory-mapped, header to header</text>
+  <text class="l" x="24" y="154">input source owned by caller/core</text>
   <path class="ln" d="M200,204 L266,196" marker-end="url(#a)"/>
   <text class="l" x="210" y="222">bytes</text>
   <path class="dl" d="M110,330 L110,300 L351,300 L351,248" marker-end="url(#a)"/>
-  <text class="l" x="160" y="294">replaces the CLI's reader</text>
+  <text class="l" x="160" y="294">sole packet reader</text>
 
   <!-- CLI to lib -->
   <path class="ln" d="M436,168 L486,168" marker-end="url(#a)"/>

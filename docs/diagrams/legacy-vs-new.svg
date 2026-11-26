@@ -61,7 +61,7 @@
   <!-- New lane -->
   <text class="h" x="20" y="284">irig106-tmats</text>
   <rect class="box" x="20"  y="300" width="118" height="56" rx="6"/><text x="79" y="324" text-anchor="middle">every setup</text><text x="79" y="342" text-anchor="middle">record</text>
-  <rect class="hl"  x="166" y="300" width="160" height="56" rx="6"/><text x="246" y="324" text-anchor="middle">one scan: spans</text><text x="246" y="342" text-anchor="middle">into one buffer</text>
+  <rect class="hl"  x="166" y="300" width="160" height="56" rx="6"/><text x="246" y="324" text-anchor="middle">one scan: spans</text><text x="246" y="342" text-anchor="middle">over source spans</text>
   <rect class="hl"  x="354" y="300" width="230" height="56" rx="6"/><text x="469" y="324" text-anchor="middle">Document: items · keys · index</text><text x="469" y="342" text-anchor="middle">G\SHA digest · diagnostics</text>
   <rect class="box" x="612" y="300" width="200" height="56" rx="6"/><text x="712" y="324" text-anchor="middle">views · validation · edits</text><text x="712" y="342" text-anchor="middle">derived from spec registry</text>
   <rect class="box" x="840" y="300" width="180" height="56" rx="6"/><text x="930" y="324" text-anchor="middle">writer: original</text><text x="930" y="342" text-anchor="middle">bytes + patches</text>

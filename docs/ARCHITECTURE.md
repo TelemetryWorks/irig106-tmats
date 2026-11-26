@@ -123,12 +123,14 @@ theme on their own. Each shows one mechanism.
 ![irig106-tmats in the TelemetryWorks ecosystem](diagrams/system-context.svg)
 
 *Context.* The `tmats` CLI is the only part that opens files: it
-memory-maps a Chapter 10 recording, slices each setup-record packet, and hands
+uses core to find packets and borrows its non-contiguous DATA spans, then hands
 the fragments (or a standalone TMATS file's bytes) to the library, whose
 assembler joins fragments into complete setup records (section 6). CLI and library are one
 workspace released in lockstep; the sibling crates, including the complete
 `irig106-cli`, depend on the library; shared types come from
-`irig106-types`; `irig106-core` will later replace the CLI's packet reader.
+`irig106-types`; ADR-0036 requires the single packet reader in
+`irig106-core`. Its PacketFacts/evidence and borrowed DATA spans pass into
+TMATS logical CSDW/text slicing and assembly without coalescing.
 
 ![Legacy pipeline compared with irig106-tmats](diagrams/legacy-vs-new.svg)
 
@@ -174,6 +176,12 @@ bytes, and the writer copies every other byte unchanged. The checksum of the
 result no longer matches the stored `G\SHA`, so the library reports it stale
 and suggests a stamp edit; `G\SHA` changes only if the caller applies that
 suggestion (`tmats stamp` does this on request).
+
+The owned-document model above is a standalone construction/materialization
+path. ADR-0036's assembler consumes borrowed span-backed DATA directly;
+creating one contiguous owned Document is not a prerequisite for slicing or
+assembly. Retain source owners/borrows and logical provenance without an
+extra payload copy. Concrete lifetime/API integration is implementation work.
 
 ## 4. Refinement T1: executable registry, validation passes, effective values
 
@@ -365,7 +373,7 @@ styles) is a test fixture, with one precedence test per level of Table E-6.
 From the team design review, priority T3 (`docs/ROADMAP.md`). Applied
 2026-09-26 with the owner's decision that the assembler lives in the library;
 recorded in ADR-0025. It adds an assembler in front of the scanner and
-specifies how the CLI slices packets.
+specifies how core supplies DATA and tmats slices its CSDW/text spans (ADR-0036).
 
 ### 6.1 The problem
 
@@ -390,31 +398,39 @@ and `G\SHA` covers the assembled body. The acceptance test
 
 | Stage | Owner | Input → output |
 |-------|-------|----------------|
-| Packet reading and slicing | the `tmats` CLI's reader (later `irig106-core`) | file → packets → fragment bytes with provenance |
-| Assembly | **the library** (no I/O) | fragments with provenance → complete setup records |
+| Packet finding/trust and DATA spans | `irig106-core`, consumed by the CLI | acquired source → PacketFacts + borrowed DATA spans + unchanged evidence |
+| Setup CSDW/text slicing | TMATS adapter/assembler | logical DATA prefix/text spans, no coalescing |
+| Assembly | **the library** (no I/O) | borrowed DATA/text spans + provenance → logical candidate records, no extra payload copy |
 | Reading | the library (scanner, section 2 point 1) | complete record → Document |
 
 The assembler takes bytes and provenance, never files, so it is consistent
 with ADR-0010 and reusable unchanged by `irig106-ch10-reader`,
 `irig106-studio`, and `irig106-core`.
 
-### 6.3 Slicing rules (the CLI's reader)
+### 6.3 Core-owned DATA boundary (ADR-0036)
 
-From Chapter 11 §11.2.1.1–11.2.1.4: the 24-byte header begins with sync
-`0xEB25`; a 12-byte secondary header follows when packet-flags bit 7 is 1;
-the packet body starts after them; Data Length covers the CSDW and the data
-and excludes filler and the data checksum; the TMATS fragment is the body
-from offset 4 to Data Length. The header checksum and, when present, the
-secondary-header checksum are verified before any length field is trusted;
-the data checksum (8, 16, or 32 bits per packet-flags bits 1–0) is verified
-and reported when present.
+Core is the single reader and owns packet finding, bounds/trust and header/
+secondary checksum evidence. The CLI consumes PacketFacts plus borrowed
+DATA spans; tmats does not reconstruct packet/header/trailer extents or
+choose RDG-008 byte/word secondary-checksum readings. All core evidence,
+including data NotChecked, passes through unchanged. Packet data-checksum
+verification is a core feature request scheduled by the owner, with no local
+fallback. Chapter 11's 24/12-byte headers and body/filler/checksum facts are
+reference facts, not another CLI implementation.
+
+TMATS takes the first four logical DATA bytes as CSDW and the remaining
+bytes as text, even when either crosses block boundaries. Core DATA already
+excludes headers, filler and checksum. No coalesced payload allocation is
+required. Input owners keep borrowed blocks alive through use.
 
 ### 6.4 Assembly contract (the library)
 
-- **In:** fragments in file order, each with its bytes and provenance — file
+- **In:** core DATA in file order as borrowed non-contiguous spans, with
+  PacketFacts-derived evidence and provenance — file
   offset, channel ID, sequence number, relative time counter, the CSDW fields
   (FRMT, SRCC, RCCVER), and the data-type version.
-- **Out:** complete setup records, each with the concatenated TMATS body, one
+- **Out:** candidate records with logical TMATS concatenation over borrowed
+  spans (no extra payload copy), one
   CSDW summary, and a **provenance map** from every body offset back to its
   packet and offset, so every diagnostic can name the packet it came from.
 - **Boundary rule** (reviewed interpretations, because the standard defines
@@ -766,21 +782,22 @@ TMATS body is copied, once (`docs/TMATS-IN-CHAPTER-10.md` section 4.13).
 ## 12. Decisions this architecture must honour
 
 Recorded as ADRs in `docs/adr/` (0001–0019, 0022–0029 accepted): the lossless ordered attribute store as the
-single source of truth; owned storage instead of borrowed lifetimes; the
+single source of truth; owned standalone documents plus borrowed core DATA
+for zero-extra-copy assembly (ADR-0036); the
 layered, spec-cited registry generated by a script (no `build.rs`);
 registry-driven validation with severity policy and user rules; no automatic
 repair (suggested edits, explicit apply); first-class V and X groups; shared
 ecosystem types from `irig106-types`; the two-crate lockstep workspace
-(`irig106-tmats` and `irig106-tmats-cli`, binary `tmats`); a minimal Chapter
-10 packet reader inside the CLI until `irig106-core` provides one; `G\SHA`
+(`irig106-tmats` and `irig106-tmats-cli`, binary `tmats`); the ONE Chapter
+10 reader in core, consumed by the CLI (ADR-0036); `G\SHA`
 over the original bytes and the flex signature as a labelled compatibility
 option; no I/O in the library; the edition strategy; the two-layer registry
 with reviewed interpretations and defined condition semantics (ADR-0022);
 validation in four passes over effective values (ADR-0023); derived
 parameters parsed, validated, and described here and evaluated in
 `irig106-decode` (ADR-0024); setup records assembled from their packet
-fragments in the library, with packet slicing in the CLI's reader
-(ADR-0025); counters with declared scopes, links with declared namespaces,
+borrowed DATA spans in the library, with packet finding/checksum evidence
+owned by core and logical CSDW/text slicing in tmats (ADR-0036); counters with declared scopes, links with declared namespaces,
 selectors, and cardinality, keys unique per attribute, and case-insensitive
 comparison of code names, keywords, and link values (ADR-0026); an
 interpretation register, relationships generated from three sources, and the
@@ -798,7 +815,7 @@ proposal is captured in ADR-0020 and ADR-0021 (proposed).
   effective-value resolver, derived-expression parser and derivation graph,
   views, validator, edits and writer, checksums,
   Chapter 10 setup-record assembler, packet check, configuration timeline,
-  channel-type table, CLI packet reader).
+  channel-type table, superseded prototype CLI packet reader).
 - The condition language's grammar and the interpretation file format.
 - Data flow per use case (UC-01 … UC-17).
 - Error and diagnostic model; JSON output schema for the CLI.

@@ -78,8 +78,10 @@ requirements do not choose those rules or reduce the 0.1 obligations.
 
 ### Remaining CLI input and presentation derivations
 
-Review packet-header trust and setup-body slicing before the minimal CLI
-reader is implemented. Keep packet-checksum failure use/recovery policy
+Review core-backed borrowed DATA/CSDW slicing before integration. Core owns
+the single reader and all packet/header trust; no local checksum fallback
+is permitted. Record packet-data verification as a core feature request,
+with timing decided by the owner. Keep failure use/recovery policy
 separate from mechanical bounds/checksum evidence. Before report/rendered
 output formats are derived, STOP and bring the owner options for findings,
 assumption labels and suppressed markers; no text/JSON/layout policy is
@@ -447,12 +449,11 @@ assembler takes bytes, not files. Plan:
    Retain START and stop reasons for INT-034, including leading-truncation
    evidence. Channel-0 conformance from 106-17 is a separate edition check.
    Anything ambiguous is reported, never guessed.
-3. *Slicing rules* for the packet reader: body after the header and the
-   optional secondary header; TMATS = body from offset 4 to Data Length;
-   filler and data checksum excluded; header and secondary-header checksums
-   verified (the length fields cannot be trusted otherwise — this narrows
-   ADR-0019's "checksums out of scope"); data checksum verified and reported
-   when present.
+3. *Slicing rules*, responsibility corrected by ADR-0036: core finds packets,
+   supplies validated DATA spans and header/secondary checksum evidence.
+   TMATS reads each CSDW prefix/text over borrowed spans without coalescing;
+   no local packet/data-checksum implementation. Data checksum evidence is
+   passed as core provides it (NotChecked until core's owner-scheduled feature).
 4. *Checksums*: `G\SHA` and the flex signature are computed over the
    assembled record.
 5. *Session rules* reported across setup records: ASCII and XML not mixed;
@@ -476,7 +477,8 @@ header checksums now verified), L1-CH10-001 and L1-CLI-003 revised, new L1
 requirements for assembly, provenance, slicing, and session rules.
 **Decided (owner, 2026-09-26): the assembler lives in the library**
 (fragments with provenance in, complete records out; no I/O); packet slicing
-stays in the CLI's reader until `irig106-core` exists. The multi-packet case
+is now core-owned under the 2026-11-22 owner architecture (ADR-0036);
+TMATS consumes borrowed DATA directly without payload coalescing. The multi-packet case
 has a named acceptance test, `multi_packet_setup_record_is_assembled`
 (`docs/TEST-DATA.md`), and a diagram (`docs/diagrams/setup-record-assembly.svg`).
 *Applied 2026-09-26: `docs/USE-CASES.md` (UC-02, UC-17), `docs/ARCHITECTURE.md`

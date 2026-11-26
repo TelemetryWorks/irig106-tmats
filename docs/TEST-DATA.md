@@ -1223,48 +1223,47 @@ All normalization transformations still need their own reviewed rules and
 independent byte oracles before those features are implemented. Nothing here
 marks the full normalization L1, writer family or release complete.
 
-## Planned packet-slicing batch 22 (internal mechanics only)
+## Planned core-backed slicing batch 22 (corrected boundary)
 
-PLANNED cases for L2-CLI-003/004 and L3-CLI-004–013, not executed reader
-coverage or report-format decisions. Sources: 106-24R1 Chapter 11 sections
-11.1, 11.2.1–11.2.1.4 pp. 11-1–12 and 11.2.7.2/Figure 11-34 p. 11-50;
-[source/byte-oracle note](research/2026-11-26-packet-slicing-requirements.md).
-Use independently constructed fixed headers and body/filler/checksum regions;
-trust and extent assertions are internal values, not rendered messages or a
-choice to use damaged payloads. No fixture defines findings/assumption-label/
-suppression-marker formatting. Partial text is not a complete TMATS oracle.
+PLANNED cases for L2-CLI-003/004 and L3-CLI-004–013, re-pointed under
+ADR-0036. Use core PacketFacts and borrowed DATA spans; no local packet
+finder, header/profile validator or checksum algorithm is under test.
+Chapter 11 facts/reference values remain in the [original source note](research/2026-11-26-packet-slicing-requirements.md);
+the [decision/span note](research/2026-11-26-core-reader-span-rework.md)
+records the corrected ownership and exact maximum-case arithmetic. Values
+below are internal evidence, not report formats or new core API field names.
 
 | Named planned test | Independent stimulus / expected result | Requirements |
 | --- | --- | --- |
-| `packet_primary_header_is_fixed_before_length_use` | Source shorter than 24 bytes, including huge-looking partial length bytes: no trusted length, source slicing/allocation/traversal from that length or successful packet boundary | L3-CLI-004, L3-CLI-006 |
-| `packet_primary_checksum_word_sum_is_independent` | Valid little-endian primary vector with independently summed eleven 16-bit words; mutate checksum word only: mismatch blocks trusted length use even if claimed body bytes appear plausible | L3-CLI-004, L3-CLI-013 |
-| `packet_sync_value_and_raw_binary_fields` | Correct 0xEB25 sync versus wrong/reversed bytes with recomputed checksum: wrong sync cannot establish a supported packet. Header binary length/type/version fields are not parsed with INT-055 numeric-text rules | L3-CLI-004, L3-CLI-012 |
-| `packet_secondary_flag_controls_fixed_extent` | Verified primary with bit 7 clear/set: H=24/36 respectively; only enabled secondary bytes participate in secondary verification, never data/CSDW/text | L3-CLI-005, L3-CLI-008 |
-| `packet_secondary_truncation_or_mismatch_blocks_trust` | Bit 7 set with fewer than 12 secondary bytes, then full bytes but bad secondary checksum: no length-based trusted packet/fragment despite valid primary checksum | L3-CLI-005, L3-CLI-006 |
-| `packet_secondary_checksum_uses_bytes_not_words` | First ten secondary bytes 01 02 03 04 05 06 07 08 00 00: expected checksum 0x0024; reject word-sum 0x1410. Reserved bytes zero; no timestamp interpretation asserted | L3-CLI-005, L3-CLI-013 |
-| `packet_checked_lengths_do_not_wrap_or_underflow` | Verified-header unit cases with offset-plus-size overflow, P<H, D>P-H-C, C extending before body and unrepresentable host offsets: no wrapped/truncated span or success | L3-CLI-006 |
-| `packet_alignment_and_source_containment_are_separate` | Checksum-correct lengths with P not multiple of four or packet endpoint beyond source: reject trusted boundary; checksum success cannot turn missing bytes into a packet | L3-CLI-006 |
-| `packet_profile_limit_keeps_setup_exception` | Arithmetic-only reviewed-baseline limit checks: ordinary 524288 permitted as limit, +4 exceeds; setup 134217728 permitted as limit, +4 exceeds. No allocation or trusted full packet is claimed by passing the isolated limit check | L3-CLI-007 |
-| `packet_profile_binding_never_borrows_tmat_edition` | Unsupported/unavailable packet-profile binding with supplied G\106/RCCVER values: no invented physical layout or successful length trust from a different code space | L3-CLI-007, L3-CLI-012 |
-| `setup_slice_without_secondary_is_exact` | O nonzero, H=24, D=7: CSDW [O+24,O+28), text [O+28,O+31), body [O+24,O+31); compare explicit source bytes, not a second slice calculator under test | L3-CLI-008, L3-CLI-011 |
-| `setup_slice_with_secondary_skips_all_twelve_bytes` | Same body with H=36: CSDW [O+36,O+40), text [O+40,O+43); none of the secondary time/reserved/checksum bytes enters text | L3-CLI-005, L3-CLI-008 |
-| `setup_short_data_never_fabricates_csdw` | Format 1 D=0/1/2/3: no four-byte CSDW/text span; D=4 separately gives empty text only, never a defaulted or complete usable record | L3-CLI-008 |
-| `other_packet_types_never_become_setup_text` | Bounded type 0x00/02/03/04 and time packets: no Format-1 CSDW decode or append to its text stream merely because bytes resemble attributes | L3-CLI-008, L3-CLI-012 |
-| `packet_checksum_flags_define_trailer_width` | Bits 1–0 = 00/01/10/11 give C=0/1/2/4, each with separately constructed body/filler region: no absent checksum presented as positive verification and no checksum bytes in TMATS text | L3-CLI-009, L3-CLI-010 |
-| `packet_data_checksum_includes_filler` | CSDW zero plus 61 62 63 text, D=7: 8-bit sum without filler 0x26; with eight FF filler bytes 0x1E. Both yield the same three text bytes; omitting filler is a verification failure | L3-CLI-009, L3-CLI-013 |
-| `packet_filler_can_exceed_alignment_minimum` | P=40,H=24,D=7,C=1 yields eight filler bytes; retain valid exact extents, do not clamp filler to three or include it in the fragment | L3-CLI-006, L3-CLI-008, L3-CLI-009 |
-| `packet_word_longword_checksum_domains_are_independent` | Separate 16/32-bit fixtures with independently specified body+filler sums: checksum covers the full domain, excludes both headers and its own bytes, with valid word alignment and widths | L3-CLI-009, L3-CLI-013 |
-| `packet_data_checksum_failure_stays_distinct` | Valid primary/secondary and bounded body, incorrect present data checksum: retain established bounds and failed verification independently; no verified/trusted fragment or time-closure/governing claim, and no invented adopt/drop/render policy | L3-CLI-010 |
-| `packet_checksum_is_not_tmats_sha` | Packet checksum passes but supplied text has unusable G\SHA evidence, or conversely text evidence does not establish packet verification: do not conflate checksum domains or report record integrity from packet slicing | L3-CLI-009, L3-CLI-010 |
-| `packet_fragment_provenance_survives_slicing` | Two bounded setup packets carry distinct channel/sequence/RTC/version/raw CSDW metadata: keep exact per-packet source extents for the existing decoder/assembler, no premature join or record-wide metadata winner | L3-CLI-008, L3-CLI-011 |
-| `packet_trust_failure_never_hides_input_mutation` | Header/bounds failures on immutable source: same bytes before/after, no alternate packet-kind or repaired successful setup fallback; standalone text gets no fabricated packet offsets | L3-CLI-011, L3-CLI-012 |
-| `packet_generated_region_matrix_has_independent_oracle` | Future CI bounded cases cross secondary presence, four checksum widths and allowed extra filler, with independently supplied regions and single-field corruptions: exact span/domain/trust invariants; finite declared seed/case budget, no large allocations | L3-CLI-006, L3-CLI-008, L3-CLI-009, L3-CLI-013 |
+| `core_is_only_packet_finder_and_reader` | Instrumented core adapter supplies facts/DATA: no local sync scan, header parser, checksum call or fallback reader; missing compatible core capability remains a dependency gap | L3-CLI-004, L3-CLI-012 |
+| `core_primary_trust_passes_through_unchanged` | Supplied core primary evidence/qualifications survive adapter and assembler exactly; no stronger verified verdict from TMATS or duplicate check of source header bytes | L3-CLI-004, L3-CLI-010 |
+| `core_rdg008_both_readings_are_preserved` | Core evidence includes RDG-008 byte/word readings 0x0024/0x1410 and its own outcome/qualifications: preserve both and outcome unchanged, no preferred reading or local checksum calculation | L3-CLI-005, L3-CLI-010 |
+| `core_data_notchecked_has_no_local_fallback` | Core data evidence NotChecked with checksum-related metadata present or absent: pass NotChecked unchanged; never calculate packet data checksum or synthesize verified/failed/absent from flags | L3-CLI-009, L3-CLI-010 |
+| `core_future_data_evidence_is_not_reinterpreted` | Opaque supplied core data-integrity evidence beyond NotChecked: preserve its exact values/qualification through slicing/assembly; no API enum/schema is invented by this fixture | L3-CLI-009, L3-CLI-010 |
+| `core_data_extents_are_not_rebuilt_from_headers` | Core supplies DATA references excluding header/filler/checksum with nontrivial source origins: use those spans, never guessed O+24/36 or a new local P/H/C parse | L3-CLI-006, L3-CLI-008 |
+| `borrowed_span_local_bounds_do_not_wrap` | Invalid requested logical subrange/overflow or D<4: bounded rejection, no clamp/wrap/fabricated CSDW; check local span contract only, never revalidate packet headers | L3-CLI-006, L3-CLI-008 |
+| `core_profile_limits_versions_remain_core_facts` | Core supplies packet profile/size/version qualifications, including unsupported context: keep them without local cap/version tables or G\106/RCCVER fallback; source limits remain reference facts | L3-CLI-007 |
+| `csdw_straddles_core_block_boundary` | DATA starts with 0E 01 00 00, split after byte 1/2/3 across different backing blocks: raw four bytes/scalar decode unchanged, logical text starts at 4 once, zero payload coalescing | L3-CLI-008, L3-CLI-012, L3-CLI-013 |
+| `text_fragment_straddles_core_block_boundary` | CSDW followed by G\PN:x; text split within its name/value/semicolon in separate arms: same logical text/source mappings, no CSDW skip at a new block or inserted delimiter, zero payload copy | L3-CLI-008, L3-CLI-011, L3-CLI-012 |
+| `csdw_and_text_cross_multiple_short_spans` | Several spans shorter than four bytes, plus valid zero-length metadata intervals where supplied: consume exactly first four logical bytes once, retain only remaining text spans; do not require any span to hold a contiguous CSDW/text | L3-CLI-006, L3-CLI-008, L3-CLI-012 |
+| `empty_text_span_does_not_prove_complete_setup` | Total DATA D=4 split across blocks: valid logical CSDW, empty text only; D=0/1/2/3 cannot fabricate CSDW. Neither case asserts record completeness/default metadata | L3-CLI-008 |
+| `other_core_packet_types_do_not_become_tmats` | Core facts say type 0x00/02/03/04 or time packet: no Format-1 CSDW decode or text append merely from text-like DATA; keep core evidence for its actual type | L3-CLI-004, L3-CLI-008 |
+| `assembly_block_boundaries_do_not_stop_runs` | Joined same-channel packet facts satisfy existing INT-011/045 prerequisites; text crosses blocks within each packet: block edges never create joins/stops/closure or new CSDWs, and no payload allocation is required | L3-CLI-011, L3-CLI-012 |
+| `borrowed_provenance_maps_blocks_and_packets` | Logical text range crosses both block and fragment boundaries with distinct core source origins: preserve every ordered subrange, owner/block identity, packet metadata and unchanged evidence | L3-CLI-011 |
+| `span_owners_live_until_borrows_end` | CI API/lifetime tests retain references while block recycling/drop would invalidate them: safe ownership/borrowing prevents use-after-recycle, no hidden copy claimed as zero-copy success | L3-CLI-011, L3-CLI-012 |
+| `maximum_setup_uses_256_borrowed_data_spans` | Core facts for baseline maximum P=134217728,H=24,C=0 supply D=134217704 as first span 524264 then 255 spans 524288: assembler text length 134217700, original references/owners preserved, zero extra payload copy/coalescing, data NotChecked unchanged. Large backing only in bounded CI; local math allocates no payload | L3-CLI-007, L3-CLI-012, L3-CLI-013 |
+| `span_count_fixture_is_not_a_production_cap` | Smaller payload split into 257 spans within supplied resource budget: 256-span coverage does not create an undocumented span-count rejection or contiguous-buffer fallback | L3-CLI-007, L3-CLI-012 |
+| `core_packet_integrity_is_not_tmats_sha` | Core integrity evidence and TMATS G\SHA/flex results differ or are unavailable: keep domains separate; no local packet verification fills NotChecked and no core packet verdict proves TMATS completeness/governance | L3-CLI-009, L3-CLI-010 |
+| `borrowed_input_never_requires_owned_document_first` | Span-backed slicing/assembly is exercised directly without constructing a contiguous owned Document; any explicit owned standalone/materialization API is separate and not invoked behind this path | L3-CLI-012, L3-CLI-013 |
+| `core_span_integration_matrix_preserves_evidence` | Future bounded CI varies span partitions, packet metadata/evidence and source origins: same logical CSDW/text bytes and unchanged core evidence, zero payload-copy counter, no reimplementation of core reader/checksum oracles | L3-CLI-005, L3-CLI-006, L3-CLI-010, L3-CLI-013 |
 
-The result of failed checksum verification is recorded as internal evidence;
-this table does not decide downstream adoption/recovery policy or rendered
-finding severity, text, JSON shape or process exit code. Report/rendered-output
-formats require an owner decision before that later slice starts. All
-requirements here remain Draft until meaningful implementation verification.
+DATA is already core's body view; tmats does not receive trailer bytes just
+to checksum them. Core data verification is an owner-scheduled feature
+request, not a second local implementation or mandatory new release blocker.
+All fixtures are planned; no compatible core API/version, runtime ownership
+safety or large-case performance is claimed as tested here. Report/rendered
+formats remain behind the owner-decision gate. Standard checksum facts and
+example values remain reference evidence, not TMATS acceptance algorithms.
 
 ## Real Chapter 10 recordings (local use only)
 

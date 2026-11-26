@@ -35,8 +35,8 @@
 
   <rect class="box" x="190" y="76" width="200" height="80" rx="6"/>
   <text class="b" x="290" y="98" text-anchor="middle">Packet reader</text>
-  <text class="l" x="290" y="116" text-anchor="middle">irig106-core (today: the tmats</text>
-  <text class="l" x="290" y="130" text-anchor="middle">CLI's minimal reader)</text>
+  <text class="l" x="290" y="116" text-anchor="middle">irig106-core: sole reader</text>
+  <text class="l" x="290" y="130" text-anchor="middle">PacketFacts + borrowed DATA</text>
   <text class="l" x="290" y="146" text-anchor="middle">walks headers, checks checksums</text>
 
   <rect class="hub" x="470" y="66" width="220" height="150" rx="8"/>

@@ -652,7 +652,7 @@ approval through a requirement or a supplied fixture binding.
 
 **Parent**: L1-CH10-004
 
-**Statement**: The library SHALL form independent candidate fragment runs per channel from caller-supplied bytes and provenance in recording order using the INT-011 joining prerequisites, retain each run's start reason and why each join was permitted or stopped, and concatenate only the TMATS text portions without inserting, removing or interpreting text at a packet boundary; a joined run SHALL remain distinct from a completeness or governance verdict.
+**Statement**: The library SHALL form independent candidate fragment runs per channel from caller-supplied bytes and provenance in recording order using the INT-011 joining prerequisites, retain each run's start reason and why each join was permitted or stopped, and logically concatenate only the TMATS text portions as ordered borrowed spans without mandatory coalescing, extra payload copy, insertion, removal or interpretation at packet/block boundaries; a joined run SHALL remain distinct from a completeness or governance verdict.
 
 **Rationale**: 106-24R1 Chapter 11 section 11.2.7.2 page 11-50 states that one setup record may span consecutive packets and that sequence increments n+1 in segmentation order. Section 11.2.1.1 f defines per-channel sequence counters. ADR-0025 supplies the library boundary; INT-011 supplies the additional same-channel/FRMT/RCCVER interpretation. ADR-0031 supersedes the old assumption that stopping a run proves a record finished. Joey's 2026-11-23 INT-011 clarification makes other-channel packets provenance/information only, never a stop condition. Channel-0 conformance is separate from joining. This is not a packet reader or an end-marker invention.
 
@@ -920,23 +920,21 @@ normalization algorithm, edit API or Rust output signature is selected here.
 
 **Verification Method**: Test (T)
 
-## CLI packet trust and setup slicing (family 2, batch 22)
+## Core-backed setup slicing (family 2, batch 22; review correction)
 
-Derive L1-CLI-008 before a minimal recording reader is implemented.
-ADR-0025 refines ADR-0019: checksums precede trusted length use, packets
-are sliced by the CLI, and the library receives payload/fragments only.
-Sources: 106-24R1 Chapter 11 sections 11.1, 11.2.1–11.2.1.4 and 11.2.7.2;
-see the [source note](research/2026-11-26-packet-slicing-requirements.md).
-These are mechanics/internal evidence, not report formats, presentation of
-findings, assumption labels, suppression markers or a recovery/adoption policy.
+ADR-0036 supersedes the temporary tmats reader in ADR-0019/0025. The CLI
+uses core PacketFacts plus borrowed DATA spans; only TMATS CSDW/fragment
+slicing and assembly remain here. See the [decision record](research/2026-11-26-core-reader-span-rework.md).
+Existing IDs are re-pointed, not reused for a new local reader. Chapter 11
+facts remain reference evidence. No report/rendered format is selected.
 
 #### L2-CLI-003
 
 **Parent**: L1-CLI-008
 
-**Statement**: The CLI's packet reader SHALL establish primary-header and enabled secondary-header checksum evidence from their fixed-size bounded bytes before trusting length fields, then validate checked packet/body/trailer extents under the applicable reviewed packet profile before using them for traversal or payload access; absent, truncated, corrupt or unsupported prerequisites SHALL NOT be treated as verified lengths or trusted payloads.
+**Statement**: The tmats CLI SHALL obtain packet finding, validated DATA extents, packet trust and primary/secondary-header checksum evidence from irig106-core PacketFacts and borrowed spans, without implementing another packet reader, header/profile validator or checksum algorithm, and SHALL preserve core's evidence rather than synthesize a stronger verdict or choose among RDG-008 readings.
 
-**Rationale**: ADR-0025 and L1-CLI-008 require this trust ordering. 106-24R1 Chapter 11 section 11.2.1.1 pp. 11-5–10 defines the 24-byte header and checksum; section 11.2.1.2 p. 11-10 defines the optional 12-byte secondary header. Successful checksum arithmetic alone does not prove length containment. Packet fields are binary, not INT-055 decimal TMATS values.
+**Rationale**: Owner architecture 2026-11-22 and coordinator rework decisions, recorded in ADR-0036. Core is available; ADR-0019's temporary-reader condition no longer applies. Exact compatible dependency/API binding remains implementation work. The TMATS library remains I/O-free; the CLI adapter consumes core facts and passes spans/provenance/evidence to it without inventing a duplicate PacketFacts definition.
 
 **Verification Method**: Test (T)
 
@@ -944,8 +942,8 @@ findings, assumption labels, suppression markers or a recovery/adoption policy.
 
 **Parent**: L1-CLI-008
 
-**Statement**: For a bounded Computer-Generated Data Format 1 packet, the CLI SHALL keep the setup CSDW and exact TMATS fragment separate, exclude packet headers/filler/data-checksum bytes from the fragment, verify any optional data checksum over its specified domain, and retain source extents and independent checksum/trust evidence for downstream decoding/assembly without silently promoting failed verification to trusted metadata.
+**Statement**: Over core's borrowed DATA spans, TMATS SHALL read the first four logical bytes as the setup CSDW and retain the remaining logical bytes as borrowed text fragments, accepting block-split CSDWs/text directly without coalescing or extra payload copy; it SHALL preserve source mappings and core integrity evidence unchanged, including data checksum NotChecked, and SHALL NOT verify packet data checksums locally.
 
-**Rationale**: Chapter 11 section 11.2.1.1 d p. 11-6 excludes filler/checksum from Data Length; sections 11.2.1.3–4 p. 11-11 make data checksum cover body AND filler; section 11.2.7.2/Figure 11-34 p. 11-50 supplies each packet's four-byte setup CSDW. ADR-0025 keeps assembly in the library. This is not G\SHA verification, record completeness, time-boundary closure, packet-checksum failure adoption or a rendered diagnostic format.
+**Rationale**: Chapter 11 section 11.2.7.2/Figure 11-34 p. 11-50 defines each packet's CSDW before text; sections 11.2.1.1 d and 11.2.1.4 define DATA excluding filler/checksum. Core supplies those DATA spans; tmats must not reconstruct them from raw headers. ADR-0036 records direct non-contiguous input and core-owned verification. Library assembly stays per-channel under INT-011/045, independent of physical block boundaries. The coordinator's data-checksum feature request is for core; owner scheduling is pending.
 
 **Verification Method**: Test (T)

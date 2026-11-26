@@ -1111,7 +1111,9 @@ e352323. Source freshness, deep analysis and executable verification remain.
 *For the identified Figure 11-34 layout, payload decoding SHALL require at least four bytes, preserve the input and supplied provenance on failure and report a located short-CSDW result for lengths 0–3 without reading unavailable bytes, zero-padding or inventing a version/format/change flag.*
 
 Source: 106-24R1 Chapter 11 section 11.2.7.2 a, Figure 11-34, page 11-50.
-The raw CSDW spans payload offsets [0,4). A short CSDW is not a supported
+The raw CSDW spans logical payload offsets [0,4), which may cross borrowed
+DATA spans under ADR-0036; no contiguous intermediate is required.
+A short CSDW is not a supported
 empty document. Unknown/unavailable layout knowledge is a separate blocked
 interpretation, not proof of malformed bytes or permission to use baseline
 semantics silently. No concrete Rust result/diagnostic enum is fixed here.
@@ -1122,7 +1124,9 @@ semantics silently. No concrete Rust result/diagnostic enum is fixed here.
 The caller supplies a packet-body slice already bounded by Data Length;
 filler and data checksum are outside it (ADR-0025). This function does not
 search raw packets or remove bytes by padding heuristics. Each fragment has
-its own CSDW: later assembly must concatenate bodies, not embedded CSDWs.
+its own CSDW: later assembly logically concatenates text spans, not embedded
+CSDWs. Under ADR-0036, [4,payload_length) is a logical interval represented
+by borrowed subspans, not a requirement for one contiguous byte slice.
 BOM meaning is checked at assembled-text offset zero under INT-037, not
 independently stripped at every fragment boundary.
 
@@ -1306,7 +1310,7 @@ this selects no recovery or completeness result. INT-034 needs run-start
 as well as stop evidence to consider leading truncation (L3-CH10-016).
 
 **L3-CH10-012** · Parent: L2-CH10-004 · Verification: T
-*The candidate text SHALL be the exact concatenation, in recording order, of each joined fragment's supplied text slice after its own CSDW; no CSDW, header, filler, packet checksum or separator SHALL be inserted into that text, and no code name, value or encoding marker SHALL be interpreted separately merely because it crosses a fragment boundary.*
+*The candidate text SHALL be the exact concatenation, in recording order, of each joined fragment's supplied text spans after its own CSDW; no CSDW, header, filler, packet checksum or separator SHALL be inserted into that text, and no code name, value or encoding marker SHALL be interpreted separately merely because it crosses a fragment boundary.*
 
 Chapter 11 Figure 11-34/section 11.2.7.2 page 11-50 and ADR-0025 establish
 per-packet CSDWs followed by fragment text. Boundaries do not add a newline,
@@ -1315,17 +1319,22 @@ contract, scanner/INT-035 framing, INT-037 offset-zero marker recognition and
 checksum exclusion rules use assembled text coordinates, not packet-local
 coordinates. This authorizes no parse/checksum of a run as if proven complete.
 
+ADR-0036 requires this concatenation to be logical over borrowed spans,
+not a mandatory copy into a contiguous allocation. The assembler takes
+non-contiguous DATA directly; reading across a block does not create a new
+packet/CSDW or alter INT-011/045 joins/closure.
+
 **L3-CH10-013** · Parent: L2-CH10-005 · Verification: T
 *Every assembled text byte SHALL map to exactly its original packet and byte offset, retaining the corresponding recording/file identity and fragment identity; the mapping SHALL cover the concatenated text without gaps or fabricated bytes and SHALL preserve all supplied fragment metadata independently of any record-level summary.*
 
 ADR-0025 requires offset provenance; ADR-0003 retains original source bytes.
 Packet-relative text starts include that fragment's own four-byte CSDW.
-The mapping uses supplied packet/body bounds, not a guessed fixed header
-length, since optional secondary headers alter offsets (ADR-0025). Empty
+The mapping uses core-supplied DATA spans and source origins, not a guessed
+fixed header length; block splits may occur within a packet (ADR-0036). Empty
 text contributes no byte interval but does not discard fragment metadata.
 
 **L3-CH10-014** · Parent: L2-CH10-005 · Verification: T
-*A requested half-open assembled-text range SHALL map to its ordered source subranges, splitting only at fragment boundaries and retaining every contributing byte; an invalid/out-of-bounds range SHALL report its invalid request rather than clamp, wrap or identify unrelated packet bytes.*
+*A requested half-open assembled-text range SHALL map to its ordered source subranges, splitting at span/block and packet-fragment boundaries and retaining every contributing byte; an invalid/out-of-bounds range SHALL report its invalid request rather than clamp, wrap or identify unrelated packet bytes.*
 
 This is an offset-mapping contract, not text normalization. A boundary offset
 belongs to the following nonempty interval for byte lookup; the end offset
@@ -2035,93 +2044,84 @@ implementation or a particular failure enum/API. Transformation-specific
 rules, source citations and acceptance fixtures remain required in a later
 family-2 slice. No absent policy is chosen by “canonical” as an output label.
 
-## CLI packet trust and setup slicing (family 2, batch 22)
+## Core-backed setup slicing (family 2, batch 22; review correction)
 
-Baseline source: 106-24R1 Chapter 11 Version 1 common packet fields.
-This is an internal byte/evidence contract, not a new public Rust API or
-report layout; [source note](research/2026-11-26-packet-slicing-requirements.md).
-Other editions/profiles need their own reviewed bindings; neither G\106 nor
-setup RCCVER may silently stand in for the packet header's data-type version.
+ADR-0036 re-points the former reader requirements to core. These IDs now
+specify integration with PacketFacts/borrowed DATA spans, not a second
+reader/checksum implementation. Source facts/examples are retained in the
+[original note](research/2026-11-26-packet-slicing-requirements.md) and
+[correction](research/2026-11-26-core-reader-span-rework.md).
 
 **L3-CLI-004** · Parent: L2-CLI-003 · Verification: T
-*The reader SHALL first bound the fixed 24-byte primary header, check its sync value and verify its 16-bit arithmetic sum of 16-bit words excluding the checksum word; unverified length fields SHALL NOT drive source access, allocation, traversal or a successful packet boundary.*
+*The CLI SHALL use irig106-core for packet finding and primary-header trust/checksum results, consuming its PacketFacts/DATA output without a local sync scanner, header-checksum implementation, packet traversal fallback or duplicate reader.*
 
-Sources: section 11.1 p. 11-1 gives little-endian structural fields;
-section 11.2.1.1 a p. 11-5 gives sync 0xEB25, and j p. 11-10 gives the
-checksum. A short header or mismatch is not an absent setup record or a
-trusted length. This specifies no damaged-file resynchronization algorithm.
+The owner one-reader architecture supersedes the temporary ADR-0019 reader.
+The CLI owns acquisition/integration; the TMATS library performs no I/O.
+Unavailable core capability is a dependency gap, not permission for a fallback.
 
 **L3-CLI-005** · Parent: L2-CLI-003 · Verification: T
-*After primary verification, packet-flags bit 7 SHALL determine the enabled secondary header; when set, the reader SHALL bound its fixed 12 bytes and verify the printed 16-bit arithmetic sum of secondary-header BYTES excluding its checksum word before trusting length fields, without substituting the primary-header word-sum rule.*
+*TMATS SHALL forward core's secondary-header integrity evidence unchanged, including RDG-008 byte/word readings and core's qualifications/verdicts, without calculating, choosing, rejecting or upgrading one reading through a local secondary-checksum rule.*
 
-Sources: section 11.2.1.1 g p. 11-8 and section 11.2.1.2 p. 11-10.
-Use fixed extents, not untrusted Packet/Data Length, to obtain these bytes.
-Secondary time/reserved bytes belong to this header, never TMATS text.
-No packet timestamp is interpreted or converted by this requirement.
+The Ch11 printed byte-sum and reference examples remain source evidence,
+not a tmats acceptance test or algorithm. Core owns RDG-008 resolution;
+copying references/scalar metadata is not a new interpretation of its verdict.
 
 **L3-CLI-006** · Parent: L2-CLI-003 · Verification: T
-*Using verified headers, the reader SHALL validate Packet Length, Data Length, enabled-header size, checksum width and source containment with checked arithmetic before constructing any body/trailer/next-packet span; inconsistent, underflowing, overflowing, out-of-source or non-four-byte-aligned Packet Length SHALL NOT produce a trusted boundary or wrapped/truncated slice.*
+*The adapter SHALL consume core's already identified DATA extents as borrowed span sequences and check only its own logical span/slice bounds with checked arithmetic, without re-parsing raw headers to reconstruct packet, secondary-header, filler or checksum boundaries.*
 
-Sources: section 11.2.1.1 c–d pp. 11-5–6 and section 11.2.1.4 p. 11-11.
-For source offset O, header size H=24+(12 when enabled), packet size P,
-data size D and checksum width C, require P >= H+D+C and [O,O+P)
-inside the source. Checked calculations precede indexing; checksum success
-alone never makes an impossible length safe. No host integer cast may wrap.
+Local CSDW/text access must not wrap, clamp, overrun a supplied span or invent
+missing bytes. Such span-contract checks are not a duplicate core header/
+profile validator. Preserve core facts/source identity with each span sequence.
 
 **L3-CLI-007** · Parent: L2-CLI-003 · Verification: T
-*Length validation SHALL use the applicable reviewed profile's packet-type limit, not silently apply the ordinary packet cap to Format 1 setup packets or infer a newer profile from unavailable/reserved version evidence.*
+*Packet-profile, version, packet-size and trust facts SHALL come from core and remain qualified as core supplied them, with no tmats reimplementation of packet caps/version tables or fallback inference from G\106/RCCVER.*
 
-Baseline: section 11.2.1 c/Table 11-3 p. 11-4 permits 134,217,728 bytes
-for Format 1 setup packets and 524,288 for ordinary types. These are source
-limits, not permission to allocate a maximum-sized buffer locally. Test
-boundary metadata arithmetically without large allocations; source-backed
-payload access still requires actual containment. Shared types retain their
-ownership under ADR-0009; no duplicate version/code tables are approved here.
+Ch11 Table 11-3 source limits (134,217,728-byte setup packet; 524,288-byte
+ordinary packet) remain reference facts. A 256-span maximum-setup fixture
+is coverage, not a new 256-span production cap or maximum assembled-record
+size. No dependency version supporting uninspected APIs is assumed here.
 
 **L3-CLI-008** · Parent: L2-CLI-004 · Verification: T
-*For verified headers and bounded data type 0x01 payload with Data Length at least four, the reader SHALL identify body [O+H,O+H+D), raw CSDW [O+H,O+H+4) and TMATS fragment [O+H+4,O+H+D), excluding all header/trailer bytes; shorter data SHALL NOT fabricate a CSDW or text span.*
+*For core-provided Format-1 DATA with at least four logical bytes, TMATS SHALL read logical [0,4) as CSDW and [4,D) as text over the borrowed spans, even when either region crosses block boundaries; shorter logical DATA SHALL not fabricate a CSDW/text value, and D=4 SHALL produce only an empty text range, not a completeness claim.*
 
-Sources: Table 11-4 p. 11-6 and section 11.2.7.2/Figure 11-34 p. 11-50;
-existing setup decoder handles CSDW fields separately. Data Length=4 gives
-an empty text span, not a claimed complete usable setup. Non-Format-1
-packets do not acquire Format-1 CSDW interpretation or enter its text stream.
+Source: Chapter 11 section 11.2.7.2/Figure 11-34 p. 11-50. The four-byte
+prefix is removed ONCE per packet, not once per span/block. Other packet
+types do not acquire Format-1 CSDW interpretation by resembling text.
 
 **L3-CLI-009** · Parent: L2-CLI-004 · Verification: T
-*Packet-flags bits 1–0 SHALL identify absent/8/16/32-bit data checksum and its 0/1/2/4-byte trailer width; any present checksum SHALL be verified over the complete body PLUS filler, excluding primary/secondary headers and the checksum itself, using the specified byte/word/long-word arithmetic sum.*
+*TMATS SHALL NOT verify packet data checksums and SHALL pass core's data-integrity evidence through as-is, including NotChecked until core provides verification, without converting it to checked, failed, absent or verified based on local checksum arithmetic.*
 
-Sources: section 11.2.1.1 g p. 11-9 and section 11.2.1.4 pp. 11-11–12.
-Filler is [O+H+D,O+P-C); checksum is [O+P-C,O+P). Filler need not be
-only minimal alignment bytes: the standard also allows fixed packet sizes
-per channel. Neither filler nor checksum enters TMATS text or G\SHA input.
-An absent checksum is recorded as absent, not a positive integrity check.
+Coordinator decision 2; ADR-0036. Ch11's body-plus-filler checksum facts
+remain a CORE feature request, whose implementation timing the owner decides.
+G\SHA/flex over TMATS is separate and unchanged; it does not supply missing
+packet integrity evidence. No optional local checksum fallback is authorised.
 
 **L3-CLI-010** · Parent: L2-CLI-004 · Verification: T
-*The reader SHALL retain primary, secondary and data-checksum evidence independently from structural containment and setup semantic evidence; failure, absence or unavailable verification SHALL NOT be relabelled success, and a failed data checksum SHALL remain visible without asserting trusted fragment/time-boundary/governing semantics.*
+*Primary/secondary/data integrity and trust evidence in PacketFacts SHALL retain its original values, readings and qualifications through CSDW/text slicing and assembly; logical byte access SHALL NOT promote NotChecked or uncertain/failed evidence to successful verification or infer time closure/governing authority from it.*
 
-This is a verification result, not a choice to adopt/drop checksum-failed
-payloads or a severity/exit-code/display policy. G\SHA/flex and INT-045
-closure remain distinct; packet slicing alone cannot validate setup text.
-Any further use of failed payloads needs its own reviewed contract.
+Use core's evidence, not a tmats verdict assembled from its subfields. This
+selects no failed-payload adoption, report severity/format or RDG-008 rule.
+Core DATA excludes filler/checksum; TMATS neither rechecks nor adds them.
 
 **L3-CLI-011** · Parent: L2-CLI-004 · Verification: T
-*Every bounded setup payload/fragment result SHALL retain its source offset/extents, raw CSDW and packet metadata needed by the existing decoder/assembler, together with the checks actually established, without inventing packet provenance for standalone text or replacing fragment-local source evidence with one record-wide checksum claim.*
+*The adapter and assembler SHALL retain the ordered source-span references and PacketFacts-derived packet/CSDW/provenance evidence for every logical text range, splitting mappings at block/span as well as packet-fragment boundaries and preserving exact origin/lifetimes without a contiguous payload intermediate.*
 
-ADR-0025 needs channel/sequence/RTC/data-type-version and CSDW evidence;
-L2-CH10-004/005 supply joining/provenance contracts. This slice does not
-change per-channel joining, initial/mid-session closure or completeness.
-No rendered finding, assumption or suppression-marker format is selected.
+An input owner/borrow must keep core blocks alive while spans are used; no
+block recycling or dangling/rebound slice is permitted. Logical adjacency
+does not mean adjacent backing allocations. Public lifetime/API signatures
+remain reviewed implementation work, not a new local PacketFacts type.
 
-**L3-CLI-012** · Parent: L2-CLI-003 · Verification: T
-*Packet inspection SHALL operate on caller/CLI-acquired bytes without mutating input or moving file/network acquisition into the TMATS library; a trust/bounds failure SHALL not be hidden by treating the data as a different supported packet or a successful complete setup.*
+**L3-CLI-012** · Parent: L2-CLI-004 · Verification: T
+*The TMATS assembler SHALL accept non-contiguous DATA spans directly and retain logical per-channel text concatenation without required coalescing or extra payload byte copy; block splits SHALL NOT be interpreted as packet boundaries, new CSDWs, delimiters, join stops or complete records.*
 
-ADR-0010/0019/0025 define the temporary CLI reader and library boundary.
-Recovery, scan restart, input sniffing, record selection, publication policy
-and output presentation are separate derivations; no fallback is invented.
+Coordinator decision 3. Scalar CSDW decoding and bounded span/provenance
+metadata are not payload coalescing. Explicit owned standalone/document
+materialization remains a separate path, never required just to slice or
+assemble span-backed input. INT-011/045 logical packet boundaries remain.
 
 **L3-CLI-013** · Parent: L2-CLI-004 · Verification: T
-*Verification fixtures SHALL independently construct header/body/filler/checksum regions and expected offsets, distinguish primary word-sum from secondary byte-sum and body-only from body-plus-filler checksum, and mutate trust/length fields without deriving expected slices or checksum results from the production reader.*
+*Integration verification SHALL include CSDW-straddling and text-straddling block cases, unchanged core evidence including RDG-008 readings/NotChecked, and a 256-span maximum-setup-packet case, asserting exact logical bytes/provenance and zero extra payload copying without implementing core checksum/reader algorithms as test oracles.*
 
-Use small bounded packets and arithmetic-only limit/overflow cases; do not
-allocate standard maxima or run heavy local input-space enumeration. Planned
-case names are not executed coverage, nor a replacement for source freshness,
-implementation analysis and meaningful GitHub CI verification.
+Large backing belongs to bounded GitHub CI, with no 128-MiB local allocation.
+Use arithmetic/descriptor checks locally and core fixtures or explicit facts
+for integration. Metadata allocation is not hidden payload coalescing.

@@ -280,8 +280,8 @@ This matrix is the single source of truth for live status; the requirement docum
 |-------|-------------|----------------|--------|
 | L2-CLI-001 | L3-CLI-001, L3-CLI-002 | _(TBD)_ | Draft |
 | L2-CLI-002 | L3-CLI-003 | _(TBD)_ | Draft |
-| L2-CLI-003 | L3-CLI-004, L3-CLI-005, L3-CLI-006, L3-CLI-007, L3-CLI-012 | _(TBD)_ | Draft |
-| L2-CLI-004 | L3-CLI-008, L3-CLI-009, L3-CLI-010, L3-CLI-011, L3-CLI-013 | _(TBD)_ | Draft |
+| L2-CLI-003 | L3-CLI-004, L3-CLI-005, L3-CLI-006, L3-CLI-007 | _(TBD)_ | Draft |
+| L2-CLI-004 | L3-CLI-008, L3-CLI-009, L3-CLI-010, L3-CLI-011, L3-CLI-012, L3-CLI-013 | _(TBD)_ | Draft |
 
 ### L1-ROB: Robustness against arbitrary input
 

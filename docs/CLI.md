@@ -42,10 +42,11 @@ a command computes, the library can compute for other callers.
   file order (the `idmptmat` first-packet-only limitation, defect D2, is not
   repeated). Each record's output is labelled with its position and packet
   offset.
-- **Recordings are memory-mapped**, and the reader skips from packet header
-  to packet header, reading only data type `0x01` payloads, so a
-  multi-gigabyte file costs little. A minimal packet reader lives in the CLI
-  until `irig106-core` provides one.
+- **Recordings are memory-mapped**, and packet finding/trust comes from
+  `irig106-core` (ADR-0036), with borrowed DATA spans into TMATS slicing/
+  assembly. The temporary CLI reader is superseded; no header or packet-data
+  checksum implementation is added here. DATA need not be contiguous or
+  copied/coalesced; input blocks remain alive for the borrows.
 - **Plain text by default, JSON on request**, with a documented, versioned
   JSON schema so scripts and `irig106-cli` can rely on it.
 - **Labels are the code names actually read.** A value is never shown under

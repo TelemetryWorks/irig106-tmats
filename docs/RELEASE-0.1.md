@@ -34,7 +34,7 @@ not a substitute for requirements or a new source of requirement IDs.
 | Byte-faithful writing; normalization only by explicit request | L1-WRT-001, 002 |
 | SHA compute, verify, final-byte verified stamping, labelled flex compatibility signature | L1-SUM-001 through L1-SUM-004 |
 | No library I/O; bounded handling of arbitrary input, guard rails and coverage | L1-IO-001; L1-ROB-001, 002, 003 |
-| Recording/text input, every complete record, show modes, extract, checksums, text/JSON, safe output, verified packet slicing | L1-CLI-001 through L1-CLI-009 |
+| Recording/text input, every complete record, show modes, extract, checksums, text/JSON, safe output, core-backed borrowed DATA slicing | L1-CLI-001 through L1-CLI-009 |
 | Measured parser and recording-scan performance | L1-PERF-001 |
 | Lockstep versions, MSRV/platform/WASM checks, dependency policy, binary SBOM and provenance | L1-REL-001 through L1-REL-006 |
 

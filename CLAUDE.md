@@ -94,8 +94,11 @@ architecture must honour:
 - **A setup record is not a packet.** One setup record may span several
   consecutive packets; the library's assembler joins fragments (with their
   provenance) into complete records, and only complete records are parsed or
-  checksummed (ADR-0025). Packet slicing belongs to the CLI's reader until
-  `irig106-core` exists.
+  checksummed (ADR-0025). ADR-0036 supersedes the temporary CLI reader:
+  core owns packet finding/trust/checksums; tmats consumes PacketFacts and
+  borrowed non-contiguous DATA spans, with no required coalescing or extra
+  payload copy. Data-checksum evidence is passed through as-is (NotChecked
+  until core provides it); no local implementation is permitted.
 - **No silent repair.** Validation may *suggest* edits; only an explicit call
   applies them.
 - **Two edition declarations, one labelled basis.** `G\106` (the edition that
