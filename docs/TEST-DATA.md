@@ -1087,6 +1087,54 @@ bytes, assert canonical equivalence only for admitted raw strings, and check
 warnings, raw identity and unusable-condition propagation. No full grammar
 coverage or implementation readiness is claimed by this table.
 
+## Planned association/assumption batch 20 (bounded time view)
+
+PLANNED acceptance specifications for L2-VIEW-013/014 and L3-VIEW-043–051,
+not runtime tests or an association resolver. Authority: owner direction
+2026-11-21 in RELEASE-0.1. Inspected sources: 106-24R1 Chapter 9 section
+9.5.4 Table 9-4 NSB p. 9-33, TK1 p. 9-48, DSI/CHE p. 9-49, CDT
+p. 9-50, SHTF p. 9-51, TTF/TFMT/TSRC pp. 9-71–72; [batch note](research/2026-11-26-association-assumption-requirements.md).
+None of those fields is treated as a data-channel -> time-channel reference.
+
+Unless varied, supply reviewed baseline metadata and an explicitly scoped
+setup document/revision, source data-channel identity and caller-supplied
+context basis. No fixture infers governing context. Parsed numeric arms use
+approved INT-055; isolated composition units receive effective field/state
+results rather than claiming numeric parser coverage. Preserve independent
+presence/counter findings in snippets that are not complete conforming setups.
+
+| Named planned test | Independent stimulus / expectation | Requirements |
+| --- | --- | --- |
+| `association_no_timein_keeps_unestablished_reason` | Scoped setup contains no confirmed TIMEIN entry: association_unestablished with no fabricated candidate and an explicit reason; do not call the association evidenced, resolved or data Invalid merely from absence | L3-VIEW-043, L3-VIEW-044, L3-VIEW-045 |
+| `association_only_timein_is_not_proof` | One locally usable TIMEIN entry, scoped TK1 and Explicit TFMT=B; repeat with absent applicable TFMT Defaulted A: retain the respective field evidence, association_unestablished and that candidate; no automatic selection | L3-VIEW-044, L3-VIEW-045 |
+| `association_multiple_candidates_never_first_or_lowest` | Several TIMEIN entries without proof, vary input order and actual TK1 values independently of entry indices: unestablished, retain every candidate/scope; never pick first/lowest/nearest, or call the count alone an evidence conflict | L3-VIEW-044, L3-VIEW-045 |
+| `association_enable_state_is_only_context` | One enabled and one disabled confirmed TIMEIN, then an explicit caller-filtered projection with one remaining: CHE context survives; no evidenced association or loss of underlying candidate uncertainty solely from enable state/filtering | L3-VIEW-045, L3-VIEW-047 |
+| `association_equal_labels_and_source_bits_are_not_proof` | Data/time entries share DSI text or explicit NSB-derived source component in the same recorder: preserve context/scopes, no merge or association proof; repeat distinct labels and recorders without changing evidence support | L3-VIEW-043, L3-VIEW-045 |
+| `association_source_category_and_format_are_not_ids` | TIMEIN TSRC=E or I and TTF/TFMT/SHTF declarations numerically resemble another TK1: no clock-selection reference from the category or format; explicit/defaulted evidence stays labelled | L3-VIEW-045, L3-VIEW-047 |
+| `association_same_actual_id_retains_scopes` | Same actual TK1 appears on independent recorder scopes, plus entry n differs from actual ID: insufficient query scope retains all candidates/limitation, never uses n or merges equal IDs | L3-VIEW-043, L3-VIEW-047 |
+| `association_unknown_extension_is_raw_not_evidence` | Unknown vendor/X attribute has CLOCK_A-like name or a target-looking numeric value: preserve raw occurrence and unknown findings; no supported proof provider, association_evidenced or hidden field interpretation | L3-VIEW-046, L3-VIEW-047 |
+| `association_unreviewed_proof_semantics_are_unavailable` | Supplied alleged relation evidence lacks a reviewed interpretation, source or applicability: retain origin/raw evidence and unavailable reason; no affirmative baseline proof fixture or guessed extension semantics | L3-VIEW-046 |
+| `association_stale_proof_never_crosses_revision` | Evidence claims a target from another recording/setup/revision or wrong channel scope: cannot establish current association; keep mismatch/reason and historical evidence, never silently transplant it | L3-VIEW-043, L3-VIEW-046, L3-VIEW-051 |
+| `association_field_ambiguity_is_not_association_state` | Duplicate CDT/TFMT or unusable TK1 in one possible candidate, supplied as field-state evidence: preserve Ambiguous/Invalid/unavailable and assembly qualifications; do not convert field-state names to association_evidenced or select a winner | L3-VIEW-044, L3-VIEW-047 |
+| `association_conflict_composition_keeps_all_evidence` | Isolated unit receives a preclassified association_conflicting result and its competing scoped evidence: keep state, every candidate/reason and locations; no preferred winner. This tests composition, not production admission/classification of proof | L3-VIEW-044, L3-VIEW-047 |
+| `assumed_time_target_never_upgrades_association` | Explicit caller selects one possible TIMEIN without proof, with caller basis: every dependent view answer is labelled assumed and carries choice/basis/scope; underlying unestablished remains unestablished | L3-VIEW-048, L3-VIEW-049 |
+| `assumed_choice_keeps_supplied_conflict` | Composition unit receives the preclassified conflict above, then caller chooses one target: underlying conflicting state and all competing findings persist alongside assumed selection; never association_evidenced | L3-VIEW-048, L3-VIEW-050 |
+| `assumption_missing_choice_or_basis_is_not_inferred` | Choice or caller basis is not supplied, or selected actual ID names several scopes: no guessed first target/basis or unqualified assumed answer; retain precise missing/ambiguous limitation | L3-VIEW-048 |
+| `assumption_does_not_upgrade_bad_target` | Caller chooses candidate with Invalid/duplicate/unavailable ID/format: choice is still a caller assumption, but cannot produce a fabricated usable value or suppress any local/assembly finding | L3-VIEW-047, L3-VIEW-050 |
+| `assumption_provenance_survives_derived_view_outputs` | Select/copy/render a view answer derived from a caller choice: retain assumption label, supplied basis, source/target/setup/revision; independent unassumed query does not inherit that earlier choice | L3-VIEW-049, L3-VIEW-051 |
+| `assumption_cannot_bypass_setup_qualification` | Incomplete/cut-plus-ambiguity/unsupported setup context with caller choice: retain full eligibility limitations and findings, no governing selection or provisional-use permission | L3-VIEW-047, L3-VIEW-050 |
+| `association_and_assumption_keep_source_locations` | Standalone versus assembled input with supplied fragment mapping: preserve original item/default basis/spans and fragment provenance; no fabricated packet location on standalone or input span for a default | L3-VIEW-047, L3-VIEW-049 |
+| `association_revision_change_requires_new_scope` | New setup/revision repeats TK1/DSI, with a prior association/assumption answer: no silent reuse. Require new applicable evidence or newly scoped explicit choice; keep earlier answers attached to their original scope | L3-VIEW-043, L3-VIEW-051 |
+| `association_views_never_edit_or_drop_input` | Vary candidate and caller-selection order, unknown fields and duplicate spelling; before/after read bytes, item order, multiplicity and every finding remain identical, with no stamp/normalisation/edit side effect | L3-VIEW-047, L3-VIEW-051 |
+
+Future generated checks should permute metadata/order/scopes and caller
+choices without synthesizing proof; independently assert no evidenced result
+from those mutations alone, unchanged raw bytes, and retained assumption
+labels/qualifications on dependent results. There is no field-code invention,
+synthetic positive-proof claim, evidence weighting rule or fixed Rust symbol
+in this test plan. Meaningful executable markers and source-based oracles
+must accompany implementation later; all requirements here remain Draft.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample

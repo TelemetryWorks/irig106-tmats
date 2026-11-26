@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-26-association-assumption-requirements.md](2026-11-26-association-assumption-requirements.md) | Family 2 batch 20: scoped association uncertainty and labelled caller choices, source boundary and planned cases; no invented proof rule or new interpretation |
 | [2026-11-26-int054-int055-final-concurrence.md](2026-11-26-int054-int055-final-concurrence.md) | Final INT-054/055 CONCUR at #51 ebd5c98, eight-mask inventory correction, retained development gates; merge reference not yet available |
 | [2026-11-26-int055-binary-exclusions.md](2026-11-26-int055-binary-exclusions.md) | Binary/non-decimal dispatch exclusions, 27 Binary rows plus 11 unlabelled P/D masks (corrected after review), every-Range baseline audit and width-preserving planned cases; final concurrence recorded separately |
 | [2026-11-25-int055-owner-answers.md](2026-11-25-int055-owner-answers.md) | Verbatim owner A/A/A answers: uniform leading-blank guard, raw numeric checks, decimal-only scope; complete float/hex exclusion inventory; AI recheck pending |

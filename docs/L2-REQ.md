@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through CHE/numeric syntax drafted (family 2, batches 1-19).**
+> **Status: foundations through bounded association/assumption contracts drafted (family 2, batches 1-20).**
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
@@ -851,5 +851,33 @@ implementation; no new requirement is verified by this documentation.
 **Statement**: The time view SHALL still enumerate a confirmed TIMEIN entry with disabled CHE, reporting its own located CHE context and effective state without implicit filtering; missing, duplicate, invalid or unavailable CHE SHALL retain the existing state/evidence rules and independent findings, and any caller filter SHALL be explicit without changing the underlying entries.
 
 **Rationale**: Owner Option A, INT-054, distinguishes inspection from generation of packets. Table 9-4 CHANNEL ENABLE p. 9-49 describes T/F and packet generation, not a library's enumeration API. CHE never substitutes for TIMEIN classification or overrides setup qualification.
+
+**Verification Method**: Test (T)
+
+## Association uncertainty and caller assumptions (family 2, batch 20)
+
+This derives the owner-approved RELEASE-0.1 association contract of
+2026-11-21, not a new TMATS link or evidence classifier. Source inspection
+and boundaries are in the [batch note](research/2026-11-26-association-assumption-requirements.md).
+INT-039/041/054/055 preserve field evidence; they supply no clock reference.
+No new interpretation or stable Rust API is selected by this requirements slice.
+
+#### L2-VIEW-013
+
+**Parent**: L1-VIEW-007
+
+**Statement**: For a supplied data-channel identity and setup document/revision context, the bounded time view SHALL report association_unestablished when no adequate reviewed evidence establishes a time-channel association, retain relevant scoped candidates, their metadata qualifications and the reason, and distinguish independently established conflicting association evidence from an evidenced association without choosing a candidate by occurrence, similarity, format, enable state or count alone.
+
+**Rationale**: RELEASE-0.1 explicitly defines association_unestablished/conflicting/evidenced as distinct from field/link lookup states. 106-24R1 Chapter 9 section 9.5.4 Table 9-4 NSB p. 9-33, TK1 p. 9-48, DSI/CHE p. 9-49, CDT p. 9-50, SHTF p. 9-51 and TTF/TFMT/TSRC pp. 9-71–72 describe local metadata, not a cited data-channel-to-clock reference. The owner's no-inference contract governs this view. It does not assert that the standard can never define another relationship; any future proof path must cite its actual source and reviewed semantics.
+
+**Verification Method**: Test (T)
+
+#### L2-VIEW-014
+
+**Parent**: L1-VIEW-008
+
+**Statement**: A time-view answer using an explicit caller choice without association proof SHALL retain the choice, its caller-supplied assumption basis and scoped identities on every answer derived from it, alongside the unchanged underlying association uncertainty and candidate findings; it SHALL NOT relabel that choice as association_evidenced, silently propagate it to another setup/revision or make otherwise unusable setup evidence usable or governing.
+
+**Rationale**: Owner direction 2026-11-21 and RELEASE-0.1 permit labelled caller assumptions for the bounded time view, not silent guesses or global configuration overrides. Other assumption uses in L1-VIEW-008 remain 0.2. This does not approve proposed INT-028/031/032/033, select a governing setup or authorise provisional semantic use; source and eligibility limitations remain visible.
 
 **Verification Method**: Test (T)

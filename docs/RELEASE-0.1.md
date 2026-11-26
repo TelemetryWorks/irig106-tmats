@@ -251,6 +251,12 @@ Do not carry associations from another recording or setup revision without
 new evidence. Full configuration-timeline construction stays in 0.2; the
 0.1 caller must identify the complete setup record used for each query.
 
+The bounded requirements are decomposed in L2-VIEW-013/014 and
+L3-VIEW-043–051, with [planned acceptance cases](TEST-DATA.md#planned-associationassumption-batch-20-bounded-time-view).
+These are requirements, not an implemented resolver or a new positive-proof
+source. They preserve uncertainty and assumption provenance without approving
+remaining general governance, provisional-use or fragment-order policies.
+
 ## Setup-record boundary
 
 Use 106-24R1 Chapter 11 section 11.2.7.2 and Figure 11-34 for format/SRCC/

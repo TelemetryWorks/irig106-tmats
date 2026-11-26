@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through CHE/numeric syntax drafted (family 2, batches 1-19).**
+> **Status: foundations through bounded association/assumption contracts drafted (family 2, batches 1-20).**
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
@@ -1815,3 +1815,81 @@ Required when Allowed depends on evaluated R\N > 0; unknown is not true.
 
 This composes batch 16 provenance/qualification and INT-054, not a new
 streaming/adoption rule or permission to override disabled packet findings.
+
+## Association uncertainty and caller assumptions (family 2, batch 20)
+
+Future obligations derived from RELEASE-0.1's owner direction, 2026-11-21.
+They specify evidence retention/composition, not a TMATS association field,
+consumer clock-selection algorithm, Rust API or implementation readiness.
+No new interpretation is proposed. See the [batch note](research/2026-11-26-association-assumption-requirements.md).
+
+**L3-VIEW-043** · Parent: L2-VIEW-013 · Verification: T
+*An association query SHALL retain the supplied data-channel identity, its recorder/entry scope where established, setup document/revision and supplied governing-context basis or limitation, without inventing scope, borrowing another record's TIMEIN entries or using entry index n as an actual TK1 channel ID.*
+
+Use the existing scoped metadata and actual-ID results, not a new ID parser.
+INT-055 governs decimal operands; missing/ambiguous/unavailable input identity
+remains a query limitation with all candidates, not a guessed channel or an
+unqualified empty result. This operation does not choose which setup governs.
+
+**L3-VIEW-044** · Parent: L2-VIEW-013 · Verification: T
+*The association result SHALL retain its association_unestablished, association_conflicting or association_evidenced meaning and supporting reason separately from each field's Explicit/Defaulted/Missing/Invalid/Ambiguous or unavailable evidence and from L1-VIEW-006 lookup/link states; an unusable field or several possible TIMEIN entries SHALL NOT alone establish or resolve an association.*
+
+The semantic names come from RELEASE-0.1; they do not freeze Rust symbols.
+Absent adequate evidence gives unestablished. Conflicting requires evidence
+of competing associations, not arbitrary classification from candidate count.
+No new conflict threshold/evidence-admission algorithm is defined here.
+
+**L3-VIEW-045** · Parent: L2-VIEW-013 · Verification: T
+*In the absence of adequate reviewed association evidence, zero, one or several possible TIMEIN entries SHALL leave the association unestablished with the relevant candidates/reason retained; first/lowest/nearest/only/enabled occurrence, equal DSI labels, shared recorder or NSB components, TSRC categories and explicit/defaulted format values SHALL NOT select or prove an association.*
+
+Sources: 106-24R1 Chapter 9 Table 9-4 NSB p. 9-33; TK1 p. 9-48;
+DSI/CHE p. 9-49; CDT p. 9-50; SHTF p. 9-51; TTF/TFMT/TSRC
+pp. 9-71–72, plus the owner's RELEASE-0.1 no-inference direction.
+CHE F remains enumerated under INT-054. Caller filtering cannot turn one
+remaining candidate into proof or erase the underlying uncertainty/evidence.
+
+**L3-VIEW-046** · Parent: L2-VIEW-013 · Verification: T
+*An evidenced association SHALL require evidence identifying its origin, applicable recording/setup document/revision and channel identities, and the reviewed semantics establishing that relationship; unavailable, unreviewed, stale, unknown vendor/extension or merely suggestively named attributes SHALL remain raw/context evidence rather than proof.*
+
+RELEASE-0.1 allows a future cited, reviewed extension, but defines none.
+This requirement is a proof-admission guard, not an implemented resolver or
+permission to treat a synthetic fixture as standard-defined positive proof.
+No affirmative baseline association-proof fixture is invented in this batch.
+
+**L3-VIEW-047** · Parent: L2-VIEW-013 · Verification: T
+*Association candidates/results SHALL retain every relevant occurrence and independent finding, field-state/default/edition evidence, source locations and supplied fragment mapping, and setup eligibility limitations; neither a plausible clock match nor a caller selection SHALL discard ambiguity, retained-cut blocking, invalid metadata or source uncertainty.*
+
+INT-039/048 scalar/assembly ambiguity and INT-041 unavailable reads remain
+separate. Source-bit splitting, CHE context and DSI reads are context only.
+Standalone TMATS gains no fabricated packet provenance. A candidate result
+must not assert a usable governing setup from diagnostic/raw inspection.
+
+**L3-VIEW-048** · Parent: L2-VIEW-014 · Verification: T
+*An assumption-bearing answer SHALL require an explicit caller choice and retain its supplied basis, selected target identity and input setup/data-channel scope distinctly from standards evidence, without silently choosing the first candidate, inferring missing choice/basis or relabelling the underlying unestablished/conflicting association as evidenced.*
+
+This is a semantic provenance requirement, not a new public input struct or
+validation grammar for an assumption label. A missing/ambiguous target keeps
+its limitation; choosing an actual ID cannot silently pick among its scopes.
+
+**L3-VIEW-049** · Parent: L2-VIEW-014 · Verification: T
+*Every time-view answer derived using a caller assumption SHALL carry that dependency's choice, basis and source/setup/revision identities, including any copied, selected or rendered result produced by this view; a separately obtained unassumed read SHALL NOT silently inherit a prior query's assumption.*
+
+Only time-view outputs are in this slice; this does not define JSON/CLI
+schemas or the consumer's timestamp/correlation computation. Consumers must
+retain the assumption on their own further derived answers per L1-VIEW-008.
+No globally cached current choice is authorised by this contract.
+
+**L3-VIEW-050** · Parent: L2-VIEW-014 · Verification: T
+*A caller assumption SHALL preserve the underlying candidate set, association state/reason and all independent findings and SHALL NOT upgrade an invalid, unavailable, ambiguous or cut result, select a governing setup, override packet evidence or establish a time-correlation/reset policy.*
+
+An isolated unit fixture may supply a preclassified conflicting association
+and test provenance composition; that is not coverage of a future evidence
+classifier or an actual TMATS proof path. Proposed general governance and
+ambiguous/provisional acceptance interpretations remain outside this slice.
+
+**L3-VIEW-051** · Parent: L2-VIEW-014 · Verification: T
+*Association queries and assumption-bearing reads SHALL preserve raw bytes, item ordering/multiplicity and revision identity, and SHALL NOT silently carry an association, selected target or assumption into a different recording, setup record or revision without new scope-valid evidence or an explicit newly scoped caller choice that remains labelled as an assumption.*
+
+A changed record is not made equivalent by a shared channel ID or DSI label.
+Earlier answers keep their original scope/basis; a new query does not rewrite
+historical provenance. Full timelines remain 0.2 and are not constructed here.
