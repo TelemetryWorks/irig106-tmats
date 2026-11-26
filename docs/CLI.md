@@ -67,6 +67,14 @@ select no argument grammar, report format, exit mapping or adoption policy.
   JSON schema so scripts and `irig106-cli` can rely on it.
 - **Labels are the code names actually read.** A value is never shown under
   another code name (defect D4).
+- **Extraction preserves bytes.** L2-CLI-008 derives exact extraction of one
+  explicitly selected eligible record; record eligibility/selection stays
+  separate. L2-CLI-009 requires preserving input files, including aliases,
+  before destructive destination access for tool-opened outputs; shell
+  redirection is outside that acquisition guarantee. Implementation is BLOCKED
+  on owner decisions for `-o` overwrite, fail-closed identity checks for
+  pipes/devices/stdout/network shares, and extraction eligibility under
+  integrity/encoding findings. No pending policy is selected.
 - **Nothing is changed in place.** Commands that produce modified TMATS
   (`stamp`, and later fix application) write to a new output file.
 - **`stamp` is a verified transaction.** It hashes the final output bytes

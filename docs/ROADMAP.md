@@ -82,6 +82,16 @@ choices are recorded; independent review and development gates remain.
 
 ### Remaining output derivations
 
+BLOCK implementation pending owner decisions on `-o` overwrite policy,
+fail-closed identity checking for pipes/devices/stdout/network shares, and
+extraction eligibility under integrity/encoding findings. These remain
+unapproved; raw-byte preservation tests do not decide eligibility.
+
+Review selected-record extraction and input-preserving destination acquisition
+before CLI output implementation, including platform file identity and races.
+Keep byte replay separate from record eligibility/selection and from a general
+existing-destination overwrite or atomicity policy.
+
 Review the lossless-replay/caller-supplied-output and explicit-normalization
 boundary before writer implementation. Derive transformation-specific
 canonical ordering, line-ending and counter-rewrite rules with independent

@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through CLI-mounting boundaries drafted (family 2, batches 1-24).**
+> **Status: foundations through extraction/safe-output boundaries drafted (family 2, batches 1-25).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -2267,3 +2267,92 @@ ADR-0036 and L3-CLI-006/010–013 retain ownership and no-extra-copy duties.
 This does not choose an exact cross-crate API or require core to depend on
 TMATS. Published types/core 0.2 compatibility remains a release prerequisite,
 not a claim that dependency APIs were inspected or exercised by this batch.
+
+
+## Byte-exact extraction and safe destination boundary (family 2, batch 25)
+
+Derived from L1-CLI-004/007, ADR-0002/0003/0010/0036 and L2-WRT-003.
+The [batch note](research/2026-11-26-extraction-requirements.md) distinguishes
+mechanical byte extraction from pending record-selection and output policies.
+
+**Implementation BLOCKED on owner decisions**: `-o` overwrite policy;
+fail-closed identity-check policy for pipes/devices/stdout/network shares;
+and extraction eligibility under integrity/encoding findings. These are
+pending choices, not approved defaults; source/development/test gates remain.
+
+**L3-CLI-030** · Parent: L2-CLI-008 · Verification: T
+*For one explicitly selected eligible setup record, extraction SHALL deliver its original logical TMATS text in fragment order, excluding each packet's four-byte CSDW and all packet headers, filler and packet checksums; physical DATA-span/block boundaries SHALL NOT insert, remove or duplicate output bytes.*
+
+Chapter 11 (106-24R1) section 11.2.7.2/Figure 11-34 p. 11-50 supplies
+CSDW-before-text framing. Core supplies DATA extents excluding trailers;
+L3-CLI-006/008 determine logical slicing. Extraction does not reconstruct
+packet boundaries or repeat CSDW removal once per physical span.
+
+**L3-CLI-031** · Parent: L2-CLI-008 · Verification: T
+*Extraction SHALL preserve the selected record's text bytes exactly, including layout, case, unknown/vendor/extension attributes, duplicates, high/control bytes and preserved suffix/padding where present in that record's original text; read-only interpretation or findings SHALL NOT cause byte filtering, text conversion, normalization, repair or checksum stamping; INT-036/037 projections and INT-055 raw-byte numeric checks SHALL be VIEW-ONLY and SHALL NOT change extracted bytes.*
+
+ADR-0002/0003 and L3-WRT-004–010 govern replay. Raw preservation does not
+make any field or setup usable; test byte preservation separately from
+eligibility. Fixtures with malformed content exercise the mechanical sink
+boundary without asserting that those records are CLI-eligible. Controls
+omitted from interpreted views, numeric Invalid verdicts and a BOM detected
+after fragment assembly never authorize changing the raw extraction bytes.
+Extraction eligibility under those findings awaits the owner decision.
+
+**L3-CLI-032** · Parent: L2-CLI-008 · Verification: T
+*Extraction SHALL receive and retain the explicit selected record/source identity and its established eligibility basis, without silently substituting the first, latest or governing record, merging distinct records, or treating absent/unresolved selection as a successfully extracted empty record.*
+
+This pins an internal precondition, not the public record-selection rule.
+Ordinal ordering, incomplete/ambiguous access and multi-record destination
+behavior remain for their own reviewed derivations. A failure to establish
+that precondition cannot be repaired by choosing another record implicitly.
+
+**L3-CLI-033** · Parent: L2-CLI-008 · Verification: T
+*Extraction delivery SHALL use the existing fallible byte-writer contract, preserving byte order across partial writes and exposing sink failure rather than claiming complete extraction; a failure SHALL leave source bytes/provenance unchanged and SHALL NOT trigger an automatic edit or second source selection.*
+
+L2-WRT-003 and L3-WRT-007/008 supply the delivery/failure contract,
+including progress and retained failure causes. A partial external sink is
+not a modified source. No new atomic file protocol, rollback, cleanup policy,
+flush/durability guarantee or error rendering is introduced by this
+requirement.
+
+**L3-CLI-034** · Parent: L2-CLI-009 · Verification: T
+*For a regular-file destination the tool opens itself, CLI filesystem glue SHALL open without truncating, compare the opened handle's file identity with the input-file identities, and only then, if distinct and authorized by the reviewed overwrite policy, truncate through that SAME handle; it SHALL NOT close and reopen by pathname between the identity check and truncation. A known input alias SHALL be refused observably before destructive access, and inability to establish input preservation SHALL NOT authorize truncation.*
+
+L1-CLI-007 applies to same-path, relative/absolute aliases, symbolic links
+and hard links where supported. String inequality is insufficient. The
+implementation must review platform file-identity and acquisition/race
+behavior. A pathname preflight check alone is insufficient; comparison must
+use the non-truncating opened destination handle before truncation/writing.
+Exact platform APIs remain implementation analysis. The owner decisions on
+`-o` overwrite and fail-closed identity checks for pipes/devices/stdout/network
+shares BLOCK implementation; no such destination policy, public error
+spelling or numeric status is selected here.
+
+**L3-CLI-035** · Parent: L2-CLI-009 · Verification: T
+*For destinations the tool opens itself, successful or failed CLI extraction and other output-producing commands SHALL leave input-file contents unchanged, and SHALL NOT acquire input files for in-place writing, truncation, replacement or implicit repair as part of producing output; shell redirection performed outside the tool SHALL be out of scope for this file-acquisition guarantee.*
+
+ADR-0010 keeps this at the CLI/caller boundary; the TMATS library still
+receives bytes/writers rather than filenames. The prohibition also covers
+alias destinations and writer/acquisition failures for tool-opened outputs.
+The tool cannot undo truncation already performed by a shell before it runs.
+Delivery to supplied writers remains fallible under L3-WRT-007/008; this
+does not settle the pending stdout/other-destination identity policy.
+It is not an approval of pending general edit commands or a packet-writing
+implementation.
+
+**L3-CLI-036** · Parent: L2-CLI-009 · Verification: T
+*Destination acquisition failure or input-alias refusal SHALL remain observable to the caller without being reported as completed output, silently redirecting to another destination or modifying an input to recover.*
+
+L1-CLI-007 and the existing failure boundary motivate this observable
+contract, not a new report schema, filesystem overwrite mode or fallback
+stdout policy. A host-callable invocation still returns to its host under
+L3-CLI-001/022; numeric process-status mapping remains separate.
+
+**L3-CLI-037** · Parent: L2-CLI-008 · Verification: T
+*Extraction verification SHALL compare delivered bytes to an independent literal source/fragment oracle and verify source immutability on success and failure, including core DATA-span partitions, without deriving expected bytes from the production extraction/writer path or adding a packet reader/checksum implementation to the oracle.*
+
+Use bounded synthetic spans and injected sink outcomes for mechanical tests;
+use isolated temporary files for CLI identity/acquisition integration. Actual
+record selection/eligibility requires its own approved fixtures. No local
+large-record scan or payload allocation is required by this docs batch.

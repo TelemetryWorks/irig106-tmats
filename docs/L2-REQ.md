@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through CLI-mounting boundaries drafted (family 2, batches 1-24).**
+> **Status: foundations through extraction/safe-output boundaries drafted (family 2, batches 1-25).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -995,5 +995,36 @@ No report/rendered format or new interpretation is selected here.
 **Statement**: A mounting host SHALL own orchestration and packet data-type dispatch using core-supplied facts/evidence; the TMATS Format-1 fragment adapter SHALL check its expected input kind only as a guard, without becoming a packet dispatcher or reader, while preserving host-supplied assembly boundary observations required by the existing joining/closure contracts.
 
 **Rationale**: Owner direction 2026-09-26 and ADR-0034 W3 require reusable CLI behavior; ADR-0030 leaves orchestration in each tool and ADR-0036 puts the single packet reader in core. The clarification relayed after #55 explicitly assigns dispatch to the orchestrating host. Chapter 11 (106-24R1) section 11.2.7.2/Figure 11-34 p. 11-50 supplies Format-1 CSDW slicing, not a second dispatcher. INT-011/045 require provenance and non-fragment observations: guarding fragment input must not hide same-channel stops or recognised time boundaries. This does not delegate time-packet recognition/trust to a local reader or authorize new setup adoption behavior.
+
+**Verification Method**: Test (T)
+
+
+## Extraction and input immutability (family 2, batch 25)
+
+These decompose L1-CLI-004/007 using the existing byte-faithful output and
+caller-owned I/O contracts. They take one explicitly selected, eligible
+record as input; they do not select an eligibility or ordinal policy.
+Implementation is BLOCKED on owner decisions for `-o` overwrite, fail-closed
+identity checking on pipes/devices/stdout/network shares, and extraction
+eligibility under integrity/encoding findings; no pending option is approved.
+See the [scope and remaining-work audit](research/2026-11-26-extraction-requirements.md).
+
+#### L2-CLI-008
+
+**Parent**: L1-CLI-004
+
+**Statement**: Given an explicitly selected setup record whose extraction eligibility has been established under the reviewed record-selection/format rules, the CLI SHALL extract exactly that record's original assembled TMATS text bytes to the requested output, using core-backed fragment extents and the byte-faithful writer contract without packet framing, decoding/re-encoding, normalization or implicit edits.
+
+**Rationale**: UC-17, CLI command table and L1-CLI-004 require extracting TMATS bytes, not rendering a typed view. ADR-0002/0003 preserve source bytes; ADR-0010 leaves destination acquisition to the CLI/caller; ADR-0036 supplies borrowed DATA. Chapter 11 (106-24R1) section 11.2.7.2/Figure 11-34 p. 11-50 places a CSDW before each fragment's text. Existing eligibility/completeness/unsupported-format gates remain: this is not authority to adopt an open/cut/ambiguous record, choose a default record, or combine several records into one output.
+
+**Verification Method**: Test (T)
+
+#### L2-CLI-009
+
+**Parent**: L1-CLI-007
+
+**Statement**: For output destinations the tool opens itself, CLI output acquisition and delivery SHALL preserve every input file unchanged, including when a requested destination identifies that same file through a different path; input-alias rejection SHALL occur before destructive destination access, and output failure SHALL remain distinguishable from successful delivery without modifying or repairing the input.
+
+**Rationale**: L1-CLI-007 prohibits modifying input files and requires changed results in a new output. ADR-0010 assigns filesystem safety to CLI/caller glue, not library serialization. Path strings alone do not establish distinct files. This obligation does not select a general existing-destination overwrite policy, atomic replacement, durability guarantee or new rendering/exit mapping; those require separate reviewed definitions where applicable. Shell redirection outside the tool is out of scope for its file-acquisition guarantee.
 
 **Verification Method**: Test (T)

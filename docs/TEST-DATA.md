@@ -1306,6 +1306,58 @@ must cover the actual reviewed commands when implemented; scaffold/help
 success does not demonstrate every command's mountability. Full report
 formats and numeric exit mappings need their own owner-reviewed derivations.
 
+## Planned extraction and safe-output batch 25
+
+These are planned acceptance cases for L2-CLI-008/009, not executable tests.
+Mechanical extraction receives one explicitly selected record and an already
+established eligibility basis; malformed-byte cases test replay only, not
+permission to select an incomplete, ambiguous or unsupported record. Core
+supplies DATA; existing adapter/assembly contracts supply fragment text.
+
+**Implementation BLOCKED**: owner decisions on `-o` overwrite, fail-closed
+identity checking for pipes/devices/stdout/network shares, and extraction
+eligibility under integrity/encoding findings are pending. The following
+raw-byte fixtures do not decide those policies. File-acquisition guarantees
+cover destinations the tool opens itself, not shell redirection.
+
+| Planned test | Independent input and expected boundary result | Requirements |
+|---|---|---|
+| `extract_selected_text_is_byte_exact` | Supplied text `COMMENT:a;` is delivered exactly, with no newline, terminator change, label or wrapper | L3-CLI-030, L3-CLI-031 |
+| `extract_fragment_text_excludes_each_csdw` | Two packet text fragments `COMMENT:a;` and `COMMENT:b;` yield literal `COMMENT:a;COMMENT:b;`; exclude both CSDWs and every header/trailer byte | L3-CLI-030 |
+| `extract_csdw_split_is_removed_once` | Synthetic arbitrary-span partition: four logical CSDW bytes straddle spans; expected text excludes four bytes total, not four per span. With the reviewer's 512 KiB block layout the CSDW is always in the first block; this is not a production-layout claim | L3-CLI-030, L3-CLI-037 |
+| `extract_text_split_does_not_change_bytes` | A text fragment crosses several span boundaries including inside a name/value; compare to the same independent literal | L3-CLI-030, L3-CLI-037 |
+| `extract_layout_and_case_survive` | Mixed case, leading/inter-item layout and CR/LF are replayed exactly; no canonical case, order or newline conversion | L3-CLI-031 |
+| `extract_comment_control_is_view_only` | Mechanical source `COMMENT:a\tb;` with a real TAB: INT-036 interpreted value is `ab` but extraction keeps `a\tb` byte-for-byte; the same applies to an omitted CR/LF/control; eligibility remains owner-pending | L3-CLI-031 |
+| `extract_numeric_control_invalid_keeps_raw` | Mechanical source `R-1\NSB:0\r\n4;` with real CR/LF: INT-055 raw-byte numeric check returns Invalid, never repaired to 4; extraction keeps every control/raw byte; eligibility remains owner-pending | L3-CLI-031 |
+| `extract_assembled_leading_bom_is_not_stripped` | Same-channel +1 fragments with matching FRMT/RCCVER: first text starts EF, following text starts BB BF then `COMMENT:a;` (after each packet CSDW); leading assembled EF BB BF is detected under INT-037 at text offset zero, never stripped from extraction; eligibility remains owner-pending | L3-CLI-030, L3-CLI-031 |
+| `extract_raw_unknown_vendor_extension_survive` | Supplied raw text contains unknown, V and X items; none is dropped or rendered from a typed model | L3-CLI-031 |
+| `extract_raw_damage_is_not_repaired` | Mechanical sink input contains duplicate/malformed items, high bytes and an unterminated suffix; exact replay is asserted without asserting CLI eligibility | L3-CLI-031 |
+| `extract_raw_padding_is_not_packet_fill` | Record text contains trailing preserved NUL/space bytes; replay them, while packet filler remains excluded by core DATA extents | L3-CLI-030, L3-CLI-031 |
+| `extract_read_only_views_do_not_stamp` | Read-only views/findings/checksum verification precede extraction; original text, including original checksum spelling/value, stays unchanged | L3-CLI-031 |
+| `extract_selected_identity_never_substituted` | Two distinct supplied records have different literal texts; the explicit eligible selection alone supplies output and provenance | L3-CLI-032 |
+| `extract_unresolved_selection_never_becomes_empty_success` | Missing/unresolved selection cannot become success with an empty document or a different selected record; exact public error spelling is not pinned | L3-CLI-032 |
+| `extract_distinct_records_never_concatenated_implicitly` | One selected record plus another available record outputs only the selected text; multi-record output policy remains undecided | L3-CLI-032 |
+| `extract_short_writes_preserve_order` | Bounded sink accepts positive partial writes under existing writer contract; delivered bytes equal independent literal in order | L3-CLI-033, L3-CLI-037 |
+| `extract_sink_failure_keeps_source` | Sink fails before/after a bounded prefix; failure stays observable, no full-delivery claim, source bytes and provenance unchanged | L3-CLI-033, L3-CLI-035 |
+| `output_same_path_is_refused_before_truncate` | Destination is input path; open without truncating, compare handle identity, host observes refusal before any truncate/write, input bytes unchanged | L3-CLI-034, L3-CLI-036 |
+| `output_relative_absolute_input_alias_is_refused` | Distinct relative/absolute spellings name the input; no destructive open, input unchanged | L3-CLI-034, L3-CLI-035 |
+| `output_symbolic_link_input_alias_is_refused` | Supported platform symlink destination identifies input; refuse before modifying either input contents or replacing its file | L3-CLI-034, L3-CLI-035 |
+| `output_hard_link_input_alias_is_refused` | Supported platform hard-link destination identifies input despite path inequality; refuse before destructive open | L3-CLI-034, L3-CLI-035 |
+| `output_unestablished_input_safety_never_opens_destructively` | Inject inability to establish input preservation; no destructive acquisition proceeds and no output success is claimed | L3-CLI-034, L3-CLI-036 |
+| `output_acquisition_failure_never_redirects` | Destination acquisition fails; observable failure returns, no automatic stdout/alternate-file output or input repair | L3-CLI-035, L3-CLI-036 |
+| `output_distinct_sink_success_keeps_input` | Isolated distinct regular-file output, conditional on approved overwrite policy: non-truncating open, compare input identities, truncate/write through the SAME handle (no pathname reopen); input snapshot remains identical | L3-CLI-035, L3-CLI-037 |
+| `output_failure_returns_to_mounting_host` | Host calls shared command with failing sink/acquisition; failure is observable and host executes subsequent sentinel | L3-CLI-033, L3-CLI-036 |
+| `extract_oracle_is_independent` | Expected text comes from literal source/fragment descriptors; fixture never invokes production extraction/writer to calculate expected bytes | L3-CLI-037 |
+
+Filesystem cases need isolated temporary fixtures and platform-identity/
+acquisition analysis, including race behavior; instrument open/check/truncate
+ordering and assert no pathname reopen before truncation. String checks alone cannot
+verify the obligation. Unsupported link creation is recorded as unavailable
+coverage, not a safety pass. No existing unrelated-file overwrite policy,
+cleanup/atomicity/durability promise or report/rendered format is selected.
+Actual record eligibility, selection and XML behavior require their own
+reviewed fixtures before end-to-end extraction implementation is accepted.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample

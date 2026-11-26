@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-26-extraction-requirements.md](2026-11-26-extraction-requirements.md) | Batch 25 selected-record byte extraction, input-alias safety, planned fixtures and remaining family-2 planning estimate |
 | [2026-11-26-cli-mounting-requirements.md](2026-11-26-cli-mounting-requirements.md) | Batch 24 runner/individual API mounting, verbatim host-dispatch clarification, defensive Format-1 guard and preserved assembly observations |
 | [2026-11-26-content-routing-requirements.md](2026-11-26-content-routing-requirements.md) | Batch 23 retained content selector, core-only route, raw acquisition/failure boundaries and independent planned prefix oracle |
 | [2026-11-26-packetfacts-sideband-correction.md](2026-11-26-packetfacts-sideband-correction.md) | #54 factual correction: header-only types PacketFacts with core PacketInfo integrity/trust sideband alongside; types/core 0.2 publication prerequisites |
