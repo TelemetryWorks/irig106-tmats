@@ -208,8 +208,8 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
-| L1-WRT-001 | L2-WRT-001 | _(none)_ | Draft |
-| L1-WRT-002 | _(none)_ | _(none)_ | Draft |
+| L1-WRT-001 | L2-WRT-001, L2-WRT-003 | _(none)_ | Draft |
+| L1-WRT-002 | L2-WRT-004 | _(none)_ | Draft |
 | L1-WRT-003 | _(none)_ | _(none)_ | Draft |
 | L1-WRT-004 | _(none)_ | _(none)_ | Draft |
 | L1-WRT-005 | _(none)_ | _(none)_ | Draft |
@@ -222,6 +222,8 @@ This matrix is the single source of truth for live status; the requirement docum
 |-------|-------------|----------------|--------|
 | L2-WRT-001 | L3-WRT-001 | _(TBD)_ | Draft |
 | L2-WRT-002 | L3-WRT-002, L3-WRT-003 | _(TBD)_ | Draft |
+| L2-WRT-003 | L3-WRT-004, L3-WRT-005, L3-WRT-006, L3-WRT-007, L3-WRT-008, L3-WRT-009 | _(TBD)_ | Draft |
+| L2-WRT-004 | L3-WRT-010, L3-WRT-011 | _(TBD)_ | Draft |
 
 ### L1-SUM: TMATS checksums
 
@@ -341,20 +343,20 @@ This matrix is the single source of truth for live status; the requirement docum
 | VAL | 6 | 3 | 12 | 0 | 0 | 0 | 0 |
 | DER | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EXT | 4 | 0 | 0 | 0 | 0 | 0 | 0 |
-| WRT | 7 | 2 | 3 | 0 | 0 | 0 | 0 |
+| WRT | 7 | 4 | 11 | 0 | 0 | 0 | 0 |
 | SUM | 4 | 3 | 10 | 0 | 0 | 0 | 0 |
 | IO | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
 | CLI | 9 | 2 | 3 | 0 | 0 | 0 | 0 |
 | ROB | 3 | 3 | 6 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **58** | **170** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **60** | **178** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 50 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 49 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 278 (0.0%).
+**Tested by at least one test marker**: 0 of 287 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 278 (1.1%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 287 (1.0%).
 
 ### Orphan check
 
@@ -422,11 +424,11 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-053 | Later copies compare with the currently governing setup, never a guessed target (QM) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) | not yet written | _(none)_ |
 | INT-054 | Disabled TIMEIN entries remain enumerated with CHE context (Option A) | approved (Joey, Option A, 2026-11-25; independent AI final CONCUR at ebd5c98a297a2ad1391cabcb24985a8b789e88f1) | not yet written | _(none)_ |
 | INT-055 | Decimal-integer fields and numeric codes use bounded raw ASCII digits (Option A) | approved (Joey, Option A answers, 2026-11-25; independent AI final CONCUR at ebd5c98a297a2ad1391cabcb24985a8b789e88f1) | not yet written | _(none)_ |
-| INT-056 | Bad target data has Strict, Warn-default and Quiet caller levels | owner decision recorded (Joey, 2026-11-26); independent AI recheck pending | not yet written | _(none)_ |
-| INT-057 | Caller choice must be a scoped TIMEIN candidate in the same recorder | approved (Joey, 2026-11-26; independent AI CONCUR at 8ec64115fae70f5e7dc70c744a6964aeebd749bd) | not yet written | _(none)_ |
-| INT-058 | Only an individually approved evidence rule can contradict a caller choice | approved (Joey, 2026-11-26; independent AI CONCUR at 8ec64115fae70f5e7dc70c744a6964aeebd749bd) | not yet written | _(none)_ |
-| INT-059 | Unproven multiplicity is unestablished, conflicting requires evidence | approved (Joey, 2026-11-26; independent AI CONCUR at 8ec64115fae70f5e7dc70c744a6964aeebd749bd) | not yet written | _(none)_ |
-| INT-060 | Each query supplies its caller choice explicitly | approved (Joey, 2026-11-26; independent AI CONCUR at 8ec64115fae70f5e7dc70c744a6964aeebd749bd) | not yet written | _(none)_ |
+| INT-056 | Bad target data has Strict, Warn-default and Quiet caller levels | approved (Joey, 2026-11-26; independent AI final CONCUR at 3fcbd2cb0e911d1bc23e4cc3a5b53d503e5d7e23) | not yet written | _(none)_ |
+| INT-057 | Caller choice must be a scoped TIMEIN candidate in the same recorder | approved (Joey, 2026-11-26; independent AI final CONCUR at 3fcbd2cb0e911d1bc23e4cc3a5b53d503e5d7e23) | not yet written | _(none)_ |
+| INT-058 | Only an individually approved evidence rule can contradict a caller choice | approved (Joey, 2026-11-26; independent AI final CONCUR at 3fcbd2cb0e911d1bc23e4cc3a5b53d503e5d7e23) | not yet written | _(none)_ |
+| INT-059 | Unproven multiplicity is unestablished, conflicting requires evidence | approved (Joey, 2026-11-26; independent AI final CONCUR at 3fcbd2cb0e911d1bc23e4cc3a5b53d503e5d7e23) | not yet written | _(none)_ |
+| INT-060 | Each query supplies its caller choice explicitly | approved (Joey, 2026-11-26; independent AI final CONCUR at 3fcbd2cb0e911d1bc23e4cc3a5b53d503e5d7e23) | not yet written | _(none)_ |
 
 * Entries without a written analysis: **60** of 60
 * Entries without a test: **60** of 60
