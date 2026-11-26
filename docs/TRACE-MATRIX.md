@@ -132,10 +132,10 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-VIEW-001 | L2-VIEW-001 | _(none)_ | Draft |
 | L1-VIEW-002 | _(none)_ | _(none)_ | Draft |
 | L1-VIEW-003 | _(none)_ | _(none)_ | Draft |
-| L1-VIEW-004 | L2-VIEW-002, L2-VIEW-003, L2-VIEW-004 | _(none)_ | Draft |
+| L1-VIEW-004 | L2-VIEW-002, L2-VIEW-003, L2-VIEW-004, L2-VIEW-011 | _(none)_ | Draft |
 | L1-VIEW-005 | L2-VIEW-008, L2-VIEW-009 | _(none)_ | Draft |
 | L1-VIEW-006 | _(none)_ | _(none)_ | Draft |
-| L1-VIEW-007 | L2-VIEW-005, L2-VIEW-006, L2-VIEW-007, L2-VIEW-010 | _(none)_ | Draft |
+| L1-VIEW-007 | L2-VIEW-005, L2-VIEW-006, L2-VIEW-007, L2-VIEW-010, L2-VIEW-012 | _(none)_ | Draft |
 | L1-VIEW-008 | _(none)_ | _(none)_ | Draft |
 | L1-VIEW-009 | _(none)_ | _(none)_ | Draft |
 
@@ -153,6 +153,8 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-VIEW-008 | L3-VIEW-023, L3-VIEW-024, L3-VIEW-025, L3-VIEW-026, L3-VIEW-027 | _(TBD)_ | Draft |
 | L2-VIEW-009 | L3-VIEW-028, L3-VIEW-029, L3-VIEW-030 | _(TBD)_ | Draft |
 | L2-VIEW-010 | L3-VIEW-031, L3-VIEW-032, L3-VIEW-033, L3-VIEW-034, L3-VIEW-035, L3-VIEW-036 | _(TBD)_ | Draft |
+| L2-VIEW-011 | L3-VIEW-037, L3-VIEW-038, L3-VIEW-039 | _(TBD)_ | Draft |
+| L2-VIEW-012 | L3-VIEW-040, L3-VIEW-041, L3-VIEW-042 | _(TBD)_ | Draft |
 
 ### L1-VAL: Validation
 
@@ -333,7 +335,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | CH10 | 8 | 7 | 21 | 0 | 0 | 0 | 0 |
 | EDN | 6 | 2 | 7 | 0 | 0 | 0 | 0 |
 | REG | 8 | 7 | 16 | 0 | 0 | 0 | 0 |
-| VIEW | 9 | 10 | 36 | 0 | 0 | 0 | 0 |
+| VIEW | 9 | 12 | 42 | 0 | 0 | 0 | 0 |
 | VAL | 6 | 3 | 12 | 0 | 0 | 0 | 0 |
 | DER | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EXT | 4 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -344,13 +346,13 @@ This matrix is the single source of truth for live status; the requirement docum
 | ROB | 3 | 3 | 6 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **54** | **149** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **56** | **155** | **0** | **0** | **0** | **0** |
 
 The countable requirement set is every L2 and L3 requirement plus the 51 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 254 (0.0%).
+**Tested by at least one test marker**: 0 of 262 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 254 (1.2%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 262 (1.1%).
 
 ### Orphan check
 
@@ -416,9 +418,11 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-051 | Prominent integrity findings are the default, subject to eligibility guards (QH/QG) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) | not yet written | _(none)_ |
 | INT-052 | Unreadable SRCC never becomes an eligibility or governing inference (QS) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) | not yet written | _(none)_ |
 | INT-053 | Later copies compare with the currently governing setup, never a guessed target (QM) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) | not yet written | _(none)_ |
+| INT-054 | Disabled TIMEIN entries remain enumerated with CHE context (Option A) | approved (Joey, Option A, 2026-11-25; independent AI final CONCUR at ebd5c98a297a2ad1391cabcb24985a8b789e88f1) | not yet written | _(none)_ |
+| INT-055 | Decimal-integer fields and numeric codes use bounded raw ASCII digits (Option A) | approved (Joey, Option A answers, 2026-11-25; independent AI final CONCUR at ebd5c98a297a2ad1391cabcb24985a8b789e88f1) | not yet written | _(none)_ |
 
-* Entries without a written analysis: **53** of 53
-* Entries without a test: **53** of 53
+* Entries without a written analysis: **55** of 55
+* Entries without a test: **55** of 55
 * Entries missing the development mark: **0**
 
 ### Marker reference check

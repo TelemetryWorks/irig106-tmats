@@ -26,27 +26,27 @@ locally; CI runs on synthesized examples and fuzzing only.
 - **When a real file reveals a behaviour**, it is reproduced as a synthesized
   fixture in the same change, so CI keeps the lesson without the file.
 
-## Pending owner decision: numeric FIELD-VALUE syntax
+## Owner-signed CHE and numeric field-value expectations
 
-Unreviewed numeric field-value syntax is BLOCKED pending the owner decision
-and ADR-0033 independent check: sign, leading zeros, blanks and digit limit.
-This includes counts/condition operands such as R-x\N (NUMBER OF TRACKS/
-CHANNELS, 106-24R1 Chapter 9 section 9.5.4 Table 9-4 p. 9-32, range
-1–65536), NSB/TK1 and numeric-looking enumeration codes in TTF/SHTF/TFMT
-(Table 9-4 pp. 9-51, 9-71–72). Whether `02` matches enumeration code `2`
-is undecided. TK1/CDT/SHTF/DSI/CHE have Allowed when R\N > 0 (Table 9-4
-pp. 9-48–51): parsing that operand inherits the blocker even for text fields.
+INT-054/055 record Joey's Option A decisions of 2026-11-25. The former
+pending-OWNER blockers are removed and expected results below are specified.
+INT-054/055 have final AI CONCUR at #51 ebd5c98; source freshness,
+written development analysis and executable verification remain required.
+These are PLANNED tests, not enabled runtime coverage or approval to implement.
 
-Every parser/integration fixture with such a dependency is BLOCKED, including
-variants of otherwise isolated assertions below. A unit fixture may instead
-receive a scoped, explicitly supplied evaluated condition/operand; that is
-synthetic evidence, not numeric parsing or condition-evaluator coverage, and
-never permission to assume an absent/unknown condition true. Mathematical
-ranges and already numerical arithmetic operands remain separate. INT-038
-code-name-index identity and INT-043's algorithm-specific decision do not
-supply a generic field-value grammar. Existing approved field-specific
-interpretations remain in force; no generic sign/zero/blank/digit acceptance
-is chosen here.
+Decimal-integer fields, including R\N condition operands and numeric-looking
+TTF/SHTF/TFMT codes, use RAW nonempty ASCII digits, maximum ten before stripping
+zeros. Leading zeros give a located warning and canonical comparison; 04=4,
+02 matches code 2. Invalid syntax/range never repairs/clips/wraps input.
+A leading blank is uniformly unavailable under INT-041; trailing/embedded
+blanks are Invalid. Any raw control makes a number Invalid; INT-036 never
+repairs it. Binary/masks, float/hex and all other non-decimal representations
+are out of scope, even with numeric-only spelling. Numeric codes come from
+explicit reviewed enumeration tables, never binary patterns; see the
+[complete inventory](research/2026-11-26-int055-binary-exclusions.md). Character findings, missing/duplicate states, field-specific
+ranges and independently supplied unit premises retain their contracts.
+Raw binding does not assert a usable numeric value. See the new focused
+fixture table below for lexical/range/condition expectations.
 
 ## Family 2 batch 1: foundation acceptance specifications
 
@@ -941,32 +941,31 @@ Preserve separate counter/presence/applicability findings. Known scalar
 duplicates also impose INT-048 assembly ambiguity: local field reads below
 are diagnostic, never permission to govern or bypass retained-cut blocking.
 
-**Numeric dependency (review follow-up to #50):** The general gate above
-includes parsed R\N applicability and numeric enumeration tokens, not just
-NSB/TK1. Each unblocked unit row below receives a scoped evaluated R\N > 0
-result (true unless the case varies/withholds it), plus the stated CDT/edition
-evidence and any needed interpreted enum operand; it parses no numeric text.
-Parsed-text integration variants are BLOCKED.
-A supplied condition never establishes an absent or unknown one at runtime.
+**Numeric dependency (owner follow-up to #50):** Parsed R\N and numeric
+code expectations now follow owner-signed INT-055, with final independent AI
+CONCUR at #51 ebd5c98. Existing supplied-condition unit arms remain isolated; add parsed
+integration arms with valid scoped R\N=1 (or case-specific invalid/unknown
+operand), never assuming missing applicability true. Numeric code arms use
+the new syntax; raw-only binding arms do not claim conversion coverage.
 
 | Named planned test | Stimulus / independent expectation | Requirements |
 | --- | --- | --- |
-| `time_view_entry_index_is_not_channel_id` | **BLOCKED parsed fixture: general numeric FIELD-VALUE syntax awaits owner decision.** Entry n=3 has TK1=42 and CDT=TIMEIN; return scope n=3 and actual ID 42, never ID 3 | L3-VIEW-012, L3-VIEW-014 |
+| `time_view_entry_index_is_not_channel_id` | **Parsed expectation: INT-055; independent final CONCUR at #51 ebd5c98.** Entry n=3 has TK1=42 and CDT=TIMEIN; return scope n=3 and actual ID 42, never ID 3 | L3-VIEW-012, L3-VIEW-014 |
 | `time_view_never_borrows_other_scope` | **UNIT: supplied evaluated R\N applicability; no numeric text parsing.** R-1 entry 3 has TIMEIN with absent TFMT; R-2 entry 3 explicitly has TFMT=B. R-1's own applicable default is A, never borrowed B; repeat across document/revision boundaries | L3-VIEW-012, L3-VIEW-016 |
-| `time_view_projected_indices_keep_evidence` | **BLOCKED parsed fixture: general numeric FIELD-VALUE syntax awaits owner decision.** `r-01\cdt-003:timein;R-1\TK1-3:42;`: same numeric scope with raw spelling and noncanonical-index information retained; no rewrite or case-sensitive failure | L3-VIEW-012, L3-VIEW-013 |
+| `time_view_projected_indices_keep_evidence` | **Parsed expectation: INT-055; independent final CONCUR at #51 ebd5c98.** `r-01\cdt-003:timein;R-1\TK1-3:42;`: same numeric scope with raw spelling and noncanonical-index information retained; no rewrite or case-sensitive failure | L3-VIEW-012, L3-VIEW-013 |
 | `time_view_unknown_cdt_is_not_confirmed_timein` | **UNIT: supplied evaluated R\N applicability; no numeric text parsing.** CDT absent, high-byte Invalid, duplicate TIMEIN or blank-unavailable in separate cases, with a present TFMT: Confirm no TIMEIN by inference; retain each state/reason, raw candidates and format evidence | L3-VIEW-013 |
-| `time_view_unusable_id_is_not_fabricated` | **BLOCKED parsed fixture: general numeric FIELD-VALUE syntax awaits owner decision.** Confirmed TIMEIN with TK1 absent, 0, or duplicate 42/43: Retain entry scope and Missing/Invalid/Ambiguous identity; never n/0/first/last substitution | L3-VIEW-014 |
-| `time_view_actual_id_selection_keeps_all_candidates` | **BLOCKED parsed fixture: general numeric FIELD-VALUE syntax awaits owner decision.** Two entries (or recorder scopes) each explicitly identify 42; query with insufficient scope: Return all scoped candidates/selection limitation; no merge or conformance claim of global uniqueness. No match fabricates nothing | L3-VIEW-015 |
-| `time_view_formats_bind_to_entry_not_extras` | **UNIT: supplied evaluated R\N applicability; no numeric text parsing.** Adjacent entries carry differing TTF/TFMT/TSRC; raw unrelated recorder extras also present: Each field binds to its full entry key; unrelated extras do not supply metadata or disappear | L3-VIEW-016 |
-| `time_view_format_roles_are_distinct` | **BLOCKED parsed fixture: numeric enumeration and R\N syntax await owner decision.** TIMEIN entry has TTF=2, TFMT=2, TSRC=E and SHTF=1: Keep four roles and independent locations; neither numeric 2 nor E becomes a channel ID, packet-type byte or reset command | L3-VIEW-017 |
+| `time_view_unusable_id_is_not_fabricated` | **Parsed expectation: INT-055; independent final CONCUR at #51 ebd5c98.** Confirmed TIMEIN with TK1 absent, 0, or duplicate 42/43: Retain entry scope and Missing/Invalid/Ambiguous identity; never n/0/first/last substitution | L3-VIEW-014 |
+| `time_view_actual_id_selection_keeps_all_candidates` | **Parsed expectation: INT-055; independent final CONCUR at #51 ebd5c98.** Two entries (or recorder scopes) each explicitly identify 42; query with insufficient scope: Return all scoped candidates/selection limitation; no merge or conformance claim of global uniqueness. No match fabricates nothing | L3-VIEW-015 |
+| `time_view_formats_bind_to_entry_not_extras` | **UNIT: raw, located binding only; no numeric state assertion.** Adjacent entries carry differing TTF/TFMT/TSRC; raw unrelated recorder extras also present: each raw field binds to its full entry key; unrelated extras do not supply metadata or disappear. Any arm asserting TTF Explicit/Invalid follows INT-055 | L3-VIEW-016 |
+| `time_view_format_roles_are_distinct` | **Parsed numeric-code expectation: INT-055; independent final CONCUR at #51 ebd5c98.** TIMEIN entry has TTF=2, TFMT=2, TSRC=E and SHTF=1: Keep four roles and independent locations; neither numeric 2 nor E becomes a channel ID, packet-type byte or reset command | L3-VIEW-017 |
 | `time_view_duplicate_field_does_not_default` | **UNIT: supplied evaluated R\N applicability; no numeric text parsing.** One entry contains TFMT=A and TFMT=B, then canonical-index collision spellings of the same TFMT key: Field Ambiguous with every occurrence and normalization/collision findings; no first/last/default A rescue; assembly ambiguity retained | L3-VIEW-018 |
 | `time_view_explicit_and_default_a_are_distinct` | **UNIT: supplied evaluated R\N applicability; no numeric text parsing.** Explicit TFMT=A versus absent TFMT with known TIMEIN/baseline; repeat explicit lowercase a: Explicit raw value/span versus Defaulted A with citation/basis and no input span; same original bytes before/after view | L3-VIEW-018, L3-VIEW-019 |
 | `time_view_blank_and_high_byte_keep_existing_policy` | **UNIT: supplied evaluated R\N applicability; no numeric text parsing.** TFMT=` A` versus a value containing 0xFF: Blank-unavailable per INT-041, not automatic Invalid/trim; high-byte Invalid per INT-037; no default replacement | L3-VIEW-018 |
 | `time_view_unknown_condition_or_edition_never_borrows_a` | **UNIT: supplied evaluated R\N applicability; no numeric text parsing.** Absent TFMT with ambiguous CDT or unavailable reviewed edition rule: Missing/default-unavailability or unavailable read with precise reason, not assumed A or data Invalid merely from unknown rules | L3-VIEW-019 |
-| `time_view_default_keeps_independent_findings` | **BLOCKED parsed fixture: numeric enumeration and R\N syntax await owner decision.** TIMEIN, TTF=2, no TFMT, with the RELEASE-0.1 network-time inconsistency finding: Defaulted A stays labelled and the independent finding remains; never override packet evidence, infer UTC or suppress required-presence findings | L3-VIEW-017, L3-VIEW-019 |
-| `time_view_local_format_on_non_timein_is_not_absent` | **UNIT: supplied evaluated R\N applicability; no numeric text parsing.** Non-TIMEIN entry explicitly contains locally valid TFMT: Not a confirmed TIMEIN entry; local field remains Explicit with applicability finding, not silently absent | L3-VIEW-013, L3-VIEW-018 |
+| `time_view_default_keeps_independent_findings` | **Parsed numeric-code expectation: INT-055; independent final CONCUR at #51 ebd5c98.** TIMEIN, TTF=2, no TFMT, with the RELEASE-0.1 network-time inconsistency finding: Defaulted A stays labelled and the independent finding remains; never override packet evidence, infer UTC or suppress required-presence findings | L3-VIEW-017, L3-VIEW-019 |
+| `time_view_local_format_on_non_timein_is_not_absent` | **UNIT: supplied evaluated R\N applicability; no numeric text parsing.** Non-TIMEIN entry explicitly contains letter TFMT=B: Not a confirmed TIMEIN entry; local field remains Explicit with applicability finding, not silently absent | L3-VIEW-013, L3-VIEW-018 |
 | `time_view_missing_source_does_not_default` | **UNIT: supplied evaluated R\N applicability; no numeric text parsing.** Confirmed TIMEIN with absent TSRC/TTF: Missing with reason and independent required-presence findings; do not infer external/internal source, default format or an association | L3-VIEW-016, L3-VIEW-018 |
-| `time_view_shtf_on_non_timein_does_not_enable_header` | **BLOCKED parsed fixture: numeric enumeration and R\N syntax await owner decision.** A non-TIMEIN entry has SHTF=2; compare absent and unusable cases: Expose that entry's own field state; no TIMEIN prerequisite, enabled-header inference or neighbouring-channel fallback | L3-VIEW-020 |
+| `time_view_shtf_on_non_timein_does_not_enable_header` | **Parsed numeric-code expectation: INT-055; independent final CONCUR at #51 ebd5c98.** A non-TIMEIN entry has SHTF=2; compare absent and unusable cases: Expose that entry's own field state; no TIMEIN prerequisite, enabled-header inference or neighbouring-channel fallback | L3-VIEW-020 |
 | `time_view_provenance_and_revision_are_preserved` | **UNIT: supplied evaluated R\N applicability; no numeric text parsing.** Assembled field crosses fragments; repeat on standalone input and an edited revision: Original spans and supplied fragment map retained; no packet provenance on standalone text and no stale results after revision change | L3-VIEW-021 |
 | `time_view_retains_qualification_without_adoption` | **UNIT: supplied evaluated R\N applicability; no numeric text parsing.** Incomplete, cut-plus-ambiguity, other assembly ambiguity or unsupported XML context: Preserve limitation; raw/diagnostic access never becomes unqualified usable metadata, a governing setup or an evidenced clock association | L3-VIEW-022 |
 | `time_view_fallback_basis_is_visible` | **UNIT: supplied evaluated R\N applicability; no numeric text parsing.** A field failure or applicable default under supplied labelled fallback edition: Keep fallback edition/basis and field evidence, never a claimed explicit G\106 declaration or input location for a default | L3-VIEW-019, L3-VIEW-021 |
@@ -995,31 +994,31 @@ full-setup fixtures. Retain independent source/assembly/usage findings.
 
 | Named planned test | Independent stimulus / expectation | Requirements |
 | --- | --- | --- |
-| `nsb_explicit_zero_preserves_full_id` | **BLOCKED parsed fixture: general numeric FIELD-VALUE syntax awaits owner decision.** Explicit NSB=0, full ID 42: source width 0/value 0, local width 16/value 42; retain the actual declaration, never confuse it with absence | L3-VIEW-024, L3-VIEW-026 |
-| `nsb_high_bits_not_low_bits` | **BLOCKED parsed fixture: general numeric FIELD-VALUE syntax awaits owner decision.** NSB=4, C=0xA02A: source 10, local 42, widths 4/12, full 41002 unchanged | L3-VIEW-026 |
-| `nsb_upper_count_and_id_boundaries` | **BLOCKED parsed fixture: general numeric FIELD-VALUE syntax awaits owner decision.** NSB=13, C=0xFFFF: source 8191, local 7, widths 13/3, full 65535 retained | L3-VIEW-024, L3-VIEW-026 |
-| `nsb_zero_local_component_is_not_full_zero` | **BLOCKED parsed fixture: general numeric FIELD-VALUE syntax awaits owner decision.** NSB=13/C=0xA000 gives source 5120/local 0; NSB=1/C=0x8000 gives source 1/local 0. No reserved-full-ID or TK1-range error is manufactured for the derived zero | L3-VIEW-025, L3-VIEW-026 |
-| `nsb_absence_is_not_explicit_zero` | Absent NSB with independently supplied usable full-ID evidence and specified R\ID: retain Missing plus the required-presence finding (Table 9-4 p. 9-33, Required when: Allowed), no fabricated components/count and no presumed explicit zero. This absence check needs no numeric conversion; any combined parsed TK1 variant remains blocked | L3-VIEW-027 |
-| `nsb_bad_count_never_clips_or_wraps` | **BLOCKED parsed fixture: general numeric FIELD-VALUE syntax awaits owner decision.** NSB=-1, 14 or a demonstrated invalid numeric value under a supported definition: no split, no modulo/clamp/default; raw Invalid evidence remains | L3-VIEW-024, L3-VIEW-027 |
-| `nsb_duplicate_even_equal_blocks_split` | **BLOCKED parsed fixture: general numeric FIELD-VALUE syntax awaits owner decision.** NSB=4 repeated identically, then 4/5: Ambiguous with every occurrence, no chosen count or split; assembly ambiguity remains | L3-VIEW-024, L3-VIEW-027 |
-| `nsb_blank_or_unsupported_rule_is_unavailable` | **BLOCKED parsed fixture: general numeric FIELD-VALUE syntax awaits owner decision.** Leading-blank count or unavailable historical definition/layout: preserve unavailable reason rather than trim, assume baseline, invent zero or prove data Invalid from unknown rules | L3-VIEW-024, L3-VIEW-027 |
-| `nsb_unknown_applicability_does_not_enable_split` | **BLOCKED parsed fixture: general numeric FIELD-VALUE syntax awaits owner decision.** Explicit local count with unestablished specified-R\ID condition evidence: no guessed applicability; retain the field and blocking condition evidence | L3-VIEW-023, L3-VIEW-024 |
-| `nsb_recorder_scope_is_not_borrowed` | **BLOCKED parsed fixture: general numeric FIELD-VALUE syntax awaits owner decision.** Recorder 1 lacks NSB, recorder 2 has 4; repeat across record/revision. Recorder 1 does not borrow 4; entry-suffixed R-1\NSB-3 is not the native recorder-level declaration | L3-VIEW-023, L3-VIEW-027 |
-| `nsb_canonical_recorder_keeps_raw_spelling` | **BLOCKED parsed fixture: general numeric FIELD-VALUE syntax awaits owner decision.** R-01\NSB binds selected canonical recorder 1, with the spelling/normalization information retained | L3-VIEW-023, L3-VIEW-028 |
-| `nsb_actual_id_not_entry_index` | **BLOCKED parsed fixture: general numeric FIELD-VALUE syntax awaits owner decision.** Entry n=3 has TK1=41002 and NSB=4: split actual C=0xA02A into 10/42, never split n=3 | L3-VIEW-025 |
-| `nsb_unusable_id_is_not_coerced` | **BLOCKED parsed fixture: general numeric FIELD-VALUE syntax awaits owner decision.** Missing, duplicate or out-of-range TK1=0/65536 with valid NSB: retain full-ID state, no n/packet-ID/local-ID substitution or split | L3-VIEW-025, L3-VIEW-027 |
-| `nsb_local_id_collision_does_not_merge_channels` | **BLOCKED parsed fixture: general numeric FIELD-VALUE syntax awaits owner decision.** NSB=4, full IDs 0xA02A/0xB02A both have local 42, sources 10/11. Keep both full/scoped identities; no channel merge or evidenced clock association | L3-VIEW-029 |
-| `nsb_provenance_and_qualification_survive_read` | **BLOCKED parsed fixture: general numeric FIELD-VALUE syntax awaits owner decision.** Declaration/ID spans in assembled or standalone input, labelled edition basis, then revision change and retained-cut/ambiguous context: preserve evidence, raw bytes and limitations without stale results or governing promotion | L3-VIEW-028, L3-VIEW-029 |
+| `nsb_explicit_zero_preserves_full_id` | **Parsed expectation: INT-055; independent final CONCUR at #51 ebd5c98.** Explicit NSB=0, full ID 42: source width 0/value 0, local width 16/value 42; retain the actual declaration, never confuse it with absence | L3-VIEW-024, L3-VIEW-026 |
+| `nsb_high_bits_not_low_bits` | **Parsed expectation: INT-055; independent final CONCUR at #51 ebd5c98.** NSB=4, C=0xA02A: source 10, local 42, widths 4/12, full 41002 unchanged | L3-VIEW-026 |
+| `nsb_upper_count_and_id_boundaries` | **Parsed expectation: INT-055; independent final CONCUR at #51 ebd5c98.** NSB=13, C=0xFFFF: source 8191, local 7, widths 13/3, full 65535 retained | L3-VIEW-024, L3-VIEW-026 |
+| `nsb_zero_local_component_is_not_full_zero` | **Parsed expectation: INT-055; independent final CONCUR at #51 ebd5c98.** NSB=13/C=0xA000 gives source 5120/local 0; NSB=1/C=0x8000 gives source 1/local 0. No reserved-full-ID or TK1-range error is manufactured for the derived zero | L3-VIEW-025, L3-VIEW-026 |
+| `nsb_absence_is_not_explicit_zero` | Absent NSB with independently supplied usable full-ID evidence and specified R\ID: retain Missing plus the required-presence finding (Table 9-4 p. 9-33, Required when: Allowed), no fabricated components/count and no presumed explicit zero. This absence check needs no numeric conversion; any combined parsed TK1 variant follows INT-055 | L3-VIEW-027 |
+| `nsb_bad_count_never_clips_or_wraps` | **Parsed expectation: INT-055; independent final CONCUR at #51 ebd5c98.** NSB=-1 (invalid syntax), 14 (invalid range), or another demonstrated invalid numeric value under a supported definition: no split, no modulo/clamp/default; raw Invalid evidence remains | L3-VIEW-024, L3-VIEW-027 |
+| `nsb_duplicate_even_equal_blocks_split` | **Parsed expectation: INT-055; independent final CONCUR at #51 ebd5c98.** NSB=4 repeated identically, then 4/5: Ambiguous with every occurrence, no chosen count or split; assembly ambiguity remains | L3-VIEW-024, L3-VIEW-027 |
+| `nsb_blank_or_unsupported_rule_is_unavailable` | **Parsed expectation: INT-055; independent final CONCUR at #51 ebd5c98.** Leading-blank NSB count retains its existing INT-041 unavailable outcome (L3-VIEW-024); an unavailable historical definition/layout likewise stays unavailable rather than proving data Invalid. Neither trims, assumes baseline or invents zero | L3-VIEW-024, L3-VIEW-027 |
+| `nsb_unknown_applicability_does_not_enable_split` | **Parsed expectation: INT-055; independent final CONCUR at #51 ebd5c98.** Explicit local count with unestablished specified-R\ID condition evidence: no guessed applicability; retain the field and blocking condition evidence | L3-VIEW-023, L3-VIEW-024 |
+| `nsb_recorder_scope_is_not_borrowed` | **Parsed expectation: INT-055; independent final CONCUR at #51 ebd5c98.** Recorder 1 lacks NSB, recorder 2 has 4; repeat across record/revision. Recorder 1 does not borrow 4; entry-suffixed R-1\NSB-3 is not the native recorder-level declaration | L3-VIEW-023, L3-VIEW-027 |
+| `nsb_canonical_recorder_keeps_raw_spelling` | **Parsed expectation: INT-055; independent final CONCUR at #51 ebd5c98.** R-01\NSB binds selected canonical recorder 1, with the spelling/normalization information retained | L3-VIEW-023, L3-VIEW-028 |
+| `nsb_actual_id_not_entry_index` | **Parsed expectation: INT-055; independent final CONCUR at #51 ebd5c98.** Entry n=3 has TK1=41002 and NSB=4: split actual C=0xA02A into 10/42, never split n=3 | L3-VIEW-025 |
+| `nsb_unusable_id_is_not_coerced` | **Parsed expectation: INT-055; independent final CONCUR at #51 ebd5c98.** Missing, duplicate or out-of-range TK1=0/65536 with valid NSB: retain full-ID state, no n/packet-ID/local-ID substitution or split | L3-VIEW-025, L3-VIEW-027 |
+| `nsb_local_id_collision_does_not_merge_channels` | **Parsed expectation: INT-055; independent final CONCUR at #51 ebd5c98.** NSB=4, full IDs 0xA02A/0xB02A both have local 42, sources 10/11. Keep both full/scoped identities; no channel merge or evidenced clock association | L3-VIEW-029 |
+| `nsb_provenance_and_qualification_survive_read` | **Parsed expectation: INT-055; independent final CONCUR at #51 ebd5c98.** Declaration/ID spans in assembled or standalone input, labelled edition basis, then revision change and retained-cut/ambiguous context: preserve evidence, raw bytes and limitations without stale results or governing promotion | L3-VIEW-028, L3-VIEW-029 |
 | `nsb_all_valid_partitions_match_bitstring_oracle` | Future CI arithmetic test streams C=1–65535 × explicit N=0–13; partition independent 16-character strings, assert 917,490 pairs, widths/ranges and exact reconstruction. Parse/scope assertions use focused cases above | L3-VIEW-026, L3-VIEW-030 |
 
 The all-valid-partitions oracle uses already numerical operands, not raw
 NSB/TK1 field strings; its 917,490 arithmetic cases are unchanged. Parsed
-binding variants remain blocked even where a fixed mathematical vector can
-be checked independently. The missing-NSB required-presence assertion above
+binding variants now have INT-055 expectations; development/source/test gates remain
+required even where a fixed mathematical vector can be checked independently. The missing-NSB required-presence assertion above
 uses absence and the specified-R\ID predicate, not numeric acceptance.
 
-These cases specify no CHE enumeration/filter behavior; that owner choice
-is pending and no expected disabled-entry policy is recorded as approved.
+CHE enumeration expectations follow owner-signed INT-054 below; the
+independent check has final CONCUR at #51 ebd5c98. No caller filter runs implicitly.
 DSI source context is in the remaining-derivations list, not implemented
 here or used as a clock reference. No association/correlation or governing
 inference follows from common multiplexer source/local values.
@@ -1034,8 +1033,8 @@ Queries take supplied recorder/entry scope using approved code-name-index
 identity. Every row is an isolated UNIT fixture receiving a scoped evaluated
 R\N > 0 result (true unless varied), not parsing R\N or assuming it at runtime.
 In particular, the missing-DSI required-presence assertion receives true
-applicability. Every parsed-R\N integration variant is BLOCKED by the general
-numeric gate above. These units neither test numeric condition evaluation nor
+applicability. Parsed-R\N integration arms now use INT-055 expectations (R\N=1 gives
+true; invalid/missing/ambiguous operands cannot establish true). These units neither test numeric condition evaluation nor
 choose CHE enumeration. Use supported reviewed field/condition evidence for
 semantic assertions; unavailable results never guess blank/length rules.
 Fragments are not complete conforming recording setups.
@@ -1054,9 +1053,39 @@ Fragments are not complete conforming recording setups.
 | `dsi_context_provenance_and_qualification_survive` | **UNIT: supplied evaluated R\N applicability; no numeric text parsing.** Standalone or fragmented source, new revision, retained-cut/ambiguous/unsupported context: preserve source/basis/spans and limitations, no fabricated packet locations or stale cross-revision value | L3-VIEW-035 |
 | `dsi_context_does_not_require_clock_resolution` | **UNIT: supplied evaluated R\N applicability; no numeric text parsing.** Native context is locally readable while a separate time association or general link result is unresolved/ambiguous: retain DSI context and independent findings without resolving either by guess | L3-VIEW-036 |
 
-No CHE behavior, numeric field grammar, DSI length-counting rule or generic
-link-selector algorithm is approved by these planned context fixtures. All
+CHE and numeric expectations are owner-signed in INT-054/055, with final
+independent CONCUR at #51 ebd5c98. DSI length-counting and generic link selection remain
+outside these planned context fixtures. All
 new requirements remain Draft until real executable verification exists.
+
+## Planned CHE and numeric syntax batch 19
+
+Owner-signed INT-054/055; independent AI final CONCUR at #51 ebd5c98. Requirements:
+L2-VIEW-011/012, L3-VIEW-037–042. Sources and owner text are in the
+[decision note](research/2026-11-25-che-numeric-syntax-owner-decisions.md).
+Use reviewed baseline definitions and scoped applicability. Expected states
+are local; independent applicability, assembly and default findings remain.
+Every case preserves raw bytes, source locations and warning evidence.
+
+| Named planned test | Independent stimulus / expected result | Requirements |
+| --- | --- | --- |
+| `che_disabled_timein_is_still_enumerated` | R-1\N:1; R-1\CDT-1:TIMEIN; CHE F vs T: both enumerate the same entry, CHE Explicit false/true with own location; never automatic filtering or packet-generation permission | L3-VIEW-040, L3-VIEW-042 |
+| `che_missing_duplicate_invalid_preserve_entry` | Confirmed TIMEIN: absent CHE Missing plus required-presence finding when Allowed; duplicate F/F or T/F Ambiguous with all occurrences/assembly hold; CHE Q Invalid; unavailable definition stays unavailable. Entry remains inspectable, no fabricated enable value | L3-VIEW-041, L3-VIEW-042 |
+| `che_caller_filter_is_explicit_and_nonmutating` | Caller explicitly filters disabled from its result, compared with unfiltered view: base still contains disabled entry and every finding; bytes/revision/scopes unchanged; ambiguous/cut setup never gains governing eligibility | L3-VIEW-040, L3-VIEW-042 |
+| `numeric_ascii_syntax_and_digit_limit` | NSB empty, +4, -1, 4x, 4.0, non-ASCII digit U+0664, 4 followed by blank or embedded blank: Invalid; 0000000004 (10 digits) Explicit 4 with warning, 00000000004 and 00000000000 (11 digits) Invalid before canonicalisation; no clipped success | L3-VIEW-037 |
+| `numeric_zero_padding_keeps_warning_and_raw` | NSB 04 and 00: Explicit 4/0 with located warnings and unchanged raw strings; 014: Invalid range with warning retained; canonical 4 and 0 have no zero-padding warning | L3-VIEW-038 |
+| `numeric_ranges_follow_canonicalisation` | NSB 0/13 valid, 14 invalid; TK1 1/65535 valid, 0/65536 invalid; R\N 1/65536 valid, 0/65537 invalid. Repeat with zero-padding within ten digits: same mathematical outcome, warning retained, no wrap | L3-VIEW-038 |
+| `numeric_codes_accept_02_without_changing_letters` | Supported TIMEIN: TTF 02 and TFMT 02 match code 2 Explicit with warning; SHTF 00/01/02 match 0/1/2 with warning. Letter TFMT B stays Explicit B with raw spelling, no numeric-code warning; no default replacement | L3-VIEW-037, L3-VIEW-038 |
+| `numeric_leading_blank_keeps_int041_exception` | Leading blank in NSB ` 4`, TK1 ` 42`, R\N ` 1`, SHTF ` 1`, TTF ` 2`, TFMT ` 2`: all unavailable under uniform INT-041; existing letter TFMT ` A` unchanged. Trailing/embedded blanks in each numeric field/code are Invalid. Never trim/default; retain independent proved failures | L3-VIEW-037, L3-VIEW-039 |
+| `numeric_rn_condition_never_guesses` | R\N=01: Explicit 1/warning, condition >0 true for TK1/CDT/SHTF/DSI/CHE; 0/65537/+1 invalid => cannot-evaluate, not false; missing or duplicate 1/1 => cannot-evaluate with Missing/Ambiguous evidence; unavailable rule likewise. No borrowed count; DSI absence finding only when Allowed established | L3-VIEW-039 |
+| `numeric_projection_keeps_character_findings` | NSB `0\r\n4` (actual CR/LF bytes) is Invalid on RAW bytes, never Explicit 4; repeat TAB, NUL, lone CR/LF and each control at start/middle/end of a numeric value. Retain located character/NUL findings, raw bytes and no default. A high byte remains INT-037 Invalid. INT-036 projection cannot make any arm usable | L3-VIEW-037, L3-VIEW-038 |
+| `numeric_exclusions_dispatch_by_definition` | Float R-x\ITH-n=-12.5, R-x\TC6=12.5 and hex R-x\MRC\SPM=0A3F, plus digits-only variants: no INT-055 validity verdict or digit-limit/zero-padding warning solely from that rule. Dispatch to the field's own reviewed representation rule; unavailable if it is unreviewed, not a fabricated Explicit/Invalid. Binary R-x\MFD\TRA-n-m=00101 keeps all five bits, never decimal 101; R-x\DMSK-n-m with 32 digits, R-x\AMSK-n-m with 64 digits and R-x\UCSV-n-m with 81 digits incur NO INT-055 ten-digit rejection or zero-padding warning. Include FW/X arms, D-x\WFM-y-n-m-e, P-d\ADM\FDP-n=0011 (four preserved bits, never decimal 11), and digits in character/date/IP fields. Dispatch by reviewed representation; no INT-055 verdict even for all-digit spellings. Retain raw width/bytes and existing G\SHA rules separately | L3-VIEW-037, L3-VIEW-038 |
+
+These are named PLANNED tests. Future property tests should independently
+mutate digit runs, signs, blanks, lengths, range boundaries and control/high
+bytes, assert canonical equivalence only for admitted raw strings, and check
+warnings, raw identity and unusable-condition propagation. No full grammar
+coverage or implementation readiness is claimed by this table.
 
 ## Real Chapter 10 recordings (local use only)
 

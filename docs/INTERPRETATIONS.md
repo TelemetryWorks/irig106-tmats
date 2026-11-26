@@ -1015,6 +1015,12 @@ omitted controls in values add no character finding by themselves. Known
 leading encoding markers follow INT-037 before projection. Unknown-code and
 embedded-blank validity checks still follow.
 
+**Numeric-value amendment (Joey, 2026-11-25)**: Owner-signed INT-055 is an
+explicit exception for decimal-integer values/numeric codes: check RAW bytes,
+so controls make them Invalid and cannot be omitted into a usable number.
+Retain independent findings and unchanged raw bytes. Code-name/general text
+projection remains unchanged. INT-055 has final independent CONCUR at #51 ebd5c98; development gates remain.
+
 **Reason**: Chapter 9 requires nonprintable discard for meaning and intentional blanks, while product policy retains bytes. The precise set and separate raw/projected operations need a reviewable interpretation rather than locale/Unicode whitespace heuristics.
 
 **Design**: approved (Joey, owner sign-off, 2026-11-22) · **Review**: approved under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-22; independent AI recheck: CONCURRED on PR #16 at `891f77f`, relayed by the owner 2026-11-22 · **Origin**: family 2 batch 3; review amendments requested 2026-11-21
@@ -1285,6 +1291,13 @@ applicability is uncertainty, not permission to infer an inapplicable default.
 Invalid results reached under a fallback edition keep that fallback label,
 applied edition and reason, just as other results keep their interpretation
 basis. These edge notes were requested with the 2026-11-23 sign-off.
+
+**Numeric-policy follow-up (owner, 2026-11-25)**: INT-055 records the
+numeric field-value rule, with final independent CONCUR at #51 ebd5c98. The owner's clarification
+applies leading-blank unavailability uniformly to every decimal-integer
+value and numeric-looking code; trailing/embedded blanks are Invalid.
+Letter-value and structured G\SHA blank rules are
+not silently changed. Demonstrated high-byte/other failures remain visible.
 
 **Reason**: Missing describes actual absence and Invalid requires evidence about the data; neither is justified solely by missing interpretation knowledge. The alternative is forcing all unsuccessful reads into those states, which conceals unsupported coverage and can trigger a false default or false data-error report. Consumers must handle blocked reads explicitly, at the cost of a guarded result rather than treating every request as a successfully resolved field.
 
@@ -1856,3 +1869,108 @@ Preserve every earlier copy's located findings without overwrite. Earlier govern
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
 **Decision record**: [owner wording and bounded scope](research/2026-11-25-qm-governing-comparison-owner-decision.md); [sequence contract and named fixtures](research/2026-11-23-retransmission-decision-matrix.md#multiple-following-copies-owner-signed-qm-sequence-contract). The pairwise product stays unchanged; sequence coverage is separate, bounded and planned. Independent AI review is complete at the exact head cited above; source freshness, development analysis and executable verification remain required before implementation.
+
+
+## Bounded time-view enable context and numeric field-value syntax
+
+### INT-054
+
+**Title**: Disabled TIMEIN entries remain enumerated with CHE context (Option A)
+
+**Sources**:
+- 106-24R1 Chapter 9 section 9.5.4 Table 9-4 CHANNEL ENABLE R-x\CHE-n, p. 9-49: "Indicate if source is enabled. Source must be enabled to generate data packets." Usage: "Allowed when: R\N > 0", "Required when: Allowed"; enumeration T True / F False.
+- Same table CHANNEL DATA TYPE, p. 9-50: TIMEIN is IRIG Time Input. The packet-generation condition does not define a library enumeration/filter policy.
+- Joey, owner decision, 2026-11-25: Option A; [dated decision record](research/2026-11-25-che-numeric-syntax-owner-decisions.md).
+
+**Behaviour**: Still enumerate a confirmed TIMEIN entry whose own R-x\CHE-n
+is disabled (F), with CHE exposed as located context. Never silently filter
+it; callers may filter explicitly. Enabled (T), disabled, missing, duplicate
+or invalid CHE does not replace CDT's TIMEIN classification. Missing CHE
+uses existing absent/default-evidence rules, not fabricated enabled/disabled;
+known scalar duplicates stay Ambiguous with every occurrence (INT-039/048),
+and a demonstrated invalid CHE stays Invalid. Unavailable reviewed rules
+retain INT-041's guard. Retain independent applicability/presence findings,
+raw bytes, scope and setup qualifications. Enumeration is diagnostic, not
+permission to govern, generate packets or bypass assembly ambiguity/cuts.
+
+**Reason**: The owner chose caller-controlled filtering with visible context;
+a recorder's enable declaration must not hide the setup information a
+consumer needs to inspect.
+
+**Design**: approved (Joey, Option A, 2026-11-25; independent AI final CONCUR at ebd5c98a297a2ad1391cabcb24985a8b789e88f1) · **Review**: complete under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25; independent AI final CONCUR on PR #51 at `ebd5c98a297a2ad1391cabcb24985a8b789e88f1`, reviewer @thread:thr_qsvwmtnn8f (Behaviour unchanged); source freshness, development analysis and executable tests remain required · **Origin**: owner CHE direction after #50
+
+**Test**: `che_disabled_timein_is_still_enumerated`, `che_missing_duplicate_invalid_preserve_entry`, `che_caller_filter_is_explicit_and_nonmutating` (planned, not implemented or executed)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+### INT-055
+
+**Title**: Decimal-integer fields and numeric codes use bounded raw ASCII digits (Option A)
+
+**Sources**:
+- 106-24R1 Chapter 9 section 9.5.4 Table 9-4 NUMBER OF SOURCE BITS p. 9-33: "Range: 0 to 13"; TRACK NUMBER/CHANNEL ID p. 9-48: "Range: 1 to 65535"; NUMBER OF TRACKS/CHANNELS p. 9-32: "Range: 1 to 65536". These ranges do not supply a general lexical grammar or digit limit.
+- Table 9-4 SECONDARY HEADER TIME FORMAT p. 9-51, TIME DATA TYPE FORMAT pp. 9-71–72 and TIME FORMAT p. 9-72 contain numeric-looking enumeration codes; TK1/CDT/SHTF/DSI/CHE applicability uses R\N > 0 (pp. 9-48–51).
+- Section 9.4.1 p. 9-2 governs character projection (INT-036/037); section 9.4.2 p. 9-2 calls value blanks intentional (INT-041). The owner supplies the policy below, not a claim that the standard mandates it.
+- Joey, owner decision, 2026-11-25: Option A; [dated decision record](research/2026-11-25-che-numeric-syntax-owner-decisions.md). INT-038 and INT-043 are related canonical-string decisions, not independent authority for this extension.
+
+**Behaviour**: Owner-signed answers, Joey, 2026-11-25, Option A for all
+three clarifications; [verbatim answers and exclusion inventory](research/2026-11-25-int055-owner-answers.md).
+This applies ONLY to decimal-integer field values (NSB, TK1, R\N condition
+operands, and other decimal-integer fields) and numeric-looking enumeration
+codes from explicit reviewed enumeration tables, including TTF/SHTF/TFMT
+0/1/2. A binary pattern is NEVER a numeric-looking enumeration code.
+Floating-point, hexadecimal, binary (including bit strings, patterns and
+masks), and ANY OTHER non-decimal representation are explicitly out of
+scope and require their own reviewed rules; numeric-only spelling does not
+bring an excluded representation into this rule. Choose dispatch from the
+reviewed field/representation definition, never the bytes alone. Preserve
+binary width/leading zeros; no decimal ten-digit limit, canonicalisation,
+warning or range comparison applies. See the [complete exclusion inventory
+and every-Range audit](research/2026-11-26-int055-binary-exclusions.md), which
+extends the dated floating/hex list without rewriting its history.
+
+Check the RAW value bytes, not the INT-036 projection: require a nonempty
+run of ASCII digits, at most TEN before stripping zeros. Any control byte
+(CR, LF, NUL, TAB or other) anywhere in the numeric value is Invalid;
+INT-036 must not repair a number into usable data. Retain raw bytes and
+independent character findings; high bytes remain INT-037 Invalid.
+A leading blank makes EVERY decimal-integer value and numeric-looking code
+unavailable under INT-041 uniformly, including NSB, TK1, R\N, SHTF, TTF
+and numeric TFMT. Trailing/embedded blanks are Invalid. Retain independently
+proved failures if the same value has multiple defects; leading-blank
+unavailability never erases a proved control/high-byte/syntax failure.
+Letter TFMT codes keep their existing enumeration path (`B`, or unavailable
+` A`); this decision does not change all nonnumeric blank handling.
+
+Signs (+/-), any other non-digit, empty values and more than ten digits are
+Invalid; never repair, clip, wrap or trim. Check the limit before zero
+stripping: eleven zeros are Invalid. Strip leading zeros for interpreted
+comparison, retaining `0` for all-zero input, without changing source bytes.
+Emit a located WARNING for accepted noncanonical spelling: `04` equals 4,
+`02` matches code 2. Keep the warning if a later range/membership check fails.
+Check the cited field range/enumeration after canonicalisation; out-of-range
+is Invalid. Use canonical-string length/lexicographic comparison or u64;
+u32 cannot represent all ten-digit values. Code-name indices and G\SHA's
+separately reviewed structured grammar are unchanged. General text/name
+projection remains INT-036; this is an explicit numeric-value exception.
+
+An Invalid/unavailable R\N cannot be used to conclude R\N > 0: conditions
+report cannot-evaluate, retaining operand and independent findings. Missing
+and duplicate operands retain existing Missing/Ambiguous behavior; numeric
+conversion cannot select a winner or trigger an absence default. Raw and
+located binding remain available independently of local conversion.
+
+**Reason**: The owner chose raw-byte strictness over the projection-first
+recommendation, uniform leading-blank unavailability and decimal-only scope.
+This preserves floating/hex/binary and other non-decimal representations
+for separate review, avoids an arbitrary field-by-field blank exception set and never makes a damaged
+number usable by omission. Zero-padding remains visible, bounded comparison,
+not a source edit.
+
+**Design**: approved (Joey, Option A answers, 2026-11-25; independent AI final CONCUR at ebd5c98a297a2ad1391cabcb24985a8b789e88f1) · **Review**: complete under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-25, including all three clarification answers; independent AI final CONCUR on PR #51 at `ebd5c98a297a2ad1391cabcb24985a8b789e88f1`, reviewer @thread:thr_qsvwmtnn8f; source freshness, development analysis and executable tests remain required · **Origin**: owner numeric field-value direction after #50
+
+**Test**: `numeric_ascii_syntax_and_digit_limit`, `numeric_zero_padding_keeps_warning_and_raw`, `numeric_ranges_follow_canonicalisation`, `numeric_codes_accept_02_without_changing_letters`, `numeric_leading_blank_keeps_int041_exception`, `numeric_rn_condition_never_guesses`, `numeric_projection_keeps_character_findings`, `numeric_exclusions_dispatch_by_definition` (planned, not implemented or executed)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+**Review history**: The [earlier concerns](research/2026-11-25-che-numeric-independent-review.md) are retained as history; the [owner answers](research/2026-11-25-int055-owner-answers.md) settle the three choices. Final AI concurrence at #51 ebd5c98 is recorded in the [final review record](research/2026-11-26-int054-int055-final-concurrence.md). The eight-mask inventory correction does not change the concurred decimal-only behaviour. Source freshness, development analysis and executable tests remain required.

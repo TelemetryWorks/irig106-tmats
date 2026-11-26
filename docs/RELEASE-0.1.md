@@ -136,6 +136,24 @@ GitHub CI consumer build using this exact declaration and exercising the
 public time-view API. A workspace all-features test alone is not that check.
 No CI or manifest change is made in this documentation family.
 
+## Owner-signed CHE and numeric field-value decisions
+
+INT-054/055 (Joey, Option A, 2026-11-25) retain disabled TIMEIN entries with
+located CHE context and specify numeric field-value/enum-code grammar:
+raw nonempty ASCII digits for decimal-integer fields/numeric codes only,
+at most ten before canonicalisation, leading zeros accepted with warning,
+range checked afterward. Every leading blank is unavailable under INT-041;
+trailing/embedded blanks and any raw control byte are Invalid. Float/hex
+and binary/mask fields, plus all other non-decimal representations, are
+excluded for their own reviewed rules; numeric codes must come from explicit
+reviewed enumeration tables, never binary patterns; other failed syntax/range is Invalid,
+never repaired/clipped. Raw binding alone asserts no usable numeric state.
+INT-054/055 have final AI CONCUR at #51 ebd5c98 under ADR-0033. These decisions remove
+the owner-choice blockers, not development/source/test gates. See the
+[original record](research/2026-11-25-che-numeric-syntax-owner-decisions.md)
+and [owner answers](research/2026-11-25-int055-owner-answers.md), extended by
+the [complete non-decimal exclusions/Range audit](research/2026-11-26-int055-binary-exclusions.md).
+
 ## Effective values and default evidence
 
 Each time-view field reports one of these semantic states:

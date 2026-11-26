@@ -60,13 +60,12 @@ opt-in labelled snapshots versus final-only semantic use; no choice is made.
 
 Derive the association-uncertainty/caller-assumption contract while keeping
 DATA SOURCE ID (`R-x\DSI-n`, 106-24R1 Chapter 9 Table 9-4 p. 9-49) as
-source context, never a clock reference. General numeric FIELD-VALUE syntax
-(including NSB/TK1, R\N condition operands and numeric-looking TTF/SHTF/TFMT
-codes such as whether 02 matches 2; sign, leading zeros, blanks, digit limit)
-awaits an owner decision; dependent parsed-value fixtures remain blocked, distinct from mathematical bit ranges
-and approved code-name-index identity. CHANNEL ENABLE (`R-x\CHE-n`, same
-table/page) also awaits an owner decision: no TIMEIN enumeration/filter
-policy is selected until confirmation.
+source context, never a clock reference. Owner-signed INT-054/055 record CHE
+context without silent filtering and general numeric field-value syntax.
+INT-054/055 have final independent AI concurrence. Complete source-freshness
+and development analysis (including the complete non-decimal representation inventory),
+and implement the planned executable tests before relying on them. The owner
+choices are recorded; independent review and development gates remain.
 
 ### Planned scanner suggestion after framing
 
