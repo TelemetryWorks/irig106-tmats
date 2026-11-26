@@ -58,11 +58,14 @@ opt-in labelled snapshots versus final-only semantic use; no choice is made.
 
 ### Remaining bounded time-view derivations
 
-Derive the association-uncertainty/caller-assumption contract while keeping
+Review the association-uncertainty/caller-assumption derivations and implement
+only after source/development/verification gates, keeping
 DATA SOURCE ID (`R-x\DSI-n`, 106-24R1 Chapter 9 Table 9-4 p. 9-49) as
 source context, never a clock reference. Owner-signed INT-054/055 record CHE
 context without silent filtering and general numeric field-value syntax.
-INT-054/055 have final independent AI concurrence. Complete source-freshness
+INT-054/055 have final independent AI concurrence. Obtain the ADR-0033
+independent recheck of INT-056's owner-signed Quiet clarifications before
+relying on that behaviour; INT-057–060 already have concurrence. Complete source-freshness
 and development analysis (including the complete non-decimal representation inventory),
 and implement the planned executable tests before relying on them. The owner
 choices are recorded; independent review and development gates remain.

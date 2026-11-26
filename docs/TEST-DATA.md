@@ -1087,6 +1087,98 @@ bytes, assert canonical equivalence only for admitted raw strings, and check
 warnings, raw identity and unusable-condition propagation. No full grammar
 coverage or implementation readiness is claimed by this table.
 
+## Planned association/assumption batch 20 (bounded time view)
+
+PLANNED acceptance specifications for L2-VIEW-013/014 and L3-VIEW-043–051,
+not runtime tests or an association resolver. Authority: owner direction
+2026-11-21 and owner answers 2026-11-26 (INT-056–060, independent check
+pending) in RELEASE-0.1. Inspected sources: 106-24R1 Chapter 9 section
+9.5.4 Table 9-4 NSB p. 9-33, TK1 p. 9-48, DSI/CHE p. 9-49, CDT
+p. 9-50, SHTF p. 9-51, TTF/TFMT/TSRC pp. 9-71–72; [batch note](research/2026-11-26-association-assumption-requirements.md).
+None of those fields is treated as a data-channel -> time-channel reference.
+
+Unless varied, supply reviewed baseline metadata and an explicitly scoped
+setup document/revision, source data-channel identity and caller-supplied
+context basis. No fixture infers governing context. Parsed numeric arms use
+approved INT-055; isolated composition units receive effective field/state
+results rather than claiming numeric parser coverage. Preserve independent
+presence/counter findings in snippets that are not complete conforming setups.
+
+| Named planned test | Independent stimulus / expectation | Requirements |
+| --- | --- | --- |
+| `association_no_timein_keeps_unestablished_reason` | Scoped setup contains no confirmed TIMEIN entry: association_unestablished with no fabricated candidate and an explicit reason; do not call the association evidenced, resolved or data Invalid merely from absence | L3-VIEW-043, L3-VIEW-044, L3-VIEW-045 |
+| `association_only_timein_is_not_proof` | One locally usable TIMEIN entry, scoped TK1 and Explicit TFMT=B; repeat with absent applicable TFMT Defaulted A: retain the respective field evidence, association_unestablished and that candidate; no automatic selection | L3-VIEW-044, L3-VIEW-045 |
+| `association_multiple_candidates_never_first_or_lowest` | Several TIMEIN entries without proof, vary input order and actual TK1 values independently of entry indices: unestablished, retain every candidate/scope; never pick first/lowest/nearest, or call the count alone an evidence conflict | L3-VIEW-044, L3-VIEW-045 |
+| `association_enable_state_is_only_context` | One enabled and one disabled confirmed TIMEIN, then an explicit caller-filtered projection with one remaining: CHE context survives; no evidenced association or loss of underlying candidate uncertainty solely from enable state/filtering | L3-VIEW-045, L3-VIEW-047 |
+| `association_equal_labels_and_source_bits_are_not_proof` | Data/time entries share DSI text or explicit NSB-derived source component in the same recorder: preserve context/scopes, no merge or association proof; repeat distinct labels and recorders without changing evidence support | L3-VIEW-043, L3-VIEW-045 |
+| `association_source_category_and_format_are_not_ids` | TIMEIN TSRC=E or I and TTF/TFMT/SHTF declarations numerically resemble another TK1: no clock-selection reference from the category or format; explicit/defaulted evidence stays labelled | L3-VIEW-045, L3-VIEW-047 |
+| `association_same_actual_id_retains_scopes` | Same actual TK1 appears on independent recorder scopes, plus entry n differs from actual ID: insufficient query scope retains all candidates/limitation, never uses n or merges equal IDs | L3-VIEW-043, L3-VIEW-047 |
+| `association_unknown_extension_is_raw_not_evidence` | Unknown vendor/X attribute has CLOCK_A-like name or a target-looking numeric value: preserve raw occurrence and unknown findings; no supported proof provider, association_evidenced or hidden field interpretation | L3-VIEW-046, L3-VIEW-047 |
+| `association_unreviewed_proof_semantics_are_unavailable` | Supplied alleged relation evidence lacks a reviewed interpretation, source or applicability: retain origin/raw evidence and unavailable reason; no affirmative baseline proof fixture or guessed extension semantics | L3-VIEW-046 |
+| `association_stale_proof_never_crosses_revision` | Evidence claims a target from another recording/setup/revision or wrong channel scope: cannot establish current association; keep mismatch/reason and historical evidence, never silently transplant it | L3-VIEW-043, L3-VIEW-046, L3-VIEW-051 |
+| `association_field_ambiguity_is_not_association_state` | Duplicate CDT/TFMT or unusable TK1 in one possible candidate, supplied as field-state evidence: preserve Ambiguous/Invalid/unavailable and assembly qualifications; do not convert field-state names to association_evidenced or select a winner | L3-VIEW-044, L3-VIEW-047 |
+| `association_conflict_composition_keeps_all_evidence` | Isolated unit receives a preclassified association_conflicting result and its competing scoped evidence: keep state, every candidate/reason and locations; no preferred winner. This tests composition, not production admission/classification of proof | L3-VIEW-044, L3-VIEW-047 |
+| `assumed_time_target_never_upgrades_association` | Explicit caller selects one possible TIMEIN without proof, with caller basis: every dependent view answer is labelled assumed and carries choice/basis/scope; underlying unestablished remains unestablished; level defaults to Warn and is recorded | L3-VIEW-048, L3-VIEW-049, L3-VIEW-057 |
+| `assumed_choice_keeps_supplied_conflict` | Isolated provenance unit receives a preclassified conflict, with no approved-rule different-association predicate supplied for this choice, then an otherwise eligible choice: retain conflict and level-qualified findings, never association_evidenced. This is not a production evidence-admission/contradiction path | L3-VIEW-048, L3-VIEW-050 |
+| `assumption_missing_choice_or_basis_is_not_inferred` | Choice or caller basis is not supplied, or selected actual ID names several scopes: no guessed first target/basis or unqualified assumed answer; retain precise missing/ambiguous limitation | L3-VIEW-048 |
+| `assumption_does_not_upgrade_bad_target` | Caller chooses a scoped TIMEIN entry with Invalid/duplicate/unavailable ID/format: apply INT-056 Strict/Warn/Quiet (matrix below), accept only at Warn/Quiet as labelled assumption, retain original field states and setup qualification; Quiet suppresses exactly Warn's bad-data findings of any severity, never field/source diagnostics, and records `suppressed: N bad-data findings` even 0 | L3-VIEW-047, L3-VIEW-050 |
+| `assumption_provenance_survives_derived_view_outputs` | Select/copy/render a view answer derived from a caller choice: retain assumption label, supplied basis, selected level, source/target/setup/revision; independent unassumed query does not inherit that earlier choice | L3-VIEW-049, L3-VIEW-051 |
+| `assumption_cannot_bypass_setup_qualification` | Incomplete/cut-plus-ambiguity/unsupported setup context with caller choice: retain full eligibility limitations and findings, no governing selection or provisional-use permission | L3-VIEW-047, L3-VIEW-050 |
+| `association_and_assumption_keep_source_locations` | Standalone versus assembled input with supplied fragment mapping: preserve original item/default basis/spans and fragment provenance; no fabricated packet location on standalone or input span for a default | L3-VIEW-047, L3-VIEW-049 |
+| `association_revision_change_requires_new_scope` | New setup/revision repeats TK1/DSI, with a prior association/assumption answer: no silent reuse. Require new applicable evidence or newly scoped explicit choice; keep earlier answers attached to their original scope | L3-VIEW-043, L3-VIEW-051 |
+| `association_views_never_edit_or_drop_input` | Vary candidate and caller-selection order, unknown fields and duplicate spelling; before/after read bytes, item order, multiplicity and canonical input diagnostics remain identical; result bad-data finding emission follows its explicit level, with no stamp/normalisation/edit side effect | L3-VIEW-047, L3-VIEW-051 |
+
+
+### Owner-signed caller-choice fixture matrix (INT-056–060)
+
+All cases are PLANNED; independent AI check is pending. The nine bad-data
+fixtures enumerate every level x bad-data-kind combination. EACH has both
+ID and format arms (18 focused members): a canonical scoped TIMEIN entry is
+already identified independently of its bad TK1/format value. No nonexistent
+ID-only request is made to look like an identified entry. Keep original
+input diagnostics, states, raw bytes, association state and setup limits.
+Quiet suppresses EXACTLY Warn's bad-data findings, of ANY severity; they
+stay readable from the target's field results AND source diagnostics. Every
+Quiet result includes `suppressed: N bad-data findings`, including N=0.
+
+| Named planned test | Independent stimulus / expected result | Requirements |
+| --- | --- | --- |
+| `assumption_strict_invalid_target` | Existing same-recorder scoped TIMEIN entry; separate bad-ID and bad-format arms, state Invalid. Strict refuses with a typed invalid-target-data reason; no accepted choice; recorded level Strict. Original field states/reasons and canonical input diagnostics unchanged; no association/governing upgrade | L3-VIEW-052, L3-VIEW-053 |
+| `assumption_warn_invalid_target` | Existing same-recorder scoped TIMEIN entry; separate bad-ID and bad-format arms, state Invalid. Warn (also repeat with omitted level) accepts as a labelled caller assumption with ALL bad-data findings attached; recorded level Warn. Original field states/reasons and canonical input diagnostics unchanged; no association/governing upgrade | L3-VIEW-052, L3-VIEW-053 |
+| `assumption_quiet_invalid_target` | Existing same-recorder scoped TIMEIN entry; separate bad-ID and bad-format arms, state Invalid. Quiet accepts as a labelled caller assumption suppressing EXACTLY the bad-data findings Warn attaches, of ANY severity; target field results AND source diagnostics still expose them. Recorded level Quiet and `suppressed: N bad-data findings` report the exact suppressed count (no omitted zero marker). Original field states/reasons and canonical input diagnostics unchanged; no association/governing upgrade | L3-VIEW-052, L3-VIEW-053 |
+| `assumption_strict_duplicate_target` | Existing same-recorder scoped TIMEIN entry; separate bad-ID and bad-format arms, state Ambiguous with every occurrence. Strict refuses with a typed duplicate-target-data reason; no accepted choice; recorded level Strict. Original field states/reasons and canonical input diagnostics unchanged; no association/governing upgrade | L3-VIEW-052, L3-VIEW-053 |
+| `assumption_warn_duplicate_target` | Existing same-recorder scoped TIMEIN entry; separate bad-ID and bad-format arms, state Ambiguous with every occurrence. Warn (also repeat with omitted level) accepts as a labelled caller assumption with ALL bad-data findings attached; recorded level Warn. Original field states/reasons and canonical input diagnostics unchanged; no association/governing upgrade | L3-VIEW-052, L3-VIEW-053 |
+| `assumption_quiet_duplicate_target` | Existing same-recorder scoped TIMEIN entry; separate bad-ID and bad-format arms, state Ambiguous with every occurrence. Quiet accepts as a labelled caller assumption suppressing EXACTLY the bad-data findings Warn attaches, of ANY severity; target field results AND source diagnostics still expose them. Recorded level Quiet and `suppressed: N bad-data findings` report the exact suppressed count (no omitted zero marker). Original field states/reasons and canonical input diagnostics unchanged; no association/governing upgrade | L3-VIEW-052, L3-VIEW-053 |
+| `assumption_strict_unavailable_target` | Existing same-recorder scoped TIMEIN entry; separate bad-ID and bad-format arms, state unavailable with reason. Strict refuses with a typed unavailable-target-data reason; no accepted choice; recorded level Strict. Original field states/reasons and canonical input diagnostics unchanged; no association/governing upgrade | L3-VIEW-052, L3-VIEW-053 |
+| `assumption_warn_unavailable_target` | Existing same-recorder scoped TIMEIN entry; separate bad-ID and bad-format arms, state unavailable with reason. Warn (also repeat with omitted level) accepts as a labelled caller assumption with ALL bad-data findings attached; recorded level Warn. Original field states/reasons and canonical input diagnostics unchanged; no association/governing upgrade | L3-VIEW-052, L3-VIEW-053 |
+| `assumption_quiet_unavailable_target` | Existing same-recorder scoped TIMEIN entry; separate bad-ID and bad-format arms, state unavailable with reason. Quiet accepts as a labelled caller assumption suppressing EXACTLY the bad-data findings Warn attaches, of ANY severity; target field results AND source diagnostics still expose them. Recorded level Quiet and `suppressed: N bad-data findings` report the exact suppressed count (no omitted zero marker). Original field states/reasons and canonical input diagnostics unchanged; no association/governing upgrade | L3-VIEW-052, L3-VIEW-053 |
+| `assumption_refuses_non_timein_target` | Candidate in same recorder has confirmed non-TIMEIN CDT: typed non-TIMEIN eligibility refusal at Strict/Warn/Quiet; no accepted assumption | L3-VIEW-054 |
+| `assumption_refuses_other_recorder` | Target TIMEIN belongs to another recorder, even with equal numeric TK1: typed recorder-scope refusal at every level | L3-VIEW-054 |
+| `assumption_refuses_nonexistent_id` | ID-only selection has no scoped candidate: typed nonexistent-target refusal, no fabricated entry/ID or first-match fallback | L3-VIEW-054 |
+| `assumption_no_01_contradiction_rule` | Actual 0.1 registry has no association-evidence rule. An otherwise eligible choice cannot trigger evidence-contradiction refusal; state remains unestablished with level-qualified assumption result | L3-VIEW-055, L3-VIEW-056 |
+| `assumption_heuristics_never_contradict` | Vary order, only candidate, TSRC/DSI/NSB and observed time packets against chosen target: never treat any as evidence or invoke contradiction refusal; retain context/other findings | L3-VIEW-055 |
+| `assumption_future_evidence_requires_own_int` | Admission-gate unit supplies hypothetical provider metadata missing its own INT, owner signature, independent check or claim/scope definition in separate arms: cannot establish a different association or trigger contradiction. Conditional unit for a separately established approved-rule different-association predicate requires refusal at every level, retaining the rule identity; it is NOT a baseline proof fixture or approval of a hypothetical source | L3-VIEW-046, L3-VIEW-055 |
+| `association_unproven_multiplicity_is_unestablished` | Two or more unproven scoped TIMEIN candidates, all metadata otherwise usable: association_unestablished, never conflicting/evidenced by count; retain each candidate | L3-VIEW-056 |
+| `association_conflict_requires_competing_evidence` | Missing/unreviewed/heuristic relation claims cannot produce conflicting. Isolated supplied-state composition with competing-evidence classification preserves conflicting and provenance; no actual 0.1 proof path is asserted | L3-VIEW-044, L3-VIEW-056 |
+| `assumption_next_query_needs_explicit_choice` | Query A explicitly selects a target; query B omits target in the SAME setup/revision/session: B is not assumed to use A's target and no remembered choice is filled in. A retains its own provenance | L3-VIEW-049, L3-VIEW-057 |
+| `assumption_warn_default_is_not_target_default` | After a Quiet query, query B explicitly supplies target but omits level: recorded Warn DEFAULT with all bad-data findings. Query C omits target: no target from either Warn default or previous queries | L3-VIEW-052, L3-VIEW-057 |
+
+| `assumption_quiet_suppressed_count_zero` | Eligible target with usable ID/format, explicit Quiet and Warn bad-data set empty: labelled assumption, level Quiet, marker `suppressed: 0 bad-data findings` MUST appear; no clean-data implication or field-state upgrade; field/source diagnostics unchanged | L3-VIEW-052, L3-VIEW-053 |
+| `assumption_quiet_suppressed_count_nonzero` | Same target/choice yields Warn bad-data set of three independently named findings: information, warning and error. Quiet suppresses exactly those three, marker `suppressed: 3 bad-data findings`; unrelated warning/error findings remain on the result. All three suppressed findings remain readable from target field results AND source diagnostics; states/reasons unchanged | L3-VIEW-052, L3-VIEW-053 |
+| `assumption_quiet_marker_survives_derived_result` | Copy/select/render an accepted Quiet result with N=0 and N=3 in separate arms: marker, count, level, assumption label and unchanged field states remain visible; do not drop zero or relabel Quiet as clean. Suppression never hides an independent typed refusal | L3-VIEW-049, L3-VIEW-053 |
+
+The bad-data level matrix never bypasses eligibility or contradiction guards.
+Accepting a choice at Warn/Quiet is not a field validity or setup adoption
+verdict. No signed proof rule is fabricated by the conditional gate unit.
+
+Future generated checks should permute metadata/order/scopes and caller
+choices without synthesizing proof; independently assert no evidenced result
+from those mutations alone, unchanged raw bytes, and retained assumption
+labels/qualifications on dependent results. There is no field-code invention,
+synthetic positive-proof claim, evidence weighting rule or fixed Rust symbol
+in this test plan. Meaningful executable markers and source-based oracles
+must accompany implementation later; all requirements here remain Draft.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample

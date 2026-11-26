@@ -220,7 +220,7 @@ candidates, provenance and a reason:
 | State | Meaning |
 | --- | --- |
 | `association_unestablished` | No adequate evidence identifies a time channel; may include one or more candidates that are only possible matches |
-| `association_conflicting` | Multiple conflicting or equally supported associations remain; return all candidates and their evidence |
+| `association_conflicting` | Competing evidence remains; return all candidates and their evidence; several unproven candidates are unestablished (INT-059) |
 | `association_evidenced` | One association is actually established by evidence valid for this record; return that evidence, not just a selected ID |
 
 These semantic state names are distinct from L1-VIEW-006 link/lookup states
@@ -247,9 +247,36 @@ with the choice and assumption basis attached to every derived answer
 `association_unestablished` or `association_conflicting`; the override must
 not relabel it as `association_evidenced`.
 
+Owner answers of 2026-11-26 are recorded in INT-056–060 (INT-056 Quiet
+recheck pending; INT-057–060 CONCUR at #52 8ec6411). An explicit choice must name a scoped TIMEIN candidate in
+the same recorder, otherwise typed refusal. Bad ID/format data has three
+caller levels: Strict typed refusal; Warn DEFAULT accepts a labelled
+assumption with all bad-data findings; Quiet accepts a labelled assumption
+suppressing exactly Warn's bad-data findings of any severity. Every Quiet
+result carries `suppressed: N bad-data findings`, including 0; the suppressed
+findings remain readable in target field results and source diagnostics.
+Unrelated findings are not suppressed by this policy. Every accepted result
+keeps the level,
+assumption label and original field states; Quiet does not repair or upgrade
+them. Original input diagnostics remain intact. These levels never bypass
+candidate eligibility, setup qualification or an established contradiction.
+
+A contradiction requires a DIFFERENT association established by its OWN
+owner-approved evidence INT. No such rule exists in 0.1. Every future source
+needs its own signed/reviewed INT defining exactly what it proves; order,
+only candidate, TSRC, DSI, NSB and observed time packets are never evidence.
+There is no remembered/session-wide target default: each query carries its
+choice explicitly. Default Warn is only a level default, not a target.
+
 Do not carry associations from another recording or setup revision without
 new evidence. Full configuration-timeline construction stays in 0.2; the
 0.1 caller must identify the complete setup record used for each query.
+
+The bounded requirements are decomposed in L2-VIEW-013/014 and
+L3-VIEW-043–057, with [planned acceptance cases](TEST-DATA.md#planned-associationassumption-batch-20-bounded-time-view).
+These are requirements, not an implemented resolver or a new positive-proof
+source. They preserve uncertainty and assumption provenance without approving
+remaining general governance, provisional-use or fragment-order policies.
 
 ## Setup-record boundary
 

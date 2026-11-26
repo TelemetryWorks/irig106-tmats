@@ -96,6 +96,9 @@ irig106-tmats/
 │   │                          2026-11-25-retained-cut-and-qm-review-followups.md records the independent review and narrow blocking/test amendments;
 │   │                          2026-11-25-time-view-metadata-requirements.md derives bounded channel/time-field requirements and acceptance scope;
 │   │                          2026-11-25-source-bit-requirements.md derives explicit NSB splitting and records DSI/CHE remaining boundaries;
+│   │                          2026-11-26-int056-quiet-owner-answers.md records exact suppression-set/count owner clarifications;
+│   │                          2026-11-26-caller-choice-owner-answers.md records the five owner-signed caller policies and fixture matrix;
+│   │                          2026-11-26-association-assumption-requirements.md derives uncertainty and caller-assumption requirements/planned cases;
 │   │                          2026-11-26-int054-int055-final-concurrence.md records final independent approval and the inventory correction;
 │   │                          2026-11-26-int055-binary-exclusions.md completes the non-decimal inventory and every-Range audit;
 │   │                          2026-11-25-int055-owner-answers.md records verbatim owner clarifications and floating/hex exclusions;
