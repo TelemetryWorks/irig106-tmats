@@ -15,6 +15,20 @@ It is **not** the ecosystem's general tool: that is `irig106-cli`, which uses
 the same library. Every command is a thin layer over library calls; anything
 a command computes, the library can compute for other callers.
 
+### Reusable mounting boundary
+
+The `irig106-cli` host may mount `run(args, stdout, stderr) -> ExitClass`
+or call individual commands and renderers (L1-CLI-009; ADR-0034 W3). The
+host owns process lifetime; only its outer boundary or standalone main maps
+a returned classification to process status. Command computation is shared.
+
+For a packet pipeline, the orchestrating host does data-type dispatch using
+core-supplied facts. The TMATS adapter's Format-1 check is only a guard, not
+a second reader or dispatcher. Non-fragment assembly observations required
+by INT-011/045 remain available even when another consumer gets that
+packet's DATA. L2-CLI-007 and L3-CLI-022–029 refine these boundaries; they
+select no argument grammar, report format, exit mapping or adoption policy.
+
 ## 2. Commands (from UC-17)
 
 | Command | Does | Release |
