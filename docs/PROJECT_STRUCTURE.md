@@ -96,6 +96,7 @@ irig106-tmats/
 │   │                          2026-11-25-retained-cut-and-qm-review-followups.md records the independent review and narrow blocking/test amendments;
 │   │                          2026-11-25-time-view-metadata-requirements.md derives bounded channel/time-field requirements and acceptance scope;
 │   │                          2026-11-25-source-bit-requirements.md derives explicit NSB splitting and records DSI/CHE remaining boundaries;
+│   │                          2026-11-26-packet-slicing-requirements.md derives internal packet trust/slicing and records source/format boundaries;
 │   │                          2026-11-26-lossless-output-requirements.md derives replay/delivery/normalization-boundary requirements and records #52 concurrence;
 │   │                          2026-11-26-int056-quiet-owner-answers.md records exact suppression-set/count owner clarifications;
 │   │                          2026-11-26-caller-choice-owner-answers.md records the five owner-signed caller policies and fixture matrix;

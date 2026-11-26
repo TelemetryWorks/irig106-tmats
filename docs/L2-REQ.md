@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through lossless-output boundaries drafted (family 2, batches 1-21).**
+> **Status: foundations through packet-slicing mechanics drafted (family 2, batches 1-22).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -917,5 +917,35 @@ normalization algorithm, edit API or Rust output signature is selected here.
 **Statement**: The output boundary SHALL distinguish unedited default replay from a caller's explicit normalization request; parsing, registry loading, validation, effective values, queries and output presentation preferences SHALL NOT implicitly request canonical ordering, line-ending conversion, counter recomputation or other source changes.
 
 **Rationale**: L1-WRT-002 and ADR-0002 require caller authorization before normalization. Chapter 9 section 9.4.2 allows free attribute order and case-insensitive interpretation; neither grants automatic byte rewriting. This is the opt-in gate only. Transformation definitions, canonical ordering and supported counter-rewrite behavior need their own reviewed derivations before the full normalization capability is implemented; this partial child does not complete L1-WRT-002 or reduce the 0.1 scope.
+
+**Verification Method**: Test (T)
+
+## CLI packet trust and setup slicing (family 2, batch 22)
+
+Derive L1-CLI-008 before a minimal recording reader is implemented.
+ADR-0025 refines ADR-0019: checksums precede trusted length use, packets
+are sliced by the CLI, and the library receives payload/fragments only.
+Sources: 106-24R1 Chapter 11 sections 11.1, 11.2.1–11.2.1.4 and 11.2.7.2;
+see the [source note](research/2026-11-26-packet-slicing-requirements.md).
+These are mechanics/internal evidence, not report formats, presentation of
+findings, assumption labels, suppression markers or a recovery/adoption policy.
+
+#### L2-CLI-003
+
+**Parent**: L1-CLI-008
+
+**Statement**: The CLI's packet reader SHALL establish primary-header and enabled secondary-header checksum evidence from their fixed-size bounded bytes before trusting length fields, then validate checked packet/body/trailer extents under the applicable reviewed packet profile before using them for traversal or payload access; absent, truncated, corrupt or unsupported prerequisites SHALL NOT be treated as verified lengths or trusted payloads.
+
+**Rationale**: ADR-0025 and L1-CLI-008 require this trust ordering. 106-24R1 Chapter 11 section 11.2.1.1 pp. 11-5–10 defines the 24-byte header and checksum; section 11.2.1.2 p. 11-10 defines the optional 12-byte secondary header. Successful checksum arithmetic alone does not prove length containment. Packet fields are binary, not INT-055 decimal TMATS values.
+
+**Verification Method**: Test (T)
+
+#### L2-CLI-004
+
+**Parent**: L1-CLI-008
+
+**Statement**: For a bounded Computer-Generated Data Format 1 packet, the CLI SHALL keep the setup CSDW and exact TMATS fragment separate, exclude packet headers/filler/data-checksum bytes from the fragment, verify any optional data checksum over its specified domain, and retain source extents and independent checksum/trust evidence for downstream decoding/assembly without silently promoting failed verification to trusted metadata.
+
+**Rationale**: Chapter 11 section 11.2.1.1 d p. 11-6 excludes filler/checksum from Data Length; sections 11.2.1.3–4 p. 11-11 make data checksum cover body AND filler; section 11.2.7.2/Figure 11-34 p. 11-50 supplies each packet's four-byte setup CSDW. ADR-0025 keeps assembly in the library. This is not G\SHA verification, record completeness, time-boundary closure, packet-checksum failure adoption or a rendered diagnostic format.
 
 **Verification Method**: Test (T)

@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-26-packet-slicing-requirements.md](2026-11-26-packet-slicing-requirements.md) | Family 2 batch 22: fixed-header trust, bounded setup spans, body-plus-filler checksum and independent byte oracles; owner gate before report formats |
 | [2026-11-26-lossless-output-requirements.md](2026-11-26-lossless-output-requirements.md) | Family 2 batch 21: byte-faithful replay/supplied-sink failure and explicit normalization gate, plus #52 merged-head concurrence; full normalization remains separate |
 | [2026-11-26-int056-quiet-owner-answers.md](2026-11-26-int056-quiet-owner-answers.md) | Verbatim Quiet clarification: exact Warn bad-data set at any severity, readable field/source diagnostics and mandatory zero/positive suppression marker; independent recheck pending |
 | [2026-11-26-caller-choice-owner-answers.md](2026-11-26-caller-choice-owner-answers.md) | Verbatim #52 owner answers as INT-056–060: caller levels, scoped TIMEIN refusal, own-INT evidence gate, unestablished multiplicity and per-query choice; independent check pending |

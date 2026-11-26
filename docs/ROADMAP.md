@@ -76,6 +76,16 @@ canonical ordering, line-ending and counter-rewrite rules with independent
 byte oracles before claiming the full normalization capability. The boundary
 requirements do not choose those rules or reduce the 0.1 obligations.
 
+### Remaining CLI input and presentation derivations
+
+Review packet-header trust and setup-body slicing before the minimal CLI
+reader is implemented. Keep packet-checksum failure use/recovery policy
+separate from mechanical bounds/checksum evidence. Before report/rendered
+output formats are derived, STOP and bring the owner options for findings,
+assumption labels and suppressed markers; no text/JSON/layout policy is
+selected by internal evidence requirements. Continue record selection,
+command-specific and other remaining CLI derivations within that boundary.
+
 ### Planned scanner suggestion after framing
 
 Record the independent reviewer's note carried forward by the owner on

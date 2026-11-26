@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through lossless-output boundaries drafted (family 2, batches 1-21).**
+> **Status: foundations through packet-slicing mechanics drafted (family 2, batches 1-22).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -2034,3 +2034,94 @@ This specifies authorization/scope separation, not a complete normalizer
 implementation or a particular failure enum/API. Transformation-specific
 rules, source citations and acceptance fixtures remain required in a later
 family-2 slice. No absent policy is chosen by “canonical” as an output label.
+
+## CLI packet trust and setup slicing (family 2, batch 22)
+
+Baseline source: 106-24R1 Chapter 11 Version 1 common packet fields.
+This is an internal byte/evidence contract, not a new public Rust API or
+report layout; [source note](research/2026-11-26-packet-slicing-requirements.md).
+Other editions/profiles need their own reviewed bindings; neither G\106 nor
+setup RCCVER may silently stand in for the packet header's data-type version.
+
+**L3-CLI-004** · Parent: L2-CLI-003 · Verification: T
+*The reader SHALL first bound the fixed 24-byte primary header, check its sync value and verify its 16-bit arithmetic sum of 16-bit words excluding the checksum word; unverified length fields SHALL NOT drive source access, allocation, traversal or a successful packet boundary.*
+
+Sources: section 11.1 p. 11-1 gives little-endian structural fields;
+section 11.2.1.1 a p. 11-5 gives sync 0xEB25, and j p. 11-10 gives the
+checksum. A short header or mismatch is not an absent setup record or a
+trusted length. This specifies no damaged-file resynchronization algorithm.
+
+**L3-CLI-005** · Parent: L2-CLI-003 · Verification: T
+*After primary verification, packet-flags bit 7 SHALL determine the enabled secondary header; when set, the reader SHALL bound its fixed 12 bytes and verify the printed 16-bit arithmetic sum of secondary-header BYTES excluding its checksum word before trusting length fields, without substituting the primary-header word-sum rule.*
+
+Sources: section 11.2.1.1 g p. 11-8 and section 11.2.1.2 p. 11-10.
+Use fixed extents, not untrusted Packet/Data Length, to obtain these bytes.
+Secondary time/reserved bytes belong to this header, never TMATS text.
+No packet timestamp is interpreted or converted by this requirement.
+
+**L3-CLI-006** · Parent: L2-CLI-003 · Verification: T
+*Using verified headers, the reader SHALL validate Packet Length, Data Length, enabled-header size, checksum width and source containment with checked arithmetic before constructing any body/trailer/next-packet span; inconsistent, underflowing, overflowing, out-of-source or non-four-byte-aligned Packet Length SHALL NOT produce a trusted boundary or wrapped/truncated slice.*
+
+Sources: section 11.2.1.1 c–d pp. 11-5–6 and section 11.2.1.4 p. 11-11.
+For source offset O, header size H=24+(12 when enabled), packet size P,
+data size D and checksum width C, require P >= H+D+C and [O,O+P)
+inside the source. Checked calculations precede indexing; checksum success
+alone never makes an impossible length safe. No host integer cast may wrap.
+
+**L3-CLI-007** · Parent: L2-CLI-003 · Verification: T
+*Length validation SHALL use the applicable reviewed profile's packet-type limit, not silently apply the ordinary packet cap to Format 1 setup packets or infer a newer profile from unavailable/reserved version evidence.*
+
+Baseline: section 11.2.1 c/Table 11-3 p. 11-4 permits 134,217,728 bytes
+for Format 1 setup packets and 524,288 for ordinary types. These are source
+limits, not permission to allocate a maximum-sized buffer locally. Test
+boundary metadata arithmetically without large allocations; source-backed
+payload access still requires actual containment. Shared types retain their
+ownership under ADR-0009; no duplicate version/code tables are approved here.
+
+**L3-CLI-008** · Parent: L2-CLI-004 · Verification: T
+*For verified headers and bounded data type 0x01 payload with Data Length at least four, the reader SHALL identify body [O+H,O+H+D), raw CSDW [O+H,O+H+4) and TMATS fragment [O+H+4,O+H+D), excluding all header/trailer bytes; shorter data SHALL NOT fabricate a CSDW or text span.*
+
+Sources: Table 11-4 p. 11-6 and section 11.2.7.2/Figure 11-34 p. 11-50;
+existing setup decoder handles CSDW fields separately. Data Length=4 gives
+an empty text span, not a claimed complete usable setup. Non-Format-1
+packets do not acquire Format-1 CSDW interpretation or enter its text stream.
+
+**L3-CLI-009** · Parent: L2-CLI-004 · Verification: T
+*Packet-flags bits 1–0 SHALL identify absent/8/16/32-bit data checksum and its 0/1/2/4-byte trailer width; any present checksum SHALL be verified over the complete body PLUS filler, excluding primary/secondary headers and the checksum itself, using the specified byte/word/long-word arithmetic sum.*
+
+Sources: section 11.2.1.1 g p. 11-9 and section 11.2.1.4 pp. 11-11–12.
+Filler is [O+H+D,O+P-C); checksum is [O+P-C,O+P). Filler need not be
+only minimal alignment bytes: the standard also allows fixed packet sizes
+per channel. Neither filler nor checksum enters TMATS text or G\SHA input.
+An absent checksum is recorded as absent, not a positive integrity check.
+
+**L3-CLI-010** · Parent: L2-CLI-004 · Verification: T
+*The reader SHALL retain primary, secondary and data-checksum evidence independently from structural containment and setup semantic evidence; failure, absence or unavailable verification SHALL NOT be relabelled success, and a failed data checksum SHALL remain visible without asserting trusted fragment/time-boundary/governing semantics.*
+
+This is a verification result, not a choice to adopt/drop checksum-failed
+payloads or a severity/exit-code/display policy. G\SHA/flex and INT-045
+closure remain distinct; packet slicing alone cannot validate setup text.
+Any further use of failed payloads needs its own reviewed contract.
+
+**L3-CLI-011** · Parent: L2-CLI-004 · Verification: T
+*Every bounded setup payload/fragment result SHALL retain its source offset/extents, raw CSDW and packet metadata needed by the existing decoder/assembler, together with the checks actually established, without inventing packet provenance for standalone text or replacing fragment-local source evidence with one record-wide checksum claim.*
+
+ADR-0025 needs channel/sequence/RTC/data-type-version and CSDW evidence;
+L2-CH10-004/005 supply joining/provenance contracts. This slice does not
+change per-channel joining, initial/mid-session closure or completeness.
+No rendered finding, assumption or suppression-marker format is selected.
+
+**L3-CLI-012** · Parent: L2-CLI-003 · Verification: T
+*Packet inspection SHALL operate on caller/CLI-acquired bytes without mutating input or moving file/network acquisition into the TMATS library; a trust/bounds failure SHALL not be hidden by treating the data as a different supported packet or a successful complete setup.*
+
+ADR-0010/0019/0025 define the temporary CLI reader and library boundary.
+Recovery, scan restart, input sniffing, record selection, publication policy
+and output presentation are separate derivations; no fallback is invented.
+
+**L3-CLI-013** · Parent: L2-CLI-004 · Verification: T
+*Verification fixtures SHALL independently construct header/body/filler/checksum regions and expected offsets, distinguish primary word-sum from secondary byte-sum and body-only from body-plus-filler checksum, and mutate trust/length fields without deriving expected slices or checksum results from the production reader.*
+
+Use small bounded packets and arithmetic-only limit/overflow cases; do not
+allocate standard maxima or run heavy local input-space enumeration. Planned
+case names are not executed coverage, nor a replacement for source freshness,
+implementation analysis and meaningful GitHub CI verification.

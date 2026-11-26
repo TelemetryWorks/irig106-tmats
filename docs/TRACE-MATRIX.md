@@ -271,7 +271,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-CLI-005 | _(none)_ | _(none)_ | Draft |
 | L1-CLI-006 | _(none)_ | _(none)_ | Draft |
 | L1-CLI-007 | _(none)_ | _(none)_ | Draft |
-| L1-CLI-008 | _(none)_ | _(none)_ | Draft |
+| L1-CLI-008 | L2-CLI-003, L2-CLI-004 | _(none)_ | Draft |
 | L1-CLI-009 | L2-CLI-001, L2-CLI-002 | _(none)_ | Draft |
 
 **L2 -> L3 -> Verification Artifacts**
@@ -280,6 +280,8 @@ This matrix is the single source of truth for live status; the requirement docum
 |-------|-------------|----------------|--------|
 | L2-CLI-001 | L3-CLI-001, L3-CLI-002 | _(TBD)_ | Draft |
 | L2-CLI-002 | L3-CLI-003 | _(TBD)_ | Draft |
+| L2-CLI-003 | L3-CLI-004, L3-CLI-005, L3-CLI-006, L3-CLI-007, L3-CLI-012 | _(TBD)_ | Draft |
+| L2-CLI-004 | L3-CLI-008, L3-CLI-009, L3-CLI-010, L3-CLI-011, L3-CLI-013 | _(TBD)_ | Draft |
 
 ### L1-ROB: Robustness against arbitrary input
 
@@ -346,17 +348,17 @@ This matrix is the single source of truth for live status; the requirement docum
 | WRT | 7 | 4 | 11 | 0 | 0 | 0 | 0 |
 | SUM | 4 | 3 | 10 | 0 | 0 | 0 | 0 |
 | IO | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
-| CLI | 9 | 2 | 3 | 0 | 0 | 0 | 0 |
+| CLI | 9 | 4 | 13 | 0 | 0 | 0 | 0 |
 | ROB | 3 | 3 | 6 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **60** | **178** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **62** | **188** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 49 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 48 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 287 (0.0%).
+**Tested by at least one test marker**: 0 of 298 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 287 (1.0%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 298 (1.0%).
 
 ### Orphan check
 
