@@ -1,6 +1,7 @@
 # irig106-tmats — Level 3 Requirements
 
 > **Status: foundations through bounded association/assumption contracts drafted (family 2, batches 1-20).**
+> INT-056–060 are owner-signed (Joey, 2026-11-26); independent AI check pending.
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
 > INT-042 Option A was approved by Joey, 2026-11-23, with independent AI recheck concurrence.
@@ -1609,6 +1610,10 @@ input, use the existing provenance map rather than inventing a packet-local
 span for a field crossing fragments. Rust ownership/types remain a later
 reviewed API choice; revision identity and no stale interpretation are binding.
 
+INT-056's later owner policy keeps original findings intact while Quiet
+emits no warning findings on the assumption result; result level and field
+states still expose the suppression/limitations. Independent review pending.
+
 **L3-VIEW-022** · Parent: L2-VIEW-007 · Verification: T
 *A view obtained with incomplete, retained-cut, ambiguous, unsupported-format or otherwise unestablished setup eligibility SHALL preserve that limitation and SHALL NOT present local metadata as an unqualified usable or governing time setup; no metadata result SHALL prove a data-channel/time-source association or select a governing candidate from competing records.*
 
@@ -1821,7 +1826,8 @@ streaming/adoption rule or permission to override disabled packet findings.
 Future obligations derived from RELEASE-0.1's owner direction, 2026-11-21.
 They specify evidence retention/composition, not a TMATS association field,
 consumer clock-selection algorithm, Rust API or implementation readiness.
-No new interpretation is proposed. See the [batch note](research/2026-11-26-association-assumption-requirements.md).
+Owner-signed INT-056–060 now settle the caller policies, with independent
+AI check pending. See the [batch note](research/2026-11-26-association-assumption-requirements.md).
 
 **L3-VIEW-043** · Parent: L2-VIEW-013 · Verification: T
 *An association query SHALL retain the supplied data-channel identity, its recorder/entry scope where established, setup document/revision and supplied governing-context basis or limitation, without inventing scope, borrowing another record's TIMEIN entries or using entry index n as an actual TK1 channel ID.*
@@ -1837,7 +1843,9 @@ unqualified empty result. This operation does not choose which setup governs.
 The semantic names come from RELEASE-0.1; they do not freeze Rust symbols.
 Absent adequate evidence gives unestablished. Conflicting requires evidence
 of competing associations, not arbitrary classification from candidate count.
-No new conflict threshold/evidence-admission algorithm is defined here.
+INT-059 reserves conflicting for competing evidence; several unproven
+candidates are unestablished. INT-058 requires each future evidence rule
+to have its own approved INT; no 0.1 evidence rule exists.
 
 **L3-VIEW-045** · Parent: L2-VIEW-013 · Verification: T
 *In the absence of adequate reviewed association evidence, zero, one or several possible TIMEIN entries SHALL leave the association unestablished with the relevant candidates/reason retained; first/lowest/nearest/only/enabled occurrence, equal DSI labels, shared recorder or NSB components, TSRC categories and explicit/defaulted format values SHALL NOT select or prove an association.*
@@ -1849,15 +1857,19 @@ CHE F remains enumerated under INT-054. Caller filtering cannot turn one
 remaining candidate into proof or erase the underlying uncertainty/evidence.
 
 **L3-VIEW-046** · Parent: L2-VIEW-013 · Verification: T
-*An evidenced association SHALL require evidence identifying its origin, applicable recording/setup document/revision and channel identities, and the reviewed semantics establishing that relationship; unavailable, unreviewed, stale, unknown vendor/extension or merely suggestively named attributes SHALL remain raw/context evidence rather than proof.*
+*An evidenced association SHALL require evidence identifying its origin, applicable recording/setup document/revision and channel identities, and an individually owner-approved evidence INT defining the reviewed semantics establishing that relationship; unavailable, unreviewed, stale, unknown vendor/extension or merely suggestively named attributes SHALL remain raw/context evidence rather than proof.*
 
-RELEASE-0.1 allows a future cited, reviewed extension, but defines none.
+INT-058 requires an owner-signed INT for EVERY future evidence source,
+including later-edition fields or packet-level rules, plus ADR-0033 review
+and development gates. There is no 0.1 association-evidence rule. Order,
+only-candidate status, TSRC, DSI, NSB and observed time packets are NEVER
+evidence. RELEASE-0.1 allows future reviewed semantics but defines none.
 This requirement is a proof-admission guard, not an implemented resolver or
 permission to treat a synthetic fixture as standard-defined positive proof.
 No affirmative baseline association-proof fixture is invented in this batch.
 
 **L3-VIEW-047** · Parent: L2-VIEW-013 · Verification: T
-*Association candidates/results SHALL retain every relevant occurrence and independent finding, field-state/default/edition evidence, source locations and supplied fragment mapping, and setup eligibility limitations; neither a plausible clock match nor a caller selection SHALL discard ambiguity, retained-cut blocking, invalid metadata or source uncertainty.*
+*Association candidates/results SHALL retain every relevant occurrence, original diagnostic evidence and field-state/default/edition evidence, source locations and supplied fragment mapping, and setup eligibility limitations; neither a plausible clock match nor a caller selection SHALL discard ambiguity, retained-cut blocking, invalid metadata or source uncertainty; retained input diagnostics SHALL remain separate from warning emission on an assumption result under INT-056.*
 
 INT-039/048 scalar/assembly ambiguity and INT-041 unavailable reads remain
 separate. Source-bit splitting, CHE context and DSI reads are context only.
@@ -1872,15 +1884,17 @@ validation grammar for an assumption label. A missing/ambiguous target keeps
 its limitation; choosing an actual ID cannot silently pick among its scopes.
 
 **L3-VIEW-049** · Parent: L2-VIEW-014 · Verification: T
-*Every time-view answer derived using a caller assumption SHALL carry that dependency's choice, basis and source/setup/revision identities, including any copied, selected or rendered result produced by this view; a separately obtained unassumed read SHALL NOT silently inherit a prior query's assumption.*
+*Every time-view answer derived using a caller assumption SHALL carry that dependency's choice, basis, selected level and source/setup/revision identities, including any copied, selected or rendered result produced by this view; a separately obtained unassumed read SHALL NOT silently inherit a prior query's assumption.*
 
 Only time-view outputs are in this slice; this does not define JSON/CLI
 schemas or the consumer's timestamp/correlation computation. Consumers must
 retain the assumption on their own further derived answers per L1-VIEW-008.
-No globally cached current choice is authorised by this contract.
+INT-060 requires an explicit choice on EVERY query: no remembered or
+session-wide default, even for the same setup/revision. Default Warn is
+only a level default and never supplies a target.
 
 **L3-VIEW-050** · Parent: L2-VIEW-014 · Verification: T
-*A caller assumption SHALL preserve the underlying candidate set, association state/reason and all independent findings and SHALL NOT upgrade an invalid, unavailable, ambiguous or cut result, select a governing setup, override packet evidence or establish a time-correlation/reset policy.*
+*A caller assumption SHALL preserve the underlying candidate set, association state/reason and original input diagnostics, applying INT-056 warning emission for its selected level while keeping field states unchanged, and SHALL NOT upgrade an invalid, unavailable, ambiguous or cut result, select a governing setup, override packet evidence or establish a time-correlation/reset policy.*
 
 An isolated unit fixture may supply a preclassified conflicting association
 and test provenance composition; that is not coverage of a future evidence
@@ -1893,3 +1907,53 @@ ambiguous/provisional acceptance interpretations remain outside this slice.
 A changed record is not made equivalent by a shared channel ID or DSI label.
 Earlier answers keep their original scope/basis; a new query does not rewrite
 historical provenance. Full timelines remain 0.2 and are not constructed here.
+
+
+## Owner-signed caller-choice policies (INT-056–060)
+
+Joey, 2026-11-26; independent AI check pending under ADR-0033. The policies
+are owner decisions, not a new standard field. They do not waive development,
+source freshness or executable-test gates.
+
+**L3-VIEW-052** · Parent: L2-VIEW-014 · Verification: T
+*For an eligible selected target with Invalid, duplicate or unavailable ID/format data, Strict SHALL refuse with a typed bad-data reason; Warn SHALL be the default level and accept as a labelled caller assumption with all bad-data findings attached; Quiet SHALL accept as a labelled caller assumption with no warning findings emitted.*
+
+INT-056 separates acceptance of a choice from field validity. Each bad-data
+kind has one named fixture per level, with ID and format arms. Typed reason
+categories are semantic obligations, not frozen Rust enum names.
+
+**L3-VIEW-053** · Parent: L2-VIEW-014 · Verification: T
+*Every accepted bad-data choice SHALL retain its assumption label, selected level and target's original Invalid/Ambiguous/unavailable states and reasons; Quiet SHALL make suppression visible through that recorded level without upgrading states, deleting canonical input diagnostics or treating a selected candidate as association evidence.*
+
+INT-056 warning emission is local to the assumption result. It does not
+silently mute non-warning severities or edit the lossless input. Every
+level retains setup/retained-cut qualifications and governing limitations.
+
+**L3-VIEW-054** · Parent: L2-VIEW-014 · Verification: T
+*A choice outside the existing scoped TIMEIN candidates of the data channel's recorder SHALL be refused with a typed eligibility reason at every level, including non-TIMEIN entries, another recorder or a nonexistent ID; a valid scoped entry selection with bad ID/format SHALL instead follow INT-056 without fabricating a usable ID.*
+
+INT-057 permits addressing an existing candidate by canonical entry identity;
+a missing/ambiguous ID-only lookup cannot silently choose or create one.
+Same numeric IDs on different recorders do not satisfy the scope guard.
+
+**L3-VIEW-055** · Parent: L2-VIEW-014 · Verification: T
+*A choice SHALL be refused as contradicting evidence ONLY when a separate owner-approved evidence INT establishes a different association for that data channel in the applicable scope; no heuristic, unreviewed rule or target-data defect SHALL trigger this refusal, and Strict/Warn/Quiet SHALL NOT bypass a genuine established contradiction.*
+
+INT-058 defines the admission/refusal gate, not proof. No evidence source
+exists in 0.1, so this branch is not currently triggerable. Every future
+source needs its own owner-signed INT describing exactly what it proves,
+independent check and readiness gates. Observed time packets are not evidence.
+
+**L3-VIEW-056** · Parent: L2-VIEW-013 · Verification: T
+*Several unproven candidates SHALL yield association_unestablished, while association_conflicting SHALL be reserved for competing evidence admitted through its own approved evidence rules; candidate count, metadata similarity or heuristic packet observations SHALL NOT substitute for such evidence.*
+
+INT-059 preserves the difference between possible matches and proved claims.
+A supplied preclassified conflict in a unit tests composition only; it must
+not be presented as an actual 0.1 evidence-admission path.
+
+**L3-VIEW-057** · Parent: L2-VIEW-014 · Verification: T
+*Every query using a caller choice SHALL carry that choice explicitly, with no remembered/session-wide default or implicit reuse even in the same setup/revision; an omitted level SHALL use Warn, while an omitted target SHALL never be filled from an earlier query or from the Warn level default.*
+
+INT-060 and INT-056 distinguish explicit choice from default warning level.
+Dependent answers from that query still retain its provenance; a new query
+needs its own explicit choice even when it selects the same target.

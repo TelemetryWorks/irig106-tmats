@@ -155,8 +155,8 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-VIEW-010 | L3-VIEW-031, L3-VIEW-032, L3-VIEW-033, L3-VIEW-034, L3-VIEW-035, L3-VIEW-036 | _(TBD)_ | Draft |
 | L2-VIEW-011 | L3-VIEW-037, L3-VIEW-038, L3-VIEW-039 | _(TBD)_ | Draft |
 | L2-VIEW-012 | L3-VIEW-040, L3-VIEW-041, L3-VIEW-042 | _(TBD)_ | Draft |
-| L2-VIEW-013 | L3-VIEW-043, L3-VIEW-044, L3-VIEW-045, L3-VIEW-046, L3-VIEW-047 | _(TBD)_ | Draft |
-| L2-VIEW-014 | L3-VIEW-048, L3-VIEW-049, L3-VIEW-050, L3-VIEW-051 | _(TBD)_ | Draft |
+| L2-VIEW-013 | L3-VIEW-043, L3-VIEW-044, L3-VIEW-045, L3-VIEW-046, L3-VIEW-047, L3-VIEW-056 | _(TBD)_ | Draft |
+| L2-VIEW-014 | L3-VIEW-048, L3-VIEW-049, L3-VIEW-050, L3-VIEW-051, L3-VIEW-052, L3-VIEW-053, L3-VIEW-054, L3-VIEW-055, L3-VIEW-057 | _(TBD)_ | Draft |
 
 ### L1-VAL: Validation
 
@@ -337,7 +337,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | CH10 | 8 | 7 | 21 | 0 | 0 | 0 | 0 |
 | EDN | 6 | 2 | 7 | 0 | 0 | 0 | 0 |
 | REG | 8 | 7 | 16 | 0 | 0 | 0 | 0 |
-| VIEW | 9 | 14 | 51 | 0 | 0 | 0 | 0 |
+| VIEW | 9 | 14 | 57 | 0 | 0 | 0 | 0 |
 | VAL | 6 | 3 | 12 | 0 | 0 | 0 | 0 |
 | DER | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EXT | 4 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -348,13 +348,13 @@ This matrix is the single source of truth for live status; the requirement docum
 | ROB | 3 | 3 | 6 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **58** | **164** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **58** | **170** | **0** | **0** | **0** | **0** |
 
 The countable requirement set is every L2 and L3 requirement plus the 50 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 272 (0.0%).
+**Tested by at least one test marker**: 0 of 278 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 272 (1.1%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 278 (1.1%).
 
 ### Orphan check
 
@@ -422,9 +422,14 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-053 | Later copies compare with the currently governing setup, never a guessed target (QM) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) | not yet written | _(none)_ |
 | INT-054 | Disabled TIMEIN entries remain enumerated with CHE context (Option A) | approved (Joey, Option A, 2026-11-25; independent AI final CONCUR at ebd5c98a297a2ad1391cabcb24985a8b789e88f1) | not yet written | _(none)_ |
 | INT-055 | Decimal-integer fields and numeric codes use bounded raw ASCII digits (Option A) | approved (Joey, Option A answers, 2026-11-25; independent AI final CONCUR at ebd5c98a297a2ad1391cabcb24985a8b789e88f1) | not yet written | _(none)_ |
+| INT-056 | Bad target data has Strict, Warn-default and Quiet caller levels | owner decision recorded (Joey, 2026-11-26); independent AI check pending | not yet written | _(none)_ |
+| INT-057 | Caller choice must be a scoped TIMEIN candidate in the same recorder | owner decision recorded (Joey, 2026-11-26); independent AI check pending | not yet written | _(none)_ |
+| INT-058 | Only an individually approved evidence rule can contradict a caller choice | owner decision recorded (Joey, 2026-11-26); independent AI check pending | not yet written | _(none)_ |
+| INT-059 | Unproven multiplicity is unestablished, conflicting requires evidence | owner decision recorded (Joey, 2026-11-26); independent AI check pending | not yet written | _(none)_ |
+| INT-060 | Each query supplies its caller choice explicitly | owner decision recorded (Joey, 2026-11-26); independent AI check pending | not yet written | _(none)_ |
 
-* Entries without a written analysis: **55** of 55
-* Entries without a test: **55** of 55
+* Entries without a written analysis: **60** of 60
+* Entries without a test: **60** of 60
 * Entries missing the development mark: **0**
 
 ### Marker reference check

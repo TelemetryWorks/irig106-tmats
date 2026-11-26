@@ -1974,3 +1974,166 @@ not a source edit.
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
 **Review history**: The [earlier concerns](research/2026-11-25-che-numeric-independent-review.md) are retained as history; the [owner answers](research/2026-11-25-int055-owner-answers.md) settle the three choices. Final AI concurrence at #51 ebd5c98 is recorded in the [final review record](research/2026-11-26-int054-int055-final-concurrence.md). The eight-mask inventory correction does not change the concurred decimal-only behaviour. Source freshness, development analysis and executable tests remain required.
+
+
+## Bounded caller-choice policy (owner answers, 2026-11-26)
+
+### INT-056
+
+**Title**: Bad target data has Strict, Warn-default and Quiet caller levels
+
+**Sources**:
+- 106-24R1 Chapter 9 section 9.5.4 Table 9-4 TRACK NUMBER/CHANNEL ID p. 9-48: "Range: 1 to 65535"; TIME FORMAT p. 9-72 supplies field definitions, not caller acceptance levels. INT-039/041 preserve duplicate/unavailable states. The levels and warning emission are OWNER policy.
+- Joey, owner answers, 2026-11-26: [verbatim record](research/2026-11-26-caller-choice-owner-answers.md).
+
+**Owner sign-off (verbatim; Joey, 2026-11-26)**:
+
+> 1. The chosen target has bad data (Invalid, duplicate or unavailable ID/format): THREE caller-selectable levels.
+>    - Strict: refuse the choice, with a typed reason.
+>    - Warn (DEFAULT): accept as a labelled assumption, with all bad-data findings attached.
+>    - Quiet: accept as a labelled assumption with NO warning findings emitted.
+>    Even in Quiet:
+>    - the result is still labelled a caller assumption;
+>    - the target's own states (Invalid / duplicate / unavailable) stay as they are and are never upgraded;
+>    - the selected level is recorded in the result, so suppression is visible to anyone inspecting it.
+>    One fixture per level, for each bad-data kind.
+
+**Behaviour**: For an otherwise eligible selected target with Invalid, duplicate or
+unavailable ID/format, offer three caller-selectable levels. Strict refuses
+with a typed bad-data reason. Warn is DEFAULT and accepts as a labelled
+caller assumption with all bad-data findings attached. Quiet accepts as a
+labelled caller assumption with NO warning findings emitted. Every result
+records the selected level so suppression is visible. Even Quiet retains
+the target's original Invalid/Ambiguous/unavailable state and reason; no
+level upgrades field validity or association evidence. Keep original raw
+bytes and canonical input diagnostics unchanged; Quiet controls warning
+emission on this result, not deletion of source findings. It does not
+silently suppress every non-warning severity. Target eligibility and
+approved-evidence contradictions (INT-057/058) are independent refusals at
+all levels. Accepting a choice is not a usable-field or governing-setup claim.
+
+**Reason**: The owner chose this explicit policy after the #52 independent review identified an unresolved caller-choice decision; these words do not claim the standard mandates the policy.
+
+**Design**: owner decision recorded (Joey, 2026-11-26); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-26; independent AI check: pending on this wording · **Origin**: #52 caller-choice owner answers
+
+**Test**: `assumption_strict_invalid_target`, `assumption_warn_invalid_target`, `assumption_quiet_invalid_target`, `assumption_strict_duplicate_target`, `assumption_warn_duplicate_target`, `assumption_quiet_duplicate_target`, `assumption_strict_unavailable_target`, `assumption_warn_unavailable_target`, `assumption_quiet_unavailable_target` (planned, not implemented or executed)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+### INT-057
+
+**Title**: Caller choice must be a scoped TIMEIN candidate in the same recorder
+
+**Sources**:
+- 106-24R1 Chapter 9 section 9.5.4 Table 9-4 CHANNEL DATA TYPE p. 9-50: "TIMEIN IRIG Time Input"; TRACK NUMBER/CHANNEL ID p. 9-48 identifies the channel; neither row chooses a caller override across recorder scopes. Same-recorder eligibility/refusal is OWNER policy.
+- Joey, owner answers, 2026-11-26: [verbatim record](research/2026-11-26-caller-choice-owner-answers.md).
+
+**Owner sign-off (verbatim; Joey, 2026-11-26)**:
+
+> 2. A: refuse a choice that is not a scoped TIMEIN candidate in the same recorder (a non-TIMEIN entry, another recorder, or a nonexistent ID). Typed refusal, with a fixture.
+
+**Behaviour**: Refuse with a typed reason any choice that is not an existing scoped
+TIMEIN candidate in the same recorder as the queried data channel. This
+includes a non-TIMEIN entry, another recorder or a nonexistent ID, regardless
+of Strict/Warn/Quiet. Keep the query/setup/revision scope explicit; never
+choose by equal numeric ID across recorders. A scoped TIMEIN entry can be
+identified by its canonical entry identity even when its own ID/format data
+is bad: apply INT-056 without fabricating a usable ID. This does not turn
+an unresolvable/nonexistent ID-only selection into an existing candidate.
+
+**Reason**: The owner chose this explicit policy after the #52 independent review identified an unresolved caller-choice decision; these words do not claim the standard mandates the policy.
+
+**Design**: owner decision recorded (Joey, 2026-11-26); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-26; independent AI check: pending on this wording · **Origin**: #52 caller-choice owner answers
+
+**Test**: `assumption_refuses_non_timein_target`, `assumption_refuses_other_recorder`, `assumption_refuses_nonexistent_id` (planned, not implemented or executed)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+### INT-058
+
+**Title**: Only an individually approved evidence rule can contradict a caller choice
+
+**Sources**:
+- 106-24R1 Chapter 9 section 9.5.4 Table 9-4 TIME SOURCE p. 9-72: "Indicate the time source." It enumerates I/E/R/X categories, not a data-to-time channel field. RELEASE-0.1 records the absence of a cited association field. The required evidence-INT gate and refusal are OWNER policy.
+- Joey, owner answers, 2026-11-26: [verbatim record](research/2026-11-26-caller-choice-owner-answers.md).
+
+**Owner sign-off (verbatim; Joey, 2026-11-26)**:
+
+> 3. A: refuse a choice that contradicts evidence. The owner wants the contradiction rules made explicit. State that a contradiction exists ONLY when an owner-approved evidence rule (its own INT) establishes a different association for that data channel. No evidence rule exists in 0.1, since Chapter 9 has no data-to-time field, so this cannot trigger yet. Every future evidence source (e.g. a later edition's field, or a reviewed packet-level rule) needs its own owner-signed INT defining what it proves. Heuristics (order, only candidate, TSRC, DSI, NSB, observed time packets) are never evidence.
+
+**Behaviour**: Refuse a choice with a typed contradiction reason ONLY when an
+owner-approved evidence rule, identified by its OWN INT, establishes a
+DIFFERENT association for this data channel in the applicable scope. Each
+future source (later-edition field, packet-level rule or other source) must
+have its own owner-signed INT defining precisely what it proves, and pass
+ADR-0033's independent check/readiness gates before implementation. There
+is NO such evidence rule in 0.1, so this contradiction branch cannot trigger
+yet. Order, only-candidate status, TSRC, DSI, NSB and observed time packets
+are NEVER evidence. Do not create a contradiction from bad target data,
+competing guesses or an unreviewed/unknown rule. This INT is an admission/
+refusal policy, not itself an association-proof rule. It supplies no rule
+for choosing among competing approved sources whose assertions are not
+resolved; retain INT-059 uncertainty rather than invent a precedence.
+
+**Reason**: The owner chose this explicit policy after the #52 independent review identified an unresolved caller-choice decision; these words do not claim the standard mandates the policy.
+
+**Design**: owner decision recorded (Joey, 2026-11-26); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-26; independent AI check: pending on this wording · **Origin**: #52 caller-choice owner answers
+
+**Test**: `assumption_no_01_contradiction_rule`, `assumption_heuristics_never_contradict`, `assumption_future_evidence_requires_own_int` (planned, not implemented or executed)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+### INT-059
+
+**Title**: Unproven multiplicity is unestablished, conflicting requires evidence
+
+**Sources**:
+- 106-24R1 Chapter 9 section 9.5.4 Table 9-4 CDT p. 9-50 and TTF/TFMT/TSRC pp. 9-71–72 supply local metadata, not a candidate-count classification rule. The association-state definitions and this clarification are OWNER policy in RELEASE-0.1.
+- Joey, owner answers, 2026-11-26: [verbatim record](research/2026-11-26-caller-choice-owner-answers.md).
+
+**Owner sign-off (verbatim; Joey, 2026-11-26)**:
+
+> 4. A: several unproven candidates means "unestablished"; "conflicting" is reserved for competing evidence.
+
+**Behaviour**: Several unproven candidates are association_unestablished, not
+association_conflicting. Reserve conflicting for competing evidence; retain
+all candidates, evidence, scope and reasons without picking a winner. Since
+0.1 has no approved association-evidence rule, candidate multiplicity and
+heuristic observations cannot produce conflicting/evidenced in production.
+Composition tests may receive a preclassified conflicting state to check
+retention; they do not implement or claim an actual baseline evidence path.
+
+**Reason**: The owner chose this explicit policy after the #52 independent review identified an unresolved caller-choice decision; these words do not claim the standard mandates the policy.
+
+**Design**: owner decision recorded (Joey, 2026-11-26); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-26; independent AI check: pending on this wording · **Origin**: #52 caller-choice owner answers
+
+**Test**: `association_unproven_multiplicity_is_unestablished`, `association_conflict_requires_competing_evidence` (planned, not implemented or executed)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+### INT-060
+
+**Title**: Each query supplies its caller choice explicitly
+
+**Sources**:
+- 106-24R1 Chapter 9 section 9.5.4 Table 9-4 defines setup metadata, not stateful caller-choice defaults. RELEASE-0.1 labels caller choices as assumptions and binds them to a record/revision; per-query explicitness is OWNER policy.
+- Joey, owner answers, 2026-11-26: [verbatim record](research/2026-11-26-caller-choice-owner-answers.md).
+
+**Owner sign-off (verbatim; Joey, 2026-11-26)**:
+
+> 5. A: no remembered or session-wide default; each query carries the choice explicitly.
+
+**Behaviour**: No remembered or session-wide default choice. Each query carries its
+choice explicitly, even within the same recording/setup/revision. A prior
+accepted choice cannot supply a missing choice in the next query. Dependent
+answers keep provenance of their own explicit query, and an independent
+unassumed read stays unassumed. INT-056's Warn DEFAULT is a level default,
+not a default target; it never supplies a missing choice.
+
+**Reason**: The owner chose this explicit policy after the #52 independent review identified an unresolved caller-choice decision; these words do not claim the standard mandates the policy.
+
+**Design**: owner decision recorded (Joey, 2026-11-26); independent AI check pending · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off: Joey, 2026-11-26; independent AI check: pending on this wording · **Origin**: #52 caller-choice owner answers
+
+**Test**: `assumption_next_query_needs_explicit_choice`, `assumption_warn_default_is_not_target_default` (planned, not implemented or executed)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
