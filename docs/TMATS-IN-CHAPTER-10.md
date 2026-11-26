@@ -95,7 +95,7 @@ the way.
 
 | Not done here | Done by | Why |
 |---------------|---------|-----|
-| Open files; read packets other than setup-record fragments | the caller — today the `tmats` CLI's minimal reader, later `irig106-core` | The library performs no I/O (ADR-0010, ADR-0019; ROADMAP X3) |
+| Open files; read packets other than setup-record fragments | the caller uses `irig106-core` as the sole reader (ADR-0036) | The library performs no I/O (ADR-0010, ADR-0019; ROADMAP X3) |
 | Decode packet data; extract measurement values; apply conversions; evaluate derived parameters; interpret floating-point formats | `irig106-decode` | It needs data over time and numeric policy that a description does not have (ADR-0024; NR-007; ROADMAP X6) |
 | Handle time (time packets, time formats, correlating relative time) | `irig106-time` | Separate concern; TMATS only says which channels and formats are involved |
 | Write packets or files | `irig106-write` | The library builds the setup-record payload only (L1-CH10-003) |
@@ -176,11 +176,12 @@ what crosses each boundary; section 2.3 defines each.
 
 ### 2.1 Reading a recording
 
-1. **A packet reader walks the file** (A). It reads each packet header,
-   checks the header checksums before trusting any length, and slices each
-   packet body by its Data Length (Chapter 11 §11.2.1; ADR-0025). Today this
-   is the `tmats` CLI's minimal reader (ADR-0019); it moves to
-   `irig106-core` when that exists (ROADMAP X3).
+1. **Core's ONE reader finds packets** (A). The CLI consumes core
+   header-only PacketFacts and borrowed DATA spans, with core PacketInfo
+   trust/integrity sideband carried alongside and passed
+   through unchanged, including RDG-008 readings and NotChecked. TMATS
+   logically separates CSDW/text without a local packet/checksum algorithm
+   or required payload coalescing (ADR-0036).
 2. **Setup-record fragments go to `irig106-tmats`** (B). A packet of data type
    `0x01` carries a fragment of a setup record (Table 11-4). The reader hands
    over each fragment's bytes — after the CSDW, without filler or checksum —
@@ -610,9 +611,9 @@ several tools, it moves into a crate of its own (ADR-0030, option C).
 |---|---|
 | **Gives** | setup-record fragments with provenance, and packet summaries, as `irig106-types` data |
 | **Gets from the library** | nothing: it does not depend on `irig106-tmats` (ADR-0030) |
-| **Must** | slice each packet as ADR-0025 sets out: verify the header (and secondary-header) checksums before trusting any length; skip the 12-byte secondary header when packet-flags bit 7 is set; take the TMATS fragment as the body after the 4-byte CSDW up to Data Length, excluding filler and the data checksum |
+| **Must** | use header-only PacketFacts (irig106-types), borrowed DATA and core PacketInfo trust/integrity sideband alongside it; pass integrity evidence unchanged (including RDG-008 readings and data NotChecked); let TMATS consume the first four logical DATA bytes as CSDW and retain text spans without coalescing (ADR-0036) |
 | **Must not** | interpret TMATS |
-| **When** | when `irig106-core` exists; until then the `tmats` CLI's minimal reader does this (ADR-0019; ROADMAP X3) |
+| **When** | core is available; use the single reader now, with exact compatible API/dependency binding verified before implementation (ADR-0036) |
 
 ### 4.5 `irig106-decode` — values from packets
 
@@ -682,8 +683,9 @@ not a data-channel-to-time-channel reference.
 
 ### 4.12 The `tmats` CLI in this repository
 
-It is a consumer like the others: it reads files, slices packets with its
-minimal reader until `irig106-core` exists (ADR-0019), writes the joining
+It is a consumer like the others: it acquires input and uses core for packet
+finding/trust and borrowed DATA; tmats slices CSDW/text logically without
+coalescing or packet checksum implementations (ADR-0036), and writes the joining
 loop for the commands that need it, and presents the library's answers
 (`docs/CLI.md`). It is organised as a reusable library so that
 `irig106-cli` can mount it (4.10).
@@ -695,20 +697,19 @@ library builds without copying it, to stay fast and memory-efficient. Yes —
 within one process, this is how Rust borrowing works, and the compiler
 checks that no reader outlives what it reads:
 
-- **The recording's bytes are never copied.** The packet reader memory-maps
-  the file; each packet body and each setup-record fragment is a borrowed
-  slice of that mapping, handed on as it is.
-- **One copy of each setup record, and only of the TMATS.** The library
-  keeps the assembled record in one owned buffer (ADR-0003), so the
-  description can outlive the file mapping, be kept by a tool, or move
-  between threads. That buffer is the only copy — the TMATS body, typically
-  kilobytes, at most 134,217,728 bytes (Chapter 11 Table 11-3), against a
-  recording of gigabytes. A record that spans several packets has to be
-  joined into one buffer in any case, because its fragments are not next to
-  each other in the file.
-- **Everything else points into that buffer.** Attributes, the index, the
-  link graph, and every view refer to the bytes by position (spans,
-  ADR-0003); values reach a consumer as borrowed slices of the buffer.
+- **No extra TMATS payload copy.** Core supplies borrowed DATA spans from
+  its input owner/block backing; mapping or input-block acquisition belongs
+  to that owner. TMATS retains the borrows rather than copying/coalescing.
+- **No required assembly copy.** Core DATA may cross blocks. The assembler
+  retains borrowed text spans and source owners/lifetimes; a CSDW or field
+  crossing a block is read logically, without joining payload allocations.
+  An owned standalone document can be constructed explicitly when needed,
+  but it is not a prerequisite for span-based slicing/assembly (ADR-0036).
+
+- **Sources stay alive for their views.** Owned-document attributes/indexes
+  retain ADR-0003 spans into their buffer; the borrowed assembly path retains
+  core block owners and span-level origins. The latter does not require a
+  contiguous buffer as a hidden intermediate (ADR-0036).
 - **Consumers read the description by reference.** `irig106-decode` and the
   tools hold a reference to it, or a shared pointer when it is kept across
   threads. It does not change once built, so any number of readers —

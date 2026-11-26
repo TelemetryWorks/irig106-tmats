@@ -18,6 +18,18 @@ the consumer boundary in [TMATS-IN-CHAPTER-10.md](TMATS-IN-CHAPTER-10.md).
 Existing [L1 requirements](L1-REQ.md) retain their statements and identifiers.
 A partial time-view delivery does not mark an entire broader L1 implemented.
 
+## Published dependency prerequisites for tmats 0.1
+
+Publish `irig106-types` 0.2 and `irig106-core` 0.2 BEFORE tmats 0.1.
+The integration uses header-only PacketFacts from types, core's PacketInfo
+integrity/trust sideband and borrowed DATA spans. Core 0.1.0 already being
+published, or the core 0.2 reader being merged, does not satisfy publication
+of these 0.2 dependencies. Verify the compatible published APIs before the
+tmats release; do not add fields to PacketFacts or ship a fallback reader.
+Packet data-checksum verification remains a separately owner-scheduled core
+feature; pass NotChecked until core provides it. No publishing action is
+authorised/performed by this documentation change.
+
 ## Full 0.1 acceptance scope
 
 The unchanged release obligations are grouped here for review. L2/L3 and
@@ -34,7 +46,7 @@ not a substitute for requirements or a new source of requirement IDs.
 | Byte-faithful writing; normalization only by explicit request | L1-WRT-001, 002 |
 | SHA compute, verify, final-byte verified stamping, labelled flex compatibility signature | L1-SUM-001 through L1-SUM-004 |
 | No library I/O; bounded handling of arbitrary input, guard rails and coverage | L1-IO-001; L1-ROB-001, 002, 003 |
-| Recording/text input, every complete record, show modes, extract, checksums, text/JSON, safe output, verified packet slicing | L1-CLI-001 through L1-CLI-009 |
+| Recording/text input, every complete record, show modes, extract, checksums, text/JSON, safe output, core-backed borrowed DATA slicing | L1-CLI-001 through L1-CLI-009 |
 | Measured parser and recording-scan performance | L1-PERF-001 |
 | Lockstep versions, MSRV/platform/WASM checks, dependency policy, binary SBOM and provenance | L1-REL-001 through L1-REL-006 |
 

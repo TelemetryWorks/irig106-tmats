@@ -32,13 +32,13 @@ status line points to the later record.
 | [0016](0016-edition-strategy.md) | Parse every edition; baseline 106-24R1; validate 106-04 … 106-24R1 | accepted; partly superseded by 0028 |
 | [0017](0017-standards-archive-repository.md) | Mirror the RCC 106 standards in a separate repository, as release assets | accepted |
 | [0018](0018-reference-tools-and-test-data.md) | Reference tools are oracles, not authorities; real data stays local | accepted |
-| [0019](0019-cli-minimal-chapter-10-reader.md) | The CLI carries a minimal Chapter 10 packet reader until `irig106-core` | accepted; refined by 0025 |
+| [0019](0019-cli-minimal-chapter-10-reader.md) | The CLI carries a minimal Chapter 10 packet reader until `irig106-core` | accepted; refined by 0025; reader responsibility superseded by 0036 |
 | [0020](0020-correctness-guard-rails.md) | Correctness guard rails in the code and the tests | proposed |
 | [0021](0021-single-pass-scanner.md) | A single-pass scanner that indexes, checksums, and reports as it reads | proposed; scanner rule added by 0024 |
 | [0022](0022-registry-source-text-and-reviewed-interpretations.md) | The registry holds source text and reviewed, executable interpretations (review rule revised by 0033) | accepted; extended by 0026 and 0027; interpretation review superseded by 0033 |
 | [0023](0023-validation-passes-and-effective-values.md) | Validate in four passes over effective values | accepted; refined by 0026 |
 | [0024](0024-derived-parameters-parsed-not-evaluated.md) | Derived parameters parsed, validated, and described here; evaluated in `irig106-decode` | accepted; interpretation review superseded by 0033 |
-| [0025](0025-setup-record-assembly-contract.md) | Setup records assembled from packet fragments in the library; packets sliced by the CLI's reader | accepted; record ending superseded by 0031; edition-code wording refined by 0032; interpretation review superseded by 0033 |
+| [0025](0025-setup-record-assembly-contract.md) | Setup records assembled from packet fragments in the library; packets sliced by the CLI's reader | accepted; record ending superseded by 0031; edition-code wording refined by 0032; interpretation review superseded by 0033; reader/checksum ownership superseded by 0036 |
 | [0026](0026-counter-scopes-link-namespaces-and-comparison.md) | Counters declare their scope, links their namespace, selector, and cardinality; keys unique per attribute; case-insensitive comparison | accepted; extended by 0027 |
 | [0027](0027-interpretation-register-and-three-source-relationships.md) | An interpretation register; relationships from Links to, Links from, and §9.5.1 b; the H group | accepted; interpretation review superseded by 0033 |
 | [0028](0028-edition-declarations-and-validation-basis.md) | TMATS edition and recording-format version kept apart; validation basis labelled; fallback and compatibility checks named | accepted; RCCVER wording refined by 0032 |
@@ -49,6 +49,7 @@ status line points to the later record.
 | [0033](0033-owner-signoff-and-independent-ai-interpretation-review.md) | One owner sign-off plus an independent AI check approves an interpretation | accepted (owner, 2026-11-21) |
 | [0034](0034-coordinator-release-foundation-decisions.md) | W1-W3 and F1/F7 release-foundation decisions | coordinator-decided (2026-11-21); W1 superseded by owner decision 0035; others unchanged |
 | [0035](0035-virtual-workspace-with-library-crate-and-cli-app.md) | Virtual root, library under crates/, CLI under apps/, exact shared dependency | accepted (owner, 2026-11-21); supersedes 0034 W1 only |
+| [0036](0036-core-reader-and-borrowed-data-spans.md) | One core reader; unchanged core evidence; borrowed non-contiguous DATA input with zero extra payload copy | accepted owner architecture (2026-11-22); coordinator-decided integration (2026-11-26) |
 
 New records take the next number and use the same front matter
 (`status`, `date`, `decision-makers`).

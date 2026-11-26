@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through lossless-output boundaries drafted (family 2, batches 1-21).**
+> **Status: foundations through packet-slicing mechanics drafted (family 2, batches 1-22).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -652,7 +652,7 @@ approval through a requirement or a supplied fixture binding.
 
 **Parent**: L1-CH10-004
 
-**Statement**: The library SHALL form independent candidate fragment runs per channel from caller-supplied bytes and provenance in recording order using the INT-011 joining prerequisites, retain each run's start reason and why each join was permitted or stopped, and concatenate only the TMATS text portions without inserting, removing or interpreting text at a packet boundary; a joined run SHALL remain distinct from a completeness or governance verdict.
+**Statement**: The library SHALL form independent candidate fragment runs per channel from caller-supplied bytes and provenance in recording order using the INT-011 joining prerequisites, retain each run's start reason and why each join was permitted or stopped, and logically concatenate only the TMATS text portions as ordered borrowed spans without mandatory coalescing, extra payload copy, insertion, removal or interpretation at packet/block boundaries; a joined run SHALL remain distinct from a completeness or governance verdict.
 
 **Rationale**: 106-24R1 Chapter 11 section 11.2.7.2 page 11-50 states that one setup record may span consecutive packets and that sequence increments n+1 in segmentation order. Section 11.2.1.1 f defines per-channel sequence counters. ADR-0025 supplies the library boundary; INT-011 supplies the additional same-channel/FRMT/RCCVER interpretation. ADR-0031 supersedes the old assumption that stopping a run proves a record finished. Joey's 2026-11-23 INT-011 clarification makes other-channel packets provenance/information only, never a stop condition. Channel-0 conformance is separate from joining. This is not a packet reader or an end-marker invention.
 
@@ -917,5 +917,34 @@ normalization algorithm, edit API or Rust output signature is selected here.
 **Statement**: The output boundary SHALL distinguish unedited default replay from a caller's explicit normalization request; parsing, registry loading, validation, effective values, queries and output presentation preferences SHALL NOT implicitly request canonical ordering, line-ending conversion, counter recomputation or other source changes.
 
 **Rationale**: L1-WRT-002 and ADR-0002 require caller authorization before normalization. Chapter 9 section 9.4.2 allows free attribute order and case-insensitive interpretation; neither grants automatic byte rewriting. This is the opt-in gate only. Transformation definitions, canonical ordering and supported counter-rewrite behavior need their own reviewed derivations before the full normalization capability is implemented; this partial child does not complete L1-WRT-002 or reduce the 0.1 scope.
+
+**Verification Method**: Test (T)
+
+## Core-backed setup slicing (family 2, batch 22; review correction)
+
+ADR-0036 supersedes the temporary tmats reader in ADR-0019/0025. The CLI
+uses header-only PacketFacts (irig106-types), borrowed DATA spans and
+core PacketInfo integrity/trust sideband carried alongside them; only TMATS CSDW/fragment
+slicing and assembly remain here. See the [decision record](research/2026-11-26-core-reader-span-rework.md).
+Existing IDs are re-pointed, not reused for a new local reader. Chapter 11
+facts remain reference evidence. No report/rendered format is selected.
+
+#### L2-CLI-003
+
+**Parent**: L1-CLI-008
+
+**Statement**: The tmats CLI SHALL obtain packet finding, validated DATA extents, packet trust and primary/secondary-header checksum evidence from core-supplied integrity/trust evidence (PacketInfo sideband: secondary_integrity per RDG-008, data-checksum state, admission evidence, ranges), carried ALONGSIDE header-only PacketFacts from irig106-types and borrowed DATA spans, without implementing another packet reader, header/profile validator or checksum algorithm, and SHALL preserve core's evidence rather than synthesize a stronger verdict or choose among RDG-008 readings.
+
+**Rationale**: Owner architecture 2026-11-22 and coordinator rework decisions, recorded in ADR-0036. Core is available; ADR-0019's temporary-reader condition no longer applies. Exact compatible dependency/API binding remains implementation work. The TMATS library remains I/O-free; the CLI adapter consumes core facts and passes spans/provenance/evidence to it without inventing a duplicate PacketFacts definition or adding integrity/trust fields to it.
+
+**Verification Method**: Test (T)
+
+#### L2-CLI-004
+
+**Parent**: L1-CLI-008
+
+**Statement**: Over core's borrowed DATA spans, TMATS SHALL read the first four logical bytes as the setup CSDW and retain the remaining logical bytes as borrowed text fragments, accepting block-split CSDWs/text directly without coalescing or extra payload copy; it SHALL preserve source mappings and core integrity evidence unchanged, including data checksum NotChecked, and SHALL NOT verify packet data checksums locally.
+
+**Rationale**: Chapter 11 section 11.2.7.2/Figure 11-34 p. 11-50 defines each packet's CSDW before text; sections 11.2.1.1 d and 11.2.1.4 define DATA excluding filler/checksum. Core supplies those DATA spans; tmats must not reconstruct them from raw headers. ADR-0036 records direct non-contiguous input and core-owned verification. Library assembly stays per-channel under INT-011/045, independent of physical block boundaries. The coordinator's data-checksum feature request is for core; owner scheduling is pending.
 
 **Verification Method**: Test (T)

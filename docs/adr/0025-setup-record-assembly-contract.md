@@ -1,10 +1,16 @@
 ---
-status: accepted; record ending superseded by 0031; edition-code wording refined by 0032; interpretation review rule superseded by 0033 (2026-11-21)
+status: accepted; reader/checksum ownership superseded by ADR-0036; record ending superseded by 0031; edition-code wording refined by 0032; interpretation review rule superseded by 0033 (2026-11-21)
 date: 2026-09-26
 decision-makers: Joey
 ---
 
 # Setup records are assembled from packet fragments in the library; packets are sliced by the CLI's reader
+
+> **Superseded responsibility:** ADR-0036 records the owner's 2026-11-22
+> ONE-reader architecture and the coordinator's core-evidence/borrowed-DATA
+> integration decisions. The temporary CLI reader below is historical; core
+> now owns packet finding/trust/header checksums. tmats does not verify packet
+> data checksums or coalesce DATA to assemble it. TMATS assembly rules remain.
 
 ## Context and Problem Statement
 

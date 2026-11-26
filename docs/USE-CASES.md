@@ -459,8 +459,10 @@ or 1553 time words (L1-VIEW-007; section 3.8).
   row; behaviour the standard does not define is either configurable or
   reported, never invented.
 - **Fast enough to be invisible:** TMATS is kilobytes to a few megabytes and
-  read once per recording. Reading is a single pass with one owned buffer,
-  lookups are constant-time, and typed values are parsed only when asked for.
+  read once per recording. Owned standalone input and borrowed core DATA
+  are separate paths: assembly accepts non-contiguous spans directly without
+  payload coalescing (ADR-0036). Lookups are constant-time, and typed values
+  are parsed only when asked for.
   Benchmarks on real files guard this.
 - **Extensible:** layered definitions, policies, and rules (UC-07).
 - **Robust:** never panics on any input; fuzzed.
