@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through packet-slicing mechanics drafted (family 2, batches 1-22).**
+> **Status: foundations through content-routing boundaries drafted (family 2, batches 1-23).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -946,5 +946,34 @@ facts remain reference evidence. No report/rendered format is selected.
 **Statement**: Over core's borrowed DATA spans, TMATS SHALL read the first four logical bytes as the setup CSDW and retain the remaining logical bytes as borrowed text fragments, accepting block-split CSDWs/text directly without coalescing or extra payload copy; it SHALL preserve source mappings and core integrity evidence unchanged, including data checksum NotChecked, and SHALL NOT verify packet data checksums locally.
 
 **Rationale**: Chapter 11 section 11.2.7.2/Figure 11-34 p. 11-50 defines each packet's CSDW before text; sections 11.2.1.1 d and 11.2.1.4 define DATA excluding filler/checksum. Core supplies those DATA spans; tmats must not reconstruct them from raw headers. ADR-0036 records direct non-contiguous input and core-owned verification. Library assembly stays per-channel under INT-011/045, independent of physical block boundaries. The coordinator's data-checksum feature request is for core; owner scheduling is pending.
+
+**Verification Method**: Test (T)
+
+
+## Content-based input routing (family 2, batch 23)
+
+The content selector in accepted ADR-0019 remains applicable after ADR-0036
+supersedes its temporary packet reader. This decomposes L1-CLI-001 only;
+packet finding/trust remains core's responsibility. See the [source and
+boundary note](research/2026-11-26-content-routing-requirements.md).
+No command/report format, recovery mode or new interpretation is selected.
+
+#### L2-CLI-005
+
+**Parent**: L1-CLI-001
+
+**Statement**: The CLI SHALL select recording input when the successfully acquired source begins with the complete Chapter 10 packet sync pattern and standalone TMATS text otherwise, independently of filename/extension; selection SHALL neither validate the selected content nor search for a later packet sync pattern.
+
+**Rationale**: ADR-0019 and CLI section 3 choose this content predicate. Chapter 11 (106-24R1) section 11.2.1.1 a, p. 11-5 specifies sync 0xEB25; section 11.1, p. 11-1 specifies little-endian structural fields, giving initial bytes 25 EB. This is the existing input-mode selector, not a local reader, trust decision or damaged-file recovery algorithm. A source shorter than the complete pattern cannot satisfy it.
+
+**Verification Method**: Test (T)
+
+#### L2-CLI-006
+
+**Parent**: L1-CLI-001
+
+**Statement**: Input acquisition and routing SHALL preserve original bytes and source identity, delegate recording packet work to core and standalone text interpretation to the TMATS reader, and preserve acquisition/downstream failure without manufacturing a successful empty document or silently retrying the other input mode.
+
+**Rationale**: ADR-0003/0010 preserve raw source and keep library I/O caller-owned; ADR-0036 requires one core reader. A successful empty source differs from an acquisition failure. Neither content selection nor forwarding core evidence establishes a complete, trusted or governing setup. Dependency availability and recovery policy remain separate gates; types/core 0.2 must be published before tmats 0.1.
 
 **Verification Method**: Test (T)

@@ -96,6 +96,7 @@ irig106-tmats/
 │   │                          2026-11-25-retained-cut-and-qm-review-followups.md records the independent review and narrow blocking/test amendments;
 │   │                          2026-11-25-time-view-metadata-requirements.md derives bounded channel/time-field requirements and acceptance scope;
 │   │                          2026-11-25-source-bit-requirements.md derives explicit NSB splitting and records DSI/CHE remaining boundaries;
+│   │                          2026-11-26-content-routing-requirements.md derives retained content routing and acquisition/failure boundaries;
 │   │                          2026-11-26-packetfacts-sideband-correction.md clarifies header-only PacketFacts, separate core evidence and release prerequisites;
 │   │                          2026-11-26-core-reader-span-rework.md records the core-only reader, unchanged evidence, direct spans and core feature request;
 │   │                          2026-11-26-packet-slicing-requirements.md derives internal packet trust/slicing and records source/format boundaries;

@@ -90,8 +90,10 @@ requirements do not choose those rules or reduce the 0.1 obligations.
 
 ### Remaining CLI input and presentation derivations
 
-Review core-backed borrowed DATA/CSDW slicing before integration. Core owns
-the single reader and all packet/header trust; no local checksum fallback
+Review the retained content selector and acquisition/failure boundary before
+CLI integration; it routes by initial bytes without adding packet finding or
+fallback recovery. Review core-backed borrowed DATA/CSDW slicing before
+integration. Core owns the single reader and all packet/header trust; no local checksum fallback
 is permitted. Record packet-data verification as a core feature request,
 with timing decided by the owner. Keep failure use/recovery policy
 separate from mechanical bounds/checksum evidence. Before report/rendered
