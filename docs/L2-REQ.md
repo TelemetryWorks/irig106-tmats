@@ -1037,12 +1037,16 @@ with definition-bound code-name patterns, using approved name/key policies
 rather than a new glob/regex language. See the [source and scope note](research/2026-11-26-pattern-lookup-requirements.md).
 No value resolution, link inference, rendering or full registry rollout is
 selected; unknown/private grammar is not guessed.
+Owner decisions are PENDING and block implementation: 0.1 pattern scope
+(reviewed registry patterns only is a proposal, not an approved restriction)
+and public query syntax, including wildcards/escaping. The conditional
+reviewed-pattern contract below does not settle either item.
 
 #### L2-VIEW-015
 
 **Parent**: L1-VIEW-001
 
-**Statement**: For a cited, reviewed structural code-name pattern with caller-bound index positions, the library SHALL return every matching source item within the supplied document in input order, matching the complete literal path and index arity under INT-036/038 and retaining raw values, identities, locations, multiplicity and findings; it SHALL distinguish unavailable matching from an available empty candidate collection without inventing defaults, resolving values or claiming absence from damaged evidence.
+**Statement**: For a cited, reviewed structural code-name pattern with caller-bound index positions, the library SHALL return every matching source item within the supplied document in input order, matching the complete literal path and index arity under the Chapter 9 section 9.4.2 ASCII case rule and INT-036/038 and retaining raw values, identities, locations, multiplicity and findings; it SHALL distinguish unavailable matching from an available empty candidate collection without inventing defaults, resolving values or claiming absence from damaged evidence.
 
 **Rationale**: UC-03 and L1-VIEW-001 include every R-1\TK1-n. Chapter 9 (106-24R1) section 9.4.2 p. 9-2 defines numbered multiple-entry names and case-insensitive interpretation; Table 9-4 TRACK NUMBER/CHANNEL ID R-x\TK1-n p. 9-48 supplies the example's structural pattern. ADR-0002/0003 make source items authoritative, INT-038 supplies numeric index identity, and INT-039 preserves every duplicate. Pattern lookup is candidate retrieval, not a standard-defined association, cardinality/default decision or public query-string grammar. Concrete query representation and index data structures remain API/implementation review work.
 

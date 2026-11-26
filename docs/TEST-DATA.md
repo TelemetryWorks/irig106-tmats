@@ -1366,19 +1366,26 @@ syntax: use the cited R-x\TK1-n pattern from 106-24R1 Ch9 Table 9-4
 TRACK NUMBER/CHANNEL ID p. 9-48. Named items A/B/C are independent fixture
 identities with explicit literal source ranges. Values are raw candidates,
 not interpreted TK1 verdicts. Existing findings remain located/observable.
+Owner decisions on 0.1 pattern scope (reviewed registry patterns only) and
+public query syntax (wildcards/escaping) are PENDING; implementation is
+blocked. Diagnostic candidate fixtures do not approve incomplete/ambiguous
+access: see the [open item](ROADMAP.md#streaming-setup-record-follow-ups)
+and [proposed INT-031](INTERPRETATIONS.md#int-031). Any supplied record
+qualification, including Ambiguous, cut facets and Incomplete, stays attached
+and unchanged when candidates are returned.
 
 | Planned test | Independent source/bindings and expected candidate result | Requirements |
 |---|---|---|
 | `pattern_bound_recorder_keeps_all_entries` | A=`R-1\TK1-3:a;`, B=`R-2\TK1-1:b;`, C=`R-1\TK1-1:c;`; bind x=1, n unbound: [A,C] in source order, not [C,A] | L3-VIEW-058, L3-VIEW-060 |
 | `pattern_unbound_occurrence_is_not_default_one` | Same A/B/C; both positions unbound: [A,B,C]; bind x=3: empty collection, never reuse recorder 1 | L3-VIEW-059, L3-VIEW-063 |
 | `pattern_literal_path_is_not_substring` | TK1 query does not match literal TK10, another path segment or TK1-like bytes inside a COMMENT/value; original items remain retained | L3-VIEW-058, L3-VIEW-061 |
+| `pattern_literal_case_is_ascii_only` | Name `R-1\tK1-3` (path separator backslash then ASCII lowercase t, NOT a TAB) matches the TK1 pattern under Ch9 section 9.4.2 p. 9-2; replace K (4B) with high byte CB: no match or high-byte/locale/Unicode folding, raw damage retained | L3-VIEW-058, L3-VIEW-059 |
 | `pattern_full_arity_never_matches_extra_index` | A complete key under the cited pattern matches; extra/missing index or path component is not guessed into that pattern; retain unusable raw source | L3-VIEW-058 |
-| `pattern_bound_index_uses_numeric_identity` | A=`R-01\TK1-003:a;`, B=`R-1\TK1-3:b;`; bind x=1,n=3 returns [A,B] with raw spellings and INT-038 normalization/collision findings | L3-VIEW-059, L3-VIEW-060 |
-| `pattern_name_projection_keeps_internal_omission` | Name `r-01\T
-K1-003` contains real CR/LF; approved projection matches x=1,n=3 and retains internal-omission/normalization findings and raw bytes | L3-VIEW-059, L3-VIEW-061 |
+| `pattern_bound_index_uses_canonical_index_identity` | A=`R-01\TK1-003:a;`, B=`R-1\TK1-3:b;`; bind x=1,n=3 returns [A,B] with raw spellings and INT-038 normalization/collision findings; record remains INT-048 Ambiguous with qualification attached and unchanged | L3-VIEW-059, L3-VIEW-060, L3-VIEW-063 |
+| `pattern_name_projection_keeps_internal_omission` | Name `r-01\T\r\nK1-003` contains real CR/LF; approved projection matches x=1,n=3 and retains internal-omission/normalization findings and raw bytes | L3-VIEW-059, L3-VIEW-061 |
 | `pattern_long_index_never_uses_field_digit_limit` | Entry index is 40 ASCII digits; same literal canonical-string binding matches without integer conversion or INT-055 ten-digit cutoff; index range validity is not asserted | L3-VIEW-059 |
 | `pattern_absent_occurrence_is_not_invented` | Name without the required occurrence cannot match by supplying occurrence 1 implicitly | L3-VIEW-058, L3-VIEW-059 |
-| `pattern_exact_repeats_are_not_deduplicated` | Three repeated source occurrences of one complete key return all three IDs in order, with INT-039 duplicate and INT-038 collision findings where applicable | L3-VIEW-060 |
+| `pattern_exact_repeats_are_not_deduplicated` | Three repeated source occurrences of one complete key return all three IDs in order, with INT-039 duplicate and INT-038 collision findings where applicable; record remains INT-048 Ambiguous with qualification attached and unchanged | L3-VIEW-060, L3-VIEW-063 |
 | `pattern_fully_bound_agrees_with_exact_and_literal_oracle` | Fully bind x/n: pattern and exact lookup both return independently listed IDs/ranges in source order; neither path calculates the expected list | L3-VIEW-060, L3-VIEW-064 |
 | `pattern_empty_value_is_a_present_candidate` | Matching `R-1\TK1-3:;` returns one raw item with an empty value range; not zero matches or a valid/defaulted TK1 | L3-VIEW-061, L3-VIEW-062 |
 | `pattern_invalid_numeric_value_is_not_filtered` | Matching name with value `+2` or raw control bytes remains a raw candidate despite any INT-055 Invalid verdict; no value repair/query filtering | L3-VIEW-061 |
@@ -1387,7 +1394,7 @@ K1-003` contains real CR/LF; approved projection matches x=1,n=3 and retains int
 | `pattern_leading_bom_is_unavailable_not_empty` | Leading assembled EF BB BF blocks interpreted matching under INT-037; expose unavailable reason/finding and raw source, never successful zero matches | L3-VIEW-062 |
 | `pattern_unavailable_binding_is_not_zero_matches` | Query lacks usable reviewed pattern/binding metadata: observable unavailable reason, not a manufactured empty success | L3-VIEW-062 |
 | `pattern_suffix_is_not_item_but_can_block_presence_false` | Unterminated compatible suffix is not returned as an item under INT-035; independent INT-042 predicate keeps cannot-evaluate rather than inferring false from empty query | L3-VIEW-062 |
-| `pattern_cross_fragment_duplicates_share_document` | Same channel, sequence +1, same FRMT/RCCVER form ONE ADR-0025/INT-011 record; matches on each fragment both appear with packet/body provenance and duplicate evidence | L3-VIEW-060, L3-VIEW-061, L3-VIEW-063 |
+| `pattern_cross_fragment_duplicates_share_document` | Same channel, sequence +1, same FRMT/RCCVER form ONE ADR-0025/INT-011 record; matches on each fragment both appear with packet/body provenance and duplicate evidence; record remains INT-048 Ambiguous with qualification attached and unchanged | L3-VIEW-060, L3-VIEW-061, L3-VIEW-063 |
 | `pattern_other_document_never_supplies_missing_match` | No match in supplied document; a later separate record/document contains the key: query does not borrow it or choose a governing record | L3-VIEW-063 |
 | `pattern_defaults_never_create_source_items` | A view cache contains an effective/defaulted value; raw pattern retrieval still returns only actual source occurrences and never mutates source bytes | L3-VIEW-061, L3-VIEW-063 |
 | `pattern_permutation_partition_oracle_preserves_multiplicity` | Bounded CI permutations/span partitions: independently permuted literal IDs/ranges determine result; retain every occurrence and source bytes, not production-matcher-derived expectations | L3-VIEW-064 |

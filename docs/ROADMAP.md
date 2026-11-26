@@ -82,6 +82,12 @@ choices are recorded; independent review and development gates remain.
 
 ### Remaining raw lookup and extension derivations
 
+Owner decisions PENDING before pattern-query implementation: 0.1 pattern
+scope (reviewed registry patterns only is a proposal, not approved), and
+public query syntax including wildcards/escaping. Candidate retrieval must
+retain record qualifications; it does not resolve the open incomplete/
+ambiguous access and governance item under streaming setup-record follow-ups.
+
 Review structural pattern retrieval alongside exact lookup before query
 implementation: retain every raw candidate/location and canonical index
 identity without treating collection results as effective values or absence

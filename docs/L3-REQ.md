@@ -2365,8 +2365,12 @@ pattern and explicit bound/unbound index positions. The [batch note](research/20
 separates this semantic contract from query spelling, interpretation review
 and unavailable/related-damage evidence. All new cases are planned.
 
+**Owner decisions PENDING; implementation blocked**: the 0.1 pattern scope
+(reviewed registry patterns only is a proposal, not an approved restriction)
+and public query syntax, including wildcards/escaping.
+
 **L3-VIEW-058** · Parent: L2-VIEW-015 · Verification: T
-*Pattern lookup SHALL require a complete match of the supplied reviewed pattern's group, literal path components and number/positions of indices; unbound index positions SHALL range over present complete keys, not arbitrary path suffixes, value text, another group or another literal component.*
+*Pattern lookup SHALL require a complete match of the supplied reviewed pattern's group, literal path components and number/positions of indices; literal path parts SHALL compare ASCII case-insensitively under Chapter 9 section 9.4.2 p. 9-2, without locale/Unicode folding or high-byte folding; unbound index positions SHALL range over present complete keys, not arbitrary path suffixes, value text, another group or another literal component.*
 
 Source: 106-24R1 Ch9 section 9.4.2 p. 9-2 and Table 9-4 R-x\TK1-n
 p. 9-48. For that row, bind recorder occurrence x=1 and leave entry n
@@ -2374,7 +2378,7 @@ unbound to retrieve that recorder's entries. This names semantic bindings,
 not a regex/glob syntax, recursive wildcard or CLI argument convention.
 
 **L3-VIEW-059** · Parent: L2-VIEW-015 · Verification: T
-*Bound index comparisons SHALL use INT-038 canonical decimal-string identity, with INT-036's approved name projection/case folding, without numeric field-value parsing, fixed-width conversion, integer overflow, truncation or a default occurrence for an absent index.*
+*Bound index comparisons SHALL use INT-038 canonical decimal-string identity, with INT-036's approved name projection and the Chapter 9 section 9.4.2 p. 9-2 ASCII case rule from L3-VIEW-058, without numeric field-value parsing, fixed-width conversion, integer overflow, truncation or a default occurrence for an absent index.*
 
 An occurrence spelled 01 matches a bound identity 1 while original spelling
 and normalization/internal-omission findings remain. INT-055's ten-digit
@@ -2407,12 +2411,21 @@ L3-VAL-010–012. This requirement does not turn query results into that
 predicate or decide a new damaged-name completion/repair rule.
 
 **L3-VIEW-063** · Parent: L2-VIEW-015 · Verification: T
-*Pattern retrieval SHALL be scoped to the supplied document and bindings, without borrowing candidates or missing index values from another recorder/document, a later setup record or a default/effective-value cache; one assembled setup record SHALL remain one document across its fragment packets.*
+*Pattern retrieval SHALL be scoped to the supplied document and bindings, without borrowing candidates or missing index values from another recorder/document, a later setup record or a default/effective-value cache; one assembled setup record SHALL remain one document across its fragment packets, and returned candidates SHALL keep the record's qualification (including INT-048 Ambiguous, INT-045 cut and Incomplete evidence) attached and unchanged, never upgrading it because lookup succeeded.*
 
 INT-039 and ADR-0025 define document scope; INT-011 joining and INT-045
 layered closure remain unchanged. Neither packet boundaries inside the
 same assembled record nor source file membership create a new lookup scope.
-The query does not select a governing record or establish a time association.
+INT-048 Ambiguous retains any cut facet; INT-045 cut/Incomplete and other
+established Incomplete evidence remain blocking despite successful lookup,
+equality or a readable value. The cut facet keeps its full blocking
+force; query success does not make the record usable or governing.
+This preservation contract does not settle the [open incomplete/ambiguous
+access and governance item](ROADMAP.md#streaming-setup-record-follow-ups)
+or [proposed INT-031](INTERPRETATIONS.md#int-031). It applies when diagnostic
+candidate retrieval is available, not as a new authorization to access or
+accept a qualified record. The query does not select a governing record or
+establish a time association.
 
 **L3-VIEW-064** · Parent: L2-VIEW-015 · Verification: T
 *Pattern-lookup verification SHALL compare ordered item IDs, raw byte ranges and multiplicity against independent literal fixture expectations, and SHALL cross-check fully bound queries with exact-key lookup, without calculating the oracle through the production matcher or treating that cross-check alone as proof of correctness.*
