@@ -1678,6 +1678,40 @@ No public report format, historical code semantics, default, registry delta
 or owner interpretation is approved by these cases. Future implementation
 must replace planned rows with executable tests and trace markers.
 
+## Planned complete-record enumeration batch 34
+
+These planned tests assert internal command computation for L1-CLI-003,
+not report layouts, public record ordinals or command eligibility. Inputs
+supply independently evaluated final assembly results and core source facts;
+assembly-specific integration cases retain their existing interpretation
+gates. No synthetic packet is claimed conforming merely by its channel.
+Source: 106-24R1 Ch11 section 11.2.7.2 p. 11-50; ADR-0025/0036.
+
+| Planned test | Independent input and expected result | Requirements |
+|---|---|---|
+| `records_all_complete_not_first_only` | Complete candidates A/B/C at first-fragment offsets 100/500/900, with intervening data observations: entries A/B/C exactly once | L3-CLI-038, L3-CLI-040 |
+| `records_one_fragmented_document_one_entry` | A consists of three fragments with explicit ordered membership: one A entry retaining all spans, not three packet entries | L3-CLI-039 |
+| `records_fragmented_and_single_both_retained` | Multi-fragment A followed by single-fragment B: two entries with separate body extents and provenance | L3-CLI-038, L3-CLI-039 |
+| `records_identical_separate_copies_not_deduplicated` | Distinct bounded A/B have identical text and digest: both remain; equality is information, no governing/eligibility upgrade | L3-CLI-039, L3-CLI-043 |
+| `records_order_uses_first_fragment_not_finalization` | Supplied Complete A begins at 100 and ends at 800; independent B begins at 300 and ends at 400: internal order A/B, despite completion order B/A | L3-CLI-040 |
+| `records_not_sorted_by_channel_or_timestamp` | Supplied source order A/B disagrees with both channel and timestamp order: retain A/B and their original provenance | L3-CLI-040 |
+| `records_complete_list_does_not_absorb_noncomplete` | A Complete, B Incomplete, C Ambiguous, D provisional: Complete entries contain A; B/C/D evidence and distinct states remain, no text borrowed into A | L3-CLI-041 |
+| `records_cut_facet_retains_blocking_force` | Ambiguous-with-cut B retains cut and all findings; no Complete entry or usable/governing setup manufactured | L3-CLI-041, L3-CLI-043 |
+| `records_revised_time_seal_uses_final_outcome` | A formerly observed as Complete now supplied finally Ambiguous after continuation: no stale Complete A entry; revision history and premature-seal finding retained | L3-CLI-041 |
+| `records_unknown_or_xml_format_not_reparsed` | Supplied unsupported-format candidate remains unsupported with source facts; no ASCII reparse or format guessing | L3-CLI-041 |
+| `records_no_complete_is_not_empty_document` | Successfully traversed extent contains only evaluated non-Complete candidates: no Complete entries, evidence retained, no synthesized empty document | L3-CLI-038, L3-CLI-041 |
+| `records_failure_is_not_clean_empty_scan` | Acquisition/traversal fails before any Complete record: failure distinct from successful zero-result inventory | L3-CLI-038, L3-CLI-042 |
+| `records_late_failure_does_not_claim_full_inventory` | Complete A observed before supplied core failure at 700 in a larger extent: A identity retained with traversal failure/extent, no claim of absent later records or publication policy | L3-CLI-042 |
+| `records_limit_never_silently_drops_channel_run` | Supplied typed aggregate-run limit error: preserved with context, no retry as text, no silently forgotten run or invented success | L3-CLI-042 |
+| `records_selection_does_not_renumber_internal_identity` | Same A/B set passed to two command consumers with explicit A versus B context: selected identity changes, underlying inventory/provenance does not | L3-CLI-043 |
+| `records_separate_documents_do_not_create_duplicate` | A and B each contain one scalar field: enumeration retains two scoped documents, never combines their fields into an INT-039 duplicate group | L3-CLI-039 |
+| `records_complete_is_not_governing_or_integrity_pass` | Evaluated Complete A with integrity findings/unresolved governing effect: those facts stay attached; no checksum match or adoption inferred | L3-CLI-041, L3-CLI-043 |
+| `records_oracle_uses_independent_candidate_sets` | Expected set/order/membership listed independently from supplied facts; production enumeration or a local replacement packet reader is not an oracle | L3-CLI-044 |
+
+Pending owner choices for access/governance, public selection policy and
+report rendering remain pending. No executable tests or packet reader are
+added by these specifications.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample

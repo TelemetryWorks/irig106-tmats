@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through edition-independent reading drafted (family 2, batches 1-26 and 28-33).**
+> **Status: foundations through complete-record enumeration drafted (family 2, batches 1-26 and 28-34).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -1241,5 +1241,36 @@ record-access, historical-layout and report-format gates remain unchanged.
 **Statement**: Edition-independent reading SHALL expose retained raw items even when edition-specific meanings are unavailable, keeping structural reading, definition-dependent interpretation and record qualification separate; successful reading SHALL NOT assert validation against an unsupported edition, authorize incomplete/ambiguous setup use or silently apply baseline aliases, ranges or defaults.
 
 **Rationale**: ADR-0002/0003 preserve source, ADR-0016 supplies the single reader, and ADR-0028 requires labelled semantics. L1-EDN-002/005 and their existing children retain declaration/basis policy. Full historical semantic coverage and generated deltas stay in their planned releases. This child does not bypass pending INT-014–017 or general record-access decisions, introduce XML support, or broaden the bounded time view to general validation.
+
+**Verification Method**: Test (T)
+
+
+## Complete-record enumeration (family 2, batch 34)
+
+These derive L1-CLI-003's all-record/file-order obligation, not a report
+format, public numbering scheme or governing-setup timeline. The adapter
+uses core; the TMATS assembler supplies candidate identities, exact fragment
+membership and evaluated final qualifications under its reviewed rules.
+The [scope and fixture note](research/2026-11-27-record-enumeration-requirements.md)
+distinguishes enumeration from those upstream classifications and remaining
+eligibility/governance decisions. No new owner interpretation is selected.
+
+#### L2-CLI-010
+
+**Parent**: L1-CLI-003
+
+**Statement**: Given the assembly results for the supplied recording extent, the CLI's command computation SHALL enumerate every finalized Complete setup record exactly once in file order, preserving each record's own source position, fragment membership, assembled-text extent and evaluated qualifications; it SHALL neither stop after the first record nor report each fragment as a separate record, merge separate records, or deduplicate records with equal text.
+
+**Rationale**: L1-CLI-003, CLI.md's every-record contract and defect D2 require all records rather than only the first packet. Chapter 11 section 11.2.7.2 p. 11-50 (106-24R1) allows a setup record to span several packets; ADR-0025/0036 place assembly in tmats and the sole packet reader in core. File order is the recording order of each record's first contributing fragment, not completion order, channel sorting or timestamp order. This project ordering rule does not infer a governing setup or adopt an incomplete candidate.
+
+**Verification Method**: Test (T)
+
+#### L2-CLI-011
+
+**Parent**: L1-CLI-003
+
+**Statement**: Record enumeration SHALL retain the source/candidate identities and upstream findings needed to distinguish Complete records from incomplete, ambiguous, provisional, unsupported or failed candidates; it SHALL preserve qualifications and observable traversal failures without manufacturing records, silently treating a failed scan as a complete inventory or making enumeration confer command eligibility or governing authority.
+
+**Rationale**: INT-011/039/045/048 and existing assembly/core-boundary requirements determine input evidence, not this enumerator. A Complete classification is not checksum success, valid metadata, a publishable provisional result or authority to extract/use a setup. Final classification may revise an earlier time seal; this slice consumes evaluated outcomes rather than deciding provisional publication, access, quarantine or recovery. Presentation and command-specific eligibility remain owner-gated.
 
 **Verification Method**: Test (T)

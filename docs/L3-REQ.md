@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through edition-independent reading drafted (family 2, batches 1-26 and 28-33).**
+> **Status: foundations through complete-record enumeration drafted (family 2, batches 1-26 and 28-34).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -2892,7 +2892,7 @@ The X vocabulary's older-name issue remains pending INT-062, not settled here.
 Core-backed payload slicing, format gating and assembly stay in their existing
 requirements. Raw access is not semantic-use permission. Qualification
 composition follows INT-045/048 and the open access/governance item; this
-requirement does not select an ambiguous/incomplete acceptance option.
+requirement does not select an ambiguous/incomplete acceptance option. Packet-level edition rules (channel-0-only setup from 106-11, core's legacy_setup_any_channel, 106-04 time CSDW EXT bits and Time F2) stay in core / L3-CH10; edition-independent TEXT reading does not imply edition-independent packet routing.
 
 **L3-EDN-013** · Parent: L2-EDN-004 · Verification: T
 *Edition-independent reader tests SHALL independently specify raw source/spans, structural items and expected qualification retention across supplied edition contexts, including missing, known, unknown, older and future labels, and SHALL distinguish synthetic syntax fixtures from source-cited historical conformance fixtures.*
@@ -2902,3 +2902,71 @@ trip alone as proof that semantic interpretation is correct. A historical
 code/range/default fixture needs its own edition/table/row source and review;
 none is fabricated to fill this batch. Structured internal assertions do not
 select report rendering, assumption text or a JSON schema.
+
+
+## Complete-record enumeration acceptance (family 2, batch 34)
+
+These consume evaluated assembler outcomes and core-owned source/provenance;
+they introduce no packet routing, record-splitting or governing rule. Planned
+checks use supplied final outcomes where the classification rule is pending.
+See the [scope note](research/2026-11-27-record-enumeration-requirements.md).
+No public output layout, numbering or report-schema choice is implied.
+
+**L3-CLI-038** · Parent: L2-CLI-010 · Verification: T
+*Within the supplied recording extent, enumeration SHALL return one command-computation entry for every independently identified finalized Complete record, including later records after intervening data, without stopping after the first setup packet or first Complete result; zero Complete records SHALL not fabricate an empty successful setup document.*
+
+An empty record list is distinct from acquisition/traversal failure and from
+an explicitly supplied complete empty text document. This defines internal
+computation, not whether a command prints a heading or exits successfully.
+Full-file completeness can be claimed only when the supplied traversal
+successfully reaches that extent's end; partial results retain their limits.
+
+**L3-CLI-039** · Parent: L2-CLI-010 · Verification: T
+*Each enumerated record SHALL correspond to exactly its assembler candidate/revision and ordered fragment membership, with original assembled-text extent and source mapping; one multi-fragment record SHALL yield one entry, while distinct bounded records SHALL remain distinct even when their bytes, channel, declarations or checksum values agree.*
+
+ADR-0025 and INT-039 define one assembled record as one document. Enumeration
+must not concatenate documents to satisfy scalar fields or hash the entire
+recording as a TMATS body. INT-053 previous-copy identity stays information,
+not permission to remove a record or change governing/eligibility outcomes.
+
+**L3-CLI-040** · Parent: L2-CLI-010 · Verification: T
+*The internal record sequence SHALL follow the source position of each record's first contributing fragment in the supplied recording order, independently of channel number, packet timestamp, record length or order in which independent channel runs finalize; every entry SHALL keep that source position and all contributing packet/span provenance.*
+
+A first fragment is not a complete text record by itself. Core supplies
+packet positions; do not reconstruct them from lengths/timestamps or add a
+second scanner. A synthetic out-of-order-finalization fixture receives
+already evaluated independent runs; it asserts no new packet-admission rule.
+This defines neither public record ordinals nor streaming emission timing.
+
+**L3-CLI-041** · Parent: L2-CLI-011 · Verification: T
+*Enumeration SHALL preserve each supplied final classification, retained cut facet, trust/integrity evidence, format/edition facts and findings, and SHALL keep non-Complete/provisional/unsupported candidates distinguishable from Complete entries without promoting them, hiding their existence or using their text to repair another record.*
+
+A revised time-seal outcome supersedes its earlier observed classification
+for this final inventory, retaining its history/findings under INT-045/048.
+Duplicate-field ambiguity cannot be cured by byte identity or digest evidence.
+Access to qualified raw bytes and command eligibility remain their own gates.
+No severity suppression or rendering rule is selected here.
+
+**L3-CLI-042** · Parent: L2-CLI-011 · Verification: T
+*Enumeration SHALL pass through core/assembler traversal failure and resource-limit evidence with its supplied extent and source context, retaining the distinction between no Complete records and an incomplete inventory; it SHALL NOT restart under the alternate input route, silently drop runs or assert that unvisited input contained no further records.*
+
+Already observed records do not establish successful full traversal after a
+later failure. This requirement selects no continue/stop/recovery mode,
+partial-result publication, exit code or process policy. Existing bounded
+resource rules still apply; no unbounded whole-file staging is authorized.
+
+**L3-CLI-043** · Parent: L2-CLI-011 · Verification: T
+*Enumerated-record identity and order SHALL remain independent of per-command selection, integrity mode or governing-setup use; selecting a record for extraction/checksum/view computation SHALL refer to that same scoped candidate/revision and SHALL not silently choose the first, latest, byte-identical or checksum-valid record as a global default.*
+
+Command argument grammar, public numbering, multiple-output framing and
+selection defaults are not decided here. No extraction, provisional-use or
+integrity/quarantine option is unblocked by these enumeration requirements.
+The time-view caller still identifies its setup context explicitly.
+
+**L3-CLI-044** · Parent: L2-CLI-010 · Verification: T
+*Enumeration tests SHALL independently list expected candidate/revision identities, first-fragment source positions, ordered fragment sets, final states and traversal extents, including multiple complete records, fragmented records, identical separate records, non-Complete candidates and failure after a valid record; expected enumeration SHALL not be generated by the production enumerator or a second packet reader.*
+
+Tests of classification itself remain with the assembler's source-cited
+fixtures and interpretation gates. Adapter integration uses core evidence
+alongside PacketFacts and borrowed spans; no checksum/trust fields are
+invented in PacketFacts. Structured assertions choose no rendered schema.

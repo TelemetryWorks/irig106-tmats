@@ -191,6 +191,16 @@ canonical ordering, line-ending and counter-rewrite rules with independent
 byte oracles before claiming the full normalization capability. The boundary
 requirements do not choose those rules or reduce the 0.1 obligations.
 
+### Remaining complete-record enumeration acceptance
+
+Review internal all-record enumeration against final evaluated assembly
+outcomes: retain distinct records, exact fragment provenance and first-fragment
+file order independently of finalization order. Qualifying a record as
+Complete does not approve command eligibility or governing use. Preserve
+non-Complete evidence and partial-traversal failures without inventing a clean
+full inventory. Public selection/numbering, live provisional emission and
+report rendering remain their separate owner-review scope.
+
 ### Remaining CLI input and presentation derivations
 
 Review the reusable mounting boundary before implementation: the host owns
