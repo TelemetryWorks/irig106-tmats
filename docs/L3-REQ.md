@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through suspect-terminator suggestions drafted (family 2, batches 1-26 and 28-37).**
+> **Status: foundations through session evidence drafted (family 2, batches 1-26 and 28-38).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -3123,12 +3123,21 @@ its terminating semicolon, read past EOF or borrow a name from another item.
 Existing surrounding-name blank, ASCII-case, character-projection and index
 rules apply to recognition, never source rewriting. Missing grammar coverage
 stays explicit rather than being filled with speculative V/X path splitting.
+The 0.1 recognizer vocabulary SHALL include the Appendix 9-C code names and
+their reviewed index patterns, including D-x\MML\N, D-x\MNF\N and D-x\WP;
+an independently listed excerpt-name inventory SHALL expose any coverage
+gap as unready coverage, never a silently missed warning. These are pattern
+stems, not literal complete names without their required indices.
 
 **L3-READ-035** · Parent: L2-READ-014 · Verification: T
 *Each positive predicate occurrence SHALL retain a located suspect warning and a suggested edit replacing exactly the triggering raw colon byte with semicolon; the suggestion SHALL identify its source/document revision and retain the evidence for the recognized following name without converting that lookahead into a lookup item.*
 
 Use checked source correspondence: a projected-name position is not a raw
 byte offset. The original item/value and the original source remain unchanged.
+Detection SHALL skip unterminated suffixes. A suggestion inside supplied
+cut-qualified text SHALL retain the record's qualification/cut facet and
+never make it usable; diagnostic inspection remains subject to proposed
+INT-031 access, not an exception to that gate.
 No public result type, renderer text/layout or JSON encoding is fixed; L1's
 existing warning meaning and severity are not a new presentation choice.
 
@@ -3165,3 +3174,60 @@ No new numeric budget, truncation/recovery policy or complexity claim is made
 without analysis of the actual recognizer. Repeated colon-rich values require
 bounded workload tests, not an unbounded local scan or arbitrary cap. Resource
 failure remains distinct from no candidate or unavailable grammar coverage.
+
+
+## Session-format/F7 evidence acceptance (family 2, batch 38)
+
+These consume supplied decoded CSDW/session evidence, not a new reader,
+packet classifier or SRCC aggregation rule. Unsupported/inaccessible bodies
+are not read merely to obtain metadata. See the [source/gap note](research/2026-11-27-session-evidence-requirements.md).
+Final admission, access and governing qualifications remain unchanged.
+
+**L3-CH10-022** · Parent: L2-CH10-008 · Verification: T
+*Session-format checking SHALL associate each supplied readable FRMT observation with its setup/candidate, fragment, source position and explicit session scope/provenance, and SHALL report established ASCII/XML coexistence within that scope without treating observations in distinct scopes as a mixture.*
+
+Source: Figure 11-34, 106-24R1 section 11.2.7.2 p. 11-50. Preserve all
+contributing occurrences; multiple fragments are not silently summarized
+as one chosen format. Caller-asserted session labels retain that basis and
+never become evidence that recorder control commands were observed.
+
+**L3-CH10-023** · Parent: L2-CH10-008 · Verification: T
+*Format-check results SHALL distinguish established coexistence, no observed coexistence within the supplied known extent and unavailable scope/format evidence, retaining incomplete coverage and all supplied trust/record qualifications; XML unsupported for text parsing SHALL not erase its decoded FRMT evidence or make the whole check pass.*
+
+No observed mixture is not proof about unvisited input, and an unknown FRMT
+is not ASCII by default. FRMT disagreements within a candidate remain located
+evidence; this check never resolves its boundary or promotes its completeness.
+Proposed INT-031 still gates incomplete/ambiguous text access.
+
+**L3-CH10-024** · Parent: L2-CH10-009 · Verification: T
+*With an established SRCC=1 trigger but no verified configuration-change-event identity, the required-event check SHALL remain indeterminate with its missing basis and raw observations retained, regardless of whether a nearby Format 2 recording-event packet or other event-like candidate is supplied.*
+
+Approved INT-030 does not identify a packet type. A candidate is not proof
+of compliance or violation; absence of a matching guessed type cannot mean
+missing required event. Event identification and a cited reviewed rule for
+what prior means remain prerequisites before implementing a determinate check.
+
+**L3-CH10-025** · Parent: L2-CH10-009 · Verification: T
+*Session-change evidence SHALL retain each fragment's SRCC reading and supplied first-record/session context; disagreement, unreadable bits or absent summary policy SHALL remain unresolved rather than be repaired by OR/AND, last/first wins or presumed agreement from matching FRMT/RCCVER.*
+
+INT-045's first-fragment SRCC controls its specific mid-session closure
+eligibility only, not a general event-check aggregation rule. SRCC=1 on a
+session's first record is separately identifiable evidence, not automatically
+settled as a missing-event finding. SRCC=0 alone is not proof of unchanged
+bytes; approved retransmission rules still apply in their separate scope.
+
+**L3-CH10-026** · Parent: L2-CH10-009 · Verification: T
+*Session checking SHALL preserve core-supplied admission/trust, integrity and edition-dependent channel-rule evidence alongside header-only PacketFacts without rerouting packets, recomputing checksums, guessing unavailable edition mappings or using a format/event finding to override that evidence or authorize governing use.*
+
+Packet-level channel policy, including legacy_setup_any_channel, remains in
+core / existing L3-CH10 integration. No new 106-11/106-17 transition is encoded
+here; reconcile the stale parent wording from archived per-edition sources.
+A separately observed format conflict does not erase or repair core findings.
+
+**L3-CH10-027** · Parent: L2-CH10-008 · Verification: T
+*Session-evidence tests SHALL independently list scope/provenance, FRMT/SRCC observations, locations and expected uncertainty/findings, including mixed/separate sessions, XML without body parsing, unknown coverage, first-record SRCC=1, fragment disagreement and nearby generic events; they SHALL not use a second packet reader, invented event identity or production scope inference as the oracle.*
+
+Tests may supply already evaluated triggers/context; that does not qualify a
+missing aggregation or prior-ordering rule. Keep F7 identification, source
+freshness, development analysis and executable verification gates explicit.
+No public report format, severity mapping or output schema is selected.

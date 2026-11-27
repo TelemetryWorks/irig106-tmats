@@ -191,6 +191,17 @@ canonical ordering, line-ending and counter-rewrite rules with independent
 byte oracles before claiming the full normalization capability. The boundary
 requirements do not choose those rules or reduce the 0.1 obligations.
 
+### Remaining session-format and configuration-change evidence
+
+Review same-session ASCII/XML observations without requiring unsupported XML
+body parsing or inferring session boundaries. Keep first-record SRCC=1,
+fragment disagreement and nearby generic event candidates as separate evidence.
+F7 remains indeterminate until event identification and a cited reviewed prior
+scope are established; no event type is guessed. Core owns edition-dependent
+packet/channel rules. Reconcile the parent's 106-17 wording against archived
+per-edition sources and the owner-relayed 106-11 reminder before implementing
+that part; no local routing threshold is selected by these derivations.
+
 ### Remaining flex source qualification and acceptance
 
 Qualify the exact irig106lib reference revision, relevant source/options and
@@ -265,6 +276,11 @@ raw edit locations and independent negative/lookalike cases before its own
 implementation. Suggestions remain unapplied, framing and raw bytes unchanged;
 S1 stays suspect until separately authorized real-data confirmation. Recognizer
 coverage gaps are not permission to guess private/extension grammar.
+The 0.1 recognizer must cover the Appendix 9-C names and index patterns,
+including D MML/N, MNF/N and WP; an explicit inventory exposes missing coverage
+rather than silently losing warnings. Skip unterminated suffixes and retain
+cut/Incomplete/Ambiguous qualifications on any permitted diagnostic access;
+a suggestion never makes the record usable or bypasses proposed INT-031.
 
 ## Queued for the next release (`[Unreleased]`)
 
