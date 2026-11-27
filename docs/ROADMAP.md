@@ -113,6 +113,18 @@ owner approval.
 
 ### Remaining raw lookup and extension derivations
 
+Review the indexed X/original attachment derivation and complete V grouping.
+PENDING OWNER/independent review: proposed INT-061 for X occurrence mapping
+to unindexed originals such as G\PN; recommend unavailable mapping (A), with
+labelled unique-path attachment (C) as a natural future refinement; B is an
+explicit convention and D's blanket nonconforming classification is rejected
+in the draft recommendation, not owner-decided. Separately review proposed
+INT-062: “existing TMATS code” as edition-registry vocabulary (recommended)
+versus codes present in the document. Registry-name matching and the section
+9.5.14 EXTENSION_CODE uniqueness rule determine decomposition; missing
+metadata does not justify a heuristic. No affected-case implementation before
+owner/AI approval; edit/renumber rules and qualifiers remain separate.
+
 Owner decisions PENDING before pattern-query implementation: 0.1 pattern
 scope (reviewed registry patterns only is a proposal, not approved), and
 public query syntax including wildcards/escaping. Candidate retrieval must

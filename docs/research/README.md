@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-27-x-association-requirements.md](2026-11-27-x-association-requirements.md) | Batch 30 sourced X/original attachment, retained scope/qualification, planned fixtures and proposed INT-061/062 unindexed-original/vocabulary owner options |
 | [2026-11-27-performance-evidence-requirements.md](2026-11-27-performance-evidence-requirements.md) | Batch 29 parser/all-setup scan evidence, honest same-file reference comparisons, bounded compute and carried Clippy/#59 review notes |
 | [2026-11-27-robustness-evidence-requirements.md](2026-11-27-robustness-evidence-requirements.md) | Batch 28 existing lint/80%-library-line obligations, effective configuration/failure oracles, CI evidence boundaries and #60 validator-ownership nit |
 | [2026-11-26-pattern-lookup-requirements.md](2026-11-26-pattern-lookup-requirements.md) | Batch 26 structural raw-pattern retrieval, canonical bindings, all ordered candidates/provenance and independent planned oracles |
