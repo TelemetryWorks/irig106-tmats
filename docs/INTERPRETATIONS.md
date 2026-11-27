@@ -171,7 +171,7 @@ a document spelling CDT=FBCIN is still an unknown keyword, not repaired.
 
 **Reason**: Bus data carried in a PCM stream shares the P group's data-link name, so a PCM channel would otherwise match both P and B.
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: independent check CONCERNS (narrow, 2026-11-27) on main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`; amended wording pending independent recheck; existing owner acceptance: Joey, 2026-09-26; draft author: maintainer agent; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch1.md); source-freshness/development-analysis/executable-test gates remain · **Origin**: T4
+**Design**: accepted (owner, 2026-09-26) · **Review**: initial independent check CONCERNS (narrow, 2026-11-27) on main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`; amended-wording recheck CONCUR at #81 head `699029b9e739f7bef7f27e7f67d8cac23c20d90d` (2026-11-27); existing owner acceptance: Joey, 2026-09-26; draft author: maintainer agent; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch1.md); source-freshness/development-analysis/executable-test gates remain · **Origin**: T4
 
 **Test**: `pcm_channel_carrying_bus_data_resolves_to_p_group`, `link_target_unusable_cdt_keeps_all_groups`, `link_target_fibre_channel_uses_int007` (planned; not yet written)
 
@@ -199,7 +199,7 @@ never upgrades record qualifications or approves semantic access.
 
 **Reason**: The standard gives the tie in prose without naming the attribute that carries it on the G side; `G\TA` is G's test-item attribute. There is no H table to transcribe; §9.7 says IHAL serves "the purpose originally intended for the Airborne Hardware Attributes (H) group …, which has never been implemented".
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: independent check CONCERNS (narrow, 2026-11-27) on main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`; amended wording pending independent recheck; existing owner acceptance: Joey, 2026-09-26; draft author: maintainer agent; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch1.md); source-freshness/development-analysis/executable-test gates remain · **Origin**: T5
+**Design**: accepted (owner, 2026-09-26) · **Review**: initial independent check CONCERNS (narrow, 2026-11-27) on main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`; amended-wording recheck CONCUR at #81 head `699029b9e739f7bef7f27e7f67d8cac23c20d90d` (2026-11-27); existing owner acceptance: Joey, 2026-09-26; draft author: maintainer agent; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch1.md); source-freshness/development-analysis/executable-test gates remain · **Origin**: T5
 
 **Test**: `h_group_test_item_ties_to_g_group`, `h_test_item_ascii_match_keeps_raw`, `h_test_item_leading_blank_is_unavailable`, `h_test_item_duplicate_occurrences_are_ambiguous` (planned; not yet written)
 
@@ -272,7 +272,7 @@ never upgrades record qualifications or approves semantic access.
 
 **Reason**: The grammar is the machine-readable source; the table's spacing is typographic (ADR-0024).
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: independent check CONCERNS (narrow source correction, 2026-11-27) at main `c682e05`; correction applied, amended wording pending recheck; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch2.md) · **Origin**: T2
+**Design**: accepted (owner, 2026-09-26) · **Review**: initial independent check CONCERNS (narrow source correction, 2026-11-27) at main `c682e05`; correction applied; recheck CONCUR at #81 head `699029b9e739f7bef7f27e7f67d8cac23c20d90d` (2026-11-27); [batch evidence](research/2026-11-27-legacy-int-independent-check-batch2.md) · **Origin**: T2
 
 **Test**: `spaced_equality_operator_is_accepted_with_warning`
 
@@ -551,7 +551,7 @@ edition year. The archived-edition year set remains INT-014's source.
 
 **Reason**: Older files may use forms the standard never defined; reading them would be a guess.
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: independent check CONCERNS (narrow source correction, 2026-11-27) at main `c682e05`; correction applied, amended wording pending recheck; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch2.md) · **Origin**: T6
+**Design**: accepted (owner, 2026-09-26) · **Review**: initial independent check CONCERNS (narrow source correction, 2026-11-27) at main `c682e05`; correction applied; recheck CONCUR at #81 head `699029b9e739f7bef7f27e7f67d8cac23c20d90d` (2026-11-27); [batch evidence](research/2026-11-27-legacy-int-independent-check-batch2.md) · **Origin**: T6
 
 **Test**: `g106_other_forms_are_unrecognised_and_preserved`
 
@@ -975,10 +975,44 @@ file order, completion, SRCC, integrity mode or equality alone. First-fragment
 versus completion file order remains an owner item, not an adopted rule here.
 Multiple simultaneous files remain out of scope.
 
-**Owner options**: A (recommended) approve this composed umbrella and resolve
-its remaining takeover/boundary decisions explicitly; B defer governing
-application and expose only candidates/evidence until those decisions exist.
-Neither permits the superseded proposed “last fragment then latest wins”.
+**Owner options**: A (recommended) approve this composed umbrella and answer
+these specific takeover/boundary sub-questions (none is answered here):
+
+(a) **Effective governing boundary:** from which packet does a validly taking-
+control setup govern: after its last fragment, after its INT-045 closure
+point, or another explicitly defined boundary? Last fragment and time closure
+may differ; specify how packets between those points are qualified.
+
+(b) **Unresolved comparison target:** can this Complete candidate take
+control while INT-053's comparison target is unresolved, and which independent
+evidence establishes that valid takeover? INT-053 already allows a later
+INDEPENDENTLY ESTABLISHED valid takeover to restore a resolved target;
+Complete alone is never that evidence. The owner must define the qualifying
+rule or defer its application, not guess the old comparison target.
+
+(c) **SRCC=1 with unverified F7 event identity:** does the indeterminate event
+check block takeover, delay it pending verified evidence, or not by itself
+affect eligibility? Preserve approved INT-030's indeterminate finding in all
+options; neither a nearby generic event nor absence of verified identification
+proves an event occurred or did not occur. Other takeover guards still apply.
+
+(d) **Distributed-mux / nonzero-channel setup sources before 106-11:** define
+per-source governing with independently established source partitions, or
+leave that governing case out of scope pending its own reviewed rule? No
+channel/source association is guessed. This scope question concerns governing,
+not permission to discard or stop parsing legacy raw setup candidates; core
+still owns packet admission/legacy-channel evidence.
+
+(e) **File order for interleaved runs:** use first contributing fragment or
+completion order, and how does that ordering relate to the effective boundary
+chosen in (a)? These are distinct concepts: ordering a candidate does not
+adopt it. This is the existing [file-order owner item](research/2026-11-27-checksum-commands-and-owner-questions.md#owner-brief-what-file-order-means),
+not a new implicit default.
+
+**B (unchanged)**: defer governing application and expose only candidates/
+evidence until those decisions exist. Neither option permits the superseded
+proposed “last fragment then latest wins”. Multiple simultaneous files remain
+out of scope. Approved INT-045/048/050/051/052/053 constrain every answer.
 
 **Reason**: The standard orders setup records before the data they describe but never states the governing rule outright.
 

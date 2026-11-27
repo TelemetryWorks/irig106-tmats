@@ -84,3 +84,21 @@ No new owner decision was made. The rewrites are proposals with no enabled
 implementation. Analysis fields remain not yet written. Planned cases below
 are not executable evidence; exact-head PR review and substantive rewritten
 interpretation checks remain necessary.
+
+## Later exact-head independent review and remaining narrow fix
+
+Reviewer message received 2026-11-27: #81 at
+`699029b9e739f7bef7f27e7f67d8cac23c20d90d` APPROVED; the INT-005/006/010/015
+amendments all rechecked CONCUR. Their register fields now cite that exact
+head; old batch records retain their dated initial CONCERNS. Development
+Analysis fields and executable-test gates are unchanged.
+
+The reviewer APPROVED #82 at ef9f7ea and requested one narrow change in #83
+at `ada532841ea9cddef10994f91739faa1ad09b5b8`: enumerate INT-028 A's takeover
+questions. The owner brief's alternatives/recommendations were otherwise
+judged fair and complete, including INT-022 options (CONCUR as options,
+owner pending), and the approved-rule alignment was checked. This later
+review is not a new owner sign-off or an independent check of the newly
+expanded question wording. The five sub-questions now identify effective
+boundary, unresolved-target takeover, F7 effect, distributed-source scope
+and file order; B's deferral option is unchanged. All five remain unanswered.
