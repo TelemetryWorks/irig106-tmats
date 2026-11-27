@@ -2092,6 +2092,28 @@ semantic/governing access stays gated by proposed INT-031. Test observations
 are internal handoffs and outcomes, not a public report/schema design.
 No test in this table has been executed against replacement code.
 
+## Legacy independent-check batches 3/4 proposed follow-ups
+
+All policy-dependent arms below are BLOCKED pending owner approval and,
+where concerned, independent recheck. Named source-reading facts do not
+approve the proposed mapping/governance algorithms. No tests executed.
+
+| Planned case | Independent source/evidence and expected proposed boundary | Interpretation |
+|---|---|---|
+| `equals_suggestion_needs_complete_recognized_name` | F3 A versus B: A suggests only positively recognized full name before '=' with no colon; always keep raw/missing-delimiter finding, never apply | INT-023 |
+| `packet_mapping_unusable_operands_are_not_mismatch` | Missing/Invalid/duplicate/unavailable CDT or format: cannot-evaluate with all evidence, not a mismatch; usable baseline versus unavailable historical mapping distinguished | INT-024 |
+| `tspiin_condition_does_not_repair_tspin` | TDTF p. 9-81 condition reading TSPIIN; a document's CDT=TSPIN is still unknown | INT-025 |
+| `duplicate_conversion_source_is_no_op` | C DCN references R AMN twice but only AMN/DMN have R-side Links-to; no fabricated EV/IPMN/BME/SMF source | INT-027 |
+| `governing_umbrella_composes_approved_guards` | Complete copy with ambiguity/unreadable SRCC/unresolved takeover never adopts from completion alone; approved INT-045..053 constraints preserved | INT-028 |
+| `governing_complete_is_not_takeover` | A later Complete candidate has no established valid control transition: no latest-Complete replacement of current/unresolved governing evidence | INT-028, INT-053 |
+| `governing_unresolved_is_not_no_setup` | Distinguish unresolved comparison/control target from known ungoverned packet range; no guessed previous setup | INT-028, INT-031, INT-053 |
+| `srcc_raw_subtypes_do_not_infer_semantics` | SHA-only/layout-only/other raw difference crossed with SRCC 0/1/unreadable: preserve claim/subtype evidence, no generic case/order equivalence, reset or automatic takeover | INT-029, INT-050 |
+| `governance_assumptions_are_per_query` | Prior ambiguity opt-in or assigned description cannot silently supply next query; cut facet always blocks semantic use, Complete integrity alone follows INT-051 | INT-031, INT-032, INT-048, INT-051, INT-060 |
+| `appendix_fragment_defaults_find_example_collision` | The standard's D-3 example itself has two fragments and no WFP; both default 1 with finding/ambiguous order, never infer from index or C-2 prose | INT-033 |
+| `completeness_rollover_is_not_gap` | Source sequences FE/FF/00/01 on same channel retain +1 continuity; no false gap at FF->00 | INT-034, INT-011 |
+| `completeness_padding_precedence_remains_open` | ';' followed by SP/CRLF/omitted controls/NUL/1A exercises explicit owner item (b), no accidental literal-space-only cut classification | INT-034, INT-035, INT-036 |
+| `completeness_integrity_is_not_source_unavailability` | Otherwise available well-framed text with core Mismatch/secondary-integrity findings is distinct from unavailable DATA bounds; no integrity-only Incomplete quarantine; resource refusal remains operational | INT-034, INT-051 |
+
 ## Legacy independent-check batch 1 follow-up fixtures
 
 Independent review at main c682e05 (2026-11-27); these are PLANNED, not
