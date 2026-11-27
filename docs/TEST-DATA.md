@@ -1614,12 +1614,19 @@ error is not proof that policy/artifact enforcement worked.
 | `artifact_sbom_is_per_binary_build_context` | Matching target/features/resolved build identity associates CycloneDX SBOM with intended binary; library-only requirements list is insufficient | L3-REL-013 |
 | `artifact_other_target_sbom_is_not_substitute` | Windows or another-version graph supplied for intended Linux build: mismatch/missing evidence remains unsatisfied, no cross-target substitution | L3-REL-012, L3-REL-013 |
 | `artifact_missing_sbom_is_not_green_build_success` | Binary exists and workflow is green, required per-binary SBOM absent: L1 release-artifact obligation remains unsatisfied | L3-REL-013 |
-| `artifact_attestation_is_for_intended_file` | Provenance verification covers intended binary/SBOM/checksum bytes and source/build identity, not another subject digest or a signing-step name | L3-REL-014 |
+| `artifact_attestation_is_for_intended_file` | Builder provenance verification covers intended .crate/binary/SBOM subject bytes and source/build identity, not another digest or signing-step name; manifest/bundle validation does not imply their individual attestation | L3-REL-014 |
 | `artifact_wrong_source_or_changed_payload_fails` | Verification/evidence gives another repository/head or modified payload: preserve mismatch/failure, not accepted build provenance | L3-REL-014, L3-REL-015 |
 | `artifact_user_recipe_has_applicable_result` | Documented verification path and actual completed matching-file result are available; docs/upload alone cannot claim verification | L3-REL-015 |
 | `artifact_missing_or_failed_verification_stays_unsatisfied` | Required artifact/verification missing, failed or not run: no inference from release notes or unrelated green job | L3-REL-014, L3-REL-015 |
-| `artifact_distribution_does_not_gain_publish_authority` | Planned binary release.yml and TP crate workflow/environment remain distinct; artifact acceptance cannot add a registry credential, token fallback or maintainer bootstrap | L3-REL-016 |
+| `artifact_distribution_does_not_gain_publish_authority` | Unified trusted-publishing.yml uses a non-publishing self-attesting builder and crates-io-gated publish job; artifact acceptance cannot add a stored credential, token fallback or maintainer bootstrap | L3-REL-016 |
 | `artifact_signed_build_is_not_tmats_integrity` | SBOM/provenance verifies build evidence only; no positive G\SHA, trusted recorder data, semantic coverage or qualified-record-use permission follows | L3-REL-016 |
+| `dep_release_uses_published_types_core` | Release graph resolves compatible types 0.2/core 0.2 APIs from crates.io and exercises them; reject unpublished/path/git/[patch]/source overrides, including a CI-only override; internal packaged CLI resolves its matching published library | L3-REL-009, L3-REL-010 |
+| `artifact_unified_release_set_is_complete` | Both .crate files, all binary archives, SBOMs, exactly one SHA256SUMS and one irig106-tmats-<version>.intoto.jsonl bundle; missing/extra manifest or bundle fails | L3-REL-012, L3-REL-016 |
+| `artifact_builder_attests_only_own_output` | Nested signer independently guards v* tag push, checks github.sha/verified output and rejects caller-selected inputs; PR/manual runs never sign; no top-level attest job | L3-REL-014 |
+| `artifact_publish_repackage_cmp_before_upload` | Non-compiling publish needs gate/build, validates checksums and cmp's cargo package --locked --no-verify output with attested .crate; changed bytes block upload | L3-REL-016 |
+| `artifact_served_crate_bytes_and_registry_checksum` | New and already-published packages must match attested bytes and registry checksum; retry never skips comparisons; a mismatch fails | L3-REL-015, L3-REL-016 |
+| `artifact_draft_resume_checks_metadata_and_assets` | Wrong tag/title/body/draft state or asset name/size/digest blocks publication; check again after publish, never replace an asset or modify published release | L3-REL-016 |
+| `artifact_verifier_checks_served_release` | Verify actual downloaded release assets with repository/tag/builder signer constraints, not only staging artifacts; tampering fails | L3-REL-015 |
 
 No workflow/policy/credential/settings action is performed by these cases.
 Existing deny.toml and RELEASING.md govern, including coordinator/owner-only

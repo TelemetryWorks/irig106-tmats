@@ -1205,8 +1205,8 @@ No new Evidence is claimed until actual redesigned graph/artifact checks.
 
 **Parent**: L1-REL-006
 
-**Statement**: Binary-release acceptance SHALL bind each distributed binary and its required SBOM/checksum/provenance evidence to the actual released bytes, target/build and reviewed source/version, with a documented verification path; missing, mismatched or unverifiable artifacts SHALL remain unsatisfied rather than inferred from a green build, crates.io upload or release note.
+**Statement**: Release-artifact acceptance SHALL bind every distributed .crate, binary archive and required SBOM to the actual released bytes and reviewed source/version through one SHA256SUMS and one builder-signed provenance bundle, with a documented verification path; missing, mismatched or unverifiable artifacts SHALL remain unsatisfied rather than inferred from a green build, crates.io upload or release note.
 
-**Rationale**: L1-REL-006 and RELEASING.md steps 6–7 already require binary distribution, per-binary CycloneDX SBOMs and verifiable build provenance. The planned release.yml builds/distributes them and never publishes to crates.io; trusted-publishing.yml with crates-io owns real crate uploads. These are future evidence contracts, not authorization to implement/run publishing workflows, access registrations/credentials or change the coordinator/owner-only first-upload exception.
+**Rationale**: L1-REL-006 remains the primary binary-evidence parent; L1-REL-001/005 and the org TRUSTED-PUBLISHING.md binary variant also motivate crate-package evidence within this child, without a new L1. Owner direction of 2026-11-22 supersedes the old separate release.yml/cargo-dist plan. The unified trusted-publishing.yml uses a self-attesting reusable builder, non-compiling TP publication with package comparison, and a verified draft-then-publish GitHub release. RELEASING.md records that protocol. These are future evidence contracts, not authorization to run publishing workflows, access credentials/settings or change the coordinator/owner-only bootstrap exception.
 
 **Verification Method**: Inspection (I)

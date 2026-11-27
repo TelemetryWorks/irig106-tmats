@@ -28,18 +28,18 @@ and actual matching-head results still need verification; comments do not
 prove the intended rule was enforced. No cargo-deny command/database fetch,
 lockfile resolution or dependency installation runs locally in this PR.
 
-L1-REL-006 and RELEASING.md already require binary SBOMs and verifiable build
-provenance. Source-inspected RELEASING.md steps 5–7: the planned release.yml
-builds Windows/Linux/macOS binaries, SHA-256 checksums, per-binary CycloneDX
-SBOMs using cargo cyclonedx, and GitHub build-provenance attestations.
-The documented user verification recipe uses gh attestation verify with
-TelemetryWorks as owner. No external tool behavior or successful artifact
-verification is claimed from quoting that recipe.
+L1-REL-006 requires binary SBOMs and verifiable build provenance. Owner
+direction of 2026-11-22 requires all repos to maintain the org standard.
+Source-inspected [TRUSTED-PUBLISHING.md](https://github.com/TelemetryWorks/.github/blob/2adedc5aaf27b7bafb54ad05a51bc17d89b65d3e/docs/TRUSTED-PUBLISHING.md),
+particularly “Repositories that also ship binaries” and base publication/
+verification sections. It requires the binary variant before tmats' first
+real release. This supersedes RELEASING.md's 2026-09-25 separate
+release.yml/cargo-dist plan; RELEASING.md is reconciled in this batch.
 
-The current workflow file inventory contains CI, Scorecard and zizmor, not
-implemented release.yml/trusted-publishing.yml. Naming future jobs in docs
-does not establish their existence, completed results or crate registrations.
-No registry/account state, secrets or other repositories are inspected.
+The current workflow inventory contains CI, Scorecard and zizmor, not an
+implemented release pipeline. Naming future jobs proves neither their
+existence nor completed results or registrations. Only the authorized org
+standard was read externally; no registry/account state or secrets inspected.
 
 ## Dependency evidence boundary
 
@@ -56,27 +56,45 @@ prototype-only XML ignores when that code is retired; do not transfer their
 rationale to replacement dependencies or approve a new exception in this PR.
 Criterion retention and new dev dependencies still require owner approval.
 
-## Binary artifact evidence boundary
+## Unified release-artifact evidence boundary
 
-L2-REL-006/L3-REL-012–016 require exact artifact identity and a verification
-path. A binary and its checksum/SBOM/provenance must describe the same source,
-version, target/features and actual bytes. Same filenames or another target's
-SBOM do not prove that binding. The actual resolved build context matters,
-not merely the manifest's semver requirements or a library-only inventory.
+L2-REL-006 keeps L1-REL-006 as primary parent and broadens the child to release
+artifacts, motivated also by L1-REL-001/005 and the org mandate. No new L1 or
+requirement IDs: crate-package evidence accompanies binary evidence.
+L3-REL-012–016 derive the binary variant:
 
-Retain applicable completed verification results, not just an attestation
-step name or a green workflow badge. A missing file/evidence, changed digest,
-wrong source or failed verification remains unsatisfied. No new CycloneDX
-schema version, generator, signing/notarization policy, architecture list or
-public TMATS report format is selected by this contract.
+- trusted-publishing.yml has gate/build/publish/github-release/verify plus
+  read-only publish-path-check, no top-level attest job. build invokes
+  build-binaries.yml and read-only build-binaries-core.yml; its nested
+  Checksums and attestations signs its own verified output only on v* tag
+  push. The caller cannot choose signing inputs; PR/manual builds never sign.
+- One release contains .crate files, binary archives and per-binary CycloneDX
+  SBOMs, one SHA256SUMS and one irig106-tmats-<version>.intoto.jsonl bundle.
+  Match source, version, target/features and bytes, not filenames alone.
+- publish needs [gate, build], compiles nothing, uses crates-io and fresh
+  ephemeral OIDC per wave. Repackage with cargo package --locked --no-verify,
+  cmp against the attested package, then compare every served .crate byte
+  for byte and against the registry checksum, including on retries.
+- github-release creates/resumes a draft, verifies tag/title/exact committed
+  docs/releases/vX.Y.Z.md body/draft state, checks each asset name/size/digest
+  before and after publication and never modifies a published release.
+- verify checks actual published files. User attestation verification must
+  constrain repository, tag and reusable-builder signer; validate the manifest
+  and bundle without assuming each has an individual attestation.
 
-Binary distribution remains separate from crate publishing. All real crate
-releases stay Trusted Publishing through trusted-publishing.yml with crates-io;
-release.yml never acquires crate-publishing authority. The existing narrow
-first-upload placeholder exception stays coordinator/owner-only, never CI or
-this maintainer. This document changes/executes no registration, setting,
-workflow, token flow, upload, packaging or publishing operation. Signed build
-evidence is not a positive TMATS G\SHA result or semantic-conformance proof.
+A missing/mismatched artifact or failed verification remains unsatisfied.
+No new SBOM schema, generator, architecture list, signing/notarization policy
+or TMATS output format is selected, and provenance alone claims no SLSA level.
+Real releases remain TP-only; the existing narrowly scoped first-upload
+exception stays coordinator/owner-only, never CI or this maintainer.
+No workflow, registration, settings, token, packaging or upload action runs
+here. Signed build evidence proves no TMATS G\SHA or semantic conformance.
+
+The release dependency graph must use compatible published types 0.2/core 0.2
+APIs from crates.io without path/git/[patch]/source overrides. A CI-only
+source override is never release evidence. Internal exact-version workspace
+library paths remain allowed; the packaged CLI must resolve its matching
+published library. Publication of both external dependencies precedes tmats.
 
 ## INT-063 usable VN amendment requested after #64
 

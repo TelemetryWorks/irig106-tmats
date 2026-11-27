@@ -83,10 +83,15 @@ choices are recorded; independent review and development gates remain.
 ### Remaining dependency and artifact acceptance
 
 Review redesigned dependency-graph evidence against existing deny.toml and
-per-binary SBOM/checksum/provenance identity/verification before release
-implementation. Old prototype passes and workflow names are not completed
-evidence. Keep binary distribution separate from TP-only crate publishing;
-this planning adds no policy exception, credential or publishing authority.
+crate and binary SBOM/checksum/provenance identity/verification before release
+implementation. Resolve published types 0.2/core 0.2 from crates.io without
+external source overrides; CI overrides are not release evidence. Adopt the
+org TRUSTED-PUBLISHING.md binary variant: one trusted-publishing.yml pipeline,
+self-attesting reusable builder, attested package cmp/served-copy checks and
+one draft-then-publish release with verified assets. This supersedes the old
+separate release.yml/cargo-dist plan (owner direction, 2026-11-22). Old
+prototype passes/workflow names are not completed evidence. This planning
+adds no policy exception, credential or publishing authority.
 
 ### Remaining performance evidence
 

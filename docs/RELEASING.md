@@ -2,7 +2,14 @@
 
 > **Status: draft for review.** Written during the design phase so that
 > publishing is understood before any code is released. The decisions here are
-> recorded as ADRs; the mechanics are finalized with the first release (0.1).
+> recorded as ADRs; implementation must adopt the org standard before 0.1.
+
+Owner direction (2026-11-22): all repositories maintain the org
+[TRUSTED-PUBLISHING.md binary variant](https://github.com/TelemetryWorks/.github/blob/2adedc5aaf27b7bafb54ad05a51bc17d89b65d3e/docs/TRUSTED-PUBLISHING.md#repositories-that-also-ship-binaries).
+This **supersedes** the 2026-09-25 separate release.yml/cargo-dist plan and
+its later separate attestation step. They are historical, not parallel paths.
+The binary variant is required before the first real release; this docs PR
+implements no workflow.
 
 The 2026-11-21 owner decision keeps the full 0.1 release obligations and
 adds a bounded time view before `irig106-time` 0.8.0. See the
@@ -16,7 +23,11 @@ The integration uses header-only PacketFacts from types, core's PacketInfo
 integrity/trust sideband and borrowed DATA spans. Core 0.1.0 already being
 published, or the core 0.2 reader being merged, does not satisfy publication
 of these 0.2 dependencies. Verify the compatible published APIs before the
-tmats release; do not add fields to PacketFacts or ship a fallback reader.
+tmats release. The release graph must resolve both from crates.io without
+path/git/[patch]/source overrides and exercise their compatible published
+APIs; a CI-only source override is never release evidence. The internal exact
+workspace library path is retained, with a matching published dependency in
+the packaged CLI. Do not add fields to PacketFacts or ship a fallback reader.
 Packet data-checksum verification remains a separately owner-scheduled core
 feature; pass NotChecked until core provides it. No publishing action is
 authorised/performed by this documentation change.
@@ -86,31 +97,51 @@ bootstrap below and verify both crates' Trusted Publisher registrations.
    `--check` scripts, a public-API break check on the library
    (`cargo semver-checks`) once a previous version exists, and
    `cargo publish --workspace --dry-run`.
-4. Tag `vX.Y.Z` and push the tag.
-5. `.github/workflows/trusted-publishing.yml`, gated by the protected
-   `crates-io` environment, publishes both crates using Trusted Publishing with
-   `cargo publish --workspace` (stable since Rust 1.90; it publishes in
-   dependency order, library first, verifying the set together). Publishing
-   is **not atomic**: if the CLI upload fails after the library succeeded,
-   re-run for the CLI only.
-6. The planned cargo-dist workflow `.github/workflows/release.yml` builds
-   `tmats` for Windows, Linux, and macOS, attaches the
-   binaries and their SHA-256 checksums to the GitHub release, and copies the
-   changelog section into the release notes (decided 2026-09-25; configured
-   before 0.1).
-7. That same `release.yml` binary-distribution workflow attaches a
-   **software bill of materials** for each binary (CycloneDX, `cargo cyclonedx`) and creates a
-   **build-provenance attestation** for every attached file with
-   `actions/attest-build-provenance` (SLSA build level 1, signed through
-   GitHub's Sigstore instance; the workflow needs `id-token: write` and
-   `attestations: write`). A user verifies a download with
-   `gh attestation verify <file> --owner TelemetryWorks` (L1-REL-006;
-   recipe from the retired `irig106-rust`'s `notes/SLSA1.md`, kept in
-   `docs/research/2026-09-26-irig106-rust/`).
+4. Commit `docs/releases/vX.Y.Z.md` with the exact release body and title
+   (first heading), then tag `vX.Y.Z` and push the tag after review.
+5. `.github/workflows/trusted-publishing.yml` (name **Trusted publishing**)
+   uses job IDs `gate`, `build`, `publish`, `github-release`, `verify`, plus
+   read-only `publish-path-check` for PR/manual dry runs. There is **no
+   top-level attest job**. `build` needs `gate` and calls reusable
+   `./.github/workflows/build-binaries.yml`, which uses read-only
+   `build-binaries-core.yml` to build/qualify targets, package crates and
+   Windows/Linux/macOS binaries, and generate per-binary CycloneDX SBOMs
+   (`cargo cyclonedx`) and one `SHA256SUMS`. The builder checks out
+   `github.sha` and self-attests its own verified output in a nested
+   **Checksums and attestations** job only on `v*` tag push, independently
+   guarded. The caller passes the gate decision, never signing inputs.
+   PR/manual runs build but never sign. Building/signing precedes approval.
+6. `publish` needs `[gate, build]`, uses the protected `crates-io` environment
+   and **compiles nothing**. Revalidate the downloaded checksums; reproduce
+   each `.crate` with `cargo package --locked --no-verify` and `cmp` it with
+   the attested package. Publish in dependency waves, library before CLI,
+   using fresh short-lived OIDC credentials per wave and
+   `cargo publish --locked --no-verify`. Never store a token. Publication is
+   not atomic: retry only missing uploads, but compare **every** served
+   `.crate`, even already-published versions, byte for byte with the attested
+   file and against the registry checksum. A mismatch stops the run.
+7. `github-release` needs `[gate, publish]`. Create or resume a draft through
+   the releases list, verify tag/title/exact committed body/draft state,
+   upload all assets and check each name, size and digest. Publish and check
+   again. Never replace assets or modify an already published release.
+   The single release contains both `.crate` files, all binary archives,
+   SBOMs, **one `SHA256SUMS`** and **one
+   `irig106-tmats-<version>.intoto.jsonl`** bundle for all signed files.
+8. `verify` needs `[gate, github-release]` and checks the actual published
+   files. Verify served crate bytes/checksums and provenance for the intended
+   repository/tag/reusable-builder signer. The documented user path includes
+   `gh attestation verify <file> --owner TelemetryWorks`, constrained also to
+   this repository, `--source-ref refs/tags/vX.Y.Z` and the expected builder
+   workflow. Validate the checksum manifest and bundle as evidence, without
+   claiming they necessarily have individual attestations. Require successful
+   docs.rs builds within a bounded wait (pending at deadline fails), and a
+   clean exact-version `cargo install --locked` plus executable version check.
 
-The binary-distribution `release.yml` workflow never publishes to crates.io
-and receives no crates.io publishing credential. Package publishing belongs
-only to `trusted-publishing.yml`; these workflows are still to be implemented.
+These are future acceptance mechanics, not completed release evidence.
+The reusable builder builds binaries, SBOMs and attestations; it never
+publishes to crates.io. Only `publish` in `trusted-publishing.yml` with the
+`crates-io` environment uploads crates. No release workflow is implemented
+by this documentation change; build provenance alone claims no SLSA level.
 
 ## Credentials
 
@@ -169,7 +200,7 @@ resolution but does not delete anything.
 ## Open questions
 
 - ~~Should `tmats` binaries be signed, beyond the published SHA-256
-  checksums?~~ Answered by step 7: each file carries a signed
+  checksums?~~ Answered by the reusable-builder protocol above: signed files carry a
   build-provenance attestation (2026-09-27). Signing the binaries themselves
   (Authenticode on Windows, notarisation on macOS) stays open.
 - `irig106-cli` is the complete ecosystem tool and is released from its own

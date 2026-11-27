@@ -2774,13 +2774,21 @@ No dependency, workflow, publishing, settings or credential change is made.
 Inspect actual graph coverage rather than only direct manifest entries.
 Record unavailable checks/data as limitations, not clean results. This does
 not invent a database-freshness window, feature matrix or new source policy.
+The release graph SHALL resolve compatible published irig106-types 0.2 and
+irig106-core 0.2 APIs from crates.io and exercise those APIs. Merged source
+or a CI-only source override (including #59's consumer check) is never release
+evidence; publication of both dependencies precedes tmats 0.1.
 
 **L3-REL-010** · Parent: L2-REL-005 · Verification: I
 *The existing vulnerability, maintenance/yank, licence and source rules SHALL remain effective on the checked graph, with denials causing failed acceptance unless an applicable existing documented exception covers them; warnings SHALL remain distinguishable from denials, and an internal workspace path SHALL NOT silently permit arbitrary third-party path/git/registry sources.*
 
 L1-REL-005 and deny.toml govern the actual rule set; validate tool behavior,
 not comments alone. Duplicate-version warnings are not turned into a new
-blanket ban. No exception, licence list or registry allowance is added here.
+blanket ban. For the release graph, external types/core dependencies SHALL
+have no path/git/[patch]/source override; inspect their actual resolved source.
+The exact-version internal workspace library path remains allowed, with its
+packaged dependency resolving the matching published crates.io library.
+No exception, licence list or registry allowance is added here.
 
 **L3-REL-011** · Parent: L2-REL-005 · Verification: I
 *Each dependency exception SHALL remain traceable to its listed identifier, affected dependency/context and written reason; retirement of the prototype XML code SHALL include review/removal of its prototype-only advisory ignores, without transferring that rationale to replacement code or treating a past exception as approval of a new dependency.*
@@ -2791,40 +2799,42 @@ of the policy file now. Criterion retention and any dev dependency still
 need owner approval under the carried instructions.
 
 **L3-REL-012** · Parent: L2-REL-006 · Verification: I
-*Release-artifact acceptance SHALL identify the reviewed release source/version, target/build and exact binary bytes/digest for every distributed binary, and bind its published checksum and SBOM/provenance evidence to that same artifact; another target/version's evidence or a mutable filename alone SHALL NOT satisfy the match.*
+*Release-artifact acceptance SHALL identify the reviewed source/tag/version and actual bytes/digests of every .crate, binary archive and SBOM; one SHA256SUMS and one irig106-tmats-<version>.intoto.jsonl bundle SHALL cover the signed files in the single GitHub release, with target/build identity for binaries and no substitution by filename or another build's evidence.*
 
-RELEASING.md plans Windows/Linux/macOS distribution and SHA-256 checksums.
-This introduces no new target/architecture set or release action. A binary
-rebuilt after evidence generation requires matching evidence, not reuse of
-a stale digest merely because the output filename is identical.
+The org binary variant and RELEASING.md govern the release asset set. The
+manifest and bundle are validated evidence, not necessarily individually
+attested subjects. This selects no new target/architecture or release action.
 
 **L3-REL-013** · Parent: L2-REL-006 · Verification: I
 *Each released binary SHALL have its required CycloneDX SBOM from the actual build/dependency context, with target/features/source identity sufficient to associate it with that binary; a library-only manifest list, different-target graph or missing SBOM SHALL NOT be accepted as per-binary inventory.*
 
-RELEASING.md selects cargo cyclonedx; no SBOM schema version, new generator,
-tool installation or substitute format is selected here. A manifest's version
-requirements alone are not an inventory of resolved shipped dependencies.
+RELEASING.md retains cargo cyclonedx; no SBOM schema version, new generator,
+tool installation or substitute format is selected here. Include those SBOMs
+in the unified checksums/bundle and release asset verification.
 
 **L3-REL-014** · Parent: L2-REL-006 · Verification: I
-*Every distribution file covered by RELEASING.md's provenance obligation SHALL have verifiable build provenance associated with its actual digest and reviewed source/build identity, including the required binaries/SBOM/checksum artifacts, rather than only a workflow badge, signing-step name or another file's attestation.*
+*The caller's build SHALL invoke ./.github/workflows/build-binaries.yml, using read-only build-binaries-core.yml for target qualification and packaging; the reusable builder SHALL sign only its own verified output in its nested Checksums and attestations job on v* tag push, independently guarded, with no caller-supplied signing inputs or top-level attest job.*
 
-RELEASING.md step 7 chooses GitHub build-provenance attestations. Evidence
-must show verification for the intended downloaded bytes and repository/
-build identity; a changed payload or wrong source artifact is not equivalent.
-No new signing/notarization policy or trust bypass is approved.
+The org binary variant requires source checkout at github.sha and explicit
+gate decision input. PR/manual builds never sign. All building/signing
+finishes before crates-io approval; provenance alone claims no SLSA level.
 
 **L3-REL-015** · Parent: L2-REL-006 · Verification: I
-*Release evidence SHALL include the documented user verification path and an applicable completed verification result for the exact intended distribution file, retaining missing/mismatch/verification failures as unsatisfied; documentation or an uploaded artifact alone SHALL NOT be claimed as successful verification.*
+*Release evidence SHALL include completed verification of the actual published assets and documented user verification path, constrained to intended repository, tag and reusable-builder signer; missing, changed, wrong-source or failed verification SHALL remain unsatisfied, never inferred from an upload or workflow badge.*
 
-The existing recipe is gh attestation verify <file> --owner TelemetryWorks.
-Concrete workflow/artifact verification belongs to later reviewed release
-work, not this docs PR. No account, credential or publisher registration is
-accessed to create evidence here.
+The user path includes gh attestation verify <file> --owner TelemetryWorks,
+with repository, --source-ref refs/tags/vX.Y.Z and expected builder workflow
+constraints for the signed files in the bundle. Validate SHA256SUMS and the
+bundle without claiming they necessarily have individual attestations.
 
 **L3-REL-016** · Parent: L2-REL-006 · Verification: I
-*Artifact acceptance SHALL preserve the existing separation between binary release.yml distribution and crates.io publishing via trusted-publishing.yml with the crates-io environment, and SHALL NOT turn SBOM/provenance success into authority to publish, store a registry token, bypass release gates or assert TMATS record integrity/semantic correctness.*
+*Acceptance SHALL follow the org binary variant in trusted-publishing.yml (Trusted publishing), with gate/build/publish/github-release/verify and read-only publish-path-check: publish needs [gate, build], uses crates-io, compiles nothing, reproduces each package with cargo package --locked --no-verify and cmp against the attested .crate before upload, then compares every served .crate byte for byte and against the registry checksum, including already-published versions.*
 
-All real releases remain Trusted Publishing-only. RELEASING.md's narrowly
-scoped first-upload exception stays coordinator/owner-only, never CI or this
-maintainer. No release workflow exists merely because a document names it;
-no first upload, token fallback or settings operation is authorized here.
+Use fresh ephemeral OIDC credentials per dependency wave, never stored tokens.
+The github-release job SHALL create/resume a draft, verify tag/title/exact
+committed docs/releases/vX.Y.Z.md body/draft state, upload and check every
+asset name/size/digest, publish and check again; never modify a published
+release or replace an asset. verify checks actual published release files.
+All real releases remain TP-only; the coordinator/owner-only first-upload
+exception is unchanged, never CI or this maintainer. Artifact acceptance
+neither authorizes publishing/settings actions nor proves TMATS integrity.
