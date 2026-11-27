@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-27-checksum-commands-and-owner-questions.md](2026-11-27-checksum-commands-and-owner-questions.md) | Batch 35 checksum command contracts and plain-English owner briefs on proposed INT-031 and first-fragment versus completion order |
 | [2026-11-27-record-enumeration-requirements.md](2026-11-27-record-enumeration-requirements.md) | Batch 34 internal complete-record enumeration, source order/provenance, qualifications and traversal-failure boundaries |
 | [2026-11-27-edition-independent-reading.md](2026-11-27-edition-independent-reading.md) | Batch 33 edition-independent structural reading, semantic/qualification boundary and release-gate/toolchain follow-ups |
 | [2026-11-27-release-evidence-and-vn-followup.md](2026-11-27-release-evidence-and-vn-followup.md) | Batch 32 existing dependency/SBOM/provenance acceptance, workflow-authority boundaries and INT-063 projected three-character usable-VN amendment |

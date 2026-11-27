@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through complete-record enumeration drafted (family 2, batches 1-26 and 28-34).**
+> **Status: foundations through checksum command computation drafted (family 2, batches 1-26 and 28-35).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -2944,7 +2944,7 @@ This defines neither public record ordinals nor streaming emission timing.
 A revised time-seal outcome supersedes its earlier observed classification
 for this final inventory, retaining its history/findings under INT-045/048.
 Duplicate-field ambiguity cannot be cured by byte identity or digest evidence.
-Access to qualified raw bytes and command eligibility remain their own gates.
+Access to incomplete/ambiguous records is gated by [proposed INT-031](INTERPRETATIONS.md#int-031); retained raw evidence and enumeration do not approve that access or command eligibility.
 No severity suppression or rendering rule is selected here.
 
 **L3-CLI-042** · Parent: L2-CLI-011 · Verification: T
@@ -2970,3 +2970,72 @@ Tests of classification itself remain with the assembler's source-cited
 fixtures and interpretation gates. Adapter integration uses core evidence
 alongside PacketFacts and borrowed spans; no checksum/trust fields are
 invented in PacketFacts. Structured assertions choose no rendered schema.
+
+
+## Checksum command computation acceptance (family 2, batch 35)
+
+Existing library contracts provide digest/exclusion/transaction semantics;
+these command children preserve them without a second implementation.
+Proposed INT-031 gates incomplete/ambiguous record access. Tests of refused
+outcomes may inject library results; they do not bypass the access gate.
+Public report formats, exit mappings and selection defaults remain held.
+
+**L3-CLI-045** · Parent: L2-CLI-012 · Verification: T
+*Checksum/verify command computation SHALL use the explicitly supplied scoped document/revision and operation, preserving their association with the library result and findings; a different record, earlier revision or concatenation of records SHALL not silently replace that input.*
+
+Recording inputs use the assembled TMATS text domain, not packet headers,
+CSDWs, filler or data checksums. Standalone text uses its retained source.
+Existing library/source and core-backed adapter contracts determine those
+bytes; commands neither re-scan packets nor rebuild text from typed fields.
+
+**L3-CLI-046** · Parent: L2-CLI-012 · Verification: T
+*Authoritative compute results SHALL retain the library's defined-domain/refusal distinction: a complete terminated SHA item with a malformed value alone SHALL not become a command-level compute refusal, while an undefined/ambiguous exclusion SHALL not become a successful authoritative checksum or be replaced silently by an unlabelled raw-byte hash.*
+
+L3-SUM-002 permits compute with G\SHA:2-ABC;, a 63-digit value, a zero
+placeholder or unsupported algorithm when the domain is established; verify
+retains its different verdict. A blocked access path is not permission to
+compute by reading partial/ambiguous input through another API.
+
+**L3-CLI-047** · Parent: L2-CLI-012 · Verification: T
+*Verification command computation SHALL preserve the library's match, mismatch, absent, unknown-algorithm, malformed, indeterminate, unavailable and placeholder distinctions and every applicable finding, without choosing a duplicate, repairing bytes or treating inability to verify as a match.*
+
+These are semantic distinctions, not a frozen result enum or output schema.
+INT-043 permits canonical numeric algorithm 2 with leading zeros, retaining
+every located noncanonical-designator warning even when another cause blocks
+verification. F1/INT-021 retains all duplicate evidence and no positive match.
+No whole-document validity or governing authority follows from a SHA match.
+
+**L3-CLI-048** · Parent: L2-CLI-012 · Verification: T
+*An explicitly requested flex computation SHALL stay distinguishable from standard SHA computation/verification with its non-standard identity and supplied compatibility options attached to the result; it SHALL neither write a flex value into G\SHA nor satisfy a standard checksum request by returning flex instead.*
+
+ADR-0014 and L1-SUM-003 are the compatibility authority; no new flag syntax,
+option default, digest algorithm or output spelling is selected. Bit-for-bit
+algorithm/source qualification and independent flex fixtures remain their
+own unfinished derivation. No digest or checksum is a keyed signature here.
+
+**L3-CLI-049** · Parent: L2-CLI-013 · Verification: T
+*Stamp command computation SHALL delegate explicit revision-bound edits and the final stamp to the existing transaction, reject its refused/failed outcome without a successful stamped-result claim, and preserve original source, findings and failure evidence; it SHALL not silently remove duplicate SHA items or repair damaged names to create a stamp target.*
+
+An explicit permitted exact-item removal may precede stamp in the transaction;
+rebuild/re-read before computing. Noncanonical name-slot findings remain
+prominent in the result with the recommendation for an explicit rename first;
+a stamp alone is not a rename. No new edit syntax or ambiguous-access option
+is authorized by this command wrapper.
+
+**L3-CLI-050** · Parent: L2-CLI-013 · Verification: T
+*Only a successful final-byte verified stamp transaction SHALL yield the command's successful stamped-result bytes, with canonical 2- and lower-case hex and all transaction findings retained; command computation SHALL not hash before emission, omit inserted bytes from the domain, return an unverified intermediate result as success or modify the input.*
+
+Delivery is separate: a valid result in memory does not prove a destination
+write succeeded. Existing input-identity and delivery/failure contracts apply;
+held output policy/eligibility choices remain held. This requirement approves
+neither early file truncation nor a numeric process-status mapping.
+
+**L3-CLI-051** · Parent: L2-CLI-012 · Verification: T
+*Command/library integration tests SHALL independently check selected source/revision, operation, domain, semantic outcome and retained findings for compute/verify/flex/stamp paths, with explicit library refusal and transaction-verification failure cases; a mocked call alone SHALL not establish digest correctness or flex compatibility.*
+
+Contract tests may inject already evaluated blocked results; meaningful
+integration later exercises eligible real documents, independently calculated
+SHA digests and the reviewed transaction. Negative fixtures assert intended
+reasons, not unrelated errors. No second parser/packet reader or production
+command path computes its own expected oracle. Stamp cases also trace to
+L3-CLI-049/050; flex readiness still requires its own source-derived tests.

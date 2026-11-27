@@ -191,6 +191,16 @@ canonical ordering, line-ending and counter-rewrite rules with independent
 byte oracles before claiming the full normalization capability. The boundary
 requirements do not choose those rules or reduce the 0.1 obligations.
 
+### Remaining checksum command acceptance
+
+Review checksum/verify/stamp command computation as thin library consumers
+for explicitly selected eligible records: preserve defined-domain versus
+value-verdict distinctions, every refusal/finding and final-byte verified
+stamp results. Flex remains explicitly requested, non-standard and never a
+G\SHA replacement; finish its exact compatibility derivation before use.
+Proposed INT-031 gates incomplete/ambiguous access. Public selection defaults,
+rendered formats and output destination/eligibility policy remain held.
+
 ### Remaining complete-record enumeration acceptance
 
 Review internal all-record enumeration against final evaluated assembly
@@ -199,7 +209,10 @@ file order independently of finalization order. Qualifying a record as
 Complete does not approve command eligibility or governing use. Preserve
 non-Complete evidence and partial-traversal failures without inventing a clean
 full inventory. Public selection/numbering, live provisional emission and
-report rendering remain their separate owner-review scope.
+report rendering remain their separate owner-review scope. Proposed INT-031
+explicitly gates incomplete/ambiguous record access; enumeration never approves
+its optional labelled split. First-fragment versus completion order is being
+put to the owner for confirmation; no new approval is recorded here.
 
 ### Remaining CLI input and presentation derivations
 

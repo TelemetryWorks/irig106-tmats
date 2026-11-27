@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through complete-record enumeration drafted (family 2, batches 1-26 and 28-34).**
+> **Status: foundations through checksum command computation drafted (family 2, batches 1-26 and 28-35).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -1271,6 +1271,36 @@ eligibility/governance decisions. No new owner interpretation is selected.
 
 **Statement**: Record enumeration SHALL retain the source/candidate identities and upstream findings needed to distinguish Complete records from incomplete, ambiguous, provisional, unsupported or failed candidates; it SHALL preserve qualifications and observable traversal failures without manufacturing records, silently treating a failed scan as a complete inventory or making enumeration confer command eligibility or governing authority.
 
-**Rationale**: INT-011/039/045/048 and existing assembly/core-boundary requirements determine input evidence, not this enumerator. A Complete classification is not checksum success, valid metadata, a publishable provisional result or authority to extract/use a setup. Final classification may revise an earlier time seal; this slice consumes evaluated outcomes rather than deciding provisional publication, access, quarantine or recovery. Presentation and command-specific eligibility remain owner-gated.
+**Rationale**: INT-011/039/045/048 and existing assembly/core-boundary requirements determine input evidence, not this enumerator. A Complete classification is not checksum success, valid metadata, a publishable provisional result or authority to extract/use a setup. Final classification may revise an earlier time seal; this slice consumes evaluated outcomes rather than deciding provisional publication, access, quarantine or recovery. Presentation and command-specific eligibility remain owner-gated; access to incomplete/ambiguous records is explicitly gated by [proposed INT-031](INTERPRETATIONS.md#int-031), not authorized by enumeration.
+
+**Verification Method**: Test (T)
+
+
+## Checksum command computation (family 2, batch 35)
+
+These derive L1-CLI-005 for explicitly selected, eligible document/revision
+inputs; no public selection syntax, multi-record default or report rendering
+is chosen. The [source/owner brief](research/2026-11-27-checksum-commands-and-owner-questions.md)
+records the boundary and the requested INT-031/file-order summaries.
+Access to incomplete/ambiguous records is gated by proposed INT-031;
+no command below implicitly approves its labelled ambiguous-split option.
+
+#### L2-CLI-012
+
+**Parent**: L1-CLI-005
+
+**Statement**: Checksum and verification command computation SHALL delegate to the corresponding library operations for the explicitly supplied eligible document/revision, preserving the authoritative byte domain, operation-specific results and located findings; flex SHALL remain a separate explicitly requested compatibility operation, never substituted for G\SHA or presented as standard verification.
+
+**Rationale**: CLI.md requires commands as thin library layers. L1-SUM-001/002/003 and ADR-0014 define SHA and non-standard flex as different operations; approved INT-018–021/043 define SHA recognition, refusal and value behavior. The command must not implement another digest-domain recognizer, collapse verify-malformed into compute-refused, repair input to obtain a match, or upgrade field/assembly qualifications. The exact flex algorithm's remaining derivation and independent compatibility fixtures are still required.
+
+**Verification Method**: Test (T)
+
+#### L2-CLI-013
+
+**Parent**: L1-CLI-005
+
+**Statement**: Stamp command computation SHALL use the library's validated final-byte stamp transaction for its supplied document/revision and permitted explicit edits, preserving refusals, verification failure and all findings; only a successfully verified transaction SHALL produce a successful stamped-result value, with the original input unchanged and output delivery subject to the separate safe-destination contract.
+
+**Rationale**: L1-SUM-004, ADR-0029 and L2-SUM-003/L2-WRT-002 require final-byte hashing and re-read verification. F1 permits explicit exact-item duplicate removal before stamping, not a winner selected by stamp. L1-CLI-007 and the extraction/output contracts prevent in-place input changes. This derives command computation, not permission to implement held -o overwrite/identity checks or to select a destination, output layout or exit code.
 
 **Verification Method**: Test (T)
