@@ -982,6 +982,11 @@ these specific takeover/boundary sub-questions (none is answered here):
 control setup govern: after its last fragment, after its INT-045 closure
 point, or another explicitly defined boundary? Last fragment and time closure
 may differ; specify how packets between those points are qualified.
+**Maintainer recommendation (not approved):** use the evidenced closure/
+valid-takeover boundary, including a trusted time packet that seals the record
+rather than starting only after that packet. Do not backdate adoption to the
+last fragment merely because it arrived earlier; intervening packets retain
+their established or unresolved qualification, not an inferred new setup.
 
 (b) **Unresolved comparison target:** can this Complete candidate take
 control while INT-053's comparison target is unresolved, and which independent
@@ -989,12 +994,20 @@ evidence establishes that valid takeover? INT-053 already allows a later
 INDEPENDENTLY ESTABLISHED valid takeover to restore a resolved target;
 Complete alone is never that evidence. The owner must define the qualifying
 rule or defer its application, not guess the old comparison target.
+**Maintainer recommendation (not approved):** allow restoration only through
+a separately reviewed rule establishing independent valid takeover, as
+INT-053 permits. Until such evidence is established the target remains
+unresolved; Complete, equality, SRCC or a digest alone is insufficient.
 
 (c) **SRCC=1 with unverified F7 event identity:** does the indeterminate event
 check block takeover, delay it pending verified evidence, or not by itself
 affect eligibility? Preserve approved INT-030's indeterminate finding in all
 options; neither a nearby generic event nor absence of verified identification
 proves an event occurred or did not occur. Other takeover guards still apply.
+**Maintainer recommendation (not approved):** unverified F7 identity should
+not itself block/delay an otherwise independently established valid takeover.
+Retain the indeterminate finding prominently; do not assert the event existed
+or waive any other admission, qualification or adoption requirement.
 
 (d) **Distributed-mux / nonzero-channel setup sources before 106-11:** define
 per-source governing with independently established source partitions, or
@@ -1002,12 +1015,21 @@ leave that governing case out of scope pending its own reviewed rule? No
 channel/source association is guessed. This scope question concerns governing,
 not permission to discard or stop parsing legacy raw setup candidates; core
 still owns packet admission/legacy-channel evidence.
+**Maintainer recommendation (not approved):** leave distributed-source
+GOVERNING scope unavailable pending a dedicated source-partition rule;
+continue retaining/parsing legacy setup candidates and core evidence.
+Do not invent which recorder/source/channel governs which data. This is
+not a cut to the existing legacy text/payload-reading obligation.
 
 (e) **File order for interleaved runs:** use first contributing fragment or
 completion order, and how does that ordering relate to the effective boundary
 chosen in (a)? These are distinct concepts: ordering a candidate does not
 adopt it. This is the existing [file-order owner item](research/2026-11-27-checksum-commands-and-owner-questions.md#owner-brief-what-file-order-means),
 not a new implicit default.
+**Maintainer recommendation (not approved):** first contributing fragment
+orders the candidate inventory; the separate closure/takeover point in (a)
+controls when an established governing setup applies. Completion order is
+not a substitute for source order or evidence of adoption.
 
 **B (unchanged)**: defer governing application and expose only candidates/
 evidence until those decisions exist. Neither option permits the superseded
@@ -1052,6 +1074,18 @@ from there” shortcut remains. INT-048 Ambiguous stays blocking regardless of
 comparison equality. **Owner sub-question**: when do descriptive-only changes
 such as G\COM/G\OD count as configuration change? Require reviewed
 attribute semantics; do not choose a generic rule in this table.
+
+**Separate owner question — comment-only/date-only changes**: A excludes a
+change proven to affect only reviewed descriptive comment/date fields from
+SEMANTIC configuration change; B counts those changes as configuration
+changes too; C makes that classification an explicitly supplied reviewed
+per-field policy, with no silent default. **Recommend A**, but only when
+reviewed definitions prove the fields are descriptive and no other change
+is present. Unknown/private fields stay unresolved, not assumed descriptive.
+In every option report the raw change and SRCC claim under INT-050; it is
+never byte-identical retransmission or automatic takeover. A does not waive
+the owner rule that an SRCC=0 copy differing in raw bytes is checked and
+reported as a change. No semantic reset or governing effect is inferred.
 
 **Owner options**: A (recommended) this evidence/findings-only composition,
 with semantic classes only when independently reviewed; B defer the table
