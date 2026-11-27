@@ -2963,6 +2963,11 @@ No severity suppression or rendering rule is selected here.
 **L3-CLI-042** · Parent: L2-CLI-011 · Verification: T
 *Enumeration SHALL pass through core/assembler traversal failure and resource-limit evidence with its supplied extent and source context, retaining the distinction between no Complete records and an incomplete inventory; it SHALL NOT restart under the alternate input route, silently drop runs or assert that unvisited input contained no further records.*
 
+Core's admission refusals (HardLimit / BudgetTooSmall / TargetLimit) and
+drain reports are core-owned evidence passed through unchanged, with supplied
+extent/context. They remain separate from tmats' assembler-retention limit:
+tmats never reclassifies them or double-counts bytes across the two accounts.
+
 Already observed records do not establish successful full traversal after a
 later failure. This requirement selects no continue/stop/recovery mode,
 partial-result publication, exit code or process policy. Existing bounded
@@ -3489,13 +3494,19 @@ No source may dangle/rebind; ADR-0036's no-required-coalescing remains intact.
 A budget for open-run state is not a bound on the caller's entire heap/RSS.
 
 **L3-ROB-016** · Parent: L2-ROB-006 · Verification: T
-*Accounting evidence SHALL name its domain, selected model/units and known quantities or reviewed bounds for every covered retention category; it SHALL expose excluded/caller-owned or unknown quantities and SHALL NOT advertise a hard aggregate byte bound from logical text totals, incomplete overhead/owner accounting or a synthetic fixture model.*
+*Accounting evidence SHALL name its domain, including core BlockPool credits held by retained DATA spans, selected model/units and known quantities or reviewed bounds for every covered retention category; it SHALL expose excluded/caller-owned or unknown quantities and SHALL NOT advertise a hard aggregate byte bound from logical text totals, incomplete overhead/owner accounting or a synthetic fixture model.*
 
 Selected policies must cover their claimed domain, including metadata-only
 streams, backing retention and failure/snapshot state. This does not decide
 allocator overhead or shared/caller charging. An unavailable required quantity
 is a readiness limitation, not zero charge or a fabricated successful proof.
 The owner-held zero-allocation non-setup host rule is not selected here.
+
+Retained pool credits stay inside this domain, not an exclusion for borrowed
+or caller-owned bytes. PENDING OWNER: how the assembler keeps the reader
+progressing while it retains spans (cap retained pool credits, early copy,
+or typed failure). No policy, threshold or copy trigger is selected; the
+open-run reader-stall fixture is BLOCKED on that decision.
 
 **L3-ROB-017** · Parent: L2-ROB-007 · Verification: T
 *An admission/limit calculation SHALL compare the configured finite limit, charged state and proposed charge under the selected model without wrapping arithmetic; a full proposed operation whose charge exceeds the remaining limit or arithmetic domain SHALL not be reported as fully admitted within budget, and its actual accepted/rejected extent SHALL remain explicit.*
@@ -3515,6 +3526,11 @@ support or safe retry/resume from this ledger; those remain review items.
 Failure reporting itself is retained state if the assembler owns it, not an
 escape from the existing budget. No spill I/O, forced eviction or renderer
 format is authorized. Missing input cannot be repaired with an empty record.
+
+Core admission refusals and drain reports remain core-owned evidence under
+L3-CLI-042, passed through unchanged and separate from this assembler limit.
+Do not relabel a core refusal as an assembler limit or double-count retained
+bytes by adding overlapping core and assembler accounting totals.
 
 **L3-ROB-019** · Parent: L2-ROB-007 · Verification: T
 *Resource tests SHALL independently specify retained owner/reference/category inventories, selected fixture-model charges, arithmetic boundaries and failure/source disposition, including multiple channels, shared owners, empty fragments, snapshots and error paths; fixture accounting shall not substitute for verification of actual production allocations/ownership or approve a pending policy.*

@@ -1504,9 +1504,9 @@ required; synthetic policy inputs do not certify a hard memory bound.
 
 **Parent**: L1-ROB-001
 
-**Statement**: The assembler SHALL retain a testable inventory of its in-scope retained text/owners, span/fragment/run metadata, provenance, retained snapshots and error-path state across all open channels, identifying shared ownership and known size/capacity or unavailable quantity; it SHALL bind accounting claims to the declared budget domain and selected reviewed model rather than infer memory use from logical text length or zero payload copies.
+**Statement**: The assembler SHALL retain a testable inventory of its in-scope retained text/owners, span/fragment/run metadata, provenance, retained snapshots and error-path state across all open channels, identifying shared ownership and known size/capacity or unavailable quantity, with core BlockPool credits held by retained DATA spans inside the budget domain; it SHALL bind accounting claims to the declared budget domain and selected reviewed model rather than infer memory use from logical text length or zero payload copies.
 
-**Rationale**: ADR-0036 requires borrowed blocks to stay alive and accounts for retained block owners/span metadata; L3-ROB-004 already covers aggregate text/metadata/snapshots with no hard-bound claim from an incomplete model. Owner identity/reference facts are distinct from the still-open charging/overhead and caller-owned accounting choices. This adds no packet metadata field, numeric limit or allocation threshold.
+**Rationale**: ADR-0036 requires borrowed blocks to stay alive and accounts for retained block owners/span metadata; L3-ROB-004 already covers aggregate text/metadata/snapshots with no hard-bound claim from an incomplete model. Owner identity/reference facts are distinct from the still-open charging/overhead and caller-owned accounting choices. This adds no packet metadata field, numeric limit or allocation threshold. Retained pool credits are not excluded as caller-owned storage. Reader progress while spans retain those credits is PENDING OWNER: a retained-credit cap, an early copy, or typed failure; none is selected here.
 
 **Verification Method**: Test (T)
 

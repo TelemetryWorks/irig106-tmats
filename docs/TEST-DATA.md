@@ -2045,6 +2045,9 @@ ADR-0036 and existing per-channel/provenance contracts.
 | `retention_error_payload_copy_cannot_escape_budget` | Proposed full rejected-payload copy hidden in error path: inventory/claimed-domain check detects unaccounted retention, no false bounded-state success | L3-ROB-014, L3-ROB-018 |
 | `retention_limit_is_not_joining_or_validity_signal` | Limit failure with an open run: preserve its actual state/source context, never invent EOF/stop/Complete, malformed findings or governing adoption | L3-ROB-018 |
 | `retention_fixture_model_is_not_production_evidence` | Synthetic charge totals pass but real ownership/allocation model is unverified: implementation hard-bound readiness still unsatisfied | L3-ROB-016, L3-ROB-019 |
+| `retention_core_refusals_and_drains_stay_core_owned` | Supplied core HardLimit / BudgetTooSmall / TargetLimit refusals and drain reports retain identity, extent and context unchanged; distinct from injected tmats assembler-retention failure, never reclassified | L3-CLI-042, L3-ROB-018 |
+| `retention_pool_credits_are_in_domain_not_counted_twice` | Retained DATA spans hold supplied core BlockPool credits: inventory includes them inside the budget domain, not a borrowed/caller exclusion; overlapping core/assembler byte totals are not added twice | L3-ROB-014, L3-ROB-016, L3-ROB-018 |
+| `retention_open_run_holds_pool_to_b_reader_stall` | **BLOCKED, PENDING OWNER reader-progress policy:** synthetic pool budget B; an open run retains DATA spans holding credits up to B and the reader needs another block. Preserve the credit inventory and core evidence; expected cap/early-copy/typed-failure behavior awaits owner choice, no assumed progress or silent eviction | L3-ROB-016, L3-ROB-019 |
 
 Operational failure is not a new always-refuse extraction finding. Raw
 extract still requires an available selected extent; no guessed byte ranges,

@@ -47,6 +47,25 @@ state. Synthetic inventories and supplied charges test contract mechanics;
 they cannot qualify actual allocation behavior or prove a process heap/RSS
 bound. The host's non-setup steady-state allocation target remains owner-held.
 
+## Core boundary and reader-progress hold (PR #78 review)
+
+Core admission refusals (HardLimit / BudgetTooSmall / TargetLimit) and drain
+reports are core-owned evidence. Pass them through unchanged under L3-CLI-042,
+with their extent and source context; do not turn them into tmats assembler
+limit failures. The two limits remain distinct, with no double-counting of
+bytes when their accounting domains overlap.
+
+Core BlockPool credits held by retained DATA spans are INSIDE the assembler
+budget domain; borrowing does not exclude them. This is distinct from choosing
+an accounting tariff or claiming a global heap bound.
+
+**PENDING OWNER — reader progress:** an open run may retain spans holding pool
+credits up to B while the reader needs another block. Decide a cap on retained
+pool credits, an early copy, or a typed failure. No option, cap, copy trigger
+or recovery behavior is selected. The named reader-stall fixture is BLOCKED
+until the owner answers. This note does not authorize required coalescing or
+silently replace ADR-0036's borrowed-span contract.
+
 ## Arithmetic and operational failure
 
 L2-ROB-007 / L3-ROB-017..019 refine existing typed failure evidence without
@@ -75,10 +94,11 @@ bad-data category and does not decide the pending extract strict predicate.
 
 ## Verification and remaining gates
 
-The 18 planned TEST-DATA cases specify independent category/reference
+The 21 planned TEST-DATA cases specify independent category/reference
 inventories, supplied charges, exact arithmetic and source dispositions.
 They include sharing across channels, empty fragments, retained snapshots,
-unknown capacity, error storage and owner handoff. Production code must verify
+unknown capacity, error storage, owner handoff, unchanged core evidence and
+pool-credit accounting; the reader-stall policy case is owner-blocked. Production code must verify
 its real ownership/accounting, beyond these fixture-model checks.
 
 No executable resource test is claimed here. Local validation is limited to

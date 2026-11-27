@@ -97,6 +97,14 @@ Choose numeric defaults, shared/caller/allocator accounting and failure
 atomicity/recovery separately; typed source-disposition evidence must not
 silently choose those policies or manufacture closure on resource exhaustion.
 
+**PENDING OWNER — reader progress under retained pool credits:** core BlockPool
+credits held by retained DATA spans are inside the budget domain. Decide how
+an open assembler run avoids stalling the reader: cap retained pool credits,
+make an early copy, or return a typed failure. Do not select a policy or
+threshold until the owner answers; the reader-stall fixture remains blocked.
+Core admission refusals and drain reports remain unchanged core evidence,
+separate from the assembler-retention limit, with no double-counting of bytes.
+
 ### Remaining bounded time-view derivations
 
 Review the association-uncertainty/caller-assumption derivations and implement
