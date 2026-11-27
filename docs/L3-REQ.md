@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through retention/limit evidence drafted (family 2, batches 1-26 and 28-42).**
+> **Status: foundations through show-free command orchestration drafted (family 2, batches 1-26 and 28-43).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -3539,3 +3539,64 @@ Assert internal evidence and exact retained source, not only a final numeric
 counter. Test native checked arithmetic in appropriate CI profiles when code
 exists; debug/release differences must not hide overflow. No new dev dependency,
 local heavy run or production memory/throughput threshold is approved.
+
+
+## Show-free command orchestration acceptance (family 2, batch 43)
+
+These refine L2-CLI-016/017 using supplied reviewed internal requests and
+unheld computation. No public command grammar, rendering or exit mapping is
+chosen. Proposed INT-031 still gates semantic access to incomplete/ambiguous
+records; raw extract remains separately authorized by ADR-0037.
+
+**L3-CLI-062** · Parent: L2-CLI-016 · Verification: T
+*Orchestration SHALL carry the acquired source identity and explicitly selected scoped document/revision into the requested library operation, preserving source extents, occurrence multiplicity and qualifications; a path, inventory position, checksum result or byte-identical copy SHALL NOT silently substitute a different candidate or revision.*
+
+Assert the selected binding through routing/enumeration and command handoff,
+not only identical final values. This chooses no public numbering/default,
+file-order interpretation, live publication policy or filesystem snapshot
+atomicity. Stamp's explicit new output revision and required verification
+are not forbidden; distinguish them from the selected input revision.
+
+**L3-CLI-063** · Parent: L2-CLI-016 · Verification: T
+*Command composition SHALL preserve original selected bytes for raw extraction and checksum-domain computation, together with core-supplied trust/integrity/admission evidence and record qualifications, without silently normalizing, serializing an interpreted view, reparsing packet headers or using one integrity result to upgrade another.*
+
+L3-CLI-030/031 and the checksum-domain rules remain authoritative. Projected
+fields cannot replace raw source. CSDW exclusion follows existing fragment
+slicing, not a second reader. Core refusals/drain reports and tmats retention
+limits stay distinct under L3-CLI-042/ROB-018; no double-counting or fallback.
+This does not authorize access or govern a record merely because it was read.
+
+**L3-CLI-064** · Parent: L2-CLI-016 · Verification: T
+*Each invocation SHALL use its supplied request/selection/options and output handles; prior successful or failed calls SHALL NOT supply an omitted record, edition override, clock choice or command mode to a later call, nor overwrite evidence/results already returned for another source/revision.*
+
+INT-060 forbids remembered per-query association choices. Reviewed edition
+fallback remains applicable; absence of an override does not forbid that
+policy. This does not require global cache flushing, prohibit explicit
+caller-managed context, choose a reset API or promise concurrent execution.
+A result's source identity and qualifications must not silently rebind.
+
+**L3-CLI-065** · Parent: L2-CLI-017 · Verification: T
+*Integration tests SHALL distinguish acquisition/routing, traversal/assembly, selection/access, computation and delivery outcomes under their reviewed contracts; an earlier failure SHALL NOT become a successful empty command result, and successful computation SHALL NOT be reported as successful delivery when the supplied sink fails.*
+
+Use injected distinguishable failures to verify the shared boundary without
+choosing numeric process codes, rendered diagnostics or warning suppression.
+Retain actual stage/source evidence; do not turn unavailable semantic access
+into permission to continue. No new retry, continuation or failure-atomicity
+policy is selected; existing output contracts govern partial delivery.
+
+**L3-CLI-066** · Parent: L2-CLI-017 · Verification: T
+*For the same reviewed request, source/revision and supplied context, the runner's command handoff and individual-command path SHALL use shared command computation and yield equivalent semantic results, source bindings and qualifications before rendering, while returning control to the host on both success and failure.*
+
+Compare pre-render command data and stage identity, not JSON/text snapshots
+or unreviewed exit mappings. A bounded instrumented adapter can observe the
+handoff; adapter success alone does not qualify an actual command. The thin
+binary remains responsible only for process-edge translation under W3.
+
+**L3-CLI-067** · Parent: L2-CLI-017 · Verification: T
+*Acceptance evidence SHALL identify which real reviewed command/routing paths were exercised and their independent byte/result/failure oracles; synthetic stage adapters, help/version coverage or a passing component suite SHALL NOT be reported as full integrated command acceptance when real paths, dependency compatibility or owner-held policies remain unverified.*
+
+Bounded synthetic composition fixtures test boundary mechanics. Actual text
+and core-backed recording command paths need their own executable evidence
+once implemented, using existing source-cited fixtures. Flex qualification,
+std/consumer checks, report formats, strict scope and general record access
+retain their gates. No new dependency or local heavy check is authorized.

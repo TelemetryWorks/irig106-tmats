@@ -190,6 +190,7 @@ to retain it in the redesign or add another benchmarking dependency.
 | F7 event identity/prior scope | Indeterminate policy approved; identity still unverified, prior meaning needs its own reviewed interpretation | Determinate configuration-change-event presence/absence check; a generic Format 2 candidate is not proof; do not reopen the approved uncertainty policy |
 | --strict scope | PENDING OWNER: listed bad-data kinds versus any finding | Strict behavior for unlisted findings, including the information-only fixture; listed-kind/no-finding cases and default raw extraction are common to both options |
 | Criterion retention (#62) | PENDING OWNER | Keeping the prototype Criterion dev dependency and accepting a harness that relies on it; no automatic new benchmark dependency approval |
+| Reader progress under retained BlockPool credits (#78 follow-up) | PENDING OWNER; retained DATA-span pool credits are inside the budget domain | Production strategy for keeping core reader progressing while an open run retains spans: cap retained pool credits, early copy or typed failure; the open-run-at-B reader-stall fixture remains BLOCKED, no policy/threshold selected |
 | Completeness/provisional/resource policy | Open where recorded under INT-034 and related governance work | Precise unresolved classification, provisional semantic use/invalidation and aggregate default/accounting/recovery policy; unheld drafting can cover already decided portions only |
 
 ## Extract policy is decided, not still an owner blocker
