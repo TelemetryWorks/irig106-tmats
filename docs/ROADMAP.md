@@ -113,14 +113,23 @@ owner approval.
 
 ### Remaining raw lookup and extension derivations
 
-Review the indexed X/original attachment derivation and complete V grouping.
+Review the indexed X/original attachment and V source/vendor grouping
+derivations. Proposed INT-063 needs owner/AI review for incomplete or
+conflicting VN/path evidence: recommend retained observed inventory with
+unavailable confirmed attribution, versus labelled path-first/header-first
+policies. Do not implement a recovery winner before that decision.
 PENDING OWNER/independent review: proposed INT-061 for X occurrence mapping
 to unindexed originals such as G\PN; recommend unavailable mapping (A), with
 labelled unique-path attachment (C) as a natural future refinement; B is an
 explicit convention and D's blanket nonconforming classification is rejected
 in the draft recommendation, not owner-decided. Separately review proposed
-INT-062: “existing TMATS code” as edition-registry vocabulary (recommended)
-versus codes present in the document. Registry-name matching and the section
+INT-062: registry-only vocabulary (recommended), document-present names, or
+registry-first hybrid C limited to groups with no registry vocabulary and
+labelled document-defined vocabulary. Registry-only A cannot split private V
+or other non-registry originals; C still needs the V group/private-namespace
+boundary decided. Use the 106-24R1 baseline catalog until edition deltas
+exist, with registry basis kept beside INT-044 declaration/fallback labels;
+older renamed originals stay unavailable, never silently mapped to new codes. Registry-name matching and the section
 9.5.14 EXTENSION_CODE uniqueness rule determine decomposition; missing
 metadata does not justify a heuristic. No affected-case implementation before
 owner/AI approval; edit/renumber rules and qualifiers remain separate.

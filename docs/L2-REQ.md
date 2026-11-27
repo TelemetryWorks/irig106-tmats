@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through pattern lookup, robustness/performance evidence and X-association derivations drafted (family 2, batches 1-26 and 28-30).**
+> **Status: foundations through pattern lookup, robustness/performance evidence and V/X derivations drafted (family 2, batches 1-26 and 28-31).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -1122,9 +1122,13 @@ child does not complete that parent. ADR-0008/0026 and section 9.5.14 supply
 the baseline. The [source/gap note](research/2026-11-27-x-association-requirements.md)
 drafts proposed INT-061 for unindexed originals; that case is BLOCKED on
 owner sign-off and independent AI check under ADR-0033. Proposed INT-062
-separately gates “existing TMATS code”: edition-registry code names versus
-codes present in the document. Registry vocabulary is recommended, not
-approved. No edit/renumber implementation or public query-language decision
+separately gates “existing TMATS code”: registry, document-present names or
+a guarded hybrid. A excludes private/non-registry codes; C only falls back
+for groups with no registry vocabulary and carries a document-defined basis.
+The catalog is 106-24R1 until deltas exist, with INT-044-compatible labels
+kept separate from the document declaration. Older renamed originals are
+unavailable rather than silently aliased. Vocabulary choice and the V
+namespace boundary remain pending owner review. No edit/renumber implementation or public query-language decision
 is selected here.
 
 #### L2-EXT-001
@@ -1144,5 +1148,35 @@ is selected here.
 **Statement**: Extension association SHALL preserve all X/original bytes, identities, locations, record qualifications and unknown extension content independently of decoding support, without creating a missing original, editing indices or extending parent counters; missing evidence/unsupported mappings SHALL remain distinguishable from an established no-target result, and no unindexed-original mapping SHALL bypass the proposed INT-061 review gate.
 
 **Rationale**: Section 9.5.14 p. 9-172 requires association preservation even when extension meaning is unknown and says X occurrence values match originals rather than create new ones; ADR-0002/0003 retain raw source. INT-040 excludes X from D membership and leaves extension-private indices unclassified. The source's no-index gap for G\PN (Table 9-2 PROGRAM NAME p. 9-10) needs an owner decision, not a fabricated zero/one occurrence. Renumber edits remain their later transaction scope.
+
+**Verification Method**: Test (T)
+
+
+## V-group source/vendor context (family 2, batch 31)
+
+This derives the V portion of L1-EXT-003 alongside the X children, without
+claiming the parent implemented or approving pending interpretation choices.
+The [source/follow-up note](research/2026-11-27-v-group-and-int062-followup.md)
+records section 9.5.13 and the INT-062 amendments. Proposed INT-063 gates
+missing/conflicting vendor evidence under ADR-0033; raw inventory must never
+be mistaken for confirmed vendor attribution or a private-value decoder.
+
+#### L2-EXT-003
+
+**Parent**: L1-EXT-003
+
+**Statement**: The library SHALL retain V occurrence contexts, local V-x\ID and V-x\VN candidates and structurally readable V-x\acr\attribute-string items, grouping by explicit data-source context and observed vendor acronym while preserving every occurrence, raw suffix/value and location; it SHALL keep incomplete/unavailable source or vendor attribution explicit rather than drop, merge or reassign items to manufacture a complete group.
+
+**Rationale**: 106-24R1 Ch9 section 9.5.13 p. 9-171 defines V-x\ID, V-x\VN and the three-character acronym/private attribute-string form. ADR-0008 accepts grouping by source/vendor; ADR-0002/0003 retain raw items. INT-038 supplies occurrence identity and INT-039 governs known scalar multiplicity. Structural namespaces and evaluated header context remain separate; missing/conflicting header-versus-path policy is proposed INT-063, not silently inferred from a sole vendor path.
+
+**Verification Method**: Test (T)
+
+#### L2-EXT-004
+
+**Parent**: L1-EXT-003
+
+**Statement**: V source/vendor context SHALL stay within its document and V occurrence, retain header/source-link multiplicity and record qualifications, and leave private attribute-string/value semantics opaque without a reviewed definition; source-context matching SHALL use the declared textual Data Source ID namespace rather than occurrence-number equality or numeric field/index normalization, and pending INT-063 SHALL block speculative vendor attribution.
+
+**Rationale**: Section 9.5.13 p. 9-171 ties V ID to General Information; Table 9-2 DATA SOURCE ID G\DSI-n p. 9-11 names textual sources and links to V-x\ID. ADR-0026 keeps namespaces/cardinality explicit. This supports context, not clock associations, auto-repair, vendor plug-ins, counter inference or the later user-registry overlay. Existing availability, record access and report-format gates remain unchanged.
 
 **Verification Method**: Test (T)

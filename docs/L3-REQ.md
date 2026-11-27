@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through pattern lookup, robustness/performance evidence and X-association derivations drafted (family 2, batches 1-26 and 28-30).**
+> **Status: foundations through pattern lookup, robustness/performance evidence and V/X derivations drafted (family 2, batches 1-26 and 28-31).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -2588,8 +2588,15 @@ approved INT-038/039/040/048. These are proposed derivations, not runtime
 coverage. [INT-061](INTERPRETATIONS.md#int-061) remains proposed: unindexed-
 original mapping is blocked before implementation. Proposed
 [INT-062](INTERPRETATIONS.md#int-062) separately gates the meaning of
-“existing TMATS code” (edition-registry vocabulary versus codes present in
-the document). Registry vocabulary is recommended, not approved. Other
+“existing TMATS code” (registry vocabulary, document-present names or a
+guarded hybrid). Registry-only vocabulary is recommended, not approved.
+Until edition deltas exist, the registry is the 106-24R1 baseline, labelled
+separately from raw declarations and the INT-044 selection/fallback basis;
+older renamed originals without baseline metadata remain cannot-evaluate,
+not aliases to newer codes. Registry-only A cannot split vendor-private V
+or other non-registry originals. Hybrid C uses document names only for
+groups with no registry vocabulary, labelled document-defined vocabulary;
+the V group/private-namespace boundary is still an owner question. Other
 unknown grammar must not be guessed. Public pattern-scope/syntax and
 record-access holds remain separate and unchanged.
 
@@ -2674,3 +2681,76 @@ index/spelling/duplicate/scope variants. Values remain opaque. Source
 freshness, development analysis and executable tests precede implementation;
 unknown grammar or pending INT-061/062 cannot become a passing conformance
 case.
+
+
+## V namespace inventory and attribution (family 2, batch 31)
+
+Source: section 9.5.13 p. 9-171 and Table 9-2 DATA SOURCE ID p. 9-11
+(106-24R1). These are draft contracts; [INT-063](INTERPRETATIONS.md#int-063)
+remains proposed. Header-local validity can be supplied by reviewed field
+results; this slice does not invent blank, required-presence or private-code
+rules. See the [source/owner-options note](research/2026-11-27-v-group-and-int062-followup.md).
+
+**L3-EXT-009** · Parent: L2-EXT-003 · Verification: T
+*V inventory SHALL distinguish standard V-x\ID and V-x\VN headers from private V-x\acr\attribute-string items, retaining the occurrence and observed three-character acronym prefix when structurally readable and preserving the complete remaining private suffix/value as raw content without inventing its grammar.*
+
+Section 9.5.13 p. 9-171 defines only those two standard V headers; other
+attributes are vendor-specific. The private suffix may resemble paths or
+indices but cannot become a standard counter/member/value rule from shape
+alone. Malformed/opaque names stay retained, not fabricated into valid keys.
+
+**L3-EXT-010** · Parent: L2-EXT-003 · Verification: T
+*Within a V occurrence, inventory SHALL retain every local ID/VN candidate and observed private namespace in input order, keeping Missing, known scalar Ambiguous, Invalid and unavailable field results distinct; no path item or prior occurrence SHALL silently supply a missing header, pick a repeated header or suppress an empty/header-only context.*
+
+INT-039 applies where the reviewed standard header definition declares
+scalar cardinality; raw multiplicity of private fields does not infer their
+cardinality. Receiving evaluated header states avoids settling unreviewed
+blank/type rules. No required-presence finding is invented merely from a
+private item or from the header's absence.
+
+**L3-EXT-011** · Parent: L2-EXT-003 · Verification: T
+*V occurrence comparison SHALL use INT-038 canonical index identity and INT-036 name projection; literal code/acronym and usable textual source/vendor comparisons SHALL use the ASCII case rule from section 9.4.2 p. 9-2 without locale/Unicode/high-byte folding, preserving raw spelling and every applicable finding.*
+
+Data Source ID and vendor acronym are textual identifiers, not integer
+field values. A source named 01 is not numerically canonicalized to 1 by
+INT-038 or INT-055. No acronym alphabet beyond the cited rules, private
+value decoder or default vendor is introduced here.
+
+**L3-EXT-012** · Parent: L2-EXT-004 · Verification: T
+*Given a usable explicit local V ID and available reviewed source-key metadata, source-context matching SHALL list every same-document G\DSI-n candidate with equal textual identity, retaining resolved/unresolved/ambiguous evidence without equating V occurrence x to G source entry n; ambiguous/unavailable local ID SHALL not become an arbitrarily selected source binding.*
+
+Table 9-2 DATA SOURCE ID p. 9-11 links to V-x\ID; section 9.5.13 ties V to
+General Information. A retained local label is distinct from successful
+G-source resolution. Zero/one/many matches follow ADR-0026; source lookup
+availability remains separate from an established no-target result.
+
+**L3-EXT-013** · Parent: L2-EXT-004 · Verification: T
+*Every V context, namespace and source candidate SHALL retain original item identities/raw spans and fragment provenance, with all setup Ambiguous/Incomplete/cut/encoding qualifications unchanged; inventory/source grouping SHALL NOT authorize record access, a governing setup or any private clock/measurement interpretation.*
+
+INT-037/039/048 and the [open access/governance item](ROADMAP.md#streaming-setup-record-follow-ups)
+remain in force. One assembled record is one document under ADR-0025/INT-011;
+separate records and V occurrences cannot lend missing headers to each other.
+Equal source/vendor labels do not erase their contributing occurrences.
+
+**L3-EXT-014** · Parent: L2-EXT-004 · Verification: T
+*Confirmation or reassignment of vendor attribution when V VN is missing, repeated, invalid/unavailable or disagrees with a private path acronym SHALL remain gated by proposed INT-063 owner sign-off and independent AI check; inventory SHALL NOT silently adopt path-only or header-only authority before that decision.*
+
+INT-063 A recommends observed namespace inventory plus unavailable confirmed
+attribution until one usable VN agrees; B would use a labelled path-first
+policy, C a labelled usable-header-first policy. All retain original items
+and field/record states. These are choices, not approved output/repair rules.
+
+**L3-EXT-015** · Parent: L2-EXT-003 · Verification: T
+*Unknown private V suffix/value content SHALL remain attached to its observed raw namespace without synthesized members, inferred counters/defaults, value repair or source rewriting; successful grouping SHALL NOT claim the private meaning was decoded, while unavailable structural decomposition SHALL remain observable with raw evidence retained.*
+
+Section 9.5.13 explicitly leaves vendor equipment details outside the
+standard. A private suffix ending in N or digits is not automatically a
+standard count/index declaration. Malformed source is not silently discarded
+just because a vendor namespace cannot be confirmed.
+
+**L3-EXT-016** · Parent: L2-EXT-003 · Verification: T
+*V-group tests SHALL use independently listed item IDs, header states, namespace/source candidates and raw spans to verify retention, grouping and blocked attribution, without deriving expected groups through the production implementation or declaring opaque private fields conforming from their names.*
+
+Positive names cite section 9.5.13; source targets cite Table 9-2 p. 9-11.
+Missing/duplicate/invalid header composition can receive evaluated states.
+INT-063 policy fixtures remain BLOCKED, not executed conformance tests.
