@@ -79,8 +79,9 @@ and verify actual text/recording command paths against independent byte,
 source/revision and failure evidence. Component success or synthetic adapters
 alone do not establish mounted-runner/direct-command equivalence. Keep report
 formats, grammar/default selection and semantic-access policy held where not
-approved. Reassess remaining family-two coverage and owner answers before
-claiming readiness for the restructure or parser implementation.
+approved. Stdin input via '-' or an omitted path remains owner-held;
+acquire only explicitly supplied sources, with no stdin fallback. Reassess
+remaining family-two coverage and owner answers before claiming readiness for the restructure or parser implementation.
 
 ### Streaming setup-record follow-ups
 

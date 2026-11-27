@@ -178,6 +178,7 @@ to retain it in the redesign or add another benchmarking dependency.
 | Owner item | Status/boundary | What it blocks |
 |---|---|---|
 | Report format | PENDING OWNER; no renderer/schema chosen here | L1-CLI-002/006, raw/tree/summary show presentation, findings/assumption/suppression rendering, JSON and public exit presentation |
+| Stdin input | PENDING OWNER; '-' operand and no-path stdin behavior are not approved | Public stdin input grammar/acquisition; orchestration acquires only explicitly supplied sources and never falls back to stdin; stdout/pipe destination approval is separate |
 | std feature | PENDING OWNER; #59 held | #59, L1-REL-002–004 derivations/acceptance and the exact irigtime consumer feature check |
 | Flex reference/revision | PENDING OWNER, bbaggerman versus atac source | Qualified flex vectors, exact arithmetic/source derivation and flex implementation; reference runs remain bounded synthetic-only CI, no new project dependency or pasted source |
 | INT-061/062/063 | Proposed, owner sign-off/review pending | Affected X attachment/unindexed mapping/vocabulary and V attribution; not raw source retention |

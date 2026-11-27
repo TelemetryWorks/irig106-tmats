@@ -52,7 +52,7 @@ boundary. Existing contracts still govern partial delivery and host lifetime.
 
 ## Acceptance without choosing report formats
 
-The 18 planned TEST-DATA cases specify internal source bindings, unchanged
+The 21 planned TEST-DATA cases specify internal source bindings, unchanged
 qualifications, raw byte oracles, injected failures and subsequent explicit
 calls. Compare runner command handoff against the individual-command path
 before rendering. Do not derive diagnostic prose, finding order, assumption
@@ -65,6 +65,27 @@ paths, reviewed requests and independent results; the help/version scaffold
 and a component-only suite are insufficient. No duplicate parser/reader or
 project/development dependency is introduced. Heavy executable checks belong
 in GitHub CI once code exists; this batch runs local documentation checks only.
+
+## PR #79 review: input, extract and host dispatch boundaries
+
+Stdin as an input source stays PENDING OWNER, whether requested by a '-'
+operand or inferred from no path. Acquire only explicitly supplied sources;
+never fall back to stdin after absence/failure. ADR-0037's stdout/pipe output
+permission is not approval of stdin input grammar.
+
+Orchestration carries the supplied --force/--strict choices into extract.
+Every ADR-0037 destination refusal precedes destructive access: an existing
+unrelated file without --force, unproven regular-file identity without
+--force, and a known input alias with or without --force. Keep the existing
+open-without-truncation/check/same-handle-truncate sequence. Runner and direct
+extract paths have the same policy outcome for identical flags/evidence.
+Strict's unlisted-finding predicate is still pending; no rendering is fixed.
+
+Mounted orchestration consumes the packets/observations supplied by its host;
+it does not dispatch, claim other consumers' DATA or rebuild routing from
+headers. Keep the observation path and observable typed Format-1 guard from
+#56. Standalone is one host doing its own dispatch through that same adapter
+boundary, not a second dispatcher inside the command. Core remains the reader.
 
 ## Holds and the next readiness review
 

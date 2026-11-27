@@ -3557,6 +3557,18 @@ file-order interpretation, live publication policy or filesystem snapshot
 atomicity. Stamp's explicit new output revision and required verification
 are not forbidden; distinguish them from the selected input revision.
 
+Acquire only explicitly supplied input sources. Stdin as an input source
+(a '-' operand or stdin when no path is given) stays PENDING OWNER; never
+fall back to stdin on an absent path or acquisition failure.
+
+When mounted, consume only packets and observations the host routed to this
+adapter, preserving the non-fragment observation path under L3-CLI-028.
+Never run a separate dispatcher, claim other consumers' packets or rebuild
+dispatch from headers. The standalone binary is one host that performs its
+own dispatch through the same L3-CLI-026/027 adapter boundary and observable
+typed wrong-input refusal; this adds no reader or dispatcher inside tmats
+command computation.
+
 **L3-CLI-063** · Parent: L2-CLI-016 · Verification: T
 *Command composition SHALL preserve original selected bytes for raw extraction and checksum-domain computation, together with core-supplied trust/integrity/admission evidence and record qualifications, without silently normalizing, serializing an interpreted view, reparsing packet headers or using one integrity result to upgrade another.*
 
@@ -3575,6 +3587,15 @@ policy. This does not require global cache flushing, prohibit explicit
 caller-managed context, choose a reset API or promise concurrent execution.
 A result's source identity and qualifications must not silently rebind.
 
+Carry the invocation's --force/--strict choices unchanged into extract's
+ADR-0037 path. Every destination refusal precedes any destructive operation:
+existing unrelated file without --force; unproven regular-file identity
+without --force; known input alias ALWAYS, even with --force. Apply the
+open-without-truncation, identity check, same-handle truncate/write sequence
+of L3-CLI-034, never truncate/write first and refuse afterward. Stdout/pipes
+remain allowed as destinations under ADR-0037; that does not approve stdin
+as an input source. --strict on unlisted findings remains PENDING OWNER.
+
 **L3-CLI-065** · Parent: L2-CLI-017 · Verification: T
 *Integration tests SHALL distinguish acquisition/routing, traversal/assembly, selection/access, computation and delivery outcomes under their reviewed contracts; an earlier failure SHALL NOT become a successful empty command result, and successful computation SHALL NOT be reported as successful delivery when the supplied sink fails.*
 
@@ -3591,6 +3612,11 @@ Compare pre-render command data and stage identity, not JSON/text snapshots
 or unreviewed exit mappings. A bounded instrumented adapter can observe the
 handoff; adapter success alone does not qualify an actual command. The thin
 binary remains responsible only for process-edge translation under W3.
+
+Runner and direct extract paths must give the same ADR-0037 outcome for the
+same supplied flags and destination/identity evidence, including refusal
+before destructive access; this does not settle the strict unlisted-finding
+predicate or extend extract's policy to stamp.
 
 **L3-CLI-067** · Parent: L2-CLI-017 · Verification: T
 *Acceptance evidence SHALL identify which real reviewed command/routing paths were exercised and their independent byte/result/failure oracles; synthetic stage adapters, help/version coverage or a passing component suite SHALL NOT be reported as full integrated command acceptance when real paths, dependency compatibility or owner-held policies remain unverified.*
