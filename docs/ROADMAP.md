@@ -68,6 +68,10 @@ assembly/session and resource details without reducing the full 0.1 scope.
 The extract owner decisions of 2026-11-27 remove the three #57 owner holds;
 ADR-0037 records them, rather than asking again.
 Do not start family 3/parser code or claim readiness from prototype CI.
+The audit includes the owner-item/blocker table, including Criterion retention
+and the pending strict predicate. Its revised estimate accounts for partial
+normalization, assembly/resource and show-free CLI work as well as missing
+parent links; the trace relabel is separate from actual build acceptance.
 
 ### Streaming setup-record follow-ups
 

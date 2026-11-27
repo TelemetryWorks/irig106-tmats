@@ -89,7 +89,7 @@ Inventory categories: D 35, P 9, M 3, H 3.
 | [L1-CLI-007](../L1-REQ.md#l1-cli-007) | [L2-CLI-009](../L2-REQ.md#l2-cli-009) | D | Tool-opened input-alias/delivery safety; #73 records force proof exception while known aliases always refuse. |
 | [L1-CLI-008](../L1-REQ.md#l1-cli-008) | [L2-CLI-003](../L2-REQ.md#l2-cli-003), [L2-CLI-004](../L2-REQ.md#l2-cli-004) | D | Core evidence and borrowed DATA slicing; published types/core 0.2 and real API compatibility still need evidence. |
 | [L1-CLI-009](../L1-REQ.md#l1-cli-009) | [L2-CLI-001](../L2-REQ.md#l2-cli-001), [L2-CLI-002](../L2-REQ.md#l2-cli-002), [L2-CLI-007](../L2-REQ.md#l2-cli-007), [L2-CLI-014](../L2-REQ.md#l2-cli-014), [L2-CLI-015](../L2-REQ.md#l2-cli-015) | D | Shared runner/individual APIs/parser mechanism; every actual reviewed row still needs integration tests. |
-| [L1-PERF-001](../L1-REQ.md#l1-perf-001) | [L2-PERF-001](../L2-REQ.md#l2-perf-001), [L2-PERF-002](../L2-REQ.md#l2-perf-002) | D | Independent-work parser/borrowed-span traversal evidence, untimed allocations/copy counts; numeric budgets await measurement. |
+| [L1-PERF-001](../L1-REQ.md#l1-perf-001) | [L2-PERF-001](../L2-REQ.md#l2-perf-001), [L2-PERF-002](../L2-REQ.md#l2-perf-002) | D | Independent-work parser/borrowed-span traversal evidence, untimed allocations/copy counts; numeric budgets await measurement. Retaining prototype Criterion is pending owner (#62). |
 | [L1-REL-001](../L1-REQ.md#l1-rel-001) | [L2-REL-001](../L2-REQ.md#l2-rel-001) | D | ADR-0035 virtual crates/apps layout and lockstep exact path/version; actual restructure not done. |
 | [L1-REL-002](../L1-REQ.md#l1-rel-002) | None on main | H | No direct child on main: L2/L3 slice held in #59 on owner std decision; rebase/recount before re-review. |
 | [L1-REL-003](../L1-REQ.md#l1-rel-003) | None on main | H | Plain-library WASM obligation; held #59 is not main evidence or WASM-bindings approval. |
@@ -168,6 +168,30 @@ turn them into passing Evidence. No trace status is manually upgraded.
    independence and budgets. Legacy INT-001–034 pending AI reviews are not
    grandfathered. Do not replace this with a requirement-ID count.
 
+## Owner items and the work they block
+
+This table separates outstanding owner choices from already approved policies
+whose source/interpretation evidence is unfinished. Criterion retention from
+#62 is explicitly owner-held; an existing prototype dependency is not approval
+to retain it in the redesign or add another benchmarking dependency.
+
+| Owner item | Status/boundary | What it blocks |
+|---|---|---|
+| Report format | PENDING OWNER; no renderer/schema chosen here | L1-CLI-002/006, raw/tree/summary show presentation, findings/assumption/suppression rendering, JSON and public exit presentation |
+| std feature | PENDING OWNER; #59 held | #59, L1-REL-002–004 derivations/acceptance and the exact irigtime consumer feature check |
+| Flex reference/revision | PENDING OWNER, bbaggerman versus atac source | Qualified flex vectors, exact arithmetic/source derivation and flex implementation; reference runs remain bounded synthetic-only CI, no new project dependency or pasted source |
+| INT-061/062/063 | Proposed, owner sign-off/review pending | Affected X attachment/unindexed mapping/vocabulary and V attribution; not raw source retention |
+| INT-031 | Proposed; no general access exception approved | Semantic/governing use of incomplete/ambiguous records; ADR-0037 raw extract is separate and cut facets remain blocking for semantic use |
+| Pattern scope/syntax | PENDING OWNER | UC-03 CLI querying, public pattern language/escaping and approved 0.1 query scope; not already defined internal raw candidate retention |
+| Host allocation | PENDING OWNER | Whether the tmats host must enforce zero steady-state per-packet allocation for non-setup traffic; borrowed-DATA zero extra copy does not decide it |
+| Mixture scope | Recommended Complete-only A, PENDING OWNER | Formal ASCII/XML mixture-finding eligibility, especially Complete ASCII plus Incomplete XML; qualified FRMT retention remains defined |
+| L1-CH10-005 wording | Recommended A, PENDING OWNER after source re-verification | Wording/acceptance alignment for setup-on-0 from 106-11 versus 106-13/17 exclusivity changes; core still owns routing/profile evidence |
+| File order | First-fragment meaning recommended, owner confirmation pending | Final public record ordering/selection interpretation for interleaved runs and its dependent CLI contract; no completion-order default inferred |
+| F7 event identity/prior scope | Indeterminate policy approved; identity still unverified, prior meaning needs its own reviewed interpretation | Determinate configuration-change-event presence/absence check; a generic Format 2 candidate is not proof; do not reopen the approved uncertainty policy |
+| --strict scope | PENDING OWNER: listed bad-data kinds versus any finding | Strict behavior for unlisted findings, including the information-only fixture; listed-kind/no-finding cases and default raw extraction are common to both options |
+| Criterion retention (#62) | PENDING OWNER | Keeping the prototype Criterion dev dependency and accepting a harness that relies on it; no automatic new benchmark dependency approval |
+| Completeness/provisional/resource policy | Open where recorded under INT-034 and related governance work | Precise unresolved classification, provisional semantic use/invalidation and aggregate default/accounting/recovery policy; unheld drafting can cover already decided portions only |
+
 ## Extract policy is decided, not still an owner blocker
 
 The owner decisions of 2026-11-27 remove #57's overwrite, identity and
@@ -189,11 +213,34 @@ explicitly blocked. No new owner answer or recommendation is invented.
 
 ## Family-3 readiness and recommended order
 
-Finish the unheld bounded VIEW-006 decomposition, then reassess this inventory
-against the merged owner-policy docs. Route the existing held decisions/source
-questions instead of inventing defaults. Finish partial required contracts
-and source qualification before calling family 2 complete. No fixed number
-of PRs can honestly be promised for unresolved owner/source work.
+The previous one-audit/very-few-batches estimate was too low: counting absent
+parent links missed substantial partial-contract work. Revised planning
+estimate is **about 4–6 unheld batches** plus **about 5–8 owner-gated batches**,
+roughly **9–14 before family 3**, subject to review size and owner/source
+answers. This is not a promise of a completion date or permission to bypass
+gates. The unheld estimate includes the companion trace relabel requested
+with this review; it is not another owner decision.
+
+Unheld work comprises bounded VIEW-006's direct decomposition, explicit
+normalization transformation definitions, already-decided assembly/resource
+detail, show-free CLI integration contracts/grammar-independent computation,
+and the
+separate prototype-evidence trace relabel. These may split or combine to
+stay reviewable. Unresolved classification/resource choices remain in the
+owner-gated column; do not decide them inside an otherwise unheld batch.
+
+Owner-gated batches cover the table above, notably report/show formats, std,
+flex qualification and the pending V/X, access, pattern, session/order/event,
+allocation, Criterion and strict-scope items. They can be grouped only when
+the actual answers and source evidence support doing so. Route existing
+questions instead of inventing defaults or silently reducing 0.1 scope.
+Finish the unheld VIEW-006 slice next and reassess after each merged answer.
+
+A **separate small PR** relabels L1-REL-002/004's current prototype Evidence
+as prototype configuration and regenerates TRACE-MATRIX, so its Verified
+rollup no longer counts those two configuration references as readiness.
+The inspected snapshot above describes the earlier state; relabelling is
+not execution of replacement-code MSRV/platform checks or resolution of #59.
 
 Once applicable family-2 gates are satisfied, the already decided family 3
 is ADR-0035's virtual root, crates/irig106-tmats and apps/irig106-tmats-cli,
