@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through session evidence drafted (family 2, batches 1-26 and 28-38).**
+> **Status: foundations through argument-parser contracts drafted (family 2, batches 1-26 and 28-39).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -3184,16 +3184,22 @@ are not read merely to obtain metadata. See the [source/gap note](research/2026-
 Final admission, access and governing qualifications remain unchanged.
 
 **L3-CH10-022** · Parent: L2-CH10-008 · Verification: T
-*Session-format checking SHALL associate each supplied readable FRMT observation with its setup/candidate, fragment, source position and explicit session scope/provenance, and SHALL report established ASCII/XML coexistence within that scope without treating observations in distinct scopes as a mixture.*
+*Session-format checking SHALL retain each supplied readable FRMT observation with its setup/candidate qualification, fragment, source position and explicit session scope/provenance; formal coexistence-finding eligibility SHALL remain BLOCKED on the owner scope decision, recommended Complete-only A versus broader non-Complete B, with neither silently selected.*
 
 Source: Figure 11-34, 106-24R1 section 11.2.7.2 p. 11-50. Preserve all
 contributing occurrences; multiple fragments are not silently summarized
 as one chosen format. Caller-asserted session labels retain that basis and
-never become evidence that recorder control commands were observed.
+never become evidence that recorder control commands were observed. Treating an
+entire recording as one session requires explicit labelled caller assertion
+or supplied session evidence; without either, report unavailable scope,
+not no mixture. Recommended A keeps non-Complete FRMT as qualified evidence
+without a formal finding; B broadens eligibility and remains unapproved.
 
 **L3-CH10-023** · Parent: L2-CH10-008 · Verification: T
 *Format-check results SHALL distinguish established coexistence, no observed coexistence within the supplied known extent and unavailable scope/format evidence, retaining incomplete coverage and all supplied trust/record qualifications; XML unsupported for text parsing SHALL not erase its decoded FRMT evidence or make the whole check pass.*
 
+Observed format coexistence and eligibility to issue the formal finding are
+separate; the owner-pending scope gate is not bypassed by this result contract.
 No observed mixture is not proof about unvisited input, and an unknown FRMT
 is not ASCII by default. FRMT disagreements within a candidate remain located
 evidence; this check never resolves its boundary or promotes its completeness.
@@ -3221,7 +3227,8 @@ bytes; approved retransmission rules still apply in their separate scope.
 
 Packet-level channel policy, including legacy_setup_any_channel, remains in
 core / existing L3-CH10 integration. No new 106-11/106-17 transition is encoded
-here; reconcile the stale parent wording from archived per-edition sources.
+here. The source evidence is re-verified in the batch-39 note; changing the
+parent is recommended A, PENDING OWNER, not approved or applied here.
 A separately observed format conflict does not erase or repair core findings.
 
 **L3-CH10-027** · Parent: L2-CH10-008 · Verification: T
@@ -3231,3 +3238,58 @@ Tests may supply already evaluated triggers/context; that does not qualify a
 missing aggregation or prior-ordering rule. Keep F7 identification, source
 freshness, development analysis and executable verification gates explicit.
 No public report format, severity mapping or output schema is selected.
+
+
+## Argument-parser mechanism acceptance (family 2, batch 39)
+
+These refine the existing runner/API contracts under ADR-0013. They select
+no new grammar for held flags, numeric arguments, labels, streams or exit
+codes. The [source note](research/2026-11-27-argument-contract-and-session-scope.md)
+separates parser mechanism from complete product-command acceptance.
+
+**L3-CLI-052** · Parent: L2-CLI-014 · Verification: T
+*The parser SHALL consume the exact supplied argument sequence for that invocation without reading global argv, environment, stdin or source files, and SHALL return its internal request/usage outcome to the calling host without printing or exiting.*
+
+Existing runner/render APIs own supplied output streams, not the token parser.
+No implicit shell expansion, filename-content routing or process-state default
+belongs to this parser; the outer caller supplies tokens, not a shell string.
+Representation/grammar of platform-specific or non-Unicode tokens is not
+chosen here, and must not be settled by a silent lossy conversion.
+
+**L3-CLI-053** · Parent: L2-CLI-014 · Verification: T
+*Implemented commands/options SHALL be described by the applicable reviewed parsing table, with supplied values associated with the declared command/option rule and passed to its reviewed decoder; unaccepted tokens, missing required operands and declared conflicts SHALL produce a distinguishable usage failure rather than a partially executable request.*
+
+Tests derive expected requests/failures independently of production tables.
+This fixes no new alias, duplicate-option, ordering, abbreviation, equals-form
+or -- behavior; such rules must be reviewed before their rows are enabled.
+TMATS INT-055 field-value grammar does not automatically apply to CLI numbers.
+
+**L3-CLI-054** · Parent: L2-CLI-014 · Verification: T
+*Parsing SHALL preserve supplied operand/token identity and association without silently trimming, folding case, normalizing, splitting or repairing it beyond an explicitly reviewed grammar rule; a rejected selector/edition/options operand SHALL not become a guessed record, edition, input route or caller clock choice.*
+
+An input path token is not TMATS text. A parsed command request is not proof
+that the file exists or that its contents select a valid recording/text route.
+Record numbering/defaults and file-order owner confirmation remain separate;
+no fabricated record identity is produced to complete an incomplete request.
+
+**L3-CLI-055** · Parent: L2-CLI-015 · Verification: T
+*Parser and runner tests SHALL demonstrate that rejected requests never reach command execution or input/output acquisition, and that the host receives their usage classification and remains running; parser success SHALL not suppress later acquisition, library or delivery failures.*
+
+Keep semantic return classifications distinct without assigning numeric exits,
+usage text, help layout or diagnostic streams. Help/version token handling
+uses its own reviewed table entries, not a hidden process-exit path.
+
+**L3-CLI-056** · Parent: L2-CLI-015 · Verification: T
+*The standalone binary and mounted host runner SHALL share the same parser/request construction for the same supplied arguments, while individual command APIs SHALL remain callable with explicit requests without re-parsing global arguments or invoking main.*
+
+W3 requires both entry paths. Compare the same request/outcome before rendering;
+no host-only remembered selector, implicit environment default or second
+command computation may create different semantics for identical inputs.
+
+**L3-CLI-057** · Parent: L2-CLI-015 · Verification: T
+*Acceptance SHALL independently enumerate each implemented reviewed flag/value/usage rule and its positive/negative token cases, including bounded empty/truncated/unknown inputs and decoder failures; missing tests or unreviewed enabled table rows SHALL remain readiness gaps rather than inferred coverage from help/version or a synthetic parser table.*
+
+Use bounded in-memory token lists, not shell subprocess expansion as oracle.
+Assertions target request/usage states and execution boundaries, not public
+rendering. No parser dependency, fixture dev dependency or unbounded campaign
+is authorized. Existing finite input/resource rules still apply.

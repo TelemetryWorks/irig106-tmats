@@ -198,9 +198,17 @@ body parsing or inferring session boundaries. Keep first-record SRCC=1,
 fragment disagreement and nearby generic event candidates as separate evidence.
 F7 remains indeterminate until event identification and a cited reviewed prior
 scope are established; no event type is guessed. Core owns edition-dependent
-packet/channel rules. Reconcile the parent's 106-17 wording against archived
-per-edition sources and the owner-relayed 106-11 reminder before implementing
-that part; no local routing threshold is selected by these derivations.
+packet/channel rules. Archived 106-05/07/09/11/13/15/17 header sources are
+re-verified in the argument-contract/session-scope research note: setup-only-on-0
+begins in the explicit 106-11 rule; 106-13/17 change channel-0 exclusivity.
+**PENDING OWNER (recommended A):** align the L1 wording with that onset while
+consuming core evidence; alternative B defers the change and keeps the gap
+explicit. No L1 wording change or local routing threshold is approved here.
+**PENDING OWNER (recommended A):** mixture finding only across Complete
+records, retaining other candidates' qualified FRMT evidence without that
+finding; alternative B broadens finding eligibility and is not approved.
+Treating one whole recording as one session requires explicit labelled caller
+assertion or supplied session evidence; otherwise scope is unavailable.
 
 ### Remaining flex source qualification and acceptance
 
@@ -241,6 +249,15 @@ report rendering remain their separate owner-review scope. Proposed INT-031
 explicitly gates incomplete/ambiguous record access; enumeration never approves
 its optional labelled split. First-fragment versus completion order is being
 put to the owner for confirmation; no new approval is recorded here.
+
+### Remaining argument-parser acceptance
+
+Review the hand-rolled table-driven mechanism over caller-supplied tokens,
+returning request/usage outcomes without I/O, printing or process exit.
+Independently cover every implemented reviewed flag/value/error rule; a
+synthetic table or help/version pass does not qualify the product grammar.
+Do not silently decide held option syntax, defaults, numeric CLI grammar,
+non-Unicode handling, output schema or exit mapping through table entries.
 
 ### Remaining CLI input and presentation derivations
 

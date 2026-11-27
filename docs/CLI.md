@@ -130,6 +130,8 @@ existing content-based recording/text input route. The 0.1 scope is unchanged.
   own; that code is kept table-driven and every flag, value, and usage error
   has a test. The scaffold's `--version` / `--help` handling already follows
   this approach.
+  L2-CLI-014/015 derive parser mechanism/acceptance from host-supplied tokens;
+  they choose no new grammar, defaults, report rendering or exit mappings.
 
 ## 4. Proposed rules (to confirm)
 

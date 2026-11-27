@@ -1836,9 +1836,14 @@ identity or body access. Sources: 106-24R1 Ch11 section 11.2.7.2 Figure
 11-34 pp. 11-50–51 and approved INT-030/F7. Core routing/channel checks and
 proposed INT-031 access gates remain independent.
 
+Mixture-scope Option A (Complete records only) is RECOMMENDED, PENDING OWNER;
+B broadens finding eligibility to non-Complete candidates. Scope-sensitive
+finding expectations are BLOCKED on that decision; evidence-only cases do
+not approve either branch. L1 wording Option A is also recommended-pending.
+
 | Planned test | Independent input and expected result | Requirements |
 |---|---|---|
-| `session_ascii_xml_same_scope_reports_mixture` | Established FRMT ASCII and XML observations in supplied S, with source locations: coexistence finding retains both observations and scope basis | L3-CH10-022 |
+| `session_ascii_xml_same_scope_reports_mixture` | Given Complete ASCII and Complete XML records in supplied S: retain source/qualification/scope evidence; formal-finding eligibility follows the owner-pending scope decision, never approval of broader candidate scope | L3-CH10-022 |
 | `session_formats_in_separate_scopes_not_mixture` | ASCII in supplied S1, XML in S2: no cross-scope mixture; scopes/provenance retained, not merged by file proximity | L3-CH10-022 |
 | `session_caller_scope_keeps_assertion_label` | S is caller asserted rather than observed control commands: check retains that basis, never certifies .RECORD/.STOP was seen | L3-CH10-022 |
 | `session_xml_observation_does_not_parse_body` | Readable XML FRMT with unsupported body: retain format evidence without ASCII/XML body parsing or eligibility upgrade | L3-CH10-022, L3-CH10-023 |
@@ -1859,6 +1864,44 @@ F7's determinate presence/absence check remains BLOCKED on verified identity,
 reviewed prior-ordering, source freshness, analysis and executable tests.
 Per-edition parent/channel wording needs source reconciliation; these cases
 do not select a packet routing rule or authorize new access/governing policy.
+
+## Session-scope follow-ups after #71 (owner decisions pending)
+
+| Planned test | Independent input and expected result | Requirements |
+|---|---|---|
+| `session_complete_ascii_incomplete_xml_scope_pending` | Complete ASCII plus Incomplete XML candidate in explicit S: **BLOCKED PENDING OWNER**. Recommended A retains qualified XML evidence without formal mixture finding; B would broaden eligibility. No qualification upgrade under either | L3-CH10-022, L3-CH10-023 |
+| `session_same_bytes_without_session_assertion` | Same supplied recording bytes/facts contain ASCII/XML observations, no actual session evidence and no caller assertion: unavailable scope, never inferred one-session or no-mixture | L3-CH10-022, L3-CH10-023 |
+| `session_same_bytes_with_labelled_whole_recording_assertion` | Exact same bytes/facts plus explicit caller assertion that this recording is one session: scope available with asserted basis retained; formal finding still follows the pending eligibility gate, not inferred command observations | L3-CH10-022, L3-CH10-023 |
+
+## Planned argument-parser mechanism batch 39
+
+Internal requests/usage results only, not new public grammar or rendering.
+Mechanism fixtures may supply a synthetic reviewed table; product coverage
+requires every actual implemented rule to have reviewed independent cases.
+Authority: accepted ADR-0013 and ADR-0034 W3, L1-CLI-009.
+
+| Planned test | Independent input and expected result | Requirements |
+|---|---|---|
+| `args_only_supplied_tokens_are_consumed` | Supplied tokens produce the table-defined request regardless of unrelated process arguments/environment; no global argv read | L3-CLI-052 |
+| `args_parser_no_source_or_stream_acquisition` | Parser request/usage paths use bounded in-memory tokens only; file/stdin/output/process-exit hooks are never reached | L3-CLI-052, L3-CLI-055 |
+| `args_reviewed_show_raw_request` | Reviewed show --raw operand form yields that internal request with the exact operand; no file acquisition, rendering or input-route claim | L3-CLI-053, L3-CLI-054 |
+| `args_missing_required_operand_is_usage` | Reviewed row requires a value, supplied sequence ends first: usage classification, no executable partial request | L3-CLI-053 |
+| `args_unknown_under_table_is_not_guessed` | Supplied token is unaccepted by the fixture's reviewed grammar: usage failure, no nearest command/option repair | L3-CLI-053 |
+| `args_declared_conflict_is_not_executed` | Fixture table explicitly defines a conflict: conflicting input yields usage; this does not define product duplicate/precedence policy | L3-CLI-053, L3-CLI-055 |
+| `args_operand_identity_not_tmats_projection` | Supplied path/value tokens preserve identity unless the reviewed grammar explicitly decodes them; INT-036/038/055 does not silently rewrite arguments | L3-CLI-054 |
+| `args_decoder_failure_keeps_usage_result` | Reviewed value decoder refuses an operand: no guessed edition/record/clock target or command execution | L3-CLI-053, L3-CLI-054 |
+| `args_empty_and_truncated_use_reviewed_rows` | Bounded empty/truncated token lists produce their table-defined usage/request outcome, with no automatic undocumented command default | L3-CLI-053, L3-CLI-057 |
+| `args_usage_reaches_host_without_exit` | Rejected request returns its classification to the calling host, which continues running; no output-text/exit-number assertion | L3-CLI-055 |
+| `args_success_does_not_hide_later_failures` | Parsed valid request later hits acquisition/library/delivery failure: preserve the failure, no claim of successful command from parse success | L3-CLI-055 |
+| `args_binary_and_host_share_parser` | Identical supplied arguments at both adapters construct identical request/usage outcomes before rendering, not two separately maintained parsers | L3-CLI-056 |
+| `args_individual_command_needs_no_global_parse` | Explicit request calls an individual command without main/global argv parsing or process lifetime changes | L3-CLI-056 |
+| `args_help_version_have_no_hidden_exit` | Reviewed help/version table entries return their request/outcome; no parser-side print/exit or claim of full command coverage | L3-CLI-052, L3-CLI-055 |
+| `args_each_implemented_row_has_independent_cases` | Inventory of actual implemented reviewed command/flag/value/error rules maps to independent positive/negative tests; missing cases or unreviewed active rows fail readiness | L3-CLI-057 |
+| `args_synthetic_table_is_not_product_coverage` | Mechanism fixtures pass on a synthetic table while product rows are absent/unreviewed: product readiness still unsatisfied, not inferred from parser unit success | L3-CLI-057 |
+
+Held grammar rules need their own review before activation. No report-format,
+numeric CLI syntax, separator/abbreviation, non-Unicode policy or new default
+is selected; no dependency or executable parser is added by these cases.
 
 ## Real Chapter 10 recordings (local use only)
 
