@@ -55,33 +55,30 @@ Packet data-checksum verification remains a separately owner-scheduled core
 feature; pass NotChecked until core provides it. No publishing action is
 authorised/performed by this documentation change.
 
-### Family-2 coverage audit and next unheld work
+### Family-2 remaining gates
 
-The [dated coverage audit](research/2026-11-27-family2-coverage-audit.md)
-separates drafted children, partial contracts, owner-held work and executed
-evidence. Family 2 is not complete merely because parents have children.
-The bounded time-view lookup-state primary derivation now needs source/
-development review and executable verification; related multiplicity/value
-children do not substitute for those checks. Continue unheld normalization,
-already-decided assembly/resource and show-free integration contracts next. Keep report-format work stopped for the owner and build acceptance
-held on the existing std decision. Resolve partial normalization, flex source,
-assembly/session and resource details without reducing the full 0.1 scope.
-The extract owner decisions of 2026-11-27 remove the three #57 owner holds;
-ADR-0037 records them, rather than asking again.
-Do not start family 3/parser code or claim readiness from prototype CI.
-The audit includes the owner-item/blocker table, including Criterion retention
-and the pending strict predicate. Its revised estimate accounts for partial
-normalization, assembly/resource and show-free CLI work as well as missing
-parent links; the trace relabel is separate from actual build acceptance.
+Use the [post-integration reassessment](research/2026-11-27-family2-unheld-queue-reassessment.md)
+for the remaining owner/source gates and the [owner-item/blocker table](research/2026-11-27-family2-coverage-audit.md#owner-items-and-the-work-they-block)
+for decision routing. The previously identified unheld decomposition queue
+has no further scoped batch; reassess new review findings rather than assume
+complete design from child links. Family two remains incomplete. Do not start
+family three/parser code or claim readiness from prototype CI.
 
-Review the [show-free command orchestration contract](research/2026-11-27-show-free-command-orchestration.md)
-and verify actual text/recording command paths against independent byte,
-source/revision and failure evidence. Component success or synthetic adapters
-alone do not establish mounted-runner/direct-command equivalence. Keep report
-formats, grammar/default selection and semantic-access policy held where not
-approved. Stdin input via '-' or an omitted path remains owner-held;
-acquire only explicitly supplied sources, with no stdin fallback. Reassess
-remaining family-two coverage and owner answers before claiming readiness for the restructure or parser implementation.
+Obtain the existing owner answers before deriving dependent report formats,
+normalization policy, std/build acceptance, flex qualification, X/V semantics,
+record access/governance, resource policy, selection/order or public grammar.
+The reader-progress choice for retained BlockPool credits remains owner-held,
+as does stdin input via '-' or an omitted path; never fall back to stdin.
+Extract's decided destination policies are not new questions, while strict
+on unlisted findings remains pending. Keep the full documented scope.
+
+Verify source freshness and independent interpretation review, actual borrowed
+ownership/dependency APIs and development evidence where required. Component
+contracts or synthetic adapters do not prove real text/recording integration,
+a complete accounting model, qualified flex vectors or release compatibility.
+Route answered work as bounded reviewed requirement slices; executable tests
+follow in the appropriate implementation family. The earlier audit's batch
+estimate is historical, not permission to bypass remaining gates.
 
 ### Streaming setup-record follow-ups
 

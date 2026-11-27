@@ -476,14 +476,17 @@ and clarify L1-WRT-002. Neither choice or L1 text change is made here.
 
 ## Decomposition/readiness audit
 
-The [2026-11-27 coverage audit](research/2026-11-27-family2-coverage-audit.md)
-checks this scope against actual primary links and named partial contracts.
-It is a dated inspection, not implementation evidence or permission to begin
-family 3. Missing direct lookup-state coverage, held build/report work and
-partial normalization/flex/assembly/resource rules remain explicit; no scope
-is silently removed. The owner extract decisions are already made and are
-recorded in [ADR-0037](adr/0037-extract-destination-and-findings-policy.md),
-not a new owner-decision gate.
+The [post-#79 reassessment](research/2026-11-27-family2-unheld-queue-reassessment.md)
+rechecks the scoped primary links and remaining partial contracts. The
+identified unheld decomposition queue is exhausted; family two is still
+incomplete and family three is not authorized. The [earlier audit](research/2026-11-27-family2-coverage-audit.md)
+is a dated snapshot; its missing lookup-state finding and batch estimate are
+historical. Held build/report work and normalization/flex/assembly/resource
+policy or source gates remain explicit; no scope is silently removed.
+Documentation linkage and green prototype CI are not implementation evidence.
+The owner extract decisions are already made and are recorded in
+[ADR-0037](adr/0037-extract-destination-and-findings-policy.md), not a new
+owner-decision gate; strict on unlisted findings remains pending.
 
 ## Delivery and release gates
 
