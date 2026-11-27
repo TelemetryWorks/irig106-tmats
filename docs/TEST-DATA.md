@@ -1408,8 +1408,10 @@ No fixture or executable test marker is claimed as implemented by this table.
 
 These cases refine L1-ROB-002/003 and L2-ROB-004/005. They are planned
 inspection/CI acceptance specifications, not executed tests or Evidence.
-Use isolated future fixtures under the actual lint settings, not prohibited
-operations inserted into this requirements PR or production library.
+Use CI-scripted cargo clippy runs on isolated fixture crates under the actual
+lint settings, not prohibited operations inserted into this requirements PR
+or production library. Do NOT add trybuild/ui_test or any dev dependency
+without owner approval.
 
 | Planned acceptance case | Independent failure/success evidence required | Requirements |
 |---|---|---|
@@ -1441,6 +1443,44 @@ and completed matching-head result. No new coverage exclusion list, numeric
 resource budget, test framework or full ADR-0020 acceptance is selected.
 The std, pattern, extraction, report-format and qualified-record-use holds
 remain independent of these planned checks.
+
+## Planned performance-evidence inspection batch 29
+
+These are planned acceptance cases for L2-PERF-001/002, not executed
+benchmarks or new numeric gates. Fixtures need independent expected-work
+inventories under reviewed semantics. Heavy synthesized runs belong in
+bounded GitHub CI; local/sample work requires the existing authorization
+and data/compute plan. No reference tool or recording is accessed here.
+
+| Planned acceptance case | Independent evidence or rejection condition | Requirements |
+|---|---|---|
+| `perf_parser_consumes_expected_source` | Literal source and expected item inventory establish full work before timing acceptance; preserved bytes alone do not hide missing parsed items | L3-PERF-001, L3-PERF-002 |
+| `perf_empty_early_result_is_not_fast_parse` | Parser returns early/empty while fixture contains expected items: reject timing as incomplete work, not an optimization success | L3-PERF-001 |
+| `perf_parser_result_is_observable` | Timed operation consumes a real result and records actual scope; an optimized-away/no-op path cannot count as parsing | L3-PERF-002 |
+| `perf_parser_scope_lists_included_work` | Record acquisition/allocation/index/checksum/view/render inclusion so differently scoped runs cannot silently compare | L3-PERF-002, L3-PERF-004 |
+| `perf_recording_scan_includes_later_setups` | Reviewed synthetic recording has later setup records/updates; independently listed inventory must all be accounted for, not only the first packet | L3-PERF-001, L3-PERF-003 |
+| `perf_fragments_are_not_records` | Several fragments form one reviewed candidate/record: distinguish fragment/run/record counts with source extents and qualification intact | L3-PERF-001, L3-PERF-003 |
+| `perf_interleaved_channels_keep_reviewed_work` | Synthetic per-channel runs/interleaving follow INT-011/045 fixtures; benchmark cannot reduce work by dropping another channel or inventing a completion | L3-PERF-001, L3-PERF-003 |
+| `perf_core_is_the_only_packet_reader` | Recording benchmark uses core facts/sideband/DATA and TMATS slicing; local sync scanner/checksum fallback or a second traversal oracle is not accepted | L3-PERF-003 |
+| `perf_recording_and_text_byte_denominators_differ` | Large recording with smaller setup text reports actual processed byte domains; parser text rate is not labelled full-file scan throughput | L3-PERF-004 |
+| `perf_borrowed_assembly_mode_is_identified` | DATA partitioning, any owned parse-source construction and measured phases remain explicit; no mandatory coalescing or new copy budget introduced | L3-PERF-003, L3-PERF-004 |
+| `perf_reproducible_input_build_identity` | Record source SHA, input fingerprint/size, compiler/tool versions, profile/features, hardware/OS/architecture and run settings | L3-PERF-005 |
+| `perf_unlike_cache_or_acquisition_modes_are_labelled` | Warm in-memory run versus file acquisition/cold mode cannot masquerade as equal-scope timing; actual modes retained | L3-PERF-004, L3-PERF-005 |
+| `perf_reference_uses_same_file` | Input fingerprints and reference version/command show same-file comparison; another input or unreported scope cannot yield an equivalent-work speedup claim | L3-PERF-005, L3-PERF-006 |
+| `perf_reference_first_packet_only_is_partial` | idmptmat consumes first packet while tmats traverses later setups: record partial/non-equivalent work, never unqualified whole-recording ratio | L3-PERF-006 |
+| `perf_reference_standalone_rejection_is_not_timing_success` | Reference cannot accept standalone TMATS: unsupported outcome stays visible, not a successful zero-time parse | L3-PERF-006 |
+| `perf_reference_timeout_is_not_speedup` | Reference nontermination hits the explicit bound: retain timeout/extent and stop owned process, no fabricated completed rate | L3-PERF-006, L3-PERF-007 |
+| `perf_reference_semantic_disagreement_is_investigated` | Independent inventory disagrees: investigate cited rules, retain mismatch; reference output alone cannot settle correctness | L3-PERF-001, L3-PERF-006 |
+| `perf_run_limits_and_cleanup_are_explicit` | Future plan bounds input/time/memory/repetitions and stops only its owned jobs on completion/limit; missing plan is not authorization for background runs | L3-PERF-007 |
+| `perf_missing_sample_evidence_remains_missing` | Synthetic CI exists but authorized sample/reference work unavailable: sample obligation remains unverified; do not upload local-use data or silently run heavy local work | L3-PERF-005, L3-PERF-007 |
+| `perf_initial_measurement_is_not_guessed_budget` | First measured baseline is retained for later explicit budget review; historical 100 Mbps context is not promoted into an accepted pass/fail threshold | L3-PERF-008 |
+| `perf_speed_does_not_waive_semantics_or_owner_holds` | Fast run with missing source/candidates, unapproved interpretation or unresolved qualified-record policy cannot count as full acceptance | L3-PERF-001, L3-PERF-008 |
+
+Future Evidence names completed, matching-source runs and their actual
+workload/limitations. These rows select no public report format, timing
+threshold, benchmark dependency, reference-tool patch or numeric timeout.
+Prototype benchmark comments are not requirement verification markers for
+this new contract, and timing does not approve proposed ADR-0021.
 
 ## Real Chapter 10 recordings (local use only)
 

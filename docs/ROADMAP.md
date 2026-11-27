@@ -80,10 +80,21 @@ and development analysis (including the complete non-decimal representation inve
 and implement the planned executable tests before relying on them. The owner
 choices are recorded; independent review and development gates remain.
 
+### Remaining performance evidence
+
+Review parser and whole-recording benchmarks with independent expected-work
+inventories before treating timings as evidence. Use core for packet finding,
+keep parser/scan phases and byte domains explicit, and label reference-tool
+partial work, unsupported inputs and timeouts. Plan bounded CI workloads and
+authorized sample comparisons; set numeric budgets only after measurement.
+This does not approve the full proposed ADR-0021 scanner design.
+
 ### Remaining library guard-rail and coverage acceptance
 
 Review effective library lint enforcement and the existing 80% line-coverage
 floor before adding their checks with the first redesigned library code.
+Run compile-fail fixture crates through CI-scripted cargo clippy; no
+trybuild/ui_test or dev dependency may be added without owner approval.
 Inspect actual package inheritance, failure propagation and measured library
 scope at the reviewed head; prototype CI and overall green status cannot
 substitute. Keep semantic/requirements coverage and owner gates separate.
