@@ -17,7 +17,8 @@ generator. Follow the regenerated TRACE-MATRIX for later totals.
 Also inspected held [#59](https://github.com/TelemetryWorks/irig106-tmats/pull/59)
 at `5748ba016f37cdcd4ac791d685345ca0df497c93`. Extraction's owner-policy
 record [#73](https://github.com/TelemetryWorks/irig106-tmats/pull/73) is now
-merged documentation, not implementation or a pending owner choice.
+merged documentation, not implementation. The three #57 policies are decided; the later
+clarification of --strict's refusal scope remains PENDING OWNER.
 
 Main has L2 92, L3 306 and 33 L1 leaves: 431 countable requirements. Held
 #59's requirements are not counted as merged. Scope is the 49 L1 parents
@@ -82,7 +83,7 @@ Inventory categories: D 35, P 9, M 3, H 3.
 | [L1-CLI-001](../L1-REQ.md#l1-cli-001) | [L2-CLI-005](../L2-REQ.md#l2-cli-005), [L2-CLI-006](../L2-REQ.md#l2-cli-006) | D | Content routing/acquisition boundary, core reader only; parser success is not valid input. |
 | [L1-CLI-002](../L1-REQ.md#l1-cli-002) | None on main | M | Raw/tree/channel-summary report derivation absent; stop for owner report-format decision, not a help-only substitute. |
 | [L1-CLI-003](../L1-REQ.md#l1-cli-003) | [L2-CLI-010](../L2-REQ.md#l2-cli-010), [L2-CLI-011](../L2-REQ.md#l2-cli-011) | D | Internal all-record identity/order; first-fragment meaning and public/live selection policy remain owner-gated. |
-| [L1-CLI-004](../L1-REQ.md#l1-cli-004) | [L2-CLI-008](../L2-REQ.md#l2-cli-008) | D | Byte/destination contracts and accepted 2026-11-27 owner policy are in merged #73; implementation/platform/core-access evidence remains. |
+| [L1-CLI-004](../L1-REQ.md#l1-cli-004) | [L2-CLI-008](../L2-REQ.md#l2-cli-008) | D | Byte/destination contracts and accepted 2026-11-27 owner policy are in merged #73; strict listed-only versus any-finding scope is pending owner; implementation/platform/core-access evidence remains. |
 | [L1-CLI-005](../L1-REQ.md#l1-cli-005) | [L2-CLI-012](../L2-REQ.md#l2-cli-012), [L2-CLI-013](../L2-REQ.md#l2-cli-013) | P | Library command propagation drafted; flex detail and actual command grammar/report integration remain incomplete. |
 | [L1-CLI-006](../L1-REQ.md#l1-cli-006) | None on main | M | Versioned JSON/plain reports and public exit mappings not derived; explicit owner report-format hold. |
 | [L1-CLI-007](../L1-REQ.md#l1-cli-007) | [L2-CLI-009](../L2-REQ.md#l2-cli-009) | D | Tool-opened input-alias/delivery safety; #73 records force proof exception while known aliases always refuse. |
@@ -173,12 +174,18 @@ The owner decisions of 2026-11-27 remove #57's overwrite, identity and
 finding-eligibility holds. Merged #73 records them verbatim and explicitly makes
 --force/--strict owner-approved spellings, with remaining grammar held.
 Force can authorize unproven regular identity, NEVER a known input alias.
-Default raw extract reports every finding and preserves bytes; strict
-refuses on findings. No finding is always-refuse. This does not make cut/
+Default raw extract reports every finding and preserves bytes. Strict refuses
+the listed bad-data kinds; whether it also refuses every other finding is
+PENDING OWNER. The earlier any-finding shorthand is not a decided predicate.
+No finding is default always-refuse. This does not make cut/
 ambiguous/invalid input semantically usable or governing, nor invent a core
 raw extent. Do not repeat #59's historical extraction-hold prose as current
 owner status. The final inspected main includes #73's removal of those stale
-holds; do not ask for the same decisions again.
+holds; do not ask for the same decisions again. This audit PR also marks
+--strict scope pending in current L2/L3/CLI/ROADMAP/fixtures without changing
+ADR-0037's verbatim text or older research. Listed-kind and no-finding cases
+are common to both options; the information-only other-finding strict arm is
+explicitly blocked. No new owner answer or recommendation is invented.
 
 ## Family-3 readiness and recommended order
 

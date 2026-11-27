@@ -1007,13 +1007,15 @@ removing the #57 overwrite/identity/finding-eligibility holds for extract.
 The [decision follow-up](research/2026-11-27-extract-owner-policy.md) records
 scope and planned checks. Source/development/test gates and independent
 review remain; no extraction implementation or other argument grammar is
-approved by recording the decision.
+approved by recording the decision. Owner clarification after #73: the
+--strict predicate is PENDING OWNER (listed bad-data kinds versus any finding).
+Neither broader refusal nor narrower acceptance is silently selected.
 
 #### L2-CLI-008
 
 **Parent**: L1-CLI-004
 
-**Statement**: For an explicitly selected setup record/candidate with supplied original text bytes, extract SHALL proceed byte-exact by default despite findings, reporting every finding; --strict SHALL refuse when findings are present. It SHALL extract exactly that selection's original text bytes to the requested output, using core-backed fragment extents and the byte-faithful writer contract without packet framing, decoding/re-encoding, normalization or implicit edits.
+**Statement**: For an explicitly selected setup record/candidate with supplied original text bytes, extract SHALL proceed byte-exact by default despite findings, reporting every finding; --strict SHALL refuse for the listed bad-data kinds, while its behavior on other findings SHALL remain PENDING OWNER. It SHALL extract exactly that selection's original text bytes to the requested output, using core-backed fragment extents and the byte-faithful writer contract without packet framing, decoding/re-encoding, normalization or implicit edits.
 
 **Rationale**: UC-17, CLI command table and L1-CLI-004 require extracting TMATS bytes, not rendering a typed view. ADR-0002/0003 preserve source bytes; ADR-0010 leaves destination acquisition to the CLI/caller; ADR-0036 supplies borrowed DATA. Chapter 11 (106-24R1) section 11.2.7.2/Figure 11-34 p. 11-50 places a CSDW before each fragment's text. ADR-0037 allows raw extraction despite the listed integrity, cut, ambiguity, encoding and invalid-value findings, with no always-refuse finding class. This does not adopt a qualified setup for semantic/governing use, choose a default record, combine records or invent bytes/packet extents not supplied by core. Proposed INT-031's general semantic-access gate is not silently approved by this extraction-only owner direction.
 

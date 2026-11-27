@@ -90,7 +90,8 @@ existing content-based recording/text input route. The 0.1 scope is unchanged.
   another code name (defect D4).
 - **Extraction preserves bytes.** ADR-0037 records the owner policy of
   2026-11-27: extract the explicitly selected original bytes despite findings,
-  reporting every finding; --strict refuses on findings. There is no
+  reporting every finding; --strict refuses the listed bad-data kinds.
+  Its listed-kinds-only versus any-finding scope is PENDING OWNER. There is no
   always-refuse finding class. Cut/ambiguous/invalid/marker qualifications
   and core integrity evidence stay unchanged; raw extraction does not make
   them semantically usable or governing.

@@ -195,7 +195,10 @@ write through the non-truncating identity-checked same handle, never
 temp-file+rename. Stdout/pipes are allowed without identity proof; a regular
 file with unproven identity refuses unless --force. Known input aliases
 still refuse. Extract despite findings by default, byte-exact with every
-finding reported; --strict refuses on findings, with no always-refuse class.
+finding reported, with no default always-refuse class. --strict refuses the
+listed bad-data kinds; whether it refuses on ANY finding remains PENDING OWNER.
+Neither option is approved by the earlier shorthand. Overwrite/identity and
+raw default extraction decisions remain made; this is a narrower clarification.
 
 Review executable byte, qualification, identity/race and destination tests
 before implementation; owner policy is not completed evidence. --force and
