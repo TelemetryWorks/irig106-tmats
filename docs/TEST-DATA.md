@@ -1451,6 +1451,9 @@ benchmarks or new numeric gates. Fixtures need independent expected-work
 inventories under reviewed semantics. Heavy synthesized runs belong in
 bounded GitHub CI; local/sample work requires the existing authorization
 and data/compute plan. No reference tool or recording is accessed here.
+Retaining the prototype Criterion dev dependency requires owner approval.
+PENDING OWNER: zero per-packet steady-state allocation by the tmats host for
+non-setup packets (core L2-HOT-008 analogy); no such threshold is set here.
 
 | Planned acceptance case | Independent evidence or rejection condition | Requirements |
 |---|---|---|
@@ -1463,8 +1466,9 @@ and data/compute plan. No reference tool or recording is accessed here.
 | `perf_interleaved_channels_keep_reviewed_work` | Synthetic per-channel runs/interleaving follow INT-011/045 fixtures; benchmark cannot reduce work by dropping another channel or inventing a completion | L3-PERF-001, L3-PERF-003 |
 | `perf_core_is_the_only_packet_reader` | Recording benchmark uses core facts/sideband/DATA and TMATS slicing; local sync scanner/checksum fallback or a second traversal oracle is not accepted | L3-PERF-003 |
 | `perf_recording_and_text_byte_denominators_differ` | Large recording with smaller setup text reports actual processed byte domains; parser text rate is not labelled full-file scan throughput | L3-PERF-004 |
-| `perf_borrowed_assembly_mode_is_identified` | DATA partitioning, any owned parse-source construction and measured phases remain explicit; no mandatory coalescing or new copy budget introduced | L3-PERF-003, L3-PERF-004 |
-| `perf_reproducible_input_build_identity` | Record source SHA, input fingerprint/size, compiler/tool versions, profile/features, hardware/OS/architecture and run settings | L3-PERF-005 |
+| `perf_borrowed_assembly_mode_is_identified` | Recording traversal uses ADR-0036 borrowed spans without coalescing/extra payload copies; any owned parse-source construction is a separate parser workload. Paired untimed allocator/copy instrumentation reports allocation counts and payload-copy bytes, with counter scope and no new numeric threshold | L3-PERF-003, L3-PERF-004 |
+| `perf_coalescing_or_copying_scan_is_not_accepted` | A run coalesces/copies setup payloads instead of ADR-0036 borrowed-span assembly: reject it as recording-scan evidence even if fast/correct; untimed test-allocator and explicit copy counters remain reported, without a new allocation threshold | L3-PERF-003, L3-PERF-004 |
+| `perf_reproducible_input_build_identity` | Record source SHA, input fingerprint/size, compiler/tool versions, profile/Cargo features, compile-time target features, hardware/OS/architecture and run settings | L3-PERF-005 |
 | `perf_unlike_cache_or_acquisition_modes_are_labelled` | Warm in-memory run versus file acquisition/cold mode cannot masquerade as equal-scope timing; actual modes retained | L3-PERF-004, L3-PERF-005 |
 | `perf_reference_uses_same_file` | Input fingerprints and reference version/command show same-file comparison; another input or unreported scope cannot yield an equivalent-work speedup claim | L3-PERF-005, L3-PERF-006 |
 | `perf_reference_first_packet_only_is_partial` | idmptmat consumes first packet while tmats traverses later setups: record partial/non-equivalent work, never unqualified whole-recording ratio | L3-PERF-006 |

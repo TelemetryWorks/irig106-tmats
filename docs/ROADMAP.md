@@ -87,19 +87,29 @@ inventories before treating timings as evidence. Use core for packet finding,
 keep parser/scan phases and byte domains explicit, and label reference-tool
 partial work, unsupported inputs and timeouts. Plan bounded CI workloads and
 authorized sample comparisons; set numeric budgets only after measurement.
+Recording-scan measurement must use ADR-0036 borrowed-span assembly without
+coalescing or extra payload copies. Report allocation counts and payload-copy
+bytes from paired untimed instrumentation (test allocator plus copy
+accounting), with no new numeric threshold; retain compile-time target
+features as well as Cargo features. Retaining the prototype Criterion dev
+dependency requires owner approval.
+PENDING OWNER: whether the tmats host must also do zero per-packet allocation
+in steady state for non-setup packets, analogous to core L2-HOT-008.
 This does not approve the full proposed ADR-0021 scanner design.
 
 ### Remaining library guard-rail and coverage acceptance
 
 Review effective library lint enforcement and the existing 80% line-coverage
 floor before adding their checks with the first redesigned library code.
-Run compile-fail fixture crates through CI-scripted cargo clippy; no
-trybuild/ui_test or dev dependency may be added without owner approval.
 Inspect actual package inheritance, failure propagation and measured library
 scope at the reviewed head; prototype CI and overall green status cannot
 substitute. Keep semantic/requirements coverage and owner gates separate.
 This does not approve the remainder of proposed ADR-0020 or resolve #59's
 held std choice.
+
+Compile-fail fixtures for the guard rails use CI-scripted cargo clippy runs
+on fixture crates. Do NOT add trybuild/ui_test or any dev dependency without
+owner approval.
 
 ### Remaining raw lookup and extension derivations
 

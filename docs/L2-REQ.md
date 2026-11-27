@@ -1088,13 +1088,17 @@ These derive L1-PERF-001, not approval of the whole proposed single-pass
 scanner in ADR-0021 or a guessed throughput budget. The [measurement and
 source note](research/2026-11-27-performance-evidence-requirements.md) separates
 benchmark scope, correctness, reference limitations and permitted compute.
-No benchmark is run or new dependency selected in this docs batch.
+No benchmark is run or new dependency selected in this docs batch. Retaining
+the prototype Criterion dev dependency requires owner approval.
+**PENDING OWNER**: whether the tmats host must also have zero per-packet
+allocation in steady state for non-setup packets (core L2-HOT-008 analogy);
+this slice does not approve that host allocation threshold.
 
 #### L2-PERF-001
 
 **Parent**: L1-PERF-001
 
-**Statement**: The project SHALL measure redesigned TMATS text reading and finding every setup record in a recording as distinct, explicitly scoped workloads on synthesized and sample data, checking the consumed source/record inventory independently before accepting timing evidence; recording traversal SHALL use the sole irig106-core reader and retain the existing TMATS slicing/assembly contracts.
+**Statement**: The project SHALL measure redesigned TMATS text reading and finding every setup record in a recording as distinct, explicitly scoped workloads on synthesized and sample data, checking the consumed source/record inventory independently before accepting timing evidence; recording traversal SHALL use the sole irig106-core reader and ADR-0036 borrowed-span assembly without coalescing or extra payload copies, with allocation counts/payload-copy bytes reported from matching untimed instrumentation rather than imposing a new numeric budget.
 
 **Rationale**: L1-PERF-001 already requires both workloads. ADR-0036 owns packet finding/trust in core; ADR-0025 distinguishes packet fragments from setup records. A fast result that scans only the first packet, drops source bytes or treats every fragment as a separate record does not measure the required work. Sample access/compute must follow TEST-DATA's local-use policy and owner compute authorization; missing sample evidence remains missing, not inferred from synthetic CI.
 

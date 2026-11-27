@@ -18,7 +18,9 @@ Performance evidence must preserve those responsibilities and qualifications.
 
 Source-inspected the prototype benches/parse_bench.rs and Cargo.toml:
 there is a Criterion parse/serialization/validation benchmark and an existing
-criterion dev dependency. The bench contains prototype fixtures and obsolete
+criterion dev dependency. Retaining that prototype Criterion dev dependency
+for the redesign requires OWNER APPROVAL; presence in Cargo.toml does not
+grant approval to keep it. The bench contains prototype fixtures and obsolete
 traceability comments, not executable requirement markers for these new
 requirements. Neither fixture semantics nor measured redesign performance
 is established by its presence. Do not reuse its assertions as an oracle or
@@ -30,10 +32,25 @@ cases. Real recording samples remain local-use data. No reference binary,
 other repository, sample file or local computer is accessed in this slice.
 No benchmark, Rust build, reference process or new tool install runs here.
 
+## Pending owner item
+
+PENDING OWNER: whether the tmats host must also do zero per-packet allocation
+in steady state for non-setup packets, analogous to core L2-HOT-008. That
+host allocation rule is not approved here. Allocation/copy metrics below are
+reporting only, with no new numeric threshold; ADR-0036's existing borrowed-
+span/no-extra-payload-copy assembly obligation still applies independently.
+Retaining Criterion also needs owner approval before implementation chooses
+that framework; no new or retained dev dependency is approved by this PR.
+
 ## Correct work before timing claims
 
 L2-PERF-001 and L3-PERF-001–004 require separately scoped parser and recording
-workloads. Before accepting times, compare retained bytes and the applicable
+workloads. Recording traversal MUST use ADR-0036 borrowed-span assembly,
+without coalescing or extra payload copies. A copying/coalescing run is not
+accepted as recording-scan evidence, even if its output is correct or fast.
+Any owned parse-source construction is a separately identified parser
+workload, not an alternative recording-scan mode.
+Before accepting times, compare retained bytes and the applicable
 item/fragment/run/record inventory with independent fixture expectations.
 A parser returning an early empty result, a scanner ignoring later setup
 packets or an assembler counting each fragment as a record is not a faster
@@ -56,12 +73,22 @@ Keep recording bytes and TMATS text bytes separate. Report units and actual
 processed extents; a small setup's parsing rate is not a full recording's
 scan rate. Cache and acquisition modes matter, so identify them rather than
 invent a cold-cache policy or compare unlike modes without qualifications.
+Allocation counts and payload-copy bytes must also be reported, measured
+OUTSIDE the timer in a paired run with matching input/build/configuration
+and workload scope. Use a test allocator like core's for allocation counts
+and separate explicit instrumentation for payload-copy bytes; an allocator
+alone does not count copies. Record counter definitions and scope. This is
+reporting only, with no new numeric threshold; refusing coalescing enforces
+ADR-0036 rather than inventing a metric budget. The reference to core's test
+allocator is the supplied review direction, not a claim of cross-repository
+source/API inspection or approval of an added dependency.
 No output layout, file format or benchmark framework is chosen here.
 
 ## Same-file reference comparison with limitations visible
 
 L2-PERF-002 and L3-PERF-005–008 require exact source/build/input identity,
-versions/options, hardware/OS/architecture and run configuration. Use the
+versions/options, hardware/OS/architecture, compile-time target features
+(separate from Cargo features) and run configuration. Use the
 same input files for comparison and retain actual completion and consumed
 extent for both tools. If idmptmat reads one packet while tmats finds later
 records, the work differs: no unqualified whole-scan speedup ratio follows.
@@ -98,7 +125,9 @@ invented. No new dependency is approved by selecting a measurement contract.
 For L3-ROB-009 compile-fail fixtures, use CI-scripted cargo clippy runs on
 fixture crates. Do NOT add trybuild/ui_test or any dev dependency without
 owner approval. The requirement and TEST-DATA note carry this instruction;
-no fixture framework or dependency is installed or added by this PR.
+the ROADMAP places it under the guard-rail/coverage section, not performance.
+This placement is called out in the PR description; no fixture framework or
+dependency is installed or added by this PR.
 
 Held #59 remains separate pending the owner's std decision. Before its
 re-review it must rebase on then-current main and regenerate/recount trace

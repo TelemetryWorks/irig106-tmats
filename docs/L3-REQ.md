@@ -2508,6 +2508,11 @@ These are future inspection obligations. No Evidence line or executable
 benchmark coverage is claimed. See the [batch note](research/2026-11-27-performance-evidence-requirements.md)
 for source inspection, independent expected-work oracles and pending budgets.
 
+**PENDING OWNER**: whether the tmats host must also perform zero per-packet
+allocation in steady state for non-setup packets, analogous to core
+L2-HOT-008. No such host allocation threshold is approved here. Retaining
+the prototype Criterion dev dependency also requires owner approval.
+
 **L3-PERF-001** · Parent: L2-PERF-001 · Verification: I
 *Before accepting a benchmark result, verification SHALL compare its consumed source extent and applicable item/fragment/run/record inventory with independently specified fixture expectations, preserving source bytes and qualification evidence rather than accepting timing alone or deriving the oracle through the production parser/assembler.*
 
@@ -2523,7 +2528,7 @@ parse with end-to-end file processing as if their measured scopes were equal.
 This does not choose a scanner algorithm, benchmark framework or new API.
 
 **L3-PERF-003** · Parent: L2-PERF-001 · Verification: I
-*Whole-recording measurement SHALL traverse the declared input extent through core and account for all expected setup fragments/candidates/records under the reviewed assembly rules, without substituting first-setup-only timing, a local packet reader, fragment-count-as-record-count or silently skipped later updates.*
+*Whole-recording measurement SHALL traverse the declared input extent through core using ADR-0036 borrowed-span assembly directly, without coalescing or extra payload copies, and account for all expected setup fragments/candidates/records under the reviewed assembly rules; a coalescing/copying run SHALL NOT be accepted as recording-scan evidence, nor SHALL first-setup-only timing, a local packet reader, fragment-count-as-record-count or silently skipped later updates.*
 
 ADR-0036 preserves core header facts, integrity sideband and borrowed DATA;
 INT-011/045 define joining/closure separately from complete/governing use.
@@ -2531,16 +2536,22 @@ Synthetic fixture inventories can establish expected work without copying
 core's packet-finding algorithm into a benchmark oracle.
 
 **L3-PERF-004** · Parent: L2-PERF-001 · Verification: I
-*Measurement evidence SHALL distinguish TMATS text bytes from recording bytes and report whether timing covers core traversal, TMATS slicing/assembly, parsing, acquisition and output; it SHALL retain the units and run mode needed to interpret rates without presenting one phase's throughput as another's or hiding mandatory work outside the timer.*
+*Measurement evidence SHALL distinguish TMATS text bytes from recording bytes and report whether timing covers core traversal, ADR-0036 borrowed-span slicing/assembly, parsing, acquisition and output; it SHALL retain the units and run mode needed to interpret rates without presenting one phase's throughput as another's or hiding mandatory work outside the timer, and SHALL report allocation counts and payload-copy bytes from a matching untimed measurement using a test allocator like core's plus explicit copy accounting, with reporting only and no new numeric threshold.*
 
-Physical DATA blocks need not be coalesced under ADR-0036. Record any owned
-source construction separately from borrowed assembly; no allocation/copy
-budget or cold/warm-cache policy is invented by this requirement. Describe
-the actual mode, rather than silently mixing modes in a comparison.
+Recording-scan evidence MUST use borrowed-span assembly, not merely label
+coalescing/copying as another scan mode. Any owned parse-source construction
+belongs to a separately identified parser workload. Allocation/copy counters
+are measured OUTSIDE the timer in a paired run with matching input, build,
+configuration and workload scope: allocator instrumentation counts allocations;
+separate copy accounting measures payload-copy bytes. Record counter scope.
+No new numeric allocation/copy budget or cold/warm-cache policy is selected;
+rejection of coalescing enforces ADR-0036, not a new metric threshold.
 
 **L3-PERF-005** · Parent: L2-PERF-002 · Verification: I
-*Each accepted measurement SHALL identify source head, tool/compiler versions, build profile/features, hardware/OS/architecture, input fingerprint/size, repetition and cache/acquisition mode, measured scope and completed result, so results from different sources, environments or workloads cannot masquerade as a same-condition comparison.*
+*Each accepted measurement SHALL identify source head, tool/compiler versions, build profile/Cargo features and compile-time target features, hardware/OS/architecture, input fingerprint/size, repetition and cache/acquisition mode, measured scope and completed result, so results from different sources, environments or workloads cannot masquerade as a same-condition comparison.*
 
+Compile-time CPU/target features are distinct from Cargo features; retain
+both with the actual build configuration.
 Keep authorized sample bytes out of CI/public artifacts under TEST-DATA's
 local-use policy; identify evidence without uploading the recording. No
 user-facing report schema, benchmark tool dependency or numeric run default
