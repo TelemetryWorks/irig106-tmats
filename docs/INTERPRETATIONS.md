@@ -2160,6 +2160,8 @@ not a default target; it never supplies a missing choice.
 
 **Sources**:
 - 106-24R1 Chapter 9 section 9.5.14, p. 9-172, prints `X-x\ ORGANIZATION \ORIGCODE\EXTENSION_CODE-i-j-m-n:Value;`.
+- Same section: “Everything to the right of ORGANIZATION that matches an existing TMATS code is used to associate the extension with an existing object defined by the TMATS file.”
+- Same section: “The EXTENSION_CODE identifies the specific extension and shall be unique (i.e., not overlapping any existing TMATS code name).” Registry-name matching plus this uniqueness rule determines the reviewed ORIGCODE/EXTENSION_CODE decomposition; missing metadata does not authorize a heuristic. What “existing TMATS code” means is separately proposed INT-062, not silently decided here.
 - Same section: “The ORIGCODE contains the original group identifier (i.e., G,D,P, etc.)” and “The value of “-x” must match the first level index (P-x, etc.) value”.
 - Same section: “The “x” values must match the index of the original code word therefore no new values may be added.”
 - Table 9-2 PROGRAM NAME, p. 9-10, prints code name `G\PN`, with no numeric index. Section 9.5.14's worked example uses indexed `D-1\MN-1-2`, not an unindexed original.
@@ -2177,11 +2179,49 @@ it declines to invent the absent occurrence mapping.
 **Owner options**:
 - **A — recommend:** leave the mapping unavailable until a separately reviewed representation is established. Raw data remains accessible; no fabricated match enters a consumer's model.
 - **B — explicit policy:** define an owner-chosen representation for unindexed targets (for example a labelled sentinel/omitted-occurrence convention) before supporting them. This could enable such attachments but would add project policy not printed in section 9.5.14 and needs its own exact syntax, collision and compatibility tests; no representation is chosen here.
+- **C — natural future refinement:** for a once-per-document G attribute such as G\PN, attach by a unique reviewed path when exactly one source occurrence exists, with a labelled attachment and a located finding that occurrence x cannot be verified. No sentinel is needed. This is plausible because G is explicitly listed and the text speaks of an existing object. Duplicates are still ambiguous, record/cut qualifications stay attached, and exact public label wording remains behind the report-format decision. C is not approved here.
+- **D — considered and rejected in this draft recommendation:** classify the X as nonconforming/malformed with a located finding because the required index comparison cannot be satisfied. This is the strict reading of the index sentence, but the explicit G listing makes a blanket rejection of such extensions poorly supported; raw bytes would still be kept. The owner remains the decision-maker; this is not an owner rejection record.
+
+A is reversible: later approved B/C can refine missing-rule cannot-evaluate to resolved where their guards hold, retaining raw bytes/evidence without a breaking source/result-shape change. This does not pre-approve B/C or bypass normal published API/report compatibility review. A remains recommended now; C is the natural future refinement.
 
 **Reason**: The X form/index-match rule assumes an index to compare; its broad original-group description includes G, whose PROGRAM NAME has none. The cited text does not supply a sentinel or omitted-index form. Guessing one can create a false attachment or hide an orphan. Prefer an explicit unavailable result over claiming a standards-defined mapping.
 
 **Design**: proposed (2026-11-27; Option A recommended) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off pending; independent AI check pending; source freshness, development analysis and executable tests remain required · **Origin**: family 2 batch 30 source inspection
 
-**Test**: `x_unindexed_original_mapping_unavailable`, `x_unindexed_zero_one_never_default`, `x_unindexed_value_never_supplies_occurrence` (planned Option A expectations; BLOCKED before owner sign-off/AI check, not implemented or executed)
+**Test**: `x_unindexed_original_mapping_unavailable`, `x_unindexed_zero_one_never_default`, `x_unindexed_value_never_supplies_occurrence` (planned Option A expectations), `x_unindexed_unique_path_option_c`, `x_unindexed_duplicate_path_option_c`, `x_unindexed_nonconforming_option_d` (alternative-option fixtures; all BLOCKED before owner sign-off/AI check, not implemented or executed)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+
+### INT-062
+
+**Title**: Meaning of existing TMATS code in X decomposition
+
+**Sources**:
+- 106-24R1 Chapter 9 section 9.5.14, p. 9-172: “Everything to the right of ORGANIZATION that matches an existing TMATS code is used to associate the extension with an existing object defined by the TMATS file.”
+- Same section: “The EXTENSION_CODE identifies the specific extension and shall be unique (i.e., not overlapping any existing TMATS code name).”
+- Same section says ORIGCODE contains the original group identifier and original code, potentially more backslashes, and prints the D-1\MN-1-2 / X-1\MYORG\D\MN\SGAIN-1-2 example. Table 9-7 MEASUREMENT NAME p. 9-115 defines the original code-name pattern independently of whether an instance is present.
+- ADR-0008/0026 preserve attachment and every candidate; the phrases “existing TMATS code” and “existing object defined by the TMATS file” leave vocabulary versus instance presence to review.
+
+**Behaviour (PROPOSED, Option A recommended; owner decision required)**:
+Use code names in the reviewed registry for the applied edition/basis as
+the decomposition vocabulary. Match the original group/full path there,
+using its reviewed index arity. EXTENSION_CODE uniqueness against that
+vocabulary makes a conforming split deterministic. Then search the supplied
+document for the actual original occurrences as a separate step; a known
+code with no instance is an orphan/unresolved target, not missing grammar.
+If registry metadata is missing, overlap is established or the split cannot
+be proved unique, retain raw evidence and cannot-evaluate; no greedy/
+longest-prefix or document-presence heuristic fills the gap.
+
+**Owner options**:
+- **A — recommend:** “existing code” means the applied edition's reviewed code-name vocabulary. This separates stable name decomposition from actual document presence and makes orphan reporting possible. The catalog need not be the complete later value-validation registry, but claimed code-name/arity coverage must be sourced and reviewed.
+- **B:** “existing code” means usable code names present in the supplied document. The reference to an existing object in the file supports this reading and could admit document-defined/private codes, but the same X text could decompose differently when originals are missing/added; metadata and ambiguity rules still need review, and presence alone cannot invent unknown grammar or objects.
+
+**Reason**: Registry matching and EXTENSION_CODE uniqueness provide the deterministic decomposition described by the section. The remaining vocabulary-scope question must be an explicit owner choice. A is recommended, not signed; no namespace, private-code or edition fallback policy is silently added.
+
+**Design**: proposed (2026-11-27; Option A recommended) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off pending; independent AI check pending; source freshness, development analysis and executable tests remain required · **Origin**: PR #63 independent review follow-up
+
+**Test**: `x_registry_decomposition_survives_absent_target`, `x_document_only_code_does_not_define_registry_split`, `x_extension_overlap_prevents_heuristic_split` (planned Option A expectations; BLOCKED before owner sign-off/AI check, not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written

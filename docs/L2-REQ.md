@@ -1121,16 +1121,19 @@ This is the X portion of L1-EXT-003; V grouping remains to derive, so this
 child does not complete that parent. ADR-0008/0026 and section 9.5.14 supply
 the baseline. The [source/gap note](research/2026-11-27-x-association-requirements.md)
 drafts proposed INT-061 for unindexed originals; that case is BLOCKED on
-owner sign-off and independent AI check under ADR-0033. No edit/renumber
-implementation or public query-language decision is selected here.
+owner sign-off and independent AI check under ADR-0033. Proposed INT-062
+separately gates “existing TMATS code”: edition-registry code names versus
+codes present in the document. Registry vocabulary is recommended, not
+approved. No edit/renumber implementation or public query-language decision
+is selected here.
 
 #### L2-EXT-001
 
 **Parent**: L1-EXT-003
 
-**Statement**: Given a reviewed, unambiguous X-name decomposition and original-code index metadata, the library SHALL associate an X item with every source occurrence matching its original group/code path, occurrence and carried leading indices in the same document, using ASCII case comparison and INT-038 identity; it SHALL retain resolved/unresolved/ambiguous candidate evidence without selecting a duplicate winner or inferring association from extension values.
+**Statement**: Given X-name decomposition by matching reviewed registry code names, made unambiguous by EXTENSION_CODE uniqueness, and original-code index metadata (with the vocabulary interpretation pending INT-062), the library SHALL associate an X item with every source occurrence matching its original group/code path, occurrence and carried leading indices in the same document, using ASCII case comparison and INT-038 identity; it SHALL retain resolved/unresolved/ambiguous candidate evidence without selecting a duplicate winner or inferring association from extension values.
 
-**Rationale**: 106-24R1 Chapter 9 section 9.5.14 p. 9-172 defines ORIGCODE, occurrence/leading-index agreement and extension-private remaining indices. ADR-0008 makes X first-class, ADR-0026 lists link candidates without arbitrary selection, and approved INT-038 explicitly applies canonical identity to X/original indices. Association is structural attachment, not evidence that an original value or setup is valid, complete or governing. Unknown decomposition/arity must remain unavailable rather than be guessed.
+**Rationale**: 106-24R1 Chapter 9 section 9.5.14 p. 9-172 defines ORIGCODE, occurrence/leading-index agreement and extension-private remaining indices. ADR-0008 makes X first-class, ADR-0026 lists link candidates without arbitrary selection, and approved INT-038 explicitly applies canonical identity to X/original indices. Association is structural attachment, not evidence that an original value or setup is valid, complete or governing. Section 9.5.14's matching-existing-code and EXTENSION_CODE uniqueness sentences supply decomposition, not a missing grammar convention. Unknown registry metadata/arity/uniqueness must remain unavailable rather than be guessed; INT-062's choice needs owner/AI review.
 
 **Verification Method**: Test (T)
 

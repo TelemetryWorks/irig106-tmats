@@ -454,9 +454,10 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-059 | Unproven multiplicity is unestablished, conflicting requires evidence | approved (Joey, 2026-11-26; independent AI final CONCUR at 3fcbd2cb0e911d1bc23e4cc3a5b53d503e5d7e23) | not yet written | _(none)_ |
 | INT-060 | Each query supplies its caller choice explicitly | approved (Joey, 2026-11-26; independent AI final CONCUR at 3fcbd2cb0e911d1bc23e4cc3a5b53d503e5d7e23) | not yet written | _(none)_ |
 | INT-061 | X occurrence mapping when the original has no numeric index | proposed (2026-11-27; Option A recommended) | not yet written | _(none)_ |
+| INT-062 | Meaning of existing TMATS code in X decomposition | proposed (2026-11-27; Option A recommended) | not yet written | _(none)_ |
 
-* Entries without a written analysis: **61** of 61
-* Entries without a test: **61** of 61
+* Entries without a written analysis: **62** of 62
+* Entries without a test: **62** of 62
 * Entries missing the development mark: **0**
 
 ### Marker reference check

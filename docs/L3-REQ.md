@@ -2586,15 +2586,26 @@ record-access/governance and report-format decisions remain unresolved.
 Source: 106-24R1 Chapter 9 section 9.5.14 p. 9-172, ADR-0008/0026 and
 approved INT-038/039/040/048. These are proposed derivations, not runtime
 coverage. [INT-061](INTERPRETATIONS.md#int-061) remains proposed: unindexed-
-original mapping is blocked before implementation; other unknown grammar
-must not be guessed. Public pattern-scope/syntax and record-access holds
-remain separate and unchanged.
+original mapping is blocked before implementation. Proposed
+[INT-062](INTERPRETATIONS.md#int-062) separately gates the meaning of
+“existing TMATS code” (edition-registry vocabulary versus codes present in
+the document). Registry vocabulary is recommended, not approved. Other
+unknown grammar must not be guessed. Public pattern-scope/syntax and
+record-access holds remain separate and unchanged.
 
 **L3-EXT-001** · Parent: L2-EXT-001 · Verification: T
-*X association SHALL use a reviewed decomposition retaining X occurrence, organization, original group/full code path, extension code and all suffix indices with raw correspondence; when decomposition or original index arity is unavailable/ambiguous, it SHALL retain the source and an observable cannot-evaluate reason rather than choose a greedy path split or fabricate a usable original key.*
+*X association SHALL decompose the name by matching original code names against the reviewed registry, made unambiguous for conforming extensions by the EXTENSION_CODE uniqueness rule, retaining X occurrence, organization, original group/full path, extension code and suffix indices with raw correspondence; missing metadata or unproved uniqueness SHALL retain source and an observable cannot-evaluate reason, not a heuristic split or fabricated key. The edition-vocabulary versus document-presence interpretation SHALL remain gated by proposed INT-062 before implementation.*
 
-Section 9.5.14 allows multiple backslashes in ORIGCODE, with no hyphens in
-that original-code text. Its D-1\MN-1-2 / X-1\MYORG\D\MN\SGAIN-1-2
+Section 9.5.14 p. 9-172: “Everything to the right of ORGANIZATION that
+matches an existing TMATS code is used to associate the extension with an
+existing object defined by the TMATS file.” It also says “The EXTENSION_CODE
+identifies the specific extension and shall be unique (i.e., not overlapping
+any existing TMATS code name).” Match reviewed registry names; do not infer
+that the standard supplies no split. INT-062 records the still-open meaning
+of “existing code”; its registry-vocabulary Option A is the draft recommendation.
+Missing/incomplete registry metadata still cannot justify a longest-prefix
+heuristic. Section 9.5.14 allows multiple backslashes in ORIGCODE, with no
+hyphens in that original-code text. Its D-1\MN-1-2 / X-1\MYORG\D\MN\SGAIN-1-2
 example is a structural oracle, not a complete conforming setup fixture.
 Private extension grammar is not inferred from familiar-looking suffixes.
 
@@ -2636,8 +2647,9 @@ remains open; internal attachment does not approve the public pattern API.
 
 Section 9.5.14 p. 9-172 exempts X occurrence contiguity and disallows new
 original values; INT-040 says X does not create a D member. This is not a
-blanket contiguity exemption for every embedded/trailing index or approval
-of the EXTENSION_CODE namespace-uniqueness validator. Unknown values are
+blanket contiguity exemption for every embedded/trailing index. EXTENSION_CODE
+uniqueness is a prerequisite for the registry-name split, not permission to
+auto-rename an overlap or implement all private value/namespace rules. Unknown values are
 not evaluated as a sensor conversion or clock-association rule.
 
 **L3-EXT-007** · Parent: L2-EXT-002 · Verification: T
@@ -2646,7 +2658,11 @@ not evaluated as a sensor conversion or clock-association rule.
 The printed section 9.5.14 form and index-match sentence do not explain how
 to target G\PN, whose Table 9-2 p. 9-10 code name has no numeric index.
 INT-061 Option A recommends retaining raw X plus cannot-evaluate mapping;
-that proposed case expectation is BLOCKED, not approved behavior. This gate
+that proposed case expectation is BLOCKED, not approved behavior. C offers
+a natural future labelled unique-path refinement; D is considered/rejected
+in the draft recommendation, not by the owner. A retains raw evidence so a
+later approved B/C can refine the result without a source/result-shape break.
+This gate
 does not decide indexed fields of groups without an occurrence or any
 other unsupported original grammar.
 
@@ -2656,4 +2672,5 @@ other unsupported original grammar.
 Use the section 9.5.14 example and cited original-code rows, then controlled
 index/spelling/duplicate/scope variants. Values remain opaque. Source
 freshness, development analysis and executable tests precede implementation;
-unknown grammar or pending INT-061 cannot become a passing conformance case.
+unknown grammar or pending INT-061/062 cannot become a passing conformance
+case.

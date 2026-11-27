@@ -1,6 +1,6 @@
 # X-extension association: family 2 batch 30
 
-Date: 2026-11-27. Documentation-first derivation and proposed INT-061,
+Date: 2026-11-27. Documentation-first derivation and proposed INT-061/062,
 pending independent review/owner decision where stated. No runtime code.
 
 ## Source and accepted basis
@@ -12,6 +12,20 @@ The printed X form includes organization, ORIGCODE, extension code and indices.
 ORIGCODE includes the original group and full original code path, potentially
 several backslashes but no hyphens. X occurrence and the leading index tuple
 must match the original; additional indices belong to the extension.
+
+The section also explicitly supplies the decomposition rule:
+
+> Everything to the right of ORGANIZATION that matches an existing TMATS code is used to associate the extension with an existing object defined by the TMATS file.
+
+> The EXTENSION_CODE identifies the specific extension and shall be unique (i.e., not overlapping any existing TMATS code name).
+
+The reviewed ORIGCODE/EXTENSION_CODE split matches reviewed registry code
+names; the uniqueness rule makes it deterministic for conforming extensions.
+The standard therefore does not leave the split unspecified. Missing registry
+metadata or an overlapping/nonunique code still does not justify a greedy
+heuristic. Proposed INT-062 separately flags the meaning of “existing code”:
+the applied edition's vocabulary versus codes present in the document.
+Registry vocabulary is recommended, not yet owner-signed.
 
 The worked example is D-1\MN-1-2:MEAS1; with
 X-1\MYORG\D\MN\SGAIN-1-2:10.75;. This is a structural oracle from the
@@ -38,14 +52,15 @@ private grammar or wait for the complete 0.2 registry.
 
 For an unambiguous reviewed X decomposition and original layout, match the
 complete original group/path, occurrence and ordered leading index tuple.
-Original arity and component attachment come from reviewed name metadata;
+Original arity and component attachment come from reviewed registry-name metadata;
 do not guess from extension suffix length, a longest-prefix heuristic or a
 plausible matching value. Keep extra extension indices distinct and opaque.
 
 With prerequisites available, list every matching original source occurrence.
 Zero means unresolved, one resolved to that item, several ambiguous. Do not
 deduplicate identical originals or choose a first/last/best-checksum target.
-A grammar/arity/encoding block means cannot-evaluate, not proof of no target.
+A missing-registry/arity/encoding or uniqueness block means cannot-evaluate,
+not proof of no target. Do not infer that the source lacks a matching rule.
 Raw originals/extensions and their diagnostics remain retained in all cases.
 
 Association is not validation or adoption. Keep record qualifications attached
@@ -56,8 +71,10 @@ access and report-format decisions remain their own pending gates.
 
 X occurrence values need not be contiguous, but that is not a blanket
 exemption for original/carried/private nested indices. An orphan X creates
-no original object, D member or counter entry. Namespace uniqueness and
-private value/count rules still need their own reviewed definitions. No
+no original object, D member or counter entry. EXTENSION_CODE uniqueness
+is required for the reviewed split; additional private value/count rules
+and namespace policy beyond that stated constraint need their own reviewed
+definitions. No
 renumber/edit operation or user-registry overlay is implemented by this
 read-only association contract; association provenance must survive queries.
 
@@ -80,12 +97,58 @@ with its own labelled policy, exact syntax, collision and compatibility
 fixtures. This could enable them, but the cited section does not define that
 convention. No sentinel or omitted-index form is selected in this PR.
 
+**C — natural future refinement:** for a once-per-document G attribute with
+one source occurrence, attach by unique reviewed path, labelled, with a
+located occurrence-unverifiable finding. No sentinel is needed; the existing-
+object sentence and explicit G listing support this reading. Duplicate
+originals remain ambiguous, record/cut qualifiers remain, and exact public
+label wording awaits the report-format decision. C is not approved here.
+
+**D — considered/rejected in this draft recommendation:** preserve the X but
+classify it as nonconforming/malformed because the index comparison cannot
+succeed. This is a strict reading of the index sentence, but blanket rejection
+is poorly supported when the same section explicitly includes G as extendable.
+The owner has not rejected D; this is the drafter's recommendation only.
+
+A is reversible: later approved B/C can refine the missing-rule unavailable
+result to resolved where their guards hold, keeping bytes/evidence without a
+breaking source/result-shape change. This is not advance approval or a waiver
+of normal published API/report compatibility review. Keep A recommended now;
+C is the natural future refinement.
+
 INT-061 remains PROPOSED with A recommended. Owner sign-off and independent
 AI check under ADR-0033 are required before implementing that case. Its
-three planned Option-A fixtures are BLOCKED, not accepted conformance cases.
+three Option-A and three C/D alternative fixtures are BLOCKED, not accepted
+conformance cases.
 Indexed fields of groups without an occurrence and other ambiguous private
 paths remain separate unsupported mappings until reviewed; this proposal
 does not guess their treatment.
+
+## Proposed INT-062: which existing-code vocabulary?
+
+**A — recommend:** use the applied edition/basis's reviewed registry code
+names for decomposition and uniqueness, regardless of target presence. Then
+look for concrete original occurrences in this document as a separate step.
+A known code with a missing instance remains a useful orphan diagnostic;
+missing metadata/overlap retains cannot-evaluate instead of guessed parsing.
+This catalog is code-name/arity metadata, not the whole later value registry.
+
+**B:** use code names actually present in the supplied document as “existing
+codes.” The phrase “existing object defined by the TMATS file” supports this
+reading and may accommodate private names, but adds/removes of originals can
+change decomposition; it still cannot invent unknown grammar or objects.
+
+The vocabulary choice is a new proposed INT, not silently adopted by the
+registry-matching recommendation. Owner sign-off and an independent AI check
+under ADR-0033 are pending. Three Option-A fixtures are BLOCKED; ordinary
+candidate-composition fixtures can receive an explicit reviewed decomposition
+without signing off its runtime vocabulary selection. This does not settle
+public pattern scope, private overlays or edition fallback rules.
+
+The independent pre-check at #63 head 99a052b concurred with INT-061 Option A
+but requested the missing clauses, C/D alternatives and vocabulary question.
+That was not final approval of this amended wording; both reviews remain
+pending until their exact-head checks and owner decisions are recorded.
 
 ## Planned verification and gates
 

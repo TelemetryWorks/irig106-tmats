@@ -1493,8 +1493,13 @@ Table 9-7 MEASUREMENT NAME p. 9-115, D-x\MNF\N-y-n-m is NUMBER OF
 FRAGMENTS p. 9-117. G\PN is Table 9-2 PROGRAM NAME p. 9-10. These
 fixtures test structural attachment, not whole-file conformance or private
 extension-value semantics. A/B below are independent source item identities.
-Record qualification/access restrictions remain intact. INT-061 Option A
-is proposed: its three expectations are BLOCKED before owner/AI approval.
+Record qualification/access restrictions remain intact. INT-061 options and
+INT-062's vocabulary choice remain PROPOSED; their nine option-specific
+fixtures below are BLOCKED before owner/AI approval. Indexed candidate tests
+can receive explicit reviewed decomposition metadata; they do not sign off
+runtime vocabulary selection. Under the proposed registry-vocabulary reading,
+registry-name matching plus EXTENSION_CODE uniqueness determines the split,
+not a free-form greedy parser or target presence in the document.
 
 | Planned test | Independent source/binding and expected evidence | Requirements |
 |---|---|---|
@@ -1513,7 +1518,7 @@ is proposed: its three expectations are BLOCKED before owner/AI approval.
 | `x_duplicate_originals_are_all_candidates` | A and B are repeated original scalar keys, even with equal values: ambiguous [A,B] in source order, no winner, record INT-048 Ambiguous attached/unchanged | L3-EXT-004, L3-EXT-005 |
 | `x_unknown_extension_value_does_not_erase_attachment` | Unique matching original exists, private value unknown/contains high bytes: structural attachment retains raw evidence/field findings, never interprets it as a clock/measurement rule | L3-EXT-004, L3-EXT-005, L3-EXT-006 |
 | `x_noncontiguous_occurrences_are_not_created` | Originals/related X occurrences use 1 and 3: section 9.5.14's X occurrence rule does not demand 2 or synthesize original 2; other index rules stay separate | L3-EXT-006 |
-| `x_unknown_arity_never_uses_greedy_prefix` | Reviewed original arity/path metadata unavailable or decomposition ambiguous: cannot-evaluate with retained raw items, not guessed longest-prefix match or false absence | L3-EXT-001, L3-EXT-004 |
+| `x_unknown_arity_never_uses_greedy_prefix` | Reviewed registry code-name/arity metadata missing or split uniqueness unproved: cannot-evaluate with retained raw items, not guessed longest-prefix match or false absence; the standard's registry-match decomposition rule is not treated as absent | L3-EXT-001, L3-EXT-004 |
 | `x_separate_record_cannot_supply_original` | Target only exists in another setup record/document: query never borrows it or chooses a governing record | L3-EXT-005 |
 | `x_cross_fragment_target_shares_one_document` | Same-channel sequence +1 fragments with matching FRMT/RCCVER form ONE ADR-0025/INT-011 record: original and X across fragments retain target IDs and packet/body provenance | L3-EXT-005 |
 | `x_attachment_preserves_cut_and_ambiguous_qualification` | Diagnostic source has Ambiguous and/or retained cut/Incomplete facets: any returned attachment keeps them and their blocking force, without approving access/adoption | L3-EXT-005 |
@@ -1521,6 +1526,12 @@ is proposed: its three expectations are BLOCKED before owner/AI approval.
 | `x_unindexed_original_mapping_unavailable` | **BLOCKED, INT-061 Option A proposed:** raw X appears to target unindexed G\PN; retain plausible raw evidence and cannot-evaluate mapping, not resolved or proven no-target | L3-EXT-007 |
 | `x_unindexed_zero_one_never_default` | **BLOCKED, INT-061 Option A proposed:** hypothetical X-0/X-1 forms for G\PN cannot introduce an implicit sentinel/default occurrence or source rewrite | L3-EXT-007 |
 | `x_unindexed_value_never_supplies_occurrence` | **BLOCKED, INT-061 Option A proposed:** numeric-looking G\PN value/order supplies no missing source index; no association invented from its data | L3-EXT-007 |
+| `x_unindexed_unique_path_option_c` | **BLOCKED, INT-061 Option C alternative:** exactly one once-per-document G\PN occurrence can be attached by unique reviewed path with labelled status and a located occurrence-unverifiable finding, no sentinel; exact label wording pending | L3-EXT-007 |
+| `x_unindexed_duplicate_path_option_c` | **BLOCKED, INT-061 Option C alternative:** duplicate G\PN occurrences stay ambiguous/all listed, not a unique-path attachment; INT-048 record/cut qualification remains unchanged | L3-EXT-005, L3-EXT-007 |
+| `x_unindexed_nonconforming_option_d` | **BLOCKED alternative, rejected in draft recommendation, not owner-decided:** D would retain raw X and report nonconforming/malformed because the index cannot match; explicit G support is the reason not to recommend blanket rejection | L3-EXT-007 |
+| `x_registry_decomposition_survives_absent_target` | **BLOCKED, INT-062 Option A proposed:** reviewed edition registry contains D\MN pattern/arity, but no matching original item is present; registry split remains defined, then instance lookup reports unresolved/orphan, not absent grammar | L3-EXT-001, L3-EXT-004 |
+| `x_document_only_code_does_not_define_registry_split` | **BLOCKED, INT-062 Option A proposed:** a document-only/private code is present but absent from reviewed registry metadata; presence cannot create a registry code definition or heuristic split; retain raw/cannot-evaluate evidence | L3-EXT-001 |
+| `x_extension_overlap_prevents_heuristic_split` | **BLOCKED, INT-062 Option A proposed:** fixture metadata establishes EXTENSION_CODE overlap with an existing registry code name; retain violation/raw evidence and cannot-evaluate split, do not pick a longest prefix or rename source | L3-EXT-001, L3-EXT-006 |
 | `x_association_oracle_is_not_resolver_output` | Independently listed target IDs/path/arity/spans determine expected outcomes; production resolver/round trip alone is not the oracle; all bytes and qualifiers unchanged | L3-EXT-008 |
 
 No public query syntax, concrete result/error names, report layout, private
