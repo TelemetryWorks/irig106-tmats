@@ -55,6 +55,24 @@ Packet data-checksum verification remains a separately owner-scheduled core
 feature; pass NotChecked until core provides it. No publishing action is
 authorised/performed by this documentation change.
 
+### Family-2 coverage audit and next unheld work
+
+The [dated coverage audit](research/2026-11-27-family2-coverage-audit.md)
+separates drafted children, partial contracts, owner-held work and executed
+evidence. Family 2 is not complete merely because parents have children.
+Finish the bounded time-view lookup-state primary derivation next; related
+multiplicity/field-state children under other parents do not supply its direct
+trace. Keep report-format work stopped for the owner and build acceptance
+held on the existing std decision. Resolve partial normalization, flex source,
+assembly/session and resource details without reducing the full 0.1 scope.
+The extract owner decisions of 2026-11-27 remove the three #57 owner holds;
+ADR-0037 records them, rather than asking again.
+Do not start family 3/parser code or claim readiness from prototype CI.
+The audit includes the owner-item/blocker table, including Criterion retention
+and the pending strict predicate. Its revised estimate accounts for partial
+normalization, assembly/resource and show-free CLI work as well as missing
+parent links; the trace relabel is separate from actual build acceptance.
+
 ### Streaming setup-record follow-ups
 
 Carry the reviewer consequences relayed by the owner after INT-011's
@@ -181,7 +199,10 @@ write through the non-truncating identity-checked same handle, never
 temp-file+rename. Stdout/pipes are allowed without identity proof; a regular
 file with unproven identity refuses unless --force. Known input aliases
 still refuse. Extract despite findings by default, byte-exact with every
-finding reported; --strict refuses on findings, with no always-refuse class.
+finding reported, with no default always-refuse class. --strict refuses the
+listed bad-data kinds; whether it refuses on ANY finding remains PENDING OWNER.
+Neither option is approved by the earlier shorthand. Overwrite/identity and
+raw default extraction decisions remain made; this is a narrower clarification.
 
 Review executable byte, qualification, identity/race and destination tests
 before implementation; owner policy is not completed evidence. --force and

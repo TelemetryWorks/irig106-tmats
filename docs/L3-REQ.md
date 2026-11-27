@@ -2283,7 +2283,9 @@ mechanical byte extraction from pending record-selection and output policies.
 **Owner decisions recorded, 2026-11-27 (ADR-0037):** extract refuses existing
 unrelated files and unproven regular-file identity unless --force; stdout and
 pipes are allowed. Findings do not block byte-exact extraction by default,
-with every finding reported; --strict refuses on findings. These remove the
+with every finding reported. --strict refuses the listed bad-data kinds;
+listed-kinds-only versus any-finding scope is now PENDING OWNER. This does not
+reopen overwrite/identity policy or default byte preservation. These remove the
 three #57 owner holds, not source/development/test or independent review.
 Other argument grammar stays on hold. L3-CLI-052–057 came from merged #72;
 this separate follow-up uses 058–061 without changing its reviewed record.
@@ -2302,7 +2304,8 @@ packet boundaries or repeat CSDW removal once per physical span.
 ADR-0002/0003 and L3-WRT-004–010 govern replay. ADR-0037 permits default
 raw extraction under findings, including cut/ambiguous/marker/Invalid cases;
 this is not semantic or governing usability. Report every finding without
-changing bytes; --strict refuses on findings. Controls omitted from views,
+changing bytes; --strict's additional-finding scope remains PENDING OWNER.
+The listed bad-data refusal cases are common to both options. Controls omitted from views,
 numeric Invalid verdicts and a detected BOM never authorize source changes.
 
 **L3-CLI-032** · Parent: L2-CLI-008 · Verification: T
@@ -3321,7 +3324,7 @@ replacement protocol, implicit force default or invented destination grammar.
 Shell redirection remains outside the tool-opened acquisition guarantee.
 
 **L3-CLI-060** · Parent: L2-CLI-008 · Verification: T
-*Extract SHALL deliver the selected supplied original bytes despite findings by default, reporting every finding; --strict SHALL refuse when findings are present. There SHALL be no always-refuse finding class, including data-checksum mismatch, secondary-header failure, INT-045 cut, INT-048 ambiguity, INT-037 marker and INT-055 invalidity.*
+*Extract SHALL deliver the selected supplied original bytes despite findings by default, reporting every finding; --strict SHALL refuse for data-checksum mismatch, secondary-header failure, INT-045 cut, INT-048 ambiguity, INT-037 marker and INT-055 invalidity. Whether --strict also refuses on every other finding is PENDING OWNER, with neither option silently selected. There SHALL be no default always-refuse finding class.*
 
 The findings/qualifications and core integrity states remain unchanged.
 This is extraction-only raw delivery, not a positive checksum, semantic
