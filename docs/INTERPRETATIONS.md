@@ -2249,6 +2249,21 @@ historical edition mappings still need their own cited delta sources.
 - Table 9-2 DATA SOURCE ID G\DSI-n p. 9-11: “Provide a descriptive name for this source. Each source identifier must be unique.” Its Links to field includes V-x\ID.
 - ADR-0008 accepts source/vendor grouping; ADR-0002/0026 retain evidence without a winner; INT-039/048 preserve known scalar multiplicity and record ambiguity. The cited text does not define missing/duplicate/mismatched VN recovery.
 
+**Usable VN (amended definition, 2026-11-27)**:
+A usable VN is one present, non-Ambiguous candidate with available INT-041
+blank/availability and INT-037 character interpretation, whose INT-036-projected
+value has exactly THREE characters (section 9.5.13 p. 9-171). Compare it
+with the path acronym ASCII case-insensitively under section 9.4.2 p. 9-2;
+no locale/Unicode/high-byte folding, raw trimming or source rewrite. INT-036
+provides projection, not case folding. An available projected value of the
+wrong length is Invalid, leaving vendor attribution unconfirmed under A;
+do not downgrade that known length failure to generic unavailable. If blank
+handling itself is unreviewed/unavailable under INT-041, keep that reason
+rather than trim blanks or manufacture validity/invalidity by an unreviewed
+comparison. Missing, repeated, Invalid or unavailable VN is not usable;
+equal duplicate spellings cannot erase Ambiguous. Raw bytes/findings remain.
+No additional alphabet rule or INT-055 numeric syntax is imposed on VN.
+
 **Behaviour (PROPOSED, Option A recommended; owner decision required)**:
 Always retain observed V occurrence/private-acronym namespaces and every
 local ID/VN result. Confirm vendor attribution only when one usable VN
@@ -2268,6 +2283,6 @@ confirmation. Private meanings remain opaque.
 
 **Design**: proposed (2026-11-27; Option A recommended) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off pending; independent AI check pending; source freshness, development analysis and executable tests remain required · **Origin**: family 2 batch 31 source inspection
 
-**Test**: `v_missing_vn_keeps_namespace_unconfirmed`, `v_duplicate_vn_never_picks_vendor`, `v_path_header_mismatch_keeps_both`, `v_invalid_unavailable_vn_keeps_namespace` (planned Option A expectations; BLOCKED before owner sign-off/AI check, not implemented or executed)
+**Test**: `v_missing_vn_keeps_namespace_unconfirmed`, `v_duplicate_vn_never_picks_vendor`, `v_path_header_mismatch_keeps_both`, `v_invalid_unavailable_vn_keeps_namespace`, `v_vn_projected_three_chars_ascii_match`, `v_vn_wrong_length_is_invalid_unconfirmed`, `v_vn_blank_handling_does_not_trim`, `v_vn_high_byte_is_not_usable` (planned Option A/definition expectations; BLOCKED before owner sign-off/AI check, not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written

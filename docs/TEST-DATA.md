@@ -1553,8 +1553,8 @@ Source: 106-24R1 Ch9 section 9.5.13 p. 9-171 (V ID/VN/private form) and
 Table 9-2 DATA SOURCE ID p. 9-11. These are structural/context fixtures,
 not whole-file conformance or private-value decoders. Header composition
 can receive evaluated field states under reviewed metadata; it does not
-settle unreviewed blanks/required-presence rules. Four INT-063 Option-A
-cases are BLOCKED before owner sign-off and independent AI check.
+settle unreviewed blanks/required-presence rules. Eight INT-063 Option-A/
+definition cases are BLOCKED before owner sign-off and independent AI check.
 
 | Planned test | Independent source/context and expected evidence | Requirements |
 |---|---|---|
@@ -1579,12 +1579,59 @@ cases are BLOCKED before owner sign-off and independent AI check.
 | `v_path_header_mismatch_keeps_both` | **BLOCKED, INT-063 A:** evaluated VN=ABC and private path=XYZ: preserve both, unavailable confirmed attribution with located reason, no raw reassignment/repair | L3-EXT-014 |
 | `v_invalid_unavailable_vn_keeps_namespace` | **BLOCKED, INT-063 A:** evaluated Invalid or unavailable VN does not hide observed items or become an inferred vendor; preserve distinct state/reason | L3-EXT-010, L3-EXT-014 |
 | `v_unknown_private_duplicates_stay_unclassified` | Repeated opaque private name retains every raw occurrence; unknown private cardinality does not create a proved scalar duplicate merely from shape | L3-EXT-010, L3-EXT-015 |
+| `v_vn_projected_three_chars_ascii_match` | **BLOCKED, INT-063 definition/A:** VN a<TAB>Bc (real TAB) projects under INT-036 to aBc, exactly three ASCII characters; compares to ABC path without rewriting raw value; existing diagnostics remain | L3-EXT-011, L3-EXT-014 |
+| `v_vn_wrong_length_is_invalid_unconfirmed` | **BLOCKED, INT-063 definition/A:** available projected empty, two- or four-character VN is Invalid (not Missing/generic unavailable), so confirmed attribution is unconfirmed; raw bytes retained | L3-EXT-011, L3-EXT-014 |
+| `v_vn_blank_handling_does_not_trim` | **BLOCKED, INT-063 definition/A:** three-character value space+AB has leading blank; INT-041 unreviewed blank handling remains unavailable, never trim it or invent a numeric/strict alphabet rule | L3-EXT-011, L3-EXT-014 |
+| `v_vn_high_byte_is_not_usable` | **BLOCKED, INT-063 definition/A:** raw three-byte VN containing FF is Invalid under INT-037, not a usable acronym through Latin-1/Unicode/high-byte folding; unconfirmed and raw evidence unchanged | L3-EXT-011, L3-EXT-014 |
 | `v_grouping_oracle_is_not_implementation_output` | Independently listed IDs/header states/source candidates and literal spans determine expected inventory; no production grouping path calculates the oracle | L3-EXT-016 |
 
 No vendor decoder/plug-in, generic user overlay, acronym alphabet, required-
 presence rule, result schema, exact rendered label or repair policy is chosen.
 Observed raw grouping is not confirmed interpretation, clock proof or a
 waiver of INT-061/062/063 and the other owner/implementation gates.
+
+## Planned dependency/artifact inspection batch 32
+
+These are planned evidence/acceptance cases for L2-REL-005/006, not executed
+policy checks, generated SBOMs, verified attestations or permission to release.
+Inputs can supply synthetic graph/artifact facts and independently expected
+failure reasons. The intended applicable check must fail; an unrelated tool
+error is not proof that policy/artifact enforcement worked.
+
+| Planned acceptance case | Independent evidence or rejection condition | Requirements |
+|---|---|---|
+| `dep_actual_graph_not_manifest_strings` | Resolved library/CLI graph, features/targets, lock/source identity and policy revision match the reviewed head; a direct manifest list alone is insufficient | L3-REL-009 |
+| `dep_transitive_or_feature_edge_not_omitted` | Finding lies in a checked transitive/optional graph edge: actual policy result retained; another feature graph cannot silently hide it | L3-REL-009, L3-REL-010 |
+| `dep_advisory_source_context_is_recorded` | Completed command/tool result identifies advisory source/snapshot/time or its unavailability; no invented freshness window or clean status from missing data | L3-REL-009 |
+| `dep_denied_finding_fails_acceptance` | Applicable non-exempt denial is present: failed acceptance with intended reason, not a swallowed command failure or unrelated-network-error pass | L3-REL-010 |
+| `dep_duplicate_warning_is_not_new_ban` | Existing multiple-version warning remains distinguishable from denial; this contract does not silently tighten policy | L3-REL-010 |
+| `dep_internal_path_is_not_external_exception` | Accepted exact-version workspace path does not become an unlisted external path/git/registry-source allowance | L3-REL-010 |
+| `dep_exception_reason_is_scoped` | Listed exception is matched to identifier/dependency/context/reason; unrelated replacement dependency cannot inherit its prototype rationale | L3-REL-011 |
+| `dep_prototype_xml_ignore_retirement_is_checked` | Prototype XML code is removed in future restructure: review/removal of its prototype-only advisory ignores accompanies that change, not blanket retention | L3-REL-011 |
+| `dep_past_pass_does_not_approve_new_dependency` | Old policy pass or existing Criterion entry cannot approve retention/new dev dependency without required owner approval | L3-REL-009, L3-REL-011 |
+| `artifact_binary_digest_matches_released_bytes` | Actual downloaded binary bytes/digest match its intended source/version/target and checksum/provenance association | L3-REL-012, L3-REL-014 |
+| `artifact_same_filename_stale_digest_is_rejected` | Rebuilt/different bytes retain filename but stale evidence: acceptance fails rather than trusting the name | L3-REL-012 |
+| `artifact_sbom_is_per_binary_build_context` | Matching target/features/resolved build identity associates CycloneDX SBOM with intended binary; library-only requirements list is insufficient | L3-REL-013 |
+| `artifact_other_target_sbom_is_not_substitute` | Windows or another-version graph supplied for intended Linux build: mismatch/missing evidence remains unsatisfied, no cross-target substitution | L3-REL-012, L3-REL-013 |
+| `artifact_missing_sbom_is_not_green_build_success` | Binary exists and workflow is green, required per-binary SBOM absent: L1 release-artifact obligation remains unsatisfied | L3-REL-013 |
+| `artifact_attestation_is_for_intended_file` | Builder provenance verification covers intended .crate/binary/SBOM subject bytes and source/build identity, not another digest or signing-step name; manifest/bundle validation does not imply their individual attestation | L3-REL-014 |
+| `artifact_wrong_source_or_changed_payload_fails` | Verification/evidence gives another repository/head or modified payload: preserve mismatch/failure, not accepted build provenance | L3-REL-014, L3-REL-015 |
+| `artifact_user_recipe_has_applicable_result` | Documented verification path and actual completed matching-file result are available; docs/upload alone cannot claim verification | L3-REL-015 |
+| `artifact_missing_or_failed_verification_stays_unsatisfied` | Required artifact/verification missing, failed or not run: no inference from release notes or unrelated green job | L3-REL-014, L3-REL-015 |
+| `artifact_distribution_does_not_gain_publish_authority` | Unified trusted-publishing.yml uses a non-publishing self-attesting builder and crates-io-gated publish job; artifact acceptance cannot add a stored credential, token fallback or maintainer bootstrap | L3-REL-016 |
+| `artifact_signed_build_is_not_tmats_integrity` | SBOM/provenance verifies build evidence only; no positive G\SHA, trusted recorder data, semantic coverage or qualified-record-use permission follows | L3-REL-016 |
+| `dep_release_uses_published_types_core` | Release graph resolves compatible types 0.2/core 0.2 APIs from crates.io and exercises them; reject unpublished/path/git/[patch]/source overrides, including a CI-only override; internal packaged CLI resolves its matching published library | L3-REL-009, L3-REL-010 |
+| `artifact_unified_release_set_is_complete` | Both .crate files, all binary archives, SBOMs, exactly one SHA256SUMS and one irig106-tmats-<version>.intoto.jsonl bundle; missing/extra manifest or bundle fails | L3-REL-012, L3-REL-016 |
+| `artifact_builder_attests_only_own_output` | Nested signer independently guards v* tag push, checks github.sha/verified output and rejects caller-selected inputs; PR/manual runs never sign; no top-level attest job | L3-REL-014 |
+| `artifact_publish_repackage_cmp_before_upload` | Non-compiling publish needs gate/build, validates checksums and cmp's cargo package --locked --no-verify output with attested .crate; changed bytes block upload | L3-REL-016 |
+| `artifact_served_crate_bytes_and_registry_checksum` | New and already-published packages must match attested bytes and registry checksum; retry never skips comparisons; a mismatch fails | L3-REL-015, L3-REL-016 |
+| `artifact_draft_resume_checks_metadata_and_assets` | Wrong tag/title/body/draft state or asset name/size/digest blocks publication; check again after publish, never replace an asset or modify published release | L3-REL-016 |
+| `artifact_verifier_checks_served_release` | Verify actual downloaded release assets with repository/tag/builder signer constraints, not only staging artifacts; tampering fails | L3-REL-015 |
+
+No workflow/policy/credential/settings action is performed by these cases.
+Existing deny.toml and RELEASING.md govern, including coordinator/owner-only
+bootstrap and TP-only real releases. New requirements remain Draft until
+matching graph/distribution evidence is reviewed; no new Evidence is claimed.
 
 ## Real Chapter 10 recordings (local use only)
 

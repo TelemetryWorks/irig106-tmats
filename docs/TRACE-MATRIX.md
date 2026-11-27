@@ -343,14 +343,16 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-REL-002 | _(none)_ | `.github/workflows/ci.yml`<br>`msrv`<br>`cargo check --workspace --all-features` | Implemented (I) |
 | L1-REL-003 | _(none)_ | _(none)_ | Draft |
 | L1-REL-004 | _(none)_ | `.github/workflows/ci.yml`<br>`test`<br>`ubuntu-latest`<br>`windows-latest`<br>`macos-latest` | Implemented (I) |
-| L1-REL-005 | _(none)_ | `.github/workflows/ci.yml`<br>`deny`<br>`EmbarkStudios/cargo-deny-action`<br>`deny.toml` | Implemented (I) |
-| L1-REL-006 | _(none)_ | _(none)_ | Draft |
+| L1-REL-005 | L2-REL-005 | _(none)_ | Draft |
+| L1-REL-006 | L2-REL-006 | _(none)_ | Draft |
 
 **L2 -> L3 -> Verification Artifacts**
 
 | L2 ID | L3 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
 | L2-REL-001 | L3-REL-001 | _(TBD)_ | Draft |
+| L2-REL-005 | L3-REL-009, L3-REL-010, L3-REL-011 | _(TBD)_ | Draft |
+| L2-REL-006 | L3-REL-012, L3-REL-013, L3-REL-014, L3-REL-015, L3-REL-016 | _(TBD)_ | Draft |
 
 ---
 
@@ -375,14 +377,14 @@ This matrix is the single source of truth for live status; the requirement docum
 | CLI | 9 | 9 | 37 | 0 | 0 | 0 | 0 |
 | ROB | 3 | 5 | 13 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 2 | 8 | 0 | 0 | 0 | 0 |
-| REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **76** | **250** | **0** | **0** | **0** | **0** |
+| REL | 6 | 3 | 9 | 0 | 0 | 0 | 0 |
+| **Total** | **84** | **78** | **258** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 41 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 39 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 367 (0.0%).
+**Tested by at least one test marker**: 0 of 375 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 367 (0.8%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 375 (0.5%).
 
 ### Orphan check
 

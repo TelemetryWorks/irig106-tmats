@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through pattern lookup, robustness/performance evidence and V/X derivations drafted (family 2, batches 1-26 and 28-31).**
+> **Status: foundations through V/X and release-evidence derivations drafted (family 2, batches 1-26 and 28-32).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -1180,3 +1180,33 @@ be mistaken for confirmed vendor attribution or a private-value decoder.
 **Rationale**: Section 9.5.13 p. 9-171 ties V ID to General Information; Table 9-2 DATA SOURCE ID G\DSI-n p. 9-11 names textual sources and links to V-x\ID. ADR-0026 keeps namespaces/cardinality explicit. This supports context, not clock associations, auto-repair, vendor plug-ins, counter inference or the later user-registry overlay. Existing availability, record access and report-format gates remain unchanged.
 
 **Verification Method**: Test (T)
+
+
+## Dependency and release-artifact evidence (family 2, batch 32)
+
+These derive existing L1-REL-005/006 and RELEASING.md obligations without
+changing deny.toml, workflows, credentials, settings or publication policy.
+The [source/acceptance note](research/2026-11-27-release-evidence-and-vn-followup.md)
+records the scoped inspection and INT-063 definition amendment. REL-002–004
+and L3-REL-002–008 remain reserved by held #59, not silently reused here.
+No new Evidence is claimed until actual redesigned graph/artifact checks.
+
+#### L2-REL-005
+
+**Parent**: L1-REL-005
+
+**Statement**: Dependency acceptance SHALL inspect and check the actual resolved redesigned library/CLI dependency graph against the repository's existing deny.toml policy, retaining graph/configuration/source/advisory evidence and every listed exception's rationale; a policy table, old prototype pass or unrelated feature graph SHALL NOT substitute for a completed applicable check or approve a new dependency/exception.
+
+**Rationale**: L1-REL-005 already requires no known vulnerable/unmaintained/yanked dependencies, permitted licences/sources and documented exceptions. deny.toml covers all features, distinguishes warnings from denials and lists prototype-only XML exceptions to remove with that code. The accepted internal exact-version workspace path dependency is not an implicit allowance for arbitrary external path/git sources. This slice changes none of those rules and grants no Criterion/trybuild/ui_test or other dependency approval.
+
+**Verification Method**: Inspection (I)
+
+#### L2-REL-006
+
+**Parent**: L1-REL-006
+
+**Statement**: Release-artifact acceptance SHALL bind every distributed .crate, binary archive and required SBOM to the actual released bytes and reviewed source/version through one SHA256SUMS and one builder-signed provenance bundle, with a documented verification path; missing, mismatched or unverifiable artifacts SHALL remain unsatisfied rather than inferred from a green build, crates.io upload or release note.
+
+**Rationale**: L1-REL-006 remains the primary binary-evidence parent; L1-REL-001/005 and the org TRUSTED-PUBLISHING.md binary variant also motivate crate-package evidence within this child, without a new L1. Owner direction of 2026-11-22 supersedes the old separate release.yml/cargo-dist plan. The unified trusted-publishing.yml uses a self-attesting reusable builder, non-compiling TP publication with package comparison, and a verified draft-then-publish GitHub release. RELEASING.md records that protocol. These are future evidence contracts, not authorization to run publishing workflows, access credentials/settings or change the coordinator/owner-only bootstrap exception.
+
+**Verification Method**: Inspection (I)
