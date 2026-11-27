@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through bounded lookup states drafted (family 2, batches 1-26 and 28-40).**
+> **Status: foundations through normalization policy contracts drafted (family 2, batches 1-26 and 28-41).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -1458,5 +1458,34 @@ distinguishes lookup identity, field value and clock association.
 **Statement**: Bounded lookup answers SHALL keep candidate cardinality separate from Explicit/Defaulted/Missing/Invalid/Ambiguous field interpretation, availability limitations, original source findings and record qualification; successful identity lookup SHALL not validate a value, erase a duplicate, fabricate a default occurrence, establish a clock association or authorize access/governing use.
 
 **Rationale**: RELEASE-0.1 explicitly separates lookup/link states from effective values and association_unestablished/conflicting/evidenced. INT-039/041/048 and the existing time-view/caller-assumption children retain those boundaries. Proposed INT-031 still gates general qualified-record access; ADR-0037's raw extract permission is not typed time-view permission. No new selection, interpretation, public enum spelling or rendered schema is chosen.
+
+**Verification Method**: Test (T)
+
+
+## Explicit normalization transforms (family 2, batch 41)
+
+These extend L2-WRT-004's opt-in boundary without activating unapproved
+transform rules. Proposed INT-064/065/066 govern ordering, newline scope and
+counter recomputation; owner sign-off/AI check and development evidence are
+required before those policies are implemented. The [source/options note](research/2026-11-27-normalization-policy-drafts.md)
+keeps the full 0.1 library obligation distinct from the later CLI clean-up.
+
+#### L2-WRT-005
+
+**Parent**: L1-WRT-002
+
+**Statement**: A normalization request SHALL identify its input document/revision, explicitly requested transform kinds and selected reviewed policy/parameters; execution SHALL remain gated by each policy's approval/readiness, preserve every original source byte in the unchanged input and limit output changes to those authorized transforms, without selecting a missing canonical order/newline/counter rule implicitly.
+
+**Rationale**: ADR-0002/0007 and UC-09 retain exact output unless requested. Ch9 section 9.4.2 allows arbitrary order, so canonical choice is not a standard default. INT-064/065/066 are proposed choices, not approvals. This derives bounded order/newline/counter behavior, not arbitrary set/delete/renumber edits or the 0.2+ clean-up command.
+
+**Verification Method**: Test (T)
+
+#### L2-WRT-006
+
+**Parent**: L1-WRT-002
+
+**Statement**: Normalization SHALL retain source-item identity/correspondence, multiplicity and untouched content across a validated bounded transform plan, report unavailable/rejected rules rather than emit guessed successful output, and distinguish changed output/checksum evidence from unedited input; successful normalization SHALL NOT imply standard conformance, positive integrity or governing eligibility.
+
+**Rationale**: Unknown/vendor/extension/malformed source is evidence, not disposable formatting. Reordering/line-ending/counter changes can alter the SHA byte domain; existing stamp remains a separate explicit final transaction. Detailed transform bytes depend on the proposed policy choices and reviewed source correspondence, with independent oracles required. No report rendering or general edit API is selected here.
 
 **Verification Method**: Test (T)

@@ -217,6 +217,13 @@ boundary before writer implementation. Derive transformation-specific
 canonical ordering, line-ending and counter-rewrite rules with independent
 byte oracles before claiming the full normalization capability. The boundary
 requirements do not choose those rules or reduce the 0.1 obligations.
+Proposed INT-064/065/066 now present explicit region-order, newline-scope and
+counter-evidence options for owner choice. The recommendations require an
+explicit complete-region order, caller-selected layout-only LF/CRLF handling
+and complete contiguous range-checked counter evidence, respectively; none
+is approved. Complete their source/development review and independent byte
+oracles before activating a policy. A built-in canonical profile, field-wide
+newline conversion and permissive gapped counts are not silently selected.
 
 ### Remaining session-format and configuration-change evidence
 

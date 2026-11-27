@@ -463,6 +463,14 @@ still needs verified evidence before the event-presence check is implementable.
 These approvals do not mark requirements implemented or development evidence complete.
 F2/F3 and other unreviewed interpretations remain open where already recorded.
 
+## Normalization policy boundary
+
+L2-WRT-005/006 and L3-WRT-012–017 extend the explicit-normalization contract;
+proposed INT-064/065/066 present its order/newline/counter choices. They need
+owner sign-off and independent AI review, source analysis and executable
+oracles before implementation. The 0.1 library obligation remains unchanged;
+no general-edit or later CLI clean-up feature is silently brought forward.
+
 ## Decomposition/readiness audit
 
 The [2026-11-27 coverage audit](research/2026-11-27-family2-coverage-audit.md)

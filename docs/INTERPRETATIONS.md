@@ -2286,3 +2286,123 @@ confirmation. Private meanings remain opaque.
 **Test**: `v_missing_vn_keeps_namespace_unconfirmed`, `v_duplicate_vn_never_picks_vendor`, `v_path_header_mismatch_keeps_both`, `v_invalid_unavailable_vn_keeps_namespace`, `v_vn_projected_three_chars_ascii_match`, `v_vn_wrong_length_is_invalid_unconfirmed`, `v_vn_blank_handling_does_not_trim`, `v_vn_high_byte_is_not_usable` (planned Option A/definition expectations; BLOCKED before owner sign-off/AI check, not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+
+## Explicit normalization policy drafts
+
+These choices implement no code and approve no behavior. L1-WRT-002 and
+UC-09 retain explicit normalization in 0.1; the owner chooses the concrete
+policies under ADR-0033. The [source/options note](research/2026-11-27-normalization-policy-drafts.md)
+records the boundary. Each proposed Option-A fixture remains BLOCKED.
+
+### INT-064
+
+**Title**: Ordering policy for explicitly requested normalization
+
+**Sources**:
+- 106-24R1 Ch9 section 9.4.2 p. 9-2: “Attributes may appear in any order.”
+- ADR-0002/0007 and L1-WRT-002/UC-09 require preserved source by default and explicit normalization; none defines a standard canonical comparator.
+
+**Behaviour (PROPOSED A)**: Require a caller-selected ordering plan that names
+every reorderable, complete source region exactly once within one document/
+revision. Validate it as a bijection and replay each whole raw region without
+changing name/value bytes; explicitly retained prefix/EOF material stays
+anchored. If the region partition or mapping is unavailable, refuse this
+operation rather than invent boundaries. No implicit comparator, deduplication,
+case rewrite, counter rewrite or field/default insertion is authorized.
+A caller-selected canonical profile must be identified as that profile, never
+as the standard's unique canonical order. This does not invent or claim an
+unspecified built-in canonical profile implemented.
+
+**Options**: A — explicit caller-selected complete-region ordering plan
+(recommended); B — built-in stable full projected-key tuple ordering (ASCII-folded group/
+path components, canonical numeric indices compared by length then digits,
+source-order ties), with standalone comments and opaque/malformed regions
+anchored as barriers and each region retaining its leading layout; C — defer
+order transformation until a fixed built-in
+profile is approved, retaining only exact replay meanwhile.
+
+**Reason**: A supplies deterministic explicitly chosen ordering without
+pretending section 9.4.2 prescribes a unique order or silently moving/dropping
+opaque bytes. It costs a caller policy/plan and leaves a built-in profile
+unapproved. B is convenient but needs additional placement/tie rules; C delays
+a required normalization capability. No option permits hidden repair.
+
+**Design**: proposed (2026-11-27; A recommended) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off and independent AI check pending · **Origin**: family 2 normalization source review
+
+**Test**: `normalize_order_explicit_bijection`, `normalize_order_missing_or_repeated_identity`, `normalize_order_preserves_raw_regions` (planned; Option-A expectations BLOCKED)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+### INT-065
+
+**Title**: Scope of line-ending normalization
+
+**Sources**:
+- 106-24R1 Ch9 section 9.4.1 p. 9-2 permits LF/CR to “improve readability”. Section 9.4.2 defines field delimiters and intentional value blanks, not a canonical newline representation.
+- INT-035/036 distinguish retained bytes, layout and interpreted omission; L1-WRT-002 asks for consistent line endings only on request.
+
+**Behaviour (PROPOSED A)**: Require the caller to choose LF or CRLF, with no
+implicit platform default. Convert CRLF pairs, lone CR and lone LF only in
+source-correspondence ranges positively established as layout, outside name/
+value content. Leading/trailing name layout may be included only where its
+layout role is established; internal name controls, value bytes, opaque
+regions and NUL/0x1A padding are not silently converted or discarded. Unknown
+layout classification makes the requested conversion unavailable there,
+not permission to guess or claim globally consistent output. CRLF is one
+newline token; never process its CR and LF as two tokens.
+
+**Options**: A — explicit target and positively identified layout-only ranges
+(recommended); B — convert every raw CR/LF token in the selected source,
+including names/values, preserving all other bytes; C — require the caller
+to supply every exact conversion range rather than discover layout.
+
+**Reason**: A avoids changing COMMENT/description or damaged field bytes under
+a formatting request, but cannot claim a global raw-byte newline convention
+when field content is retained. B gives that global convention but changes
+field source; C is precise but transfers all layout work to callers. This
+is a product policy choice, not a new delimiter or an INT-036 view rewrite.
+
+**Design**: proposed (2026-11-27; A recommended) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off and independent AI check pending · **Origin**: family 2 normalization source review
+
+**Test**: `normalize_newlines_layout_only`, `normalize_newlines_field_controls_untouched`, `normalize_newlines_unknown_layout_unavailable` (planned; Option-A expectations BLOCKED)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+### INT-066
+
+**Title**: Preconditions for explicit counter recomputation
+
+**Sources**:
+- 106-24R1 Ch9 Table 9-7 NUMBER OF FRAGMENTS, D-x\MNF\N-y-n-m, p. 9-117 defines the number of occupied word positions, range 1–8; WORD POSITION D-x\WP-y-n-m-e identifies the members. The source calls these “Number of word positions”, not highest index.
+- Approved INT-038/040 supply canonical numeric identity, scoped membership and compatible-unassigned evidence; INT-055 supplies bounded decimal/range rules. They do not authorize rewriting counters.
+
+**Behaviour (PROPOSED A)**: Recompute only an existing uniquely identified,
+well-framed reviewed counter whose applicability, parent scope and complete
+member evidence are established, with contiguous distinct identities 1..k
+and no compatible unassigned evidence. Write canonical decimal k only when
+its cited field range accepts it; never renumber children, insert missing
+counters/members or guess opaque X/private counts. A malformed old counter
+VALUE may be replaced by this explicit counter operation when its physical
+target and independent member evidence are established; that is not a
+successful validation of the old counter or an implicit general repair.
+Unknown evidence, duplicate target, gap or out-of-range result refuses the
+requested counter rewrite; it does not erase the original.
+
+**Options**: A — complete, contiguous evidence with range-checked count
+(recommended); B — write distinct observed cardinality even with index gaps,
+retaining gap/excess findings and never claiming repaired conformance;
+C — write highest observed index. C is listed and rejected in the draft
+recommendation: it confuses an index bound with the printed member count.
+
+**Reason**: A avoids concealing truncation or making a counter look repaired
+while holes remain; it requires refusal where B can still provide a partial
+explicit correction. B is more permissive but leaves a knowingly inconsistent
+index domain. Equal raw spelling variants count once; duplicate occurrences
+and invalid member VALUES remain visible under INT-038/039/040.
+
+**Design**: proposed (2026-11-27; A recommended) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off and independent AI check pending · **Origin**: family 2 normalization source review
+
+**Test**: `normalize_counter_contiguous_distinct_members`, `normalize_counter_gap_refuses`, `normalize_counter_invalid_old_value_explicit_rewrite`, `normalize_counter_compatible_damage_blocks` (planned; Option-A expectations BLOCKED)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written

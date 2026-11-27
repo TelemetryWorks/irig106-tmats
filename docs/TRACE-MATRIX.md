@@ -227,7 +227,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
 | L1-WRT-001 | L2-WRT-001, L2-WRT-003 | _(none)_ | Draft |
-| L1-WRT-002 | L2-WRT-004 | _(none)_ | Draft |
+| L1-WRT-002 | L2-WRT-004, L2-WRT-005, L2-WRT-006 | _(none)_ | Draft |
 | L1-WRT-003 | _(none)_ | _(none)_ | Draft |
 | L1-WRT-004 | _(none)_ | _(none)_ | Draft |
 | L1-WRT-005 | _(none)_ | _(none)_ | Draft |
@@ -242,6 +242,8 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-WRT-002 | L3-WRT-002, L3-WRT-003 | _(TBD)_ | Draft |
 | L2-WRT-003 | L3-WRT-004, L3-WRT-005, L3-WRT-006, L3-WRT-007, L3-WRT-008, L3-WRT-009 | _(TBD)_ | Draft |
 | L2-WRT-004 | L3-WRT-010, L3-WRT-011 | _(TBD)_ | Draft |
+| L2-WRT-005 | L3-WRT-012, L3-WRT-013, L3-WRT-014, L3-WRT-015 | _(TBD)_ | Draft |
+| L2-WRT-006 | L3-WRT-016, L3-WRT-017 | _(TBD)_ | Draft |
 
 ### L1-SUM: TMATS checksums
 
@@ -387,20 +389,20 @@ This matrix is the single source of truth for live status; the requirement docum
 | VAL | 6 | 3 | 12 | 0 | 0 | 0 | 0 |
 | DER | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EXT | 4 | 4 | 16 | 0 | 0 | 0 | 0 |
-| WRT | 7 | 4 | 11 | 0 | 0 | 0 | 0 |
+| WRT | 7 | 6 | 17 | 0 | 0 | 0 | 0 |
 | SUM | 4 | 5 | 16 | 0 | 0 | 0 | 0 |
 | IO | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
 | CLI | 9 | 15 | 61 | 0 | 0 | 0 | 0 |
 | ROB | 3 | 5 | 13 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 2 | 8 | 0 | 0 | 0 | 0 |
 | REL | 6 | 3 | 9 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **94** | **312** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **96** | **318** | **0** | **0** | **0** | **0** |
 
 The countable requirement set is every L2 and L3 requirement plus the 32 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 438 (0.0%).
+**Tested by at least one test marker**: 0 of 446 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 0 of 438 (0.0%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 0 of 446 (0.0%).
 
 ### Orphan check
 
@@ -476,9 +478,12 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-061 | X occurrence mapping when the original has no numeric index | proposed (2026-11-27; Option A recommended) | not yet written | _(none)_ |
 | INT-062 | Meaning of existing TMATS code in X decomposition | proposed (2026-11-27; Option A recommended) | not yet written | _(none)_ |
 | INT-063 | Vendor attribution when V header and private path evidence are incomplete or inconsistent | proposed (2026-11-27; Option A recommended) | not yet written | _(none)_ |
+| INT-064 | Ordering policy for explicitly requested normalization | proposed (2026-11-27; A recommended) | not yet written | _(none)_ |
+| INT-065 | Scope of line-ending normalization | proposed (2026-11-27; A recommended) | not yet written | _(none)_ |
+| INT-066 | Preconditions for explicit counter recomputation | proposed (2026-11-27; A recommended) | not yet written | _(none)_ |
 
-* Entries without a written analysis: **63** of 63
-* Entries without a test: **63** of 63
+* Entries without a written analysis: **66** of 66
+* Entries without a test: **66** of 66
 * Entries missing the development mark: **0**
 
 ### Marker reference check
