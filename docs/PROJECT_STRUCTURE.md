@@ -96,6 +96,7 @@ irig106-tmats/
 │   │                          2026-11-25-retained-cut-and-qm-review-followups.md records the independent review and narrow blocking/test amendments;
 │   │                          2026-11-25-time-view-metadata-requirements.md derives bounded channel/time-field requirements and acceptance scope;
 │   │                          2026-11-25-source-bit-requirements.md derives explicit NSB splitting and records DSI/CHE remaining boundaries;
+│   │                          2026-11-27-record-enumeration-requirements.md derives internal record enumeration without rendered-output or governing choices;
 │   │                          2026-11-27-edition-independent-reading.md  Edition-independent reading and release-gate follow-ups
 │   │                          2026-11-27-release-evidence-and-vn-followup.md derives dependency/artifact evidence and defines usable VN for pending INT-063;
 │   │                          2026-11-27-v-group-and-int062-followup.md derives V context, proposes INT-063 and amends INT-062 owner options/baseline;

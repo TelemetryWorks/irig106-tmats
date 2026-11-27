@@ -62,7 +62,9 @@ existing content-based recording/text input route. The 0.1 scope is unchanged.
 - **Every setup record.** A recording's setup records are all reported, in
   file order (the `idmptmat` first-packet-only limitation, defect D2, is not
   repeated). Each record's output is labelled with its position and packet
-  offset.
+  offset. L2-CLI-010/011 derive internal enumeration and provenance while
+  leaving rendered labels, public numbering/selection and live emission
+  policy for owner review. Complete is not a governing/eligibility verdict.
 - **Recordings are memory-mapped**, and packet finding/trust comes from
   `irig106-core` (ADR-0036), with borrowed DATA spans into TMATS slicing/
   assembly. The temporary CLI reader is superseded; no header or packet-data
