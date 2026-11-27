@@ -78,6 +78,11 @@ The owner brings these parts forward from 0.2 for irigtime:
 - L1-VIEW-008: carry caller-assumption provenance through time-view answers.
   Other uses of labelled assumptions remain in 0.2.
 
+L2-VIEW-016/017 and L3-VIEW-065–070 directly derive the bounded
+L1-VIEW-006 lookup-state contract; their [source/acceptance note](research/2026-11-27-bounded-lookup-state-requirements.md)
+separates candidate identity, effective values, availability and association.
+They do not implement general link resolution or approve qualified-record use.
+
 This is metadata extraction, not a time decoder or a general validation
 engine. Time conversion, packet timestamp interpretation, clock quality,
 correlation and selection policy remain the time consumer's responsibilities.

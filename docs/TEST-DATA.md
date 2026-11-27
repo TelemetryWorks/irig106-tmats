@@ -1945,6 +1945,39 @@ These are planned checks, not current CLI behavior. Source/development,
 independent review and executable testing remain; the three #57 owner holds
 are removed. General semantic/governing access is not raw extract permission.
 
+## Planned bounded lookup-state batch 40
+
+These supply L1-VIEW-006's direct 0.1 trace with internal exact-candidate
+states, not a general link engine. Table 9-4 (106-24R1) TK1 p. 9-48,
+DSI/CHE pp. 9-49, SHTF p. 9-51, TTF/TFMT/TSRC pp. 9-71–72 and NSB p.
+9-33 supply the reviewed scope; INT-036/038/039/041/042 supply existing key,
+multiplicity and value/presence behavior. Availability/record qualifications
+are supplied explicitly where their interpretation remains gated.
+
+| Planned test | Independent input and expected result | Requirements |
+|---|---|---|
+| `bounded_lookup_zero_exact_candidates` | Available scoped TFMT lookup with no matching item: unresolved, zero candidates; no proof of generic-link or clock association resolution | L3-VIEW-066 |
+| `bounded_lookup_one_item_is_identity_resolved` | One R-1\TFMT-3:B;: resolved to its exact identity/location, with separate reviewed field result | L3-VIEW-065, L3-VIEW-066 |
+| `bounded_lookup_equal_repeats_are_ambiguous` | Two identical TFMT occurrences at the same key: ambiguous, both IDs/locations retained, never deduplicated | L3-VIEW-066 |
+| `bounded_lookup_invalid_candidate_not_filtered` | TFMT B plus a second same-key invalid value: two candidates/ambiguous, not resolved to B; both findings retained | L3-VIEW-066, L3-VIEW-068 |
+| `bounded_lookup_one_empty_or_invalid_stays_present` | Single TFMT with zero-length or invalid value in separate cases: identity resolved, value Invalid/unavailable per its existing rule, never zero candidates | L3-VIEW-068 |
+| `bounded_lookup_actual_id_is_not_entry_index` | Entry 3 has TK1 value 42: TFMT-3 lookup binds entry 3, never TFMT-42 or an item in another entry | L3-VIEW-065 |
+| `bounded_lookup_recorder_context_not_borrowed` | Same entry index under R-1/R-2 with different formats: each exact recorder query retains only its own items | L3-VIEW-065 |
+| `bounded_lookup_recorder_level_nsb_has_no_entry` | Recorder-level R-1\NSB:0; queried under its reviewed arity: no fabricated -3 suffix or per-entry source-bit item | L3-VIEW-065 |
+| `bounded_lookup_case_and_index_collisions_keep_occurrences` | R-1\TFMT-3:B; and r-01\tfmt-03:B;: same canonical full key, ambiguous with all raw spellings and INT-038 information retained | L3-VIEW-066 |
+| `bounded_lookup_reorder_changes_listing_not_winner` | Reorder same-key candidates with fixed identities: cardinality remains ambiguous, listing follows retained source order, no first/last winner | L3-VIEW-066, L3-VIEW-070 |
+| `bounded_lookup_default_is_not_a_candidate` | TFMT absent with supplied already evaluated applicable baseline default-A condition: lookup unresolved/zero explicit items, effective field Defaulted A with citation; source unchanged | L3-VIEW-068 |
+| `bounded_lookup_unavailable_prerequisite_not_empty_success` | Supplied unresolved scope/key or blocked interpreted lookup (e.g. INT-037 marker): limitation retained, no invented usable zero-candidate state | L3-VIEW-067 |
+| `bounded_lookup_damage_zero_matches_not_absence_proof` | Zero exact TFMT matches plus compatible R-1\TF\xFFMT-3:A; evidence: retain no exact item plus damage; never infer physically unspecified/default applicability; presence cannot-evaluate per INT-042 | L3-VIEW-067 |
+| `bounded_lookup_suffix_not_explicit_item` | R-1\TFMT-3:A at EOF: suffix retained but not a candidate; zero exact matches never prove absence or a default condition | L3-VIEW-067 |
+| `bounded_lookup_documents_and_revisions_stay_scoped` | Same canonical key in separate documents/revisions: never combined into one result or borrowed to fill a missing field | L3-VIEW-065, L3-VIEW-069 |
+| `bounded_lookup_qualification_not_upgraded` | Permitted diagnostic candidate evidence under Complete/Incomplete/Ambiguous-with-cut separately: lookup never changes qualification, removes cut or grants INT-031 access/governing use | L3-VIEW-069 |
+| `bounded_lookup_assumption_does_not_change_candidates` | Supplied association/caller-choice context and Quiet level: original field/source evidence and lookup cardinality unchanged; assumption emission policy is separate | L3-VIEW-069 |
+| `bounded_lookup_oracle_is_independent` | Fixed source/key/candidate/state fixtures, including supplied condition evidence, independent of production lookup or a positive clock-association invention | L3-VIEW-070 |
+
+All are planned checks, not executed tests. No new default, public query
+syntax, report schema or incomplete/ambiguous access option is approved.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample
