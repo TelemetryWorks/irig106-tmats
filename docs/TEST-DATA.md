@@ -2100,6 +2100,7 @@ approve the proposed mapping/governance algorithms. No tests executed.
 
 | Planned case | Independent source/evidence and expected proposed boundary | Interpretation |
 |---|---|---|
+| `extension_removal_requires_explicit_reviewed_plan` | **BLOCKED F2:** A refuses an attached original; B keeps/reports every orphan; C removes only explicitly selected attachments in a revision-bound transaction; unresolved attachment never becomes a guessed cascade | INT-022 |
 | `equals_suggestion_needs_complete_recognized_name` | F3 A versus B: A suggests only positively recognized full name before '=' with no colon; always keep raw/missing-delimiter finding, never apply | INT-023 |
 | `packet_mapping_unusable_operands_are_not_mismatch` | Missing/Invalid/duplicate/unavailable CDT or format: cannot-evaluate with all evidence, not a mismatch; usable baseline versus unavailable historical mapping distinguished | INT-024 |
 | `tspiin_condition_does_not_repair_tspin` | TDTF p. 9-81 condition reading TSPIIN; a document's CDT=TSPIN is still unknown | INT-025 |
@@ -2111,7 +2112,7 @@ approve the proposed mapping/governance algorithms. No tests executed.
 | `governance_assumptions_are_per_query` | Prior ambiguity opt-in or assigned description cannot silently supply next query; cut facet always blocks semantic use, Complete integrity alone follows INT-051 | INT-031, INT-032, INT-048, INT-051, INT-060 |
 | `appendix_fragment_defaults_find_example_collision` | The standard's D-3 example itself has two fragments and no WFP; both default 1 with finding/ambiguous order, never infer from index or C-2 prose | INT-033 |
 | `completeness_rollover_is_not_gap` | Source sequences FE/FF/00/01 on same channel retain +1 continuity; no false gap at FF->00 | INT-034, INT-011 |
-| `completeness_padding_precedence_remains_open` | ';' followed by SP/CRLF/omitted controls/NUL/1A exercises explicit owner item (b), no accidental literal-space-only cut classification | INT-034, INT-035, INT-036 |
+| `completeness_padding_precedence_remains_open` | **BLOCKED classification A:** ';' plus suffix bytes from hex {20,00–1F,7F} retains semicolon boundary/raw bytes. A high byte is not padding; X:a plus padding keeps substantive unterminated suffix. Empty/padding-only and leading-damage precedence still need the explicit owner choice; no field-value trim | INT-034, INT-035, INT-036 |
 | `completeness_integrity_is_not_source_unavailability` | Otherwise available well-framed text with core Mismatch/secondary-integrity findings is distinct from unavailable DATA bounds; no integrity-only Incomplete quarantine; resource refusal remains operational | INT-034, INT-051 |
 
 ## Legacy independent-check batch 1 follow-up fixtures
