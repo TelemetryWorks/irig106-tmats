@@ -296,8 +296,8 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
 | L1-ROB-001 | L2-ROB-001, L2-ROB-002, L2-ROB-003 | _(none)_ | Draft |
-| L1-ROB-002 | _(none)_ | _(none)_ | Draft |
-| L1-ROB-003 | _(none)_ | _(none)_ | Draft |
+| L1-ROB-002 | L2-ROB-004 | _(none)_ | Draft |
+| L1-ROB-003 | L2-ROB-005 | _(none)_ | Draft |
 
 **L2 -> L3 -> Verification Artifacts**
 
@@ -306,6 +306,8 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-ROB-001 | L3-ROB-001, L3-ROB-002 | _(TBD)_ | Draft |
 | L2-ROB-002 | L3-ROB-003 | _(TBD)_ | Draft |
 | L2-ROB-003 | L3-ROB-004, L3-ROB-005, L3-ROB-006 | _(TBD)_ | Draft |
+| L2-ROB-004 | L3-ROB-007, L3-ROB-008, L3-ROB-009 | _(TBD)_ | Draft |
+| L2-ROB-005 | L3-ROB-010, L3-ROB-011, L3-ROB-012, L3-ROB-013 | _(TBD)_ | Draft |
 
 ### L1-PERF: Performance
 
@@ -355,16 +357,16 @@ This matrix is the single source of truth for live status; the requirement docum
 | SUM | 4 | 3 | 10 | 0 | 0 | 0 | 0 |
 | IO | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
 | CLI | 9 | 9 | 37 | 0 | 0 | 0 | 0 |
-| ROB | 3 | 3 | 6 | 0 | 0 | 0 | 0 |
+| ROB | 3 | 5 | 13 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **68** | **219** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **70** | **226** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 45 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 43 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 332 (0.0%).
+**Tested by at least one test marker**: 0 of 339 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 332 (0.9%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 339 (0.9%).
 
 ### Orphan check
 

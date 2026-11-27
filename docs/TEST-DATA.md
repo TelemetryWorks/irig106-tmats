@@ -1404,6 +1404,44 @@ answers remain distinct. No query glob/regex syntax, private-code grammar,
 link inference, renderer/schema/error spelling or output policy is chosen.
 No fixture or executable test marker is claimed as implemented by this table.
 
+## Planned library guard-rail/coverage inspection batch 28
+
+These cases refine L1-ROB-002/003 and L2-ROB-004/005. They are planned
+inspection/CI acceptance specifications, not executed tests or Evidence.
+Use isolated future fixtures under the actual lint settings, not prohibited
+operations inserted into this requirements PR or production library.
+
+| Planned acceptance case | Independent failure/success evidence required | Requirements |
+|---|---|---|
+| `guard_unwrap_used_is_rejected` | Syntactically valid non-test library unwrap operation fails with unwrap_used, not a grep hit or unrelated compiler error | L3-ROB-007, L3-ROB-009 |
+| `guard_expect_used_is_rejected` | Typed expect operation in non-test library code fails with expect_used | L3-ROB-007, L3-ROB-009 |
+| `guard_panic_is_rejected` | Explicit panic macro in non-test library code fails with panic lint | L3-ROB-007, L3-ROB-009 |
+| `guard_todo_is_rejected` | Non-test library todo macro fails with todo lint | L3-ROB-007, L3-ROB-009 |
+| `guard_unimplemented_is_rejected` | Non-test library unimplemented macro fails with unimplemented lint | L3-ROB-007, L3-ROB-009 |
+| `guard_unreachable_is_rejected` | Non-test library unreachable macro fails with unreachable lint | L3-ROB-007, L3-ROB-009 |
+| `guard_debug_macro_is_rejected` | Non-test library dbg macro fails with dbg_macro lint | L3-ROB-007, L3-ROB-009 |
+| `guard_stdout_print_is_rejected` | Non-test library stdout print macro fails with print_stdout lint | L3-ROB-007, L3-ROB-009 |
+| `guard_stderr_print_is_rejected` | Non-test library stderr print macro fails with print_stderr lint | L3-ROB-007, L3-ROB-009 |
+| `guard_comments_strings_are_not_operations` | Benign comments/string literals containing prohibited spellings do not fail as typed operations; no text scanner substitutes for Clippy | L3-ROB-007 |
+| `guard_workspace_table_must_bind_library` | Table exists in virtual root but library fails to inherit it: configuration is not accepted as effective enforcement | L3-ROB-008 |
+| `guard_scoped_test_allowance_keeps_production_denied` | Test helper/CLI-main exception is scoped; separately checked non-test library still rejects the same prohibited operation, including in an included submodule | L3-ROB-008, L3-ROB-009 |
+| `guard_failure_cannot_be_skipped_or_ignored` | Lint job skipped or command failure swallowed: enforcement obligation remains unsatisfied, not an overall-green pass | L3-ROB-009 |
+| `coverage_library_below_floor_fails` | Controlled completed library result below 80% fails the actual gate; retain source/configuration and tool result | L3-ROB-010, L3-ROB-012 |
+| `coverage_library_at_floor_still_needs_other_checks` | Completed library measurement meeting 80% satisfies only line floor, not lints, semantic fixtures or owner gates | L3-ROB-010, L3-ROB-012, L3-ROB-013 |
+| `coverage_missing_measurement_is_not_success` | Threshold flag exists but measurement/artifact is missing or failed: no library acceptance claimed | L3-ROB-010, L3-ROB-012 |
+| `coverage_cli_score_cannot_replace_library` | CLI has high line coverage while library is below 80%: library obligation fails, not averaged into a passing score | L3-ROB-010, L3-ROB-011 |
+| `coverage_scope_and_omissions_remain_visible` | Untested library files or conditional/generated code cannot be silently excluded; record source scope, features, exclusions and unmeasured configurations | L3-ROB-011 |
+| `coverage_old_head_or_prototype_report_is_not_evidence` | Coverage report belongs to a different SHA/prototype rather than reviewed implementation: no current acceptance; inspect real command/tool/source identity | L3-ROB-011 |
+| `coverage_gate_result_is_not_rounded_display` | Below-floor enforcement is checked from actual gate result, not a rounded display or green unrelated job; ignored command failure cannot pass | L3-ROB-012 |
+| `guard_coverage_pass_does_not_approve_interpretation` | Lints/line floor pass while a semantic fixture, arbitrary-input property or owner/interpretation gate is unresolved: keep that independent obligation unsatisfied | L3-ROB-013 |
+
+All negative lint fixtures require the intended diagnostic, not just any
+nonzero exit. Coverage evidence must name actual library scope/configuration
+and completed matching-head result. No new coverage exclusion list, numeric
+resource budget, test framework or full ADR-0020 acceptance is selected.
+The std, pattern, extraction, report-format and qualified-record-use holds
+remain independent of these planned checks.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample

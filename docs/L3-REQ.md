@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through pattern-lookup boundaries drafted (family 2, batches 1-26).**
+> **Status: foundations through pattern lookup plus robustness-evidence derivations drafted (family 2, batches 1-26 and 28).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -2434,3 +2434,68 @@ Vary supplied bindings, source order, duplicates, spelling and fragment
 partitions in bounded CI. Assert source bytes unchanged. Expected sets/order
 must come from the fixture's independently listed items, not reusing query
 code or guessing standard definitions from the prototype.
+
+
+## Library lint and line-coverage acceptance (family 2, batch 28)
+
+These are planned inspection obligations, with no Evidence line until the
+actual configuration and completed checks are reviewed. The [batch note](research/2026-11-27-robustness-evidence-requirements.md)
+distinguishes existing source inspection from future execution and preserves
+ADR-0020's proposed status. No workflow/manifest or runtime code changes here.
+
+**L3-ROB-007** · Parent: L2-ROB-004 · Verification: I
+*The redesigned library's effective Clippy configuration SHALL deny unwrap_used, expect_used, panic, todo, unimplemented, unreachable, dbg_macro, print_stdout and print_stderr for non-test library code; CI SHALL run compiler-aware Clippy against the actual library package rather than accept a textual occurrence scan as enforcement.*
+
+This is the exact L1-ROB-002 list, not a newly selected policy. String
+literals/comments containing these words are not prohibited operations.
+Inspect the actual typed operation and lint result; do not infer that a
+similarly named function or a broad grep result proves a violation.
+
+**L3-ROB-008** · Parent: L2-ROB-004 · Verification: I
+*Inspection SHALL verify that the actual redesigned library inherits/applies the intended lint settings after the virtual-workspace restructure and that no broad production-code allow or invocation override disables them; permitted test-only and CLI-main exceptions SHALL NOT weaken the non-test library check.*
+
+L1-ROB-002's planned workspace table must bind to the package that builds
+the library, not just the virtual manifest or CLI. Non-test library checking
+must still occur independently of a test configuration's allowed assertions/
+helpers. No extra lint set, new exception or unsafe-code policy is approved.
+
+**L3-ROB-009** · Parent: L2-ROB-004 · Verification: I
+*The guard-rail acceptance evidence SHALL demonstrate a nonzero CI/check result for each prohibited typed operation in non-test library scope, alongside scoped permitted test helpers, without accepting a configured-but-skipped lint job, ignored command failure or comment-only negative fixture as proof of enforcement.*
+
+Use isolated future compile-fail fixtures under the real lint configuration;
+do not insert prohibited operations into production code as part of this
+requirements PR. Retain actual command, compiler/Clippy version and source
+head. The current baseline command is cargo clippy --workspace --all-targets
+--all-features -- -D warnings; bind it to redesigned packages/features.
+
+**L3-ROB-010** · Parent: L2-ROB-005 · Verification: I
+*CI line-coverage acceptance SHALL measure the redesigned irig106-tmats library at the reviewed head and fail below 80%, using the planned cargo llvm-cov --fail-under-lines 80 gate or a separately reviewed equivalent; a missing artifact, failed measurement, disabled threshold or CLI-only result SHALL remain unsatisfied.*
+
+The measured quantity is the coverage tool's library line metric, not raw
+physical line count, CLI line coverage, branch coverage or a requirements
+marker percentage. This selects no new feature matrix, tool dependency or
+format for user-facing findings; any equivalent enforcement needs review.
+
+**L3-ROB-011** · Parent: L2-ROB-005 · Verification: I
+*Coverage evidence SHALL identify the library package/source scope, tested features, command/tool version, exact source head, line metric and result, with exclusions and unmeasured configurations explicit; it SHALL NOT silently remove untested production library files, combine unrelated heads or substitute prototype/CLI coverage to meet the floor.*
+
+Instrumented library calls from applicable project tests can contribute;
+CLI application lines cannot inflate the library denominator/numerator.
+Generated or conditional library code must be accounted for in the declared
+measurement scope; this is not an approval of an arbitrary exclusion list
+or a claim that unmeasured configurations are covered.
+
+**L3-ROB-012** · Parent: L2-ROB-005 · Verification: I
+*Line-coverage acceptance SHALL verify the actual failure boundary with a controlled below-floor result and retain a matching-head passing result for acceptance; source inspection of a threshold flag, a rounded display value or an overall green unrelated run SHALL NOT substitute for the enforcement result.*
+
+A future bounded fixture demonstrates that below-floor measurement cannot exit successfully; at or above 80% must
+still satisfy the other checks. No coverage run or artificial threshold
+mutation is performed locally by this docs-only PR.
+
+**L3-ROB-013** · Parent: L2-ROB-005 · Verification: I
+*Passing lints or the 80% line floor SHALL NOT be represented as standards conformance, verified interpretation behavior, exhaustive arbitrary-input safety or complete requirements coverage; the trace matrix, independent semantic fixtures, resource/termination tests and owner gates SHALL remain separately assessable.*
+
+L1-ROB-001, source-span/framing/open-run-budget requirements and the
+interpretation development gates remain independent. This slice neither
+approves the rest of ADR-0020 nor chooses pending memory budgets/recovery,
+std features, pattern scope/syntax, output policies or report formats.
