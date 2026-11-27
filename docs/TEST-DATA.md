@@ -2121,6 +2121,34 @@ These do not satisfy development-analysis or executable-test gates.
 | `g106_year_wording_is_present_in_10615` | Archived 106-15 year wording/range already present; MFS 2 also in 106-05/07/13. Do not gate recognition-format source metadata on 106-17 or treat MFS 2 as new in 106-13 | INT-015 |
 | `fallback_intended_basis_is_not_applied_vocabulary` | Intended fallback basis 106-13, available registry 106-24R1 baseline: retain both and availability limitation, never claim edition-specific 106-13 validation; policy code mapping unchanged | INT-017 |
 
+## Planned historical CSDW source-word fixtures
+
+Source: [14-edition layout matrix](research/2026-11-27-historical-csdw-layout-sources.md).
+Explicit layout premises only, not automatic identification. These are planned
+checks of existing requirements, not executed decoder evidence.
+
+| Planned case | Independent word/source and expected boundary | Requirements |
+|---|---|---|
+| `csdw_10604_10605_no_declared_fields` | All-reserved 32-bit word; preserve all bytes and four-byte text offset; no declared CH10VER/SRCC/FRMT, even when raw bits 8/9 are set | L2-CH10-001, L2-CH10-002 |
+| `csdw_10607_srcc_without_frmt` | Explicit 106-07 layout; low byte 07, SRCC 1; bit 9 is reserved, not XML; retain its raw evidence without inventing a reserved-bit refusal policy | L2-CH10-002 |
+| `csdw_10609_introduces_frmt` | Explicit 106-09 layout: bit 9=1 is XML unsupported with original bytes retained; bit 8 independently SRCC, low byte 08 literal 106-09 | L2-CH10-002 |
+| `csdw_zero_byte_does_not_identify_layout` | Same zero low byte supplied with different reviewed layout premises: reserved/not-declared readings retain their premise, no modern/legacy layout guessed from byte alone | L2-CH10-001, L2-CH10-002 |
+| `csdw_unavailable_layout_never_guesses` | No established supported layout or contradictory supplied context: gap observable, no fabricated modern fields/empty successful text; final unavailable-context API/policy still requires review | L2-CH10-001 |
+| `csdw_10611_source_layout` | Explicit 106-11 section/figure from matrix; independently set bit 9, bit 8 and low byte with all original word/body bytes retained; verify defined field positions and cited table separately from fallback policy | L2-CH10-001, L2-CH10-002 |
+| `csdw_10613_source_layout` | Explicit 106-13 section/figure from matrix; independently set bit 9, bit 8 and low byte with all original word/body bytes retained; verify defined field positions and cited table separately from fallback policy | L2-CH10-001, L2-CH10-002 |
+| `csdw_10615_source_layout` | Explicit 106-15 section/figure from matrix; independently set bit 9, bit 8 and low byte with all original word/body bytes retained; verify defined field positions and cited table separately from fallback policy | L2-CH10-001, L2-CH10-002 |
+| `csdw_10617_source_layout` | Explicit 106-17 section/figure from matrix; independently set bit 9, bit 8 and low byte with all original word/body bytes retained; verify defined field positions and cited table separately from fallback policy | L2-CH10-001, L2-CH10-002 |
+| `csdw_10619_source_layout` | Explicit 106-19 section/figure from matrix; independently set bit 9, bit 8 and low byte with all original word/body bytes retained; verify defined field positions and cited table separately from fallback policy | L2-CH10-001, L2-CH10-002 |
+| `csdw_10620_source_layout` | Explicit 106-20 section/figure from matrix; independently set bit 9, bit 8 and low byte with all original word/body bytes retained; verify defined field positions and cited table separately from fallback policy | L2-CH10-001, L2-CH10-002 |
+| `csdw_10622_source_layout` | Explicit 106-22 section/figure from matrix; independently set bit 9, bit 8 and low byte with all original word/body bytes retained; verify defined field positions and cited table separately from fallback policy | L2-CH10-001, L2-CH10-002 |
+| `csdw_10623_source_layout` | Explicit 106-23 section/figure from matrix; independently set bit 9, bit 8 and low byte with all original word/body bytes retained; verify defined field positions and cited table separately from fallback policy | L2-CH10-001, L2-CH10-002 |
+| `csdw_10624_source_layout` | Explicit 106-24 section/figure from matrix; independently set bit 9, bit 8 and low byte with all original word/body bytes retained; verify defined field positions and cited table separately from fallback policy | L2-CH10-001, L2-CH10-002 |
+| `csdw_10624r1_source_layout` | Explicit 106-24R1 section/figure from matrix; independently set bit 9, bit 8 and low byte with all original word/body bytes retained; verify defined field positions and cited table separately from fallback policy | L2-CH10-001, L2-CH10-002 |
+
+No record-governance, checksum trust upgrade, layout default or new historical
+validator severity is inferred. Present-but-reserved code values and absent
+fields stay distinguishable. Baseline L3 bit cases remain unchanged.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample

@@ -98,6 +98,7 @@ irig106-tmats/
 │   │                          2026-11-25-source-bit-requirements.md derives explicit NSB splitting and records DSI/CHE remaining boundaries;
 │   │                          2026-11-27-legacy-int-independent-check-batch2.md records second-batch verdicts, source corrections and the later-scope F2 owner item;
 │   │                          2026-11-27-legacy-int-independent-check-batch1.md records reviewer verdicts and narrow amendments without claiming completed development analysis;
+│   │                          2026-11-27-historical-csdw-layout-sources.md inventories per-edition CSDW sources, fields and unresolved routing/API evidence;
 │   │                          2026-11-27-family2-unheld-queue-reassessment.md rechecks scoped parents after #79 and separates exhausted unheld drafting from remaining owner/source/implementation gates;
 │   │                          2026-11-27-show-free-command-orchestration.md derives cross-stage command binding and acceptance without report formats or grammar defaults;
 │   │                          2026-11-27-retention-limit-evidence.md derives retained-owner inventories and typed-limit evidence without choosing charging/recovery policy;

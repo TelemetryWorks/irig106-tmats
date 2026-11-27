@@ -1104,6 +1104,9 @@ adds no automatic repair or new refusal gate when stamping is otherwise eligible
 
 Planned obligations, not implementation. Baseline layout is explicitly
 106-24R1 Figure 11-34; historical era/declaration routing remains later work.
+The [historical source matrix](research/2026-11-27-historical-csdw-layout-sources.md)
+verifies per-edition fields and absent flags; it does not choose automatic
+layout routing or qualify shared dependency APIs.
 INT-012 was reconfirmed by Joey, 2026-11-23, with AI CONCURRED at #34 head
 e352323. Source freshness, deep analysis and executable verification remain.
 
