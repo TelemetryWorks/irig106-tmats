@@ -79,7 +79,8 @@ a complete accounting model, qualified flex vectors or release compatibility.
 The maintainer must do the historical Chapter 10/11 CSDW-layout source review,
 approved-INT development analyses and Appendix 9-C vocabulary inventory after
 the reassessment PR merges, one PR per item. The reviewer owns outstanding
-legacy independent checks and the amended normalization-order recheck;
+legacy independent checks; the received normalization-order recheck CONCUR
+still leaves the owner choice pending;
 the coordinator and core maintainer own types/core publication with owner
 go-ahead. The owner decides decision items only; source/analysis work must
 not be left idle awaiting an unrelated policy answer.

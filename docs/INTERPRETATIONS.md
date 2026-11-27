@@ -366,8 +366,30 @@ or packet-header byte. Full development analysis and tests remain outstanding.
 
 **Behaviour**: For each run joined under INT-011:
 - **complete** — no gap or CSDW change inside it, the body's last non-blank byte is `;`, and the run is followed by a SAME-CHANNEL packet (basis "followed by another packet") or by the end of input (basis "end of input", labelled);
-- **incomplete** — the body is cut inside an attribute (its last non-blank byte is not `;`), a fragment is unreadable or untrusted, or a sequence gap splits text that continues an attribute across it;
+- **incomplete** — the body is cut inside an attribute (its last non-blank byte is not `;`), a fragment has unavailable required source bytes/bounds, or a sequence gap splits text that continues an attribute across it;
 - **ambiguous** — a sequence gap or a CSDW change where the text before it ends at `;`, or a gap-free run whose text repeats a single-entry attribute (for example `G\106` or `G\PN`); both readings and the split point are reported.
+
+**Batch 4 narrow clarification / remaining owner item**: Sequence continuity
+is modulo 256: 0xFF to 0x00 is +1, not a gap (11.2.1.1 f p. 11-8).
+The phrase “last non-blank” must not mean only literal ASCII space: INT-035/036
+layout/padding classes include SP, CR/LF, other omitted controls and NUL/0x1A
+padding. Their exact precedence for deciding a final content byte stays
+EXPLICITLY OPEN under item (b), not implemented by this phrase; trailing
+reviewed layout after ';' must not itself manufacture a cut attribute.
+
+“Unreadable/untrusted” is not a generic integrity-failure quarantine. For
+completeness, distinguish unavailable required bytes/bounds (for example
+unreadable source, or core structural header/admission failure that provides
+no usable DATA extent) from present well-framed text carrying integrity
+findings. A core data-checksum Mismatch alone does not turn such text into
+Incomplete; retain INT-051 prominent-finding behavior. Secondary-integrity
+findings alone likewise do not prove text was cut when its admitted extent
+is available. Exact core evidence/availability bindings need verification,
+not invented PacketInfo fields or a new secondary-checksum rule. Operational
+resource refusal remains separate inventory/limit evidence, not manufactured
+malformed/Incomplete classification. Any stronger quarantine requires its own
+owner review; the interpretation's precise availability/precedence rules
+remain proposed. Core Verified/Mismatch/NotChecked evidence stays unchanged.
 
 **Review consequences (owner-relayed, 2026-11-23)**: "Followed by another
 packet" means SAME-CHANNEL under reconfirmed INT-011. Other-channel traffic
@@ -397,7 +419,7 @@ all other precise classification/governance rules in this entry.
 Aggregate open-run memory needs an explicit budget and typed limit error;
 exhaustion never silently drops a channel's run or synthesizes EOF.
 
-Complete records govern (INT-028); incomplete and ambiguous records do not by default (INT-031). An XML body (FRMT 1) is of unknown completeness.
+Complete alone does not prove governing adoption: proposed INT-028 must compose INT-053. Proposed INT-031 blocks incomplete/ambiguous use by default. An XML body (FRMT 1) is of unknown completeness.
 
 **INT-048 amendment (review clarification, 2026-11-25)**: The cut-text rule
 above means **Incomplete, or aggregate Ambiguous WITH A RETAINED CUT FACET**
@@ -409,7 +431,7 @@ blocking reason; the aggregate label does not relax incomplete-input policy.
 
 **Reason**: The packets alone cannot tell where a record ends; the text's final byte and repeated single-entry attributes are the only evidence the standard gives, and neither is proof in every case.
 
-**Design**: accepted in principle (three outcomes, owner, 2026-09-27, ADR-0031); these rules proposed · **Review**: pending · **Origin**: team spec alignment review, 2026-09-27
+**Design**: accepted in principle (three outcomes, owner, 2026-09-27, ADR-0031); these rules proposed · **Review**: independent batch 4 (2026-11-27) at main `283ffd5`: CONCERNS, narrow; three-outcome framework and INT-011/045/048 amendments CONCUR; revised details/open items need recheck and owner decision; [review record](research/2026-11-27-legacy-int-independent-check-batches3-4.md); source/development/test gates remain · **Origin**: team spec alignment review, 2026-09-27
 
 **Test**: `setup_record_completeness_outcomes`, `eof_boundary_is_complete_and_labelled`, `other_channel_packet_cannot_finalize_run`, `open_boundary_is_provisional_not_complete`, `provisional_extension_never_closes_run` (planned; not yet written)
 
@@ -699,9 +721,15 @@ last step of that transaction, never run over the still-ambiguous input.
 
 **Behaviour**: **Open — owner follow-up F3.** Reading follows §9.4.2 regardless: with no colon the item is reported as a missing delimiter (L1-READ-003) and kept exactly. Whether to also offer a suggested edit replacing `=` by `:` is not decided.
 
+**Owner options (still open)**: A (reviewer-recommended) offer a suggestion
+only when bytes before '=' are a positively recognized COMPLETE code name,
+with no colon in the item; preserve raw bytes and never apply automatically,
+using the L1-READ-007 guard. B offers no suggestion. The existing reading
+rule above is independent of this choice. Source: Chapter 6 p. 6-22.
+
 **Reason**: The standard's own example uses the form, so real files may too; a suggestion could help or could mislead.
 
-**Design**: open (follow-up F3, 2026-09-26) · **Review**: pending · **Origin**: T7
+**Design**: open (follow-up F3, 2026-09-26) · **Review**: independent batch 3 (2026-11-27) at main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`: NEEDS OWNER F3; reading-only rule CONCUR; suggestion policy still open; [review record](research/2026-11-27-legacy-int-independent-check-batches3-4.md); source/development/test gates remain · **Origin**: T7
 
 **Test**: `chapter_6_example_equals_sign_is_missing_delimiter`
 
@@ -717,11 +745,21 @@ last step of that transaction, never run over the still-ambiguous input.
 - Chapter 11 Table 11-4 (106-24R1): data-type families of eight codes (for example "0x08 PCM Data, Format 0" to "0x0B - 0x0F PCM Data, Format 3 - Format 7"), except "0x78 Controller Area Network Bus" (one code) and "0x79 Fibre Channel Data, Format 0", "0x7A Fibre Channel Data, Format 1", "0x7B – 0x80 … Reserved"; no `0x22` is listed.
 - Table 9-4: `R-x\CDT-n` enumeration (PCMIN … TMOUT) and one data-type-format attribute per type, for example `R-x\PDTF-n` "PCM data type format. Enumeration equates to format number in Chapter 11"; `R-x\TTF-n`, `R-x\VTF-n`, and others "equates to format number in Chapter 10"; `R-x\UTF-n` and `R-x\FCTF-n` without that sentence.
 
-**Behaviour**: A reviewed table maps each `R-x\CDT-n` keyword to its Table 11-4 family, and the channel's data-type-format value to the format within it (`docs/TMATS-IN-CHAPTER-10.md` section 3.3). TMOUT has no packet data type. The packet check (L1-CH10-007) reports a packet whose data type is not the one the table gives.
+**Behaviour**: A reviewed table maps each `R-x\CDT-n` keyword to its Table 11-4 family, and the channel's data-type-format value to the format within it (`docs/TMATS-IN-CHAPTER-10.md` section 3.3). TMOUT has no packet data type. The mapping stays owned by tmats; the packet check (L1-CH10-007) is consumed by irig106-validator, per the #60 ownership direction.
+
+The reviewed mapping is the 106-24R1 baseline, not an arithmetic family
+formula or universal historical table. Other declared editions retain their
+INT-044/017 labelled intended basis and actual baseline-availability limit;
+where no reviewed edition/format mapping exists, return cannot-evaluate.
+Missing, Invalid, Ambiguous or unavailable same-channel CDT OR data-type-format
+value also gives cannot-evaluate with all evidence, never a mismatch finding.
+A mismatch requires an independently established usable expected mapping.
+Source pages: Table 11-4 begins 11-5; analog 0x20–27 rows are on 11-7;
+Table 9-4 PDTF 9-50, UTF 9-77 and FCTF 9-82.
 
 **Reason**: The families are irregular (CAN, Fibre Channel, the missing `0x22`), and several format attributes still cite Chapter 10 after the packet formats moved to Chapter 11, so the mapping cannot be computed and must be reviewed.
 
-**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: pending · **Origin**: F4 section 3
+**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: independent batch 3 (2026-11-27) at main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`: CONCERNS, narrow; edition/value-state/mapping-consumer amendments pending recheck and owner decision; [review record](research/2026-11-27-legacy-int-independent-check-batches3-4.md); source/development/test gates remain · **Origin**: F4 section 3
 
 **Test**: `channel_data_type_maps_to_packet_data_types`
 
@@ -735,11 +773,11 @@ last step of that transaction, never run over the still-ambiguous input.
 - Table 9-4, `R-x\TDTF-n`: "Allowed when: R\CDT is "TSPIN"".
 - Table 9-4, `R-x\CDT-n` enumeration: "TSPIIN TSPI/CTS Input"; no `TSPIN`.
 
-**Behaviour**: The condition is read as `TSPIIN`, as INT-007 reads `FBCIN` as `FBCHIN`.
+**Behaviour**: The condition is read as `TSPIIN`, as INT-007 reads `FBCIN` as `FBCHIN`. A document's literal CDT=TSPIN still gets an unknown-keyword finding, never silent repair. Source: TDTF p. 9-81; TSPIIN enumeration p. 9-50.
 
 **Reason**: Read literally, the TSPI/CTS data type format could never be allowed.
 
-**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: pending · **Origin**: F4 section 3
+**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: independent batch 3 (2026-11-27) at main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`: CONCUR with proposed reading; owner decision pending; [review record](research/2026-11-27-legacy-int-independent-check-batches3-4.md); source/development/test gates remain · **Origin**: F4 section 3
 
 **Test**: `tspi_data_type_format_allowed_for_tspiin`
 
@@ -756,9 +794,12 @@ last step of that transaction, never run over the still-ambiguous input.
 
 **Behaviour**: Both conditions are read as `R\CDT` of the same channel.
 
+Source locations: RPS p. 9-51 and MFF RPS p. 9-54; the latter also
+contains the doubled printed "When When". This does not define P CDT.
+
 **Reason**: Both attributes are in the R group's PCM block beside attributes conditioned on `R\CDT`; `P-d\CDT` cannot be evaluated.
 
-**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: pending · **Origin**: F4 section 3
+**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: independent batch 3 (2026-11-27) at main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`: CONCUR with proposed reading; owner decision pending; [review record](research/2026-11-27-legacy-int-independent-check-batches3-4.md); source/development/test gates remain · **Origin**: F4 section 3
 
 **Test**: `recorder_polarity_allowed_for_pcm_channels`
 
@@ -771,11 +812,16 @@ last step of that transaction, never run over the still-ambiguous input.
 **Sources**:
 - Table 9-11, `C-d\DCN`: "Links from: R-x\AMN-n-m, R-x\AMN-n-m, M-x\SI\MN-n, M-x\BB\MN, D-x\MN-y-n, B-x\UMN1-i, B-x\UMN2-i, B-x\UMN3-i, B-x\MN-i-n-p, S-d\MN-i-n-p, R-x\DMN-n-m, Q-d\MMNM-i-n-m, Q-d\SMMNM-i-n-m-o".
 
-**Behaviour**: The duplicate is ignored; the analysis checks whether another R-group measurement-name attribute was meant (the list names `R-x\DMN-n-m` separately) and, if one is found, it becomes a link source here.
+**Behaviour (still proposed)**: The duplicate reference is a no-op. The
+reviewer checked the Links-to side: only R AMN and R DMN carry Links to
+C-d\DCN in 106-24R1. EV MN, EV PM MN, IPMN, BME SMN and SMF SMN carry no
+such link, so this duplicate hides no omitted R source on that side. Retain
+INT-003's three-source process; do not invent an additional source from a
+similar name. Source: Table 9-11 p. 9-158.
 
 **Reason**: A repeated source adds nothing, but may hide an omitted one.
 
-**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: pending · **Origin**: F4 section 3
+**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: independent batch 3 (2026-11-27) at main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`: CONCUR with proposed reading; owner decision pending; [review record](research/2026-11-27-legacy-int-independent-check-batches3-4.md); source/development/test gates remain · **Origin**: F4 section 3
 
 **Test**: `measurement_name_sources_for_conversions`
 
@@ -792,13 +838,43 @@ last step of that transaction, never run over the still-ambiguous input.
 - Chapter 10 §10.5.1: the setup record "as the first packets in the recording"; Table 10-9.
 - Chapter 11: "A single setup record may span multiple consecutive packets."
 
-**Behaviour**: A packet is governed by the most recent complete setup record before it in file order, from the packet after that record's last fragment. A repeated record with the same bytes keeps the same description. Packets before the first complete record have none (`docs/TMATS-IN-CHAPTER-10.md` sections 5 and 6). Recordings written as several simultaneous files are not covered here.
+**Behaviour — proposed umbrella, NOT APPROVED**: Compose the approved
+closure, qualification, comparison and takeover rules, not “latest Complete
+wins”. Compare later candidates against the CURRENTLY GOVERNING setup (the
+original sealed record or latest copy that validly took control), or retain
+an explicitly UNRESOLVED comparison target under INT-053. A Complete label
+alone does not establish a valid takeover or its effective packet boundary.
+
+- INT-045 supplies layered boundaries; INT-046 identity exceptions apply only
+  in their approved bounded domain, never as a new adoption rule.
+- INT-048 field ambiguity blocks new adoption, including equal/digest-matching
+  copies; retained cut facets keep Incomplete's full blocking force.
+- INT-049 never extends one candidate through a later boundary by identity.
+- INT-051 integrity findings alone neither quarantine otherwise eligible
+  Complete data by default nor prove the old setup still governs a changed copy.
+- INT-052 unreadable SRCC supplies no governing inference. INT-053 keeps an
+  unresolved takeover/target unresolved until independently valid takeover.
+- Proposed INT-031/032 distinguish ungoverned packet ranges from unresolved
+  comparison targets; no remembered caller assumption or guessed setup.
+
+The output domain must distinguish an established governing setup,
+**ungoverned (no governing setup)** and **unresolved governing/target evidence**,
+with the actual packet ranges/provenance retained. Exact takeover/boundary
+rules beyond approved dependencies need owner review; do not infer them from
+file order, completion, SRCC, integrity mode or equality alone. First-fragment
+versus completion file order remains an owner item, not an adopted rule here.
+Multiple simultaneous files remain out of scope.
+
+**Owner options**: A (recommended) approve this composed umbrella and resolve
+its remaining takeover/boundary decisions explicitly; B defer governing
+application and expose only candidates/evidence until those decisions exist.
+Neither permits the superseded proposed “last fragment then latest wins”.
 
 **Reason**: The standard orders setup records before the data they describe but never states the governing rule outright.
 
-**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: pending · **Origin**: F4 section 5
+**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: independent batch 3 (2026-11-27) at main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`: CONCERNS, substantive; umbrella rewritten as proposal, owner decision and independent recheck required; [review record](research/2026-11-27-legacy-int-independent-check-batches3-4.md); source/development/test gates remain · **Origin**: F4 section 5
 
-**Test**: `each_packet_is_governed_by_the_preceding_setup_record`
+**Test**: `governing_umbrella_composes_approved_guards`, `governing_complete_is_not_takeover`, `governing_unresolved_is_not_no_setup` (planned; owner-dependent)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -810,18 +886,39 @@ last step of that transaction, never run over the still-ambiguous input.
 - Chapter 11 §11.2.7.2: SRCC "indicates if the recorder configuration contained in the previous setup record packet(s) of the current recording session (defined as .RECORD to .STOP) has changed"; "The next setup record packet(s) committed to the stream, if not changed from this new setup record, shall clear the SRCC bit to 0."
 - Chapter 9 §9.4.2: "For alphanumeric data items, including keywords, either upper or lower case is allowed; TMATS is not case sensitive"; "Leading, trailing, and embedded blanks are assumed to be intentional"; "Attributes may appear in any order."
 
-**Behaviour**: Each complete record is compared with the governing record:
-- **identical** — the same bytes (used to share one description);
-- **same configuration** — different bytes, but the same attributes: code names compared regardless of order ("Attributes may appear in any order") and, with values, regardless of case ("TMATS is not case sensitive"), as L1-READ-004 and ADR-0026 require; blanks are kept ("assumed to be intentional");
-- **changed configuration** — attributes added, removed, or with different values, reported attribute by attribute (L1-WRT-005);
-- **indeterminate** — either record has malformed attributes, or the only differences are in attributes the registry does not define, so no defensible judgement is possible; the textual differences are reported.
-Findings: SRCC 1 on the first record; SRCC 0 with a changed configuration (an unannounced change, which still governs from there); SRCC 1 with an identical record or the same configuration (a change bit with nothing changed); SRCC 0 with the same configuration but different bytes is information, not a finding. An indeterminate comparison raises no SRCC finding either way. Whether a difference only in descriptive attributes (such as `G\COM` or `G\OD`) is a configuration change is for the analysis. *(Revised 2026-09-27 from byte identity alone, which would have called reordered attributes a change; team spec alignment review.)*
+**Behaviour — proposed findings-only table, NOT APPROVED**: Compare with
+INT-053's target, never merely the previous copy. If the target/comparison
+is unresolved, preserve that uncertainty. Report INT-050 raw subtype and any
+INDEPENDENTLY ESTABLISHED semantic class, not a generic case/order-folded
+“same configuration” verdict. Shared equality or digest never cures INT-048
+field ambiguity or establishes takeover.
 
-**Reason**: The standard ties SRCC to "the recorder configuration", and Chapter 9 lets the same configuration be written in any order and case; byte identity alone confuses rewriting with changing.
+| Comparison evidence | First-fragment SRCC | Proposed finding/evidence only |
+|---|---|---|
+| Byte-identical | 0 / 1 / unreadable | Retain equality; for 1 retain changed claim versus identity, not a guessed reset; unreadable stays unknown |
+| SHA-value-only / layout-whitespace-only / other raw difference | 0 | Report raw subtype and unchanged-claim discrepancy; no automatic semantic equivalence or reset |
+| Same raw subtypes | 1 | Report changed claim and raw subtype, no independently unproved semantic-change verdict |
+| Same raw subtypes | unreadable | Retain subtype/unknown claim; never infer the bit |
+| Independently established semantic difference | 0 / 1 / unreadable | Retain reviewed semantic evidence and supplied claim; do not invent evidence from generic value folding |
+| Incomplete comparison / unresolved target | any | Unresolved, all available evidence; never equality, guessed subtype or no-change |
 
-**Design**: proposed (2026-09-26, revised 2026-09-27, awaiting the owner) · **Review**: pending · **Origin**: F4 section 5; team spec alignment review
+Governing effects defer to approved INT-053 and the proposed INT-028 umbrella;
+a finding table cannot establish control. No SRCC=0-but-different “still governs
+from there” shortcut remains. INT-048 Ambiguous stays blocking regardless of
+comparison equality. **Owner sub-question**: when do descriptive-only changes
+such as G\COM/G\OD count as configuration change? Require reviewed
+attribute semantics; do not choose a generic rule in this table.
 
-**Test**: `setup_record_kinds_and_srcc_findings`, `srcc_compares_configuration_not_bytes`
+**Owner options**: A (recommended) this evidence/findings-only composition,
+with semantic classes only when independently reviewed; B defer the table
+until the owner defines semantic configuration equivalence. Both retain raw
+bytes and approved governance guards; neither authorizes implicit adoption.
+
+**Reason**: SRCC is a claim about configuration; raw differences alone do not define semantic equivalence. The former generic case/order-folding proposal conflicted with approved INT-050/052/053.
+
+**Design**: proposed (2026-09-26, revised 2026-09-27, awaiting the owner) · **Review**: independent batch 3 (2026-11-27) at main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`: CONCERNS, substantive; findings-only proposal rewritten, owner decision and independent recheck required; [review record](research/2026-11-27-legacy-int-independent-check-batches3-4.md); source/development/test gates remain · **Origin**: F4 section 5; team spec alignment review
+
+**Test**: `setup_record_kinds_and_srcc_findings`, `srcc_raw_subtypes_do_not_infer_semantics`
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -867,16 +964,22 @@ Findings: SRCC 1 on the first record; SRCC 0 with a changed configuration (an un
 - Chapter 11 §11.2.7.2: "A single setup record may span multiple consecutive packets. When spanning multiple packets, the sequence counter shall increment in the order of segmentation of the setup record, n+1"; "the new setup record packet will be committed to the stream prior to any new or changed data packets".
 - The standard does not say what applies after a record that cannot be read.
 
-**Behaviour**: A setup record INT-034 finds incomplete or ambiguous is reported and builds no description by default (a caller may accept an ambiguous split, labelled); the previous description is not carried forward, and packets after it are ungoverned until the next complete record. The fragment bytes are kept.
+**Behaviour**: A setup record INT-034 finds incomplete or ambiguous is reported and builds no description by default (an ambiguity-only opt-in, if approved, must be an explicit per-query caller choice, labelled; no remembered/session default); the previous description is not carried forward, and packets after it are ungoverned until a later setup validly takes control under INT-028/053, not merely the next Complete candidate. The fragment bytes are kept.
 
 **INT-048 limit on the proposed acceptance option (2026-11-25)**: A retained
 cut facet keeps Incomplete's full blocking force even if the aggregate
 outcome is Ambiguous. The labelled ambiguous-split option above, if later
 approved, cannot make cut text usable or governing.
 
+“Ungoverned” here means no governing setup, distinct from INT-053's
+unresolved comparison target. Integrity failure on otherwise eligible COMPLETE
+text uses INT-051's prominent-finding default, not this incomplete/ambiguous
+cannot-govern predicate. Depends on the INT-028 umbrella rewrite; no new
+owner approval is implied by the independent recommendation check.
+
 **Reason**: A new setup record means the configuration may have changed; applying the old description to data the new one describes would decode it wrongly without a word.
 
-**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: pending · **Origin**: F4 section 6
+**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: independent batch 4 (2026-11-27) at main `283ffd5`: CONCUR with recommendation; vocabulary/choice alignment applied, owner decision pending; [review record](research/2026-11-27-legacy-int-independent-check-batches3-4.md); source/development/test gates remain · **Origin**: F4 section 6
 
 **Test**: `nothing_governs_after_an_incomplete_setup_record`
 
@@ -888,13 +991,16 @@ approved, cannot make cut text usable or governing.
 
 **Sources**:
 - Chapter 10 §10.5.1 and Table 10-9: the setup record is "the first packets in the recording".
-- Chapter 11: "Only static Computer-Generated Data, Format 1 packets may precede the first time data packet."
+- Chapter 11 section 11.2.3 p. 11-24: "Only static Computer-Generated Data, Format 1 packets may precede the first time data packet."
 
-**Behaviour**: Packets before the first complete setup record, or after one that cannot govern (INT-031, an XML record), are reported with the range affected and are not decoded by default. A caller may assign a description to them explicitly; every report then says the description was assumed, not declared.
+**Behaviour**: Packets before the first complete setup record, or after one that cannot govern (INT-031, an XML record), are reported with the range affected and are not decoded by default. A caller may assign a description to them explicitly PER QUERY (INT-060 style), with no remembered/session-wide default; every report then says the description was assumed, not declared.
+
+XML remains unsupported for tmats 0.1 under ADR-0015. Explicit caller
+assignment does not silently declare an in-file setup or settle INT-028.
 
 **Reason**: The standard forbids such packets but real recordings may contain them; decoding them silently with a guessed configuration would hide the problem.
 
-**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: pending · **Origin**: F4 section 6
+**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: independent batch 4 (2026-11-27) at main `283ffd5`: CONCUR with proposal; explicit per-query choice alignment applied, owner decision pending; [review record](research/2026-11-27-legacy-int-independent-check-batches3-4.md); source/development/test gates remain · **Origin**: F4 section 6
 
 **Test**: `ungoverned_packets_are_reported_and_assumptions_labelled`
 
@@ -912,9 +1018,12 @@ approved, cannot make cut text usable or governing.
 
 **Behaviour**: Each absent position takes its default, as defaulted values (ADR-0023). When two or more fragments of one location end up with the same position, validation reports it and the fragment order is ambiguous: the library does not infer the order from the fragment index, the word order, or prose. A caller may supply the order explicitly; every report then labels it as an assumption.
 
+The cited Appendix 9-C example itself trips this duplicate-default-position
+finding; fixtures must say so, not assume standard examples are conforming.
+
 **Reason**: The default makes a measurement with several fragments invalid unless every position is given; inferring an order would be a guess that decodes wrongly when it is wrong.
 
-**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: pending · **Origin**: F4 section 7
+**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: independent batch 4 (2026-11-27) at main `283ffd5`: CONCUR with proposal; owner decision pending; [review record](research/2026-11-27-legacy-int-independent-check-batches3-4.md); source/development/test gates remain · **Origin**: F4 section 7
 
 **Test**: `defaulted_fragment_positions_are_ambiguous`
 
@@ -2348,7 +2457,7 @@ explicit unknown/private placement rules, anchor-limited group ordering and
 no cleanup of within-group order. A remains useful for caller-specific plans;
 neither it nor D may be advertised as the standard's unique canonical form.
 
-**Design**: proposed (2026-11-27; A mechanism plus named built-in D preferred, or explicit owner L1 reinterpretation) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off and amended-wording independent AI check pending · **Origin**: family 2 normalization source review and #77 independent review
+**Design**: proposed (2026-11-27; A mechanism plus named built-in D preferred, or explicit owner L1 reinterpretation) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off pending; independent AI recheck CONCUR at main `283ffd5` (2026-11-27) with A mechanism + named built-in D, or explicit owner L1 reinterpretation; [review evidence](research/2026-11-27-legacy-int-independent-check-batches3-4.md); development/source/test gates remain · **Origin**: family 2 normalization source review and #77 independent review
 
 **Test**: `normalize_order_explicit_bijection`, `normalize_order_missing_or_repeated_identity`, `normalize_order_preserves_raw_regions`, `normalize_group_profile_section_order`, `normalize_group_profile_stable_within_group`, `normalize_group_profile_anchors`, `normalize_group_profile_private_and_unknown_placement` (planned; A/D expectations BLOCKED)
 
