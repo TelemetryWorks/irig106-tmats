@@ -1712,6 +1712,40 @@ Pending owner choices for access/governance, public selection policy and
 report rendering remain pending. No executable tests or packet reader are
 added by these specifications.
 
+## Planned checksum command computation batch 35
+
+Internal computation only, given explicitly selected eligible records.
+Incomplete/ambiguous access remains gated by proposed INT-031; refused-result
+propagation tests can inject evaluated outcomes rather than access such text.
+No output schema, selection default or numeric exit code is fixed here.
+Sources: existing L3-SUM-001–010; INT-018–021/043; ADR-0014/0029.
+
+| Planned test | Independent input and expected result | Requirements |
+|---|---|---|
+| `checksum_command_keeps_selected_record` | Different eligible A/B sources: explicitly select B; computation and findings refer only to B, not first A or joined A+B | L3-CLI-045, L3-CLI-051 |
+| `checksum_command_rejects_stale_context_substitution` | Distinct revisions of the same document: supplied revision remains attached; no cached earlier digest presented for it | L3-CLI-045 |
+| `checksum_command_recording_domain_is_text_only` | Eligible assembled text from borrowed spans: independent SHA oracle excludes headers/CSDWs/filler/packet checksum by using the specified text domain | L3-CLI-045, L3-CLI-051 |
+| `checksum_command_malformed_value_compute_allowed` | Complete G\SHA:2-ABC; with defined exclusion: compute allowed and matches independent hashlib oracle, verify malformed; no command-level conflation | L3-CLI-046, L3-CLI-047 |
+| `checksum_command_placeholder_is_not_verification` | Complete G\SHA:0;: compute allowed under established domain, verification stays placeholder/unverified, not match | L3-CLI-046, L3-CLI-047 |
+| `checksum_command_undefined_domain_stays_refused` | Inject missing-terminator/truncation/damage/BOM refusal: no authoritative result or silently substituted raw hash | L3-CLI-046 |
+| `checksum_command_duplicate_refusal_keeps_all_findings` | Inject F1 duplicate outcome with occurrence locations: indeterminate/refusal and every occurrence preserved, no selected winner or positive match | L3-CLI-046, L3-CLI-047 |
+| `verify_command_preserves_outcome_partition` | Independently supplied match/mismatch/absent/unknown/malformed/indeterminate/unavailable/placeholder results remain distinct with their source context | L3-CLI-047 |
+| `verify_command_noncanonical_2_keeps_warning` | Eligible 02-/002- algorithm-2 cases with independently calculated matching digest: match plus located warning, raw spelling unchanged | L3-CLI-047 |
+| `verify_command_blocked_keeps_noncanonical_warning` | Inject blocked result plus located noncanonical-2 warning: both remain visible internally; no fabricated verified result | L3-CLI-047 |
+| `checksum_command_flex_is_explicit_and_separate` | Explicit flex request/options remain attached to non-standard result; standard request cannot be satisfied by flex | L3-CLI-048 |
+| `checksum_command_flex_never_stamps_gsha` | Flex result passed through computation leaves input and G\SHA unchanged; no standard-verification claim | L3-CLI-048, L3-CLI-049 |
+| `stamp_command_duplicate_is_not_auto_repair` | Inject duplicate/refused transaction: no successful stamped result, input/findings/occurrences retained, no implicit remove | L3-CLI-049 |
+| `stamp_command_explicit_exact_item_repair_then_stamp` | Permitted exact-item duplicate removal in supplied revision-bound transaction precedes re-read and stamp; wrapper never selects the item itself | L3-CLI-049, L3-CLI-050 |
+| `stamp_command_keeps_noncanonical_name_finding` | Eligible g\sha: slot: successful value stamp keeps name finding and rename recommendation; raw name not silently changed | L3-CLI-049 |
+| `stamp_command_final_bytes_verify_independently` | Transaction inserts a separator/newline outside exclusion: command result matches independent final-byte SHA and library re-read verification, canonical 2-/lower-case hex | L3-CLI-050, L3-CLI-051 |
+| `stamp_command_verification_failure_is_not_success` | Inject final verification failure after emission: original input unchanged and failure retained, no successful stamped-result value | L3-CLI-049, L3-CLI-050 |
+| `stamp_command_result_is_not_delivery_success` | Verified in-memory result followed by supplied destination delivery failure: computation result never suppresses that failure or authorizes in-place writes | L3-CLI-050 |
+| `checksum_command_oracles_not_wrapper_mocks_only` | Integration evidence uses eligible actual documents/independent digests; an injected call/result alone is not SHA correctness or flex compatibility coverage | L3-CLI-051 |
+
+Flex's exact source/algorithm and independent compatibility derivation remain
+outstanding. Output delivery and ambiguous/incomplete access cases do not
+remove their owner gates; new tests are planned, not executed coverage.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample

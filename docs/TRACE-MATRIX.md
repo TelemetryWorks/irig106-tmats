@@ -280,7 +280,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-CLI-002 | _(none)_ | _(none)_ | Draft |
 | L1-CLI-003 | L2-CLI-010, L2-CLI-011 | _(none)_ | Draft |
 | L1-CLI-004 | L2-CLI-008 | _(none)_ | Draft |
-| L1-CLI-005 | _(none)_ | _(none)_ | Draft |
+| L1-CLI-005 | L2-CLI-012, L2-CLI-013 | _(none)_ | Draft |
 | L1-CLI-006 | _(none)_ | _(none)_ | Draft |
 | L1-CLI-007 | L2-CLI-009 | _(none)_ | Draft |
 | L1-CLI-008 | L2-CLI-003, L2-CLI-004 | _(none)_ | Draft |
@@ -301,6 +301,8 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-CLI-009 | L3-CLI-034, L3-CLI-035, L3-CLI-036 | _(TBD)_ | Draft |
 | L2-CLI-010 | L3-CLI-038, L3-CLI-039, L3-CLI-040, L3-CLI-044 | _(TBD)_ | Draft |
 | L2-CLI-011 | L3-CLI-041, L3-CLI-042, L3-CLI-043 | _(TBD)_ | Draft |
+| L2-CLI-012 | L3-CLI-045, L3-CLI-046, L3-CLI-047, L3-CLI-048, L3-CLI-051 | _(TBD)_ | Draft |
+| L2-CLI-013 | L3-CLI-049, L3-CLI-050 | _(TBD)_ | Draft |
 
 ### L1-ROB: Robustness against arbitrary input
 
@@ -378,17 +380,17 @@ This matrix is the single source of truth for live status; the requirement docum
 | WRT | 7 | 4 | 11 | 0 | 0 | 0 | 0 |
 | SUM | 4 | 3 | 10 | 0 | 0 | 0 | 0 |
 | IO | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
-| CLI | 9 | 11 | 44 | 0 | 0 | 0 | 0 |
+| CLI | 9 | 13 | 51 | 0 | 0 | 0 | 0 |
 | ROB | 3 | 5 | 13 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 2 | 8 | 0 | 0 | 0 | 0 |
 | REL | 6 | 3 | 9 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **82** | **271** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **84** | **278** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 37 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 36 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 390 (0.0%).
+**Tested by at least one test marker**: 0 of 398 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 390 (0.5%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 398 (0.5%).
 
 ### Orphan check
 
