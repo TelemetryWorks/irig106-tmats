@@ -60,9 +60,10 @@ authorised/performed by this documentation change.
 The [dated coverage audit](research/2026-11-27-family2-coverage-audit.md)
 separates drafted children, partial contracts, owner-held work and executed
 evidence. Family 2 is not complete merely because parents have children.
-Finish the bounded time-view lookup-state primary derivation next; related
-multiplicity/field-state children under other parents do not supply its direct
-trace. Keep report-format work stopped for the owner and build acceptance
+The bounded time-view lookup-state primary derivation now needs source/
+development review and executable verification; related multiplicity/value
+children do not substitute for those checks. Continue unheld normalization,
+already-decided assembly/resource and show-free integration contracts next. Keep report-format work stopped for the owner and build acceptance
 held on the existing std decision. Resolve partial normalization, flex source,
 assembly/session and resource details without reducing the full 0.1 scope.
 The extract owner decisions of 2026-11-27 remove the three #57 owner holds;

@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through argument-parser contracts drafted (family 2, batches 1-26 and 28-39).**
+> **Status: foundations through bounded lookup states drafted (family 2, batches 1-26 and 28-40).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -3340,3 +3340,63 @@ Use synthetic owned inputs, injected core evidence and isolated destinations;
 no real recording is needed. Failures are observable to a host without fixing
 message layout or numeric exit status. A flag-propagation mock alone cannot
 verify byte preservation, file identity or delivery behavior.
+
+
+## Bounded time-view lookup acceptance (family 2, batch 40)
+
+These derive L2-VIEW-016/017. They compose existing key/candidate/field
+contracts, selecting no new clock proof, general link selector or query
+language. See the [contract note](research/2026-11-27-bounded-lookup-state-requirements.md).
+All tests below remain planned, not executable implementation evidence.
+
+**L3-VIEW-065** · Parent: L2-VIEW-016 · Verification: T
+*Each bounded attribute lookup SHALL bind the supplied document/revision, canonical recorder occurrence, definition path and required entry/index tuple, retaining only exact full-key matches within that scope; it SHALL not substitute channel-ID values, borrow another entry/recorder/document or invent an index for a recorder-level attribute.*
+
+106-24R1 Table 9-4 TK1 p. 9-48 defines the channel-ID value separately from
+entry n; NSB p. 9-33 is recorder-scoped. Existing full-key/source rules apply
+to the remaining reviewed time fields. This adds no semantic selector based
+on TSRC/DSI/CHE, packet proximity or a presumed governing setup.
+
+**L3-VIEW-066** · Parent: L2-VIEW-016 · Verification: T
+*When interpreted scoped lookup is available, its identified exact-candidate collection SHALL yield resolved for one occurrence, unresolved for zero and ambiguous for two or more, retaining each item identity, location and source order even for equal repeated values or canonical-index spelling collisions.*
+
+This is the bounded attribute-lookup state, not proof that a general link
+resolved/unresolved. Source order lists evidence only. Positive identity
+resolution neither calls the field Explicit nor verifies it. Canonical-key
+collisions retain INT-038's spelling/collision information and INT-039's
+scalar duplicate evidence; an invalid value is not filtered to create a winner.
+
+**L3-VIEW-067** · Parent: L2-VIEW-016 · Verification: T
+*Unavailable scope/key/definition or interpreted-lookup gating SHALL remain an explicit prerequisite limitation, never a fabricated usable unresolved answer; zero identified exact candidates with compatible damaged/unterminated evidence SHALL retain that evidence and SHALL not prove physical absence, a false specified predicate or default applicability.*
+
+INT-037 lookup gating, INT-042 physical-presence uncertainty and existing
+raw-candidate contracts remain separate. A zero-exact-match collection can
+coexist with related evidence that makes a presence predicate cannot-evaluate;
+it never manufactures the damaged/suffix text into an exact lookup item.
+This requirement selects no fourth cardinality enum or new absence policy.
+
+**L3-VIEW-068** · Parent: L2-VIEW-017 · Verification: T
+*Lookup cardinality SHALL remain separate from the effective field state: a uniquely identified item with an empty, invalid or unavailable value SHALL not disappear, and an applicable default for an absent attribute SHALL not become an explicit lookup candidate or resolve an otherwise zero-candidate lookup.*
+
+Use already evaluated condition/default evidence where needed: TFMT may be
+Defaulted A under approved INT-041 while its explicit-item lookup identifies
+zero candidates. A single invalid candidate is identity-resolved but its
+field remains Invalid; multiple candidates keep ambiguity even if one is valid.
+No default, type/blank or numeric rule is newly interpreted in this batch.
+
+**L3-VIEW-069** · Parent: L2-VIEW-017 · Verification: T
+*Bounded lookup answers SHALL retain record/source/revision qualifications, cut facets, core evidence and source diagnostics unchanged; they SHALL not upgrade record usability, alter association state, inherit another query's caller choice or erase field evidence through assumption-level suppression.*
+
+General incomplete/ambiguous access remains gated by proposed INT-031. Tests
+can receive permitted diagnostic candidate evidence without granting that
+access. INT-056 governs only bad-data finding emission on an assumption answer;
+original field/source diagnostics remain readable. Lookup success is neither
+association_evidenced nor a positive SHA/packet-integrity/governing verdict.
+
+**L3-VIEW-070** · Parent: L2-VIEW-017 · Verification: T
+*Tests SHALL independently specify full keys, source item identities/locations, availability and expected cardinality/field/qualification results across zero/one/many cases, with source-order changes, duplicates, invalid values, defaulted absence, canonical collisions and document/entry separation; expectations SHALL not be calculated by production lookup or a guessed clock resolver.*
+
+Actual Table 9-4 field fixtures keep their citations and reviewed definitions.
+Synthetic damaged/availability cases assert evidence boundaries, not invented
+conforming codes. Tests use internal states and supplied condition evidence;
+public query syntax, report rendering and stable Rust symbols remain held.

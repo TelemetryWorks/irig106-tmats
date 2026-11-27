@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through argument-parser contracts drafted (family 2, batches 1-26 and 28-39).**
+> **Status: foundations through bounded lookup states drafted (family 2, batches 1-26 and 28-40).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -1428,5 +1428,35 @@ option-default policy or output renderer is selected by this batch.
 **Statement**: Parser acceptance SHALL cover every implemented reviewed command/option/value rule and usage failure with independently specified supplied-token cases, and preserve command/request/usage distinctions through both host-runner and individual-command integration without a second parser, environment-derived defaults or side effects on rejected requests.
 
 **Rationale**: ADR-0013's per-flag tests and W3's shared runner make parsing behavior observable to an orchestrating host. Mechanism tests against a synthetic table do not prove full product grammar coverage; unsupported or held table rules remain explicit readiness gaps. Public argument forms, numeric CLI syntax, record defaults, output/exit policy and rendering still require their own reviewed definitions where pending.
+
+**Verification Method**: Test (T)
+
+
+## Bounded time-view lookup states (family 2, batch 40)
+
+This supplies the missing primary derivation of L1-VIEW-006's owner-directed
+0.1 subset identified by the coverage audit. General link resolution remains
+0.2. Exact-name/multiplicity and effective-field children under other parents
+remain unchanged; these children compose their already reviewed behavior.
+The [contract note](research/2026-11-27-bounded-lookup-state-requirements.md)
+distinguishes lookup identity, field value and clock association.
+
+#### L2-VIEW-016
+
+**Parent**: L1-VIEW-006
+
+**Statement**: For an available definition-bound attribute lookup in a supplied time-view document/revision and exact recorder/entry scope, the library SHALL retain every matching canonical-key occurrence and report resolved for one identified candidate, unresolved for zero, or ambiguous for several, without selecting by value validity, source order or equality; unavailable lookup prerequisites SHALL remain observable rather than becoming fabricated zero-candidate success.
+
+**Rationale**: The 2026-11-21 owner contract brings bounded time-view lookup states forward from L1-VIEW-006; ADR-0026 supplies no arbitrary winner, INT-036/038 key projection/identity and INT-039 preserved duplicates. This is attribute-candidate cardinality, not a general TMATS link resolver or data-to-time-channel evidence. The definition determines actual recorder/entry arity; a TK1 value does not replace the entry index. Empty raw collections alone do not establish unrelated links, physical absence or default applicability.
+
+**Verification Method**: Test (T)
+
+#### L2-VIEW-017
+
+**Parent**: L1-VIEW-006
+
+**Statement**: Bounded lookup answers SHALL keep candidate cardinality separate from Explicit/Defaulted/Missing/Invalid/Ambiguous field interpretation, availability limitations, original source findings and record qualification; successful identity lookup SHALL not validate a value, erase a duplicate, fabricate a default occurrence, establish a clock association or authorize access/governing use.
+
+**Rationale**: RELEASE-0.1 explicitly separates lookup/link states from effective values and association_unestablished/conflicting/evidenced. INT-039/041/048 and the existing time-view/caller-assumption children retain those boundaries. Proposed INT-031 still gates general qualified-record access; ADR-0037's raw extract permission is not typed time-view permission. No new selection, interpretation, public enum spelling or rendered schema is chosen.
 
 **Verification Method**: Test (T)
