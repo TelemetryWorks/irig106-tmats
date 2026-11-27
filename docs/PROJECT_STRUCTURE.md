@@ -97,6 +97,7 @@ irig106-tmats/
 │   │                          2026-11-25-time-view-metadata-requirements.md derives bounded channel/time-field requirements and acceptance scope;
 │   │                          2026-11-25-source-bit-requirements.md derives explicit NSB splitting and records DSI/CHE remaining boundaries;
 │   │                          2026-11-27-argument-contract-and-session-scope.md derives host argument parsing and records pending scope/wording choices with channel-source re-verification;
+│   │                          2026-11-27-extract-owner-policy.md records the extract owner-policy follow-up and planned acceptance under ADR-0037;
 │   │                          2026-11-27-session-evidence-requirements.md derives session-format/F7 uncertainty and carries detector qualification/vocabulary clarifications;
 │   │                          2026-11-27-suspect-terminator-requirements.md derives suspect-colon suggestions and records coordinator flex qualification constraints;
 │   │                          2026-11-27-flex-compatibility-acceptance.md derives pinned-reference compatibility acceptance and separate packet/TMATS checksum evidence;
@@ -159,6 +160,9 @@ irig106-tmats/
 │   └── parse_bench.rs     prototype: criterion parse benchmarks
 └── fuzz/                  prototype: cargo-fuzz targets (parse, round trip, Ch10 decode) and corpus
 ```
+
+ADR-0037 (`docs/adr/0037-extract-destination-and-findings-policy.md`) records
+the owner's verbatim extract overwrite/identity and findings policy.
 
 ## Planned layout
 

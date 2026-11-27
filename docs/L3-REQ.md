@@ -2280,13 +2280,16 @@ Derived from L1-CLI-004/007, ADR-0002/0003/0010/0036 and L2-WRT-003.
 The [batch note](research/2026-11-26-extraction-requirements.md) distinguishes
 mechanical byte extraction from pending record-selection and output policies.
 
-**Implementation BLOCKED on owner decisions**: `-o` overwrite policy;
-fail-closed identity-check policy for pipes/devices/stdout/network shares;
-and extraction eligibility under integrity/encoding findings. These are
-pending choices, not approved defaults; source/development/test gates remain.
+**Owner decisions recorded, 2026-11-27 (ADR-0037):** extract refuses existing
+unrelated files and unproven regular-file identity unless --force; stdout and
+pipes are allowed. Findings do not block byte-exact extraction by default,
+with every finding reported; --strict refuses on findings. These remove the
+three #57 owner holds, not source/development/test or independent review.
+Other argument grammar stays on hold. L3-CLI-052–057 came from merged #72;
+this separate follow-up uses 058–061 without changing its reviewed record.
 
 **L3-CLI-030** · Parent: L2-CLI-008 · Verification: T
-*For one explicitly selected eligible setup record, extraction SHALL deliver its original logical TMATS text in fragment order, excluding each packet's four-byte CSDW and all packet headers, filler and packet checksums; physical DATA-span/block boundaries SHALL NOT insert, remove or duplicate output bytes.*
+*For one explicitly selected setup record/candidate permitted by ADR-0037 extraction policy, extraction SHALL deliver its original logical TMATS text in fragment order, excluding each packet's four-byte CSDW and all packet headers, filler and packet checksums; physical DATA-span/block boundaries SHALL NOT insert, remove or duplicate output bytes.*
 
 Chapter 11 (106-24R1) section 11.2.7.2/Figure 11-34 p. 11-50 supplies
 CSDW-before-text framing. Core supplies DATA extents excluding trailers;
@@ -2296,20 +2299,19 @@ packet boundaries or repeat CSDW removal once per physical span.
 **L3-CLI-031** · Parent: L2-CLI-008 · Verification: T
 *Extraction SHALL preserve the selected record's text bytes exactly, including layout, case, unknown/vendor/extension attributes, duplicates, high/control bytes and preserved suffix/padding where present in that record's original text; read-only interpretation or findings SHALL NOT cause byte filtering, text conversion, normalization, repair or checksum stamping; INT-036/037 projections and INT-055 raw-byte numeric checks SHALL be VIEW-ONLY and SHALL NOT change extracted bytes.*
 
-ADR-0002/0003 and L3-WRT-004–010 govern replay. Raw preservation does not
-make any field or setup usable; test byte preservation separately from
-eligibility. Fixtures with malformed content exercise the mechanical sink
-boundary without asserting that those records are CLI-eligible. Controls
-omitted from interpreted views, numeric Invalid verdicts and a BOM detected
-after fragment assembly never authorize changing the raw extraction bytes.
-Extraction eligibility under those findings awaits the owner decision.
+ADR-0002/0003 and L3-WRT-004–010 govern replay. ADR-0037 permits default
+raw extraction under findings, including cut/ambiguous/marker/Invalid cases;
+this is not semantic or governing usability. Report every finding without
+changing bytes; --strict refuses on findings. Controls omitted from views,
+numeric Invalid verdicts and a detected BOM never authorize source changes.
 
 **L3-CLI-032** · Parent: L2-CLI-008 · Verification: T
 *Extraction SHALL receive and retain the explicit selected record/source identity and its established eligibility basis, without silently substituting the first, latest or governing record, merging distinct records, or treating absent/unresolved selection as a successfully extracted empty record.*
 
 This pins an internal precondition, not the public record-selection rule.
-Ordinal ordering, incomplete/ambiguous access and multi-record destination
-behavior remain for their own reviewed derivations. A failure to establish
+Ordinal ordering and multi-record destination behavior remain separate.
+ADR-0037 authorizes raw extract under incomplete/ambiguous findings; semantic
+access and governing use remain gated by proposed INT-031. A failure to establish
 that precondition cannot be repaired by choosing another record implicitly.
 
 **L3-CLI-033** · Parent: L2-CLI-008 · Verification: T
@@ -2322,27 +2324,30 @@ flush/durability guarantee or error rendering is introduced by this
 requirement.
 
 **L3-CLI-034** · Parent: L2-CLI-009 · Verification: T
-*For a regular-file destination the tool opens itself, CLI filesystem glue SHALL open without truncating, compare the opened handle's file identity with the input-file identities, and only then, if distinct and authorized by the reviewed overwrite policy, truncate through that SAME handle; it SHALL NOT close and reopen by pathname between the identity check and truncation. A known input alias SHALL be refused observably before destructive access, and inability to establish input preservation SHALL NOT authorize truncation.*
+*For a regular-file destination the tool opens itself, CLI filesystem glue SHALL open without truncating, compare the opened handle's file identity with the input-file identities, and only then, when not a known input alias and authorized by the applicable overwrite/identity policy (including extract's explicit --force exception for unproven identity), truncate through that SAME handle; it SHALL NOT close and reopen by pathname between the identity check and truncation. --force NEVER overrides a KNOWN input alias (L1-CLI-007), which SHALL always be refused observably before destructive access. For extract only, unproven regular-file identity SHALL refuse truncation unless --force; stdout/pipes are allowed under ADR-0037. An existing unrelated file SHALL require --force, and no temp-file+rename SHALL replace this in-place sequence.*
 
 L1-CLI-007 applies to same-path, relative/absolute aliases, symbolic links
 and hard links where supported. String inequality is insufficient. The
 implementation must review platform file-identity and acquisition/race
 behavior. A pathname preflight check alone is insufficient; comparison must
 use the non-truncating opened destination handle before truncation/writing.
-Exact platform APIs remain implementation analysis. The owner decisions on
-`-o` overwrite and fail-closed identity checks for pipes/devices/stdout/network
-shares BLOCK implementation; no such destination policy, public error
-spelling or numeric status is selected here.
+Exact platform APIs remain implementation analysis. The owner decision of
+2026-11-27 (ADR-0037) settles extract's
+policy: --force is an explicit exception to proof/default-overwrite refusal,
+not permission to write a known input alias or a claim of proved identity.
+This does not set public error spelling, numeric statuses or device grammar.
 
 **L3-CLI-035** · Parent: L2-CLI-009 · Verification: T
 *For destinations the tool opens itself, successful or failed CLI extraction and other output-producing commands SHALL leave input-file contents unchanged, and SHALL NOT acquire input files for in-place writing, truncation, replacement or implicit repair as part of producing output; shell redirection performed outside the tool SHALL be out of scope for this file-acquisition guarantee.*
 
 ADR-0010 keeps this at the CLI/caller boundary; the TMATS library still
 receives bytes/writers rather than filenames. The prohibition also covers
-alias destinations and writer/acquisition failures for tool-opened outputs.
+known input-alias destinations and writer/acquisition failures for tool-opened outputs.
 The tool cannot undo truncation already performed by a shell before it runs.
 Delivery to supplied writers remains fallible under L3-WRT-007/008; this
-does not settle the pending stdout/other-destination identity policy.
+retains ADR-0037's extract-specific stdout/pipe allowance and --force exception
+for unproven regular identity. It does not claim a shell-opened redirect was
+made safe by the tool or approve all other commands' destination policies.
 It is not an approval of pending general edit commands or a packet-writing
 implementation.
 
@@ -2949,7 +2954,7 @@ This defines neither public record ordinals nor streaming emission timing.
 A revised time-seal outcome supersedes its earlier observed classification
 for this final inventory, retaining its history/findings under INT-045/048.
 Duplicate-field ambiguity cannot be cured by byte identity or digest evidence.
-Access to incomplete/ambiguous records is gated by [proposed INT-031](INTERPRETATIONS.md#int-031); retained raw evidence and enumeration do not approve that access or command eligibility.
+General incomplete/ambiguous access is gated by [proposed INT-031](INTERPRETATIONS.md#int-031); ADR-0037 separately allows raw extract under findings, never semantic/governing use. Enumeration alone approves neither.
 No severity suppression or rendering rule is selected here.
 
 **L3-CLI-042** · Parent: L2-CLI-011 · Verification: T
@@ -3032,7 +3037,8 @@ is authorized by this command wrapper.
 
 Delivery is separate: a valid result in memory does not prove a destination
 write succeeded. Existing input-identity and delivery/failure contracts apply;
-held output policy/eligibility choices remain held. This requirement approves
+ADR-0037's extract-only output/eligibility policy does not settle stamp's
+remaining choices. This requirement approves
 neither early file truncation nor a numeric process-status mapping.
 
 **L3-CLI-051** · Parent: L2-CLI-012 · Verification: T
@@ -3293,3 +3299,41 @@ Use bounded in-memory token lists, not shell subprocess expansion as oracle.
 Assertions target request/usage states and execution boundaries, not public
 rendering. No parser dependency, fixture dev dependency or unbounded campaign
 is authorized. Existing finite input/resource rules still apply.
+
+## Extract owner-policy acceptance (ADR-0037, 2026-11-27)
+
+These refine L2-CLI-008/009 under the verbatim owner direction, with no
+new interpretation of TMATS or packet trust. #72's parser IDs are unchanged.
+Flags are the owner's exact spellings; the rest of argument grammar is held.
+
+**L3-CLI-058** · Parent: L2-CLI-009 · Verification: T
+*Extract SHALL refuse an existing unrelated -o regular file by default, allowing overwrite only with --force; an authorized overwrite SHALL open without truncation, compare identities and truncate/write through that same handle, without pathname reopen or temp-file+rename.*
+
+Known input aliases still refuse, including with --force. Source/content
+validation, identity checks and policy refusals must precede destructive
+access; output failures retain their existing partial-delivery contract.
+
+**L3-CLI-059** · Parent: L2-CLI-009 · Verification: T
+*Extract SHALL allow stdout and pipes without a provable file identity, and SHALL refuse a regular-file destination whose identity cannot be proven unless --force is explicit; acceptance with that exception SHALL retain the unproven identity as such, never represent it as a successful identity check or override a known input alias.*
+
+The owner authorizes the regular-file proof exception, not a new temporary
+replacement protocol, implicit force default or invented destination grammar.
+Shell redirection remains outside the tool-opened acquisition guarantee.
+
+**L3-CLI-060** · Parent: L2-CLI-008 · Verification: T
+*Extract SHALL deliver the selected supplied original bytes despite findings by default, reporting every finding; --strict SHALL refuse when findings are present. There SHALL be no always-refuse finding class, including data-checksum mismatch, secondary-header failure, INT-045 cut, INT-048 ambiguity, INT-037 marker and INT-055 invalidity.*
+
+The findings/qualifications and core integrity states remain unchanged.
+This is extraction-only raw delivery, not a positive checksum, semantic
+access or governing verdict. No second reader, guessed byte extent, data
+repair, UTF conversion or source-byte fabrication is authorized. Absent selection or an unavailable raw extent (not a retained cut prefix)
+and sink/limit failures remain operational failures rather
+than findings-based always-refuse exceptions. No report format is selected.
+
+**L3-CLI-061** · Parent: L2-CLI-008 · Verification: T
+*Extract policy tests SHALL cover every listed finding kind and their combination under default/--strict, preserving exact bytes and all findings or observing strict refusal; they SHALL also cover existing unrelated files, known aliases, stdout/pipes and unproven regular identity with/without --force, asserting same-handle write order and absence of rename replacement.*
+
+Use synthetic owned inputs, injected core evidence and isolated destinations;
+no real recording is needed. Failures are observable to a host without fixing
+message layout or numeric exit status. A flag-propagation mock alone cannot
+verify byte preservation, file identity or delivery behavior.

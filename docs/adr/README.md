@@ -50,6 +50,7 @@ status line points to the later record.
 | [0034](0034-coordinator-release-foundation-decisions.md) | W1-W3 and F1/F7 release-foundation decisions | coordinator-decided (2026-11-21); W1 superseded by owner decision 0035; others unchanged |
 | [0035](0035-virtual-workspace-with-library-crate-and-cli-app.md) | Virtual root, library under crates/, CLI under apps/, exact shared dependency | accepted (owner, 2026-11-21); supersedes 0034 W1 only |
 | [0036](0036-core-reader-and-borrowed-data-spans.md) | One core reader; unchanged core evidence; borrowed non-contiguous DATA input with zero extra payload copy | accepted owner architecture (2026-11-22); coordinator-decided integration (2026-11-26) |
+| [0037](0037-extract-destination-and-findings-policy.md) | Extract overwrite/identity policy and byte-exact extraction under findings; --force/--strict | accepted (owner, 2026-11-27) |
 
 New records take the next number and use the same front matter
 (`status`, `date`, `decision-makers`).

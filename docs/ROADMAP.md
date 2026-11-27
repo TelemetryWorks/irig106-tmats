@@ -175,15 +175,20 @@ complete V/X grouping/linkage derivations before their implementation.
 
 ### Remaining output derivations
 
-BLOCK implementation pending owner decisions on `-o` overwrite policy,
-fail-closed identity checking for pipes/devices/stdout/network shares, and
-extraction eligibility under integrity/encoding findings. These remain
-unapproved; raw-byte preservation tests do not decide eligibility.
+ADR-0037 records the owner's 2026-11-27 extract policy, removing the three
+#57 owner holds: existing unrelated regular output refuses unless --force;
+write through the non-truncating identity-checked same handle, never
+temp-file+rename. Stdout/pipes are allowed without identity proof; a regular
+file with unproven identity refuses unless --force. Known input aliases
+still refuse. Extract despite findings by default, byte-exact with every
+finding reported; --strict refuses on findings, with no always-refuse class.
 
-Review selected-record extraction and input-preserving destination acquisition
-before CLI output implementation, including platform file identity and races.
-Keep byte replay separate from record eligibility/selection and from a general
-existing-destination overwrite or atomicity policy.
+Review executable byte, qualification, identity/race and destination tests
+before implementation; owner policy is not completed evidence. --force and
+--strict spellings are decided; the rest of argument grammar and report
+format remain held. Raw extraction is not semantic or governing use and does
+not settle proposed INT-031. Other commands' destination policy is not
+silently approved. No new atomic replacement/durability promise is made.
 
 Review the lossless-replay/caller-supplied-output and explicit-normalization
 boundary before writer implementation. Derive transformation-specific
@@ -235,7 +240,8 @@ value-verdict distinctions, every refusal/finding and final-byte verified
 stamp results. Flex remains explicitly requested, non-standard and never a
 G\SHA replacement; finish its exact compatibility derivation before use.
 Proposed INT-031 gates incomplete/ambiguous access. Public selection defaults,
-rendered formats and output destination/eligibility policy remain held.
+rendered formats and stamp's remaining destination/eligibility policy stay
+separate; ADR-0037 settles extract only.
 
 ### Remaining complete-record enumeration acceptance
 

@@ -1309,16 +1309,16 @@ formats and numeric exit mappings need their own owner-reviewed derivations.
 ## Planned extraction and safe-output batch 25
 
 These are planned acceptance cases for L2-CLI-008/009, not executable tests.
-Mechanical extraction receives one explicitly selected record and an already
-established eligibility basis; malformed-byte cases test replay only, not
-permission to select an incomplete, ambiguous or unsupported record. Core
-supplies DATA; existing adapter/assembly contracts supply fragment text.
-
-**Implementation BLOCKED**: owner decisions on `-o` overwrite, fail-closed
-identity checking for pipes/devices/stdout/network shares, and extraction
-eligibility under integrity/encoding findings are pending. The following
-raw-byte fixtures do not decide those policies. File-acquisition guarantees
-cover destinations the tool opens itself, not shell redirection.
+Extraction receives one explicitly selected record/candidate and available
+raw text extent. ADR-0037 records the owner's 2026-11-27 policy, removing
+#57's three owner holds: raw extract under findings by default, every finding
+reported; --strict refuses on findings. Known cut prefixes are valid raw
+extraction inputs, not missing whole-document failures. Stdout/pipes are
+allowed; unproven regular identity and existing unrelated -o files require
+--force; same-handle writes, no temp-file+rename. Known input aliases refuse.
+These are policy decisions, not passing implementation evidence. Other
+argument grammar/report format remains held; file-acquisition guarantees
+cover tool-opened destinations, not shell redirection.
 
 | Planned test | Independent input and expected boundary result | Requirements |
 |---|---|---|
@@ -1327,11 +1327,11 @@ cover destinations the tool opens itself, not shell redirection.
 | `extract_csdw_split_is_removed_once` | Synthetic arbitrary-span partition: four logical CSDW bytes straddle spans; expected text excludes four bytes total, not four per span. With core 0.2 default 512 KiB blocks the CSDW is always in the first block; this is not a production-layout claim | L3-CLI-030, L3-CLI-037 |
 | `extract_text_split_does_not_change_bytes` | A text fragment crosses several span boundaries including inside a name/value; compare to the same independent literal | L3-CLI-030, L3-CLI-037 |
 | `extract_layout_and_case_survive` | Mixed case, leading/inter-item layout and CR/LF are replayed exactly; no canonical case, order or newline conversion | L3-CLI-031 |
-| `extract_comment_control_is_view_only` | Mechanical source `COMMENT:a\tb;` with a real TAB: INT-036 interpreted value is `ab` but extraction keeps `a\tb` byte-for-byte; the same applies to an omitted CR/LF/control; eligibility remains owner-pending | L3-CLI-031 |
-| `extract_numeric_control_invalid_keeps_raw` | Mechanical source `R-1\NSB:0\r\n4;` with real CR/LF: INT-055 raw-byte numeric check returns Invalid, never repaired to 4; extraction keeps every control/raw byte; eligibility remains owner-pending | L3-CLI-031 |
-| `extract_assembled_leading_bom_is_not_stripped` | Same-channel +1 fragments with matching FRMT/RCCVER: first text starts EF, following text starts BB BF then `COMMENT:a;` (after each packet CSDW); leading assembled EF BB BF is detected under INT-037 at text offset zero, never stripped from extraction; eligibility remains owner-pending | L3-CLI-030, L3-CLI-031 |
+| `extract_comment_control_is_view_only` | Mechanical source `COMMENT:a\tb;` with a real TAB: INT-036 interpreted value is `ab` but extraction keeps `a\tb` byte-for-byte; the same applies to an omitted CR/LF/control; default extract allowed with all findings, --strict refuses when findings exist | L3-CLI-031 |
+| `extract_numeric_control_invalid_keeps_raw` | Mechanical source `R-1\NSB:0\r\n4;` with real CR/LF: INT-055 raw-byte numeric check returns Invalid, never repaired to 4; extraction keeps every control/raw byte; default extract allowed with all findings, --strict refuses when findings exist | L3-CLI-031 |
+| `extract_assembled_leading_bom_is_not_stripped` | Same-channel +1 fragments with matching FRMT/RCCVER: first text starts EF, following text starts BB BF then `COMMENT:a;` (after each packet CSDW); leading assembled EF BB BF is detected under INT-037 at text offset zero, never stripped from extraction; default extract allowed with all findings, --strict refuses when findings exist | L3-CLI-030, L3-CLI-031 |
 | `extract_raw_unknown_vendor_extension_survive` | Supplied raw text contains unknown, V and X items; none is dropped or rendered from a typed model | L3-CLI-031 |
-| `extract_raw_damage_is_not_repaired` | Mechanical sink input contains duplicate/malformed items, high bytes and an unterminated suffix; exact replay is asserted without asserting CLI eligibility | L3-CLI-031 |
+| `extract_raw_damage_is_not_repaired` | Mechanical sink input contains duplicate/malformed items, high bytes and an unterminated suffix; default exact replay with all findings, strict refusal under ADR-0037 | L3-CLI-031 |
 | `extract_raw_padding_is_not_packet_fill` | Record text contains trailing preserved NUL/space bytes; replay them, while packet filler remains excluded by core DATA extents | L3-CLI-030, L3-CLI-031 |
 | `extract_read_only_views_do_not_stamp` | Read-only views/findings/checksum verification precede extraction; original text, including original checksum spelling/value, stays unchanged | L3-CLI-031 |
 | `extract_selected_identity_never_substituted` | Two distinct supplied records have different literal texts; the explicit eligible selection alone supplies output and provenance | L3-CLI-032 |
@@ -1343,9 +1343,9 @@ cover destinations the tool opens itself, not shell redirection.
 | `output_relative_absolute_input_alias_is_refused` | Distinct relative/absolute spellings name the input; no destructive open, input unchanged | L3-CLI-034, L3-CLI-035 |
 | `output_symbolic_link_input_alias_is_refused` | Supported platform symlink destination identifies input; refuse before modifying either input contents or replacing its file | L3-CLI-034, L3-CLI-035 |
 | `output_hard_link_input_alias_is_refused` | Supported platform hard-link destination identifies input despite path inequality; refuse before destructive open | L3-CLI-034, L3-CLI-035 |
-| `output_unestablished_input_safety_never_opens_destructively` | Inject inability to establish input preservation; no destructive acquisition proceeds and no output success is claimed | L3-CLI-034, L3-CLI-036 |
+| `output_unestablished_input_safety_never_opens_destructively` | Unproven regular identity without --force: no destructive acquisition or successful output; the explicit-force case is covered by owner-policy fixtures | L3-CLI-034, L3-CLI-036 |
 | `output_acquisition_failure_never_redirects` | Destination acquisition fails; observable failure returns, no automatic stdout/alternate-file output or input repair | L3-CLI-035, L3-CLI-036 |
-| `output_distinct_sink_success_keeps_input` | Isolated distinct regular-file output, conditional on approved overwrite policy: non-truncating open, compare input identities, truncate/write through the SAME handle (no pathname reopen); input snapshot remains identical | L3-CLI-035, L3-CLI-037 |
+| `output_distinct_sink_success_keeps_input` | Isolated distinct regular-file output, with ADR-0037 authorization (--force when existing): non-truncating open, compare input identities, truncate/write through the SAME handle (no pathname reopen); input snapshot remains identical | L3-CLI-035, L3-CLI-037 |
 | `output_failure_returns_to_mounting_host` | Host calls shared command with failing sink/acquisition; failure is observable and host executes subsequent sentinel | L3-CLI-033, L3-CLI-036 |
 | `extract_oracle_is_independent` | Expected text comes from literal source/fragment descriptors; fixture never invokes production extraction/writer to calculate expected bytes | L3-CLI-037 |
 
@@ -1353,10 +1353,11 @@ Filesystem cases need isolated temporary fixtures and platform-identity/
 acquisition analysis, including race behavior; instrument open/check/truncate
 ordering and assert no pathname reopen before truncation. String checks alone cannot
 verify the obligation. Unsupported link creation is recorded as unavailable
-coverage, not a safety pass. No existing unrelated-file overwrite policy,
-cleanup/atomicity/durability promise or report/rendered format is selected.
-Actual record eligibility, selection and XML behavior require their own
-reviewed fixtures before end-to-end extraction implementation is accepted.
+coverage, not a safety pass. ADR-0037 now selects extract's overwrite and
+finding policy; other grammar, cleanup/durability and report layout remain
+separate. Preserve source/format observations without inventing core byte
+extents or parsing unsupported bodies; end-to-end implementation still needs
+meaningful tests, including the owner-policy cases below.
 
 ## Planned raw pattern lookup batch 26
 
@@ -1902,6 +1903,40 @@ Authority: accepted ADR-0013 and ADR-0034 W3, L1-CLI-009.
 Held grammar rules need their own review before activation. No report-format,
 numeric CLI syntax, separator/abbreviation, non-Unicode policy or new default
 is selected; no dependency or executable parser is added by these cases.
+
+## Planned extract owner-policy cases (ADR-0037, 2026-11-27)
+
+Extract row spellings --force and --strict are owner-approved (2026-11-27);
+the rest of argument grammar remains on hold.
+
+No finding is an always-refuse extraction class. For EACH of data-checksum
+mismatch, secondary-header failure, INT-045 cut, INT-048 ambiguity, INT-037
+marker and INT-055 invalidity, and for ALL SIX combined, instantiate both
+default and --strict fixtures below: default exact bytes plus every finding;
+strict refusal without successful extraction. Use synthetic retained extents
+and unchanged core/record evidence; no repaired/guessed byte ranges.
+
+| Planned test | Independent input and expected result | Requirements |
+|---|---|---|
+| `extract_findings_default_each_kind` | Six individually named variants as above: extraction proceeds with exact original bytes and every finding, no semantic/governing upgrade | L3-CLI-031, L3-CLI-060, L3-CLI-061 |
+| `extract_findings_strict_each_kind` | Same six variants with --strict: observable refusal, all findings retained, no successful byte-delivery claim | L3-CLI-060, L3-CLI-061 |
+| `extract_all_findings_default_and_strict` | All six kinds combined: default extracts exact bytes and reports all; strict refuses, no always-refuse kind fabricated | L3-CLI-060, L3-CLI-061 |
+| `extract_cut_prefix_is_available_raw_data` | Supplied original cut prefix under Incomplete or Ambiguous-with-cut: default extracts the retained prefix, never demands an invented complete suffix; strict refuses on its findings | L3-CLI-030, L3-CLI-060 |
+| `extract_strict_without_findings_is_allowed` | Explicit selected synthetic input has no findings: --strict does not itself refuse; exact bytes, normal destination policy | L3-CLI-060 |
+| `extract_findings_never_enter_raw_stream` | Default emits exact bytes on selected sink and retains every diagnostic separately; no labels/diagnostic text inserted into extracted bytes, no layout/stream mapping pinned | L3-CLI-031, L3-CLI-060 |
+| `extract_existing_unrelated_refuses_without_force` | Existing unrelated regular destination: observable default refusal without truncation/write/rename | L3-CLI-034, L3-CLI-058 |
+| `extract_existing_unrelated_force_same_handle` | Same destination with --force: non-truncating open, identity check, truncate/write via SAME handle; no reopen or temp-file+rename | L3-CLI-034, L3-CLI-058 |
+| `extract_known_input_alias_force_still_refuses` | Same-path/symlink/hard-link known input alias plus --force: refusal before destructive access, input unchanged | L3-CLI-034, L3-CLI-058, L3-CLI-059 |
+| `extract_stdout_and_pipe_identity_not_required` | Synthetic stdout and pipe sinks have no regular-file identity: allowed, exact bytes, ordinary fallible delivery; no proof-failure refusal | L3-CLI-059 |
+| `extract_unproven_regular_refuses_without_force` | Inject regular-file identity unavailable (network-share analogue): refusal before truncate/write, no fabricated proof | L3-CLI-059 |
+| `extract_unproven_regular_force_allows_without_proof_claim` | Same facts plus --force: owner-authorized write through same non-truncating opened handle, identity remains unproven and is never relabelled checked | L3-CLI-034, L3-CLI-059 |
+| `extract_force_does_not_override_strict` | --force plus --strict with findings: strict refusal, unrelated destination not truncated/written; flags govern separate decisions | L3-CLI-058, L3-CLI-060 |
+| `extract_force_write_failure_keeps_failure_visible` | Authorized in-place unrelated-file write fails after prefix: observable partial delivery/failure, no rename fallback or success claim | L3-CLI-033, L3-CLI-058 |
+| `extract_no_extent_is_not_a_findings_refusal_class` | No selected raw extent available at all: observable operational unavailability, never guessed core boundaries or fabricated bytes; distinct from available cut prefix | L3-CLI-032, L3-CLI-060 |
+
+These are planned checks, not current CLI behavior. Source/development,
+independent review and executable testing remain; the three #57 owner holds
+are removed. General semantic/governing access is not raw extract permission.
 
 ## Real Chapter 10 recordings (local use only)
 

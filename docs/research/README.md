@@ -15,6 +15,7 @@ dated record.
 | Record | Contents |
 |--------|----------|
 | [2026-11-27-argument-contract-and-session-scope.md](2026-11-27-argument-contract-and-session-scope.md) | Batch 39 host argument-parser mechanism, pending mixture/L1 choices and re-verified seven-edition channel sources |
+| [2026-11-27-extract-owner-policy.md](2026-11-27-extract-owner-policy.md) | Owner extract decisions in ADR-0037, removal of #57 holds and byte/destination acceptance cases |
 | [2026-11-27-session-evidence-requirements.md](2026-11-27-session-evidence-requirements.md) | Batch 38 session-format/F7 uncertainty, core channel-source gap and detector suffix/cut/vocabulary clarifications |
 | [2026-11-27-suspect-terminator-requirements.md](2026-11-27-suspect-terminator-requirements.md) | Batch 37 suspect-colon suggestions, immutable framing/raw spans and coordinator flex-reference qualification gate |
 | [2026-11-27-flex-compatibility-acceptance.md](2026-11-27-flex-compatibility-acceptance.md) | Batch 36 flex reference-source/oracle acceptance and core data-checksum versus G\SHA independence |

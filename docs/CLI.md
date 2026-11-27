@@ -36,7 +36,8 @@ for a supplied eligible document/revision. They preserve library verdicts,
 findings and transaction failures; they do not define rendered output or
 selection defaults. Proposed INT-031 gates incomplete/ambiguous access.
 A successful stamp result still needs successful delivery under the separate
-input-preserving output contract; held destination policies remain held.
+input-preserving output contract. ADR-0037 settles extract's destination and
+findings policies; that approval is not extended to stamp's remaining policy.
 Core PacketInfo data-checksum state passes through unchanged: a G\SHA result
 neither upgrades nor is upgraded by core Mismatch/NotChecked. Their separate
 results do not bypass packet admission or record-access gates.
@@ -48,7 +49,7 @@ results do not bypass packet admission or record-access gates.
 | `tmats show FILE` | Channel summary (default): channel ID, data type, enabled, data source — `idmptmat -c` | 0.1 (R-group items); 0.2 (resolved links) |
 | `tmats show --tree FILE` | Hierarchy: data sources → recorders → channels, then every group by occurrence and code path — `idmptmat -t` | 0.1 |
 | `tmats show --raw FILE` | The TMATS exactly as stored — `idmptmat -r` | 0.1 |
-| `tmats extract FILE.ch10 -o OUT` | Write the setup-record TMATS bytes to a file | 0.1 |
+| `tmats extract FILE.ch10 -o OUT` | Byte-exact extraction; --force and --strict are owner-approved spellings (2026-11-27, ADR-0037); remaining grammar held | 0.1 |
 | `tmats checksum FILE` | Print the `G\SHA` value (`2-` + 64 lower-case hex) | 0.1 |
 | `tmats checksum --flex [--include ...] FILE` | irig106.org flex signature (non-standard; UC-16) | 0.1 |
 | `tmats verify FILE` | Compare the embedded `G\SHA` with the computed value | 0.1 |
@@ -87,15 +88,23 @@ existing content-based recording/text input route. The 0.1 scope is unchanged.
   JSON schema so scripts and `irig106-cli` can rely on it.
 - **Labels are the code names actually read.** A value is never shown under
   another code name (defect D4).
-- **Extraction preserves bytes.** L2-CLI-008 derives exact extraction of one
-  explicitly selected eligible record; record eligibility/selection stays
-  separate. L2-CLI-009 requires preserving input files, including aliases,
-  before destructive destination access for tool-opened outputs; shell
-  redirection is outside that acquisition guarantee. Implementation is BLOCKED
-  on owner decisions for `-o` overwrite, fail-closed identity checks for
-  pipes/devices/stdout/network shares, and extraction eligibility under
-  integrity/encoding findings. No pending policy is selected.
-- **Nothing is changed in place.** Commands that produce modified TMATS
+- **Extraction preserves bytes.** ADR-0037 records the owner policy of
+  2026-11-27: extract the explicitly selected original bytes despite findings,
+  reporting every finding; --strict refuses on findings. There is no
+  always-refuse finding class. Cut/ambiguous/invalid/marker qualifications
+  and core integrity evidence stay unchanged; raw extraction does not make
+  them semantically usable or governing.
+- **Extract destination policy.** An existing unrelated -o file refuses
+  unless --force. Open without truncation, compare identities and truncate/
+  write through the same handle, with no temp-file+rename. Known input aliases
+  refuse even with --force. Stdout/pipes are allowed without identity proof;
+  a regular file with unproven identity refuses unless --force. The exception
+  never claims identity was proved. Tool-opened output and external shell
+  redirection remain distinct. These three #57 holds are removed; source,
+  development and executable verification remain. The rest of argument
+  grammar and report formats remain held; only these flag spellings and
+  owner policies are decided.
+- **Inputs are not edited in place.** Commands that produce modified TMATS
   (`stamp`, and later fix application) write to a new output file.
 - **`stamp` is a verified transaction.** It hashes the final output bytes
   outside the `G\SHA` item (a line break it inserts is included), writes
