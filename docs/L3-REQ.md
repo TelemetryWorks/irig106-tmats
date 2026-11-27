@@ -2324,14 +2324,15 @@ flush/durability guarantee or error rendering is introduced by this
 requirement.
 
 **L3-CLI-034** · Parent: L2-CLI-009 · Verification: T
-*For a regular-file destination the tool opens itself, CLI filesystem glue SHALL open without truncating, compare the opened handle's file identity with the input-file identities, and only then, if distinct and authorized by the reviewed overwrite policy, truncate through that SAME handle; it SHALL NOT close and reopen by pathname between the identity check and truncation. A known input alias SHALL be refused observably before destructive access, even with --force. For extract only, unproven regular-file identity SHALL refuse truncation unless --force; stdout/pipes are allowed under ADR-0037. An existing unrelated file SHALL require --force, and no temp-file+rename SHALL replace this in-place sequence.*
+*For a regular-file destination the tool opens itself, CLI filesystem glue SHALL open without truncating, compare the opened handle's file identity with the input-file identities, and only then, when not a known input alias and authorized by the applicable overwrite/identity policy (including extract's explicit --force exception for unproven identity), truncate through that SAME handle; it SHALL NOT close and reopen by pathname between the identity check and truncation. --force NEVER overrides a KNOWN input alias (L1-CLI-007), which SHALL always be refused observably before destructive access. For extract only, unproven regular-file identity SHALL refuse truncation unless --force; stdout/pipes are allowed under ADR-0037. An existing unrelated file SHALL require --force, and no temp-file+rename SHALL replace this in-place sequence.*
 
 L1-CLI-007 applies to same-path, relative/absolute aliases, symbolic links
 and hard links where supported. String inequality is insufficient. The
 implementation must review platform file-identity and acquisition/race
 behavior. A pathname preflight check alone is insufficient; comparison must
 use the non-truncating opened destination handle before truncation/writing.
-Exact platform APIs remain implementation analysis. ADR-0037 settles extract's
+Exact platform APIs remain implementation analysis. The owner decision of
+2026-11-27 (ADR-0037) settles extract's
 policy: --force is an explicit exception to proof/default-overwrite refusal,
 not permission to write a known input alias or a claim of proved identity.
 This does not set public error spelling, numeric statuses or device grammar.

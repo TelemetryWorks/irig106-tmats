@@ -49,7 +49,7 @@ results do not bypass packet admission or record-access gates.
 | `tmats show FILE` | Channel summary (default): channel ID, data type, enabled, data source — `idmptmat -c` | 0.1 (R-group items); 0.2 (resolved links) |
 | `tmats show --tree FILE` | Hierarchy: data sources → recorders → channels, then every group by occurrence and code path — `idmptmat -t` | 0.1 |
 | `tmats show --raw FILE` | The TMATS exactly as stored — `idmptmat -r` | 0.1 |
-| `tmats extract FILE.ch10 -o OUT` | Write the setup-record TMATS bytes to a file | 0.1 |
+| `tmats extract FILE.ch10 -o OUT` | Byte-exact extraction; --force and --strict are owner-approved spellings (2026-11-27, ADR-0037); remaining grammar held | 0.1 |
 | `tmats checksum FILE` | Print the `G\SHA` value (`2-` + 64 lower-case hex) | 0.1 |
 | `tmats checksum --flex [--include ...] FILE` | irig106.org flex signature (non-standard; UC-16) | 0.1 |
 | `tmats verify FILE` | Compare the embedded `G\SHA` with the computed value | 0.1 |

@@ -1906,6 +1906,9 @@ is selected; no dependency or executable parser is added by these cases.
 
 ## Planned extract owner-policy cases (ADR-0037, 2026-11-27)
 
+Extract row spellings --force and --strict are owner-approved (2026-11-27);
+the rest of argument grammar remains on hold.
+
 No finding is an always-refuse extraction class. For EACH of data-checksum
 mismatch, secondary-header failure, INT-045 cut, INT-048 ambiguity, INT-037
 marker and INT-055 invalidity, and for ALL SIX combined, instantiate both
