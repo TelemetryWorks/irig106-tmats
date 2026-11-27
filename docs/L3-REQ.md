@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through flex compatibility acceptance drafted (family 2, batches 1-26 and 28-36).**
+> **Status: foundations through suspect-terminator suggestions drafted (family 2, batches 1-26 and 28-37).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -3106,3 +3106,62 @@ selected here. Proposed INT-031 still gates incomplete/ambiguous access.
 Core data-checksum Mismatch/NotChecked passes through unchanged; neither
 flex nor G\SHA upgrades it, and it does not upgrade either result.
 Command-computation wrappers remain L3-CLI-048/051, not a flex oracle.
+
+
+## Suspect-terminator diagnostic acceptance (family 2, batch 37)
+
+These derive L2-READ-014/015 without changing INT-035 framing. Detection
+uses the reviewed whole-name recognizer and retains raw source mapping;
+unavailable private/extension grammar is not guessed. All checks are planned,
+not executed scanner or real-data evidence. See the [source note](research/2026-11-27-suspect-terminator-requirements.md).
+
+**L3-READ-034** · Parent: L2-READ-014 · Verification: T
+*For each colon inside an established value, the detector SHALL test the L1-READ-007 optional-blank/complete-code-name/own-colon predicate within that value's bounds, requiring positive whole-name recognition under available reviewed grammar; a mere group-looking prefix, partial name or ordinary value colon SHALL not be sufficient.*
+
+The item's actual name/value delimiter is not inside the value. Do not cross
+its terminating semicolon, read past EOF or borrow a name from another item.
+Existing surrounding-name blank, ASCII-case, character-projection and index
+rules apply to recognition, never source rewriting. Missing grammar coverage
+stays explicit rather than being filled with speculative V/X path splitting.
+
+**L3-READ-035** · Parent: L2-READ-014 · Verification: T
+*Each positive predicate occurrence SHALL retain a located suspect warning and a suggested edit replacing exactly the triggering raw colon byte with semicolon; the suggestion SHALL identify its source/document revision and retain the evidence for the recognized following name without converting that lookahead into a lookup item.*
+
+Use checked source correspondence: a projected-name position is not a raw
+byte offset. The original item/value and the original source remain unchanged.
+No public result type, renderer text/layout or JSON encoding is fixed; L1's
+existing warning meaning and severity are not a new presentation choice.
+
+**L3-READ-036** · Parent: L2-READ-014 · Verification: T
+*Detection SHALL leave raw/default output, item count/order, original spans, explicit-value lookup and checksum byte domains unchanged; it SHALL neither apply its suggestion nor synthesize a semicolon, split the value, insert a field or replace an independently retained finding.*
+
+INT-035/018 and ADR-0002/0007 remain authoritative. Any explicitly chosen
+future edit goes through its own reviewed revision-bound transaction and
+subsequent checksum handling. A warning is not an implicit repair request;
+this slice does not implement the later general edit/apply-all interface.
+
+**L3-READ-037** · Parent: L2-READ-015 · Verification: T
+*Tests SHALL independently fix positive and negative predicate cases, raw spans and expected one-byte proposals, including repeated candidates in one value, mixed case, source-mapped controls and item/EOF boundaries; the production detector SHALL not calculate its own expected candidate set or edit locations.*
+
+Synthetic fixtures can intentionally put a code-looking string in COMMENT;
+they are not declared malformed solely because the heuristic triggers.
+The Appendix 9-C fixture measures its targeted warning locations separately
+from other findings caused by literal example/prose text. Broad parser tests
+and independent byte oracles remain required beyond these focused cases.
+
+**L3-READ-038** · Parent: L2-READ-015 · Verification: T
+*Diagnostic readiness SHALL retain the S1 suspect status and distinguish synthetic/source-excerpt regression results from real-recording confirmation; no passing fixture, warning count or reference-tool agreement SHALL remove that mark or assert the writer intended a semicolon.*
+
+The existing owner-required real-data review must record observed candidates,
+legitimate lookalikes/false positives and severity assessment before S1 is
+closed. This authorizes no sample access or local heavy/reference workload.
+The colon detector does not enable the separately planned suggestion for a
+line break followed by a complete code name; that remains its own future item.
+
+**L3-READ-039** · Parent: L2-READ-015 · Verification: T
+*The detector SHALL respect checked source bounds and the existing finite resource contract for input, recognition work and findings/suggestions; resource exhaustion SHALL remain observable under that contract, never silently drop candidates, claim complete detection coverage or repair text to make progress.*
+
+No new numeric budget, truncation/recovery policy or complexity claim is made
+without analysis of the actual recognizer. Repeated colon-rich values require
+bounded workload tests, not an unbounded local scan or arbitrary cap. Resource
+failure remains distinct from no candidate or unavailable grammar coverage.

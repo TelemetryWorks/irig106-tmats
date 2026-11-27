@@ -1749,9 +1749,12 @@ remove their owner gates; new tests are planned, not executed coverage.
 ## Planned flex compatibility acceptance batch 36
 
 These are source-qualification/acceptance obligations, not executed vectors.
-All flex expected numeric values are **BLOCKED on pinned-reference analysis**
-and independent oracle qualification, not a newly pending owner algorithm
-choice. ADR-0014 already chose bit-for-bit compatibility including D7.
+All flex expected numeric values are **BLOCKED on the owner's reference/revision
+choice**, then pinned-reference analysis and independent oracle qualification.
+ADR-0014 already chose bit-for-bit compatibility including D7; it does not
+choose bbaggerman/irig106lib versus the atac fork or a revision. Reference runs
+are bounded, GitHub CI only, synthetic inputs only, no new project dependency.
+Record outputs/revision/hashes, never paste reference source into this repo.
 References: L1-SUM-003, ADR-0014/0018 and the 2026-09-25 tool investigation.
 Synthetic filter tokens below are not assertions of Chapter 9 field meaning.
 
@@ -1785,6 +1788,37 @@ not read a rejected packet just to manufacture a G\SHA result.
 | `checksum_core_data_mismatch_and_gsha_match_stay_separate` | Given core PacketInfo data-checksum Mismatch and independently evaluated G\SHA match: both retained unchanged, no packet-integrity upgrade or forced G\SHA mismatch | L3-CLI-010, L3-CLI-047 |
 | `checksum_core_data_notchecked_and_gsha_match_stay_separate` | Given NotChecked and independently evaluated G\SHA match: NotChecked never becomes checked/match, G\SHA result unchanged | L3-CLI-010, L3-CLI-047 |
 | `checksum_core_evidence_never_repairs_gsha_failure` | Supplied core Mismatch/NotChecked paired with G\SHA mismatch/indeterminate: preserve each state/findings, no promotion of either or access authority | L3-CLI-010, L3-CLI-047 |
+
+## Planned suspect-terminator batch 37
+
+Planned internal warning/suggestion checks for L1-READ-007, still suspect
+under ROADMAP S1. Sources: 106-24R1 Ch9 section 9.4.2 p. 9-2, Appendix
+9-C p. C-8, and ADR-0007/0026. G\PN's reviewed name is Table 9-2 PROGRAM
+NAME p. 9-10; synthetic COMMENT values below are intentional byte fixtures,
+not an assertion that all such values are errors. Use independently supplied
+recognizer coverage where private-name grammar is pending.
+
+| Planned test | Independent input and expected result | Requirements |
+|---|---|---|
+| `suspect_colon_keeps_one_original_item` | `COMMENT:before: G\PN:x;`: one original item [0,23), value [8,22), warning at [14,15), proposal replaces only that byte; no G\PN lookup item | L3-READ-034, L3-READ-035, L3-READ-036 |
+| `suspect_colon_no_blank_still_matches` | `COMMENT:before:G\PN:x;`: no optional blank, complete reviewed name/colon still qualifies; source unchanged | L3-READ-034 |
+| `suspect_colon_multiple_candidates_stay_one_value` | Two independently located recognized name/colon patterns in one COMMENT value: two proposals, no recursive splitting or applied edits | L3-READ-035, L3-READ-037 |
+| `suspect_colon_mixed_case_uses_whole_name_rule` | Lowercase g\pn lookahead with own colon qualifies under ASCII comparison, preserving spelling and raw edit location | L3-READ-034, L3-READ-037 |
+| `suspect_colon_control_projection_maps_raw_span` | Following G\P<CR><LF>N: recognized under INT-036 projection: locate the original triggering colon, retain omission information and every control byte | L3-READ-035, L3-READ-037 |
+| `suspect_colon_time_and_url_are_not_code_names` | Separate COMMENT values contain Time 12:30 or https://example.test: no complete recognized code name with own colon, no targeted warning | L3-READ-034 |
+| `suspect_colon_partial_name_or_no_own_colon` | Following G\ or G\PN without its own colon: predicate not satisfied; no prefix match | L3-READ-034 |
+| `suspect_colon_actual_name_delimiter_not_candidate` | `G\PN:x;`: its actual name/value delimiter is not inside the value, no targeted warning | L3-READ-034 |
+| `suspect_colon_does_not_cross_semicolon` | `COMMENT:before:;G\PN:x;`: no lookahead across first item's semicolon, no targeted warning or merged item | L3-READ-034, L3-READ-036 |
+| `suspect_colon_eof_never_invents_delimiter` | `COMMENT:before: G\PN` at EOF: no own colon/terminated lookup item invented, framing/suffix evidence retained | L3-READ-034, L3-READ-036 |
+| `suspect_colon_intentional_lookalike_stays_possible` | Author intentionally quotes complete G\PN:x text after a colon: heuristic may warn but never claims knowledge of intent, changes source or closes S1 | L3-READ-037, L3-READ-038 |
+| `suspect_colon_default_output_and_hash_domain_unchanged` | Read/inspect suggestions then default replay/hash on an eligible input: exact original bytes/domain and unchanged item inventory, proposals unapplied | L3-READ-036 |
+| `suspect_colon_unknown_grammar_is_not_guessed` | Supplied unresolved V/X recognition metadata: no fabricated complete-name evidence; coverage limitation explicit rather than a claimed all-name pass | L3-READ-034, L3-READ-038 |
+| `suspect_colon_appendix_targeted_locations_only` | Source code-name excerpt retains documented colon-ended patterns: target proposals independently listed; other literal-example findings not suppressed or mistaken for extra targeted warnings | L3-READ-037 |
+| `suspect_colon_s1_not_cleared_by_regressions` | Synthetic/source-excerpt checks pass: real-recording confirmation still outstanding, no new severity decision or removed suspect mark | L3-READ-038 |
+| `suspect_colon_limit_failure_is_not_no_candidates` | Bounded colon-rich input triggers supplied recognition/finding budget failure: preserve typed failure/limits, not clean complete no-candidate status or silent dropping | L3-READ-039 |
+
+No report renderer, automatic repair, private grammar, future line-break
+heuristic or sample-data run is introduced by these planned checks.
 
 ## Real Chapter 10 recordings (local use only)
 
@@ -1939,11 +1973,13 @@ archived 106-24R1 Chapter 9 (Distribution A), including page C-8.
   `D-1\MNF\N-1-2-1`, `D-1\MML\N-1-3`, `D-1\MNF\N-1-3-1` to
   `D-1\MNF\N-1-3-6`, `D-1\MML\N-1-4`, `D-1\MNF\N-1-4-1`, `D-2\MML\N-1-1`,
   `D-2\MNF\N-1-1-1`, `D-2\MML\N-1-2`, `D-2\MNF\N-1-2-1`.
-- No other reading diagnostic; D-3 and D-4 (correctly delimited) produce
-  none.
+- Correctly delimited D-3/D-4 code-name excerpts produce no targeted
+  suspect-colon warning. Preserve any other findings from literal example
+  text/prose separately; this is not a blanket no-diagnostics/conformance claim.
 - Writing the document back reproduces the input bytes exactly.
-- Applying all 18 suggestions yields a document in which each of those
-  counters is a separate attribute with a numeric value.
+- A separately authorized later general-edit test can apply the 18 explicit
+  proposals and check the resulting separated fields; the 0.1 detector itself
+  never applies suggestions or declares the literal example conforming.
 
 *Companion cases*: `C-1\DPA:A?B:C;` and the Appendix 9-E expressions
 produce no such warning; a value ending `: G\COM:x;` is reported (the G group
