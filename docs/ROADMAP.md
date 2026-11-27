@@ -1191,17 +1191,18 @@ The owner wants each feature released quickly in small, reviewed increments
 AFTER tmats 0.1. Coordinator placement is tmats 0.2+ for the additions below;
 do not wait for a whole later-release theme to be complete before shipping a
 ready increment. The full tmats 0.1 scope is unchanged. In particular, the
-existing 0.1 `show`, JSON and explicit-normalization obligations are not
-moved out of 0.1 by listing follow-on work here. The owner's report-format
-decision still blocks JSON/output-format derivation.
+existing 0.1 `show`, JSON and L1-WRT-002 library rule stay in 0.1; the
+follow-on CLI clean-up command and actual transformation rules are planned
+for 0.2+. The owner's report-format decision still blocks JSON/output-format
+derivation.
 
 | tmats 0.2+ increment | Planned behavior |
 | --- | --- |
 | `tmats validate` | Validate TMATS text rules: syntax, required fields, valid values, duplicates and cross-references. Accept a recording (`.ch10`) or a text file through the content-based routing derived in #55; this is TMATS validation, with recording cross-checks owned separately below. |
 | `tmats show` | Extend the readable summary: channel table, data types, time sources and recorder information. |
 | `tmats diff` | Compare two setups at both field level and byte level. |
-| `--tmats <file>` external override | Owner direction: FULL REPLACEMENT for the WHOLE input file/recording. The in-file setup is still parsed, including every mid-recording change, and its differences from the external setup are reported. Every result using the override is labelled `setup from external file`. There is never any merge of external and in-file setups. |
-| Explicit format clean-up | L1-WRT-002: only on explicit request; no automatic clean-up or implicit source rewriting. |
+| `--tmats <file>` external override | Owner direction: FULL REPLACEMENT for the WHOLE input file/recording. The in-file setup is still parsed, including every mid-recording change, and its differences from the external setup are reported. Every result using the override is clearly labelled (exact wording follows the report-format decision) as using the external setup. There is never any merge of external and in-file setups. |
+| Explicit format clean-up | 0.2+ adds the CLI clean-up command and the actual transformation rules, building on the L1-WRT-002 library rule that stays in 0.1. Clean-up is only on explicit request; no automatic clean-up or implicit source rewriting. |
 | JSON output | Follow-on output work remains blocked on the owner's report-format decision; no schema or layout is selected here. |
 
 Cross-repository placement (recorded here only; no changes to those repos):
