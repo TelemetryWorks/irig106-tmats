@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through flex compatibility acceptance drafted (family 2, batches 1-26 and 28-36).**
+> **Status: foundations through suspect-terminator suggestions drafted (family 2, batches 1-26 and 28-37).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -1314,6 +1314,11 @@ uses the repository's existing reference-tool investigation. No external
 repository or reference executable is accessed in this batch. Exact reference
 source qualification and complete arithmetic/byte-rule derivation remain
 implementation gates; these children do not claim that work complete.
+The [ROADMAP flex gate](ROADMAP.md#remaining-flex-source-qualification-and-acceptance)
+also requires the owner's reference/revision choice (bbaggerman/irig106lib
+versus the atac fork). Coordinator constraints: bounded GitHub-CI-only
+reference runs, synthetic inputs, no new project dependency; retain output
+values/revision/hashes, never copy reference source into this repository.
 
 #### L2-SUM-004
 
@@ -1332,5 +1337,35 @@ implementation gates; these children do not claim that work complete.
 **Statement**: Flex compatibility acceptance SHALL require a reproducibly identified reference source/environment and independently fixed byte/options/result vectors, including exclusions, arithmetic/byte boundaries and the retained D7 quirk; implementation SHALL remain unready until the reference-defined behavior is analyzed explicitly and unresolved or undefined cases are raised rather than silently assigned SHA, parser or normalization semantics.
 
 **Rationale**: ADR-0018 makes reference tools compatibility oracles, not authorities for the standard. Bit-for-bit compatibility cannot be established by two calls to the new implementation, a historical prose summary, one wrapper mock or an unpinned moving branch. No new runtime/dev dependency, source vendoring, install or reference execution is authorized by these planned acceptance obligations. Proposed INT-031 access and existing resource/report-format gates stay in force.
+
+**Verification Method**: Test (T)
+
+
+## Suspect colon-for-semicolon suggestion (family 2, batch 37)
+
+These derive the existing L1-READ-007 diagnostic, not a new delimiter or
+repair policy. INT-035 remains semicolon-only framing. ADR-0007/0026 and
+ROADMAP S1 keep the heuristic suspect pending real-data confirmation.
+The [source/boundary note](research/2026-11-27-suspect-terminator-requirements.md)
+distinguishes an internal located suggestion from rendered findings and
+from the separate planned line-break detector. No new interpretation is made.
+
+#### L2-READ-014
+
+**Parent**: L1-READ-007
+
+**Statement**: Within an already framed value, the reader SHALL detect a colon followed after optional blanks by a positively recognized complete code name and its own colon, and produce the existing suspect warning with a suggested replacement of that first colon by a semicolon, retaining the original value/item boundaries and every byte; the candidate SHALL remain evidence of a possible typo, never a newly parsed attribute or proof of the writer's intent.
+
+**Rationale**: L1-READ-007 derives the heuristic from 106-24R1 Appendix 9-C p. C-8's colon-ended code-name excerpt. Chapter 9 section 9.4.2 p. 9-2 defines the actual colon/semicolon framing; INT-035 forbids repairing it implicitly. Approved name/case/index rules supply recognition, not a guess based on value punctuation alone. Blank/name interpretation must use its existing reviewed rules; recognizing the lookahead does not trim or project the stored value. The accepted warning remains suspect under S1, not evidence that all similarly written text is erroneous.
+
+**Verification Method**: Test (T)
+
+#### L2-READ-015
+
+**Parent**: L1-READ-007
+
+**Statement**: Suspect-terminator verification SHALL independently specify the candidate predicate, raw location and one-byte suggested change, preserving unrelated findings and demonstrating no implicit splitting/editing; negative and intentional-lookalike cases SHALL distinguish heuristic evidence from actual malformed framing, and the S1 real-recording confirmation SHALL remain outstanding until its separately authorized observations are recorded.
+
+**Rationale**: ADR-0002/0007 preserve user data. The Appendix 9-C pattern supplies targeted regression evidence, not proof of all values' intent or general conformance of example text. Recognition coverage must be explicit where reviewed name grammar is unavailable. Existing bounded-resource/source-mapping contracts apply; the detector selects no report layout, public diagnostic spelling beyond L1's existing wording, apply-all command or new parser recovery rule.
 
 **Verification Method**: Test (T)

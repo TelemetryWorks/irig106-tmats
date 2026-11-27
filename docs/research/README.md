@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-27-suspect-terminator-requirements.md](2026-11-27-suspect-terminator-requirements.md) | Batch 37 suspect-colon suggestions, immutable framing/raw spans and coordinator flex-reference qualification gate |
 | [2026-11-27-flex-compatibility-acceptance.md](2026-11-27-flex-compatibility-acceptance.md) | Batch 36 flex reference-source/oracle acceptance and core data-checksum versus G\SHA independence |
 | [2026-11-27-checksum-commands-and-owner-questions.md](2026-11-27-checksum-commands-and-owner-questions.md) | Batch 35 checksum command contracts and plain-English owner briefs on proposed INT-031 and first-fragment versus completion order |
 | [2026-11-27-record-enumeration-requirements.md](2026-11-27-record-enumeration-requirements.md) | Batch 34 internal complete-record enumeration, source order/provenance, qualifications and traversal-failure boundaries |

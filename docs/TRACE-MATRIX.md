@@ -29,7 +29,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-READ-004 | L2-READ-005 | _(none)_ | Draft |
 | L1-READ-005 | L2-READ-011 | _(none)_ | Draft |
 | L1-READ-006 | L2-READ-003, L2-READ-008 | _(none)_ | Draft |
-| L1-READ-007 | _(none)_ | _(none)_ | Draft |
+| L1-READ-007 | L2-READ-014, L2-READ-015 | _(none)_ | Draft |
 
 **L2 -> L3 -> Verification Artifacts**
 
@@ -48,6 +48,8 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-READ-011 | L3-READ-019, L3-READ-020, L3-READ-025 | _(TBD)_ | Draft |
 | L2-READ-012 | L3-READ-024, L3-READ-026, L3-READ-027, L3-READ-029 | _(TBD)_ | Draft |
 | L2-READ-013 | L3-READ-030, L3-READ-031, L3-READ-032, L3-READ-033 | _(TBD)_ | Draft |
+| L2-READ-014 | L3-READ-034, L3-READ-035, L3-READ-036 | _(TBD)_ | Draft |
+| L2-READ-015 | L3-READ-037, L3-READ-038, L3-READ-039 | _(TBD)_ | Draft |
 
 ### L1-CH10: Chapter 10 setup records
 
@@ -371,7 +373,7 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | Category | L1 | L2 | L3 | L2 tested | L3 tested | L2 verified | L3 verified |
 |----------|----|----|----|-----------|-----------|-------------|-------------|
-| READ | 7 | 13 | 33 | 0 | 0 | 0 | 0 |
+| READ | 7 | 15 | 39 | 0 | 0 | 0 | 0 |
 | CH10 | 8 | 7 | 21 | 0 | 0 | 0 | 0 |
 | EDN | 6 | 4 | 13 | 0 | 0 | 0 | 0 |
 | REG | 8 | 7 | 16 | 0 | 0 | 0 | 0 |
@@ -386,13 +388,13 @@ This matrix is the single source of truth for live status; the requirement docum
 | ROB | 3 | 5 | 13 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 2 | 8 | 0 | 0 | 0 | 0 |
 | REL | 6 | 3 | 9 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **86** | **284** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **88** | **290** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 35 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 34 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 405 (0.0%).
+**Tested by at least one test marker**: 0 of 412 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 405 (0.5%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 412 (0.5%).
 
 ### Orphan check
 

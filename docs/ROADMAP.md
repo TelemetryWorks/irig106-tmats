@@ -201,6 +201,12 @@ and arithmetic checks must cover default/inclusion options and bounded edge
 cases. Historical prose or wrapper mocks alone are not compatibility evidence.
 Raise undefined/platform-sensitive behavior before selecting product policy;
 no source vendoring, new dependency or output-format choice is approved here.
+Coordinator calls carried after #69: run the reference only in bounded
+GitHub CI, with synthetic inputs and no new project dependency. Record output
+values and pinned revision/file hashes, never paste reference source into
+this repository. **PENDING OWNER:** which reference and revision to qualify
+(bbaggerman/irig106lib versus the atac fork). Neither is silently selected;
+reference execution and numeric-vector qualification wait for that decision.
 
 ### Remaining checksum command acceptance
 
@@ -254,6 +260,11 @@ not split attributes or apply an edit. Complete code-name recognition,
 requirements and test derivations precede implementation. This is a planned
 addition alongside L1-READ-007, not an implemented diagnostic or a change
 to the semicolon-only framing approved in INT-035.
+Review the colon-for-semicolon detector's positive whole-name recognition,
+raw edit locations and independent negative/lookalike cases before its own
+implementation. Suggestions remain unapplied, framing and raw bytes unchanged;
+S1 stays suspect until separately authorized real-data confirmation. Recognizer
+coverage gaps are not permission to guess private/extension grammar.
 
 ## Queued for the next release (`[Unreleased]`)
 
