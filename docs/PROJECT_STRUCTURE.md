@@ -96,6 +96,7 @@ irig106-tmats/
 │   │                          2026-11-25-retained-cut-and-qm-review-followups.md records the independent review and narrow blocking/test amendments;
 │   │                          2026-11-25-time-view-metadata-requirements.md derives bounded channel/time-field requirements and acceptance scope;
 │   │                          2026-11-25-source-bit-requirements.md derives explicit NSB splitting and records DSI/CHE remaining boundaries;
+│   │                          2026-11-27-historical-csdw-layout-sources.md inventories per-edition CSDW sources, fields and unresolved routing/API evidence;
 │   │                          2026-11-27-family2-unheld-queue-reassessment.md rechecks scoped parents after #79 and separates exhausted unheld drafting from remaining owner/source/implementation gates;
 │   │                          2026-11-27-show-free-command-orchestration.md derives cross-stage command binding and acceptance without report formats or grammar defaults;
 │   │                          2026-11-27-retention-limit-evidence.md derives retained-owner inventories and typed-limit evidence without choosing charging/recovery policy;

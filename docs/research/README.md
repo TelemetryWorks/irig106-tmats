@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-27-historical-csdw-layout-sources.md](2026-11-27-historical-csdw-layout-sources.md) | Maintainer source review: 14 fingerprinted 106-04..24R1 Format 1 CSDWs, field onsets/absence, layout versus fallback limits and planned historical fixtures |
 | [2026-11-27-family2-unheld-queue-reassessment.md](2026-11-27-family2-unheld-queue-reassessment.md) | Post-#79 source audit: identified unheld decomposition queue exhausted, 50-parent current links and remaining owner/source/evidence gates; not family-3 permission |
 | [2026-11-27-show-free-command-orchestration.md](2026-11-27-show-free-command-orchestration.md) | Batch 43 source/revision binding, per-invocation context and cross-stage command acceptance without report/grammar policy; explicit reader-progress blocker |
 | [2026-11-27-retention-limit-evidence.md](2026-11-27-retention-limit-evidence.md) | Batch 42 retained-owner inventory, accounting-proof scope and typed-limit/source-disposition evidence; charging and recovery policies remain open |

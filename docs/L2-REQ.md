@@ -568,7 +568,10 @@ complete those parents or implement assembly, completeness, edition selection,
 session checks, packet slicing/checksums or time views. No packet/file I/O or
 new default is introduced. Requirements and acceptance cases remain planned.
 
-The concrete baseline below is 106-24R1 Chapter 11 Figure 11-34. Historical
+The concrete baseline below is 106-24R1 Chapter 11 Figure 11-34.
+The [historical source matrix](research/2026-11-27-historical-csdw-layout-sources.md)
+verifies per-edition fields and absent flags; it does not choose automatic
+layout routing or qualify shared dependency APIs. Historical
 layout routing and the complete declaration/fallback contract remain separate
 batches. INT-012's literal Format 1 decision was reconfirmed by Joey, 2026-11-23,
 with AI concurrence on #34 head e352323 after seven-edition source review.
