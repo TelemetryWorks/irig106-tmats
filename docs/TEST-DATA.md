@@ -1820,6 +1820,46 @@ recognizer coverage where private-name grammar is pending.
 No report renderer, automatic repair, private grammar, future line-break
 heuristic or sample-data run is introduced by these planned checks.
 
+## Detector clarifications carried after #70
+
+| Planned test | Independent input and expected result | Requirements |
+|---|---|---|
+| `suspect_colon_skips_unterminated_suffix` | `COMMENT:before: G\PN:x` at EOF contains a lookalike but no terminating semicolon: retained suffix, no detector warning/proposal or new lookup item | L3-READ-035, L3-READ-036 |
+| `suspect_colon_cut_qualification_never_upgraded` | Given permitted diagnostic inspection of a terminated value within supplied cut-qualified text: suggestion retains cut/Incomplete or Ambiguous-with-cut qualification, never usable/governing and never an INT-031 bypass | L3-READ-035, L3-READ-036 |
+| `suspect_colon_appendix_vocabulary_is_required` | Independently listed Appendix 9-C names/patterns include complete D-1\MML\N-1-1, D-1\MNF\N-1-1-1 and D-1\WP-1-1-1-1 forms and the rest of the excerpt vocabulary: recognition coverage is required | L3-READ-034, L3-READ-037 |
+| `suspect_colon_missing_appendix_name_is_coverage_failure` | Remove one required reviewed excerpt pattern from a synthetic recognizer catalog: readiness visibly fails, never counts a missed warning as clean no-candidate output | L3-READ-034, L3-READ-038 |
+
+## Planned session-evidence batch 38
+
+Synthetic supplied CSDW/session/trigger evidence only; no invented packet
+identity or body access. Sources: 106-24R1 Ch11 section 11.2.7.2 Figure
+11-34 pp. 11-50–51 and approved INT-030/F7. Core routing/channel checks and
+proposed INT-031 access gates remain independent.
+
+| Planned test | Independent input and expected result | Requirements |
+|---|---|---|
+| `session_ascii_xml_same_scope_reports_mixture` | Established FRMT ASCII and XML observations in supplied S, with source locations: coexistence finding retains both observations and scope basis | L3-CH10-022 |
+| `session_formats_in_separate_scopes_not_mixture` | ASCII in supplied S1, XML in S2: no cross-scope mixture; scopes/provenance retained, not merged by file proximity | L3-CH10-022 |
+| `session_caller_scope_keeps_assertion_label` | S is caller asserted rather than observed control commands: check retains that basis, never certifies .RECORD/.STOP was seen | L3-CH10-022 |
+| `session_xml_observation_does_not_parse_body` | Readable XML FRMT with unsupported body: retain format evidence without ASCII/XML body parsing or eligibility upgrade | L3-CH10-022, L3-CH10-023 |
+| `session_unknown_scope_is_not_clean_pass` | Readable ASCII/XML observations but no established shared session: retain unavailable scope, no guessed grouping or clean full-scope result | L3-CH10-023 |
+| `session_unknown_frmt_is_not_default_ascii` | Unreadable format evidence: retain unknown and coverage limitation, no ASCII default | L3-CH10-023 |
+| `session_partial_extent_never_proves_global_no_mixture` | Known supplied prefix contains only ASCII, later traversal unavailable: no observed mixture limited to prefix, never whole-recording conformance | L3-CH10-023 |
+| `session_frmt_conflict_keeps_record_qualification` | Conflicting format observations within supplied Ambiguous candidate: all evidence retained, no winning FRMT or repaired boundary | L3-CH10-023 |
+| `session_f7_unidentified_event_is_indeterminate` | Established SRCC=1 trigger, event identity unverified: indeterminate missing basis, no pass/fail claim | L3-CH10-024 |
+| `session_nearby_format2_event_is_candidate_only` | Same trigger with nearby generic Format 2 recording event: candidate provenance retained, result still indeterminate | L3-CH10-024 |
+| `session_no_guessed_event_match_is_not_missing_event` | No packet matches a guessed event type: no missing-event verdict while identity/prior scope remain unreviewed | L3-CH10-024 |
+| `session_first_record_srcc1_is_separate_evidence` | Caller supplies first-record context and SRCC=1: separately located observation plus F7 uncertainty, not automatic missing-event conclusion | L3-CH10-025 |
+| `session_fragment_srcc_disagreement_is_not_aggregated` | Same FRMT/RCCVER but SRCC 0/1/unreadable across fragments: retain every reading; no OR/AND/first/last general summary or event verdict | L3-CH10-025 |
+| `session_srcc0_never_proves_byte_identity` | SRCC=0 with independently differing content evidence: bit retained, no unchanged-byte assertion from it alone | L3-CH10-025 |
+| `session_core_channel_evidence_passes_through` | Supplied core legacy/edition admission and integrity evidence retained with PacketFacts, not reclassified by a local threshold or event/format result | L3-CH10-026 |
+| `session_oracle_has_no_reader_or_scope_guess` | Independently listed observations/context/expected results; production scope inference or invented packet identity cannot establish fixture correctness | L3-CH10-027 |
+
+F7's determinate presence/absence check remains BLOCKED on verified identity,
+reviewed prior-ordering, source freshness, analysis and executable tests.
+Per-edition parent/channel wording needs source reconciliation; these cases
+do not select a packet routing rule or authorize new access/governing policy.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample

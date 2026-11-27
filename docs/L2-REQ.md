@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through suspect-terminator suggestions drafted (family 2, batches 1-26 and 28-37).**
+> **Status: foundations through session evidence drafted (family 2, batches 1-26 and 28-38).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -1367,5 +1367,35 @@ from the separate planned line-break detector. No new interpretation is made.
 **Statement**: Suspect-terminator verification SHALL independently specify the candidate predicate, raw location and one-byte suggested change, preserving unrelated findings and demonstrating no implicit splitting/editing; negative and intentional-lookalike cases SHALL distinguish heuristic evidence from actual malformed framing, and the S1 real-recording confirmation SHALL remain outstanding until its separately authorized observations are recorded.
 
 **Rationale**: ADR-0002/0007 preserve user data. The Appendix 9-C pattern supplies targeted regression evidence, not proof of all values' intent or general conformance of example text. Recognition coverage must be explicit where reviewed name grammar is unavailable. Existing bounded-resource/source-mapping contracts apply; the detector selects no report layout, public diagnostic spelling beyond L1's existing wording, apply-all command or new parser recovery rule.
+
+**Verification Method**: Test (T)
+
+
+## Session format and configuration-change evidence (family 2, batch 38)
+
+These partially derive L1-CH10-005 with supplied decoded CSDW and explicit
+session/provenance evidence; they do not implement packet routing or a
+configuration timeline. The [source/gap note](research/2026-11-27-session-evidence-requirements.md)
+retains F7 event identification/prior-ordering and per-edition source gates.
+No new interpretation is chosen; INT-030's indeterminate-until-identified
+policy is approved, while its evidence and development gates remain.
+
+#### L2-CH10-008
+
+**Parent**: L1-CH10-005
+
+**Statement**: Within an explicitly supplied session scope, the library SHALL retain observed setup FRMT evidence and report the prohibited coexistence of ASCII and XML when both decoded format observations are established, with source locations and qualifications; unsupported XML text SHALL not be parsed as ASCII, and unknown session or format evidence SHALL not become a clean no-mixture conclusion.
+
+**Rationale**: 106-24R1 Chapter 11 section 11.2.7.2 Figure 11-34 p. 11-50 prohibits both formats in the same session. Format observation is CSDW evidence, not XML-body interpretation, successful assembly or governing use. The source defines a recording session as .RECORD to .STOP; existing INT-045 caller assertions remain labelled provenance, not inferred sessions from gaps/time/channel changes. This child approves no guessed boundary or per-fragment FRMT conflict summary.
+
+**Verification Method**: Test (T)
+
+#### L2-CH10-009
+
+**Parent**: L1-CH10-005
+
+**Statement**: For a supplied established configuration-change trigger, the library SHALL preserve record/fragment SRCC observations, session context and candidate-event provenance while reporting the required-event check indeterminate until verified event identity and its separately reviewed prior-ordering scope are available; it SHALL never choose a nearby generic event as proof, infer agreement among fragment bits or make the uncertainty imply a positive/negative event-presence verdict.
+
+**Rationale**: Chapter 11 section 11.2.7.2 pp. 11-50–51 requires a configuration-change event before the new setup. Approved INT-030/F7 requires verified identification and indeterminate meanwhile; its analysis notes keep first-record SRCC=1, fragment disagreement and prior-ordering open. Core owns packet admission and edition-dependent channel rules under ADR-0036; this does not derive or duplicate a channel-0 threshold in tmats. L1-CH10-005's existing 106-17 wording still needs per-edition source reconciliation with the owner-relayed 106-11 reminder before that part is implemented.
 
 **Verification Method**: Test (T)
