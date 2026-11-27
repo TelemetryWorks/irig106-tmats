@@ -2114,6 +2114,35 @@ approve the proposed mapping/governance algorithms. No tests executed.
 | `completeness_padding_precedence_remains_open` | ';' followed by SP/CRLF/omitted controls/NUL/1A exercises explicit owner item (b), no accidental literal-space-only cut classification | INT-034, INT-035, INT-036 |
 | `completeness_integrity_is_not_source_unavailability` | Otherwise available well-framed text with core Mismatch/secondary-integrity findings is distinct from unavailable DATA bounds; no integrity-only Incomplete quarantine; resource refusal remains operational | INT-034, INT-051 |
 
+## Legacy independent-check batch 1 follow-up fixtures
+
+Independent review at main c682e05 (2026-11-27); these are PLANNED, not
+executed tests or implementation approval. INT-005/006 amendments await
+independent recheck. General link/H semantics retain their release scope;
+this does not bring general resolved links forward into the bounded time view.
+
+| Planned case | Independent premise and expected result | Interpretation |
+|---|---|---|
+| `definition_placeholder_arity_must_match` | Definition B-d\DLN matches B-x\DLN with the same path/one index position; differing index arity cannot match merely because placeholder letters are ignored | INT-004 |
+| `definition_placeholders_do_not_equal_document_indices` | Definition placeholder equivalence never equates actual document B-1 and B-2 occurrences; preserve raw/canonical index identities independently | INT-004, INT-038 |
+| `link_target_unusable_cdt_keeps_all_groups` | Same-channel CDT separately Missing, Invalid, duplicate equal/unequal, or unavailable (leading blank): R\CDLN target selection cannot-evaluate, retaining every P/B/S/Q candidate and every CDT occurrence/finding, never resolved or no-target from uncertainty | INT-005, INT-039, INT-041 |
+| `link_target_fibre_channel_uses_int007` | Usable same-channel FBCHIN admits S/Q by INT-007's condition reading; explicit CDT=FBCIN retains unknown-keyword/Invalid evidence and cannot-evaluate selection, never silently repaired | INT-005, INT-007 |
+| `h_test_item_ascii_match_keeps_raw` | H\TA:TeSt;G\TA:test; compares ASCII-insensitively with original bytes/locations kept; B/S TA fields do not supply a G target and high-byte look-alikes do not fold | INT-006, INT-036, INT-037 |
+| `h_test_item_leading_blank_is_unavailable` | Leading blank on either H\TA or G\TA makes that value unavailable under INT-041; no trim or invented match. Other unreviewed blank-bearing forms stay unavailable rather than choosing a blank rule | INT-006, INT-041 |
+| `h_test_item_duplicate_occurrences_are_ambiguous` | Multiple H\TA, multiple G\TA, or both, including identical repeats: Ambiguous with EVERY occurrence retained, never first/last or an equality winner; record qualification unchanged | INT-006, INT-039, INT-048 |
+| `derived_default_labels_prose_origin` | Same-occurrence DER condition and absent DPNO: default 1 cites Table 9-11 Definition prose p. 9-167, distinguishable from table Default usage metadata; no other occurrence supplies the condition | INT-008 |
+
+## Legacy independent-check batch 2 source follow-ups
+
+Planned only; INT-010/015 source corrections need exact-head recheck.
+These do not satisfy development-analysis or executable-test gates.
+
+| Planned case | Source and expected boundary | Interpretation |
+|---|---|---|
+| `equality_spacing_cites_e6_not_e3` | 106-24R1 E-3 p. E-2 has ==; E-6 p. E-3 has spaced = =; grammar remains == and spaced form warns, no behavior change | INT-010 |
+| `g106_year_wording_is_present_in_10615` | Archived 106-15 year wording/range already present; MFS 2 also in 106-05/07/13. Do not gate recognition-format source metadata on 106-17 or treat MFS 2 as new in 106-13 | INT-015 |
+| `fallback_intended_basis_is_not_applied_vocabulary` | Intended fallback basis 106-13, available registry 106-24R1 baseline: retain both and availability limitation, never claim edition-specific 106-13 validation; policy code mapping unchanged | INT-017 |
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample
