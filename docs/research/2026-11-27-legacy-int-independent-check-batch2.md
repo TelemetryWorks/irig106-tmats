@@ -15,7 +15,7 @@ hashes are retained as supplied, not expanded into invented fingerprints.
 | 015 | CONCERNS, source fact only | Year wording already in 106-15 (f8c6ec06), absent in 106-13 (33028a32); size 2 already in 106-05 (ccdc77cc) / 07 (ef8783a5). Correct onset/size wording, preserve recognition/fallback behavior; amended wording awaits recheck |
 | 016 | CONCUR | 106-05 Ch10 (7aa84ef9) all-reserved word; 106-07 (50d125bc) CH10VER plus SRCC bit 8; modern RCCVER describes recording compliance, not TMATS edition. Preserve no-declaration/reserved handling |
 | 017 | CONCUR with note | Existing owner policy maps intended basis, not literal edition-table meaning. Before edition deltas exist, applied registry is 24R1 baseline: distinguish intended basis and actual vocabulary/availability, not a claim of older-edition validation |
-| 022 | NEEDS OWNER, no proposal | Section 9.5.14 p. 9-172 covers renumbering, not removal. Open F2 remains open; this is 0.5 editing, not a 0.1 blocker |
+| 022 | NEEDS OWNER, no proposal | Section 9.5.14 p. 9-172 covers renumbering, not removal. Open F2 remains open; this is 0.5 editing, not a 0.1 blocker; register amendment/options belong to PR B |
 
 ## Narrow amendments and remaining decisions
 
@@ -46,3 +46,14 @@ Analysis fields remain not yet written; source freshness, development and
 executable verification gates are not waived. No Rust test or local source
 qualification run is claimed. The historical CSDW-layout source review is a
 separate maintainer task and PR, informed but not replaced by this check.
+
+## Additional recheck: INT-064
+
+Reviewer batch 4, main 283ffd5, received 2026-11-27: **CONCUR** with amended
+INT-064's A mechanism plus named built-in D, or explicit owner L1
+reinterpretation. The section order G/T/R/M/P/D/B/S/Q/C/H/V/X is a project
+profile, not a standard mandate; anchors, stable within-group order and
+unchanged default replay are preserved. No residual independent concern.
+The owner choice remains pending. This clears only the amended-wording
+independent check; it is not a sign-off of a normalization policy or completed
+development analysis. Recorded in PR A per the coordinator's requested split.

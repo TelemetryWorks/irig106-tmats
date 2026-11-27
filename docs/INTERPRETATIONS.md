@@ -728,15 +728,9 @@ last step of that transaction, never run over the still-ambiguous input.
 
 **Behaviour**: **Open — owner follow-up F2.** No behaviour is chosen until the owner decides.
 
-The reviewer verified section 9.5.14 p. 9-172 but cannot concur with a
-nonexistent proposal. Future owner options must use reviewed INT-061/062
-attachment evidence, never guessed X targets. Refusal, orphan-preserving
-removal and explicit cascade are alternatives to draft, not approved behavior.
-This is later 0.5 editing, not a reason to block tmats 0.1.
-
 **Reason**: The standard covers renumbering the original, not removing it.
 
-**Design**: open (follow-up F2, 2026-09-26) · **Review**: no proposal to check; NEEDS OWNER (F2), independent batch 2 at main `c682e05` (2026-11-27); 0.5 edit scope, not a 0.1 blocker; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch2.md) · **Origin**: T7
+**Design**: open (follow-up F2, 2026-09-26) · **Review**: pending · **Origin**: T7
 
 **Test**: `removing_an_extended_attribute` (written once F2 is decided)
 
@@ -2401,7 +2395,7 @@ explicit unknown/private placement rules, anchor-limited group ordering and
 no cleanup of within-group order. A remains useful for caller-specific plans;
 neither it nor D may be advertised as the standard's unique canonical form.
 
-**Design**: proposed (2026-11-27; A mechanism plus named built-in D preferred, or explicit owner L1 reinterpretation) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off and amended-wording independent AI check pending · **Origin**: family 2 normalization source review and #77 independent review
+**Design**: proposed (2026-11-27; A mechanism plus named built-in D preferred, or explicit owner L1 reinterpretation) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off pending; independent AI recheck CONCUR at main `283ffd5` (2026-11-27) with A mechanism + named built-in D, or explicit owner L1 reinterpretation; [recheck record](research/2026-11-27-legacy-int-independent-check-batch2.md#additional-recheck-int-064); source freshness, development analysis and executable tests remain required · **Origin**: family 2 normalization source review and #77 independent review
 
 **Test**: `normalize_order_explicit_bijection`, `normalize_order_missing_or_repeated_identity`, `normalize_order_preserves_raw_regions`, `normalize_group_profile_section_order`, `normalize_group_profile_stable_within_group`, `normalize_group_profile_anchors`, `normalize_group_profile_private_and_unknown_placement` (planned; A/D expectations BLOCKED)
 
