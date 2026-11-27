@@ -55,6 +55,20 @@ Packet data-checksum verification remains a separately owner-scheduled core
 feature; pass NotChecked until core provides it. No publishing action is
 authorised/performed by this documentation change.
 
+### Family-2 coverage audit and next unheld work
+
+The [dated coverage audit](research/2026-11-27-family2-coverage-audit.md)
+separates drafted children, partial contracts, owner-held work and executed
+evidence. Family 2 is not complete merely because parents have children.
+Finish the bounded time-view lookup-state primary derivation next; related
+multiplicity/field-state children under other parents do not supply its direct
+trace. Keep report-format work stopped for the owner and build acceptance
+held on the existing std decision. Resolve partial normalization, flex source,
+assembly/session and resource details without reducing the full 0.1 scope.
+The extract owner decisions of 2026-11-27 remove the three #57 owner holds;
+ADR-0037 records them, rather than asking again.
+Do not start family 3/parser code or claim readiness from prototype CI.
+
 ### Streaming setup-record follow-ups
 
 Carry the reviewer consequences relayed by the owner after INT-011's

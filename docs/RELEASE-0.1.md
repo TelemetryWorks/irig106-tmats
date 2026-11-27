@@ -458,6 +458,17 @@ still needs verified evidence before the event-presence check is implementable.
 These approvals do not mark requirements implemented or development evidence complete.
 F2/F3 and other unreviewed interpretations remain open where already recorded.
 
+## Decomposition/readiness audit
+
+The [2026-11-27 coverage audit](research/2026-11-27-family2-coverage-audit.md)
+checks this scope against actual primary links and named partial contracts.
+It is a dated inspection, not implementation evidence or permission to begin
+family 3. Missing direct lookup-state coverage, held build/report work and
+partial normalization/flex/assembly/resource rules remain explicit; no scope
+is silently removed. The owner extract decisions are already made and are
+recorded in [ADR-0037](adr/0037-extract-destination-and-findings-policy.md),
+not a new owner-decision gate.
+
 ## Delivery and release gates
 
 Follow the twelve-family sequence: scope/API contracts; derived requirements;
