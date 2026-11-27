@@ -254,7 +254,7 @@ never upgrades record qualifications or approves semantic access.
 
 **Reason**: Counters count within their parent (ADR-0026); any other occurrence would make the condition meaningless.
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T1, T4
+**Design**: accepted (owner, 2026-09-26) · **Review**: independent rule check CONCUR (2026-11-27) at main `c682e05`; existing owner acceptance and development/analysis/test gates retained; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch2.md) · **Origin**: T1, T4
 
 **Test**: `fragment_position_allowed_only_when_its_own_location_has_fragments`
 
@@ -262,17 +262,17 @@ never upgrades record qualifications or approves semantic access.
 
 ### INT-010
 
-**Title**: Equality is `==`, although Table E-3 prints `= =`
+**Title**: Equality is `==`, although Table E-6 prints `= =`
 
 **Sources**:
-- Appendix 9-E, Table E-3: "= = Equal To A = = B"; Table E-6: "= = != Left to right".
-- Appendix 9-E grammar: "| expression '==' expression".
+- 106-24R1 Appendix 9-E, Table E-3 p. E-2: "== Equal To A==B"; Table E-6 p. E-3: "= = != Left to right". The spaced occurrence is E-6, not E-3.
+- 106-24R1 Appendix 9-E grammar, p. E-5 region: "| expression '==' expression".
 
 **Behaviour**: `==` is the equality operator; `= =` is accepted with a warning.
 
 **Reason**: The grammar is the machine-readable source; the table's spacing is typographic (ADR-0024).
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T2
+**Design**: accepted (owner, 2026-09-26) · **Review**: independent check CONCERNS (narrow source correction, 2026-11-27) at main `c682e05`; correction applied, amended wording pending recheck; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch2.md) · **Origin**: T2
 
 **Test**: `spaced_equality_operator_is_accepted_with_warning`
 
@@ -458,9 +458,15 @@ INT-035/036 padding at EOF. No precise algorithm is approved here. See
 
 **Behaviour**: The attribute is kept exactly as read (the first colon ends the code name) and a warning, "possible `;` typed as `:`", is reported with a suggested edit (L1-READ-007, ADR-0026).
 
+The independent check confirms the recurring colon-ended pattern across
+106-17/19/20/22/23/24/24R1, absent in 106-13/15 text. The exact historical
+count of 18 is line-wrap/extraction-sensitive and was not independently
+reproduced as exactly 18; it is not a required detector match count. S1
+remains suspect and no repair is authorized.
+
 **Reason**: Nothing is split silently (ADR-0002, ADR-0007).
 
-**Design**: **suspect** (owner, 2026-09-26; `docs/ROADMAP.md`, S1) · **Review**: pending · **Origin**: T4
+**Design**: **suspect** (owner, 2026-09-26; `docs/ROADMAP.md`, S1) · **Review**: independent rule check CONCUR (2026-11-27) at main `c682e05`; existing owner acceptance and development/analysis/test gates retained; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch2.md) · **Origin**: T4
 
 **Test**: `appendix_9c_example_reports_suspected_semicolons` (`docs/TEST-DATA.md`)
 
@@ -480,7 +486,7 @@ INT-035/036 padding at EOF. No precise algorithm is approved here. See
 
 **Reason**: The field cannot say more than the year, and "should" makes even the two-digit form a recommendation.
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T6
+**Design**: accepted (owner, 2026-09-26) · **Review**: independent rule check CONCUR (2026-11-27) at main `c682e05`; existing owner acceptance and development/analysis/test gates retained; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch2.md) · **Origin**: T6
 
 **Test**: `g106_24_names_106_24_and_106_24r1`
 
@@ -488,18 +494,23 @@ INT-035/036 padding at EOF. No precise algorithm is approved here. See
 
 ### INT-015
 
-**Title**: `G\106` had no defined format before 106-17
+**Title**: `G\106` year-format wording appears by 106-15
 
 **Sources**:
-- 106-05 and 106-07 Chapter 9, `G\106`: "VERSION OF IRIG 106 STANDARD USED TO GENERATE THIS TMATS FILE" (no format).
-- 106-13 Chapter 9, `G\106`: "Version of RCC IRIG 106 standard used to generate this TMATS file." with a maximum field size of 2.
-- 106-17 Chapter 9: the first edition with "The last 2 digits of the year should be used."
+- 106-05 and 106-07 Chapter 9, `G\106`: "VERSION OF IRIG 106 STANDARD USED TO GENERATE THIS TMATS FILE" (no year-format wording); both already have maximum field size 2.
+- 106-13 Chapter 9, `G\106`: "Version of RCC IRIG 106 standard used to generate this TMATS file." with MFS 2, not a newly introduced size constraint.
+- 106-15 Chapter 9 already states "The last 2 digits of the year should be used. Use a leading 0 if necessary." and "Range: 0-99"; 106-13 does not state that year format.
 
 **Behaviour**: Only a value that reads as the year of an archived edition (INT-014) is recognised. Any other form — `106-05`, `2005`, `IRIG 106-05` — is reported as "unrecognised", preserved exactly, and not interpreted; the fallback of ADR-0028 then applies, and the caller may override.
 
+The corrected source onset changes no accepted-value policy. No edition-aware
+rule may require 106-17 before acknowledging the printed year-format text.
+106-24R1's January 2025 publication does not make G\106=25 a recognized
+edition year. The archived-edition year set remains INT-014's source.
+
 **Reason**: Older files may use forms the standard never defined; reading them would be a guess.
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T6
+**Design**: accepted (owner, 2026-09-26) · **Review**: independent check CONCERNS (narrow source correction, 2026-11-27) at main `c682e05`; correction applied, amended wording pending recheck; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch2.md) · **Origin**: T6
 
 **Test**: `g106_other_forms_are_unrecognised_and_preserved`
 
@@ -516,9 +527,15 @@ INT-035/036 padding at EOF. No precise algorithm is approved here. See
 
 **Behaviour**: The byte is reported as the **recording-format version declared**, never as the TMATS edition. A value from `0x00` to `0x06` is reported as "not declared (the field did not exist before 106-07, or is reserved)", not as an error; defined codes are read from the newest table (106-24R1), since later editions only added codes.
 
+Historical-layout note from the independent check: 106-07 also introduced
+SRCC at bit 8, with bits 31–9 reserved; keep that edition-specific layout
+separate from the later FRMT field and the declared recording-version code.
+The maintainer CSDW review must verify each source/layout, not infer from
+RCCVER alone.
+
 **Reason**: The field describes the recorder and recorded data, and 106-04 and 106-05 recordings carry no version at all.
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T6
+**Design**: accepted (owner, 2026-09-26) · **Review**: independent rule check CONCUR (2026-11-27) at main `c682e05`; existing owner acceptance and development/analysis/test gates retained; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch2.md) · **Origin**: T6
 
 **Test**: `zero_csdw_version_is_not_declared`
 
@@ -532,11 +549,18 @@ INT-035/036 padding at EOF. No precise algorithm is approved here. See
 - 106-24R1 Chapter 11 RCCVER codes: "0x07 = RCC 106-07" … "0x0D = RCC 106-19", "0x0E = RCC 106-22".
 - Owner decision (2026-09-26): when `G\106` is missing or unrecognised and there is no override, use a labelled fallback (ADR-0028).
 
-**Behaviour**: Codes `0x07` to `0x0C` apply the rules of the edition each names. For `0x0D` ("RCC 106-19") the rules of 106-20 apply, and for `0x0E` ("RCC 106-22") those of 106-24R1, each as a labelled **policy**: "the newest archived edition that still uses this code" (INT-012; owner, 2026-09-27, "Yes, use 106-20"). With no usable RCCVER, the baseline applies. The report says "fallback" and gives the reason. *(Revised 2026-09-27, ADR-0032: the policy is now named as one; the effect for `0x0E` is unchanged.)*
+**Behaviour**: Codes `0x07` to `0x0C` select the intended rules basis named by each code. For `0x0D` ("RCC 106-19") the rules of 106-20 apply, and for `0x0E` ("RCC 106-22") those of 106-24R1, each as a labelled **policy**: "the newest archived edition that still uses this code" (INT-012; owner, 2026-09-27, "Yes, use 106-20"). With no usable RCCVER, the baseline applies. The report says "fallback" and gives the reason. *(Revised 2026-09-27, ADR-0032: the policy is now named as one; the effect for `0x0E` is unchanged.)*
+
+Until edition deltas exist (0.4), the applied registry vocabulary is the
+106-24R1 baseline, while the labelled basis records the policy's intended
+edition. Expose that availability limitation; never claim actual 106-13
+rules were applied when only baseline definitions exist. This follows the
+INT-062 baseline clarification without approving its proposed X vocabulary
+options. No new RCCVER mapping, renderer or fallback reason is selected.
 
 **Reason**: Applying the newest edition that still uses a code avoids reporting attributes introduced by that edition as unknown in recordings that could only declare the older code; the label keeps the choice visible as policy, not as something RCCVER says.
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T6
+**Design**: accepted (owner, 2026-09-26) · **Review**: independent rule check CONCUR (2026-11-27) at main `c682e05`; existing owner acceptance and development/analysis/test gates retained; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch2.md) · **Origin**: T6
 
 **Test**: `missing_g106_falls_back_to_rccver_edition_labelled`
 
@@ -704,9 +728,15 @@ last step of that transaction, never run over the still-ambiguous input.
 
 **Behaviour**: **Open — owner follow-up F2.** No behaviour is chosen until the owner decides.
 
+The reviewer verified section 9.5.14 p. 9-172 but cannot concur with a
+nonexistent proposal. Future owner options must use reviewed INT-061/062
+attachment evidence, never guessed X targets. Refusal, orphan-preserving
+removal and explicit cascade are alternatives to draft, not approved behavior.
+This is later 0.5 editing, not a reason to block tmats 0.1.
+
 **Reason**: The standard covers renumbering the original, not removing it.
 
-**Design**: open (follow-up F2, 2026-09-26) · **Review**: pending · **Origin**: T7
+**Design**: open (follow-up F2, 2026-09-26) · **Review**: no proposal to check; NEEDS OWNER (F2), independent batch 2 at main `c682e05` (2026-11-27); 0.5 edit scope, not a 0.1 blocker; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch2.md) · **Origin**: T7
 
 **Test**: `removing_an_extended_attribute` (written once F2 is decided)
 

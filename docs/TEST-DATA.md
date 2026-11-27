@@ -2110,6 +2110,17 @@ this does not bring general resolved links forward into the bounded time view.
 | `h_test_item_duplicate_occurrences_are_ambiguous` | Multiple H\TA, multiple G\TA, or both, including identical repeats: Ambiguous with EVERY occurrence retained, never first/last or an equality winner; record qualification unchanged | INT-006, INT-039, INT-048 |
 | `derived_default_labels_prose_origin` | Same-occurrence DER condition and absent DPNO: default 1 cites Table 9-11 Definition prose p. 9-167, distinguishable from table Default usage metadata; no other occurrence supplies the condition | INT-008 |
 
+## Legacy independent-check batch 2 source follow-ups
+
+Planned only; INT-010/015 source corrections need exact-head recheck.
+These do not satisfy development-analysis or executable-test gates.
+
+| Planned case | Source and expected boundary | Interpretation |
+|---|---|---|
+| `equality_spacing_cites_e6_not_e3` | 106-24R1 E-3 p. E-2 has ==; E-6 p. E-3 has spaced = =; grammar remains == and spaced form warns, no behavior change | INT-010 |
+| `g106_year_wording_is_present_in_10615` | Archived 106-15 year wording/range already present; MFS 2 also in 106-05/07/13. Do not gate recognition-format source metadata on 106-17 or treat MFS 2 as new in 106-13 | INT-015 |
+| `fallback_intended_basis_is_not_applied_vocabulary` | Intended fallback basis 106-13, available registry 106-24R1 baseline: retain both and availability limitation, never claim edition-specific 106-13 validation; policy code mapping unchanged | INT-017 |
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample

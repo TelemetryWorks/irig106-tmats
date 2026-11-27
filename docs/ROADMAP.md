@@ -965,9 +965,10 @@ validation rules selected.** Verified against the archived editions:
   necessary." "Range: 0 to 99" (Table 9-2, 106-24R1). `24` cannot tell 106-24
   from 106-24R1 (their Chapter 9 is identical, ADR-0016); "should" makes the
   two-digit form a recommendation, and "0 to 99" admits `4` for `04`.
-- *Also found — the format is recent*: the year rule first appears in 106-17.
+- *Also found — the format is recent*: the year rule is already printed in 106-15 (INT-015 source correction).
   106-05 and 106-07 say only "VERSION OF IRIG 106 STANDARD USED TO GENERATE
-  THIS TMATS FILE"; 106-13 adds a maximum field size of 2. Files written to
+  THIS TMATS FILE", with maximum field size 2 already present; 106-13 also
+  has MFS 2 but no year-format wording. Files written to
   earlier editions may hold other forms.
 - *RCCVER declares what the recorded data complies with, not the TMATS
   edition*: "Bits 7-0 specify which RCC release version applies and to which

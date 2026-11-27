@@ -428,13 +428,13 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-007 | The Q group's condition names `FBCIN`, which is not a channel type | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-008 | `C-d\DPNO`'s condition names `C\DCT` without an index | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-009 | Counters named without indices in conditions | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
-| INT-010 | Equality is `==`, although Table E-3 prints `= =` | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-010 | Equality is `==`, although Table E-6 prints `= =` | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-011 | Per-channel joining of multi-packet setup-record fragments | approved (Joey, owner reconfirmation, 2026-11-23) | not yet written | _(none)_ |
 | INT-012 | RCCVER codes are read as their table states; later editions' reuse is a note | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26, revised 2026-09-27) | not yet written | _(none)_ |
 | INT-034 | A joined run is complete, incomplete, or ambiguous | accepted in principle (three outcomes, owner, 2026-09-27, ADR-0031); these rules proposed | not yet written | _(none)_ |
 | INT-013 | Appendix 9-C ends 18 attributes with `:` instead of `;` | suspect (owner, 2026-09-26; `docs/ROADMAP.md`, S1) | not yet written | _(none)_ |
 | INT-014 | `G\106` gives two year digits, so one value can name two editions | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
-| INT-015 | `G\106` had no defined format before 106-17 | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-015 | `G\106` year-format wording appears by 106-15 | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-016 | What the setup record's version byte declares, and when it did not exist | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-017 | The fallback edition taken from RCCVER | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-018 | `G\SHA` is recognised in any letter case, and never inside a value | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26) | not yet written | _(none)_ |
