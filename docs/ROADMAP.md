@@ -1185,12 +1185,47 @@ this list once that repository has it.
 
 ## Planned releases
 
+### Small increments after 0.1 (owner direction, 2026-11-27)
+
+The owner wants each feature released quickly in small, reviewed increments
+AFTER tmats 0.1. Coordinator placement is tmats 0.2+ for the additions below;
+do not wait for a whole later-release theme to be complete before shipping a
+ready increment. The full tmats 0.1 scope is unchanged. In particular, the
+existing 0.1 `show`, JSON and L1-WRT-002 library rule stay in 0.1; the
+follow-on CLI clean-up command and actual transformation rules are planned
+for 0.2+. The owner's report-format decision still blocks JSON/output-format
+derivation.
+
+| tmats 0.2+ increment | Planned behavior |
+| --- | --- |
+| `tmats validate` | Validate TMATS text rules: syntax, required fields, valid values, duplicates and cross-references. Accept a recording (`.ch10`) or a text file through the content-based routing derived in #55; this is TMATS validation, with recording cross-checks owned separately below. |
+| `tmats show` | Extend the readable summary: channel table, data types, time sources and recorder information. |
+| `tmats diff` | Compare two setups at both field level and byte level. |
+| `--tmats <file>` external override | Owner direction: FULL REPLACEMENT for the WHOLE input file/recording. The in-file setup is still parsed, including every mid-recording change, and its differences from the external setup are reported. Every result using the override is clearly labelled (exact wording follows the report-format decision) as using the external setup. There is never any merge of external and in-file setups. |
+| Explicit format clean-up | 0.2+ adds the CLI clean-up command and the actual transformation rules, building on the L1-WRT-002 library rule that stays in 0.1. Clean-up is only on explicit request; no automatic clean-up or implicit source rewriting. |
+| JSON output | Follow-on output work remains blocked on the owner's report-format decision; no schema or layout is selected here. |
+
+Cross-repository placement (recorded here only; no changes to those repos):
+
+- **Cross-check setup versus recording:** `irig106-validator` owns that tool
+  behavior; the `tmats validate` increment checks TMATS text rules.
+- **Rewrite a recording with corrected TMATS:** `irig106-write` owns it. It
+  always writes a NEW file, with checksums recomputed.
+
+These additions record release intent and ownership, not implementation or
+approval of pending report formats, field interpretations or access policies.
+The release themes below remain planning context; this dated direction
+supersedes any implication that initial `tmats validate` must wait for all
+of 0.3 or that recording cross-checks belong in a `tmats check` command.
+
+### Release themes
+
 | Version | Theme | Scope |
 |---------|-------|-------|
 | before 0.1 | Restructure | The workspace layout and the reusable CLI library (virtual root and crates/apps layout per owner-decided W1, with W2/W3 unchanged), with CI green before and after; no new library code until it is done. |
 | 0.1 | Read | Lossless parser for code-name (ASCII) TMATS, with the suspected-semicolon diagnostic (L1-READ-007). Setup records assembled from their packet fragments, with provenance, the CSDW fields, and the session rules (L1-CH10-001, 002, 004–006). The TMATS edition and recording-format version declared, and a labelled validation basis (L1-EDN-002, 005). Lookup by code name. V and X groups preserved and linked. Byte-faithful writer. `G\SHA` compute, verify, and stamp — the stamp as the minimal verified transaction it needs (L1-SUM-004) — and the flex signature. The interpretation register seeded. The WebAssembly build checked in CI (L1-REL-003). First crates.io release of both crates. Bounded time view for irigtime (L1-VIEW-007 channel fields and applicable L1-VIEW-004/005/006/008), as specified in `docs/RELEASE-0.1.md`. **`tmats` CLI**: `show` in raw, tree, and channel-summary form (the three `idmptmat` formats), `extract`, `checksum` (`G\SHA`, `--flex`), `verify`, `stamp`; every setup record in a recording; plain text and JSON output. |
-| 0.2 | Registry and views | Spec-derived registry for the baseline edition (106-24R1) covering every group in Chapter 9 (G, T, R, M, P, D, B, S, Q, C, H, V, X), with counter and link declarations. Typed accessors generated from it. Channel views resolving R through P/B/S/Q to D and C, with link states (L1-VIEW-002, 003, 006) and effective values (L1-VIEW-004): each channel's recorder settings, format definition, measurement locations, and conversions — what `irig106-decode` needs first. The channel-type table and each channel's packet data types (L1-VIEW-009), the remaining measurement time-word views (L1-VIEW-007) beyond the bounded channel subset delivered in 0.1, and the remaining labelled assumptions (L1-VIEW-008). The packet check (L1-CH10-007) and the configuration timeline (L1-CH10-008), with the attribute-by-attribute comparison it uses (L1-WRT-005). **`tmats` CLI**: `show` uses the resolved links and lists the configuration timeline; `check`; `diff`. |
-| 0.3 | Validate | Registry-driven validation in four passes: required/allowed-when rules, keywords, ranges, value types, counters and index consistency, cross-group references. Derived parameters parsed, validated, and described (L1-DER-001 to 005). User registries, severity policy, custom rules. `tmats validate`. |
+| 0.2 | Registry and views | Spec-derived registry for the baseline edition (106-24R1) covering every group in Chapter 9 (G, T, R, M, P, D, B, S, Q, C, H, V, X), with counter and link declarations. Typed accessors generated from it. Channel views resolving R through P/B/S/Q to D and C, with link states (L1-VIEW-002, 003, 006) and effective values (L1-VIEW-004): each channel's recorder settings, format definition, measurement locations, and conversions — what `irig106-decode` needs first. The channel-type table and each channel's packet data types (L1-VIEW-009), the remaining measurement time-word views (L1-VIEW-007) beyond the bounded channel subset delivered in 0.1, and the remaining labelled assumptions (L1-VIEW-008). TMATS-side support for the packet check (L1-CH10-007) consumed by `irig106-validator`, and the configuration timeline (L1-CH10-008), with the attribute-by-attribute comparison it uses (L1-WRT-005). **`tmats` CLI**: incremental `validate`, readable `show`, field/byte `diff`, full external override and requested clean-up per the 2026-11-27 direction above; resolved-link/timeline views grow as ready. JSON remains behind the owner report-format gate. |
+| 0.3 | Validate | Registry-driven validation in four passes: required/allowed-when rules, keywords, ranges, value types, counters and index consistency, cross-group references. Derived parameters parsed, validated, and described (L1-DER-001 to 005). User registries, severity policy, custom rules. Extend `tmats validate` incrementally; its initial text-rule functionality is planned for 0.2+ above and does not wait for this whole theme. |
 | 0.4 | Editions | Registry deltas for every edition from 106-04 to 106-24R1 (including renamed codes such as `R-x\DST-n` → `R-x\CDT-n`, to be confirmed), a generated `VERSION-DELTAS.md`, edition-aware validation, and compatibility checks, named as such, for editions the registry does not cover (L1-EDN-006). |
 | 0.5 | Generate and edit | Edit API (set, insert, remove, renumber) as verified transactions (L1-WRT-003, 007), grown from 0.1's stamp; validation diagnostics carrying suggested edits with explicit apply; a generator that returns valid TMATS or an incomplete draft with missing-input findings (L1-WRT-006); the setup-record payload for `irig106-write` (L1-CH10-003). Applying chosen fixes from `tmats`. |
 

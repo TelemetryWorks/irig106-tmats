@@ -41,9 +41,13 @@ select no argument grammar, report format, exit mapping or adoption policy.
 | `tmats checksum --flex [--include ...] FILE` | irig106.org flex signature (non-standard; UC-16) | 0.1 |
 | `tmats verify FILE` | Compare the embedded `G\SHA` with the computed value | 0.1 |
 | `tmats stamp FILE -o OUT` | Write a copy with `G\SHA` inserted or updated | 0.1 |
-| `tmats validate FILE` | Validation report (UC-06/07) | 0.3 |
+| `tmats validate FILE` | TMATS text rules: syntax, required fields, valid values, duplicates and cross-references (UC-06/07); recording or text input by content | 0.2+ increments |
 | `tmats diff A B` | Compare two documents (UC-11) | 0.2 |
-| `tmats check FILE.ch10` | Check every packet against the setup record that governs it (UC-18) | 0.2 |
+
+Per the [2026-11-27 roadmap direction](ROADMAP.md#small-increments-after-01-owner-direction-2026-11-27), recording/setup
+cross-check tooling (UC-18) belongs to `irig106-validator`, rather than a
+`tmats check` command. `tmats validate` checks TMATS text rules and uses the
+existing content-based recording/text input route. The 0.1 scope is unchanged.
 
 ## 3. Behaviour already decided
 
@@ -53,7 +57,8 @@ select no argument grammar, report format, exit mapping or adoption policy.
   selection is not packet validation or permission to retry the other mode.
 - **The configuration timeline.** From 0.2, `show` lists every setup record
   with its kind (first, repeat, change), its findings, and what changed
-  (UC-19; L1-CH10-008), and `check` runs the packet check (UC-18).
+  (UC-19; L1-CH10-008). Recording/setup cross-check tooling (UC-18) belongs
+  to `irig106-validator` per the 2026-11-27 roadmap direction.
 - **Every setup record.** A recording's setup records are all reported, in
   file order (the `idmptmat` first-packet-only limitation, defect D2, is not
   repeated). Each record's output is labelled with its position and packet

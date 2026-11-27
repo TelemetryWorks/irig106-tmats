@@ -381,9 +381,8 @@ Programmers' Handbook) and the viewing parts of `igDisplayTMATS`:
 | `tmats verify FILE` | Check the embedded `G\SHA`; exit status reflects the result | 0.1 |
 | `tmats stamp FILE -o OUT` | Write a copy with `G\SHA` inserted or updated | 0.1 |
 | `tmats checksum --flex [--include ...] FILE` | irig106.org flex signature (UC-16) | 0.1 |
-| `tmats validate FILE` | Validation report (UC-06/07) | 0.3 |
+| `tmats validate FILE` | TMATS text rules: syntax, required fields, valid values, duplicates and cross-references (UC-06/07); recording or text input by content | 0.2+ increments |
 | `tmats diff A B` | Compare two documents (UC-11) | 0.2 |
-| `tmats check FILE.ch10` | Check every packet against its governing setup record (UC-18) | 0.2 |
 
 Input is detected by content (a Chapter 10 file starts with the packet sync
 pattern; anything else is treated as TMATS text). Unlike `idmptmat`, which
@@ -399,6 +398,13 @@ subcommand). A GUI view belongs in `irig106-studio`, using the same library
 calls.
 
 ### UC-18 Check a recording's packets against its setup records — *0.2*
+
+Per the [2026-11-27 roadmap direction](ROADMAP.md#small-increments-after-01-owner-direction-2026-11-27),
+recording/setup cross-check tooling belongs to `irig106-validator`, not a
+`tmats check` command. The TMATS library support described below remains
+separate from `tmats validate`, which checks TMATS text rules and accepts
+recording or text input through content-based routing. The 0.1 scope stays
+unchanged; this placement does not set a release version for the other tool.
 
 **Actor:** recording reader, validator/QA. **Trigger:** a tool walks a
 recording and wants to know whether its data agree with its configuration.
