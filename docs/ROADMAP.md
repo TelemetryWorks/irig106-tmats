@@ -80,6 +80,14 @@ and development analysis (including the complete non-decimal representation inve
 and implement the planned executable tests before relying on them. The owner
 choices are recorded; independent review and development gates remain.
 
+### Remaining dependency and artifact acceptance
+
+Review redesigned dependency-graph evidence against existing deny.toml and
+per-binary SBOM/checksum/provenance identity/verification before release
+implementation. Old prototype passes and workflow names are not completed
+evidence. Keep binary distribution separate from TP-only crate publishing;
+this planning adds no policy exception, credential or publishing authority.
+
 ### Remaining performance evidence
 
 Review parser and whole-recording benchmarks with independent expected-work
@@ -117,7 +125,11 @@ Review the indexed X/original attachment and V source/vendor grouping
 derivations. Proposed INT-063 needs owner/AI review for incomplete or
 conflicting VN/path evidence: recommend retained observed inventory with
 unavailable confirmed attribution, versus labelled path-first/header-first
-policies. Do not implement a recovery winner before that decision.
+policies. A usable VN is one available non-Ambiguous INT-036-projected
+value with INT-041 blank handling, exactly three characters under section
+9.5.13, compared ASCII case-insensitively. Available projected wrong length
+is Invalid/unconfirmed under A; raw bytes and unavailable blank reasons stay
+visible. Do not implement a recovery winner before that decision.
 PENDING OWNER/independent review: proposed INT-061 for X occurrence mapping
 to unindexed originals such as G\PN; recommend unavailable mapping (A), with
 labelled unique-path attachment (C) as a natural future refinement; B is an

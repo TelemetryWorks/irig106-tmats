@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-27-release-evidence-and-vn-followup.md](2026-11-27-release-evidence-and-vn-followup.md) | Batch 32 existing dependency/SBOM/provenance acceptance, workflow-authority boundaries and INT-063 projected three-character usable-VN amendment |
 | [2026-11-27-v-group-and-int062-followup.md](2026-11-27-v-group-and-int062-followup.md) | Batch 31 V source/vendor inventory and proposed INT-063, plus INT-062 registry-only cost/hybrid/baseline amendments awaiting owner review |
 | [2026-11-27-x-association-requirements.md](2026-11-27-x-association-requirements.md) | Batch 30 sourced X/original attachment, retained scope/qualification, planned fixtures and proposed INT-061/062 unindexed-original/vocabulary owner options |
 | [2026-11-27-performance-evidence-requirements.md](2026-11-27-performance-evidence-requirements.md) | Batch 29 parser/all-setup scan evidence, honest same-file reference comparisons, bounded compute and carried Clippy/#59 review notes |

@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through pattern lookup, robustness/performance evidence and V/X derivations drafted (family 2, batches 1-26 and 28-31).**
+> **Status: foundations through V/X and release-evidence derivations drafted (family 2, batches 1-26 and 28-32).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -2714,7 +2714,12 @@ private item or from the header's absence.
 Data Source ID and vendor acronym are textual identifiers, not integer
 field values. A source named 01 is not numerically canonicalized to 1 by
 INT-038 or INT-055. No acronym alphabet beyond the cited rules, private
-value decoder or default vendor is introduced here.
+value decoder or default vendor is introduced here. INT-063's usable VN is
+one usable non-Ambiguous INT-036-projected value with INT-041 blank handling
+and INT-037 character guards, exactly three characters under section 9.5.13,
+compared ASCII case-insensitively. Available projected wrong length is
+Invalid/unconfirmed under A; unreviewed blank handling stays unavailable,
+not silently trimmed. This defines no policy winner or source rewrite.
 
 **L3-EXT-012** · Parent: L2-EXT-004 · Verification: T
 *Given a usable explicit local V ID and available reviewed source-key metadata, source-context matching SHALL list every same-document G\DSI-n candidate with equal textual identity, retaining resolved/unresolved/ambiguous evidence without equating V occurrence x to G source entry n; ambiguous/unavailable local ID SHALL not become an arbitrarily selected source binding.*
@@ -2754,3 +2759,72 @@ just because a vendor namespace cannot be confirmed.
 Positive names cite section 9.5.13; source targets cite Table 9-2 p. 9-11.
 Missing/duplicate/invalid header composition can receive evaluated states.
 INT-063 policy fixtures remain BLOCKED, not executed conformance tests.
+
+
+## Dependency/SBOM/provenance acceptance (family 2, batch 32)
+
+L3-REL-002–008 are reserved by held #59; this independent slice starts at
+009. Requirements are Draft inspection obligations with no Evidence lines.
+See the [batch note](research/2026-11-27-release-evidence-and-vn-followup.md).
+No dependency, workflow, publishing, settings or credential change is made.
+
+**L3-REL-009** · Parent: L2-REL-005 · Verification: I
+*Dependency-check evidence SHALL identify the redesigned packages and resolved graph/lock state, supported checked features/targets, exact source head, deny.toml revision, tool command/version and advisory-source snapshot/time; a configured job without matching completed results SHALL NOT establish dependency acceptance.*
+
+Inspect actual graph coverage rather than only direct manifest entries.
+Record unavailable checks/data as limitations, not clean results. This does
+not invent a database-freshness window, feature matrix or new source policy.
+
+**L3-REL-010** · Parent: L2-REL-005 · Verification: I
+*The existing vulnerability, maintenance/yank, licence and source rules SHALL remain effective on the checked graph, with denials causing failed acceptance unless an applicable existing documented exception covers them; warnings SHALL remain distinguishable from denials, and an internal workspace path SHALL NOT silently permit arbitrary third-party path/git/registry sources.*
+
+L1-REL-005 and deny.toml govern the actual rule set; validate tool behavior,
+not comments alone. Duplicate-version warnings are not turned into a new
+blanket ban. No exception, licence list or registry allowance is added here.
+
+**L3-REL-011** · Parent: L2-REL-005 · Verification: I
+*Each dependency exception SHALL remain traceable to its listed identifier, affected dependency/context and written reason; retirement of the prototype XML code SHALL include review/removal of its prototype-only advisory ignores, without transferring that rationale to replacement code or treating a past exception as approval of a new dependency.*
+
+The current deny.toml comments explicitly require removing those ignores
+with the retired code. This is future restructure acceptance, not an edit
+of the policy file now. Criterion retention and any dev dependency still
+need owner approval under the carried instructions.
+
+**L3-REL-012** · Parent: L2-REL-006 · Verification: I
+*Release-artifact acceptance SHALL identify the reviewed release source/version, target/build and exact binary bytes/digest for every distributed binary, and bind its published checksum and SBOM/provenance evidence to that same artifact; another target/version's evidence or a mutable filename alone SHALL NOT satisfy the match.*
+
+RELEASING.md plans Windows/Linux/macOS distribution and SHA-256 checksums.
+This introduces no new target/architecture set or release action. A binary
+rebuilt after evidence generation requires matching evidence, not reuse of
+a stale digest merely because the output filename is identical.
+
+**L3-REL-013** · Parent: L2-REL-006 · Verification: I
+*Each released binary SHALL have its required CycloneDX SBOM from the actual build/dependency context, with target/features/source identity sufficient to associate it with that binary; a library-only manifest list, different-target graph or missing SBOM SHALL NOT be accepted as per-binary inventory.*
+
+RELEASING.md selects cargo cyclonedx; no SBOM schema version, new generator,
+tool installation or substitute format is selected here. A manifest's version
+requirements alone are not an inventory of resolved shipped dependencies.
+
+**L3-REL-014** · Parent: L2-REL-006 · Verification: I
+*Every distribution file covered by RELEASING.md's provenance obligation SHALL have verifiable build provenance associated with its actual digest and reviewed source/build identity, including the required binaries/SBOM/checksum artifacts, rather than only a workflow badge, signing-step name or another file's attestation.*
+
+RELEASING.md step 7 chooses GitHub build-provenance attestations. Evidence
+must show verification for the intended downloaded bytes and repository/
+build identity; a changed payload or wrong source artifact is not equivalent.
+No new signing/notarization policy or trust bypass is approved.
+
+**L3-REL-015** · Parent: L2-REL-006 · Verification: I
+*Release evidence SHALL include the documented user verification path and an applicable completed verification result for the exact intended distribution file, retaining missing/mismatch/verification failures as unsatisfied; documentation or an uploaded artifact alone SHALL NOT be claimed as successful verification.*
+
+The existing recipe is gh attestation verify <file> --owner TelemetryWorks.
+Concrete workflow/artifact verification belongs to later reviewed release
+work, not this docs PR. No account, credential or publisher registration is
+accessed to create evidence here.
+
+**L3-REL-016** · Parent: L2-REL-006 · Verification: I
+*Artifact acceptance SHALL preserve the existing separation between binary release.yml distribution and crates.io publishing via trusted-publishing.yml with the crates-io environment, and SHALL NOT turn SBOM/provenance success into authority to publish, store a registry token, bypass release gates or assert TMATS record integrity/semantic correctness.*
+
+All real releases remain Trusted Publishing-only. RELEASING.md's narrowly
+scoped first-upload exception stays coordinator/owner-only, never CI or this
+maintainer. No release workflow exists merely because a document names it;
+no first upload, token fallback or settings operation is authorized here.
