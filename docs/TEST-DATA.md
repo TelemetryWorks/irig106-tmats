@@ -2017,6 +2017,43 @@ are bounded library transform contracts, not an apply-all/general 0.5 edit
 API or a 0.2+ CLI clean-up command. The 0.1 normalization obligation is not
 claimed complete merely by adding gated children.
 
+## Planned retention/limit evidence batch 42
+
+Internal evidence tests use bounded synthetic ownership/span descriptors and
+explicit fixture-model charges. They do not choose production charging,
+allocator overhead, numeric defaults, failure atomicity, resume API or the
+owner-held non-setup host allocation rule. Source: L2-ROB-003/L3-ROB-004–006,
+ADR-0036 and existing per-channel/provenance contracts.
+
+| Planned test | Independent fixture and expected evidence | Requirements |
+|---|---|---|
+| `retention_inventory_covers_all_categories` | Supplied runs, owned/borrowed text, spans/fragments, provenance, snapshot and error storage all appear with domain/owner/size evidence; no hidden category | L3-ROB-014, L3-ROB-016 |
+| `retention_small_slice_keeps_backing_owner_visible` | Two text bytes borrow a much larger retained owner: used length and backing capacity remain distinct, zero copy is not zero retained memory | L3-ROB-014, L3-ROB-016 |
+| `retention_empty_fragments_still_have_metadata` | Empty text from several fragments/channels retains their metadata/provenance/owner references and declared charges, never a zero-length loophole | L3-ROB-014, L3-ROB-016 |
+| `retention_shared_owner_keeps_all_references` | Two runs point to one supplied owner identity: inventory preserves both references and sharing; no charging formula inferred from it | L3-ROB-014, L3-ROB-015 |
+| `retention_closing_one_reference_is_not_free` | One shared run closes while another/snapshot retains the owner: owner still live, no dangling reference or falsely claimed full release | L3-ROB-015 |
+| `retention_handoff_is_not_deallocation` | Completed record/caller takes a retained span: ownership/domain transfer distinguished from physical release; no claim of total application heap reduction | L3-ROB-015, L3-ROB-016 |
+| `retention_snapshot_and_error_state_are_in_scope` | Assembler-owned snapshot/error reference still retains owner/metadata after main run changes: visible under the declared model, no budget escape | L3-ROB-014, L3-ROB-018 |
+| `retention_unknown_capacity_is_not_zero` | Backing capacity/overhead needed for claimed bound is unavailable: readiness limitation exposed, not assumed zero or a hard memory guarantee | L3-ROB-016 |
+| `retention_model_does_not_claim_rss_bound` | Fixture covers open-run bytes but excludes caller outputs/allocator unknowns: scope/limitations retained, no global process/RSS claim | L3-ROB-016 |
+| `retention_limit_equality_is_not_excess` | Fixture limit 64, charged 50, proposed charge 14: arithmetic fits exactly; no other constraints supplied, so byte comparison alone is not excess | L3-ROB-017 |
+| `retention_excess_is_not_full_admission` | Same limit/state, proposed full charge 15: cannot claim full operation admitted within 64; actual acceptance/disposition follows the separately supplied failure-policy result | L3-ROB-017, L3-ROB-018 |
+| `retention_integer_overflow_is_typed_limit` | Synthetic integer max 255, charged 254, delta 2: typed arithmetic/limit failure evidence, no wrap/panic or enormous allocation | L3-ROB-017, L3-ROB-018 |
+| `retention_channels_share_aggregate_limit` | Fixture charges from several independent runs combine under one supplied limit; do not enforce each channel as if it had a separate full budget | L3-ROB-016, L3-ROB-017 |
+| `retention_failure_disposition_is_exact` | Injected failure record lists accepted fragment/prefix and rejected remainder with origins/ownership: no lost/duplicated ranges or fabricated bytes | L3-ROB-018, L3-ROB-019 |
+| `retention_failure_ledger_does_not_choose_atomicity` | Separately supplied all-rejected versus explicit-prefix failure records exercise common evidence validation only; neither is approved as the production failure contract or a safe retry promise | L3-ROB-018 |
+| `retention_error_payload_copy_cannot_escape_budget` | Proposed full rejected-payload copy hidden in error path: inventory/claimed-domain check detects unaccounted retention, no false bounded-state success | L3-ROB-014, L3-ROB-018 |
+| `retention_limit_is_not_joining_or_validity_signal` | Limit failure with an open run: preserve its actual state/source context, never invent EOF/stop/Complete, malformed findings or governing adoption | L3-ROB-018 |
+| `retention_fixture_model_is_not_production_evidence` | Synthetic charge totals pass but real ownership/allocation model is unverified: implementation hard-bound readiness still unsatisfied | L3-ROB-016, L3-ROB-019 |
+| `retention_core_refusals_and_drains_stay_core_owned` | Supplied core HardLimit / BudgetTooSmall / TargetLimit refusals and drain reports retain identity, extent and context unchanged; distinct from injected tmats assembler-retention failure, never reclassified | L3-CLI-042, L3-ROB-018 |
+| `retention_pool_credits_are_in_domain_not_counted_twice` | Retained DATA spans hold supplied core BlockPool credits: inventory includes them inside the budget domain, not a borrowed/caller exclusion; overlapping core/assembler byte totals are not added twice | L3-ROB-014, L3-ROB-016, L3-ROB-018 |
+| `retention_open_run_holds_pool_to_b_reader_stall` | **BLOCKED, PENDING OWNER reader-progress policy:** synthetic pool budget B; an open run retains DATA spans holding credits up to B and the reader needs another block. Preserve the credit inventory and core evidence; expected cap/early-copy/typed-failure behavior awaits owner choice, no assumed progress or silent eviction | L3-ROB-016, L3-ROB-019 |
+
+Operational failure is not a new always-refuse extraction finding. Raw
+extract still requires an available selected extent; no guessed byte ranges,
+silent eviction, local spill, partial-acceptance policy or source truncation
+is authorized. Tests are planned, not executed memory/performance evidence.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample

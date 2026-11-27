@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through normalization policy contracts drafted (family 2, batches 1-26 and 28-41).**
+> **Status: foundations through retention/limit evidence drafted (family 2, batches 1-26 and 28-42).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -2963,6 +2963,11 @@ No severity suppression or rendering rule is selected here.
 **L3-CLI-042** · Parent: L2-CLI-011 · Verification: T
 *Enumeration SHALL pass through core/assembler traversal failure and resource-limit evidence with its supplied extent and source context, retaining the distinction between no Complete records and an incomplete inventory; it SHALL NOT restart under the alternate input route, silently drop runs or assert that unvisited input contained no further records.*
 
+Core's admission refusals (HardLimit / BudgetTooSmall / TargetLimit) and
+drain reports are core-owned evidence passed through unchanged, with supplied
+extent/context. They remain separate from tmats' assembler-retention limit:
+tmats never reclassifies them or double-counts bytes across the two accounts.
+
 Already observed records do not establish successful full traversal after a
 later failure. This requirement selects no continue/stop/recovery mode,
 partial-result publication, exit code or process policy. Existing bounded
@@ -3462,3 +3467,75 @@ Use synthetic owned text and reviewed counter/fragment descriptors. Compare
 complete output bytes and source immutability, not only typed values or a
 multiset. Source-freshness/analysis/executable verification remain required
 beyond focused fixtures. No renderer/schema or stable Rust API is frozen.
+
+
+## Retained-resource inventory and limit evidence (family 2, batch 42)
+
+These derive L2-ROB-006/007 and refine the already stated finite-budget/
+borrowed-span contracts. No production byte tariff, allocator-overhead rule,
+numeric default, post-error API or host steady-state allocation rule is chosen.
+See the [contract note](research/2026-11-27-retention-limit-evidence.md).
+
+**L3-ROB-014** · Parent: L2-ROB-006 · Verification: T
+*The in-scope retention inventory SHALL identify open runs/channels, ordered fragment/span references, backing owner identities and their live references, owned text where present, provenance, assembler-retained snapshots and error-path storage, distinguishing logical used length from retained allocation/capacity and unavailable size information.*
+
+This is an internal test/evidence contract, not a public report schema or a
+new field on PacketFacts/PacketInfo. Memory-owner/capacity evidence must come
+from verified actual ownership APIs or explicit caller descriptors, never
+inferred from header lengths. Empty text is not zero metadata retention.
+
+**L3-ROB-015** · Parent: L2-ROB-006 · Verification: T
+*Shared backing ownership SHALL remain represented while any in-scope retained span/snapshot/error path still depends on it; closing one run or changing a run's lifecycle SHALL not falsely mark the owner released while another retained reference remains, and handoff outside the declared domain SHALL be distinguished from deallocation.*
+
+The inventory tracks owner identity/reference relationships, not a choice
+between unique-owner, per-reference or conservative charge formulas. Closing
+an open run is not proof a completed output or caller released its buffers.
+No source may dangle/rebind; ADR-0036's no-required-coalescing remains intact.
+A budget for open-run state is not a bound on the caller's entire heap/RSS.
+
+**L3-ROB-016** · Parent: L2-ROB-006 · Verification: T
+*Accounting evidence SHALL name its domain, including core BlockPool credits held by retained DATA spans, selected model/units and known quantities or reviewed bounds for every covered retention category; it SHALL expose excluded/caller-owned or unknown quantities and SHALL NOT advertise a hard aggregate byte bound from logical text totals, incomplete overhead/owner accounting or a synthetic fixture model.*
+
+Selected policies must cover their claimed domain, including metadata-only
+streams, backing retention and failure/snapshot state. This does not decide
+allocator overhead or shared/caller charging. An unavailable required quantity
+is a readiness limitation, not zero charge or a fabricated successful proof.
+The owner-held zero-allocation non-setup host rule is not selected here.
+
+Retained pool credits stay inside this domain, not an exclusion for borrowed
+or caller-owned bytes. PENDING OWNER: how the assembler keeps the reader
+progressing while it retains spans (cap retained pool credits, early copy,
+or typed failure). No policy, threshold or copy trigger is selected; the
+open-run reader-stall fixture is BLOCKED on that decision.
+
+**L3-ROB-017** · Parent: L2-ROB-007 · Verification: T
+*An admission/limit calculation SHALL compare the configured finite limit, charged state and proposed charge under the selected model without wrapping arithmetic; a full proposed operation whose charge exceeds the remaining limit or arithmetic domain SHALL not be reported as fully admitted within budget, and its actual accepted/rejected extent SHALL remain explicit.*
+
+Tests may provide a small independent integer domain and charges. Equality
+with the byte limit does not exceed that limit, though another declared
+constraint may still reject. This fixes no default, fragment-size cap or
+atomicity: a future selected policy must still define actual acceptance.
+No integer-sized source allocation is needed to test arithmetic boundaries.
+
+**L3-ROB-018** · Parent: L2-ROB-007 · Verification: T
+*Typed limit evidence SHALL retain the affected operation/run/channel, input/provenance context, configured limit/model and actual accepted/retained/returned/rejected source boundaries with their ownership disposition, without an uncharged full-payload error copy or a fabricated EOF, malformed-data verdict, joining stop, Complete result or governing/checksum success.*
+
+Source disposition must be truthful under whichever reviewed failure contract
+is eventually selected. Do not infer all-or-nothing rollback, partial-prefix
+support or safe retry/resume from this ledger; those remain review items.
+Failure reporting itself is retained state if the assembler owns it, not an
+escape from the existing budget. No spill I/O, forced eviction or renderer
+format is authorized. Missing input cannot be repaired with an empty record.
+
+Core admission refusals and drain reports remain core-owned evidence under
+L3-CLI-042, passed through unchanged and separate from this assembler limit.
+Do not relabel a core refusal as an assembler limit or double-count retained
+bytes by adding overlapping core and assembler accounting totals.
+
+**L3-ROB-019** · Parent: L2-ROB-007 · Verification: T
+*Resource tests SHALL independently specify retained owner/reference/category inventories, selected fixture-model charges, arithmetic boundaries and failure/source disposition, including multiple channels, shared owners, empty fragments, snapshots and error paths; fixture accounting shall not substitute for verification of actual production allocations/ownership or approve a pending policy.*
+
+Assert internal evidence and exact retained source, not only a final numeric
+counter. Test native checked arithmetic in appropriate CI profiles when code
+exists; debug/release differences must not hide overflow. No new dev dependency,
+local heavy run or production memory/throughput threshold is approved.
