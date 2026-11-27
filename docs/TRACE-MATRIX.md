@@ -478,7 +478,7 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-061 | X occurrence mapping when the original has no numeric index | proposed (2026-11-27; Option A recommended) | not yet written | _(none)_ |
 | INT-062 | Meaning of existing TMATS code in X decomposition | proposed (2026-11-27; Option A recommended) | not yet written | _(none)_ |
 | INT-063 | Vendor attribution when V header and private path evidence are incomplete or inconsistent | proposed (2026-11-27; Option A recommended) | not yet written | _(none)_ |
-| INT-064 | Ordering policy for explicitly requested normalization | proposed (2026-11-27; A recommended) | not yet written | _(none)_ |
+| INT-064 | Ordering policy for explicitly requested normalization | proposed (2026-11-27; A mechanism plus named built-in D preferred, or explicit owner L1 reinterpretation) | not yet written | _(none)_ |
 | INT-065 | Scope of line-ending normalization | proposed (2026-11-27; A recommended) | not yet written | _(none)_ |
 | INT-066 | Preconditions for explicit counter recomputation | proposed (2026-11-27; A recommended) | not yet written | _(none)_ |
 

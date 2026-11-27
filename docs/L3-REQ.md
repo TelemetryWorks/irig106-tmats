@@ -3418,11 +3418,14 @@ formatting mode. Missing target order/newline/count semantics stay unavailable.
 **L3-WRT-013** · Parent: L2-WRT-005 · Verification: T
 *Order normalization SHALL retain every selected source region exactly once, preserve raw bytes within each region and preserve all opaque/prefix/suffix content under the selected approved mapping; no equality, invalidity, case-folded key or unknown group SHALL authorize dropping/coalescing an occurrence or renumbering a name.*
 
-INT-064 A proposes an explicit complete-region bijection; B/C remain real
-alternatives. Region/layout ownership must be established from reviewed source
-mapping before either sorting or caller permutation is implemented. A source
-order change is not permission to reinterpret standalone comments or pick a
-scalar duplicate winner. The policy and its Option-A tests remain BLOCKED.
+INT-064 recommends A's validated complete-region bijection plus a named
+built-in profile, preferably D (Chapter 9 group order, v1); B/C/D remain
+owner choices. D groups G/T/R/M/P/D/B/S/Q/C/H/V/X within runs between
+standalone-comment/opaque/malformed anchors, stable within each group, with
+its proposed unknown/private placement rules. Unknown partition still refuses.
+A alone is not built-in canonical-order coverage: a profile for 0.1 or explicit
+owner L1 reinterpretation is required. None is approved or activated here;
+A/D policy tests stay BLOCKED. Keep every raw region and its source mapping.
 
 **L3-WRT-014** · Parent: L2-WRT-005 · Verification: T
 *Line-ending normalization SHALL use the explicitly selected target and approved conversion scope, identify CRLF as one token where conversion applies, preserve all non-target bytes and report unavailable layout rather than silently trim, project or transcode fields to achieve a claimed global newline convention.*

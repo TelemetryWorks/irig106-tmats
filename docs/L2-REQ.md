@@ -1476,7 +1476,7 @@ keeps the full 0.1 library obligation distinct from the later CLI clean-up.
 
 **Statement**: A normalization request SHALL identify its input document/revision, explicitly requested transform kinds and selected reviewed policy/parameters; execution SHALL remain gated by each policy's approval/readiness, preserve every original source byte in the unchanged input and limit output changes to those authorized transforms, without selecting a missing canonical order/newline/counter rule implicitly.
 
-**Rationale**: ADR-0002/0007 and UC-09 retain exact output unless requested. Ch9 section 9.4.2 allows arbitrary order, so canonical choice is not a standard default. INT-064/065/066 are proposed choices, not approvals. This derives bounded order/newline/counter behavior, not arbitrary set/delete/renumber edits or the 0.2+ clean-up command.
+**Rationale**: ADR-0002/0007 and UC-09 retain exact output unless requested. Ch9 section 9.4.2 allows arbitrary order, so canonical choice is not a standard default. INT-064/065/066 are proposed choices, not approvals. This derives bounded order/newline/counter behavior, not arbitrary set/delete/renumber edits or the 0.2+ clean-up command. INT-064 now recommends validated A plus the proposed named built-in D profile; A alone supplies no built-in canonical order. Approval of a built-in profile or explicit owner reinterpretation/clarification of L1 is still required; this PR does neither.
 
 **Verification Method**: Test (T)
 

@@ -2301,36 +2301,56 @@ records the boundary. Each proposed Option-A fixture remains BLOCKED.
 
 **Sources**:
 - 106-24R1 Ch9 section 9.4.2 p. 9-2: “Attributes may appear in any order.”
+- Ch9 sections 9.5.2–9.5.14, in their printed section order: G, T, R, M, P, D, B, S, Q, C, H, V, X. This supplies a possible project profile sequence, not a mandated serialized order.
 - ADR-0002/0007 and L1-WRT-002/UC-09 require preserved source by default and explicit normalization; none defines a standard canonical comparator.
 
-**Behaviour (PROPOSED A)**: Require a caller-selected ordering plan that names
-every reorderable, complete source region exactly once within one document/
-revision. Validate it as a bijection and replay each whole raw region without
-changing name/value bytes; explicitly retained prefix/EOF material stays
-anchored. If the region partition or mapping is unavailable, refuse this
-operation rather than invent boundaries. No implicit comparator, deduplication,
-case rewrite, counter rewrite or field/default insertion is authorized.
-A caller-selected canonical profile must be identified as that profile, never
-as the standard's unique canonical order. This does not invent or claim an
-unspecified built-in canonical profile implemented.
+**Behaviour (PROPOSED A mechanism plus named D profile)**: Validate the
+selected complete-region ordering plan as a bijection over one document/
+revision and replay whole raw regions without changing name/value bytes.
+Explicitly retained prefix/EOF material stays anchored. If the partition or
+mapping is unavailable, refuse rather than invent boundaries. No implicit
+normalization, deduplication, case/counter rewrite or insertion is authorized.
+The proposed named built-in **Chapter 9 group order, v1** profile generates
+such a plan using D below; both the mechanism and profile remain owner-gated.
+No profile is automatically selected by default byte-faithful serialization.
 
-**Options**: A — explicit caller-selected complete-region ordering plan
-(recommended); B — built-in stable full projected-key tuple ordering (ASCII-folded group/
-path components, canonical numeric indices compared by length then digits,
-source-order ties), with standalone comments and opaque/malformed regions
-anchored as barriers and each region retaining its leading layout; C — defer
-order transformation until a fixed built-in
-profile is approved, retaining only exact replay meanwhile.
+**Options**:
+- **A — explicit caller-selected complete-region plan.** A is the validated
+  permutation mechanism, not a built-in canonical order by itself.
+- **B — full-key sort.** Built-in stable projected-key tuple ordering:
+  ASCII-folded group/path, canonical numeric indices by length then digits,
+  source-order ties. Standalone comments and opaque/malformed regions are
+  anchored barriers; each region retains its leading layout. It gives more
+  within-group ordering but has more comparison/tie/placement rules.
+- **C — postpone built-in ordering.** Wait for an approved fixed profile,
+  retaining exact replay meanwhile. This delays the required capability;
+  it cannot be counted as satisfying L1-WRT-002's canonical-order obligation.
+- **D — group-order profile (preferred built-in).** Within each reorderable
+  run between anchors, use Ch9 section group order G, T, R, M, P, D, B, S,
+  Q, C, H, V, X, retaining source order within each group. Standalone COMMENT
+  and opaque/malformed regions are anchored as in B; unknown-group regions
+  anchor, never acquire a guessed group. Complete positively grouped V/X
+  regions retain stable within-group placement and every private byte,
+  without decoding private meaning/attachment; if group/region classification
+  is unavailable, anchor it. This proposed placement rule needs approval
+  with the profile and does not resolve INT-061/062/063. Anchors can prevent
+  global group order across the whole file; no crossing them is implied.
 
-**Reason**: A supplies deterministic explicitly chosen ordering without
-pretending section 9.4.2 prescribes a unique order or silently moving/dropping
-opaque bytes. It costs a caller policy/plan and leaves a built-in profile
-unapproved. B is convenient but needs additional placement/tie rules; C delays
-a required normalization capability. No option permits hidden repair.
+**L1-WRT-002 consequence and recommendation**: **A alone has no built-in
+canonical order and does not by itself fully satisfy the current L1.** The
+owner must either approve one named built-in B or D profile for 0.1 alongside
+A (**A + D recommended**), or explicitly reinterpret canonical order as a
+caller-selected identified profile and clarify L1 wording. No reinterpretation
+or L1 text change is made here. D is a less disruptive built-in than full-key
+sorting, with fewer tie rules and source order retained inside each group.
+Its costs are a project convention rather than a standard-mandated order,
+explicit unknown/private placement rules, anchor-limited group ordering and
+no cleanup of within-group order. A remains useful for caller-specific plans;
+neither it nor D may be advertised as the standard's unique canonical form.
 
-**Design**: proposed (2026-11-27; A recommended) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off and independent AI check pending · **Origin**: family 2 normalization source review
+**Design**: proposed (2026-11-27; A mechanism plus named built-in D preferred, or explicit owner L1 reinterpretation) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off and amended-wording independent AI check pending · **Origin**: family 2 normalization source review and #77 independent review
 
-**Test**: `normalize_order_explicit_bijection`, `normalize_order_missing_or_repeated_identity`, `normalize_order_preserves_raw_regions` (planned; Option-A expectations BLOCKED)
+**Test**: `normalize_order_explicit_bijection`, `normalize_order_missing_or_repeated_identity`, `normalize_order_preserves_raw_regions`, `normalize_group_profile_section_order`, `normalize_group_profile_stable_within_group`, `normalize_group_profile_anchors`, `normalize_group_profile_private_and_unknown_placement` (planned; A/D expectations BLOCKED)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -2400,6 +2420,9 @@ while holes remain; it requires refusal where B can still provide a partial
 explicit correction. B is more permissive but leaves a knowingly inconsistent
 index domain. Equal raw spelling variants count once; duplicate occurrences
 and invalid member VALUES remain visible under INT-038/039/040.
+The same identity/retention rule applies to reviewed MML\N-style counters,
+not only MNF\N; use each counter's own cited scope/range (Table 9-7 NUMBER
+OF MEASUREMENT LOCATIONS, p. 9-117), never import MNF\N's 1–8 range.
 
 **Design**: proposed (2026-11-27; A recommended) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off and independent AI check pending · **Origin**: family 2 normalization source review
 

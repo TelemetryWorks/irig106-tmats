@@ -470,6 +470,9 @@ proposed INT-064/065/066 present its order/newline/counter choices. They need
 owner sign-off and independent AI review, source analysis and executable
 oracles before implementation. The 0.1 library obligation remains unchanged;
 no general-edit or later CLI clean-up feature is silently brought forward.
+INT-064 A alone supplies no built-in canonical order: the owner must approve
+a named B/D profile (A + D recommended) for 0.1, or explicitly reinterpret
+and clarify L1-WRT-002. Neither choice or L1 text change is made here.
 
 ## Decomposition/readiness audit
 

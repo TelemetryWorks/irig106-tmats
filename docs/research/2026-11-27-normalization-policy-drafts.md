@@ -31,15 +31,29 @@ than inventing defaults. Earlier research stays historical.
 ## Plain-English owner questions and recommendations
 
 **INT-064 — what order does explicit normalization use?**
-A (recommended) takes the caller's explicit complete-region order, verifies
-that every region occurs once and replays unchanged chunks in that order.
-B supplies a built-in stable projected-key tuple sort, with comments and
-unknown/malformed content anchored as barriers; ties retain source order.
-C waits for a fixed built-in profile before allowing order transformation.
-A avoids pretending the standard mandates one canonical order, at the cost
-of requiring the caller to identify the policy/plan. It does not silently
-create a built-in canonical format. All mappings must preserve bytes and
-establish prefix/suffix/layout ownership; unavailable mapping refuses.
+A is the validated caller-selected complete-region permutation mechanism;
+it alone has no built-in canonical order. B supplies a stable full-key sort,
+C postpones built-in ordering, and added D supplies a **Chapter 9 group order,
+v1** profile: G, T, R, M, P, D, B, S, Q, C, H, V, X, stable source order
+within each group. This sequence comes from Ch9 sections 9.5.2–9.5.14,
+not a standard mandate to serialize in that order.
+
+D uses reorderable runs between the same standalone-comment/opaque/malformed
+anchors as B. Unknown groups anchor; positively grouped complete private V/X
+regions keep raw private bytes and stable placement in their group, without
+claiming decoded meaning or attachment. Unavailable group/region classification
+anchors rather than guesses. This proposed treatment is part of D's owner
+choice, not approval of private X/V interpretation. Anchors can prevent one
+global group sequence across the file, and D does not fix within-group order.
+
+**Recommendation: A plus one named built-in profile, D preferred.** It is
+less disruptive and has fewer tie rules than B, but remains a project
+convention with explicit placement rules, not the standard's unique canonical
+form. The owner must approve a built-in B or D for 0.1, or explicitly accept
+canonical order as a caller-selected identified profile and clarify L1-WRT-002.
+A alone does not fully satisfy the current L1's canonical-order obligation.
+No profile or reinterpretation is approved here; mappings must preserve all
+raw regions and refuse unknown partitions. Default replay never invokes D.
 
 **INT-065 — which line endings can change?**
 A (recommended) converts only positively identified layout to caller-chosen
@@ -97,10 +111,25 @@ in 0.2+ while retaining L1-WRT-002 in 0.1. Owner review must reconcile the
 concrete profile/capability with that wording; this PR does not move releases,
 claim the obligation complete or silently reduce full 0.1 scope.
 
+## #77 independent review follow-up
+
+The independent check at head `4ed91a989b95642340744cc28d9bcfaf5c552aa1`
+CONCURRED with INT-065/066 Option A's fairness and identified INT-064's
+missing group-profile alternative and L1 consequence. The register, WRT
+contract, roadmap and owner summary now carry D and the A-plus-built-in
+recommendation; amended INT-064 wording still needs independent recheck,
+and all three still await owner choices. No approval is inferred from a
+pre-check or from source verification.
+
+Four blocked D cases independently list section-order/stability/anchor/private
+placement results. The counter note also clarifies that canonical identity
+and duplicate retention apply to reviewed MML/N-style counters as well as
+MNF/N; each uses its own cited scope/range, with no behavior or option change.
+
 ## Planned checks and practical limits
 
-Nineteen planned cases cover common policy/revision/refusal and retained-source
-contracts, plus explicitly blocked order/newline/counter Option-A examples.
+Twenty-three planned cases cover common policy/revision/refusal and retained-source
+contracts, plus explicitly blocked order/newline/counter A and group-profile D examples.
 Whole-byte output and untouched-region identity are independent oracles; typed
 value equality or multiset equality alone misses loss/reordering. No normalizer,
 source-patch API, renderer, schema or new Rust type is implemented here.
