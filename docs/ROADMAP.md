@@ -87,6 +87,16 @@ accounting/defaults and recovery semantics, before implementation. The
 [batch 15 draft](research/2026-11-23-completeness-contracts-draft.md) presents
 opt-in labelled snapshots versus final-only semantic use; no choice is made.
 
+Review the [retention/limit contract](research/2026-11-27-retention-limit-evidence.md)
+and verify actual ownership APIs, capacity evidence and retained reference
+lifetimes before implementing resource accounting. Distinguish a retained-owner
+inventory from its charging policy and an open-run budget from process-wide
+memory. Qualify the full accounting domain, including metadata, snapshots and
+error paths; supplied synthetic charges are not production memory evidence.
+Choose numeric defaults, shared/caller/allocator accounting and failure
+atomicity/recovery separately; typed source-disposition evidence must not
+silently choose those policies or manufacture closure on resource exhaustion.
+
 ### Remaining bounded time-view derivations
 
 Review the association-uncertainty/caller-assumption derivations and implement

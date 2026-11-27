@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through normalization policy contracts drafted (family 2, batches 1-26 and 28-41).**
+> **Status: foundations through retention/limit evidence drafted (family 2, batches 1-26 and 28-42).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -1487,5 +1487,35 @@ keeps the full 0.1 library obligation distinct from the later CLI clean-up.
 **Statement**: Normalization SHALL retain source-item identity/correspondence, multiplicity and untouched content across a validated bounded transform plan, report unavailable/rejected rules rather than emit guessed successful output, and distinguish changed output/checksum evidence from unedited input; successful normalization SHALL NOT imply standard conformance, positive integrity or governing eligibility.
 
 **Rationale**: Unknown/vendor/extension/malformed source is evidence, not disposable formatting. Reordering/line-ending/counter changes can alter the SHA byte domain; existing stamp remains a separate explicit final transaction. Detailed transform bytes depend on the proposed policy choices and reviewed source correspondence, with independent oracles required. No report rendering or general edit API is selected here.
+
+**Verification Method**: Test (T)
+
+
+## Open-run retention and limit evidence (family 2, batch 42)
+
+These refine L2-ROB-003's finite aggregate budget under ADR-0036 without
+choosing numeric defaults, a charging formula or failure atomicity/resume.
+The [contract/gate note](research/2026-11-27-retention-limit-evidence.md)
+separates an observable retained-resource inventory from a policy that turns
+that inventory into charges. Production accounting and API evidence remain
+required; synthetic policy inputs do not certify a hard memory bound.
+
+#### L2-ROB-006
+
+**Parent**: L1-ROB-001
+
+**Statement**: The assembler SHALL retain a testable inventory of its in-scope retained text/owners, span/fragment/run metadata, provenance, retained snapshots and error-path state across all open channels, identifying shared ownership and known size/capacity or unavailable quantity; it SHALL bind accounting claims to the declared budget domain and selected reviewed model rather than infer memory use from logical text length or zero payload copies.
+
+**Rationale**: ADR-0036 requires borrowed blocks to stay alive and accounts for retained block owners/span metadata; L3-ROB-004 already covers aggregate text/metadata/snapshots with no hard-bound claim from an incomplete model. Owner identity/reference facts are distinct from the still-open charging/overhead and caller-owned accounting choices. This adds no packet metadata field, numeric limit or allocation threshold.
+
+**Verification Method**: Test (T)
+
+#### L2-ROB-007
+
+**Parent**: L1-ROB-001
+
+**Statement**: A budget-limited operation SHALL preserve explicit evidence of the configured model/limit, in-scope charged state and what source/ownership was accepted, retained, returned or rejected, using checked arithmetic and bounded failure reporting; operational limitation SHALL not silently discard source, forge a joining/finality event or claim an unchosen atomicity/resume policy.
+
+**Rationale**: L3-ROB-005/006 already require typed failure, observable acceptance and no hidden eviction/finalization or unbounded error buffer. This derives failure evidence and ownership truth independently of whether a future reviewed API rejects an entire operation or reports an accepted prefix. It does not approve partial acceptance, rollback, retry, spill I/O or semantic snapshot use.
 
 **Verification Method**: Test (T)

@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-27-retention-limit-evidence.md](2026-11-27-retention-limit-evidence.md) | Batch 42 retained-owner inventory, accounting-proof scope and typed-limit/source-disposition evidence; charging and recovery policies remain open |
 | [2026-11-27-normalization-policy-drafts.md](2026-11-27-normalization-policy-drafts.md) | Batch 41 bounded transform contracts and proposed INT-064/065/066 order/newline/counter choices with blocked policy fixtures |
 | [2026-11-27-bounded-lookup-state-requirements.md](2026-11-27-bounded-lookup-state-requirements.md) | Batch 40 direct bounded VIEW-006 trace, candidate/field/association separation and independent acceptance cases |
 | [2026-11-27-family2-coverage-audit.md](2026-11-27-family2-coverage-audit.md) | Source-pinned 0.1 parent/decomposition audit, missing direct traces, partial contracts and owner/source/evidence gates |
