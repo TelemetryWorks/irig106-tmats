@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through session evidence drafted (family 2, batches 1-26 and 28-38).**
+> **Status: foundations through argument-parser contracts drafted (family 2, batches 1-26 and 28-39).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -1384,9 +1384,9 @@ policy is approved, while its evidence and development gates remain.
 
 **Parent**: L1-CH10-005
 
-**Statement**: Within an explicitly supplied session scope, the library SHALL retain observed setup FRMT evidence and report the prohibited coexistence of ASCII and XML when both decoded format observations are established, with source locations and qualifications; unsupported XML text SHALL not be parsed as ASCII, and unknown session or format evidence SHALL not become a clean no-mixture conclusion.
+**Statement**: Within an explicitly supplied session scope, the library SHALL retain setup FRMT observations with source locations and qualifications; formal coexistence-finding eligibility SHALL remain gated on the pending owner scope decision, with Complete-record-only Option A recommended and broader non-Complete-candidate Option B unapproved. Unsupported XML SHALL not be parsed as ASCII, and unavailable scope/format evidence SHALL not become a clean no-mixture conclusion.
 
-**Rationale**: 106-24R1 Chapter 11 section 11.2.7.2 Figure 11-34 p. 11-50 prohibits both formats in the same session. Format observation is CSDW evidence, not XML-body interpretation, successful assembly or governing use. The source defines a recording session as .RECORD to .STOP; existing INT-045 caller assertions remain labelled provenance, not inferred sessions from gaps/time/channel changes. This child approves no guessed boundary or per-fragment FRMT conflict summary.
+**Rationale**: 106-24R1 Chapter 11 section 11.2.7.2 Figure 11-34 p. 11-50 prohibits both formats in the same session. Format observation is CSDW evidence, not XML-body interpretation, successful assembly or governing use. The source defines a recording session as .RECORD to .STOP; existing INT-045 caller assertions remain labelled provenance, not inferred sessions from gaps/time/channel changes. This child approves no guessed boundary or per-fragment FRMT conflict summary. A whole recording is one session only under explicit labelled caller assertion or actual supplied session evidence, never by inference. The standard's format prohibition does not silently broaden L1's Complete-record scope; A retains non-Complete FRMT as qualified evidence without the formal finding, B broadens it and needs owner approval.
 
 **Verification Method**: Test (T)
 
@@ -1396,6 +1396,35 @@ policy is approved, while its evidence and development gates remain.
 
 **Statement**: For a supplied established configuration-change trigger, the library SHALL preserve record/fragment SRCC observations, session context and candidate-event provenance while reporting the required-event check indeterminate until verified event identity and its separately reviewed prior-ordering scope are available; it SHALL never choose a nearby generic event as proof, infer agreement among fragment bits or make the uncertainty imply a positive/negative event-presence verdict.
 
-**Rationale**: Chapter 11 section 11.2.7.2 pp. 11-50–51 requires a configuration-change event before the new setup. Approved INT-030/F7 requires verified identification and indeterminate meanwhile; its analysis notes keep first-record SRCC=1, fragment disagreement and prior-ordering open. Core owns packet admission and edition-dependent channel rules under ADR-0036; this does not derive or duplicate a channel-0 threshold in tmats. L1-CH10-005's existing 106-17 wording still needs per-edition source reconciliation with the owner-relayed 106-11 reminder before that part is implemented.
+**Rationale**: Chapter 11 section 11.2.7.2 pp. 11-50–51 requires a configuration-change event before the new setup. Approved INT-030/F7 requires verified identification and indeterminate meanwhile; its analysis notes keep first-record SRCC=1, fragment disagreement and prior-ordering open. Core owns packet admission and edition-dependent channel rules under ADR-0036; this does not derive or duplicate a channel-0 threshold in tmats. The archived per-edition header text is re-verified in the batch-39 source note. L1-CH10-005 wording change remains PENDING OWNER: recommended A aligns the setup-channel obligation with the verified 106-11 onset while consuming core's evidence; B defers the wording change and leaves the acceptance gap explicit. Neither is approved here; the normative L1 text is unchanged.
+
+**Verification Method**: Test (T)
+
+
+## Host-supplied argument parsing (family 2, batch 39)
+
+These derive accepted ADR-0013's hand-rolled, table-driven mechanism and
+L1-CLI-009's reusable host runner, not new command syntax or report formats.
+The [contract/source note](research/2026-11-27-argument-contract-and-session-scope.md)
+records reviewed-table and owner gates. No argument-parsing dependency,
+option-default policy or output renderer is selected by this batch.
+
+#### L2-CLI-014
+
+**Parent**: L1-CLI-009
+
+**Statement**: The reusable runner SHALL parse only its caller-supplied argument sequence through a hand-rolled, table-driven parser using the applicable reviewed command/option grammar, returning an internal command request or distinguishable usage failure without acquiring process arguments, selecting files, performing command I/O or terminating the host; it SHALL not infer an unrecognized command or repair a rejected argument into an accepted request.
+
+**Rationale**: ADR-0013 and CLAUDE.md require a hand-rolled parser and tests for every flag/value/usage error; ADR-0034 W3 shares computation between the host and thin binary. This isolates parsing from existing routing, record selection, source acquisition and rendering. It approves no unreviewed duplicate-flag, abbreviation, -- separator, stdin, non-Unicode-token or numeric option grammar.
+
+**Verification Method**: Test (T)
+
+#### L2-CLI-015
+
+**Parent**: L1-CLI-009
+
+**Statement**: Parser acceptance SHALL cover every implemented reviewed command/option/value rule and usage failure with independently specified supplied-token cases, and preserve command/request/usage distinctions through both host-runner and individual-command integration without a second parser, environment-derived defaults or side effects on rejected requests.
+
+**Rationale**: ADR-0013's per-flag tests and W3's shared runner make parsing behavior observable to an orchestrating host. Mechanism tests against a synthetic table do not prove full product grammar coverage; unsupported or held table rules remain explicit readiness gaps. Public argument forms, numeric CLI syntax, record defaults, output/exit policy and rendering still require their own reviewed definitions where pending.
 
 **Verification Method**: Test (T)

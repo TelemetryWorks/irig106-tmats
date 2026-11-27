@@ -96,6 +96,7 @@ irig106-tmats/
 │   │                          2026-11-25-retained-cut-and-qm-review-followups.md records the independent review and narrow blocking/test amendments;
 │   │                          2026-11-25-time-view-metadata-requirements.md derives bounded channel/time-field requirements and acceptance scope;
 │   │                          2026-11-25-source-bit-requirements.md derives explicit NSB splitting and records DSI/CHE remaining boundaries;
+│   │                          2026-11-27-argument-contract-and-session-scope.md derives host argument parsing and records pending scope/wording choices with channel-source re-verification;
 │   │                          2026-11-27-session-evidence-requirements.md derives session-format/F7 uncertainty and carries detector qualification/vocabulary clarifications;
 │   │                          2026-11-27-suspect-terminator-requirements.md derives suspect-colon suggestions and records coordinator flex qualification constraints;
 │   │                          2026-11-27-flex-compatibility-acceptance.md derives pinned-reference compatibility acceptance and separate packet/TMATS checksum evidence;

@@ -290,7 +290,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-CLI-006 | _(none)_ | _(none)_ | Draft |
 | L1-CLI-007 | L2-CLI-009 | _(none)_ | Draft |
 | L1-CLI-008 | L2-CLI-003, L2-CLI-004 | _(none)_ | Draft |
-| L1-CLI-009 | L2-CLI-001, L2-CLI-002, L2-CLI-007 | _(none)_ | Draft |
+| L1-CLI-009 | L2-CLI-001, L2-CLI-002, L2-CLI-007, L2-CLI-014, L2-CLI-015 | _(none)_ | Draft |
 
 **L2 -> L3 -> Verification Artifacts**
 
@@ -309,6 +309,8 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-CLI-011 | L3-CLI-041, L3-CLI-042, L3-CLI-043 | _(TBD)_ | Draft |
 | L2-CLI-012 | L3-CLI-045, L3-CLI-046, L3-CLI-047, L3-CLI-048, L3-CLI-051 | _(TBD)_ | Draft |
 | L2-CLI-013 | L3-CLI-049, L3-CLI-050 | _(TBD)_ | Draft |
+| L2-CLI-014 | L3-CLI-052, L3-CLI-053, L3-CLI-054 | _(TBD)_ | Draft |
+| L2-CLI-015 | L3-CLI-055, L3-CLI-056, L3-CLI-057 | _(TBD)_ | Draft |
 
 ### L1-ROB: Robustness against arbitrary input
 
@@ -386,17 +388,17 @@ This matrix is the single source of truth for live status; the requirement docum
 | WRT | 7 | 4 | 11 | 0 | 0 | 0 | 0 |
 | SUM | 4 | 5 | 16 | 0 | 0 | 0 | 0 |
 | IO | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
-| CLI | 9 | 13 | 51 | 0 | 0 | 0 | 0 |
+| CLI | 9 | 15 | 57 | 0 | 0 | 0 | 0 |
 | ROB | 3 | 5 | 13 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 2 | 8 | 0 | 0 | 0 | 0 |
 | REL | 6 | 3 | 9 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **90** | **296** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **92** | **302** | **0** | **0** | **0** | **0** |
 
 The countable requirement set is every L2 and L3 requirement plus the 33 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 419 (0.0%).
+**Tested by at least one test marker**: 0 of 427 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 419 (0.5%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 427 (0.5%).
 
 ### Orphan check
 
