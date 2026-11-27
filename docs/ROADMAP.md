@@ -191,6 +191,17 @@ canonical ordering, line-ending and counter-rewrite rules with independent
 byte oracles before claiming the full normalization capability. The boundary
 requirements do not choose those rules or reduce the 0.1 obligations.
 
+### Remaining flex source qualification and acceptance
+
+Qualify the exact irig106lib reference revision, relevant source/options and
+build/runtime environment before implementing bit-for-bit flex compatibility.
+Spell out byte/line preparation, filters and complete arithmetic; retain the
+accepted D7 quirk rather than silently fixing it. Independently fixed vectors
+and arithmetic checks must cover default/inclusion options and bounded edge
+cases. Historical prose or wrapper mocks alone are not compatibility evidence.
+Raise undefined/platform-sensitive behavior before selecting product policy;
+no source vendoring, new dependency or output-format choice is approved here.
+
 ### Remaining checksum command acceptance
 
 Review checksum/verify/stamp command computation as thin library consumers

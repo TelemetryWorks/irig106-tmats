@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through checksum command computation drafted (family 2, batches 1-26 and 28-35).**
+> **Status: foundations through flex compatibility acceptance drafted (family 2, batches 1-26 and 28-36).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -2101,7 +2101,12 @@ packet integrity evidence. No optional local checksum fallback is authorised.
 
 PacketFacts (irig106-types) contains HEADER FACTS ONLY, no trust/integrity
 fields; do not add fields or silently embed sideband state there. Use core's
-PacketInfo evidence, not a tmats verdict assembled from header subfields. This
+PacketInfo evidence, not a tmats verdict assembled from header subfields.
+Core's PacketInfo data-checksum state SHALL pass through unchanged: a G\SHA
+result neither upgrades nor is upgraded by a core Mismatch or NotChecked.
+A matching G\SHA does not repair packet integrity; a core Mismatch or
+NotChecked does not, by itself, change the separately evaluated G\SHA result.
+This does not grant access/admission when its own gate is unsatisfied. This
 selects no failed-payload adoption, report severity/format or RDG-008 rule.
 Core DATA excludes filler/checksum; TMATS neither rechecks nor adds them.
 
@@ -3003,7 +3008,7 @@ These are semantic distinctions, not a frozen result enum or output schema.
 INT-043 permits canonical numeric algorithm 2 with leading zeros, retaining
 every located noncanonical-designator warning even when another cause blocks
 verification. F1/INT-021 retains all duplicate evidence and no positive match.
-No whole-document validity or governing authority follows from a SHA match.
+No whole-document validity or governing authority follows from a SHA match. Core PacketInfo data-checksum Mismatch/NotChecked is independent and passes through unchanged; neither it nor a G\SHA result upgrades the other. Admission/access gates remain separate.
 
 **L3-CLI-048** · Parent: L2-CLI-012 · Verification: T
 *An explicitly requested flex computation SHALL stay distinguishable from standard SHA computation/verification with its non-standard identity and supplied compatibility options attached to the result; it SHALL neither write a flex value into G\SHA nor satisfy a standard checksum request by returning flex instead.*
@@ -3039,3 +3044,65 @@ SHA digests and the reviewed transaction. Negative fixtures assert intended
 reasons, not unrelated errors. No second parser/packet reader or production
 command path computes its own expected oracle. Stamp cases also trace to
 L3-CLI-049/050; flex readiness still requires its own source-derived tests.
+
+
+## Flex source-fidelity and acceptance (family 2, batch 36)
+
+These derive L2-SUM-004/005 from ADR-0014 and the existing investigation,
+not newly verified reference code. The full source/arithmetic derivation is
+still required before implementation; no fixture below claims conformance
+or executed reference output. See the [source/gap note](research/2026-11-27-flex-compatibility-acceptance.md).
+
+**L3-SUM-011** · Parent: L2-SUM-004 · Verification: T
+*Flex computation SHALL use its reference-defined byte preparation and item/line selection over the explicitly supplied document source, preserving raw bytes and source/revision identity; it SHALL not silently use typed/effective values, INT-036 control omission, INT-038/055 numeric normalization, repaired names or a SHA-exclusion interval as a substitute.*
+
+Reference-specific uppercasing is part of compatibility, not a source rewrite
+or permission to use locale/Unicode folding from an unrelated API. The
+source-qualification analysis must define exact byte/line/terminator handling,
+including embedded controls/high bytes and absent final delimiters; unknown
+behavior is not inferred from the TMATS reader's semantics.
+
+**L3-SUM-012** · Parent: L2-SUM-004 · Verification: T
+*The accepted reference's default exclusion and explicit inclusion-option behavior SHALL be reproduced exactly, including D7's MPOC4/DPOC4 distinction, with source options bound to the result; no extension of an exclusion family, spelling correction or substitution of standard attribute meanings SHALL silently alter the compatibility filter.*
+
+The existing investigation identifies default COMMENT/group COM, G/V and
+R-identity exclusions and their inclusion flags. D7 deliberately retains
+DPOC4 as contributing while the documented adjacent DPOC1–DPOC3 filters do
+not contribute by default. These are compatibility tokens, not definitions
+of Chapter 9 attributes or a new public CLI flag grammar.
+
+**L3-SUM-013** · Parent: L2-SUM-004 · Verification: T
+*Flex line-checksum accumulation and algorithm/options identity SHALL match the qualified reference's exact arithmetic and byte-order rules, retaining its documented per-line Fletcher-32 summation behavior without substituting whole-document Fletcher-32, SHA-256 or a host-word-size-dependent calculation.*
+
+Before implementation, analysis must specify initialization, byte/word
+packing, odd lengths, arithmetic width/reduction/carry/overflow and final
+identity encoding from the pinned source. Reordering checks apply only to
+independently qualified complete reference lines, not arbitrary fragments.
+No numeric constant or malformed-input repair is invented to fill these gaps.
+
+**L3-SUM-014** · Parent: L2-SUM-005 · Verification: T
+*Compatibility evidence SHALL identify the exact reference revision, relevant source-file hashes/function and option definitions, build/runtime environment and fixture bytes/options/expected results; a moving branch name, historical prose or production-generated expectation SHALL not establish bit-for-bit compatibility.*
+
+The historical investigation names enI106_Tmats_Signature but supplies no
+newly verified pinned snapshot in this batch. Record reference behavior's
+preconditions and any undefined/locale/platform sensitivity. Such gaps must
+be resolved by source analysis and, where a product choice is needed, owner
+review before claiming support; do not hide them behind a passing example.
+
+**L3-SUM-015** · Parent: L2-SUM-005 · Verification: T
+*Flex verification SHALL include fixed independently recorded reference vectors plus an independent arithmetic check, default/inclusion-option coverage, D7, line-order/duplicate-line relations and bounded byte/length boundary cases; equality against the new flex implementation alone SHALL not supply its own oracle or establish malformed/high-byte behavior not defined by the reference.*
+
+Reference execution/source analysis belongs to later reviewed development,
+not this documentation PR. Keep expected values fixed with source provenance,
+not recomputed through production code during the test. Undefined cases are
+explicit readiness gaps, not fabricated positive vectors. Respect existing
+resource limits; this introduces no unbounded fuzz campaign or new dependency.
+
+**L3-SUM-016** · Parent: L2-SUM-005 · Verification: T
+*Every flex result SHALL retain its non-standard compatibility identity and option/source context independently of standard SHA and core PacketInfo integrity evidence; flex SHALL not be written into G\SHA, repair input, upgrade packet integrity/record qualification or satisfy a request for authoritative standard checksum verification.*
+
+No public label spelling, text layout, JSON field or process status is
+selected here. Proposed INT-031 still gates incomplete/ambiguous access.
+Core data-checksum Mismatch/NotChecked passes through unchanged; neither
+flex nor G\SHA upgrades it, and it does not upgrade either result.
+Command-computation wrappers remain L3-CLI-048/051, not a flex oracle.
