@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through pattern lookup, robustness and performance-evidence derivations drafted (family 2, batches 1-26 and 28-29).**
+> **Status: foundations through pattern lookup, robustness/performance evidence and X-association derivations drafted (family 2, batches 1-26 and 28-30).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -2579,3 +2579,81 @@ L1-PERF-001 mentions the retired ecosystem draft's 100 Mbps sustained figure
 for first-measurement comparison; it is not a newly approved floor here.
 ADR-0021's overall proposal remains proposed. Held std, pattern, extraction,
 record-access/governance and report-format decisions remain unresolved.
+
+
+## X attachment and evidence boundaries (family 2, batch 30)
+
+Source: 106-24R1 Chapter 9 section 9.5.14 p. 9-172, ADR-0008/0026 and
+approved INT-038/039/040/048. These are proposed derivations, not runtime
+coverage. [INT-061](INTERPRETATIONS.md#int-061) remains proposed: unindexed-
+original mapping is blocked before implementation; other unknown grammar
+must not be guessed. Public pattern-scope/syntax and record-access holds
+remain separate and unchanged.
+
+**L3-EXT-001** · Parent: L2-EXT-001 · Verification: T
+*X association SHALL use a reviewed decomposition retaining X occurrence, organization, original group/full code path, extension code and all suffix indices with raw correspondence; when decomposition or original index arity is unavailable/ambiguous, it SHALL retain the source and an observable cannot-evaluate reason rather than choose a greedy path split or fabricate a usable original key.*
+
+Section 9.5.14 allows multiple backslashes in ORIGCODE, with no hyphens in
+that original-code text. Its D-1\MN-1-2 / X-1\MYORG\D\MN\SGAIN-1-2
+example is a structural oracle, not a complete conforming setup fixture.
+Private extension grammar is not inferred from familiar-looking suffixes.
+
+**L3-EXT-002** · Parent: L2-EXT-001 · Verification: T
+*For an original with a reviewed occurrence/index layout, association SHALL require matching original group and complete code path, matching X/original occurrence and the same ordered leading suffix-index tuple of the original's declared arity; only the remaining suffix positions SHALL be treated as extension-private indices, without using them to repair a mismatch or guess a target.*
+
+Section 9.5.14 p. 9-172 supplies leftmost-index matching. Get arity and
+segment attachment from reviewed original-name metadata, not the number of
+indices that happen to follow one extension. Too few/unusable carried
+indices cannot be silently completed from a nearby original.
+
+**L3-EXT-003** · Parent: L2-EXT-001 · Verification: T
+*Literal original-path comparison SHALL use ASCII case-insensitive comparison under Chapter 9 section 9.4.2 p. 9-2, with INT-036 name projection and INT-038 canonical digit-string identity for X/original indices, preserving all raw spelling, omission, normalization and collision findings without locale/Unicode/high-byte folding or numeric field-value limits.*
+
+INT-038 explicitly covers embedded original indices. X and original remain
+different full keys; canonical index agreement is not association proof by
+itself. A 40-digit index must not require integer conversion or allocation
+up to that index. Private trailing indices retain their own positions.
+
+**L3-EXT-004** · Parent: L2-EXT-001 · Verification: T
+*With association prerequisites available, zero matching original occurrences SHALL give unresolved, one SHALL give resolved to that source item, and several SHALL give ambiguous with every original occurrence/location in source order; original or extension value equality, first/last order and checksum agreement SHALL NOT select or deduplicate a target.*
+
+ADR-0026 supplies candidate semantics; INT-039 preserves scalar duplicates.
+This associates code-name identity, not a link through the data item's
+value. Unsupported metadata is cannot-evaluate, not established no-target.
+No concrete Rust result/error spelling or rendered format is selected.
+
+**L3-EXT-005** · Parent: L2-EXT-002 · Verification: T
+*Association SHALL remain within one supplied document, retaining X and every target item identity, raw bytes/spans and assembled-packet provenance, with the setup's Ambiguous/Incomplete/cut/encoding qualifications unchanged; a successful structural attachment SHALL NOT upgrade field validity, authorize record access or establish a governing setup/time-source association.*
+
+INT-039 treats an assembled setup as one document; separate setup records
+cannot supply a missing original. INT-048 retains duplicate ambiguity/cut
+blocking force and INT-037 blocks semantic lookup for leading encoding
+markers. The [open access/governance item](ROADMAP.md#streaming-setup-record-follow-ups)
+remains open; internal attachment does not approve the public pattern API.
+
+**L3-EXT-006** · Parent: L2-EXT-002 · Verification: T
+*Unrecognized extension meaning and orphan X items SHALL retain their raw content and attachment evidence without creating an original object/member, inserting missing indices, rewriting source or imposing contiguity on X occurrence values; extension-private index range/count/uniqueness semantics SHALL remain unclassified without their own reviewed definition.*
+
+Section 9.5.14 p. 9-172 exempts X occurrence contiguity and disallows new
+original values; INT-040 says X does not create a D member. This is not a
+blanket contiguity exemption for every embedded/trailing index or approval
+of the EXTENSION_CODE namespace-uniqueness validator. Unknown values are
+not evaluated as a sensor conversion or clock-association rule.
+
+**L3-EXT-007** · Parent: L2-EXT-002 · Verification: T
+*Any mapping from the printed X-x form to an original with no numeric index SHALL remain gated by INT-061 owner sign-off and independent AI review before implementation; the association layer SHALL NOT silently invent occurrence zero/one, omit the required comparison or infer an index from the original's value/order.*
+
+The printed section 9.5.14 form and index-match sentence do not explain how
+to target G\PN, whose Table 9-2 p. 9-10 code name has no numeric index.
+INT-061 Option A recommends retaining raw X plus cannot-evaluate mapping;
+that proposed case expectation is BLOCKED, not approved behavior. This gate
+does not decide indexed fields of groups without an occurrence or any
+other unsupported original grammar.
+
+**L3-EXT-008** · Parent: L2-EXT-001 · Verification: T
+*Association tests SHALL use independently enumerated original item IDs, code-path/index metadata and source spans to verify resolved/unresolved/ambiguous or unavailable outcomes, including raw retention and record qualifications, rather than compute expected targets through the production resolver or infer correctness from a successful round trip alone.*
+
+Use the section 9.5.14 example and cited original-code rows, then controlled
+index/spelling/duplicate/scope variants. Values remain opaque. Source
+freshness, development analysis and executable tests precede implementation;
+unknown grammar or pending INT-061 cannot become a passing conformance case.

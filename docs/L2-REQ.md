@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through pattern lookup, robustness and performance-evidence derivations drafted (family 2, batches 1-26 and 28-29).**
+> **Status: foundations through pattern lookup, robustness/performance evidence and X-association derivations drafted (family 2, batches 1-26 and 28-30).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -1113,3 +1113,33 @@ this slice does not approve that host allocation threshold.
 **Rationale**: L1-PERF-001 requires same-file comparison and defers a numeric budget until the first measurement. TEST-DATA documents reference-tool defects including first-packet-only reading and nontermination. ADR-0021 remains proposed; its scanner algorithm is not selected by this measurement contract. CI-heavy/light-local compute rules and no-new-dependency-without-owner-approval remain in force.
 
 **Verification Method**: Inspection (I)
+
+
+## X-extension association (family 2, batch 30)
+
+This is the X portion of L1-EXT-003; V grouping remains to derive, so this
+child does not complete that parent. ADR-0008/0026 and section 9.5.14 supply
+the baseline. The [source/gap note](research/2026-11-27-x-association-requirements.md)
+drafts proposed INT-061 for unindexed originals; that case is BLOCKED on
+owner sign-off and independent AI check under ADR-0033. No edit/renumber
+implementation or public query-language decision is selected here.
+
+#### L2-EXT-001
+
+**Parent**: L1-EXT-003
+
+**Statement**: Given a reviewed, unambiguous X-name decomposition and original-code index metadata, the library SHALL associate an X item with every source occurrence matching its original group/code path, occurrence and carried leading indices in the same document, using ASCII case comparison and INT-038 identity; it SHALL retain resolved/unresolved/ambiguous candidate evidence without selecting a duplicate winner or inferring association from extension values.
+
+**Rationale**: 106-24R1 Chapter 9 section 9.5.14 p. 9-172 defines ORIGCODE, occurrence/leading-index agreement and extension-private remaining indices. ADR-0008 makes X first-class, ADR-0026 lists link candidates without arbitrary selection, and approved INT-038 explicitly applies canonical identity to X/original indices. Association is structural attachment, not evidence that an original value or setup is valid, complete or governing. Unknown decomposition/arity must remain unavailable rather than be guessed.
+
+**Verification Method**: Test (T)
+
+#### L2-EXT-002
+
+**Parent**: L1-EXT-003
+
+**Statement**: Extension association SHALL preserve all X/original bytes, identities, locations, record qualifications and unknown extension content independently of decoding support, without creating a missing original, editing indices or extending parent counters; missing evidence/unsupported mappings SHALL remain distinguishable from an established no-target result, and no unindexed-original mapping SHALL bypass the proposed INT-061 review gate.
+
+**Rationale**: Section 9.5.14 p. 9-172 requires association preservation even when extension meaning is unknown and says X occurrence values match originals rather than create new ones; ADR-0002/0003 retain raw source. INT-040 excludes X from D membership and leaves extension-private indices unclassified. The source's no-index gap for G\PN (Table 9-2 PROGRAM NAME p. 9-10) needs an owner decision, not a fabricated zero/one occurrence. Renumber edits remain their later transaction scope.
+
+**Verification Method**: Test (T)

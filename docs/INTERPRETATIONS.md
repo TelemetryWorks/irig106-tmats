@@ -2152,3 +2152,36 @@ not a default target; it never supplies a missing choice.
 **Test**: `assumption_next_query_needs_explicit_choice`, `assumption_warn_default_is_not_target_default` (planned, not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+
+### INT-061
+
+**Title**: X occurrence mapping when the original has no numeric index
+
+**Sources**:
+- 106-24R1 Chapter 9 section 9.5.14, p. 9-172, prints `X-x\ ORGANIZATION \ORIGCODE\EXTENSION_CODE-i-j-m-n:Value;`.
+- Same section: “The ORIGCODE contains the original group identifier (i.e., G,D,P, etc.)” and “The value of “-x” must match the first level index (P-x, etc.) value”.
+- Same section: “The “x” values must match the index of the original code word therefore no new values may be added.”
+- Table 9-2 PROGRAM NAME, p. 9-10, prints code name `G\PN`, with no numeric index. Section 9.5.14's worked example uses indexed `D-1\MN-1-2`, not an unindexed original.
+- ADR-0002/0008/0026 preserve raw extensions and require evidence for attachment; no invented source index or default is authorized.
+
+**Behaviour (PROPOSED, Option A recommended; owner decision required)**:
+When an original has no numeric index, retain the X item and any plausible
+raw original evidence but report the occurrence mapping cannot-evaluate,
+with its missing-rule reason; do not report resolved or proven no-target,
+invent zero/one, infer an index from data values/order, or rewrite the X name.
+Ordinary indexed association keeps its separately sourced rules. This proposal
+does not claim the standard forbids all extensions of unindexed attributes;
+it declines to invent the absent occurrence mapping.
+
+**Owner options**:
+- **A — recommend:** leave the mapping unavailable until a separately reviewed representation is established. Raw data remains accessible; no fabricated match enters a consumer's model.
+- **B — explicit policy:** define an owner-chosen representation for unindexed targets (for example a labelled sentinel/omitted-occurrence convention) before supporting them. This could enable such attachments but would add project policy not printed in section 9.5.14 and needs its own exact syntax, collision and compatibility tests; no representation is chosen here.
+
+**Reason**: The X form/index-match rule assumes an index to compare; its broad original-group description includes G, whose PROGRAM NAME has none. The cited text does not supply a sentinel or omitted-index form. Guessing one can create a false attachment or hide an orphan. Prefer an explicit unavailable result over claiming a standards-defined mapping.
+
+**Design**: proposed (2026-11-27; Option A recommended) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off pending; independent AI check pending; source freshness, development analysis and executable tests remain required · **Origin**: family 2 batch 30 source inspection
+
+**Test**: `x_unindexed_original_mapping_unavailable`, `x_unindexed_zero_one_never_default`, `x_unindexed_value_never_supplies_occurrence` (planned Option A expectations; BLOCKED before owner sign-off/AI check, not implemented or executed)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written

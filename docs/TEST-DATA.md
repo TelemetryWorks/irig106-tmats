@@ -1486,6 +1486,49 @@ threshold, benchmark dependency, reference-tool patch or numeric timeout.
 Prototype benchmark comments are not requirement verification markers for
 this new contract, and timing does not approve proposed ADR-0021.
 
+## Planned X-extension association batch 30
+
+Source: 106-24R1 Ch9 section 9.5.14 p. 9-172; original D-x\MN-y-n is
+Table 9-7 MEASUREMENT NAME p. 9-115, D-x\MNF\N-y-n-m is NUMBER OF
+FRAGMENTS p. 9-117. G\PN is Table 9-2 PROGRAM NAME p. 9-10. These
+fixtures test structural attachment, not whole-file conformance or private
+extension-value semantics. A/B below are independent source item identities.
+Record qualification/access restrictions remain intact. INT-061 Option A
+is proposed: its three expectations are BLOCKED before owner/AI approval.
+
+| Planned test | Independent source/binding and expected evidence | Requirements |
+|---|---|---|
+| `x_section_example_attaches_to_original` | A=`D-1\MN-1-2:MEAS1;`, X=`X-1\MYORG\D\MN\SGAIN-1-2:10.75;`; resolved to A, raw bytes/locations retained; no Sensor Gain value decoder asserted | L3-EXT-001, L3-EXT-002, L3-EXT-004 |
+| `x_extra_indices_remain_extension_private` | Same A, X ends SGAIN-1-2-7-8: first [1,2] binds A; [7,8] stays private, not another original index/counter declaration | L3-EXT-002, L3-EXT-006 |
+| `x_nested_origcode_uses_full_path` | A=`D-1\MNF\N-1-1-1:2;`, X=`X-1\ORG\D\MNF\N\NOTE-1-1-1-8:v;`; reviewed three-index arity/path binds A, final 8 remains private | L3-EXT-001, L3-EXT-002 |
+| `x_wrong_group_or_path_never_matches_value` | Another code/path holds MEAS1 or looks like a prefix: it is not a target solely through value/prefix similarity | L3-EXT-002, L3-EXT-004 |
+| `x_occurrence_mismatch_is_not_repaired` | Only original D-2 exists, X occurrence is 1: available matching gives unresolved, no substitution of nearest/only occurrence | L3-EXT-002, L3-EXT-004 |
+| `x_carried_index_order_is_exact` | A indices [1,2], X leading [2,1]: no match; a matching subsequence later in private indices cannot repair it | L3-EXT-002 |
+| `x_too_few_carried_indices_is_unavailable` | Original arity two is reviewed, X supplies one usable carried index: cannot-evaluate malformed binding, not a fabricated second index | L3-EXT-001, L3-EXT-002 |
+| `x_canonical_indices_keep_raw_findings` | A=`D-01\MN-01-02:m;`, X=`X-1\MYORG\D\MN\SGAIN-1-2:v;`: canonical positions agree, raw spellings/INT-038 findings remain; X/D are different full keys | L3-EXT-003 |
+| `x_long_index_has_no_field_digit_limit` | Reviewed indexed name contains a 40-digit identity; compare canonical strings without integer conversion or INT-055's field-value ten-digit rule | L3-EXT-003 |
+| `x_ascii_case_is_not_unicode_folding` | Lowercase original-path spelling compares under ASCII case rules; a high-byte look-alike never folds into a matching ASCII original path | L3-EXT-003 |
+| `x_name_projection_retains_omission_finding` | A real internal control omitted under INT-036 leaves canonical matching possible only through approved projection; original source and located omission remain | L3-EXT-003, L3-EXT-005 |
+| `x_orphan_is_not_new_original_or_counter_member` | Reviewed X targets an absent original: unresolved, all bytes retained, no D member/counter entry created (INT-040) | L3-EXT-004, L3-EXT-006 |
+| `x_duplicate_originals_are_all_candidates` | A and B are repeated original scalar keys, even with equal values: ambiguous [A,B] in source order, no winner, record INT-048 Ambiguous attached/unchanged | L3-EXT-004, L3-EXT-005 |
+| `x_unknown_extension_value_does_not_erase_attachment` | Unique matching original exists, private value unknown/contains high bytes: structural attachment retains raw evidence/field findings, never interprets it as a clock/measurement rule | L3-EXT-004, L3-EXT-005, L3-EXT-006 |
+| `x_noncontiguous_occurrences_are_not_created` | Originals/related X occurrences use 1 and 3: section 9.5.14's X occurrence rule does not demand 2 or synthesize original 2; other index rules stay separate | L3-EXT-006 |
+| `x_unknown_arity_never_uses_greedy_prefix` | Reviewed original arity/path metadata unavailable or decomposition ambiguous: cannot-evaluate with retained raw items, not guessed longest-prefix match or false absence | L3-EXT-001, L3-EXT-004 |
+| `x_separate_record_cannot_supply_original` | Target only exists in another setup record/document: query never borrows it or chooses a governing record | L3-EXT-005 |
+| `x_cross_fragment_target_shares_one_document` | Same-channel sequence +1 fragments with matching FRMT/RCCVER form ONE ADR-0025/INT-011 record: original and X across fragments retain target IDs and packet/body provenance | L3-EXT-005 |
+| `x_attachment_preserves_cut_and_ambiguous_qualification` | Diagnostic source has Ambiguous and/or retained cut/Incomplete facets: any returned attachment keeps them and their blocking force, without approving access/adoption | L3-EXT-005 |
+| `x_leading_marker_blocks_semantic_attachment` | Assembled text begins EF BB BF: INT-037 availability gate remains; keep raw evidence and reason, not resolved/empty semantic success | L3-EXT-001, L3-EXT-005 |
+| `x_unindexed_original_mapping_unavailable` | **BLOCKED, INT-061 Option A proposed:** raw X appears to target unindexed G\PN; retain plausible raw evidence and cannot-evaluate mapping, not resolved or proven no-target | L3-EXT-007 |
+| `x_unindexed_zero_one_never_default` | **BLOCKED, INT-061 Option A proposed:** hypothetical X-0/X-1 forms for G\PN cannot introduce an implicit sentinel/default occurrence or source rewrite | L3-EXT-007 |
+| `x_unindexed_value_never_supplies_occurrence` | **BLOCKED, INT-061 Option A proposed:** numeric-looking G\PN value/order supplies no missing source index; no association invented from its data | L3-EXT-007 |
+| `x_association_oracle_is_not_resolver_output` | Independently listed target IDs/path/arity/spans determine expected outcomes; production resolver/round trip alone is not the oracle; all bytes and qualifiers unchanged | L3-EXT-008 |
+
+No public query syntax, concrete result/error names, report layout, private
+value/counter semantics, namespace-uniqueness validator or edit/renumber API
+is selected here. V-group derivations remain separate; a partial X child
+does not complete L1-EXT-003. Future metadata coverage and executable tests
+must satisfy the claimed 0.1 support rather than silently reduce its scope.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample

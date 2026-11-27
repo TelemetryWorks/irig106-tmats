@@ -113,6 +113,12 @@ owner approval.
 
 ### Remaining raw lookup and extension derivations
 
+Review the indexed X/original attachment derivation and complete V grouping.
+PENDING OWNER/independent review: proposed INT-061 for X occurrence mapping
+to unindexed originals such as G\PN; recommend unavailable mapping over
+inventing a zero/one index. No affected-case implementation before approval;
+unknown private grammar, edit/renumber rules and qualifiers remain separate.
+
 Owner decisions PENDING before pattern-query implementation: 0.1 pattern
 scope (reviewed registry patterns only is a proposal, not approved), and
 public query syntax including wildcards/escaping. Candidate retrieval must
