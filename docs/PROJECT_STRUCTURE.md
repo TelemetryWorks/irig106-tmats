@@ -96,6 +96,7 @@ irig106-tmats/
 │   │                          2026-11-25-retained-cut-and-qm-review-followups.md records the independent review and narrow blocking/test amendments;
 │   │                          2026-11-25-time-view-metadata-requirements.md derives bounded channel/time-field requirements and acceptance scope;
 │   │                          2026-11-25-source-bit-requirements.md derives explicit NSB splitting and records DSI/CHE remaining boundaries;
+│   │                          2026-11-27-normalization-policy-drafts.md derives bounded normalization contracts and proposes the three unresolved transform policies;
 │   │                          2026-11-27-bounded-lookup-state-requirements.md derives the direct bounded lookup-state chain without general links or new association evidence;
 │   │                          2026-11-27-family2-coverage-audit.md audits the scoped 0.1 parent links, partial derivations and readiness gates at a pinned main snapshot;
 │   │                          2026-11-27-argument-contract-and-session-scope.md derives host argument parsing and records pending scope/wording choices with channel-source re-verification;

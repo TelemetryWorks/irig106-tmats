@@ -1978,6 +1978,45 @@ are supplied explicitly where their interpretation remains gated.
 All are planned checks, not executed tests. No new default, public query
 syntax, report schema or incomplete/ambiguous access option is approved.
 
+## Planned normalization-policy batch 41
+
+Common request/retention checks below do not approve proposed INT-064/065/066.
+Every Option-A and INT-064-D transformation/result expectation is **BLOCKED** pending owner
+sign-off and independent AI check. Definitions/byte oracles come from reviewed
+source regions and explicitly supplied condition/member evidence; no implicit
+policy is calculated through the production normalizer.
+
+| Planned test | Independent input/expected obligation | Requirements |
+|---|---|---|
+| `normalize_request_without_policy_is_not_default_repair` | Missing/unready policy returns unavailable/refusal with original unchanged; default output still exact replay, never guessed canonical profile | L3-WRT-012 |
+| `normalize_stale_revision_or_conflicting_plan_refuses` | Wrong revision, conflicting exact targets or unresolved composition: observable refusal, no partial successful normalization or source mutation | L3-WRT-012 |
+| `normalize_order_explicit_bijection` | **BLOCKED INT-064 A:** source COMMENT:b;COMMENT:a;, explicit region order [second,first] gives exact COMMENT:a;COMMENT:b;, no byte changes inside either region | L3-WRT-013, L3-WRT-017 |
+| `normalize_order_missing_or_repeated_identity` | **BLOCKED INT-064 A:** omission/repetition in requested full region order refuses, never deduplicates, drops unknown content or invents a copy | L3-WRT-013 |
+| `normalize_order_preserves_raw_regions` | **BLOCKED INT-064 A:** complete selected regions with mixed case/duplicates/opaque bytes retain every byte exactly once; anchored prefix/suffix mapping must be positively established | L3-WRT-013, L3-WRT-017 |
+| `normalize_order_region_mapping_unavailable` | **BLOCKED INT-064 A:** no unambiguous complete-region partition: order request refuses rather than treating a malformed suffix as a complete item or guessing ownership | L3-WRT-012, L3-WRT-013 |
+| `normalize_group_profile_section_order` | **BLOCKED INT-064 A+D:** supplied positively grouped region IDs X1,R1,G1,T1,M1,P1,D1,B1,S1,Q1,C1,H1,V1,R2 yield G1,T1,R1,R2,M1,P1,D1,B1,S1,Q1,C1,H1,V1,X1 within one anchor-free run; raw regions intact | L3-WRT-013, L3-WRT-017 |
+| `normalize_group_profile_stable_within_group` | **BLOCKED INT-064 D:** source R regions with entry indices 10 then 2 retain that order and duplicate occurrences; D does not perform B's numeric/full-key sort or deduplicate | L3-WRT-013 |
+| `normalize_group_profile_anchors` | **BLOCKED INT-064 D:** supplied regions R1,G1,COMMENT,R2,G2 reorder to G1,R1,COMMENT,G2,R2; COMMENT/opaque/malformed anchors stay in place, no false claim of global group order across anchors | L3-WRT-013 |
+| `normalize_group_profile_private_and_unknown_placement` | **BLOCKED INT-064 D:** complete positively grouped V/X regions preserve private bytes and within-group order; unknown/unavailable group classification anchors rather than guessing placement or resolving private attachment | L3-WRT-013, L3-WRT-017 |
+| `normalize_newlines_layout_only` | **BLOCKED INT-065 A:** explicitly identified CRLF/lone-CR/lone-LF layout ranges convert to the caller's LF or CRLF target; CRLF is one token, all other bytes unchanged | L3-WRT-014 |
+| `normalize_newlines_field_controls_untouched` | **BLOCKED INT-065 A:** real CR/LF within COMMENT value or internal code name stays raw; only positively classified layout converts, no INT-036 projection written back | L3-WRT-014 |
+| `normalize_newlines_unknown_layout_unavailable` | **BLOCKED INT-065 A:** opaque/unclassified range prevents claiming complete requested conversion; no inferred trim/platform default or silent partial success | L3-WRT-012, L3-WRT-014 |
+| `normalize_newlines_padding_is_not_linebreak` | **BLOCKED INT-065 A:** NUL/0x1A/space padding is retained; explicit newline conversion never deletes padding or inserts a missing semicolon | L3-WRT-014 |
+| `normalize_counter_contiguous_distinct_members` | **BLOCKED INT-066 A:** evaluated applicable D MNF/N scope has child identities 1/01 and 2: k=2, proposed canonical value 2, every duplicate/spelling finding retained; invalid WP VALUE remains a structural member. Supplied reviewed MML/N membership descriptors likewise count canonical identities once with their own range, preserving duplicates; no MNF range import | L3-WRT-015, L3-WRT-017 |
+| `normalize_counter_gap_refuses` | **BLOCKED INT-066 A:** child identities {1,3}: refuse counter rewrite; B would use 2 with gap findings, never silently write maximum 3 as a member count | L3-WRT-015 |
+| `normalize_counter_invalid_old_value_explicit_rewrite` | **BLOCKED INT-066 A:** one complete identified target with malformed old value, established contiguous members {1,2}, accepted cited range: explicit counter operation proposes 2, old validation failure remains in old revision | L3-WRT-015, L3-WRT-016 |
+| `normalize_counter_compatible_damage_blocks` | **BLOCKED INT-066 A:** compatible unassigned/damaged member evidence makes count incomplete: refuse, never count only readable children as complete | L3-WRT-015 |
+| `normalize_counter_target_or_range_missing_refuses` | **BLOCKED INT-066 A:** absent/duplicate target, unavailable applicability/scope/range or count outside cited range refuses; no target insertion, clipping or renumbering | L3-WRT-015 |
+| `normalize_checksum_is_not_implicitly_restamped` | Authorized changed-output fixture retains G\SHA bytes unless stamp separately requested; input match not reused as output proof, verify final domain independently | L3-WRT-016 |
+| `normalize_source_and_old_findings_remain` | Original bytes/revision/item identities/findings stay available after proposed success/refusal; new revision has its own correspondence/reevaluated results, no automatic governing promotion | L3-WRT-016 |
+| `normalize_explicit_compound_plan_has_coordinates` | Explicit reviewed composition order and source correspondence required; unresolved order/newline/counter overlap never runs in a guessed sequence | L3-WRT-012, L3-WRT-016 |
+| `normalize_oracles_are_exact_bytes_not_typed_values` | Expected full output and untouched-region identities fixed independently; matching typed values/multiset or calling production writer again is not proof | L3-WRT-017 |
+
+The default lossless writer and ADR-0037 extraction remain unchanged. These
+are bounded library transform contracts, not an apply-all/general 0.5 edit
+API or a 0.2+ CLI clean-up command. The 0.1 normalization obligation is not
+claimed complete merely by adding gated children.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample

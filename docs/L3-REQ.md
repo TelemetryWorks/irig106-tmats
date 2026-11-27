@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through bounded lookup states drafted (family 2, batches 1-26 and 28-40).**
+> **Status: foundations through normalization policy contracts drafted (family 2, batches 1-26 and 28-41).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -3400,3 +3400,65 @@ Actual Table 9-4 field fixtures keep their citations and reviewed definitions.
 Synthetic damaged/availability cases assert evidence boundaries, not invented
 conforming codes. Tests use internal states and supplied condition evidence;
 public query syntax, report rendering and stable Rust symbols remain held.
+
+
+## Normalization transform acceptance (family 2, batch 41)
+
+These derive L2-WRT-005/006. Policy-sensitive behavior remains BLOCKED on
+proposed INT-064/065/066 under ADR-0033; common validation/retention tests
+are not approval of those options. No normalization code is added.
+
+**L3-WRT-012** · Parent: L2-WRT-005 · Verification: T
+*Before transforming, normalization SHALL bind the requested order/newline/counter operations and selected policy parameters to the exact input revision and checked source correspondence, reject stale plans and unresolved overlaps/incompatible compositions, and refuse unavailable/unready policy without applying a partial guessed result or changing the original.*
+
+Only the requested bounded transform kinds are in scope. This is not a
+public arbitrary-patch API, an apply-all suggestion command or a default
+formatting mode. Missing target order/newline/count semantics stay unavailable.
+
+**L3-WRT-013** · Parent: L2-WRT-005 · Verification: T
+*Order normalization SHALL retain every selected source region exactly once, preserve raw bytes within each region and preserve all opaque/prefix/suffix content under the selected approved mapping; no equality, invalidity, case-folded key or unknown group SHALL authorize dropping/coalescing an occurrence or renumbering a name.*
+
+INT-064 recommends A's validated complete-region bijection plus a named
+built-in profile, preferably D (Chapter 9 group order, v1); B/C/D remain
+owner choices. D groups G/T/R/M/P/D/B/S/Q/C/H/V/X within runs between
+standalone-comment/opaque/malformed anchors, stable within each group, with
+its proposed unknown/private placement rules. Unknown partition still refuses.
+A alone is not built-in canonical-order coverage: a profile for 0.1 or explicit
+owner L1 reinterpretation is required. None is approved or activated here;
+A/D policy tests stay BLOCKED. Keep every raw region and its source mapping.
+
+**L3-WRT-014** · Parent: L2-WRT-005 · Verification: T
+*Line-ending normalization SHALL use the explicitly selected target and approved conversion scope, identify CRLF as one token where conversion applies, preserve all non-target bytes and report unavailable layout rather than silently trim, project or transcode fields to achieve a claimed global newline convention.*
+
+INT-065 A proposes positively identified layout-only ranges and LF/CRLF
+chosen by the caller; B/C remain unapproved alternatives. Raw leading layout
+and internal name/value controls are not interchangeable; NUL/0x1A padding
+is not a newline token. Do not infer a platform default. Option-A tests block.
+
+**L3-WRT-015** · Parent: L2-WRT-005 · Verification: T
+*Counter normalization SHALL use a reviewed counter definition, explicit target/scope and independently established canonical member identities, retain every supporting occurrence/finding and check the computed value against the cited range without clipping, renumbering or synthesizing missing members/targets; unapproved evidence/contiguity policy SHALL not be guessed.*
+
+INT-066 A proposes complete contiguous membership and range-checked canonical
+count, including explicit replacement of a malformed old value only when the
+target/domain are established; B/C differ and remain unapproved. INT-040's
+unusable-old-counter validation result is not erased by calculating a proposed
+replacement. Invalid member values do not silently remove structural members.
+
+**L3-WRT-016** · Parent: L2-WRT-006 · Verification: T
+*Normalization SHALL keep original source/revision immutable and distinguish proposed/emitted output plus old-to-new item/span correspondence; changing the hash domain SHALL not silently restamp G\SHA, reuse the input's positive verification as output proof or claim automatic record/field/core qualification upgrades from normalization success.*
+
+An explicitly requested stamp may occur only after final normalization output
+under the existing stamp transaction. No output checksum is claimed stale or
+valid solely because a transform ran: establish its actual domain/result.
+A changed counter field can be reevaluated in the new revision under reviewed
+rules; old findings stay bound to the original revision, not silently erased.
+Compound plans need explicit sequence/correspondence, not a guessed pipeline.
+No file acquisition, atomic replacement or sink rollback promise is added.
+
+**L3-WRT-017** · Parent: L2-WRT-006 · Verification: T
+*Tests SHALL independently specify requested policy/revision, exact affected bytes and untouched source/item sets for order/newline/counter cases and refusal paths; planned policy-specific oracles SHALL remain BLOCKED until owner approval/review rather than be counted as implemented transformations or generated through production normalization.*
+
+Use synthetic owned text and reviewed counter/fragment descriptors. Compare
+complete output bytes and source immutability, not only typed values or a
+multiset. Source-freshness/analysis/executable verification remain required
+beyond focused fixtures. No renderer/schema or stable Rust API is frozen.
