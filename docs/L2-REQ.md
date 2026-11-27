@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through V/X and release-evidence derivations drafted (family 2, batches 1-26 and 28-32).**
+> **Status: foundations through edition-independent reading drafted (family 2, batches 1-26 and 28-33).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -1210,3 +1210,36 @@ No new Evidence is claimed until actual redesigned graph/artifact checks.
 **Rationale**: L1-REL-006 remains the primary binary-evidence parent; L1-REL-001/005 and the org TRUSTED-PUBLISHING.md binary variant also motivate crate-package evidence within this child, without a new L1. Owner direction of 2026-11-22 supersedes the old separate release.yml/cargo-dist plan. The unified trusted-publishing.yml uses a self-attesting reusable builder, non-compiling TP publication with package comparison, and a verified draft-then-publish GitHub release. RELEASING.md records that protocol. These are future evidence contracts, not authorization to run publishing workflows, access credentials/settings or change the coordinator/owner-only bootstrap exception.
 
 **Verification Method**: Inspection (I)
+
+
+## Edition-independent reading (family 2, batch 33)
+
+This completes the structural derivation of L1-EDN-001, not the later
+historical registry/delta work or implementation of every supported edition.
+ADR-0016's parsing decision survives ADR-0028. Approved INT-035–039 supply
+framing, character projection, canonical index identity and known-scalar
+multiplicity without using an edition declaration to discard source.
+The [scope/source note](research/2026-11-27-edition-independent-reading.md)
+separates these mechanical obligations from edition-dependent semantics.
+No owner decision blocks this derivation; outstanding interpretation,
+record-access, historical-layout and report-format gates remain unchanged.
+
+#### L2-EDN-003
+
+**Parent**: L1-EDN-001
+
+**Statement**: The text reader SHALL retain and frame supplied TMATS bytes independently of the declared or selected edition, accepting missing, unknown, older or future edition declarations without choosing an edition-specific scanner or discarding attributes unknown to the available registry; it SHALL preserve the same source and structural item boundaries when only caller edition metadata changes.
+
+**Rationale**: ADR-0016 requires parsing every edition through one syntax path; ADR-0028 separates declaration/basis selection from reading. Baseline 106-24R1 Chapter 9 sections 9.4.1/9.4.2 p. 9-2 define physical/logical text framing; approved INT-035–038 define the current reader policies. This is a lossless text-reading contract, not a claim that a modern definition, default or range applies to historical/future input. Malformed text still yields retained bytes and scanner findings, not a fabricated conforming document.
+
+**Verification Method**: Test (T)
+
+#### L2-EDN-004
+
+**Parent**: L1-EDN-001
+
+**Statement**: Edition-independent reading SHALL expose retained raw items even when edition-specific meanings are unavailable, keeping structural reading, definition-dependent interpretation and record qualification separate; successful reading SHALL NOT assert validation against an unsupported edition, authorize incomplete/ambiguous setup use or silently apply baseline aliases, ranges or defaults.
+
+**Rationale**: ADR-0002/0003 preserve source, ADR-0016 supplies the single reader, and ADR-0028 requires labelled semantics. L1-EDN-002/005 and their existing children retain declaration/basis policy. Full historical semantic coverage and generated deltas stay in their planned releases. This child does not bypass pending INT-014–017 or general record-access decisions, introduce XML support, or broaden the bounded time view to general validation.
+
+**Verification Method**: Test (T)

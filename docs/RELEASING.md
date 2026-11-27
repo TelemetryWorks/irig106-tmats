@@ -8,8 +8,8 @@ Owner direction (2026-11-22): all repositories maintain the org
 [TRUSTED-PUBLISHING.md binary variant](https://github.com/TelemetryWorks/.github/blob/2adedc5aaf27b7bafb54ad05a51bc17d89b65d3e/docs/TRUSTED-PUBLISHING.md#repositories-that-also-ship-binaries).
 This **supersedes** the 2026-09-25 separate release.yml/cargo-dist plan and
 its later separate attestation step. They are historical, not parallel paths.
-The binary variant is required before the first real release; this docs PR
-implements no workflow.
+The org standard governs where this summary differs. The binary variant is
+required before the first real release; this docs PR implements no workflow.
 
 The 2026-11-21 owner decision keeps the full 0.1 release obligations and
 adds a bounded time view before `irig106-time` 0.8.0. See the
@@ -99,6 +99,10 @@ bootstrap below and verify both crates' Trusted Publisher registrations.
    `cargo publish --workspace --dry-run`.
 4. Commit `docs/releases/vX.Y.Z.md` with the exact release body and title
    (first heading), then tag `vX.Y.Z` and push the tag after review.
+   The gate verifies the **annotated** tag through the remote GitHub API,
+   peels it to `github.sha`, verifies that commit is on `main` and requires
+   successful intended CI on that exact commit; a local tag or unrelated
+   green run is insufficient.
 5. `.github/workflows/trusted-publishing.yml` (name **Trusted publishing**)
    uses job IDs `gate`, `build`, `publish`, `github-release`, `verify`, plus
    read-only `publish-path-check` for PR/manual dry runs. There is **no
@@ -106,7 +110,10 @@ bootstrap below and verify both crates' Trusted Publisher registrations.
    `./.github/workflows/build-binaries.yml`, which uses read-only
    `build-binaries-core.yml` to build/qualify targets, package crates and
    Windows/Linux/macOS binaries, and generate per-binary CycloneDX SBOMs
-   (`cargo cyclonedx`) and one `SHA256SUMS`. The builder checks out
+   (an exact pinned `cargo-cyclonedx`, installed with `--locked`) and one
+   `SHA256SUMS`. Record the exact Rust toolchain as build output `rust-version`;
+   `publish` and `publish-path-check` install and check that recorded version,
+   never newly resolved stable after an approval delay. The builder checks out
    `github.sha` and self-attests its own verified output in a nested
    **Checksums and attestations** job only on `v*` tag push, independently
    guarded. The caller passes the gate decision, never signing inputs.

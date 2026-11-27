@@ -1633,6 +1633,51 @@ Existing deny.toml and RELEASING.md govern, including coordinator/owner-only
 bootstrap and TP-only real releases. New requirements remain Draft until
 matching graph/distribution evidence is reviewed; no new Evidence is claimed.
 
+## Planned release follow-up checks carried from #65
+
+These extend the batch-32 acceptance specification, not executed release
+checks. The org standard governs any difference from the local summary.
+
+| Planned acceptance case | Independent evidence or rejection condition | Requirements |
+|---|---|---|
+| `artifact_gate_uses_remote_annotated_tag` | Remote API shows annotated tag peeling to github.sha on main with intended CI green at that commit; lightweight/local-only/wrong-commit tag or unrelated CI fails | L3-REL-012 |
+| `artifact_sbom_generator_is_pinned_locked` | Exact cargo-cyclonedx pin and --locked installation match recorded evidence; floating tool selection is rejected | L3-REL-013 |
+| `artifact_publish_reuses_build_toolchain` | publish and publish-path-check install/check build's recorded rust-version; a newer stable resolved after approval is rejected | L3-REL-013 |
+
+## Planned edition-independent reading batch 33
+
+These are synthetic structural/evidence cases for L1-EDN-001, not a claim of
+historical/future conformance or an implemented reader. Source framing uses
+106-24R1 Ch9 sections 9.4.1/9.4.2 p. 9-2 and approved INT-035–039.
+The metadata matrix supplies missing/known/unknown/older/future labels to the
+same byte input without inventing numeric historical mappings. Internal
+states/spans are asserted; rendered output remains owner-gated.
+
+| Planned test | Independent input and expected result | Requirements |
+|---|---|---|
+| `edition_read_without_declaration` | Synthetic `COMMENT:x;`: one framed item, source/item [0,10), name [0,7), value [8,9); no G\106 prerequisite | L3-EDN-008 |
+| `edition_read_metadata_does_not_reframe` | Same bytes above with each supplied metadata label: identical source, spans, order and scanner findings; semantic findings are not equated | L3-EDN-008, L3-EDN-013 |
+| `edition_read_unknown_g106_kept_raw` | `G\106:zz;COMMENT:x;`: raw values and exact replay retained; no guessed year or mapping; declaration interpretation tested separately | L3-EDN-008, L3-EDN-009 |
+| `edition_read_changed_declaration_has_own_offsets` | `G\106:24;COMMENT:x;` versus `G\106:unknown;COMMENT:x;`: independent item spans [0,9)/[9,19) versus [0,14)/[14,24); no assertion that byte-changing edits keep offsets | L3-EDN-008, L3-EDN-013 |
+| `edition_read_unregistered_name_is_retained` | Synthetic `UNREGISTERED_TEST:x;`: registry does not know this name; raw item [0,20), name [0,17), value [18,19); unknown definition never drops bytes | L3-EDN-009 |
+| `edition_read_unregistered_order_and_repeats` | Synthetic unregistered items interleaved with COMMENT: all occurrences in source order, replay exact; unknown multiplicity never guessed scalar | L3-EDN-009, L3-EDN-010 |
+| `edition_read_no_historical_alias` | Supplied unavailable definition: raw key/value retained; no renamed-code alias or baseline range/default inferred | L3-EDN-009, L3-EDN-011 |
+| `edition_read_recovery_independent_of_basis` | `:v;COMMENT:x;tail` under each metadata label: empty-name finding, intact COMMENT and retained suffix; no suffix explicit lookup item | L3-EDN-010 |
+| `edition_read_projection_does_not_rewrite_source` | `CO\r\nMMENT:x;` with real CR/LF under every metadata label: INT-036 projection and internal-omission information, raw bytes unchanged | L3-EDN-010 |
+| `edition_read_high_byte_never_disappears` | COMMENT value contains 0xFF: INT-037 interpretation limits retained with exact raw bytes; metadata does not transcode/repair | L3-EDN-009, L3-EDN-010 |
+| `edition_read_duplicate_uses_reviewed_metadata` | Known scalar definition supplied twice: INT-039 retains all occurrences; absent multiplicity metadata cannot invent historical scalar behavior | L3-EDN-010 |
+| `edition_read_semantic_unavailability_separate` | Readable structural item with no applicable definition: raw candidates retained, no usable typed meaning invented or conformance claim | L3-EDN-011 |
+| `edition_read_fallback_is_not_historical_validation` | Given an already evaluated labelled basis, raw reading does not relabel it as the declared/validated historical edition; no INT-017 mapping is exercised | L3-EDN-011 |
+| `edition_read_preserves_record_qualification` | Supply Complete, Incomplete, Ambiguous and Ambiguous-with-cut qualifications separately: each remains attached unchanged; no governing authorization | L3-EDN-012 |
+| `edition_read_documents_never_merge` | Two separately identified inputs retain their own source/revision/qualification; equal labels or keys never concatenate their attribute sets | L3-EDN-012 |
+| `edition_read_xml_gate_remains` | Supplied XML format is unsupported through the setup adapter, not silently routed as ASCII because the declaration is unknown | L3-EDN-012 |
+| `edition_read_limit_failure_not_empty_success` | Same bytes/context with an exhausted supplied budget: existing typed limit contract remains observable; no empty successful document | L3-EDN-008, L3-EDN-013 |
+| `edition_read_oracle_is_independent` | Fixture oracle lists exact input bytes/spans and metadata variants independently; a production-scanner-derived oracle is rejected as evidence | L3-EDN-013 |
+
+No public report format, historical code semantics, default, registry delta
+or owner interpretation is approved by these cases. Future implementation
+must replace planned rows with executable tests and trace markers.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample
