@@ -354,9 +354,9 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
 | L1-REL-001 | L2-REL-001 | `irig106-tmats-cli/tests/lockstep.rs::cli_and_library_versions_match`<br>`irig106-tmats-cli/tests/lockstep.rs::library_dependency_is_pinned_exactly`<br>`irig106-tmats-cli/tests/lockstep.rs::version_flag_reports_both_versions` | Partially Implemented |
-| L1-REL-002 | _(none)_ | `.github/workflows/ci.yml`<br>`msrv`<br>`cargo check --workspace --all-features` | Implemented (I) |
+| L1-REL-002 | _(none)_ | _(none)_ | Draft |
 | L1-REL-003 | _(none)_ | _(none)_ | Draft |
-| L1-REL-004 | _(none)_ | `.github/workflows/ci.yml`<br>`test`<br>`ubuntu-latest`<br>`windows-latest`<br>`macos-latest` | Implemented (I) |
+| L1-REL-004 | _(none)_ | _(none)_ | Draft |
 | L1-REL-005 | L2-REL-005 | _(none)_ | Draft |
 | L1-REL-006 | L2-REL-006 | _(none)_ | Draft |
 
@@ -398,7 +398,7 @@ The countable requirement set is every L2 and L3 requirement plus the 33 L1 *lea
 
 **Tested by at least one test marker**: 0 of 431 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 431 (0.5%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 0 of 431 (0.0%).
 
 ### Orphan check
 
