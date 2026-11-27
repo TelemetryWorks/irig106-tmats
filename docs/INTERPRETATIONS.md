@@ -2204,8 +2204,11 @@ A is reversible: later approved B/C can refine missing-rule cannot-evaluate to r
 - ADR-0008/0026 preserve attachment and every candidate; the phrases “existing TMATS code” and “existing object defined by the TMATS file” leave vocabulary versus instance presence to review.
 
 **Behaviour (PROPOSED, Option A recommended; owner decision required)**:
-Use code names in the reviewed registry for the applied edition/basis as
-the decomposition vocabulary. Match the original group/full path there,
+Use the reviewed 106-24R1 BASELINE code-name registry until edition deltas
+exist, recording that registry basis separately from the document's edition
+and the INT-044-labelled selection/fallback basis. Do not claim historical
+vocabulary coverage or translate an older renamed code into a baseline code.
+Use that baseline as the decomposition vocabulary. Match the original group/full path there,
 using its reviewed index arity. EXTENSION_CODE uniqueness against that
 vocabulary makes a conforming split deterministic. Then search the supplied
 document for the actual original occurrences as a separate step; a known
@@ -2215,13 +2218,56 @@ be proved unique, retain raw evidence and cannot-evaluate; no greedy/
 longest-prefix or document-presence heuristic fills the gap.
 
 **Owner options**:
-- **A — recommend:** “existing code” means the applied edition's reviewed code-name vocabulary. This separates stable name decomposition from actual document presence and makes orphan reporting possible. The catalog need not be the complete later value-validation registry, but claimed code-name/arity coverage must be sourced and reviewed.
+- **A — recommend:** “existing code” means the reviewed standard code-name vocabulary (106-24R1 baseline until deltas exist), independent of document presence. This separates decomposition from target lookup and permits orphan reporting. **Cost:** X targeting vendor-private V or other non-registry codes can never be split under A and is always cannot-evaluate, even if the target is present. Standard V-x\ID/VN remain registry-defined; private V codes do not become standard vocabulary. Code-name/arity metadata still needs source review, not the full later value registry.
 - **B:** “existing code” means usable code names present in the supplied document. The reference to an existing object in the file supports this reading and could admit document-defined/private codes, but the same X text could decompose differently when originals are missing/added; metadata and ambiguity rules still need review, and presence alone cannot invent unknown grammar or objects.
+- **C — hybrid proposal:** try reviewed registry vocabulary first; use document-present code names ONLY for groups with no registry vocabulary, with the basis labelled `document-defined vocabulary`. This is not a fallback for every missing registry code. The owner must settle the group/private-namespace boundary: V has standard ID/VN codes but no standard private-item vocabulary, so no blanket V fallback is silently authorized. Missing/ambiguous grammar or nonunique decomposition still stays cannot-evaluate; no overlap, index, record-qualification or source-retention guard is waived.
+
+**Registry edition/basis clarification (coordinator direction, 2026-11-27)**:
+Use the 106-24R1 baseline until edition deltas exist, with the registry basis
+visible alongside existing INT-044 edition-selection/fallback labelling.
+This does not overwrite G\106 or relabel an older declared edition as 24R1.
+Older renamed originals lacking baseline metadata (the supplied R\DST to
+R\CDT example) are cannot-evaluate, never silently aliased/repaired. Exact
+historical edition mappings still need their own cited delta sources.
 
 **Reason**: Registry matching and EXTENSION_CODE uniqueness provide the deterministic decomposition described by the section. The remaining vocabulary-scope question must be an explicit owner choice. A is recommended, not signed; no namespace, private-code or edition fallback policy is silently added.
 
 **Design**: proposed (2026-11-27; Option A recommended) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off pending; independent AI check pending; source freshness, development analysis and executable tests remain required · **Origin**: PR #63 independent review follow-up
 
-**Test**: `x_registry_decomposition_survives_absent_target`, `x_document_only_code_does_not_define_registry_split`, `x_extension_overlap_prevents_heuristic_split` (planned Option A expectations; BLOCKED before owner sign-off/AI check, not implemented or executed)
+**Test**: `x_registry_decomposition_survives_absent_target`, `x_document_only_code_does_not_define_registry_split`, `x_extension_overlap_prevents_heuristic_split`, `x_private_target_registry_only_cost`, `x_baseline_registry_keeps_edition_basis`, `x_legacy_renamed_original_is_unavailable` (planned Option A/baseline expectations), `x_hybrid_no_vocabulary_uses_labelled_document_names`, `x_hybrid_existing_vocabulary_never_falls_back`, `x_hybrid_v_private_boundary_needs_owner` (Option C composition expectations; all BLOCKED before owner sign-off/AI check, not implemented or executed)
+
+**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+
+
+### INT-063
+
+**Title**: Vendor attribution when V header and private path evidence are incomplete or inconsistent
+
+**Sources**:
+- 106-24R1 Chapter 9 section 9.5.13 p. 9-171: “The only V-group attributes defined in this standard are the following.” Data Source ID is V-x\ID; Vendor Name is V-x\VN.
+- Same section says Vendor Name is “a three-character acronym that identifies the specific vendor and determines how the rest of the attributes in the V group are interpreted.” It gives all other names as `V-x\acr\attribute-string`, where “acr is the three-character acronym identifying a specific vendor”.
+- Table 9-2 DATA SOURCE ID G\DSI-n p. 9-11: “Provide a descriptive name for this source. Each source identifier must be unique.” Its Links to field includes V-x\ID.
+- ADR-0008 accepts source/vendor grouping; ADR-0002/0026 retain evidence without a winner; INT-039/048 preserve known scalar multiplicity and record ambiguity. The cited text does not define missing/duplicate/mismatched VN recovery.
+
+**Behaviour (PROPOSED, Option A recommended; owner decision required)**:
+Always retain observed V occurrence/private-acronym namespaces and every
+local ID/VN result. Confirm vendor attribution only when one usable VN
+agrees with the observed path acronym under reviewed ASCII comparison;
+otherwise retain unavailable confirmed attribution with its missing/conflict
+reason and locations. Do not move raw items, repair a header, pick a duplicate
+or invent required-presence/default findings from this policy. Source ID
+context and its G-source candidate resolution stay separate from vendor
+confirmation. Private meanings remain opaque.
+
+**Owner options**:
+- **A — recommend:** retain structural inventory for every namespace, but withhold confirmed vendor attribution if VN evidence is missing, repeated, invalid/unavailable or disagrees. This avoids assigning unknown private fields to a vendor on incomplete/conflicting evidence; raw inspection still works.
+- **B — path-first:** use the observed path acronym as labelled vendor attribution despite bad/missing/disagreeing VN, retaining all header findings/states. This makes more raw namespaces attributable but chooses path authority that the recovery text does not specify.
+- **C — usable-header-first:** one usable VN determines semantic vendor attribution even when path acronyms disagree, with labels/findings and raw namespace unchanged; absent/ambiguous/unavailable VN still cannot pick a vendor. The VN definition supports this emphasis, but it can misattribute a mixed-vendor occurrence. No policy or exact public wording is chosen here.
+
+**Reason**: Section 9.5.13 provides two pieces of vendor evidence but no recovery precedence. Reporting the raw grouping separately from confirmed attribution preserves useful data without treating conflicting writers as an authority. All options keep source/field/record evidence; A is recommended, not signed.
+
+**Design**: proposed (2026-11-27; Option A recommended) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off pending; independent AI check pending; source freshness, development analysis and executable tests remain required · **Origin**: family 2 batch 31 source inspection
+
+**Test**: `v_missing_vn_keeps_namespace_unconfirmed`, `v_duplicate_vn_never_picks_vendor`, `v_path_header_mismatch_keeps_both`, `v_invalid_unavailable_vn_keeps_namespace` (planned Option A expectations; BLOCKED before owner sign-off/AI check, not implemented or executed)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written

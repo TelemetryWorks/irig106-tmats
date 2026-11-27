@@ -200,7 +200,7 @@ This matrix is the single source of truth for live status; the requirement docum
 |-------|-------------|----------------|--------|
 | L1-EXT-001 | _(none)_ | _(none)_ | Draft |
 | L1-EXT-002 | _(none)_ | _(none)_ | Draft |
-| L1-EXT-003 | L2-EXT-001, L2-EXT-002 | _(none)_ | Draft |
+| L1-EXT-003 | L2-EXT-001, L2-EXT-002, L2-EXT-003, L2-EXT-004 | _(none)_ | Draft |
 | L1-EXT-004 | _(none)_ | _(none)_ | Draft |
 
 **L2 -> L3 -> Verification Artifacts**
@@ -209,6 +209,8 @@ This matrix is the single source of truth for live status; the requirement docum
 |-------|-------------|----------------|--------|
 | L2-EXT-001 | L3-EXT-001, L3-EXT-002, L3-EXT-003, L3-EXT-004, L3-EXT-008 | _(TBD)_ | Draft |
 | L2-EXT-002 | L3-EXT-005, L3-EXT-006, L3-EXT-007 | _(TBD)_ | Draft |
+| L2-EXT-003 | L3-EXT-009, L3-EXT-010, L3-EXT-011, L3-EXT-015, L3-EXT-016 | _(TBD)_ | Draft |
+| L2-EXT-004 | L3-EXT-012, L3-EXT-013, L3-EXT-014 | _(TBD)_ | Draft |
 
 ### L1-WRT: Writing, editing, comparing, and generating
 
@@ -366,7 +368,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | VIEW | 9 | 15 | 64 | 0 | 0 | 0 | 0 |
 | VAL | 6 | 3 | 12 | 0 | 0 | 0 | 0 |
 | DER | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
-| EXT | 4 | 2 | 8 | 0 | 0 | 0 | 0 |
+| EXT | 4 | 4 | 16 | 0 | 0 | 0 | 0 |
 | WRT | 7 | 4 | 11 | 0 | 0 | 0 | 0 |
 | SUM | 4 | 3 | 10 | 0 | 0 | 0 | 0 |
 | IO | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
@@ -374,13 +376,13 @@ This matrix is the single source of truth for live status; the requirement docum
 | ROB | 3 | 5 | 13 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 2 | 8 | 0 | 0 | 0 | 0 |
 | REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **74** | **242** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **76** | **250** | **0** | **0** | **0** | **0** |
 
 The countable requirement set is every L2 and L3 requirement plus the 41 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 357 (0.0%).
+**Tested by at least one test marker**: 0 of 367 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 357 (0.8%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 367 (0.8%).
 
 ### Orphan check
 
@@ -455,9 +457,10 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-060 | Each query supplies its caller choice explicitly | approved (Joey, 2026-11-26; independent AI final CONCUR at 3fcbd2cb0e911d1bc23e4cc3a5b53d503e5d7e23) | not yet written | _(none)_ |
 | INT-061 | X occurrence mapping when the original has no numeric index | proposed (2026-11-27; Option A recommended) | not yet written | _(none)_ |
 | INT-062 | Meaning of existing TMATS code in X decomposition | proposed (2026-11-27; Option A recommended) | not yet written | _(none)_ |
+| INT-063 | Vendor attribution when V header and private path evidence are incomplete or inconsistent | proposed (2026-11-27; Option A recommended) | not yet written | _(none)_ |
 
-* Entries without a written analysis: **62** of 62
-* Entries without a test: **62** of 62
+* Entries without a written analysis: **63** of 63
+* Entries without a test: **63** of 63
 * Entries missing the development mark: **0**
 
 ### Marker reference check

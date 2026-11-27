@@ -1495,7 +1495,8 @@ fixtures test structural attachment, not whole-file conformance or private
 extension-value semantics. A/B below are independent source item identities.
 Record qualification/access restrictions remain intact. INT-061 options and
 INT-062's vocabulary choice remain PROPOSED; their nine option-specific
-fixtures below are BLOCKED before owner/AI approval. Indexed candidate tests
+fixtures below (plus the later cost/hybrid/baseline follow-ups) are BLOCKED
+before owner/AI approval. Indexed candidate tests
 can receive explicit reviewed decomposition metadata; they do not sign off
 runtime vocabulary selection. Under the proposed registry-vocabulary reading,
 registry-name matching plus EXTENSION_CODE uniqueness determines the split,
@@ -1529,9 +1530,15 @@ not a free-form greedy parser or target presence in the document.
 | `x_unindexed_unique_path_option_c` | **BLOCKED, INT-061 Option C alternative:** exactly one once-per-document G\PN occurrence can be attached by unique reviewed path with labelled status and a located occurrence-unverifiable finding, no sentinel; exact label wording pending | L3-EXT-007 |
 | `x_unindexed_duplicate_path_option_c` | **BLOCKED, INT-061 Option C alternative:** duplicate G\PN occurrences stay ambiguous/all listed, not a unique-path attachment; INT-048 record/cut qualification remains unchanged | L3-EXT-005, L3-EXT-007 |
 | `x_unindexed_nonconforming_option_d` | **BLOCKED alternative, rejected in draft recommendation, not owner-decided:** D would retain raw X and report nonconforming/malformed because the index cannot match; explicit G support is the reason not to recommend blanket rejection | L3-EXT-007 |
-| `x_registry_decomposition_survives_absent_target` | **BLOCKED, INT-062 Option A proposed:** reviewed edition registry contains D\MN pattern/arity, but no matching original item is present; registry split remains defined, then instance lookup reports unresolved/orphan, not absent grammar | L3-EXT-001, L3-EXT-004 |
+| `x_registry_decomposition_survives_absent_target` | **BLOCKED, INT-062 Option A proposed:** reviewed 106-24R1 baseline registry contains D\MN pattern/arity, but no matching original item is present; registry split remains defined, then instance lookup reports unresolved/orphan, not absent grammar | L3-EXT-001, L3-EXT-004 |
 | `x_document_only_code_does_not_define_registry_split` | **BLOCKED, INT-062 Option A proposed:** a document-only/private code is present but absent from reviewed registry metadata; presence cannot create a registry code definition or heuristic split; retain raw/cannot-evaluate evidence | L3-EXT-001 |
 | `x_extension_overlap_prevents_heuristic_split` | **BLOCKED, INT-062 Option A proposed:** fixture metadata establishes EXTENSION_CODE overlap with an existing registry code name; retain violation/raw evidence and cannot-evaluate split, do not pick a longest prefix or rename source | L3-EXT-001, L3-EXT-006 |
+| `x_private_target_registry_only_cost` | **BLOCKED, INT-062 A:** private V original is present but outside standard registry vocabulary (section 9.5.13); X remains cannot-evaluate. Standard V ID/VN do not grant private-name grammar | L3-EXT-001 |
+| `x_baseline_registry_keeps_edition_basis` | **BLOCKED, INT-062 baseline composition:** supplied declaration/override/fallback evidence and INT-044 reason stay unchanged; identify registry as 106-24R1 until deltas exist, not a fake older catalog | L3-EXT-001, L3-EXT-005 |
+| `x_legacy_renamed_original_is_unavailable` | **BLOCKED, INT-062 baseline composition:** coordinator's legacy R\DST/R\CDT example has no reviewed baseline metadata for the legacy original: cannot-evaluate, raw bytes kept, no automatic translation; no historical rename date asserted | L3-EXT-001 |
+| `x_hybrid_no_vocabulary_uses_labelled_document_names` | **BLOCKED, INT-062 C:** explicitly supplied classification says this group has no registry vocabulary; registry-first attempt then reviewed document-present metadata can provide the split, with document-defined vocabulary basis; no actual group classification is approved | L3-EXT-001 |
+| `x_hybrid_existing_vocabulary_never_falls_back` | **BLOCKED, INT-062 C:** registry has group vocabulary but requested code is missing: no generic per-code miss fallback into document names | L3-EXT-001 |
+| `x_hybrid_v_private_boundary_needs_owner` | **BLOCKED, INT-062 C:** V has registry-defined ID/VN but private item names lack standard definitions; keep group/private-namespace classification unresolved pending owner choice, never enable blanket V fallback | L3-EXT-001 |
 | `x_association_oracle_is_not_resolver_output` | Independently listed target IDs/path/arity/spans determine expected outcomes; production resolver/round trip alone is not the oracle; all bytes and qualifiers unchanged | L3-EXT-008 |
 
 No public query syntax, concrete result/error names, report layout, private
@@ -1539,6 +1546,45 @@ value/counter semantics, namespace-uniqueness validator or edit/renumber API
 is selected here. V-group derivations remain separate; a partial X child
 does not complete L1-EXT-003. Future metadata coverage and executable tests
 must satisfy the claimed 0.1 support rather than silently reduce its scope.
+
+## Planned V-group context batch 31
+
+Source: 106-24R1 Ch9 section 9.5.13 p. 9-171 (V ID/VN/private form) and
+Table 9-2 DATA SOURCE ID p. 9-11. These are structural/context fixtures,
+not whole-file conformance or private-value decoders. Header composition
+can receive evaluated field states under reviewed metadata; it does not
+settle unreviewed blanks/required-presence rules. Four INT-063 Option-A
+cases are BLOCKED before owner sign-off and independent AI check.
+
+| Planned test | Independent source/context and expected evidence | Requirements |
+|---|---|---|
+| `v_standard_headers_are_not_private_suffixes` | V-1\ID and V-1\VN are standard headers; V-1\ABC\ID is a private suffix and cannot replace the local ID header | L3-EXT-009, L3-EXT-010 |
+| `v_private_items_keep_observed_namespace` | Readable V-1\ABC\GAIN with opaque value stays in observed ABC inventory, with original item/span/value; no gain decoder claimed | L3-EXT-009, L3-EXT-015 |
+| `v_private_nested_digits_do_not_create_counters` | Private suffix contains paths, N or -1-2; retain opaque bytes without a standard counter/member/index grammar | L3-EXT-009, L3-EXT-015 |
+| `v_context_with_agreeing_evaluated_headers` | Supplied usable ID=SRC and VN=ABC agree with observed ABC namespace; retain explicit header/source context. Any vendor-confirmation policy remains conditional on INT-063 | L3-EXT-010, L3-EXT-014 |
+| `v_header_only_occurrence_is_retained` | ID/VN headers exist with zero private items: retain occurrence context and empty private collection, not no V occurrence or a fabricated payload | L3-EXT-010 |
+| `v_canonical_occurrence_keeps_raw_findings` | V-01 and V-1 share canonical occurrence identity; retain raw spellings/normalization findings and repeated header candidates rather than deduplicate | L3-EXT-010, L3-EXT-011 |
+| `v_ascii_acronym_comparison_preserves_raw` | ABC/abc literal/evaluated identifiers compare by ASCII case rule; high-byte look-alike never folds into ASCII; raw source remains | L3-EXT-011 |
+| `v_textual_source_ids_are_not_numeric_indices` | Usable source label 01 does not equal G source label 1; INT-038/055 cannot strip its zeros as a decimal value | L3-EXT-011, L3-EXT-012 |
+| `v_source_link_uses_text_not_occurrence` | V occurrence 2 has usable ID=SRC, G\DSI-1 is SRC: matching textual source context can resolve; x need not equal n | L3-EXT-012 |
+| `v_missing_g_source_keeps_local_label` | Usable local ID exists but no equal G source candidate: keep label and unresolved source link distinct, no synthesized G item | L3-EXT-012 |
+| `v_duplicate_g_sources_keep_all_candidates` | Multiple G\DSI-n occurrences have same textual source identity: keep ambiguous candidates/all source IDs in order, no winner or record upgrade | L3-EXT-012, L3-EXT-013 |
+| `v_ambiguous_local_id_never_selects_source` | Reviewed local ID state is Ambiguous, even with equal candidate text: preserve state/all evidence; no source chosen by equality | L3-EXT-010, L3-EXT-012 |
+| `v_other_occurrence_cannot_supply_headers` | V-2 has headers missing on V-1: retain V-1 missing context; do not borrow V-2's vendor/source even if a private path matches | L3-EXT-010, L3-EXT-013 |
+| `v_separate_record_cannot_supply_context` | Context exists only in another setup document/record: no cross-record source/vendor binding | L3-EXT-013 |
+| `v_cross_fragment_context_has_packet_provenance` | Same channel, sequence +1 and matching FRMT/RCCVER give ONE ADR-0025/INT-011 record; headers/private items span packets, retaining item/body/packet mappings | L3-EXT-013 |
+| `v_record_qualifications_never_upgrade` | Inventory/source candidates remain available diagnostically only under reviewed access; Ambiguous/Incomplete/cut/encoding qualifications and blocking force stay attached | L3-EXT-013 |
+| `v_missing_vn_keeps_namespace_unconfirmed` | **BLOCKED, INT-063 A:** usable path namespace but VN Missing: preserve items/context, unavailable confirmed attribution, no default or invented required-presence finding | L3-EXT-010, L3-EXT-014 |
+| `v_duplicate_vn_never_picks_vendor` | **BLOCKED, INT-063 A:** repeated known-scalar VN, even equal: keep Ambiguous/all headers; no first/last/path-selected confirmed vendor | L3-EXT-010, L3-EXT-014 |
+| `v_path_header_mismatch_keeps_both` | **BLOCKED, INT-063 A:** evaluated VN=ABC and private path=XYZ: preserve both, unavailable confirmed attribution with located reason, no raw reassignment/repair | L3-EXT-014 |
+| `v_invalid_unavailable_vn_keeps_namespace` | **BLOCKED, INT-063 A:** evaluated Invalid or unavailable VN does not hide observed items or become an inferred vendor; preserve distinct state/reason | L3-EXT-010, L3-EXT-014 |
+| `v_unknown_private_duplicates_stay_unclassified` | Repeated opaque private name retains every raw occurrence; unknown private cardinality does not create a proved scalar duplicate merely from shape | L3-EXT-010, L3-EXT-015 |
+| `v_grouping_oracle_is_not_implementation_output` | Independently listed IDs/header states/source candidates and literal spans determine expected inventory; no production grouping path calculates the oracle | L3-EXT-016 |
+
+No vendor decoder/plug-in, generic user overlay, acronym alphabet, required-
+presence rule, result schema, exact rendered label or repair policy is chosen.
+Observed raw grouping is not confirmed interpretation, clock proof or a
+waiver of INT-061/062/063 and the other owner/implementation gates.
 
 ## Real Chapter 10 recordings (local use only)
 
