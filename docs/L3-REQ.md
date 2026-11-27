@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through V/X and release-evidence derivations drafted (family 2, batches 1-26 and 28-32).**
+> **Status: foundations through edition-independent reading drafted (family 2, batches 1-26 and 28-33).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -2801,15 +2801,21 @@ need owner approval under the carried instructions.
 **L3-REL-012** · Parent: L2-REL-006 · Verification: I
 *Release-artifact acceptance SHALL identify the reviewed source/tag/version and actual bytes/digests of every .crate, binary archive and SBOM; one SHA256SUMS and one irig106-tmats-<version>.intoto.jsonl bundle SHALL cover the signed files in the single GitHub release, with target/build identity for binaries and no substitution by filename or another build's evidence.*
 
-The org binary variant and RELEASING.md govern the release asset set. The
+The org binary variant governs where this summary differs. The release gate
+SHALL verify the annotated tag through the remote API, peel it to github.sha,
+confirm that commit is on main and require successful intended CI on that
+exact commit. A local tag or unrelated green run is not evidence. The
 manifest and bundle are validated evidence, not necessarily individually
 attested subjects. This selects no new target/architecture or release action.
 
 **L3-REL-013** · Parent: L2-REL-006 · Verification: I
 *Each released binary SHALL have its required CycloneDX SBOM from the actual build/dependency context, with target/features/source identity sufficient to associate it with that binary; a library-only manifest list, different-target graph or missing SBOM SHALL NOT be accepted as per-binary inventory.*
 
-RELEASING.md retains cargo cyclonedx; no SBOM schema version, new generator,
-tool installation or substitute format is selected here. Include those SBOMs
+The builder SHALL use an exact pinned cargo-cyclonedx installed with --locked
+and record its Rust toolchain as rust-version output; publish and
+publish-path-check SHALL install/check that same toolchain rather than resolve
+stable again. No new generator or SBOM schema is selected here, and this
+requirement performs no installation. Include those SBOMs
 in the unified checksums/bundle and release asset verification.
 
 **L3-REL-014** · Parent: L2-REL-006 · Verification: I
@@ -2838,3 +2844,61 @@ release or replace an asset. verify checks actual published release files.
 All real releases remain TP-only; the coordinator/owner-only first-upload
 exception is unchanged, never CI or this maintainer. Artifact acceptance
 neither authorizes publishing/settings actions nor proves TMATS integrity.
+
+
+## Edition-independent text-reader acceptance (family 2, batch 33)
+
+These derive L2-EDN-003/004; they add no historical meaning or new
+interpretation. Names/codes in synthetic negative cases are byte fixtures,
+not registry entries. See the [source/scope note](research/2026-11-27-edition-independent-reading.md).
+Planned checks are not executed tests or Evidence for the redesigned reader.
+
+**L3-EDN-008** · Parent: L2-EDN-003 · Verification: T
+*Given identical text bytes and resource limits, changing only supplied declaration/basis metadata SHALL leave source bytes, scanner item order/multiplicity, raw spans/delimiters and scanner recovery findings unchanged; the parser SHALL NOT require a recognised G\106 value, RCCVER or caller edition before framing text.*
+
+The test varies supplied metadata, not bytes containing G\106. When that
+attribute itself changes, compare independently expected spans for each input,
+not offsets from the shorter input. Edition/registry semantic findings may
+differ; they are not scanner invariants. Existing resource failures remain
+observable and cannot become empty successful documents.
+
+**L3-EDN-009** · Parent: L2-EDN-003 · Verification: T
+*Every framed item unknown to the selected registry SHALL remain in raw lookup and default byte replay with its complete raw name/value, source location and order; lack of an edition definition SHALL NOT drop it, replace its value, invent a canonical alias or make the structural parse fail.*
+
+Use an explicitly synthetic unregistered name, with no claim that the name
+is conforming in any edition. An unavailable semantic key does not prevent
+raw byte enumeration. Definition-dependent interpretation and its findings
+remain separate from retention and scanner recovery.
+
+**L3-EDN-010** · Parent: L2-EDN-003 · Verification: T
+*The common scanner SHALL apply its reviewed framing/name/character policies without edition-based repair, preserving malformed regions, unterminated suffixes and unknown/high-byte source as required by INT-035–038; scalar duplicate classification SHALL use available reviewed multiplicity metadata under INT-039, never guessed historical cardinality.*
+
+Unterminated suffixes remain outside explicit-value lookup (INT-035).
+The check compares scanner evidence across metadata contexts, not a blanket
+claim that every character/value verdict or historical cardinality is equal.
+An unknown multiplicity is not silently assigned the baseline scalar rule.
+
+**L3-EDN-011** · Parent: L2-EDN-004 · Verification: T
+*Raw reading SHALL remain available independently of definition-dependent semantic lookup; an unavailable historical/future definition SHALL remain unavailable, with raw candidates retained, and SHALL NOT be replaced by baseline code renaming, value parsing, defaulting or positive edition-conformance claims.*
+
+A labelled rules basis under the existing edition-selection contract is
+still permitted; it identifies applied rules, not proof of the document's
+actual edition. This adds no fallback policy or renamed-code mapping.
+The X vocabulary's older-name issue remains pending INT-062, not settled here.
+
+**L3-EDN-012** · Parent: L2-EDN-004 · Verification: T
+*Edition-independent text reading SHALL preserve all supplied setup qualifications and document/revision identity; decoding text SHALL NOT upgrade Incomplete, Ambiguous, retained-cut, trust or encoding qualifications, authorize governing use, merge documents or turn XML into supported ASCII input.*
+
+Core-backed payload slicing, format gating and assembly stay in their existing
+requirements. Raw access is not semantic-use permission. Qualification
+composition follows INT-045/048 and the open access/governance item; this
+requirement does not select an ambiguous/incomplete acceptance option.
+
+**L3-EDN-013** · Parent: L2-EDN-004 · Verification: T
+*Edition-independent reader tests SHALL independently specify raw source/spans, structural items and expected qualification retention across supplied edition contexts, including missing, known, unknown, older and future labels, and SHALL distinguish synthetic syntax fixtures from source-cited historical conformance fixtures.*
+
+Do not derive expected spans through the production scanner or treat a round
+trip alone as proof that semantic interpretation is correct. A historical
+code/range/default fixture needs its own edition/table/row source and review;
+none is fabricated to fill this batch. Structured internal assertions do not
+select report rendering, assumption text or a JSON schema.

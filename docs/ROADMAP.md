@@ -80,6 +80,16 @@ and development analysis (including the complete non-decimal representation inve
 and implement the planned executable tests before relying on them. The owner
 choices are recorded; independent review and development gates remain.
 
+### Remaining edition-independent reading acceptance
+
+Review the common text-reader boundary independently of historical definition
+coverage: retain every source item and qualification when declaration/basis
+metadata is missing, unknown, older or future. Synthetic syntax fixtures do
+not prove historical conformance. Complete source-freshness/development
+analysis and executable tests before claiming the reader implemented; do not
+use baseline aliases/defaults to fill missing historical definitions.
+Full edition deltas and compatibility validation remain their later scope.
+
 ### Remaining dependency and artifact acceptance
 
 Review redesigned dependency-graph evidence against existing deny.toml and
