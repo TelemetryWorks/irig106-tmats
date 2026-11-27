@@ -303,8 +303,8 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-CLI-005 | L3-CLI-014, L3-CLI-015, L3-CLI-016, L3-CLI-021 | _(TBD)_ | Draft |
 | L2-CLI-006 | L3-CLI-017, L3-CLI-018, L3-CLI-019, L3-CLI-020 | _(TBD)_ | Draft |
 | L2-CLI-007 | L3-CLI-026, L3-CLI-027, L3-CLI-028, L3-CLI-029 | _(TBD)_ | Draft |
-| L2-CLI-008 | L3-CLI-030, L3-CLI-031, L3-CLI-032, L3-CLI-033, L3-CLI-037 | _(TBD)_ | Draft |
-| L2-CLI-009 | L3-CLI-034, L3-CLI-035, L3-CLI-036 | _(TBD)_ | Draft |
+| L2-CLI-008 | L3-CLI-030, L3-CLI-031, L3-CLI-032, L3-CLI-033, L3-CLI-037, L3-CLI-060, L3-CLI-061 | _(TBD)_ | Draft |
+| L2-CLI-009 | L3-CLI-034, L3-CLI-035, L3-CLI-036, L3-CLI-058, L3-CLI-059 | _(TBD)_ | Draft |
 | L2-CLI-010 | L3-CLI-038, L3-CLI-039, L3-CLI-040, L3-CLI-044 | _(TBD)_ | Draft |
 | L2-CLI-011 | L3-CLI-041, L3-CLI-042, L3-CLI-043 | _(TBD)_ | Draft |
 | L2-CLI-012 | L3-CLI-045, L3-CLI-046, L3-CLI-047, L3-CLI-048, L3-CLI-051 | _(TBD)_ | Draft |
@@ -388,17 +388,17 @@ This matrix is the single source of truth for live status; the requirement docum
 | WRT | 7 | 4 | 11 | 0 | 0 | 0 | 0 |
 | SUM | 4 | 5 | 16 | 0 | 0 | 0 | 0 |
 | IO | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
-| CLI | 9 | 15 | 57 | 0 | 0 | 0 | 0 |
+| CLI | 9 | 15 | 61 | 0 | 0 | 0 | 0 |
 | ROB | 3 | 5 | 13 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 2 | 8 | 0 | 0 | 0 | 0 |
 | REL | 6 | 3 | 9 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **92** | **302** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **92** | **306** | **0** | **0** | **0** | **0** |
 
 The countable requirement set is every L2 and L3 requirement plus the 33 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 427 (0.0%).
+**Tested by at least one test marker**: 0 of 431 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 427 (0.5%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 431 (0.5%).
 
 ### Orphan check
 

@@ -1001,21 +1001,21 @@ No report/rendered format or new interpretation is selected here.
 
 ## Extraction and input immutability (family 2, batch 25)
 
-These decompose L1-CLI-004/007 using the existing byte-faithful output and
-caller-owned I/O contracts. They take one explicitly selected, eligible
-record as input; they do not select an eligibility or ordinal policy.
-Implementation is BLOCKED on owner decisions for `-o` overwrite, fail-closed
-identity checking on pipes/devices/stdout/network shares, and extraction
-eligibility under integrity/encoding findings; no pending option is approved.
-See the [scope and remaining-work audit](research/2026-11-26-extraction-requirements.md).
+These decompose L1-CLI-004/007 using the byte-faithful output and caller-owned
+I/O contracts. ADR-0037 records the owner's three decisions of 2026-11-27,
+removing the #57 overwrite/identity/finding-eligibility holds for extract.
+The [decision follow-up](research/2026-11-27-extract-owner-policy.md) records
+scope and planned checks. Source/development/test gates and independent
+review remain; no extraction implementation or other argument grammar is
+approved by recording the decision.
 
 #### L2-CLI-008
 
 **Parent**: L1-CLI-004
 
-**Statement**: Given an explicitly selected setup record whose extraction eligibility has been established under the reviewed record-selection/format rules, the CLI SHALL extract exactly that record's original assembled TMATS text bytes to the requested output, using core-backed fragment extents and the byte-faithful writer contract without packet framing, decoding/re-encoding, normalization or implicit edits.
+**Statement**: For an explicitly selected setup record/candidate with supplied original text bytes, extract SHALL proceed byte-exact by default despite findings, reporting every finding; --strict SHALL refuse when findings are present. It SHALL extract exactly that selection's original text bytes to the requested output, using core-backed fragment extents and the byte-faithful writer contract without packet framing, decoding/re-encoding, normalization or implicit edits.
 
-**Rationale**: UC-17, CLI command table and L1-CLI-004 require extracting TMATS bytes, not rendering a typed view. ADR-0002/0003 preserve source bytes; ADR-0010 leaves destination acquisition to the CLI/caller; ADR-0036 supplies borrowed DATA. Chapter 11 (106-24R1) section 11.2.7.2/Figure 11-34 p. 11-50 places a CSDW before each fragment's text. Existing eligibility/completeness/unsupported-format gates remain: this is not authority to adopt an open/cut/ambiguous record, choose a default record, or combine several records into one output.
+**Rationale**: UC-17, CLI command table and L1-CLI-004 require extracting TMATS bytes, not rendering a typed view. ADR-0002/0003 preserve source bytes; ADR-0010 leaves destination acquisition to the CLI/caller; ADR-0036 supplies borrowed DATA. Chapter 11 (106-24R1) section 11.2.7.2/Figure 11-34 p. 11-50 places a CSDW before each fragment's text. ADR-0037 allows raw extraction despite the listed integrity, cut, ambiguity, encoding and invalid-value findings, with no always-refuse finding class. This does not adopt a qualified setup for semantic/governing use, choose a default record, combine records or invent bytes/packet extents not supplied by core. Proposed INT-031's general semantic-access gate is not silently approved by this extraction-only owner direction.
 
 **Verification Method**: Test (T)
 
@@ -1023,9 +1023,9 @@ See the [scope and remaining-work audit](research/2026-11-26-extraction-requirem
 
 **Parent**: L1-CLI-007
 
-**Statement**: For output destinations the tool opens itself, CLI output acquisition and delivery SHALL preserve every input file unchanged, including when a requested destination identifies that same file through a different path; input-alias rejection SHALL occur before destructive destination access, and output failure SHALL remain distinguishable from successful delivery without modifying or repairing the input.
+**Statement**: Tool-opened output SHALL reject established input aliases before destructive access and preserve inputs through acquisition/delivery. For extract, an existing unrelated regular file SHALL be refused unless --force; unproven regular-file identity SHALL also be refused unless --force, while stdout/pipes are allowed. Authorized regular-file writes SHALL use the checked non-truncating opened handle, never temp-file+rename; failures SHALL remain distinguishable from successful delivery.
 
-**Rationale**: L1-CLI-007 prohibits modifying input files and requires changed results in a new output. ADR-0010 assigns filesystem safety to CLI/caller glue, not library serialization. Path strings alone do not establish distinct files. This obligation does not select a general existing-destination overwrite policy, atomic replacement, durability guarantee or new rendering/exit mapping; those require separate reviewed definitions where applicable. Shell redirection outside the tool is out of scope for its file-acquisition guarantee.
+**Rationale**: L1-CLI-007 prohibits modifying input files and requires changed results in a new output. ADR-0010 assigns filesystem safety to CLI/caller glue, not library serialization. Path strings alone do not establish distinct files. ADR-0037 selects these policies for extract only, not every output command. --force removes the unrelated-file/proof refusal, never authorizes a known input alias or claims that an unknown identity was proved distinct. No temp-file replacement, durability guarantee or rendering/exit mapping is added. Shell redirection outside the tool is out of scope for its file-acquisition guarantee.
 
 **Verification Method**: Test (T)
 
@@ -1271,7 +1271,7 @@ eligibility/governance decisions. No new owner interpretation is selected.
 
 **Statement**: Record enumeration SHALL retain the source/candidate identities and upstream findings needed to distinguish Complete records from incomplete, ambiguous, provisional, unsupported or failed candidates; it SHALL preserve qualifications and observable traversal failures without manufacturing records, silently treating a failed scan as a complete inventory or making enumeration confer command eligibility or governing authority.
 
-**Rationale**: INT-011/039/045/048 and existing assembly/core-boundary requirements determine input evidence, not this enumerator. A Complete classification is not checksum success, valid metadata, a publishable provisional result or authority to extract/use a setup. Final classification may revise an earlier time seal; this slice consumes evaluated outcomes rather than deciding provisional publication, access, quarantine or recovery. Presentation and command-specific eligibility remain owner-gated; access to incomplete/ambiguous records is explicitly gated by [proposed INT-031](INTERPRETATIONS.md#int-031), not authorized by enumeration.
+**Rationale**: INT-011/039/045/048 and existing assembly/core-boundary requirements determine input evidence, not this enumerator. A Complete classification is not checksum success, valid metadata, a publishable provisional result or authority to extract/use a setup. Final classification may revise an earlier time seal; this slice consumes evaluated outcomes rather than deciding provisional publication, access, quarantine or recovery. Presentation and command-specific eligibility remain owner-gated; general access to incomplete/ambiguous records is explicitly gated by [proposed INT-031](INTERPRETATIONS.md#int-031), not authorized by enumeration. ADR-0037 separately allows raw extract under findings without approving semantic/governing use.
 
 **Verification Method**: Test (T)
 
@@ -1301,7 +1301,7 @@ no command below implicitly approves its labelled ambiguous-split option.
 
 **Statement**: Stamp command computation SHALL use the library's validated final-byte stamp transaction for its supplied document/revision and permitted explicit edits, preserving refusals, verification failure and all findings; only a successfully verified transaction SHALL produce a successful stamped-result value, with the original input unchanged and output delivery subject to the separate safe-destination contract.
 
-**Rationale**: L1-SUM-004, ADR-0029 and L2-SUM-003/L2-WRT-002 require final-byte hashing and re-read verification. F1 permits explicit exact-item duplicate removal before stamping, not a winner selected by stamp. L1-CLI-007 and the extraction/output contracts prevent in-place input changes. This derives command computation, not permission to implement held -o overwrite/identity checks or to select a destination, output layout or exit code.
+**Rationale**: L1-SUM-004, ADR-0029 and L2-SUM-003/L2-WRT-002 require final-byte hashing and re-read verification. F1 permits explicit exact-item duplicate removal before stamping, not a winner selected by stamp. L1-CLI-007 and the extraction/output contracts prevent in-place input changes. This derives command computation, not permission to extend ADR-0037's extract-only destination/finding policy to stamp or to select its destination grammar, output layout or exit code.
 
 **Verification Method**: Test (T)
 
