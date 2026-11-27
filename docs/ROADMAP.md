@@ -76,6 +76,13 @@ Verify source freshness and independent interpretation review, actual borrowed
 ownership/dependency APIs and development evidence where required. Component
 contracts or synthetic adapters do not prove real text/recording integration,
 a complete accounting model, qualified flex vectors or release compatibility.
+The maintainer must do the historical Chapter 10/11 CSDW-layout source review,
+approved-INT development analyses and Appendix 9-C vocabulary inventory after
+the reassessment PR merges, one PR per item. The reviewer owns outstanding
+legacy independent checks and the amended normalization-order recheck;
+the coordinator and core maintainer own types/core publication with owner
+go-ahead. The owner decides decision items only; source/analysis work must
+not be left idle awaiting an unrelated policy answer.
 Route answered work as bounded reviewed requirement slices; executable tests
 follow in the appropriate implementation family. The earlier audit's batch
 estimate is historical, not permission to bypass remaining gates.

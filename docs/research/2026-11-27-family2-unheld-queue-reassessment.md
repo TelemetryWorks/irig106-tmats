@@ -6,6 +6,8 @@
 Family 2 is NOT complete, and family 3/parser implementation is NOT authorized.**
 The next requirement slices need the recorded owner answers or source/review
 qualification; do not create further requirements merely to extend the queue.
+This does not exhaust maintainer-owned source and analysis work: the actor
+table below schedules those items after #80 merges, one PR each.
 Full 0.1 scope remains unchanged. New substantive gaps found on review should
 be reported rather than hidden by this planning conclusion.
 
@@ -27,7 +29,7 @@ from another repository, owner answer or real recording is inferred here.
 |---|---|---|
 | Prototype trace relabel | #75; prototype configuration is no longer verified redesigned build evidence | Actual MSRV/platform/WASM/consumer acceptance and #59 std hold remain |
 | Direct bounded VIEW-006 | #76; L2-VIEW-016/017 and L3-VIEW-065–070 | Approved lookup invariants still need source/development/executable evidence; no general 0.2 resolver |
-| Explicit normalization | #77; L2-WRT-005/006 and L3-WRT-012–017 | INT-064/065/066 await owner, including A plus built-in D or L1 reinterpretation; pre-check is not approval |
+| Explicit normalization | #77; L2-WRT-005/006 and L3-WRT-012–017 | INT-064/065/066 await owner (A+D / A / A recommended); amended INT-064 still needs independent recheck; pre-check is not approval |
 | Assembly/resource evidence | #78; L2-ROB-006/007 and L3-ROB-014–019 | Charging/defaults/recovery and retained-pool reader progress are not selected |
 | Show-free CLI integration | #79; L2-CLI-016/017 and L3-CLI-062–067 | Public report/grammar/access policies and real executable integration remain unverified |
 
@@ -130,7 +132,7 @@ for routing decisions, not a new owner choice or replacement of that table.
 |---|---|
 | Report formats | Owner direction before show/raw/tree/summary, findings, assumptions/suppression presentation, JSON/schema and public exits; no renderer derived here |
 | std / #59 | Owner answer, then rebase/regenerate/recount #59 on current main; exact irigtime consumer check once the view exists; actual published types/core APIs remain a release gate |
-| Normalization INT-064/065/066 | Owner decisions and independent review; A alone is not built-in canonical order, and newline/counter choices cannot be guessed |
+| Normalization INT-064/065/066 | Owner decisions on recommended A+D / A / A; reviewer independently rechecks amended INT-064. A alone is not built-in canonical order, and newline/counter choices cannot be guessed |
 | Flex reference / Criterion | Owner selects reference/revision and separately approves retaining Criterion; bounded synthetic reference CI only, output values/pins/hashes, no source paste or new project dependency |
 | X/V INT-061/062/063 | Owner sign-off/review for mapping, vocabulary and attribution; retain raw evidence meanwhile |
 | Semantic access / completeness / governance | Proposed INT-031 and remaining classification/provisional-use policies; cut facets retain Incomplete's blocking force |
@@ -144,6 +146,26 @@ Known aliases always refuse before destructive access. Default raw extraction
 under findings remains separate from semantic/governing adoption. No stdin
 fallback, second packet reader/dispatcher or output format is introduced.
 
+## Actors and next actions
+
+“Gated” does not mean “all waiting for the owner”. Source reviews and
+approved-interpretation development analyses are maintainer work; independent
+checks belong to the reviewer. Only unresolved decision items go to the owner.
+
+| Actor | Action | Timing and boundary |
+|---|---|---|
+| Maintainer, now | Historical Chapter 10/Chapter 11 CSDW-layout source review for L1-CH10-001/002, with edition/table/layout citations and source fingerprints | Start after #80 merges, in its own PR. Reconcile verified source facts; do not invent missing edition mappings or implement another packet reader |
+| Maintainer, now | Development analyses for already approved INTs, including source freshness, alternatives/edge cases, required test coverage and unresolved evidence | Start after #80 merges, in a separate PR from the layout review and vocabulary inventory. Approved status does not waive analysis/tests; do not silently approve proposed entries |
+| Maintainer, now | Appendix 9-C recognizer vocabulary inventory, including required code names/index patterns and explicit coverage gaps | Start after #80 merges, in its own PR. Source-cited recognition coverage, not a complete registry implementation or guessed private vocabulary |
+| Reviewer | Legacy INT-001 to INT-034 independent checks where outstanding under ADR-0033 | Route the outstanding entries for review; preserve existing approvals/reconfirmations and do not grandfather pending checks or perform the independent role as maintainer |
+| Reviewer | Independent recheck of amended INT-064 | Still required; A+D recommendation is not final interpretation approval, and the owner choice remains separate |
+| Coordinator + core maintainer | Publish irig106-types 0.2 and irig106-core 0.2, with owner go-ahead | Cross-repository release prerequisite, not an action for this tmats docs PR; verify actual published APIs for tmats acceptance, with no CI-only source override as release evidence |
+| Owner | Decide the recorded decision items in the blocker table | Decision items only; not maintainer source research, development analyses or the reviewer's independent check. No new owner choice is made by this routing table |
+
+Each maintainer-now item has its own reviewed PR, with exact head reported
+and no merge by the maintainer. This PR only records that queue; it does not
+start those tasks before #80 merges or authorize family three/parser work.
+
 ## Validation and handoff
 
 Locally rechecked actual Parent fields, scoped descendant sets, planned-row
@@ -153,6 +175,9 @@ reference run, real-recording check or publication was executed locally.
 GitHub CI runs the existing checks; green prototype/docs CI still does not
 execute planned replacement-code fixtures.
 
-Next: route the recorded owner questions, obtain source/review evidence where
-needed, then derive only the answered bounded slice in reviewable PRs.
+Next after #80 merges: start the three maintainer-now items above, one PR
+each, beginning with historical CSDW-layout sources. Route owner decisions,
+independent checks and dependency publication to their named actors in
+parallel with that work; derive dependent requirements only when their
+applicable gates are met.
 No family 3 branch, restructure or parser code is started by this audit.
