@@ -315,7 +315,14 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
-| L1-PERF-001 | _(none)_ | _(none)_ | Draft |
+| L1-PERF-001 | L2-PERF-001, L2-PERF-002 | _(none)_ | Draft |
+
+**L2 -> L3 -> Verification Artifacts**
+
+| L2 ID | L3 Children | Test Artifacts | Status |
+|-------|-------------|----------------|--------|
+| L2-PERF-001 | L3-PERF-001, L3-PERF-002, L3-PERF-003, L3-PERF-004 | _(TBD)_ | Draft |
+| L2-PERF-002 | L3-PERF-005, L3-PERF-006, L3-PERF-007, L3-PERF-008 | _(TBD)_ | Draft |
 
 ### L1-REL: Versioning and release
 
@@ -358,15 +365,15 @@ This matrix is the single source of truth for live status; the requirement docum
 | IO | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
 | CLI | 9 | 9 | 37 | 0 | 0 | 0 | 0 |
 | ROB | 3 | 5 | 13 | 0 | 0 | 0 | 0 |
-| PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| PERF | 1 | 2 | 8 | 0 | 0 | 0 | 0 |
 | REL | 6 | 1 | 1 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **70** | **226** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **72** | **234** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 43 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 42 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 339 (0.0%).
+**Tested by at least one test marker**: 0 of 348 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 339 (0.9%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 3 of 348 (0.9%).
 
 ### Orphan check
 

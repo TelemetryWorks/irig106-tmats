@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through pattern lookup plus robustness-evidence derivations drafted (family 2, batches 1-26 and 28).**
+> **Status: foundations through pattern lookup, robustness and performance-evidence derivations drafted (family 2, batches 1-26 and 28-29).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -2462,9 +2462,10 @@ helpers. No extra lint set, new exception or unsafe-code policy is approved.
 **L3-ROB-009** · Parent: L2-ROB-004 · Verification: I
 *The guard-rail acceptance evidence SHALL demonstrate a nonzero CI/check result for each prohibited typed operation in non-test library scope, alongside scoped permitted test helpers, without accepting a configured-but-skipped lint job, ignored command failure or comment-only negative fixture as proof of enforcement.*
 
-Use isolated future compile-fail fixtures under the real lint configuration;
-do not insert prohibited operations into production code as part of this
-requirements PR. Retain actual command, compiler/Clippy version and source
+Use CI-scripted cargo clippy runs on isolated fixture crates under the real
+lint configuration. Do NOT add trybuild/ui_test or any dev dependency without
+owner approval. Do not insert prohibited operations into production code as
+part of this requirements PR. Retain actual command, compiler/Clippy version and source
 head. The current baseline command is cargo clippy --workspace --all-targets
 --all-features -- -D warnings; bind it to redesigned packages/features.
 
@@ -2499,3 +2500,82 @@ L1-ROB-001, source-span/framing/open-run-budget requirements and the
 interpretation development gates remain independent. This slice neither
 approves the rest of ADR-0020 nor chooses pending memory budgets/recovery,
 std features, pattern scope/syntax, output policies or report formats.
+
+
+## Parser and whole-recording measurement evidence (family 2, batch 29)
+
+These are future inspection obligations. No Evidence line or executable
+benchmark coverage is claimed. See the [batch note](research/2026-11-27-performance-evidence-requirements.md)
+for source inspection, independent expected-work oracles and pending budgets.
+
+**PENDING OWNER**: whether the tmats host must also perform zero per-packet
+allocation in steady state for non-setup packets, analogous to core
+L2-HOT-008. No such host allocation threshold is approved here. Retaining
+the prototype Criterion dev dependency also requires owner approval.
+
+**L3-PERF-001** · Parent: L2-PERF-001 · Verification: I
+*Before accepting a benchmark result, verification SHALL compare its consumed source extent and applicable item/fragment/run/record inventory with independently specified fixture expectations, preserving source bytes and qualification evidence rather than accepting timing alone or deriving the oracle through the production parser/assembler.*
+
+Use reviewed TEST-DATA contracts; a fragment is not automatically a record.
+Unresolved completeness/access rules cannot be silently settled by a timing
+fixture. Benchmark success does not make malformed/qualified data usable.
+
+**L3-PERF-002** · Parent: L2-PERF-001 · Verification: I
+*Text-reading measurement SHALL identify the exact supplied byte sequence, measured parser operation and whether acquisition, allocation/source ownership, indexing, checksums, views or rendering are included; it SHALL consume an observable parser result so discarded/optimized-away work or an early empty result cannot count as full text reading.*
+
+Record the byte denominator actually processed. Do not compare a memory-only
+parse with end-to-end file processing as if their measured scopes were equal.
+This does not choose a scanner algorithm, benchmark framework or new API.
+
+**L3-PERF-003** · Parent: L2-PERF-001 · Verification: I
+*Whole-recording measurement SHALL traverse the declared input extent through core using ADR-0036 borrowed-span assembly directly, without coalescing or extra payload copies, and account for all expected setup fragments/candidates/records under the reviewed assembly rules; a coalescing/copying run SHALL NOT be accepted as recording-scan evidence, nor SHALL first-setup-only timing, a local packet reader, fragment-count-as-record-count or silently skipped later updates.*
+
+ADR-0036 preserves core header facts, integrity sideband and borrowed DATA;
+INT-011/045 define joining/closure separately from complete/governing use.
+Synthetic fixture inventories can establish expected work without copying
+core's packet-finding algorithm into a benchmark oracle.
+
+**L3-PERF-004** · Parent: L2-PERF-001 · Verification: I
+*Measurement evidence SHALL distinguish TMATS text bytes from recording bytes and report whether timing covers core traversal, ADR-0036 borrowed-span slicing/assembly, parsing, acquisition and output; it SHALL retain the units and run mode needed to interpret rates without presenting one phase's throughput as another's or hiding mandatory work outside the timer, and SHALL report allocation counts and payload-copy bytes from a matching untimed measurement using a test allocator like core's plus explicit copy accounting, with reporting only and no new numeric threshold.*
+
+Recording-scan evidence MUST use borrowed-span assembly, not merely label
+coalescing/copying as another scan mode. Any owned parse-source construction
+belongs to a separately identified parser workload. Allocation/copy counters
+are measured OUTSIDE the timer in a paired run with matching input, build,
+configuration and workload scope: allocator instrumentation counts allocations;
+separate copy accounting measures payload-copy bytes. Record counter scope.
+No new numeric allocation/copy budget or cold/warm-cache policy is selected;
+rejection of coalescing enforces ADR-0036, not a new metric threshold.
+
+**L3-PERF-005** · Parent: L2-PERF-002 · Verification: I
+*Each accepted measurement SHALL identify source head, tool/compiler versions, build profile/Cargo features and compile-time target features, hardware/OS/architecture, input fingerprint/size, repetition and cache/acquisition mode, measured scope and completed result, so results from different sources, environments or workloads cannot masquerade as a same-condition comparison.*
+
+Compile-time CPU/target features are distinct from Cargo features; retain
+both with the actual build configuration.
+Keep authorized sample bytes out of CI/public artifacts under TEST-DATA's
+local-use policy; identify evidence without uploading the recording. No
+user-facing report schema, benchmark tool dependency or numeric run default
+is selected here. Future run plans must be bounded and reviewed.
+
+**L3-PERF-006** · Parent: L2-PERF-002 · Verification: I
+*The idmptmat comparison SHALL use the same input files and identify the reference version/build, command/options, timed scope and actual completion/consumed extent; unsupported standalone input, first-packet-only behavior, mismatch, failure or timeout SHALL remain explicitly non-equivalent rather than yield an unqualified whole-recording speedup claim.*
+
+TEST-DATA D1/D2 and reference limitations remain visible. Reference output
+is not the authority for TMATS semantics or completeness; investigate
+correctness disagreements against cited rules. Do not require changing a
+reference binary or adding a second reader to manufacture equivalence.
+
+**L3-PERF-007** · Parent: L2-PERF-002 · Verification: I
+*Benchmark/reference execution SHALL follow an explicit finite time/memory/input/repetition plan, keep failed or timed-out cases distinct from successful measurements, and stop its own jobs when finished or limited; substantive synthesized work SHALL use GitHub CI, while sample work SHALL await an authorized data/compute plan consistent with the local-use and light-local rules.*
+
+No numeric resource default, background watcher or unattended benchmark loop
+is selected. Only owned processes may be stopped; no global process kill is
+authorized. This docs PR executes no benchmark or reference tool locally.
+
+**L3-PERF-008** · Parent: L2-PERF-002 · Verification: I
+*Initial measurements SHALL inform a later explicit budget decision rather than invent a throughput/latency acceptance threshold or treat historical performance targets as already approved release gates; performance success SHALL NOT waive source preservation, semantic/interpretation tests, lint/coverage obligations or pending owner policies.*
+
+L1-PERF-001 mentions the retired ecosystem draft's 100 Mbps sustained figure
+for first-measurement comparison; it is not a newly approved floor here.
+ADR-0021's overall proposal remains proposed. Held std, pattern, extraction,
+record-access/governance and report-format decisions remain unresolved.

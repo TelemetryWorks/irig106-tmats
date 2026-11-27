@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through pattern lookup plus robustness-evidence derivations drafted (family 2, batches 1-26 and 28).**
+> **Status: foundations through pattern lookup, robustness and performance-evidence derivations drafted (family 2, batches 1-26 and 28-29).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -1078,5 +1078,38 @@ Planned checks provide no current Evidence for the redesigned library.
 **Statement**: From the first redesigned library code, CI SHALL measure the library's line coverage from the project's tests and enforce the existing minimum of 80%, identifying the exact source head, measured library scope, features and measurement command; missing/failed measurement or CLI-only coverage SHALL NOT be accepted as satisfying that library floor.
 
 **Rationale**: L1-ROB-003 already specifies 80% measured in CI and plans cargo llvm-cov with --fail-under-lines 80. The threshold is not a standards-conformance or requirements-coverage metric. Scope/configuration and omitted coverage must remain visible; new implementation cannot inherit a pass from prototype tests or raise the score by silently removing untested library code. No new threshold, test framework, dependency or CI job is added in this docs batch.
+
+**Verification Method**: Inspection (I)
+
+
+## Performance measurement acceptance (family 2, batch 29)
+
+These derive L1-PERF-001, not approval of the whole proposed single-pass
+scanner in ADR-0021 or a guessed throughput budget. The [measurement and
+source note](research/2026-11-27-performance-evidence-requirements.md) separates
+benchmark scope, correctness, reference limitations and permitted compute.
+No benchmark is run or new dependency selected in this docs batch. Retaining
+the prototype Criterion dev dependency requires owner approval.
+**PENDING OWNER**: whether the tmats host must also have zero per-packet
+allocation in steady state for non-setup packets (core L2-HOT-008 analogy);
+this slice does not approve that host allocation threshold.
+
+#### L2-PERF-001
+
+**Parent**: L1-PERF-001
+
+**Statement**: The project SHALL measure redesigned TMATS text reading and finding every setup record in a recording as distinct, explicitly scoped workloads on synthesized and sample data, checking the consumed source/record inventory independently before accepting timing evidence; recording traversal SHALL use the sole irig106-core reader and ADR-0036 borrowed-span assembly without coalescing or extra payload copies, with allocation counts/payload-copy bytes reported from matching untimed instrumentation rather than imposing a new numeric budget.
+
+**Rationale**: L1-PERF-001 already requires both workloads. ADR-0036 owns packet finding/trust in core; ADR-0025 distinguishes packet fragments from setup records. A fast result that scans only the first packet, drops source bytes or treats every fragment as a separate record does not measure the required work. Sample access/compute must follow TEST-DATA's local-use policy and owner compute authorization; missing sample evidence remains missing, not inferred from synthetic CI.
+
+**Verification Method**: Inspection (I)
+
+#### L2-PERF-002
+
+**Parent**: L1-PERF-001
+
+**Statement**: Performance evidence SHALL identify the exact source/build, input identity, workload boundary, consumed byte/record quantities, timing units, environment and bounded run plan, and SHALL compare idmptmat on the same files only with explicit differences in supported work; failed, timed-out or partial reference runs SHALL NOT be reported as equivalent full-workload speed comparisons, and numeric acceptance budgets SHALL remain undecided until measured evidence is reviewed.
+
+**Rationale**: L1-PERF-001 requires same-file comparison and defers a numeric budget until the first measurement. TEST-DATA documents reference-tool defects including first-packet-only reading and nontermination. ADR-0021 remains proposed; its scanner algorithm is not selected by this measurement contract. CI-heavy/light-local compute rules and no-new-dependency-without-owner-approval remain in force.
 
 **Verification Method**: Inspection (I)
