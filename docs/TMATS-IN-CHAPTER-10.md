@@ -1142,9 +1142,11 @@ requirements' own release notes and the contracts of section 4:
   "To be written" (module structure).
 - **`docs/USE-CASES.md`** — UC-18 to UC-20 (8.2); the actors table gains a
   time correlator (`irig106-time`) and a catalogue builder (`irig106-index`).
-- **`docs/CLI.md`** — show the configuration timeline in `tmats show`, and
-  consider a `tmats check` command for the packet check (UC-18), both
-  reusable by `irig106-cli` (ROADMAP W3).
+- **`docs/CLI.md`** — show the configuration timeline in `tmats show`,
+  reusable by `irig106-cli` (ROADMAP W3). Per the [2026-11-27 roadmap
+  direction](ROADMAP.md#small-increments-after-01-owner-direction-2026-11-27),
+  recording/setup cross-check tooling (UC-18) belongs to `irig106-validator`,
+  rather than a `tmats check` command; `tmats validate` checks TMATS text rules.
 - **`docs/ROADMAP.md`** — the release plan changes of 8.4.
 
 ### 8.6 Notes for the other repositories (awaiting the owner's direction)

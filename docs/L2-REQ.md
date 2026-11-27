@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through pattern-lookup boundaries drafted (family 2, batches 1-26).**
+> **Status: foundations through pattern lookup plus robustness-evidence derivations drafted (family 2, batches 1-26 and 28).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -1051,3 +1051,32 @@ reviewed-pattern contract below does not settle either item.
 **Rationale**: UC-03 and L1-VIEW-001 include every R-1\TK1-n. Chapter 9 (106-24R1) section 9.4.2 p. 9-2 defines numbered multiple-entry names and case-insensitive interpretation; Table 9-4 TRACK NUMBER/CHANNEL ID R-x\TK1-n p. 9-48 supplies the example's structural pattern. ADR-0002/0003 make source items authoritative, INT-038 supplies numeric index identity, and INT-039 preserves every duplicate. Pattern lookup is candidate retrieval, not a standard-defined association, cardinality/default decision or public query-string grammar. Concrete query representation and index data structures remain API/implementation review work.
 
 **Verification Method**: Test (T)
+
+
+## Library guard-rail and coverage evidence (family 2, batch 28)
+
+These derive L1-ROB-002/003 only. ADR-0020 remains proposed as a whole;
+this slice does not approve its other architecture choices, introduce
+numeric resource budgets or resolve held #59's std decision. See the
+[source and acceptance note](research/2026-11-27-robustness-evidence-requirements.md).
+Planned checks provide no current Evidence for the redesigned library.
+
+#### L2-ROB-004
+
+**Parent**: L1-ROB-002
+
+**Statement**: From the first redesigned library code, compiler-aware Clippy enforcement SHALL reject the prohibited library operations listed in L1-ROB-002 outside test-only code, with effective package/workspace lint configuration and CI failure verified rather than relying on text searches or a lint table that is not applied to the library.
+
+**Rationale**: L1-ROB-002 explicitly names the operations/lints and requires build failure; L1-IO-001 prohibits process printing in library code. Its planned workspace lint table and scoped test/CLI-main exceptions must not waive enforcement on production library paths. This derives those existing obligations without adopting the full proposed ADR-0020 or claiming lint success proves absence of every panic, abort or loop.
+
+**Verification Method**: Inspection (I)
+
+#### L2-ROB-005
+
+**Parent**: L1-ROB-003
+
+**Statement**: From the first redesigned library code, CI SHALL measure the library's line coverage from the project's tests and enforce the existing minimum of 80%, identifying the exact source head, measured library scope, features and measurement command; missing/failed measurement or CLI-only coverage SHALL NOT be accepted as satisfying that library floor.
+
+**Rationale**: L1-ROB-003 already specifies 80% measured in CI and plans cargo llvm-cov with --fail-under-lines 80. The threshold is not a standards-conformance or requirements-coverage metric. Scope/configuration and omitted coverage must remain visible; new implementation cannot inherit a pass from prototype tests or raise the score by silently removing untested library code. No new threshold, test framework, dependency or CI job is added in this docs batch.
+
+**Verification Method**: Inspection (I)

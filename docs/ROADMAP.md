@@ -80,6 +80,16 @@ and development analysis (including the complete non-decimal representation inve
 and implement the planned executable tests before relying on them. The owner
 choices are recorded; independent review and development gates remain.
 
+### Remaining library guard-rail and coverage acceptance
+
+Review effective library lint enforcement and the existing 80% line-coverage
+floor before adding their checks with the first redesigned library code.
+Inspect actual package inheritance, failure propagation and measured library
+scope at the reviewed head; prototype CI and overall green status cannot
+substitute. Keep semantic/requirements coverage and owner gates separate.
+This does not approve the remainder of proposed ADR-0020 or resolve #59's
+held std choice.
+
 ### Remaining raw lookup and extension derivations
 
 Owner decisions PENDING before pattern-query implementation: 0.1 pattern

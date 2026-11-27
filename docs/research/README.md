@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-27-robustness-evidence-requirements.md](2026-11-27-robustness-evidence-requirements.md) | Batch 28 existing lint/80%-library-line obligations, effective configuration/failure oracles, CI evidence boundaries and #60 validator-ownership nit |
 | [2026-11-26-pattern-lookup-requirements.md](2026-11-26-pattern-lookup-requirements.md) | Batch 26 structural raw-pattern retrieval, canonical bindings, all ordered candidates/provenance and independent planned oracles |
 | [2026-11-26-extraction-requirements.md](2026-11-26-extraction-requirements.md) | Batch 25 selected-record byte extraction, input-alias safety, planned fixtures and remaining family-2 planning estimate |
 | [2026-11-26-cli-mounting-requirements.md](2026-11-26-cli-mounting-requirements.md) | Batch 24 runner/individual API mounting, verbatim host-dispatch clarification, defensive Format-1 guard and preserved assembly observations |
