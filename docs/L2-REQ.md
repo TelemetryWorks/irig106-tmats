@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through checksum command computation drafted (family 2, batches 1-26 and 28-35).**
+> **Status: foundations through flex compatibility acceptance drafted (family 2, batches 1-26 and 28-36).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -1302,5 +1302,35 @@ no command below implicitly approves its labelled ambiguous-split option.
 **Statement**: Stamp command computation SHALL use the library's validated final-byte stamp transaction for its supplied document/revision and permitted explicit edits, preserving refusals, verification failure and all findings; only a successfully verified transaction SHALL produce a successful stamped-result value, with the original input unchanged and output delivery subject to the separate safe-destination contract.
 
 **Rationale**: L1-SUM-004, ADR-0029 and L2-SUM-003/L2-WRT-002 require final-byte hashing and re-read verification. F1 permits explicit exact-item duplicate removal before stamping, not a winner selected by stamp. L1-CLI-007 and the extraction/output contracts prevent in-place input changes. This derives command computation, not permission to implement held -o overwrite/identity checks or to select a destination, output layout or exit code.
+
+**Verification Method**: Test (T)
+
+
+## Flex compatibility source/acceptance (family 2, batch 36)
+
+These derive L1-SUM-003's accepted ADR-0014 compatibility decision, not an
+IRIG algorithm or public output format. The [source/gap note](research/2026-11-27-flex-compatibility-acceptance.md)
+uses the repository's existing reference-tool investigation. No external
+repository or reference executable is accessed in this batch. Exact reference
+source qualification and complete arithmetic/byte-rule derivation remain
+implementation gates; these children do not claim that work complete.
+
+#### L2-SUM-004
+
+**Parent**: L1-SUM-003
+
+**Statement**: Flex computation SHALL reproduce the accepted irig106lib compatibility behavior bit for bit for the explicitly supplied source/options, including its documented exclusion quirk, without replacing its reference-defined preparation, selection or arithmetic with the standard SHA domain or the library's semantic projections; it SHALL preserve the original source and keep its non-standard identity distinct from G\SHA.
+
+**Rationale**: ADR-0014 deliberately retains compatibility quirks, including D7. The 2026-09-25 reference-tool investigation describes uppercase-line Fletcher-32 summation, default exclusions and the MPOC4/DPOC4 slip. Those observations motivate the requirements; they do not supply a pinned current reference, fully specified arithmetic or new source inspection. L1-SUM-003 and UC-16 require compatibility, not repairing that algorithm or claiming it is an IRIG checksum.
+
+**Verification Method**: Test (T)
+
+#### L2-SUM-005
+
+**Parent**: L1-SUM-003
+
+**Statement**: Flex compatibility acceptance SHALL require a reproducibly identified reference source/environment and independently fixed byte/options/result vectors, including exclusions, arithmetic/byte boundaries and the retained D7 quirk; implementation SHALL remain unready until the reference-defined behavior is analyzed explicitly and unresolved or undefined cases are raised rather than silently assigned SHA, parser or normalization semantics.
+
+**Rationale**: ADR-0018 makes reference tools compatibility oracles, not authorities for the standard. Bit-for-bit compatibility cannot be established by two calls to the new implementation, a historical prose summary, one wrapper mock or an unpinned moving branch. No new runtime/dev dependency, source vendoring, install or reference execution is authorized by these planned acceptance obligations. Proposed INT-031 access and existing resource/report-format gates stay in force.
 
 **Verification Method**: Test (T)

@@ -96,6 +96,7 @@ irig106-tmats/
 │   │                          2026-11-25-retained-cut-and-qm-review-followups.md records the independent review and narrow blocking/test amendments;
 │   │                          2026-11-25-time-view-metadata-requirements.md derives bounded channel/time-field requirements and acceptance scope;
 │   │                          2026-11-25-source-bit-requirements.md derives explicit NSB splitting and records DSI/CHE remaining boundaries;
+│   │                          2026-11-27-flex-compatibility-acceptance.md derives pinned-reference compatibility acceptance and separate packet/TMATS checksum evidence;
 │   │                          2026-11-27-checksum-commands-and-owner-questions.md derives checksum command computation and briefs the INT-031/file-order owner questions;
 │   │                          2026-11-27-record-enumeration-requirements.md derives internal record enumeration without rendered-output or governing choices;
 │   │                          2026-11-27-edition-independent-reading.md  Edition-independent reading and release-gate follow-ups

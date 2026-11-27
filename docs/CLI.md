@@ -37,6 +37,9 @@ findings and transaction failures; they do not define rendered output or
 selection defaults. Proposed INT-031 gates incomplete/ambiguous access.
 A successful stamp result still needs successful delivery under the separate
 input-preserving output contract; held destination policies remain held.
+Core PacketInfo data-checksum state passes through unchanged: a G\SHA result
+neither upgrades nor is upgraded by core Mismatch/NotChecked. Their separate
+results do not bypass packet admission or record-access gates.
 
 ## 2. Commands (from UC-17)
 

@@ -245,7 +245,7 @@ This matrix is the single source of truth for live status; the requirement docum
 |-------|-------------|----------------|--------|
 | L1-SUM-001 | L2-SUM-001 | _(none)_ | Draft |
 | L1-SUM-002 | L2-SUM-002 | _(none)_ | Draft |
-| L1-SUM-003 | _(none)_ | _(none)_ | Draft |
+| L1-SUM-003 | L2-SUM-004, L2-SUM-005 | _(none)_ | Draft |
 | L1-SUM-004 | L2-SUM-003 | _(none)_ | Draft |
 
 **L2 -> L3 -> Verification Artifacts**
@@ -255,6 +255,8 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-SUM-001 | L3-SUM-001, L3-SUM-002 | _(TBD)_ | Draft |
 | L2-SUM-002 | L3-SUM-003, L3-SUM-004, L3-SUM-005 | _(TBD)_ | Draft |
 | L2-SUM-003 | L3-SUM-006, L3-SUM-007, L3-SUM-008, L3-SUM-009, L3-SUM-010 | _(TBD)_ | Draft |
+| L2-SUM-004 | L3-SUM-011, L3-SUM-012, L3-SUM-013 | _(TBD)_ | Draft |
+| L2-SUM-005 | L3-SUM-014, L3-SUM-015, L3-SUM-016 | _(TBD)_ | Draft |
 
 ### L1-IO: Input/output boundary
 
@@ -378,19 +380,19 @@ This matrix is the single source of truth for live status; the requirement docum
 | DER | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EXT | 4 | 4 | 16 | 0 | 0 | 0 | 0 |
 | WRT | 7 | 4 | 11 | 0 | 0 | 0 | 0 |
-| SUM | 4 | 3 | 10 | 0 | 0 | 0 | 0 |
+| SUM | 4 | 5 | 16 | 0 | 0 | 0 | 0 |
 | IO | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
 | CLI | 9 | 13 | 51 | 0 | 0 | 0 | 0 |
 | ROB | 3 | 5 | 13 | 0 | 0 | 0 | 0 |
 | PERF | 1 | 2 | 8 | 0 | 0 | 0 | 0 |
 | REL | 6 | 3 | 9 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **84** | **278** | **0** | **0** | **0** | **0** |
+| **Total** | **84** | **86** | **284** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 36 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 35 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 398 (0.0%).
+**Tested by at least one test marker**: 0 of 405 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 398 (0.5%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 405 (0.5%).
 
 ### Orphan check
 

@@ -1746,6 +1746,46 @@ Flex's exact source/algorithm and independent compatibility derivation remain
 outstanding. Output delivery and ambiguous/incomplete access cases do not
 remove their owner gates; new tests are planned, not executed coverage.
 
+## Planned flex compatibility acceptance batch 36
+
+These are source-qualification/acceptance obligations, not executed vectors.
+All flex expected numeric values are **BLOCKED on pinned-reference analysis**
+and independent oracle qualification, not a newly pending owner algorithm
+choice. ADR-0014 already chose bit-for-bit compatibility including D7.
+References: L1-SUM-003, ADR-0014/0018 and the 2026-09-25 tool investigation.
+Synthetic filter tokens below are not assertions of Chapter 9 field meaning.
+
+| Planned test | Independent input/evidence and expected obligation | Requirements |
+|---|---|---|
+| `flex_reference_snapshot_is_reproducible` | Pin revision/files/function/options/environment and fixed vectors; moving branch or historical prose alone fails readiness | L3-SUM-014 |
+| `flex_raw_source_not_effective_projection` | Controls, leading-zero tokens and raw spelling differ from typed views: use qualified reference preparation, source unchanged; do not assume INT projections equivalent | L3-SUM-011 |
+| `flex_reference_line_boundaries_are_explicit` | Qualified cases with CR/LF, delimiters, empty/layout-only input and no final semicolon have source-derived handling; no parser repair guessed | L3-SUM-011, L3-SUM-014 |
+| `flex_uppercase_is_reference_byte_operation` | Mixed-case bytes use the reference's defined preparation, not unrelated locale/Unicode folding; no source rewrite | L3-SUM-011 |
+| `flex_default_comment_and_group_filters` | Qualified complete COMMENT/group COM/G/V cases use the recorded default selection, with expected reference values fixed independently | L3-SUM-012 |
+| `flex_r_identity_filter_is_exact_not_prefix_family` | Listed R filter tokens and neighboring nonmatching tokens retain the pinned source's exact selection behavior, never a guessed family-wide exclusion | L3-SUM-012 |
+| `flex_d7_dpoc4_is_not_silently_fixed` | Qualified DPOC1/2/3 versus DPOC4 and MPOC4 vectors pin the accepted exclusion slip; no corrected symmetry | L3-SUM-012, L3-SUM-015 |
+| `flex_each_inclusion_option_has_reference_vectors` | Every supported reference inclusion option and accepted combination has independently fixed results; public CLI syntax remains separate | L3-SUM-012, L3-SUM-014 |
+| `flex_arithmetic_matches_independent_reference` | Qualified lines check initialization/packing/odd length/reduction/final sum with a separately derived arithmetic oracle, not production functions | L3-SUM-013, L3-SUM-015 |
+| `flex_long_line_and_carry_boundaries` | Bounded source-derived length/carry/overflow cases agree across qualified host environments or expose a documented readiness gap; no host-width accident accepted | L3-SUM-013, L3-SUM-015 |
+| `flex_line_permutation_preserves_sum` | Reorder independently qualified complete contributing lines: same reference sum; do not generalize to fragments or malformed text | L3-SUM-013, L3-SUM-015 |
+| `flex_repeated_line_is_not_set_deduplication` | Repeated qualified contributing line participates twice according to reference accumulation; fixed vector detects accidental deduplication | L3-SUM-013, L3-SUM-015 |
+| `flex_byte_domain_gaps_block_positive_claims` | NUL/high-byte/odd/truncated stimuli without defined reference behavior remain recorded gaps, never fabricated positive compatibility vectors | L3-SUM-011, L3-SUM-014 |
+| `flex_options_and_source_identity_survive_wrapper` | Result retains non-standard identity and the actual options/source/revision; no exact public serialization chosen | L3-SUM-016 |
+| `flex_is_not_sha_or_packet_integrity` | Flex result neither enters G\SHA nor substitutes for standard verification or core data-checksum evidence; all states stay separate | L3-SUM-016 |
+| `flex_mocked_wrapper_is_not_algorithm_coverage` | Wrapper propagation succeeds but no pinned arithmetic/filter vectors exist: flex implementation readiness remains unsatisfied | L3-SUM-014, L3-SUM-015 |
+
+## Planned checksum-evidence independence follow-up from #68
+
+These test supplied independent outcomes, not an admission bypass. A real
+integration test must first satisfy its reviewed source/access gates; it may
+not read a rejected packet just to manufacture a G\SHA result.
+
+| Planned test | Independent input and expected result | Requirements |
+|---|---|---|
+| `checksum_core_data_mismatch_and_gsha_match_stay_separate` | Given core PacketInfo data-checksum Mismatch and independently evaluated G\SHA match: both retained unchanged, no packet-integrity upgrade or forced G\SHA mismatch | L3-CLI-010, L3-CLI-047 |
+| `checksum_core_data_notchecked_and_gsha_match_stay_separate` | Given NotChecked and independently evaluated G\SHA match: NotChecked never becomes checked/match, G\SHA result unchanged | L3-CLI-010, L3-CLI-047 |
+| `checksum_core_evidence_never_repairs_gsha_failure` | Supplied core Mismatch/NotChecked paired with G\SHA mismatch/indeterminate: preserve each state/findings, no promotion of either or access authority | L3-CLI-010, L3-CLI-047 |
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample
