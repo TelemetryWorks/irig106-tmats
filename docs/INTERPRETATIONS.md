@@ -79,7 +79,7 @@ listed here.
 
 **Reason**: Two of the three sources state the tie; generating links from the R side alone would leave valid Q links unresolved.
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T5
+**Design**: accepted (owner, 2026-09-26) · **Review**: independent rule check CONCUR (2026-11-27) on main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`; existing owner acceptance: Joey, 2026-09-26; draft author: maintainer agent; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch1.md); source-freshness/development-analysis/executable-test gates remain · **Origin**: T5
 
 **Test**: `r_channel_data_link_name_resolves_to_q_group`
 
@@ -102,7 +102,7 @@ listed here.
 
 **Reason**: The prose is the only source of these ties; the target of each is chosen from the groups whose own conditions or enumerations accept that channel's data.
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T5
+**Design**: accepted (owner, 2026-09-26) · **Review**: independent rule check CONCUR (2026-11-27) on main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`; existing owner acceptance: Joey, 2026-09-26; draft author: maintainer agent; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch1.md); source-freshness/development-analysis/executable-test gates remain · **Origin**: T5
 
 **Test**: `sub_channel_and_network_names_resolve_to_their_groups`
 
@@ -120,7 +120,7 @@ listed here.
 
 **Reason**: No single source is complete; the check keeps every gap visible and decided.
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T5
+**Design**: accepted (owner, 2026-09-26) · **Review**: independent rule check CONCUR (2026-11-27) on main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`; existing owner acceptance: Joey, 2026-09-26; draft author: maintainer agent; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch1.md); source-freshness/development-analysis/executable-test gates remain · **Origin**: T5
 
 **Test**: `one_sided_relationship_without_register_entry_fails_generation`
 
@@ -136,11 +136,16 @@ listed here.
 
 **Behaviour**: A reference matches by group and code path; the index letters (`x`, `d`, `n`, …) name positions, not particular letters, so "B-d\DLN" is `B-x\DLN`.
 
+Matching also requires equal index-position arity. This placeholder
+comparison applies only to definition-table references, never to actual
+numeric document index values (whose identity follows INT-038). It does not
+make different document occurrences equal or discard their raw spelling.
+
 **Reason**: The group occurrence letter differs between tables for the same attribute; matching by letter would lose the P → B link.
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T4
+**Design**: accepted (owner, 2026-09-26) · **Review**: independent rule check CONCUR (2026-11-27) on main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`; existing owner acceptance: Joey, 2026-09-26; draft author: maintainer agent; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch1.md); source-freshness/development-analysis/executable-test gates remain · **Origin**: T4
 
-**Test**: `pcm_data_link_name_links_to_bus_data_link_name`
+**Test**: `pcm_data_link_name_links_to_bus_data_link_name`, `definition_placeholder_arity_must_match`, `definition_placeholders_do_not_equal_document_indices` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -156,11 +161,19 @@ listed here.
 
 **Behaviour**: For `R-x\CDLN-n`, the channel data type `R-x\CDT-n` of the same channel selects the target group: `PCMIN` → P; `1553IN`, `429IN` → B; `UARTIN` → S; `MSGIN`, `ETHIN`, `FBCHIN` → S or Q; `1394IN` → Q; any other type has no data-link target. Candidates in other groups are excluded; several remaining candidates make the link ambiguous (ADR-0026).
 
+This selection requires a usable same-channel CDT. Missing, Invalid,
+Ambiguous (including duplicate equal values under INT-039), or unavailable
+CDT makes target selection **cannot-evaluate**, with every candidate group
+and all CDT occurrences/findings retained, never resolved or an empty/no-target
+answer. Do not filter candidates by a guessed type. The Q target for FBCHIN
+depends on INT-007's reviewed reading of the standard's FBCIN as FBCHIN;
+a document spelling CDT=FBCIN is still an unknown keyword, not repaired.
+
 **Reason**: Bus data carried in a PCM stream shares the P group's data-link name, so a PCM channel would otherwise match both P and B.
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T4
+**Design**: accepted (owner, 2026-09-26) · **Review**: independent check CONCERNS (narrow, 2026-11-27) on main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`; amended wording pending independent recheck; existing owner acceptance: Joey, 2026-09-26; draft author: maintainer agent; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch1.md); source-freshness/development-analysis/executable-test gates remain · **Origin**: T4
 
-**Test**: `pcm_channel_carrying_bus_data_resolves_to_p_group`
+**Test**: `pcm_channel_carrying_bus_data_resolves_to_p_group`, `link_target_unusable_cdt_keeps_all_groups`, `link_target_fibre_channel_uses_int007` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -170,15 +183,25 @@ listed here.
 
 **Sources**:
 - §9.5.12: "The only H group attributes defined in this standard are the following: a. Test Item (code name H\TA) - specifies the item under test and ties the H group to the G group. b. Airborne System Type (code name H\ST-n) - identifies the airborne systems being described in the current file and determines how the rest of the attributes in the H group will be interpreted."
-- Table 9-2: "TEST ITEM G\TA Allowed when: Always".
+- Table 9-2: "TEST ITEM G\TA Allowed when: Always" (p. 9-10).
+- Section 9.4.2 p. 9-2: alphanumeric data are case-insensitive; blanks are "assumed to be intentional; they can be ignored in most cases but should not be used in code names, keywords, and data items used as links".
 
 **Behaviour**: `H\TA` links to `G\TA` by value. `H\TA` and `H\ST-n` are built in; every other H attribute is organisation-defined, supplied through the user overlay (ADR-0008) and preserved when no definition is given.
 
+Compare the value tie ASCII case-insensitively, without locale/Unicode or
+high-byte folding. INT-036/037 character guards and INT-041 blank handling
+remain in force: a leading blank is unavailable, never silently trimmed;
+other unreviewed blank-bearing link values do not acquire a guessed trim or
+matching rule. Multiple G\TA or H\TA occurrences are Ambiguous with every
+occurrence retained, including identical repeats (ADR-0026/INT-039), never
+first/last wins. B\TA or S\TA is not a substitute target. Link evaluation
+never upgrades record qualifications or approves semantic access.
+
 **Reason**: The standard gives the tie in prose without naming the attribute that carries it on the G side; `G\TA` is G's test-item attribute. There is no H table to transcribe; §9.7 says IHAL serves "the purpose originally intended for the Airborne Hardware Attributes (H) group …, which has never been implemented".
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T5
+**Design**: accepted (owner, 2026-09-26) · **Review**: independent check CONCERNS (narrow, 2026-11-27) on main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`; amended wording pending independent recheck; existing owner acceptance: Joey, 2026-09-26; draft author: maintainer agent; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch1.md); source-freshness/development-analysis/executable-test gates remain · **Origin**: T5
 
-**Test**: `h_group_test_item_ties_to_g_group`
+**Test**: `h_group_test_item_ties_to_g_group`, `h_test_item_ascii_match_keeps_raw`, `h_test_item_leading_blank_is_unavailable`, `h_test_item_duplicate_occurrences_are_ambiguous` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -197,7 +220,7 @@ listed here.
 
 **Reason**: Read literally, the Q group could never be used for Fibre Channel data, which the S group and the enumeration both support.
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T5
+**Design**: accepted (owner, 2026-09-26) · **Review**: independent rule check CONCUR (2026-11-27) on main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`; existing owner acceptance: Joey, 2026-09-26; draft author: maintainer agent; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch1.md); source-freshness/development-analysis/executable-test gates remain · **Origin**: T5
 
 **Test**: `q_group_allowed_for_fibre_channel`
 
@@ -210,11 +233,11 @@ listed here.
 **Sources**:
 - Table 9-11, `C-d\DPNO`: "Allowed when: C\DCT is "DER"" and "Default is 1."
 
-**Behaviour**: `C\DCT` means `C-d\DCT` of the same C occurrence; the default of 1 is taken from the prose.
+**Behaviour**: `C\DCT` means `C-d\DCT` of the same C occurrence; the default of 1 is taken from the prose, with its provenance explicitly labelled as Definition prose rather than a printed `Default:` usage field.
 
 **Reason**: Conditions are written for people; the only occurrence that makes sense is the attribute's own (ADR-0022, section 4.2 of the architecture).
 
-**Design**: accepted (owner, 2026-09-26) · **Review**: pending · **Origin**: T1
+**Design**: accepted (owner, 2026-09-26) · **Review**: independent rule check CONCUR (2026-11-27) on main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`; existing owner acceptance: Joey, 2026-09-26; draft author: maintainer agent; [batch evidence](research/2026-11-27-legacy-int-independent-check-batch1.md); source-freshness/development-analysis/executable-test gates remain · **Origin**: T1
 
 **Test**: `derived_occurrences_default_to_one_in_same_occurrence`
 

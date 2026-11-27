@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-27-legacy-int-independent-check-batch1.md](2026-11-27-legacy-int-independent-check-batch1.md) | Received independent legacy check INT-001..008 at c682e05: six CONCURs, narrow INT-005/006 amendments pending recheck, arity and provenance fixtures |
 | [2026-11-27-family2-unheld-queue-reassessment.md](2026-11-27-family2-unheld-queue-reassessment.md) | Post-#79 source audit: identified unheld decomposition queue exhausted, 50-parent current links and remaining owner/source/evidence gates; not family-3 permission |
 | [2026-11-27-show-free-command-orchestration.md](2026-11-27-show-free-command-orchestration.md) | Batch 43 source/revision binding, per-invocation context and cross-stage command acceptance without report/grammar policy; explicit reader-progress blocker |
 | [2026-11-27-retention-limit-evidence.md](2026-11-27-retention-limit-evidence.md) | Batch 42 retained-owner inventory, accounting-proof scope and typed-limit/source-disposition evidence; charging and recovery policies remain open |

@@ -2092,6 +2092,24 @@ semantic/governing access stays gated by proposed INT-031. Test observations
 are internal handoffs and outcomes, not a public report/schema design.
 No test in this table has been executed against replacement code.
 
+## Legacy independent-check batch 1 follow-up fixtures
+
+Independent review at main c682e05 (2026-11-27); these are PLANNED, not
+executed tests or implementation approval. INT-005/006 amendments await
+independent recheck. General link/H semantics retain their release scope;
+this does not bring general resolved links forward into the bounded time view.
+
+| Planned case | Independent premise and expected result | Interpretation |
+|---|---|---|
+| `definition_placeholder_arity_must_match` | Definition B-d\DLN matches B-x\DLN with the same path/one index position; differing index arity cannot match merely because placeholder letters are ignored | INT-004 |
+| `definition_placeholders_do_not_equal_document_indices` | Definition placeholder equivalence never equates actual document B-1 and B-2 occurrences; preserve raw/canonical index identities independently | INT-004, INT-038 |
+| `link_target_unusable_cdt_keeps_all_groups` | Same-channel CDT separately Missing, Invalid, duplicate equal/unequal, or unavailable (leading blank): R\CDLN target selection cannot-evaluate, retaining every P/B/S/Q candidate and every CDT occurrence/finding, never resolved or no-target from uncertainty | INT-005, INT-039, INT-041 |
+| `link_target_fibre_channel_uses_int007` | Usable same-channel FBCHIN admits S/Q by INT-007's condition reading; explicit CDT=FBCIN retains unknown-keyword/Invalid evidence and cannot-evaluate selection, never silently repaired | INT-005, INT-007 |
+| `h_test_item_ascii_match_keeps_raw` | H\TA:TeSt;G\TA:test; compares ASCII-insensitively with original bytes/locations kept; B/S TA fields do not supply a G target and high-byte look-alikes do not fold | INT-006, INT-036, INT-037 |
+| `h_test_item_leading_blank_is_unavailable` | Leading blank on either H\TA or G\TA makes that value unavailable under INT-041; no trim or invented match. Other unreviewed blank-bearing forms stay unavailable rather than choosing a blank rule | INT-006, INT-041 |
+| `h_test_item_duplicate_occurrences_are_ambiguous` | Multiple H\TA, multiple G\TA, or both, including identical repeats: Ambiguous with EVERY occurrence retained, never first/last or an equality winner; record qualification unchanged | INT-006, INT-039, INT-048 |
+| `derived_default_labels_prose_origin` | Same-occurrence DER condition and absent DPNO: default 1 cites Table 9-11 Definition prose p. 9-167, distinguishable from table Default usage metadata; no other occurrence supplies the condition | INT-008 |
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample
