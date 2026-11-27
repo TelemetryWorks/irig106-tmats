@@ -2054,6 +2054,44 @@ extract still requires an available selected extent; no guessed byte ranges,
 silent eviction, local spill, partial-acceptance policy or source truncation
 is authorized. Tests are planned, not executed memory/performance evidence.
 
+## Planned show-free command orchestration batch 43
+
+These are bounded integration cases using explicit reviewed internal requests,
+source/revision descriptors and independent stage oracles. No CLI syntax,
+rendered findings/assumption labels/suppression marker, numeric exits or new
+record-selection/access policy is specified. Policy-dependent real-command
+arms remain gated, not silently enabled by a successful injected adapter.
+
+| Planned test | Supplied scenario and expected internal evidence | Requirements |
+|---|---|---|
+| `command_chain_preserves_selected_source` | Two sources have equal text but different identities; explicit selection reaches computation with its own identity, never a value-based replacement | L3-CLI-062 |
+| `command_chain_preserves_selected_revision` | Selected input and distinct proposed output revisions stay separate; stamp verification refers to the explicit output, not input proof | L3-CLI-062 |
+| `command_chain_does_not_pick_identical_copy` | Two equal scoped candidates retain their separate bindings; requested candidate is used, no latest/first/digest winner | L3-CLI-062 |
+| `command_chain_raw_extract_keeps_control_bytes` | Use existing byte-exact extract fixture with controls/BOM: handoff bytes remain original, with existing findings; no projection/serialization inserted | L3-CLI-063 |
+| `command_chain_checksum_keeps_raw_domain` | Use independently fixed checksum-domain fixture: orchestration supplies raw selected source and established exclusion, not interpreted text or flex | L3-CLI-063 |
+| `command_chain_keeps_core_and_sha_independent` | Supplied core Mismatch/NotChecked and independent G\SHA result remain separate through command result, without trust/qualification upgrade | L3-CLI-063 |
+| `command_chain_keeps_limit_owners_distinct` | Inject core admission refusal/drain evidence versus tmats limit failure: unchanged source/stage ownership, no alternate route or double-counted bytes | L3-CLI-063, L3-CLI-065 |
+| `command_chain_next_call_has_no_clock_default` | First query supplies a caller choice; next supplied query omits it: no remembered choice, INT-060 state unchanged | L3-CLI-064 |
+| `command_chain_next_call_has_no_edition_override` | First supplied request has an override; next has none: apply its existing labelled basis policy, never inherit previous override | L3-CLI-064 |
+| `command_chain_failure_does_not_leak_selection` | Failed first request selected source A; next explicit request selects B: no reused A binding or stale request options | L3-CLI-064 |
+| `command_chain_prior_result_keeps_binding` | Host retains result A while running B: A source/revision/qualification evidence unchanged; no concurrency promise | L3-CLI-064 |
+| `command_chain_acquisition_failure_is_not_empty` | Injected source acquisition failure differs from acquired empty text; no successful empty report, no fabricated source | L3-CLI-065 |
+| `command_chain_traversal_failure_keeps_extent` | Injected core traversal failure preserves visited/unvisited extent and incomplete inventory, never asserts no later records | L3-CLI-065 |
+| `command_chain_access_failure_is_not_adoption` | Inject refused access under supplied reviewed policy: no computation claiming semantic/governing success; does not select pending INT-031 behavior | L3-CLI-065 |
+| `command_chain_computation_and_delivery_differ` | Supplied sink fails after successful computation: command result and delivery failure stay distinguishable; no success-of-delivery claim or retry policy | L3-CLI-065 |
+| `command_chain_runner_matches_direct_computation` | Same explicit request/source/context through runner handoff and direct command path: equivalent pre-render semantic data/qualifications and host stays alive | L3-CLI-066 |
+| `command_chain_failure_returns_to_host` | Shared command returns injected failure through both paths; host can perform next explicit call, no process exit or silent success | L3-CLI-066 |
+| `command_chain_mock_is_not_product_acceptance` | Synthetic adapters pass but real core/text paths or command policies unverified: full product acceptance remains unproven, missing paths visible | L3-CLI-067 |
+| `command_chain_never_falls_back_to_stdin` | Absent explicitly supplied source or acquisition failure never reads stdin or chooses it as fallback; '-' and omitted-path stdin grammar arms stay BLOCKED PENDING OWNER, no error spelling/exit chosen | L3-CLI-062, L3-CLI-065 |
+| `command_chain_mounted_consumes_host_routes_only` | Host supplies a routed Format-1 fragment and required non-fragment observations while another consumer gets other DATA: adapter consumes only supplied routes, no own dispatch/header reconstruction/claim on other packets; standalone host dispatch reaches same adapter with typed wrong-kind guard | L3-CLI-062, L3-CLI-026, L3-CLI-027, L3-CLI-028 |
+| `command_chain_extract_flags_match_direct_policy` | Runner and direct extract receive identical --force/--strict settings plus destination/identity evidence. Existing unrelated file and unproven regular identity refuse without --force; known alias refuses with or without it; each refusal happens before truncate/write. Authorized unrelated/unproven --force arms follow the same-handle sequence. Strict listed-kind/no-finding arms use the common approved rule; unlisted-finding strict arms remain BLOCKED PENDING OWNER. Outcomes/forwarded flags match before rendering | L3-CLI-064, L3-CLI-066, L3-CLI-034 |
+
+No record-order default, strict predicate, stamp destination exception or
+flex oracle is chosen. Extraction keeps ADR-0037's separate permission;
+semantic/governing access stays gated by proposed INT-031. Test observations
+are internal handoffs and outcomes, not a public report/schema design.
+No test in this table has been executed against replacement code.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample

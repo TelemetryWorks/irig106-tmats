@@ -74,6 +74,15 @@ and the pending strict predicate. Its revised estimate accounts for partial
 normalization, assembly/resource and show-free CLI work as well as missing
 parent links; the trace relabel is separate from actual build acceptance.
 
+Review the [show-free command orchestration contract](research/2026-11-27-show-free-command-orchestration.md)
+and verify actual text/recording command paths against independent byte,
+source/revision and failure evidence. Component success or synthetic adapters
+alone do not establish mounted-runner/direct-command equivalence. Keep report
+formats, grammar/default selection and semantic-access policy held where not
+approved. Stdin input via '-' or an omitted path remains owner-held;
+acquire only explicitly supplied sources, with no stdin fallback. Reassess
+remaining family-two coverage and owner answers before claiming readiness for the restructure or parser implementation.
+
 ### Streaming setup-record follow-ups
 
 Carry the reviewer consequences relayed by the owner after INT-011's

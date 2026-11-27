@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through retention/limit evidence drafted (family 2, batches 1-26 and 28-42).**
+> **Status: foundations through show-free command orchestration drafted (family 2, batches 1-26 and 28-43).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -1517,5 +1517,32 @@ required; synthetic policy inputs do not certify a hard memory bound.
 **Statement**: A budget-limited operation SHALL preserve explicit evidence of the configured model/limit, in-scope charged state and what source/ownership was accepted, retained, returned or rejected, using checked arithmetic and bounded failure reporting; operational limitation SHALL not silently discard source, forge a joining/finality event or claim an unchosen atomicity/resume policy.
 
 **Rationale**: L3-ROB-005/006 already require typed failure, observable acceptance and no hidden eviction/finalization or unbounded error buffer. This derives failure evidence and ownership truth independently of whether a future reviewed API rejects an entire operation or reports an accepted prefix. It does not approve partial acceptance, rollback, retry, spill I/O or semantic snapshot use.
+
+**Verification Method**: Test (T)
+
+
+## Show-free command orchestration (family 2, batch 43)
+
+These compose the existing runner, routing, selection and command boundaries
+under L1-CLI-009. They do not derive report/rendered formats, new command
+syntax or public default selection. See the [integration/gate note](research/2026-11-27-show-free-command-orchestration.md).
+
+#### L2-CLI-016
+
+**Parent**: L1-CLI-009
+
+**Statement**: For an explicitly supplied reviewed command request, reusable CLI orchestration SHALL bind acquisition/routing, selected source/document/revision and command computation to that invocation, preserving supplied provenance, qualifications and independent core evidence through the existing command boundary; it SHALL NOT replace an explicit selection with an inferred record, repaired source or remembered caller choice.
+
+**Rationale**: ADR-0010/0034 W3 require thin I/O glue over reusable computation, and ADR-0036 keeps packet traversal in core. Existing routing, enumeration and checksum/extract contracts establish the component rules; this derives their composition rather than another implementation or public request schema. Approved INT-060 requires an explicit choice per query. Reviewed access/selection rules remain prerequisites, not defaults filled by orchestration. Input sources must be explicitly supplied; stdin via a '-' operand or an omitted path remains owner-held, with no stdin fallback. Mounted packet orchestration consumes only the host-routed packets/observations through the existing adapter, not a second dispatch loop. Extract carries the supplied --force/--strict flags into ADR-0037 policy; its destination refusals precede destructive access, and --strict on unlisted findings remains pending.
+
+**Verification Method**: Test (T)
+
+#### L2-CLI-017
+
+**Parent**: L1-CLI-009
+
+**Statement**: Runner and individual-command integration acceptance SHALL compare independently specified command inputs, selected source/revision, semantic results and stage failures for every implemented unheld path, distinguishing computation from delivery and retaining invocation-specific options/evidence without terminating the host or claiming that synthetic adapters qualify real dependency or command behavior.
+
+**Rationale**: W3's two entry paths must share actual command computation, not merely have matching help/version scaffolds. Existing L3-CLI-023/024/025 and L3-CLI-055/056 establish shared entry behavior and failure boundaries. This adds a cross-stage acceptance obligation without selecting renderer bytes, numeric exits, writer retry/rollback or unfinished command policies. Production-source and dependency compatibility evidence remain necessary.
 
 **Verification Method**: Test (T)

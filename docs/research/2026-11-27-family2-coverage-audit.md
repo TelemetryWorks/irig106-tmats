@@ -178,6 +178,7 @@ to retain it in the redesign or add another benchmarking dependency.
 | Owner item | Status/boundary | What it blocks |
 |---|---|---|
 | Report format | PENDING OWNER; no renderer/schema chosen here | L1-CLI-002/006, raw/tree/summary show presentation, findings/assumption/suppression rendering, JSON and public exit presentation |
+| Stdin input | PENDING OWNER; '-' operand and no-path stdin behavior are not approved | Public stdin input grammar/acquisition; orchestration acquires only explicitly supplied sources and never falls back to stdin; stdout/pipe destination approval is separate |
 | std feature | PENDING OWNER; #59 held | #59, L1-REL-002–004 derivations/acceptance and the exact irigtime consumer feature check |
 | Flex reference/revision | PENDING OWNER, bbaggerman versus atac source | Qualified flex vectors, exact arithmetic/source derivation and flex implementation; reference runs remain bounded synthetic-only CI, no new project dependency or pasted source |
 | INT-061/062/063 | Proposed, owner sign-off/review pending | Affected X attachment/unindexed mapping/vocabulary and V attribution; not raw source retention |
@@ -190,6 +191,7 @@ to retain it in the redesign or add another benchmarking dependency.
 | F7 event identity/prior scope | Indeterminate policy approved; identity still unverified, prior meaning needs its own reviewed interpretation | Determinate configuration-change-event presence/absence check; a generic Format 2 candidate is not proof; do not reopen the approved uncertainty policy |
 | --strict scope | PENDING OWNER: listed bad-data kinds versus any finding | Strict behavior for unlisted findings, including the information-only fixture; listed-kind/no-finding cases and default raw extraction are common to both options |
 | Criterion retention (#62) | PENDING OWNER | Keeping the prototype Criterion dev dependency and accepting a harness that relies on it; no automatic new benchmark dependency approval |
+| Reader progress under retained BlockPool credits (#78 follow-up) | PENDING OWNER; retained DATA-span pool credits are inside the budget domain | Production strategy for keeping core reader progressing while an open run retains spans: cap retained pool credits, early copy or typed failure; the open-run-at-B reader-stall fixture remains BLOCKED, no policy/threshold selected |
 | Completeness/provisional/resource policy | Open where recorded under INT-034 and related governance work | Precise unresolved classification, provisional semantic use/invalidation and aggregate default/accounting/recovery policy; unheld drafting can cover already decided portions only |
 
 ## Extract policy is decided, not still an owner blocker
