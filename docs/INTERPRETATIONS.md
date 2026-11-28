@@ -61,6 +61,9 @@ listed here.
   The trace matrix shows each entry's analysis and tests; an entry with
   either missing is not ready.
 - **Analysis** links the written analysis, or says `not yet written`.
+  [Independent analysis APPROVEs](research/2026-11-28-independent-analysis-approvals.md)
+  record exact heads separately from semantic Design/Review. Owner acceptance
+  of the analyses and intensive executable tests remain pending.
 
 ---
 
@@ -83,7 +86,7 @@ listed here.
 
 **Test**: `r_channel_data_link_name_resolves_to_q_group`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (independent analysis APPROVE: [#95 at `9f2734b`](https://github.com/TelemetryWorks/irig106-tmats/pull/95/commits/9f2734b2d3d884e85c50557d6d06db1fb9207ff7); owner analysis acceptance and intensive tests pending)
 
 ### INT-002
 
@@ -106,7 +109,7 @@ listed here.
 
 **Test**: `sub_channel_and_network_names_resolve_to_their_groups`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (independent analysis APPROVE: [#95 at `9f2734b`](https://github.com/TelemetryWorks/irig106-tmats/pull/95/commits/9f2734b2d3d884e85c50557d6d06db1fb9207ff7); owner analysis acceptance and intensive tests pending)
 
 ### INT-003
 
@@ -124,7 +127,7 @@ listed here.
 
 **Test**: `one_sided_relationship_without_register_entry_fails_generation`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (independent analysis APPROVE: [#95 at `9f2734b`](https://github.com/TelemetryWorks/irig106-tmats/pull/95/commits/9f2734b2d3d884e85c50557d6d06db1fb9207ff7); owner analysis acceptance and intensive tests pending)
 
 ### INT-004
 
@@ -147,7 +150,7 @@ make different document occurrences equal or discard their raw spelling.
 
 **Test**: `pcm_data_link_name_links_to_bus_data_link_name`, `definition_placeholder_arity_must_match`, `definition_placeholders_do_not_equal_document_indices` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (independent analysis APPROVE: [#95 at `9f2734b`](https://github.com/TelemetryWorks/irig106-tmats/pull/95/commits/9f2734b2d3d884e85c50557d6d06db1fb9207ff7); owner analysis acceptance and intensive tests pending)
 
 ### INT-005
 
@@ -175,7 +178,7 @@ a document spelling CDT=FBCIN is still an unknown keyword, not repaired.
 
 **Test**: `pcm_channel_carrying_bus_data_resolves_to_p_group`, `link_target_unusable_cdt_keeps_all_groups`, `link_target_fibre_channel_uses_int007` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (independent analysis APPROVE: [#95 at `9f2734b`](https://github.com/TelemetryWorks/irig106-tmats/pull/95/commits/9f2734b2d3d884e85c50557d6d06db1fb9207ff7); owner analysis acceptance and intensive tests pending)
 
 ### INT-006
 
@@ -203,7 +206,7 @@ never upgrades record qualifications or approves semantic access.
 
 **Test**: `h_group_test_item_ties_to_g_group`, `h_test_item_ascii_match_keeps_raw`, `h_test_item_leading_blank_is_unavailable`, `h_test_item_duplicate_occurrences_are_ambiguous` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (independent analysis APPROVE: [#95 at `9f2734b`](https://github.com/TelemetryWorks/irig106-tmats/pull/95/commits/9f2734b2d3d884e85c50557d6d06db1fb9207ff7); owner analysis acceptance and intensive tests pending)
 
 ## Conditions and keywords
 
@@ -224,7 +227,7 @@ never upgrades record qualifications or approves semantic access.
 
 **Test**: `q_group_allowed_for_fibre_channel`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (independent analysis APPROVE: [#95 at `9f2734b`](https://github.com/TelemetryWorks/irig106-tmats/pull/95/commits/9f2734b2d3d884e85c50557d6d06db1fb9207ff7); owner analysis acceptance and intensive tests pending)
 
 ### INT-008
 
@@ -241,7 +244,7 @@ never upgrades record qualifications or approves semantic access.
 
 **Test**: `derived_occurrences_default_to_one_in_same_occurrence`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (independent analysis APPROVE: [#95 at `9f2734b`](https://github.com/TelemetryWorks/irig106-tmats/pull/95/commits/9f2734b2d3d884e85c50557d6d06db1fb9207ff7); owner analysis acceptance and intensive tests pending)
 
 ### INT-009
 
@@ -258,7 +261,7 @@ never upgrades record qualifications or approves semantic access.
 
 **Test**: `fragment_position_allowed_only_when_its_own_location_has_fragments`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (independent analysis APPROVE: [#98 at `a01bc83`](https://github.com/TelemetryWorks/irig106-tmats/pull/98/commits/a01bc8387d8e19f71564cd153094de5a225c7d90); owner analysis acceptance and intensive tests pending)
 
 ### INT-010
 
@@ -276,7 +279,7 @@ never upgrades record qualifications or approves semantic access.
 
 **Test**: `spaced_equality_operator_is_accepted_with_warning`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (independent analysis APPROVE: [#98 at `a01bc83`](https://github.com/TelemetryWorks/irig106-tmats/pull/98/commits/a01bc8387d8e19f71564cd153094de5a225c7d90); owner analysis acceptance and intensive tests pending)
 
 ## Chapter 10 setup records
 
@@ -321,7 +324,7 @@ record remains; leading-boundary evidence is now retained as well.
 
 **Test**: `multi_packet_setup_record_is_assembled`, `other_channel_packets_do_not_stop_joining`, `two_setup_channels_have_independent_runs`, `same_channel_packet_stops_joining`, `run_start_reasons_remain_evidence`, `setup_channel_restriction_is_not_joining` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (independent analysis APPROVE: [#99 at `98d0b8a`](https://github.com/TelemetryWorks/irig106-tmats/pull/99/commits/98d0b8a359ecce27fac79786559d70d47e930642); owner analysis acceptance and intensive tests pending)
 
 **Decision record**: [owner per-channel clarification and review status](research/2026-11-23-int011-per-channel-owner-decision.md).
 
@@ -374,7 +377,7 @@ or packet-header byte. Full development analysis and tests remain outstanding.
 
 **Test**: `rccver_codes_read_as_their_table_states`, `version_code_spaces_do_not_share_mapping`, `literal_rccver_is_not_fallback_policy` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (independent analysis APPROVE: [#98 at `a01bc83`](https://github.com/TelemetryWorks/irig106-tmats/pull/98/commits/a01bc8387d8e19f71564cd153094de5a225c7d90); owner analysis acceptance and intensive tests pending)
 
 **Reconfirmation and AI-check reference**: [owner approval record](research/2026-11-23-int012-owner-signoff.md); AI concurrence on #34 head `e352323` after seven-edition source review is owner-relayed, not a claim that this new PR or these later notes have been independently reviewed.
 
@@ -483,7 +486,7 @@ blocking reason; the aggregate label does not relax incomplete-input policy.
 
 **Test**: `q25_padding_only_is_incomplete_without_loss_claim`, `q25_leading_loss_blocks_ambiguity_opt_in`, `q25_final_semicolon_keeps_leading_cut`, `q25_input_start_does_not_prove_loss`, `setup_record_completeness_outcomes`, `eof_boundary_is_complete_and_labelled`, `other_channel_packet_cannot_finalize_run`, `open_boundary_is_provisional_not_complete`, `provisional_extension_never_closes_run` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (independent analysis APPROVE: [#99 at `98d0b8a`](https://github.com/TelemetryWorks/irig106-tmats/pull/99/commits/98d0b8a359ecce27fac79786559d70d47e930642); owner analysis acceptance and intensive tests pending)
 
 **Q25 A — owner-signed Joey, 2026-11-28, under ADR-0033**:
 - A padding-only record with no substantive attributes is **Incomplete**, reason
@@ -524,7 +527,7 @@ remains suspect and no repair is authorized.
 
 **Test**: `appendix_9c_example_reports_suspected_semicolons` (`docs/TEST-DATA.md`)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (independent analysis APPROVE: [#98 at `a01bc83`](https://github.com/TelemetryWorks/irig106-tmats/pull/98/commits/a01bc8387d8e19f71564cd153094de5a225c7d90); owner analysis acceptance and intensive tests pending)
 
 ## Editions and versions
 
@@ -544,7 +547,7 @@ remains suspect and no repair is authorized.
 
 **Test**: `g106_24_names_106_24_and_106_24r1`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (independent analysis APPROVE: [#98 at `a01bc83`](https://github.com/TelemetryWorks/irig106-tmats/pull/98/commits/a01bc8387d8e19f71564cd153094de5a225c7d90); owner analysis acceptance and intensive tests pending)
 
 ### INT-015
 
@@ -568,7 +571,7 @@ edition year. The archived-edition year set remains INT-014's source.
 
 **Test**: `g106_other_forms_are_unrecognised_and_preserved`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (independent analysis APPROVE: [#98 at `a01bc83`](https://github.com/TelemetryWorks/irig106-tmats/pull/98/commits/a01bc8387d8e19f71564cd153094de5a225c7d90); owner analysis acceptance and intensive tests pending)
 
 ### INT-016
 
@@ -593,7 +596,7 @@ RCCVER alone.
 
 **Test**: `zero_csdw_version_is_not_declared`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (independent analysis APPROVE: [#98 at `a01bc83`](https://github.com/TelemetryWorks/irig106-tmats/pull/98/commits/a01bc8387d8e19f71564cd153094de5a225c7d90); owner analysis acceptance and intensive tests pending)
 
 ### INT-017
 
@@ -618,7 +621,7 @@ options. No new RCCVER mapping, renderer or fallback reason is selected.
 
 **Test**: `missing_g106_falls_back_to_rccver_edition_labelled`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (independent analysis APPROVE: [#98 at `a01bc83`](https://github.com/TelemetryWorks/irig106-tmats/pull/98/commits/a01bc8387d8e19f71564cd153094de5a225c7d90); owner analysis acceptance and intensive tests pending)
 
 ## Edits and the checksum
 
@@ -654,7 +657,7 @@ so checksum verification is indeterminate rather than guessing the exclusion.
 
 **Test**: `g_sha_code_name_in_any_case_and_not_in_values`, `projected_sha_name_excludes_raw_span`, `missing_previous_semicolon_does_not_create_sha`, `x_and_comment_sha_text_is_not_item`, `leading_bom_blocks_sha_verification` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (independent analysis APPROVE: [#93 at `3fb65db`](https://github.com/TelemetryWorks/irig106-tmats/pull/93/commits/3fb65dbfd801365d1ade7ca5b8fa4b4c3a3b0d07); #94 `cc416dd` approves the checksum nit delta; owner analysis acceptance and intensive tests pending)
 
 **Reconfirmation and AI-check reference**: [combined owner approval record](research/2026-11-23-int021-int030-owner-signoff.md); the register review at main `30e42a3eac791f2f794e5fe239c59590eb6682b8` is the AI-check reference. Analysis and executable tests remain outstanding.
 
@@ -692,7 +695,7 @@ one to report successful verification. Suggested repairs remain unapplied.
 
 **Test**: `unterminated_g_sha_is_malformed`, `eof_sha_refuses_authoritative_compute`, `mid_document_missing_terminator_fails_value_shape`, `truncated_setup_is_not_authoritative_checksum`, `malformed_sha_keeps_duplicate_finding`, `complete_bad_digest_value_allows_compute`, `defined_exclusion_with_unusable_value_still_computes` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (independent analysis APPROVE: [#93 at `3fb65db`](https://github.com/TelemetryWorks/irig106-tmats/pull/93/commits/3fb65dbfd801365d1ade7ca5b8fa4b4c3a3b0d07); #94 `cc416dd` approves the checksum nit delta; owner analysis acceptance and intensive tests pending)
 
 **Reconfirmation and AI-check reference**: [combined owner approval record](research/2026-11-23-int021-int030-owner-signoff.md); the register review at main `30e42a3eac791f2f794e5fe239c59590eb6682b8` is the AI-check reference. Analysis and executable tests remain outstanding.
 
@@ -731,7 +734,7 @@ reviewer. No claim of reproducing that printed digest is made here.
 
 **Test**: `upper_case_g_sha_matches_with_warning`, `checksum_value_controls_keep_omission_information`, `checksum_value_blanks_are_unavailable`, `sha_zero_placeholder_is_unverified`, `checksum_fixture_uses_independent_digest` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (independent analysis APPROVE: [#93 at `3fb65db`](https://github.com/TelemetryWorks/irig106-tmats/pull/93/commits/3fb65dbfd801365d1ade7ca5b8fa4b4c3a3b0d07); #94 `cc416dd` approves the checksum nit delta; owner analysis acceptance and intensive tests pending)
 
 **Reconfirmation and AI-check reference**: [combined owner approval record](research/2026-11-23-int021-int030-owner-signoff.md); the register review at main `30e42a3eac791f2f794e5fe239c59590eb6682b8` is the AI-check reference. Analysis and executable tests remain outstanding.
 
@@ -768,7 +771,7 @@ last step of that transaction, never run over the still-ambiguous input.
 
 **Test**: `duplicate_g_sha_items`, `damaged_sha_name_is_indeterminate`, `exact_duplicate_removal_precedes_stamping` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (independent analysis APPROVE: [#93 at `3fb65db`](https://github.com/TelemetryWorks/irig106-tmats/pull/93/commits/3fb65dbfd801365d1ade7ca5b8fa4b4c3a3b0d07); #94 `cc416dd` approves the checksum nit delta; owner analysis acceptance and intensive tests pending)
 
 **Sign-off and AI-check reference**: [owner approval record](research/2026-11-23-int021-int030-owner-signoff.md); independent AI concurrence is tied to PR #30 head `13173b04faac989fa581b8e9ebbd0df6c80d6b98`, not claimed for later amended wording. Approval is not implementation or completed development evidence.
 
@@ -808,7 +811,7 @@ C keeps output internally consistent at the cost of explicitly deleting X.
 
 **Test**: `removing_an_extended_attribute` (planned; refusal and separately explicit cascade are now owner-decided)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-final-interpretation-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-final-interpretation-development-analysis.md) (independent analysis APPROVE: [#100 at `7619cb0`](https://github.com/TelemetryWorks/irig106-tmats/pull/100/commits/7619cb0fed0fb93916655f27e7c9a95bca212b31); owner analysis acceptance and intensive tests pending)
 
 ### INT-023
 
@@ -834,7 +837,7 @@ rule above is independent of this choice. Source: Chapter 6 p. 6-22.
 
 **Test**: `chapter_6_example_equals_sign_is_missing_delimiter`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-final-interpretation-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-final-interpretation-development-analysis.md) (independent analysis APPROVE: [#100 at `7619cb0`](https://github.com/TelemetryWorks/irig106-tmats/pull/100/commits/7619cb0fed0fb93916655f27e7c9a95bca212b31); owner analysis acceptance and intensive tests pending)
 
 ## Channels and packets
 
@@ -874,7 +877,7 @@ code families or turn uncertainty into a mismatch.
 
 **Test**: `channel_data_type_maps_to_packet_data_types`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-final-interpretation-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-final-interpretation-development-analysis.md) (independent analysis APPROVE: [#100 at `7619cb0`](https://github.com/TelemetryWorks/irig106-tmats/pull/100/commits/7619cb0fed0fb93916655f27e7c9a95bca212b31); owner analysis acceptance and intensive tests pending)
 
 ### INT-025
 
@@ -900,7 +903,7 @@ applicability decision. Neither repairs the document.
 
 **Test**: `tspi_data_type_format_allowed_for_tspiin`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-final-interpretation-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-final-interpretation-development-analysis.md) (independent analysis APPROVE: [#100 at `7619cb0`](https://github.com/TelemetryWorks/irig106-tmats/pull/100/commits/7619cb0fed0fb93916655f27e7c9a95bca212b31); owner analysis acceptance and intensive tests pending)
 
 ### INT-026
 
@@ -930,7 +933,7 @@ those determinate applicability answers. Never borrow another channel.
 
 **Test**: `recorder_polarity_allowed_for_pcm_channels`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-final-interpretation-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-final-interpretation-development-analysis.md) (independent analysis APPROVE: [#100 at `7619cb0`](https://github.com/TelemetryWorks/irig106-tmats/pull/100/commits/7619cb0fed0fb93916655f27e7c9a95bca212b31); owner analysis acceptance and intensive tests pending)
 
 ### INT-027
 
@@ -961,7 +964,7 @@ additional R source is inferred from a similar measurement name.
 
 **Test**: `measurement_name_sources_for_conversions`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-final-interpretation-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-final-interpretation-development-analysis.md) (independent analysis APPROVE: [#100 at `7619cb0`](https://github.com/TelemetryWorks/irig106-tmats/pull/100/commits/7619cb0fed0fb93916655f27e7c9a95bca212b31); owner analysis acceptance and intensive tests pending)
 
 ## Configuration over a recording
 
@@ -1069,7 +1072,7 @@ out of scope. Approved INT-045/048/050/051/052/053 constrain every answer.
 
 **Test**: `governing_umbrella_composes_approved_guards`, `governing_complete_is_not_takeover`, `governing_unresolved_is_not_no_setup` (planned; owner choice recorded; final rule check recorded; development-analysis review/test gates apply)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (independent analysis APPROVE: [#99 at `98d0b8a`](https://github.com/TelemetryWorks/irig106-tmats/pull/99/commits/98d0b8a359ecce27fac79786559d70d47e930642); owner analysis acceptance and intensive tests pending)
 
 ### INT-029
 
@@ -1127,7 +1130,7 @@ bytes and approved governance guards; neither authorizes implicit adoption.
 
 **Test**: `setup_record_kinds_and_srcc_findings`, `srcc_raw_subtypes_do_not_infer_semantics`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (independent analysis APPROVE: [#99 at `98d0b8a`](https://github.com/TelemetryWorks/irig106-tmats/pull/99/commits/98d0b8a359ecce27fac79786559d70d47e930642); owner analysis acceptance and intensive tests pending)
 
 ### INT-030
 
@@ -1159,7 +1162,7 @@ bytes and approved governance guards; neither authorizes implicit adoption.
 
 **Test**: `configuration_change_event_packet` (planned; event identification still unverified)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (independent analysis APPROVE: [#99 at `98d0b8a`](https://github.com/TelemetryWorks/irig106-tmats/pull/99/commits/98d0b8a359ecce27fac79786559d70d47e930642); owner analysis acceptance and intensive tests pending)
 
 **Sign-off and AI-check reference**: [owner approval record](research/2026-11-23-int021-int030-owner-signoff.md); independent AI concurrence is tied to PR #30 head `13173b04faac989fa581b8e9ebbd0df6c80d6b98`, not claimed for later amended wording. Approval is not implementation or completed development evidence.
 
@@ -1198,7 +1201,7 @@ takeover to INT-028/053. Raw extraction remains separately authorized.
 
 **Test**: `nothing_governs_after_an_incomplete_setup_record`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (independent analysis APPROVE: [#99 at `98d0b8a`](https://github.com/TelemetryWorks/irig106-tmats/pull/99/commits/98d0b8a359ecce27fac79786559d70d47e930642); owner analysis acceptance and intensive tests pending)
 
 ### INT-032
 
@@ -1228,7 +1231,7 @@ session-wide default.
 
 **Test**: `ungoverned_packets_are_reported_and_assumptions_labelled`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (independent analysis APPROVE: [#99 at `98d0b8a`](https://github.com/TelemetryWorks/irig106-tmats/pull/99/commits/98d0b8a359ecce27fac79786559d70d47e930642); owner analysis acceptance and intensive tests pending)
 
 ## Measurements
 
@@ -1260,7 +1263,7 @@ and never infer order from index, word order or explanatory prose.
 
 **Test**: `defaulted_fragment_positions_are_ambiguous`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-final-interpretation-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-final-interpretation-development-analysis.md) (independent analysis APPROVE: [#100 at `7619cb0`](https://github.com/TelemetryWorks/irig106-tmats/pull/100/commits/7619cb0fed0fb93916655f27e7c9a95bca212b31); owner analysis acceptance and intensive tests pending)
 
 
 ## Scanner recovery
@@ -1308,7 +1311,7 @@ blanks under L1-READ-006 and preserves the original span.
 
 **Test**: `missing_colon_recovers_at_semicolon`, `unterminated_suffix_is_retained`, `code_like_value_text_does_not_split`, `empty_region_run_has_one_information_finding`, `unterminated_layout_at_eof_is_silent` (planned, not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-framing-character-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-framing-character-development-analysis.md) (independent analysis APPROVE: [#84 at `195c491`](https://github.com/TelemetryWorks/irig106-tmats/pull/84/commits/195c4913e215b46c6b05ca342d96a3d6a3ec8b1f); owner analysis acceptance and intensive tests pending)
 
 **Draft analysis**: [baseline draft and remaining work](research/2026-11-21-scanner-framing-recovery.md)
 
@@ -1369,7 +1372,7 @@ projection remains unchanged. INT-055 has final independent CONCUR at #51 ebd5c9
 
 **Test**: `control_projection_preserves_raw_spans`, `nul_fields_have_one_information_finding_each`, `code_name_and_value_blanks_differ`, `character_classes_keep_int035_run_policy` (planned, not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-framing-character-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-framing-character-development-analysis.md) (independent analysis APPROVE: [#84 at `195c491`](https://github.com/TelemetryWorks/irig106-tmats/pull/84/commits/195c4913e215b46c6b05ca342d96a3d6a3ec8b1f); owner analysis acceptance and intensive tests pending)
 
 **Draft analysis**: [baseline draft and 2026-11-21 review amendments](research/2026-11-21-character-interpretation-drafts.md#review-amendments--2026-11-21)
 
@@ -1408,7 +1411,7 @@ converted data the original TMATS bytes, and never infer an edition from a BOM.
 
 **Test**: `leading_encoding_marker_blocks_semantic_lookup`, `split_marker_is_recognised_after_assembly`, `marker_after_padding_is_midstream`, `high_bytes_are_not_silently_decoded`, `unmarked_zero_patterns_do_not_select_encoding` (planned, not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-framing-character-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-framing-character-development-analysis.md) (independent analysis APPROVE: [#84 at `195c491`](https://github.com/TelemetryWorks/irig106-tmats/pull/84/commits/195c4913e215b46c6b05ca342d96a3d6a3ec8b1f); owner analysis acceptance and intensive tests pending)
 
 **Draft analysis**: [baseline draft and 2026-11-21 review amendments](research/2026-11-21-character-interpretation-drafts.md#review-amendments--2026-11-21)
 
@@ -1473,7 +1476,7 @@ those scoped checks are explicitly deferred to the counter batch.
 
 **Test**: `decimal_index_spelling_preserves_numeric_identity`, `noncanonical_index_is_visible`, `normalization_only_collision_is_reported_now`, `collision_group_includes_exact_repeats`, `identical_index_spellings_do_not_trigger_normalization_collision`, `projected_index_controls_keep_locations`, `canonical_string_equality_and_hashing`, `x_original_indices_use_numeric_identity`, `zero_index_is_not_range_approval`, `large_index_does_not_wrap_or_allocate_by_value` (planned, not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-index-duplicate-counter-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-index-duplicate-counter-development-analysis.md) (independent analysis APPROVE: [#86 at `3a1b590`](https://github.com/TelemetryWorks/irig106-tmats/pull/86/commits/3a1b5903087ae89fba161c348b5276debbc4e1f3); owner analysis acceptance and intensive tests pending)
 
 **Draft analysis**: [sources, alternatives and 2026-11-22 review amendments](research/2026-11-22-code-name-index-draft.md#review-amendments--2026-11-22)
 
@@ -1528,7 +1531,7 @@ or a clock association; zero/one-candidate default and validation rules follow.
 
 **Test**: `identical_scalar_repeats_are_ambiguous`, `invalid_candidate_is_not_filtered`, `comment_collection_is_not_a_scalar_duplicate`, `group_com_is_a_single_entry_duplicate`, `cross_fragment_scalar_duplicate_is_document_local`, `duplicate_and_normalization_findings_coexist` (planned, not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-index-duplicate-counter-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-index-duplicate-counter-development-analysis.md) (independent analysis APPROVE: [#86 at `3a1b590`](https://github.com/TelemetryWorks/irig106-tmats/pull/86/commits/3a1b5903087ae89fba161c348b5276debbc4e1f3); owner analysis acceptance and intensive tests pending)
 
 **Draft analysis**: [sources, alternatives and remaining work](research/2026-11-22-scalar-duplicates-draft.md)
 
@@ -1589,7 +1592,7 @@ counters or missing entries are repaired.
 
 **Test**: `invalid_payload_keeps_structural_membership`, `counter_counts_distinct_identities`, `unusable_counter_is_not_inferred`, `incomplete_membership_does_not_pass`, `parsed_counter_outside_own_range_blocks`, `x_extension_does_not_create_d_member`, `invalid_parent_domain_does_not_suppress_child`, `zero_parent_spellings_share_one_scope`, `malformed_governed_token_blocks_known_scope`, `malformed_parent_is_unassigned_rule_evidence`, `compatible_unassigned_evidence_never_passes`, `incompatible_parent_does_not_inherit_unassigned_block` (planned, not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-index-duplicate-counter-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-index-duplicate-counter-development-analysis.md) (independent analysis APPROVE: [#86 at `3a1b590`](https://github.com/TelemetryWorks/irig106-tmats/pull/86/commits/3a1b5903087ae89fba161c348b5276debbc4e1f3); owner analysis acceptance and intensive tests pending)
 
 **Draft analysis**: [sources, alternatives and remaining work](research/2026-11-22-counter-membership-draft.md)
 
@@ -1647,7 +1650,7 @@ not silently changed. Demonstrated high-byte/other failures remain visible.
 
 **Test**: `unavailable_definition_is_not_data_invalidity`, `unknown_validity_operand_blocks_explicit`, `known_multiplicity_survives_unavailable_value_rule`, `lowercase_tfmt_keeps_raw_case`, `blank_enum_requires_reviewed_handling`, `present_non_timein_tfmt_is_not_absence`, `ambiguous_cdt_makes_default_condition_unknown`, `invalid_under_fallback_keeps_basis` (planned, not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-effective-presence-basis-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-effective-presence-basis-development-analysis.md) (independent analysis APPROVE: [#90 at `bb9ba76`](https://github.com/TelemetryWorks/irig106-tmats/pull/90/commits/bb9ba7612773c5c90d7f9d9d6b9823ad09829a85); owner analysis acceptance and intensive tests pending)
 
 **Draft analysis**: [sources, alternatives and remaining work](research/2026-11-23-effective-value-draft.md)
 
@@ -1739,7 +1742,7 @@ Boolean semantics or new default is selected by this interpretation.
 
 **Test**: `specified_absent_is_false`, `specified_invalid_and_duplicate_stays_true`, `presence_scope_unknown_is_not_absence`, `missing_value_does_not_make_inequality_true`, `default_does_not_make_item_specified`, `unterminated_text_is_not_specified`, `damaged_name_blocks_false_presence`, `presence_uses_canonical_name_identity`, `damaged_child_parent_blocks_compatible_scopes`, `not_specified_preserves_unknown`, `other_document_does_not_supply_presence`, `unterminated_literal_prefix_blocks_compatible_presence`, `high_byte_inside_literal_blocks_false_presence`, `projected_controls_preserve_exact_presence`, `high_byte_run_covers_missing_literal_tail`, `damaged_literal_readable_order_is_required`, `high_byte_run_can_match_empty`, `terminated_literal_has_no_implicit_gap`, `high_byte_run_hiding_separator_is_unassigned` (planned, not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-effective-presence-basis-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-effective-presence-basis-development-analysis.md) (independent analysis APPROVE: [#90 at `bb9ba76`](https://github.com/TelemetryWorks/irig106-tmats/pull/90/commits/bb9ba7612773c5c90d7f9d9d6b9823ad09829a85); owner analysis acceptance and intensive tests pending)
 
 **Draft analysis**: [sources, alternatives and remaining work](research/2026-11-23-condition-scope-draft.md)
 
@@ -1807,7 +1810,7 @@ verification status (L3-SUM-002). No source bytes are repaired or dropped.
 
 **Test**: `zero_padded_sha_algorithm_requires_decision`, `sha_designator_edge_classification`, `sha_stamp_uses_canonical_designator`, `sha_algorithm_identity_uses_canonical_string`, `noncanonical_sha_designator_always_warns`, `other_numeric_sha_designators_stay_unsupported`, `noncanonical_designator_warns_when_verification_blocked` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (independent analysis APPROVE: [#93 at `3fb65db`](https://github.com/TelemetryWorks/irig106-tmats/pull/93/commits/3fb65dbfd801365d1ade7ca5b8fa4b4c3a3b0d07); #94 `cc416dd` approves the checksum nit delta; owner analysis acceptance and intensive tests pending)
 
 **Draft analysis**: [source, alternatives and independent fixture oracle](research/2026-11-23-checksum-followups-draft.md)
 
@@ -1863,7 +1866,7 @@ INT-014; that rule and all other review/coverage gates remain unchanged.
 
 **Test**: `ambiguous_g106_uses_labelled_fallback`, `identical_g106_duplicates_still_fall_back`, `override_keeps_ambiguous_declaration_evidence`, `ambiguous_fallback_uses_existing_policy`, `ambiguous_fallback_labels_defaults_and_findings`, `single_damaged_or_blank_g106_is_not_duplicate`, `ambiguous_fallback_is_prominent`, `mixed_g106_duplicates_keep_ambiguity`, `ambiguous_g106_json_reason_is_structured` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-effective-presence-basis-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-effective-presence-basis-development-analysis.md) (independent analysis APPROVE: [#90 at `bb9ba76`](https://github.com/TelemetryWorks/irig106-tmats/pull/90/commits/bb9ba7612773c5c90d7f9d9d6b9823ad09829a85); owner analysis acceptance and intensive tests pending)
 
 **Draft analysis**: [original alternatives](research/2026-11-23-edition-basis-draft.md); [owner Option B decision and conditions](research/2026-11-23-int044-owner-decision.md)
 
@@ -2026,7 +2029,7 @@ in the #40 draft; neither the event nor a nearby 0x02 is guessed as an end.
 
 **Test**: `initial_first_time_seals_before_dispatch`, `initial_time_type_is_edition_specific`, `non_time_timestamps_do_not_close_setup`, `initial_marker_requires_start_order_and_trust`, `initial_time_does_not_repair_incomplete_setup`, `no_initial_time_uses_eof_or_provisional`, `initial_runs_and_later_documents_do_not_mix`, `mid_session_time_seals_srcc_update`, `mid_session_cut_update_is_incomplete`, `post_boundary_plus_one_is_continuous_but_split`, `all_non_format1_initial_packets_violate_order`, `session_starts_are_asserted_and_independent`, `untrusted_first_time_cannot_be_replaced`, `channel_zero_time_has_conformance_finding`, `semicolon_seal_continuation_is_finally_ambiguous`, `verified_sha_keeps_sealed_candidate_complete`, `srcc_eligibility_comes_from_first_fragment`, `premature_seal_signals_do_not_replace_verified_sha`, `continuation_sha_is_diagnostic_only` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (independent analysis APPROVE: [#99 at `98d0b8a`](https://github.com/TelemetryWorks/irig106-tmats/pull/99/commits/98d0b8a359ecce27fac79786559d70d47e930642); owner analysis acceptance and intensive tests pending)
 
 **Draft analysis**: [original sources/options](research/2026-11-23-initial-time-boundary-proposal.md); [owner layered closure decision, source fingerprint and amended safety cases](research/2026-11-23-int045-layered-owner-decision.md).
 
@@ -2051,7 +2054,7 @@ in the #40 draft; neither the event nor a nearby 0x02 is guessed as an end.
 
 **Test**: `srcc1_identical_is_not_assumed_change`, `identical_duplicate_sha_never_verifies`, `identity_keeps_premature_seal_finding` (planned; not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (independent analysis APPROVE: [#94 at `cc416dd`](https://github.com/TelemetryWorks/irig106-tmats/pull/94/commits/cc416dd5132914766f87b53a1ff611a7a5e38f33); owner analysis acceptance and intensive tests pending)
 
 **Decision record**: [dated owner sign-off and alternatives](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; completed semantic review does not waive these gates.
 
@@ -2071,7 +2074,7 @@ in the #40 draft; neither the event nor a nearby 0x02 is guessed as an end.
 
 **Test**: `cut_observation_cannot_claim_mismatch_or_only_sha_layout_delta`, `matrix_inconsistent_observations_never_parser_coverage` (planned; not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (independent analysis APPROVE: [#94 at `cc416dd`](https://github.com/TelemetryWorks/irig106-tmats/pull/94/commits/cc416dd5132914766f87b53a1ff611a7a5e38f33); owner analysis acceptance and intensive tests pending)
 
 **Decision record**: [dated owner sign-off and alternatives](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; completed semantic review does not waive these gates.
 
@@ -2101,7 +2104,7 @@ any bytes, cut locations or findings. See the [exact-head review follow-up](rese
 
 **Test**: `duplicate_sha_without_related_follower_is_ambiguous`, `identical_duplicate_sha_never_verifies`, `cut_duplicate_keeps_cut_evidence_and_ambiguity`, `cut_facet_blocks_ambiguous_acceptance`, `other_field_ambiguity_blocks_identity_and_digest`, `following_duplicate_is_assembly_ambiguous` (planned; not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (independent analysis APPROVE: [#94 at `cc416dd`](https://github.com/TelemetryWorks/irig106-tmats/pull/94/commits/cc416dd5132914766f87b53a1ff611a7a5e38f33); owner analysis acceptance and intensive tests pending)
 
 **Decision record**: [dated owner sign-off and alternatives](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; completed semantic review does not waive these gates.
 
@@ -2121,7 +2124,7 @@ any bytes, cut locations or findings. See the [exact-head review follow-up](rese
 
 **Test**: `identity_outside_guard_is_information_only`, `EOF_comparison_never_rejoins_inputs` (planned; not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (independent analysis APPROVE: [#94 at `cc416dd`](https://github.com/TelemetryWorks/irig106-tmats/pull/94/commits/cc416dd5132914766f87b53a1ff611a7a5e38f33); owner analysis acceptance and intensive tests pending)
 
 **Decision record**: [dated owner sign-off and alternatives](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; completed semantic review does not waive these gates.
 
@@ -2141,7 +2144,7 @@ any bytes, cut locations or findings. See the [exact-head review follow-up](rese
 
 **Test**: `srcc0_different_is_reported_change`, `raw_change_subtype_never_resets_time`, `partial_copy_never_proves_identity` (planned; not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (independent analysis APPROVE: [#94 at `cc416dd`](https://github.com/TelemetryWorks/irig106-tmats/pull/94/commits/cc416dd5132914766f87b53a1ff611a7a5e38f33); owner analysis acceptance and intensive tests pending)
 
 **Decision record**: [dated owner sign-off and alternatives](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; completed semantic review does not waive these gates.
 
@@ -2162,7 +2165,7 @@ any bytes, cut locations or findings. See the [exact-head review follow-up](rese
 
 **Test**: `integrity_findings_default_no_silent_quarantine`, `quarantine_opt_in_requires_review`, `integrity_mode_never_waives_framing_trust_or_ambiguity` (planned; not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (independent analysis APPROVE: [#94 at `cc416dd`](https://github.com/TelemetryWorks/irig106-tmats/pull/94/commits/cc416dd5132914766f87b53a1ff611a7a5e38f33); owner analysis acceptance and intensive tests pending)
 
 **Decision record**: [dated owner sign-off and alternatives](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; completed semantic review does not waive these gates.
 
@@ -2182,7 +2185,7 @@ any bytes, cut locations or findings. See the [exact-head review follow-up](rese
 
 **Test**: `unreadable_srcc_identity_is_evidence_not_eligibility` (planned; not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (independent analysis APPROVE: [#94 at `cc416dd`](https://github.com/TelemetryWorks/irig106-tmats/pull/94/commits/cc416dd5132914766f87b53a1ff611a7a5e38f33); owner analysis acceptance and intensive tests pending)
 
 **Decision record**: [dated owner sign-off and alternatives](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; completed semantic review does not waive these gates.
 
@@ -2208,7 +2211,7 @@ Preserve every earlier copy's located findings without overwrite. Earlier govern
 
 **Test**: `qm_B_then_D_uses_governing_target`, `qm_H_then_B_previous_identity_is_information_only`, `qm_third_copy_only_checksum_does_not_select_target`, `qm_changed_srcc_claims_never_select_target`, `qm_unresolved_governing_blocks_later_target`, `qm_ambiguous_copy_does_not_prove_old_target`, `qm_valid_takeover_updates_governing_target`, `qm_unresolved_then_valid_takeover_resolves_target`, `qm_unresolved_persists_through_non_takeover`, `qm_previous_identity_mutation_preserves_decisions`, `qm_findings_and_prior_decoding_provenance_are_persistent` (planned; not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (independent analysis APPROVE: [#94 at `cc416dd`](https://github.com/TelemetryWorks/irig106-tmats/pull/94/commits/cc416dd5132914766f87b53a1ff611a7a5e38f33); owner analysis acceptance and intensive tests pending)
 
 **Decision record**: [owner wording and bounded scope](research/2026-11-25-qm-governing-comparison-owner-decision.md); [sequence contract and named fixtures](research/2026-11-23-retransmission-decision-matrix.md#multiple-following-copies-owner-signed-qm-sequence-contract). The pairwise product stays unchanged; sequence coverage is separate, bounded and planned. Independent AI review is complete at the exact head cited above; source freshness, development analysis and executable verification remain required before implementation.
 
@@ -2243,7 +2246,7 @@ consumer needs to inspect.
 
 **Test**: `che_disabled_timein_is_still_enumerated`, `che_missing_duplicate_invalid_preserve_entry`, `che_caller_filter_is_explicit_and_nonmutating` (planned, not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (independent analysis APPROVE: [#96 at `6e98255`](https://github.com/TelemetryWorks/irig106-tmats/pull/96/commits/6e98255d046f5279fa7ba0c46f41fa8ded6f52d6); owner analysis acceptance and intensive tests pending)
 
 ### INT-055
 
@@ -2313,7 +2316,7 @@ not a source edit.
 
 **Test**: `numeric_ascii_syntax_and_digit_limit`, `numeric_zero_padding_keeps_warning_and_raw`, `numeric_ranges_follow_canonicalisation`, `numeric_codes_accept_02_without_changing_letters`, `numeric_leading_blank_keeps_int041_exception`, `numeric_rn_condition_never_guesses`, `numeric_projection_keeps_character_findings`, `numeric_exclusions_dispatch_by_definition` (planned, not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (independent analysis APPROVE: [#96 at `6e98255`](https://github.com/TelemetryWorks/irig106-tmats/pull/96/commits/6e98255d046f5279fa7ba0c46f41fa8ded6f52d6); owner analysis acceptance and intensive tests pending)
 
 **Review history**: The [earlier concerns](research/2026-11-25-che-numeric-independent-review.md) are retained as history; the [owner answers](research/2026-11-25-int055-owner-answers.md) settle the three choices. Final AI concurrence at #51 ebd5c98 is recorded in the [final review record](research/2026-11-26-int054-int055-final-concurrence.md). The eight-mask inventory correction does not change the concurred decimal-only behaviour. Source freshness, development analysis and executable tests remain required.
 
@@ -2375,7 +2378,7 @@ Accepting a choice is not a usable-field or governing-setup claim.
 
 **Test**: `assumption_strict_invalid_target`, `assumption_warn_invalid_target`, `assumption_quiet_invalid_target`, `assumption_strict_duplicate_target`, `assumption_warn_duplicate_target`, `assumption_quiet_duplicate_target`, `assumption_strict_unavailable_target`, `assumption_warn_unavailable_target`, `assumption_quiet_unavailable_target`, `assumption_quiet_suppressed_count_zero`, `assumption_quiet_suppressed_count_nonzero`, `assumption_quiet_marker_survives_derived_result` (planned, not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (independent analysis APPROVE: [#96 at `6e98255`](https://github.com/TelemetryWorks/irig106-tmats/pull/96/commits/6e98255d046f5279fa7ba0c46f41fa8ded6f52d6); owner analysis acceptance and intensive tests pending)
 
 ### INT-057
 
@@ -2404,7 +2407,7 @@ an unresolvable/nonexistent ID-only selection into an existing candidate.
 
 **Test**: `assumption_refuses_non_timein_target`, `assumption_refuses_other_recorder`, `assumption_refuses_nonexistent_id` (planned, not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (independent analysis APPROVE: [#96 at `6e98255`](https://github.com/TelemetryWorks/irig106-tmats/pull/96/commits/6e98255d046f5279fa7ba0c46f41fa8ded6f52d6); owner analysis acceptance and intensive tests pending)
 
 ### INT-058
 
@@ -2438,7 +2441,7 @@ resolved; retain INT-059 uncertainty rather than invent a precedence.
 
 **Test**: `assumption_no_01_contradiction_rule`, `assumption_heuristics_never_contradict`, `assumption_future_evidence_requires_own_int` (planned, not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (independent analysis APPROVE: [#96 at `6e98255`](https://github.com/TelemetryWorks/irig106-tmats/pull/96/commits/6e98255d046f5279fa7ba0c46f41fa8ded6f52d6); owner analysis acceptance and intensive tests pending)
 
 ### INT-059
 
@@ -2466,7 +2469,7 @@ retention; they do not implement or claim an actual baseline evidence path.
 
 **Test**: `association_unproven_multiplicity_is_unestablished`, `association_conflict_requires_competing_evidence` (planned, not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (independent analysis APPROVE: [#96 at `6e98255`](https://github.com/TelemetryWorks/irig106-tmats/pull/96/commits/6e98255d046f5279fa7ba0c46f41fa8ded6f52d6); owner analysis acceptance and intensive tests pending)
 
 ### INT-060
 
@@ -2493,7 +2496,7 @@ not a default target; it never supplies a missing choice.
 
 **Test**: `assumption_next_query_needs_explicit_choice`, `assumption_warn_default_is_not_target_default` (planned, not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (independent analysis APPROVE: [#96 at `6e98255`](https://github.com/TelemetryWorks/irig106-tmats/pull/96/commits/6e98255d046f5279fa7ba0c46f41fa8ded6f52d6); owner analysis acceptance and intensive tests pending)
 
 
 ### INT-061
@@ -2534,7 +2537,7 @@ A is reversible: later approved B/C can refine missing-rule cannot-evaluate to r
 
 **Test**: `x_unindexed_original_mapping_unavailable`, `x_unindexed_zero_one_never_default`, `x_unindexed_value_never_supplies_occurrence` (planned Option A expectations), `x_unindexed_unique_path_option_c`, `x_unindexed_duplicate_path_option_c`, `x_unindexed_nonconforming_option_d` (non-selected alternatives, not active expectations; selected A cases are planned, with final rule check recorded; development-analysis review/test gates retained)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (independent analysis APPROVE: [#97 at `372a250`](https://github.com/TelemetryWorks/irig106-tmats/pull/97/commits/372a2502529563ab1ac1399de77e2bd62cc9c1e3); owner analysis acceptance and intensive tests pending)
 
 
 ### INT-062
@@ -2582,7 +2585,7 @@ historical edition mappings still need their own cited delta sources.
 
 **Test**: `x_registry_decomposition_survives_absent_target`, `x_document_only_code_does_not_define_registry_split`, `x_extension_overlap_prevents_heuristic_split`, `x_private_target_registry_only_cost`, `x_baseline_registry_keeps_edition_basis`, `x_legacy_renamed_original_is_unavailable` (planned Option A/baseline expectations), `x_hybrid_no_vocabulary_uses_labelled_document_names`, `x_hybrid_existing_vocabulary_never_falls_back`, `x_hybrid_v_private_boundary_needs_owner` (non-selected C inputs now assert A refusal/unavailability; final rule check recorded; development-analysis review/test gates retained)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (independent analysis APPROVE: [#97 at `372a250`](https://github.com/TelemetryWorks/irig106-tmats/pull/97/commits/372a2502529563ab1ac1399de77e2bd62cc9c1e3); owner analysis acceptance and intensive tests pending)
 
 
 ### INT-063
@@ -2633,7 +2636,7 @@ confirmation. Private meanings remain opaque.
 
 **Test**: `v_missing_vn_keeps_namespace_unconfirmed`, `v_duplicate_vn_never_picks_vendor`, `v_path_header_mismatch_keeps_both`, `v_invalid_unavailable_vn_keeps_namespace`, `v_vn_projected_three_chars_ascii_match`, `v_vn_wrong_length_is_invalid_unconfirmed`, `v_vn_blank_handling_does_not_trim`, `v_vn_high_byte_is_not_usable` (planned owner-signed A/definition expectations; final rule check recorded; development-analysis review/test gates retained)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (independent analysis APPROVE: [#97 at `372a250`](https://github.com/TelemetryWorks/irig106-tmats/pull/97/commits/372a2502529563ab1ac1399de77e2bd62cc9c1e3); owner analysis acceptance and intensive tests pending)
 
 
 ## Explicit normalization policy drafts
@@ -2701,7 +2704,7 @@ neither it nor D may be advertised as the standard's unique canonical form.
 
 **Test**: `normalize_order_explicit_bijection`, `normalize_order_missing_or_repeated_identity`, `normalize_order_preserves_raw_regions`, `normalize_group_profile_section_order`, `normalize_group_profile_stable_within_group`, `normalize_group_profile_anchors`, `normalize_group_profile_private_and_unknown_placement` (planned owner-signed A+D expectations; development/test gates retained)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (independent analysis APPROVE: [#97 at `372a250`](https://github.com/TelemetryWorks/irig106-tmats/pull/97/commits/372a2502529563ab1ac1399de77e2bd62cc9c1e3); owner analysis acceptance and intensive tests pending)
 
 ### INT-065
 
@@ -2738,7 +2741,7 @@ is a product policy choice, not a new delimiter or an INT-036 view rewrite.
 
 **Test**: `normalize_newlines_layout_only`, `normalize_newlines_field_controls_untouched`, `normalize_newlines_unknown_layout_unavailable` (planned owner-signed A expectations; development/test gates retained)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (independent analysis APPROVE: [#97 at `372a250`](https://github.com/TelemetryWorks/irig106-tmats/pull/97/commits/372a2502529563ab1ac1399de77e2bd62cc9c1e3); owner analysis acceptance and intensive tests pending)
 
 ### INT-066
 
@@ -2781,4 +2784,4 @@ OF MEASUREMENT LOCATIONS, p. 9-117), never import MNF\N's 1–8 range.
 
 **Test**: `normalize_counter_contiguous_distinct_members`, `normalize_counter_gap_refuses`, `normalize_counter_invalid_old_value_explicit_rewrite`, `normalize_counter_compatible_damage_blocks` (planned owner-signed A expectations; development/test gates retained)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (owner/independent analysis review and intensive tests pending)
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (independent analysis APPROVE: [#97 at `372a250`](https://github.com/TelemetryWorks/irig106-tmats/pull/97/commits/372a2502529563ab1ac1399de77e2bd62cc9c1e3); owner analysis acceptance and intensive tests pending)

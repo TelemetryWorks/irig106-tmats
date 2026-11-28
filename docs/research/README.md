@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-28-independent-analysis-approvals.md](2026-11-28-independent-analysis-approvals.md) | Independent analysis APPROVEs for all INT entries, exact #84/#86/#90/#93–100 heads and #94 checksum delta; owner analysis acceptance/tests remain pending; no family-3 start |
 | [2026-11-28-family2-completion-audit.md](2026-11-28-family2-completion-audit.md) | Current documentary closure recommendation: scoped parent/descendant audit, all analysis links, component versus layout/release gates; exact-head and owner review still required |
 | [2026-11-28-final-interpretation-development-analysis.md](2026-11-28-final-interpretation-development-analysis.md) | Draft final INT-022–027/033 analysis: uncertain X removal refusal, guarded equals suggestion, irregular packet map, condition/reference corrections and default-position collisions; 45 PDFs/31 planned cases; analysis review/tests pending |
 | [2026-11-28-assembly-governing-development-analysis.md](2026-11-28-assembly-governing-development-analysis.md) | Draft INT-011/028–032/034/045 analysis: per-channel joining, layered time closure, Q25 cut precedence, F7 uncertainty, explicit access and governing proof; 32 source PDFs and 41 planned cases; analysis review/tests pending |

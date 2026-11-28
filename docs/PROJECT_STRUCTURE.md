@@ -97,6 +97,7 @@ irig106-tmats/
 │   │                          2026-11-25-retained-cut-and-qm-review-followups.md records the independent review and narrow blocking/test amendments;
 │   │                          2026-11-25-time-view-metadata-requirements.md derives bounded channel/time-field requirements and acceptance scope;
 │   │                          2026-11-25-source-bit-requirements.md derives explicit NSB splitting and records DSI/CHE remaining boundaries;
+│   │                          2026-11-28-independent-analysis-approvals.md records exact-head independent analysis review evidence while owner acceptance/tests stay pending;
 │   │                          2026-11-28-family2-completion-audit.md audits current scoped chains and distinguishes documentary closure from layout/component/release readiness;
 │   │                          2026-11-28-final-interpretation-development-analysis.md analyzes seven edit/mapping/default interpretations without changing approvals or release scope;
 │   │                          2026-11-28-assembly-governing-development-analysis.md analyzes eight assembly/closure/access/governing rules with source and seam/range oracles; analysis review/tests pending;
