@@ -78,6 +78,11 @@ The owner brings these parts forward from 0.2 for irigtime:
 - L1-VIEW-008: carry caller-assumption provenance through time-view answers.
   Other uses of labelled assumptions remain in 0.2.
 
+L2-VIEW-016/017 and L3-VIEW-065–070 directly derive the bounded
+L1-VIEW-006 lookup-state contract; their [source/acceptance note](research/2026-11-27-bounded-lookup-state-requirements.md)
+separates candidate identity, effective values, availability and association.
+They do not implement general link resolution or approve qualified-record use.
+
 This is metadata extraction, not a time decoder or a general validation
 engine. Time conversion, packet timestamp interpretation, clock quality,
 correlation and selection policy remain the time consumer's responsibilities.
@@ -309,10 +314,11 @@ complete analysis or tests. See the [reconfirmation record](research/2026-11-23-
 INT-034's "followed by another packet" means SAME-CHANNEL; an otherwise
 complete run ending in `;` at EOF stays complete, labelled "end of input".
 An open run may expose PROVISIONAL boundary evidence, never a joining stop.
-Pre-EOF semantic use by irig106-time's CLI, snapshot invalidation and its
-interaction with INT-028/031 remain explicit owner-review items. Recommended
-option: opt-in labelled snapshots; alternative: final-only semantic use. No
-option is selected here or silently relaxes the complete-only contract above.
+Joey signed explicit versioned provisional snapshots with invalidation and
+no automatic governance on 2026-11-28 (INT-034), alongside INT-028/031's
+closure/takeover and per-query ambiguity-only access rules. Cut text stays
+unusable. Remaining independent final checks, source/development/tests and
+padding-only/leading-damage precedence are separate gates.
 Per-channel open-run state needs an explicit finite aggregate memory budget
 and typed limit error, never silent dropping; numeric policy, full accounting
 and recovery/resume details need review before implementation. See the
@@ -456,7 +462,37 @@ last step. Refusal to stamp ambiguous input is not refusal to allow its repair.
 F7 decides the uncertainty behavior, not the actual event identity. The latter
 still needs verified evidence before the event-presence check is implementable.
 These approvals do not mark requirements implemented or development evidence complete.
-F2/F3 and other unreviewed interpretations remain open where already recorded.
+F2/F3 are owner-signed (Joey, 2026-11-28); remaining independent final
+checks and development/source/tests still gate their implementation.
+
+## Normalization policy boundary
+
+L2-WRT-005/006 and L3-WRT-012–017 extend the explicit-normalization contract;
+Joey signed INT-064 A+D / INT-065 A / INT-066 A on 2026-11-28, after
+independent pre-check concurrences. The named built-in Chapter 9 group order,
+v1 accompanies validated caller order; newline changes are layout-only to
+explicit LF/CRLF, and counter rewrite requires contiguous distinct 1..k in
+range. No L1 reinterpretation or scope reduction. Source freshness, written
+analysis/review and executable oracles remain implementation prerequisites.
+
+INT-061/062/063 A and INT-022–029/031–034 sign-offs are recorded in the
+[verbatim owner record](research/2026-11-28-interpretation-owner-signoffs.md).
+INT-034 padding-only/leading-damage precedence and report formats stay open.
+Owner approval alone is not remaining independent review or passing tests.
+
+## Decomposition/readiness audit
+
+The [post-#79 reassessment](research/2026-11-27-family2-unheld-queue-reassessment.md)
+rechecks the scoped primary links and remaining partial contracts. The
+identified unheld decomposition queue is exhausted; family two is still
+incomplete and family three is not authorized. The [earlier audit](research/2026-11-27-family2-coverage-audit.md)
+is a dated snapshot; its missing lookup-state finding and batch estimate are
+historical. Held build/report work and normalization/flex/assembly/resource
+policy or source gates remain explicit; no scope is silently removed.
+Documentation linkage and green prototype CI are not implementation evidence.
+The owner extract decisions are already made and are recorded in
+[ADR-0037](adr/0037-extract-destination-and-findings-policy.md), not a new
+owner-decision gate; strict on unlisted findings remains pending.
 
 ## Delivery and release gates
 

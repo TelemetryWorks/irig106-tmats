@@ -29,7 +29,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-READ-004 | L2-READ-005 | _(none)_ | Draft |
 | L1-READ-005 | L2-READ-011 | _(none)_ | Draft |
 | L1-READ-006 | L2-READ-003, L2-READ-008 | _(none)_ | Draft |
-| L1-READ-007 | _(none)_ | _(none)_ | Draft |
+| L1-READ-007 | L2-READ-014, L2-READ-015 | _(none)_ | Draft |
 
 **L2 -> L3 -> Verification Artifacts**
 
@@ -48,6 +48,8 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-READ-011 | L3-READ-019, L3-READ-020, L3-READ-025 | _(TBD)_ | Draft |
 | L2-READ-012 | L3-READ-024, L3-READ-026, L3-READ-027, L3-READ-029 | _(TBD)_ | Draft |
 | L2-READ-013 | L3-READ-030, L3-READ-031, L3-READ-032, L3-READ-033 | _(TBD)_ | Draft |
+| L2-READ-014 | L3-READ-034, L3-READ-035, L3-READ-036 | _(TBD)_ | Draft |
+| L2-READ-015 | L3-READ-037, L3-READ-038, L3-READ-039 | _(TBD)_ | Draft |
 
 ### L1-CH10: Chapter 10 setup records
 
@@ -59,7 +61,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-CH10-002 | L2-CH10-002 | _(none)_ | Draft |
 | L1-CH10-003 | _(none)_ | _(none)_ | Draft |
 | L1-CH10-004 | L2-CH10-004, L2-CH10-005, L2-CH10-006, L2-CH10-007 | _(none)_ | Draft |
-| L1-CH10-005 | _(none)_ | _(none)_ | Draft |
+| L1-CH10-005 | L2-CH10-008, L2-CH10-009 | _(none)_ | Draft |
 | L1-CH10-006 | L2-CH10-003 | _(none)_ | Draft |
 | L1-CH10-007 | _(none)_ | _(none)_ | Draft |
 | L1-CH10-008 | _(none)_ | _(none)_ | Draft |
@@ -75,6 +77,8 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-CH10-005 | L3-CH10-013, L3-CH10-014, L3-CH10-015 | _(TBD)_ | Draft |
 | L2-CH10-006 | L3-CH10-017, L3-CH10-018, L3-CH10-019 | _(TBD)_ | Draft |
 | L2-CH10-007 | L3-CH10-020, L3-CH10-021 | _(TBD)_ | Draft |
+| L2-CH10-008 | L3-CH10-022, L3-CH10-023, L3-CH10-027 | _(TBD)_ | Draft |
+| L2-CH10-009 | L3-CH10-024, L3-CH10-025, L3-CH10-026 | _(TBD)_ | Draft |
 
 ### L1-EDN: IRIG 106 editions
 
@@ -82,7 +86,7 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
-| L1-EDN-001 | _(none)_ | _(none)_ | Draft |
+| L1-EDN-001 | L2-EDN-003, L2-EDN-004 | _(none)_ | Draft |
 | L1-EDN-002 | L2-EDN-002 | _(none)_ | Draft |
 | L1-EDN-003 | _(none)_ | _(none)_ | Draft |
 | L1-EDN-004 | _(none)_ | _(none)_ | Draft |
@@ -95,6 +99,8 @@ This matrix is the single source of truth for live status; the requirement docum
 |-------|-------------|----------------|--------|
 | L2-EDN-001 | L3-EDN-001, L3-EDN-002 | _(TBD)_ | Draft |
 | L2-EDN-002 | L3-EDN-003, L3-EDN-004, L3-EDN-005, L3-EDN-006, L3-EDN-007 | _(TBD)_ | Draft |
+| L2-EDN-003 | L3-EDN-008, L3-EDN-009, L3-EDN-010 | _(TBD)_ | Draft |
+| L2-EDN-004 | L3-EDN-011, L3-EDN-012, L3-EDN-013 | _(TBD)_ | Draft |
 
 ### L1-REG: Attribute definitions (registry)
 
@@ -134,7 +140,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-VIEW-003 | _(none)_ | _(none)_ | Draft |
 | L1-VIEW-004 | L2-VIEW-002, L2-VIEW-003, L2-VIEW-004, L2-VIEW-011 | _(none)_ | Draft |
 | L1-VIEW-005 | L2-VIEW-008, L2-VIEW-009 | _(none)_ | Draft |
-| L1-VIEW-006 | _(none)_ | _(none)_ | Draft |
+| L1-VIEW-006 | L2-VIEW-016, L2-VIEW-017 | _(none)_ | Draft |
 | L1-VIEW-007 | L2-VIEW-005, L2-VIEW-006, L2-VIEW-007, L2-VIEW-010, L2-VIEW-012, L2-VIEW-013 | _(none)_ | Draft |
 | L1-VIEW-008 | L2-VIEW-014 | _(none)_ | Draft |
 | L1-VIEW-009 | _(none)_ | _(none)_ | Draft |
@@ -158,6 +164,8 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-VIEW-013 | L3-VIEW-043, L3-VIEW-044, L3-VIEW-045, L3-VIEW-046, L3-VIEW-047, L3-VIEW-056 | _(TBD)_ | Draft |
 | L2-VIEW-014 | L3-VIEW-048, L3-VIEW-049, L3-VIEW-050, L3-VIEW-051, L3-VIEW-052, L3-VIEW-053, L3-VIEW-054, L3-VIEW-055, L3-VIEW-057 | _(TBD)_ | Draft |
 | L2-VIEW-015 | L3-VIEW-058, L3-VIEW-059, L3-VIEW-060, L3-VIEW-061, L3-VIEW-062, L3-VIEW-063, L3-VIEW-064 | _(TBD)_ | Draft |
+| L2-VIEW-016 | L3-VIEW-065, L3-VIEW-066, L3-VIEW-067 | _(TBD)_ | Draft |
+| L2-VIEW-017 | L3-VIEW-068, L3-VIEW-069, L3-VIEW-070 | _(TBD)_ | Draft |
 
 ### L1-VAL: Validation
 
@@ -200,8 +208,17 @@ This matrix is the single source of truth for live status; the requirement docum
 |-------|-------------|----------------|--------|
 | L1-EXT-001 | _(none)_ | _(none)_ | Draft |
 | L1-EXT-002 | _(none)_ | _(none)_ | Draft |
-| L1-EXT-003 | _(none)_ | _(none)_ | Draft |
+| L1-EXT-003 | L2-EXT-001, L2-EXT-002, L2-EXT-003, L2-EXT-004 | _(none)_ | Draft |
 | L1-EXT-004 | _(none)_ | _(none)_ | Draft |
+
+**L2 -> L3 -> Verification Artifacts**
+
+| L2 ID | L3 Children | Test Artifacts | Status |
+|-------|-------------|----------------|--------|
+| L2-EXT-001 | L3-EXT-001, L3-EXT-002, L3-EXT-003, L3-EXT-004, L3-EXT-008 | _(TBD)_ | Draft |
+| L2-EXT-002 | L3-EXT-005, L3-EXT-006, L3-EXT-007 | _(TBD)_ | Draft |
+| L2-EXT-003 | L3-EXT-009, L3-EXT-010, L3-EXT-011, L3-EXT-015, L3-EXT-016 | _(TBD)_ | Draft |
+| L2-EXT-004 | L3-EXT-012, L3-EXT-013, L3-EXT-014 | _(TBD)_ | Draft |
 
 ### L1-WRT: Writing, editing, comparing, and generating
 
@@ -210,7 +227,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
 | L1-WRT-001 | L2-WRT-001, L2-WRT-003 | _(none)_ | Draft |
-| L1-WRT-002 | L2-WRT-004 | _(none)_ | Draft |
+| L1-WRT-002 | L2-WRT-004, L2-WRT-005, L2-WRT-006 | _(none)_ | Draft |
 | L1-WRT-003 | _(none)_ | _(none)_ | Draft |
 | L1-WRT-004 | _(none)_ | _(none)_ | Draft |
 | L1-WRT-005 | _(none)_ | _(none)_ | Draft |
@@ -225,6 +242,8 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-WRT-002 | L3-WRT-002, L3-WRT-003 | _(TBD)_ | Draft |
 | L2-WRT-003 | L3-WRT-004, L3-WRT-005, L3-WRT-006, L3-WRT-007, L3-WRT-008, L3-WRT-009 | _(TBD)_ | Draft |
 | L2-WRT-004 | L3-WRT-010, L3-WRT-011 | _(TBD)_ | Draft |
+| L2-WRT-005 | L3-WRT-012, L3-WRT-013, L3-WRT-014, L3-WRT-015 | _(TBD)_ | Draft |
+| L2-WRT-006 | L3-WRT-016, L3-WRT-017 | _(TBD)_ | Draft |
 
 ### L1-SUM: TMATS checksums
 
@@ -234,7 +253,7 @@ This matrix is the single source of truth for live status; the requirement docum
 |-------|-------------|----------------|--------|
 | L1-SUM-001 | L2-SUM-001 | _(none)_ | Draft |
 | L1-SUM-002 | L2-SUM-002 | _(none)_ | Draft |
-| L1-SUM-003 | _(none)_ | _(none)_ | Draft |
+| L1-SUM-003 | L2-SUM-004, L2-SUM-005 | _(none)_ | Draft |
 | L1-SUM-004 | L2-SUM-003 | _(none)_ | Draft |
 
 **L2 -> L3 -> Verification Artifacts**
@@ -244,6 +263,8 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-SUM-001 | L3-SUM-001, L3-SUM-002 | _(TBD)_ | Draft |
 | L2-SUM-002 | L3-SUM-003, L3-SUM-004, L3-SUM-005 | _(TBD)_ | Draft |
 | L2-SUM-003 | L3-SUM-006, L3-SUM-007, L3-SUM-008, L3-SUM-009, L3-SUM-010 | _(TBD)_ | Draft |
+| L2-SUM-004 | L3-SUM-011, L3-SUM-012, L3-SUM-013 | _(TBD)_ | Draft |
+| L2-SUM-005 | L3-SUM-014, L3-SUM-015, L3-SUM-016 | _(TBD)_ | Draft |
 
 ### L1-IO: Input/output boundary
 
@@ -267,13 +288,13 @@ This matrix is the single source of truth for live status; the requirement docum
 |-------|-------------|----------------|--------|
 | L1-CLI-001 | L2-CLI-005, L2-CLI-006 | _(none)_ | Draft |
 | L1-CLI-002 | _(none)_ | _(none)_ | Draft |
-| L1-CLI-003 | _(none)_ | _(none)_ | Draft |
+| L1-CLI-003 | L2-CLI-010, L2-CLI-011 | _(none)_ | Draft |
 | L1-CLI-004 | L2-CLI-008 | _(none)_ | Draft |
-| L1-CLI-005 | _(none)_ | _(none)_ | Draft |
+| L1-CLI-005 | L2-CLI-012, L2-CLI-013 | _(none)_ | Draft |
 | L1-CLI-006 | _(none)_ | _(none)_ | Draft |
 | L1-CLI-007 | L2-CLI-009 | _(none)_ | Draft |
 | L1-CLI-008 | L2-CLI-003, L2-CLI-004 | _(none)_ | Draft |
-| L1-CLI-009 | L2-CLI-001, L2-CLI-002, L2-CLI-007 | _(none)_ | Draft |
+| L1-CLI-009 | L2-CLI-001, L2-CLI-002, L2-CLI-007, L2-CLI-014, L2-CLI-015, L2-CLI-016, L2-CLI-017 | _(none)_ | Draft |
 
 **L2 -> L3 -> Verification Artifacts**
 
@@ -286,8 +307,16 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-CLI-005 | L3-CLI-014, L3-CLI-015, L3-CLI-016, L3-CLI-021 | _(TBD)_ | Draft |
 | L2-CLI-006 | L3-CLI-017, L3-CLI-018, L3-CLI-019, L3-CLI-020 | _(TBD)_ | Draft |
 | L2-CLI-007 | L3-CLI-026, L3-CLI-027, L3-CLI-028, L3-CLI-029 | _(TBD)_ | Draft |
-| L2-CLI-008 | L3-CLI-030, L3-CLI-031, L3-CLI-032, L3-CLI-033, L3-CLI-037 | _(TBD)_ | Draft |
-| L2-CLI-009 | L3-CLI-034, L3-CLI-035, L3-CLI-036 | _(TBD)_ | Draft |
+| L2-CLI-008 | L3-CLI-030, L3-CLI-031, L3-CLI-032, L3-CLI-033, L3-CLI-037, L3-CLI-060, L3-CLI-061 | _(TBD)_ | Draft |
+| L2-CLI-009 | L3-CLI-034, L3-CLI-035, L3-CLI-036, L3-CLI-058, L3-CLI-059 | _(TBD)_ | Draft |
+| L2-CLI-010 | L3-CLI-038, L3-CLI-039, L3-CLI-040, L3-CLI-044 | _(TBD)_ | Draft |
+| L2-CLI-011 | L3-CLI-041, L3-CLI-042, L3-CLI-043 | _(TBD)_ | Draft |
+| L2-CLI-012 | L3-CLI-045, L3-CLI-046, L3-CLI-047, L3-CLI-048, L3-CLI-051 | _(TBD)_ | Draft |
+| L2-CLI-013 | L3-CLI-049, L3-CLI-050 | _(TBD)_ | Draft |
+| L2-CLI-014 | L3-CLI-052, L3-CLI-053, L3-CLI-054 | _(TBD)_ | Draft |
+| L2-CLI-015 | L3-CLI-055, L3-CLI-056, L3-CLI-057 | _(TBD)_ | Draft |
+| L2-CLI-016 | L3-CLI-062, L3-CLI-063, L3-CLI-064 | _(TBD)_ | Draft |
+| L2-CLI-017 | L3-CLI-065, L3-CLI-066, L3-CLI-067 | _(TBD)_ | Draft |
 
 ### L1-ROB: Robustness against arbitrary input
 
@@ -295,9 +324,9 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
-| L1-ROB-001 | L2-ROB-001, L2-ROB-002, L2-ROB-003 | _(none)_ | Draft |
-| L1-ROB-002 | _(none)_ | _(none)_ | Draft |
-| L1-ROB-003 | _(none)_ | _(none)_ | Draft |
+| L1-ROB-001 | L2-ROB-001, L2-ROB-002, L2-ROB-003, L2-ROB-006, L2-ROB-007 | _(none)_ | Draft |
+| L1-ROB-002 | L2-ROB-004 | _(none)_ | Draft |
+| L1-ROB-003 | L2-ROB-005 | _(none)_ | Draft |
 
 **L2 -> L3 -> Verification Artifacts**
 
@@ -306,6 +335,10 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-ROB-001 | L3-ROB-001, L3-ROB-002 | _(TBD)_ | Draft |
 | L2-ROB-002 | L3-ROB-003 | _(TBD)_ | Draft |
 | L2-ROB-003 | L3-ROB-004, L3-ROB-005, L3-ROB-006 | _(TBD)_ | Draft |
+| L2-ROB-004 | L3-ROB-007, L3-ROB-008, L3-ROB-009 | _(TBD)_ | Draft |
+| L2-ROB-005 | L3-ROB-010, L3-ROB-011, L3-ROB-012, L3-ROB-013 | _(TBD)_ | Draft |
+| L2-ROB-006 | L3-ROB-014, L3-ROB-015, L3-ROB-016 | _(TBD)_ | Draft |
+| L2-ROB-007 | L3-ROB-017, L3-ROB-018, L3-ROB-019 | _(TBD)_ | Draft |
 
 ### L1-PERF: Performance
 
@@ -313,7 +346,14 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
-| L1-PERF-001 | _(none)_ | _(none)_ | Draft |
+| L1-PERF-001 | L2-PERF-001, L2-PERF-002 | _(none)_ | Draft |
+
+**L2 -> L3 -> Verification Artifacts**
+
+| L2 ID | L3 Children | Test Artifacts | Status |
+|-------|-------------|----------------|--------|
+| L2-PERF-001 | L3-PERF-001, L3-PERF-002, L3-PERF-003, L3-PERF-004 | _(TBD)_ | Draft |
+| L2-PERF-002 | L3-PERF-005, L3-PERF-006, L3-PERF-007, L3-PERF-008 | _(TBD)_ | Draft |
 
 ### L1-REL: Versioning and release
 
@@ -325,8 +365,8 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1-REL-002 | L2-REL-002 | _(none)_ | Draft |
 | L1-REL-003 | L2-REL-003 | _(none)_ | Draft |
 | L1-REL-004 | L2-REL-004 | _(none)_ | Draft |
-| L1-REL-005 | _(none)_ | `.github/workflows/ci.yml`<br>`deny`<br>`EmbarkStudios/cargo-deny-action`<br>`deny.toml` | Implemented (I) |
-| L1-REL-006 | _(none)_ | _(none)_ | Draft |
+| L1-REL-005 | L2-REL-005 | _(none)_ | Draft |
+| L1-REL-006 | L2-REL-006 | _(none)_ | Draft |
 
 **L2 -> L3 -> Verification Artifacts**
 
@@ -336,6 +376,8 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-REL-002 | L3-REL-002, L3-REL-003, L3-REL-006 | _(TBD)_ | Draft |
 | L2-REL-003 | L3-REL-004, L3-REL-008 | _(TBD)_ | Draft |
 | L2-REL-004 | L3-REL-005, L3-REL-007 | _(TBD)_ | Draft |
+| L2-REL-005 | L3-REL-009, L3-REL-010, L3-REL-011 | _(TBD)_ | Draft |
+| L2-REL-006 | L3-REL-012, L3-REL-013, L3-REL-014, L3-REL-015, L3-REL-016 | _(TBD)_ | Draft |
 
 ---
 
@@ -346,28 +388,28 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | Category | L1 | L2 | L3 | L2 tested | L3 tested | L2 verified | L3 verified |
 |----------|----|----|----|-----------|-----------|-------------|-------------|
-| READ | 7 | 13 | 33 | 0 | 0 | 0 | 0 |
-| CH10 | 8 | 7 | 21 | 0 | 0 | 0 | 0 |
-| EDN | 6 | 2 | 7 | 0 | 0 | 0 | 0 |
+| READ | 7 | 15 | 39 | 0 | 0 | 0 | 0 |
+| CH10 | 8 | 9 | 27 | 0 | 0 | 0 | 0 |
+| EDN | 6 | 4 | 13 | 0 | 0 | 0 | 0 |
 | REG | 8 | 7 | 16 | 0 | 0 | 0 | 0 |
-| VIEW | 9 | 15 | 64 | 0 | 0 | 0 | 0 |
+| VIEW | 9 | 17 | 70 | 0 | 0 | 0 | 0 |
 | VAL | 6 | 3 | 12 | 0 | 0 | 0 | 0 |
 | DER | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
-| EXT | 4 | 0 | 0 | 0 | 0 | 0 | 0 |
-| WRT | 7 | 4 | 11 | 0 | 0 | 0 | 0 |
-| SUM | 4 | 3 | 10 | 0 | 0 | 0 | 0 |
+| EXT | 4 | 4 | 16 | 0 | 0 | 0 | 0 |
+| WRT | 7 | 6 | 17 | 0 | 0 | 0 | 0 |
+| SUM | 4 | 5 | 16 | 0 | 0 | 0 | 0 |
 | IO | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
-| CLI | 9 | 9 | 37 | 0 | 0 | 0 | 0 |
-| ROB | 3 | 3 | 6 | 0 | 0 | 0 | 0 |
-| PERF | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
-| REL | 6 | 4 | 8 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **71** | **226** | **0** | **0** | **0** | **0** |
+| CLI | 9 | 17 | 67 | 0 | 0 | 0 | 0 |
+| ROB | 3 | 7 | 19 | 0 | 0 | 0 | 0 |
+| PERF | 1 | 2 | 8 | 0 | 0 | 0 | 0 |
+| REL | 6 | 6 | 16 | 0 | 0 | 0 | 0 |
+| **Total** | **84** | **103** | **337** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 42 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 29 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 339 (0.0%).
+**Tested by at least one test marker**: 0 of 469 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 1 of 339 (0.3%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 0 of 469 (0.0%).
 
 ### Orphan check
 
@@ -389,37 +431,37 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-007 | The Q group's condition names `FBCIN`, which is not a channel type | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-008 | `C-d\DPNO`'s condition names `C\DCT` without an index | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-009 | Counters named without indices in conditions | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
-| INT-010 | Equality is `==`, although Table E-3 prints `= =` | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-010 | Equality is `==`, although Table E-6 prints `= =` | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-011 | Per-channel joining of multi-packet setup-record fragments | approved (Joey, owner reconfirmation, 2026-11-23) | not yet written | _(none)_ |
 | INT-012 | RCCVER codes are read as their table states; later editions' reuse is a note | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26, revised 2026-09-27) | not yet written | _(none)_ |
-| INT-034 | A joined run is complete, incomplete, or ambiguous | accepted in principle (three outcomes, owner, 2026-09-27, ADR-0031); these rules proposed | not yet written | _(none)_ |
+| INT-034 | A joined run is complete, incomplete, or ambiguous | owner-approved in part (Joey, 2026-11-28; padding-only/leading-damage precedence open) | not yet written | _(none)_ |
 | INT-013 | Appendix 9-C ends 18 attributes with `:` instead of `;` | suspect (owner, 2026-09-26; `docs/ROADMAP.md`, S1) | not yet written | _(none)_ |
 | INT-014 | `G\106` gives two year digits, so one value can name two editions | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
-| INT-015 | `G\106` had no defined format before 106-17 | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-015 | `G\106` year-format wording appears by 106-15 | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-016 | What the setup record's version byte declares, and when it did not exist | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-017 | The fallback edition taken from RCCVER | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-018 | `G\SHA` is recognised in any letter case, and never inside a value | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26) | not yet written | _(none)_ |
 | INT-019 | A `G\SHA` item with no following semicolon | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26) | not yet written | _(none)_ |
 | INT-020 | Upper-case hexadecimal in a `G\SHA` value | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26) | not yet written | _(none)_ |
 | INT-021 | Two or more `G\SHA` items in one document | approved (Joey, owner sign-off, 2026-11-23; F1 originally coordinator-decided 2026-11-21) | not yet written | _(none)_ |
-| INT-022 | Removing an attribute that X extensions point to | open (follow-up F2, 2026-09-26) | not yet written | _(none)_ |
-| INT-023 | `=` typed where `:` belongs, as in Chapter 6's own example | open (follow-up F3, 2026-09-26) | not yet written | _(none)_ |
-| INT-024 | Which packet data types a channel may carry | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
-| INT-025 | `R-x\TDTF-n`'s condition names `TSPIN`, which is not a channel type | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
-| INT-026 | Two recorder polarity conditions name `P-d\CDT`, which does not exist | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
-| INT-027 | `C-d\DCN`'s "Links from:" lists `R-x\AMN-n-m` twice | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
-| INT-028 | Which setup record governs a packet | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
-| INT-029 | Repeated, changed, and inconsistent setup records | proposed (2026-09-26, revised 2026-09-27, awaiting the owner) | not yet written | _(none)_ |
+| INT-022 | Removing an attribute that X extensions point to | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-023 | `=` typed where `:` belongs, as in Chapter 6's own example | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-024 | Which packet data types a channel may carry | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-025 | `R-x\TDTF-n`'s condition names `TSPIN`, which is not a channel type | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-026 | Two recorder polarity conditions name `P-d\CDT`, which does not exist | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-027 | `C-d\DCN`'s "Links from:" lists `R-x\AMN-n-m` twice | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-028 | Which setup record governs a packet | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-029 | Repeated, changed, and inconsistent setup records | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
 | INT-030 | The "setup record configuration change event packet" is not defined | approved (Joey, owner sign-off, 2026-11-23; F7 originally coordinator-decided 2026-11-21) | not yet written | _(none)_ |
-| INT-031 | After a setup record that cannot be assembled, nothing governs | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
-| INT-032 | Packets that no setup record governs | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
-| INT-033 | Fragment positions that default to the same value | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
-| INT-035 | Recover malformed framing only at an actual semicolon | approved (Joey, owner sign-off, 2026-11-21) | not yet written | _(none)_ |
-| INT-036 | Omit ASCII nonprintables only from semantic projections | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
-| INT-037 | Diagnose Unicode markers without automatic transcoding | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
-| INT-038 | Decimal index identity without source normalization or machine-word limits | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
-| INT-039 | Repeated scalar slots remain ambiguous even when values agree | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
-| INT-040 | Count structurally identified entries independently of value validity | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
+| INT-031 | After a setup record that cannot be assembled, nothing governs | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-032 | Packets that no setup record governs | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-033 | Fragment positions that default to the same value | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-035 | Recover malformed framing only at an actual semicolon | approved (Joey, owner sign-off, 2026-11-21) | [written development analysis](research/2026-11-28-framing-character-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-036 | Omit ASCII nonprintables only from semantic projections | approved (Joey, owner sign-off, 2026-11-22) | [written development analysis](research/2026-11-28-framing-character-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-037 | Diagnose Unicode markers without automatic transcoding | approved (Joey, owner sign-off, 2026-11-22) | [written development analysis](research/2026-11-28-framing-character-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-038 | Decimal index identity without source normalization or machine-word limits | approved (Joey, owner sign-off, 2026-11-22) | [written development analysis](research/2026-11-28-index-duplicate-counter-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-039 | Repeated scalar slots remain ambiguous even when values agree | approved (Joey, owner sign-off, 2026-11-22) | [written development analysis](research/2026-11-28-index-duplicate-counter-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-040 | Count structurally identified entries independently of value validity | approved (Joey, owner sign-off, 2026-11-22) | [written development analysis](research/2026-11-28-index-duplicate-counter-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-041 | Unavailable interpretation is not proof of missing or invalid field data | approved (Joey, owner sign-off, 2026-11-23) | not yet written | _(none)_ |
 | INT-042 | A reviewed is-specified predicate tests actual presence, not value usability | approved (Joey, owner sign-off, 2026-11-23) | not yet written | _(none)_ |
 | INT-043 | Leading-zero algorithm 2 designators are accepted with a warning | approved (Joey, Option B, 2026-11-23) | not yet written | _(none)_ |
@@ -440,9 +482,15 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-058 | Only an individually approved evidence rule can contradict a caller choice | approved (Joey, 2026-11-26; independent AI final CONCUR at 3fcbd2cb0e911d1bc23e4cc3a5b53d503e5d7e23) | not yet written | _(none)_ |
 | INT-059 | Unproven multiplicity is unestablished, conflicting requires evidence | approved (Joey, 2026-11-26; independent AI final CONCUR at 3fcbd2cb0e911d1bc23e4cc3a5b53d503e5d7e23) | not yet written | _(none)_ |
 | INT-060 | Each query supplies its caller choice explicitly | approved (Joey, 2026-11-26; independent AI final CONCUR at 3fcbd2cb0e911d1bc23e4cc3a5b53d503e5d7e23) | not yet written | _(none)_ |
+| INT-061 | X occurrence mapping when the original has no numeric index | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-062 | Meaning of existing TMATS code in X decomposition | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-063 | Vendor attribution when V header and private path evidence are incomplete or inconsistent | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-064 | Ordering policy for explicitly requested normalization | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-065 | Scope of line-ending normalization | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-066 | Preconditions for explicit counter recomputation | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
 
-* Entries without a written analysis: **60** of 60
-* Entries without a test: **60** of 60
+* Entries without a written analysis: **60** of 66
+* Entries without a test: **66** of 66
 * Entries missing the development mark: **0**
 
 ### Marker reference check

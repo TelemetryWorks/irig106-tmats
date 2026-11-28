@@ -96,6 +96,34 @@ irig106-tmats/
 │   │                          2026-11-25-retained-cut-and-qm-review-followups.md records the independent review and narrow blocking/test amendments;
 │   │                          2026-11-25-time-view-metadata-requirements.md derives bounded channel/time-field requirements and acceptance scope;
 │   │                          2026-11-25-source-bit-requirements.md derives explicit NSB splitting and records DSI/CHE remaining boundaries;
+│   │                          2026-11-28-interpretation-owner-signoffs.md preserves signed interpretation choices and their remaining review/development gates;
+│   │                          2026-11-28-appendix9c-recognizer-inventory.md and 2026-11-28-appendix9c-literal-names.csv inventory complete code-name shapes/source spellings without implementing a recognizer;
+│   │                          2026-11-28-index-duplicate-counter-development-analysis.md analyzes approved index/duplicate/counter rules with historical source limits and planned edge oracles; review/tests pending;
+│   │                          2026-11-28-framing-character-development-analysis.md analyzes approved framing/character/marker rules without marking analysis review or executable tests complete;
+│   │                          2026-11-27-int022-034-owner-brief.md gives the owner a single sitting brief for all INT-022..034 options and remaining decisions;
+│   │                          2026-11-27-legacy-int-independent-check-batches3-4.md records remaining legacy verdicts, owner-pending rewrites and normalization-order recheck;
+│   │                          2026-11-27-legacy-int-independent-check-batch2.md records second-batch verdicts, source corrections and the later-scope F2 owner item;
+│   │                          2026-11-27-legacy-int-independent-check-batch1.md records reviewer verdicts and narrow amendments without claiming completed development analysis;
+│   │                          2026-11-27-historical-csdw-layout-sources.md inventories per-edition CSDW sources, fields and unresolved routing/API evidence;
+│   │                          2026-11-27-family2-unheld-queue-reassessment.md rechecks scoped parents after #79 and separates exhausted unheld drafting from remaining owner/source/implementation gates;
+│   │                          2026-11-27-show-free-command-orchestration.md derives cross-stage command binding and acceptance without report formats or grammar defaults;
+│   │                          2026-11-27-retention-limit-evidence.md derives retained-owner inventories and typed-limit evidence without choosing charging/recovery policy;
+│   │                          2026-11-27-normalization-policy-drafts.md derives bounded normalization contracts and proposes the three unresolved transform policies;
+│   │                          2026-11-27-bounded-lookup-state-requirements.md derives the direct bounded lookup-state chain without general links or new association evidence;
+│   │                          2026-11-27-family2-coverage-audit.md audits the scoped 0.1 parent links, partial derivations and readiness gates at a pinned main snapshot;
+│   │                          2026-11-27-argument-contract-and-session-scope.md derives host argument parsing and records pending scope/wording choices with channel-source re-verification;
+│   │                          2026-11-27-extract-owner-policy.md records the extract owner-policy follow-up and planned acceptance under ADR-0037;
+│   │                          2026-11-27-session-evidence-requirements.md derives session-format/F7 uncertainty and carries detector qualification/vocabulary clarifications;
+│   │                          2026-11-27-suspect-terminator-requirements.md derives suspect-colon suggestions and records coordinator flex qualification constraints;
+│   │                          2026-11-27-flex-compatibility-acceptance.md derives pinned-reference compatibility acceptance and separate packet/TMATS checksum evidence;
+│   │                          2026-11-27-checksum-commands-and-owner-questions.md derives checksum command computation and briefs the INT-031/file-order owner questions;
+│   │                          2026-11-27-record-enumeration-requirements.md derives internal record enumeration without rendered-output or governing choices;
+│   │                          2026-11-27-edition-independent-reading.md  Edition-independent reading and release-gate follow-ups
+│   │                          2026-11-27-release-evidence-and-vn-followup.md derives dependency/artifact evidence and defines usable VN for pending INT-063;
+│   │                          2026-11-27-v-group-and-int062-followup.md derives V context, proposes INT-063 and amends INT-062 owner options/baseline;
+│   │                          2026-11-27-x-association-requirements.md derives X attachment and proposes INT-061/062 for unindexed originals and existing-code vocabulary;
+│   │                          2026-11-27-performance-evidence-requirements.md derives correctness-qualified performance measurements and reference/compute boundaries;
+│   │                          2026-11-27-robustness-evidence-requirements.md derives library lint/line-coverage acceptance and evidence gates;
 │   │                          2026-11-26-build-compatibility-requirements.md derives MSRV/WASM/platform/consumer build acceptance and evidence boundaries;
 │   │                          2026-11-26-pattern-lookup-requirements.md derives bound-index raw pattern retrieval and its review/oracle boundaries;
 │   │                          2026-11-26-extraction-requirements.md derives byte extraction/input immutability and audits remaining family-2 work;
@@ -148,6 +176,9 @@ irig106-tmats/
 │   └── parse_bench.rs     prototype: criterion parse benchmarks
 └── fuzz/                  prototype: cargo-fuzz targets (parse, round trip, Ch10 decode) and corpus
 ```
+
+ADR-0037 (`docs/adr/0037-extract-destination-and-findings-policy.md`) records
+the owner's verbatim extract overwrite/identity and findings policy.
 
 ## Planned layout
 

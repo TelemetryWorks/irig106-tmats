@@ -1,6 +1,6 @@
 # irig106-tmats — Level 2 Requirements
 
-> **Status: foundations through build-compatibility contracts drafted (family 2, batches 1-27).**
+> **Status: foundations through show-free command orchestration drafted (family 2, batches 1-26 and 28-43).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -568,7 +568,10 @@ complete those parents or implement assembly, completeness, edition selection,
 session checks, packet slicing/checksums or time views. No packet/file I/O or
 new default is introduced. Requirements and acceptance cases remain planned.
 
-The concrete baseline below is 106-24R1 Chapter 11 Figure 11-34. Historical
+The concrete baseline below is 106-24R1 Chapter 11 Figure 11-34.
+The [historical source matrix](research/2026-11-27-historical-csdw-layout-sources.md)
+verifies per-edition fields and absent flags; it does not choose automatic
+layout routing or qualify shared dependency APIs. Historical
 layout routing and the complete declaration/fallback contract remain separate
 batches. INT-012's literal Format 1 decision was reconfirmed by Joey, 2026-11-23,
 with AI concurrence on #34 head e352323 after seven-edition source review.
@@ -691,7 +694,7 @@ owner after #38 are recorded here; unresolved streaming-use policy stays open.
 
 **Statement**: An open run SHALL expose a PROVISIONAL observation distinct from final completeness, with its channel, observed text extent and boundary evidence; observing a provisional attribute boundary SHALL NOT stop joining, assert a complete record or silently establish a governing configuration.
 
-**Rationale**: Owner-relayed reviewer consequence, 2026-11-23, enables the streaming-consumer design discussion without treating other-channel data as an end marker. INT-034 records the explicit open question of pre-EOF semantic use; INT-028/031 govern final descriptions and remain proposed. A temporary lack of input is not EOF. No current-only-complete parsing rule is silently relaxed by adding an observation.
+**Rationale**: Owner-relayed reviewer consequence, 2026-11-23, enables the streaming-consumer design discussion without treating other-channel data as an end marker. INT-034 now permits explicit versioned provisional snapshots with invalidation and no automatic governance (Joey, 2026-11-28); owner-signed INT-028/031 govern final descriptions, with their separate evidence/review gates. A temporary lack of input is not EOF. No current-only-complete parsing rule is silently relaxed by adding an observation.
 
 **Verification Method**: Test (T)
 
@@ -761,7 +764,7 @@ Source: 106-24R1 Chapter 9 section 9.5.4, Table 9-4, rows/pages cited below.
 
 **Statement**: Every bounded time-view result SHALL retain its source document/revision, recorder/entry scope, source locations and supplied assembly/edition context or explicit limitations, preserve every original byte and finding, and keep locally read metadata separate from any claim that a setup governs or a data channel has an evidenced time-source association.
 
-**Rationale**: RELEASE-0.1's API/uncertainty contract and ADR-0002/0003 require byte-faithful views and stable source ownership. L1-VIEW-004 effective values are brought forward for this subset. Incomplete, retained-cut, ambiguous or unsupported setup evidence cannot become an unqualified usable view; INT-048's cut facet keeps its blocking force. This does not select open INT-028/031 general governance, create a timeline, approve provisional semantic use, or expose a stable Rust symbol before API review.
+**Rationale**: RELEASE-0.1's API/uncertainty contract and ADR-0002/0003 require byte-faithful views and stable source ownership. L1-VIEW-004 effective values are brought forward for this subset. Incomplete, retained-cut, ambiguous or unsupported setup evidence cannot become an unqualified usable view; INT-048's cut facet keeps its blocking force. This does not select owner-signed INT-028/031 general governance, create a timeline, approve provisional semantic use, or expose a stable Rust symbol before API review.
 
 **Verification Method**: Test (T)
 
@@ -888,7 +891,7 @@ Owner answers of 2026-11-26 now specify caller policy in INT-056–060
 
 **Statement**: A time-view answer using an explicit caller choice without association proof SHALL retain the choice, its caller-supplied assumption basis and scoped identities on every answer derived from it, alongside the unchanged underlying association uncertainty, target states and selected Strict/Warn/Quiet level, with bad-data finding emission governed by INT-056; it SHALL NOT relabel that choice as association_evidenced, silently propagate it to another setup/revision or make otherwise unusable setup evidence usable or governing.
 
-**Rationale**: Owner direction 2026-11-21, the owner answers of 2026-11-26 (INT-056–060, final CONCUR at #52 3fcbd2c), and RELEASE-0.1 permit labelled caller assumptions for the bounded time view, not silent guesses or global configuration overrides. Other assumption uses in L1-VIEW-008 remain 0.2. This does not approve proposed INT-028/031/032/033, select a governing setup or authorise provisional semantic use; source and eligibility limitations remain visible.
+**Rationale**: Owner direction 2026-11-21, the owner answers of 2026-11-26 (INT-056–060, final CONCUR at #52 3fcbd2c), and RELEASE-0.1 permit labelled caller assumptions for the bounded time view, not silent guesses or global configuration overrides. Other assumption uses in L1-VIEW-008 remain 0.2. This does not approve owner-signed INT-028/031/032/033, select a governing setup or authorise provisional semantic use; source and eligibility limitations remain visible.
 
 **Verification Method**: Test (T)
 
@@ -1001,21 +1004,23 @@ No report/rendered format or new interpretation is selected here.
 
 ## Extraction and input immutability (family 2, batch 25)
 
-These decompose L1-CLI-004/007 using the existing byte-faithful output and
-caller-owned I/O contracts. They take one explicitly selected, eligible
-record as input; they do not select an eligibility or ordinal policy.
-Implementation is BLOCKED on owner decisions for `-o` overwrite, fail-closed
-identity checking on pipes/devices/stdout/network shares, and extraction
-eligibility under integrity/encoding findings; no pending option is approved.
-See the [scope and remaining-work audit](research/2026-11-26-extraction-requirements.md).
+These decompose L1-CLI-004/007 using the byte-faithful output and caller-owned
+I/O contracts. ADR-0037 records the owner's three decisions of 2026-11-27,
+removing the #57 overwrite/identity/finding-eligibility holds for extract.
+The [decision follow-up](research/2026-11-27-extract-owner-policy.md) records
+scope and planned checks. Source/development/test gates and independent
+review remain; no extraction implementation or other argument grammar is
+approved by recording the decision. Owner clarification after #73: the
+--strict predicate is PENDING OWNER (listed bad-data kinds versus any finding).
+Neither broader refusal nor narrower acceptance is silently selected.
 
 #### L2-CLI-008
 
 **Parent**: L1-CLI-004
 
-**Statement**: Given an explicitly selected setup record whose extraction eligibility has been established under the reviewed record-selection/format rules, the CLI SHALL extract exactly that record's original assembled TMATS text bytes to the requested output, using core-backed fragment extents and the byte-faithful writer contract without packet framing, decoding/re-encoding, normalization or implicit edits.
+**Statement**: For an explicitly selected setup record/candidate with supplied original text bytes, extract SHALL proceed byte-exact by default despite findings, reporting every finding; --strict SHALL refuse for the listed bad-data kinds, while its behavior on other findings SHALL remain PENDING OWNER. It SHALL extract exactly that selection's original text bytes to the requested output, using core-backed fragment extents and the byte-faithful writer contract without packet framing, decoding/re-encoding, normalization or implicit edits.
 
-**Rationale**: UC-17, CLI command table and L1-CLI-004 require extracting TMATS bytes, not rendering a typed view. ADR-0002/0003 preserve source bytes; ADR-0010 leaves destination acquisition to the CLI/caller; ADR-0036 supplies borrowed DATA. Chapter 11 (106-24R1) section 11.2.7.2/Figure 11-34 p. 11-50 places a CSDW before each fragment's text. Existing eligibility/completeness/unsupported-format gates remain: this is not authority to adopt an open/cut/ambiguous record, choose a default record, or combine several records into one output.
+**Rationale**: UC-17, CLI command table and L1-CLI-004 require extracting TMATS bytes, not rendering a typed view. ADR-0002/0003 preserve source bytes; ADR-0010 leaves destination acquisition to the CLI/caller; ADR-0036 supplies borrowed DATA. Chapter 11 (106-24R1) section 11.2.7.2/Figure 11-34 p. 11-50 places a CSDW before each fragment's text. ADR-0037 allows raw extraction despite the listed integrity, cut, ambiguity, encoding and invalid-value findings, with no always-refuse finding class. This does not adopt a qualified setup for semantic/governing use, choose a default record, combine records or invent bytes/packet extents not supplied by core. Owner-signed INT-031's general semantic-access gate is not silently approved by this extraction-only owner direction.
 
 **Verification Method**: Test (T)
 
@@ -1023,9 +1028,9 @@ See the [scope and remaining-work audit](research/2026-11-26-extraction-requirem
 
 **Parent**: L1-CLI-007
 
-**Statement**: For output destinations the tool opens itself, CLI output acquisition and delivery SHALL preserve every input file unchanged, including when a requested destination identifies that same file through a different path; input-alias rejection SHALL occur before destructive destination access, and output failure SHALL remain distinguishable from successful delivery without modifying or repairing the input.
+**Statement**: Tool-opened output SHALL reject established input aliases before destructive access and preserve inputs through acquisition/delivery. For extract, an existing unrelated regular file SHALL be refused unless --force; unproven regular-file identity SHALL also be refused unless --force, while stdout/pipes are allowed. Authorized regular-file writes SHALL use the checked non-truncating opened handle, never temp-file+rename; failures SHALL remain distinguishable from successful delivery.
 
-**Rationale**: L1-CLI-007 prohibits modifying input files and requires changed results in a new output. ADR-0010 assigns filesystem safety to CLI/caller glue, not library serialization. Path strings alone do not establish distinct files. This obligation does not select a general existing-destination overwrite policy, atomic replacement, durability guarantee or new rendering/exit mapping; those require separate reviewed definitions where applicable. Shell redirection outside the tool is out of scope for its file-acquisition guarantee.
+**Rationale**: L1-CLI-007 prohibits modifying input files and requires changed results in a new output. ADR-0010 assigns filesystem safety to CLI/caller glue, not library serialization. Path strings alone do not establish distinct files. ADR-0037 selects these policies for extract only, not every output command. --force removes the unrelated-file/proof refusal, never authorizes a known input alias or claims that an unknown identity was proved distinct. No temp-file replacement, durability guarantee or rendering/exit mapping is added. Shell redirection outside the tool is out of scope for its file-acquisition guarantee.
 
 **Verification Method**: Test (T)
 
@@ -1091,3 +1096,494 @@ and actual run artifacts have been inspected.
 **Rationale**: L1-REL-004 and RELEASING.md already require all three platforms. Host-callable CLI behavior, borrowed spans and input-preserving file acquisition require their actual applicable tests once implemented; unsupported platform fixture capabilities must remain explicit rather than appear as passes. This does not authorize platform exceptions or choose new filesystem/output policy. Heavy checks remain in bounded GitHub CI, with light local checks only.
 
 **Verification Method**: Inspection (I)
+
+## Library guard-rail and coverage evidence (family 2, batch 28)
+
+These derive L1-ROB-002/003 only. ADR-0020 remains proposed as a whole;
+this slice does not approve its other architecture choices, introduce
+numeric resource budgets or resolve held #59's std decision. See the
+[source and acceptance note](research/2026-11-27-robustness-evidence-requirements.md).
+Planned checks provide no current Evidence for the redesigned library.
+
+#### L2-ROB-004
+
+**Parent**: L1-ROB-002
+
+**Statement**: From the first redesigned library code, compiler-aware Clippy enforcement SHALL reject the prohibited library operations listed in L1-ROB-002 outside test-only code, with effective package/workspace lint configuration and CI failure verified rather than relying on text searches or a lint table that is not applied to the library.
+
+**Rationale**: L1-ROB-002 explicitly names the operations/lints and requires build failure; L1-IO-001 prohibits process printing in library code. Its planned workspace lint table and scoped test/CLI-main exceptions must not waive enforcement on production library paths. This derives those existing obligations without adopting the full proposed ADR-0020 or claiming lint success proves absence of every panic, abort or loop.
+
+**Verification Method**: Inspection (I)
+
+#### L2-ROB-005
+
+**Parent**: L1-ROB-003
+
+**Statement**: From the first redesigned library code, CI SHALL measure the library's line coverage from the project's tests and enforce the existing minimum of 80%, identifying the exact source head, measured library scope, features and measurement command; missing/failed measurement or CLI-only coverage SHALL NOT be accepted as satisfying that library floor.
+
+**Rationale**: L1-ROB-003 already specifies 80% measured in CI and plans cargo llvm-cov with --fail-under-lines 80. The threshold is not a standards-conformance or requirements-coverage metric. Scope/configuration and omitted coverage must remain visible; new implementation cannot inherit a pass from prototype tests or raise the score by silently removing untested library code. No new threshold, test framework, dependency or CI job is added in this docs batch.
+
+**Verification Method**: Inspection (I)
+
+
+## Performance measurement acceptance (family 2, batch 29)
+
+These derive L1-PERF-001, not approval of the whole proposed single-pass
+scanner in ADR-0021 or a guessed throughput budget. The [measurement and
+source note](research/2026-11-27-performance-evidence-requirements.md) separates
+benchmark scope, correctness, reference limitations and permitted compute.
+No benchmark is run or new dependency selected in this docs batch. Retaining
+the prototype Criterion dev dependency requires owner approval.
+**PENDING OWNER**: whether the tmats host must also have zero per-packet
+allocation in steady state for non-setup packets (core L2-HOT-008 analogy);
+this slice does not approve that host allocation threshold.
+
+#### L2-PERF-001
+
+**Parent**: L1-PERF-001
+
+**Statement**: The project SHALL measure redesigned TMATS text reading and finding every setup record in a recording as distinct, explicitly scoped workloads on synthesized and sample data, checking the consumed source/record inventory independently before accepting timing evidence; recording traversal SHALL use the sole irig106-core reader and ADR-0036 borrowed-span assembly without coalescing or extra payload copies, with allocation counts/payload-copy bytes reported from matching untimed instrumentation rather than imposing a new numeric budget.
+
+**Rationale**: L1-PERF-001 already requires both workloads. ADR-0036 owns packet finding/trust in core; ADR-0025 distinguishes packet fragments from setup records. A fast result that scans only the first packet, drops source bytes or treats every fragment as a separate record does not measure the required work. Sample access/compute must follow TEST-DATA's local-use policy and owner compute authorization; missing sample evidence remains missing, not inferred from synthetic CI.
+
+**Verification Method**: Inspection (I)
+
+#### L2-PERF-002
+
+**Parent**: L1-PERF-001
+
+**Statement**: Performance evidence SHALL identify the exact source/build, input identity, workload boundary, consumed byte/record quantities, timing units, environment and bounded run plan, and SHALL compare idmptmat on the same files only with explicit differences in supported work; failed, timed-out or partial reference runs SHALL NOT be reported as equivalent full-workload speed comparisons, and numeric acceptance budgets SHALL remain undecided until measured evidence is reviewed.
+
+**Rationale**: L1-PERF-001 requires same-file comparison and defers a numeric budget until the first measurement. TEST-DATA documents reference-tool defects including first-packet-only reading and nontermination. ADR-0021 remains proposed; its scanner algorithm is not selected by this measurement contract. CI-heavy/light-local compute rules and no-new-dependency-without-owner-approval remain in force.
+
+**Verification Method**: Inspection (I)
+
+
+## X-extension association (family 2, batch 30)
+
+This is the X portion of L1-EXT-003; V grouping remains to derive, so this
+child does not complete that parent. ADR-0008/0026 and section 9.5.14 supply
+the baseline. The [source/gap note](research/2026-11-27-x-association-requirements.md)
+records the earlier options. Joey signed INT-061/062 A on 2026-11-28:
+unindexed-original mapping is cannot-evaluate, and decomposition uses only
+reviewed registry vocabulary. Private/non-registry originals remain unavailable;
+the document-defined hybrid is not selected. Remaining independent checks,
+source freshness, development analysis/review and tests still gate implementation.
+The catalog is 106-24R1 until deltas exist, with INT-044-compatible labels
+kept separate from the document declaration. Older renamed originals are
+unavailable rather than silently aliased. Registry-only A settles vocabulary scope; private V names cannot supply it. No edit/renumber implementation or public query-language decision
+is selected here.
+
+#### L2-EXT-001
+
+**Parent**: L1-EXT-003
+
+**Statement**: Given X-name decomposition by matching reviewed registry code names, made unambiguous by EXTENSION_CODE uniqueness, and original-code index metadata (under owner-signed INT-062 A), the library SHALL associate an X item with every source occurrence matching its original group/code path, occurrence and carried leading indices in the same document, using ASCII case comparison and INT-038 identity; it SHALL retain resolved/unresolved/ambiguous candidate evidence without selecting a duplicate winner or inferring association from extension values.
+
+**Rationale**: 106-24R1 Chapter 9 section 9.5.14 p. 9-172 defines ORIGCODE, occurrence/leading-index agreement and extension-private remaining indices. ADR-0008 makes X first-class, ADR-0026 lists link candidates without arbitrary selection, and approved INT-038 explicitly applies canonical identity to X/original indices. Association is structural attachment, not evidence that an original value or setup is valid, complete or governing. Section 9.5.14's matching-existing-code and EXTENSION_CODE uniqueness sentences supply decomposition, not a missing grammar convention. Unknown registry metadata/arity/uniqueness must remain unavailable rather than be guessed; INT-062 A is owner-signed; its remaining independent rule check and development gates remain.
+
+**Verification Method**: Test (T)
+
+#### L2-EXT-002
+
+**Parent**: L1-EXT-003
+
+**Statement**: Extension association SHALL preserve all X/original bytes, identities, locations, record qualifications and unknown extension content independently of decoding support, without creating a missing original, editing indices or extending parent counters; missing evidence/unsupported mappings SHALL remain distinguishable from an established no-target result, and no unindexed-original mapping SHALL bypass the INT-061 review/development gates.
+
+**Rationale**: Section 9.5.14 p. 9-172 requires association preservation even when extension meaning is unknown and says X occurrence values match originals rather than create new ones; ADR-0002/0003 retain raw source. INT-040 excludes X from D membership and leaves extension-private indices unclassified. The source's no-index gap for G\PN (Table 9-2 PROGRAM NAME p. 9-10) is owner-decided cannot-evaluate under INT-061 A, not a fabricated zero/one occurrence. Renumber edits remain their later transaction scope.
+
+**Verification Method**: Test (T)
+
+
+## V-group source/vendor context (family 2, batch 31)
+
+This derives the V portion of L1-EXT-003 alongside the X children, without
+claiming the parent implemented or approving pending interpretation choices.
+The [source/follow-up note](research/2026-11-27-v-group-and-int062-followup.md)
+records section 9.5.13 and the INT-062 amendments. Joey signed INT-063 A
+on 2026-11-28; remaining independent check/development evidence still gate implementation; raw inventory must never
+be mistaken for confirmed vendor attribution or a private-value decoder.
+
+#### L2-EXT-003
+
+**Parent**: L1-EXT-003
+
+**Statement**: The library SHALL retain V occurrence contexts, local V-x\ID and V-x\VN candidates and structurally readable V-x\acr\attribute-string items, grouping by explicit data-source context and observed vendor acronym while preserving every occurrence, raw suffix/value and location; it SHALL keep incomplete/unavailable source or vendor attribution explicit rather than drop, merge or reassign items to manufacture a complete group.
+
+**Rationale**: 106-24R1 Ch9 section 9.5.13 p. 9-171 defines V-x\ID, V-x\VN and the three-character acronym/private attribute-string form. ADR-0008 accepts grouping by source/vendor; ADR-0002/0003 retain raw items. INT-038 supplies occurrence identity and INT-039 governs known scalar multiplicity. Structural namespaces and evaluated header context remain separate; missing/conflicting header-versus-path policy is owner-signed INT-063 A: only one usable VN agreeing with the path confirms attribution.
+
+**Verification Method**: Test (T)
+
+#### L2-EXT-004
+
+**Parent**: L1-EXT-003
+
+**Statement**: V source/vendor context SHALL stay within its document and V occurrence, retain header/source-link multiplicity and record qualifications, and leave private attribute-string/value semantics opaque without a reviewed definition; source-context matching SHALL use the declared textual Data Source ID namespace rather than occurrence-number equality or numeric field/index normalization, and owner-signed INT-063 A SHALL withhold confirmed attribution unless one usable VN agrees with the path acronym.
+
+**Rationale**: Section 9.5.13 p. 9-171 ties V ID to General Information; Table 9-2 DATA SOURCE ID G\DSI-n p. 9-11 names textual sources and links to V-x\ID. ADR-0026 keeps namespaces/cardinality explicit. This supports context, not clock associations, auto-repair, vendor plug-ins, counter inference or the later user-registry overlay. Existing availability, record access and report-format gates remain unchanged.
+
+**Verification Method**: Test (T)
+
+
+## Dependency and release-artifact evidence (family 2, batch 32)
+
+These derive existing L1-REL-005/006 and RELEASING.md obligations without
+changing deny.toml, workflows, credentials, settings or publication policy.
+The [source/acceptance note](research/2026-11-27-release-evidence-and-vn-followup.md)
+records the scoped inspection and INT-063 definition amendment. REL-002–004
+and L3-REL-002–008 remain reserved by held #59, not silently reused here.
+No new Evidence is claimed until actual redesigned graph/artifact checks.
+
+#### L2-REL-005
+
+**Parent**: L1-REL-005
+
+**Statement**: Dependency acceptance SHALL inspect and check the actual resolved redesigned library/CLI dependency graph against the repository's existing deny.toml policy, retaining graph/configuration/source/advisory evidence and every listed exception's rationale; a policy table, old prototype pass or unrelated feature graph SHALL NOT substitute for a completed applicable check or approve a new dependency/exception.
+
+**Rationale**: L1-REL-005 already requires no known vulnerable/unmaintained/yanked dependencies, permitted licences/sources and documented exceptions. deny.toml covers all features, distinguishes warnings from denials and lists prototype-only XML exceptions to remove with that code. The accepted internal exact-version workspace path dependency is not an implicit allowance for arbitrary external path/git sources. This slice changes none of those rules and grants no Criterion/trybuild/ui_test or other dependency approval.
+
+**Verification Method**: Inspection (I)
+
+#### L2-REL-006
+
+**Parent**: L1-REL-006
+
+**Statement**: Release-artifact acceptance SHALL bind every distributed .crate, binary archive and required SBOM to the actual released bytes and reviewed source/version through one SHA256SUMS and one builder-signed provenance bundle, with a documented verification path; missing, mismatched or unverifiable artifacts SHALL remain unsatisfied rather than inferred from a green build, crates.io upload or release note.
+
+**Rationale**: L1-REL-006 remains the primary binary-evidence parent; L1-REL-001/005 and the org TRUSTED-PUBLISHING.md binary variant also motivate crate-package evidence within this child, without a new L1. Owner direction of 2026-11-22 supersedes the old separate release.yml/cargo-dist plan. The unified trusted-publishing.yml uses a self-attesting reusable builder, non-compiling TP publication with package comparison, and a verified draft-then-publish GitHub release. RELEASING.md records that protocol. These are future evidence contracts, not authorization to run publishing workflows, access credentials/settings or change the coordinator/owner-only bootstrap exception.
+
+**Verification Method**: Inspection (I)
+
+
+## Edition-independent reading (family 2, batch 33)
+
+This completes the structural derivation of L1-EDN-001, not the later
+historical registry/delta work or implementation of every supported edition.
+ADR-0016's parsing decision survives ADR-0028. Approved INT-035–039 supply
+framing, character projection, canonical index identity and known-scalar
+multiplicity without using an edition declaration to discard source.
+The [scope/source note](research/2026-11-27-edition-independent-reading.md)
+separates these mechanical obligations from edition-dependent semantics.
+No owner decision blocks this derivation; outstanding interpretation,
+record-access, historical-layout and report-format gates remain unchanged.
+
+#### L2-EDN-003
+
+**Parent**: L1-EDN-001
+
+**Statement**: The text reader SHALL retain and frame supplied TMATS bytes independently of the declared or selected edition, accepting missing, unknown, older or future edition declarations without choosing an edition-specific scanner or discarding attributes unknown to the available registry; it SHALL preserve the same source and structural item boundaries when only caller edition metadata changes.
+
+**Rationale**: ADR-0016 requires parsing every edition through one syntax path; ADR-0028 separates declaration/basis selection from reading. Baseline 106-24R1 Chapter 9 sections 9.4.1/9.4.2 p. 9-2 define physical/logical text framing; approved INT-035–038 define the current reader policies. This is a lossless text-reading contract, not a claim that a modern definition, default or range applies to historical/future input. Malformed text still yields retained bytes and scanner findings, not a fabricated conforming document.
+
+**Verification Method**: Test (T)
+
+#### L2-EDN-004
+
+**Parent**: L1-EDN-001
+
+**Statement**: Edition-independent reading SHALL expose retained raw items even when edition-specific meanings are unavailable, keeping structural reading, definition-dependent interpretation and record qualification separate; successful reading SHALL NOT assert validation against an unsupported edition, authorize incomplete/ambiguous setup use or silently apply baseline aliases, ranges or defaults.
+
+**Rationale**: ADR-0002/0003 preserve source, ADR-0016 supplies the single reader, and ADR-0028 requires labelled semantics. L1-EDN-002/005 and their existing children retain declaration/basis policy. Full historical semantic coverage and generated deltas stay in their planned releases. This child does not bypass pending INT-014–017 or general record-access decisions, introduce XML support, or broaden the bounded time view to general validation.
+
+**Verification Method**: Test (T)
+
+
+## Complete-record enumeration (family 2, batch 34)
+
+These derive L1-CLI-003's all-record/file-order obligation, not a report
+format, public numbering scheme or governing-setup timeline. The adapter
+uses core; the TMATS assembler supplies candidate identities, exact fragment
+membership and evaluated final qualifications under its reviewed rules.
+The [scope and fixture note](research/2026-11-27-record-enumeration-requirements.md)
+distinguishes enumeration from those upstream classifications and remaining
+eligibility/governance decisions. No new owner interpretation is selected.
+
+#### L2-CLI-010
+
+**Parent**: L1-CLI-003
+
+**Statement**: Given the assembly results for the supplied recording extent, the CLI's command computation SHALL enumerate every finalized Complete setup record exactly once in file order, preserving each record's own source position, fragment membership, assembled-text extent and evaluated qualifications; it SHALL neither stop after the first record nor report each fragment as a separate record, merge separate records, or deduplicate records with equal text.
+
+**Rationale**: L1-CLI-003, CLI.md's every-record contract and defect D2 require all records rather than only the first packet. Chapter 11 section 11.2.7.2 p. 11-50 (106-24R1) allows a setup record to span several packets; ADR-0025/0036 place assembly in tmats and the sole packet reader in core. File order is the recording order of each record's first contributing fragment, not completion order, channel sorting or timestamp order. This project ordering rule does not infer a governing setup or adopt an incomplete candidate.
+
+**Verification Method**: Test (T)
+
+#### L2-CLI-011
+
+**Parent**: L1-CLI-003
+
+**Statement**: Record enumeration SHALL retain the source/candidate identities and upstream findings needed to distinguish Complete records from incomplete, ambiguous, provisional, unsupported or failed candidates; it SHALL preserve qualifications and observable traversal failures without manufacturing records, silently treating a failed scan as a complete inventory or making enumeration confer command eligibility or governing authority.
+
+**Rationale**: INT-011/039/045/048 and existing assembly/core-boundary requirements determine input evidence, not this enumerator. A Complete classification is not checksum success, valid metadata, a publishable provisional result or authority to extract/use a setup. Final classification may revise an earlier time seal; this slice consumes evaluated outcomes rather than deciding provisional publication, access, quarantine or recovery. Presentation and command-specific eligibility remain owner-gated; general access to incomplete/ambiguous records is explicitly gated by [owner-signed INT-031](INTERPRETATIONS.md#int-031), not authorized by enumeration. ADR-0037 separately allows raw extract under findings without approving semantic/governing use.
+
+**Verification Method**: Test (T)
+
+
+## Checksum command computation (family 2, batch 35)
+
+These derive L1-CLI-005 for explicitly selected, eligible document/revision
+inputs; no public selection syntax, multi-record default or report rendering
+is chosen. The [source/owner brief](research/2026-11-27-checksum-commands-and-owner-questions.md)
+records the boundary and the requested INT-031/file-order summaries.
+Access to incomplete/ambiguous records is gated by owner-signed INT-031;
+no command below implicitly approves its labelled ambiguous-split option.
+
+#### L2-CLI-012
+
+**Parent**: L1-CLI-005
+
+**Statement**: Checksum and verification command computation SHALL delegate to the corresponding library operations for the explicitly supplied eligible document/revision, preserving the authoritative byte domain, operation-specific results and located findings; flex SHALL remain a separate explicitly requested compatibility operation, never substituted for G\SHA or presented as standard verification.
+
+**Rationale**: CLI.md requires commands as thin library layers. L1-SUM-001/002/003 and ADR-0014 define SHA and non-standard flex as different operations; approved INT-018–021/043 define SHA recognition, refusal and value behavior. The command must not implement another digest-domain recognizer, collapse verify-malformed into compute-refused, repair input to obtain a match, or upgrade field/assembly qualifications. The exact flex algorithm's remaining derivation and independent compatibility fixtures are still required.
+
+**Verification Method**: Test (T)
+
+#### L2-CLI-013
+
+**Parent**: L1-CLI-005
+
+**Statement**: Stamp command computation SHALL use the library's validated final-byte stamp transaction for its supplied document/revision and permitted explicit edits, preserving refusals, verification failure and all findings; only a successfully verified transaction SHALL produce a successful stamped-result value, with the original input unchanged and output delivery subject to the separate safe-destination contract.
+
+**Rationale**: L1-SUM-004, ADR-0029 and L2-SUM-003/L2-WRT-002 require final-byte hashing and re-read verification. F1 permits explicit exact-item duplicate removal before stamping, not a winner selected by stamp. L1-CLI-007 and the extraction/output contracts prevent in-place input changes. This derives command computation, not permission to extend ADR-0037's extract-only destination/finding policy to stamp or to select its destination grammar, output layout or exit code.
+
+**Verification Method**: Test (T)
+
+
+## Flex compatibility source/acceptance (family 2, batch 36)
+
+These derive L1-SUM-003's accepted ADR-0014 compatibility decision, not an
+IRIG algorithm or public output format. The [source/gap note](research/2026-11-27-flex-compatibility-acceptance.md)
+uses the repository's existing reference-tool investigation. No external
+repository or reference executable is accessed in this batch. Exact reference
+source qualification and complete arithmetic/byte-rule derivation remain
+implementation gates; these children do not claim that work complete.
+The [ROADMAP flex gate](ROADMAP.md#remaining-flex-source-qualification-and-acceptance)
+also requires the owner's reference/revision choice (bbaggerman/irig106lib
+versus the atac fork). Coordinator constraints: bounded GitHub-CI-only
+reference runs, synthetic inputs, no new project dependency; retain output
+values/revision/hashes, never copy reference source into this repository.
+
+#### L2-SUM-004
+
+**Parent**: L1-SUM-003
+
+**Statement**: Flex computation SHALL reproduce the accepted irig106lib compatibility behavior bit for bit for the explicitly supplied source/options, including its documented exclusion quirk, without replacing its reference-defined preparation, selection or arithmetic with the standard SHA domain or the library's semantic projections; it SHALL preserve the original source and keep its non-standard identity distinct from G\SHA.
+
+**Rationale**: ADR-0014 deliberately retains compatibility quirks, including D7. The 2026-09-25 reference-tool investigation describes uppercase-line Fletcher-32 summation, default exclusions and the MPOC4/DPOC4 slip. Those observations motivate the requirements; they do not supply a pinned current reference, fully specified arithmetic or new source inspection. L1-SUM-003 and UC-16 require compatibility, not repairing that algorithm or claiming it is an IRIG checksum.
+
+**Verification Method**: Test (T)
+
+#### L2-SUM-005
+
+**Parent**: L1-SUM-003
+
+**Statement**: Flex compatibility acceptance SHALL require a reproducibly identified reference source/environment and independently fixed byte/options/result vectors, including exclusions, arithmetic/byte boundaries and the retained D7 quirk; implementation SHALL remain unready until the reference-defined behavior is analyzed explicitly and unresolved or undefined cases are raised rather than silently assigned SHA, parser or normalization semantics.
+
+**Rationale**: ADR-0018 makes reference tools compatibility oracles, not authorities for the standard. Bit-for-bit compatibility cannot be established by two calls to the new implementation, a historical prose summary, one wrapper mock or an unpinned moving branch. No new runtime/dev dependency, source vendoring, install or reference execution is authorized by these planned acceptance obligations. Owner-signed INT-031 access and existing resource/report-format gates stay in force.
+
+**Verification Method**: Test (T)
+
+
+## Suspect colon-for-semicolon suggestion (family 2, batch 37)
+
+These derive the existing L1-READ-007 diagnostic, not a new delimiter or
+repair policy. INT-035 remains semicolon-only framing. ADR-0007/0026 and
+ROADMAP S1 keep the heuristic suspect pending real-data confirmation.
+The [source/boundary note](research/2026-11-27-suspect-terminator-requirements.md)
+distinguishes an internal located suggestion from rendered findings and
+from the separate planned line-break detector. No new interpretation is made.
+
+#### L2-READ-014
+
+**Parent**: L1-READ-007
+
+**Statement**: Within an already framed value, the reader SHALL detect a colon followed after optional blanks by a positively recognized complete code name and its own colon, and produce the existing suspect warning with a suggested replacement of that first colon by a semicolon, retaining the original value/item boundaries and every byte; the candidate SHALL remain evidence of a possible typo, never a newly parsed attribute or proof of the writer's intent.
+
+**Rationale**: L1-READ-007 derives the heuristic from 106-24R1 Appendix 9-C p. C-8's colon-ended code-name excerpt. Chapter 9 section 9.4.2 p. 9-2 defines the actual colon/semicolon framing; INT-035 forbids repairing it implicitly. Approved name/case/index rules supply recognition, not a guess based on value punctuation alone. Blank/name interpretation must use its existing reviewed rules; recognizing the lookahead does not trim or project the stored value. The accepted warning remains suspect under S1, not evidence that all similarly written text is erroneous.
+
+**Verification Method**: Test (T)
+
+#### L2-READ-015
+
+**Parent**: L1-READ-007
+
+**Statement**: Suspect-terminator verification SHALL independently specify the candidate predicate, raw location and one-byte suggested change, preserving unrelated findings and demonstrating no implicit splitting/editing; negative and intentional-lookalike cases SHALL distinguish heuristic evidence from actual malformed framing, and the S1 real-recording confirmation SHALL remain outstanding until its separately authorized observations are recorded.
+
+**Rationale**: ADR-0002/0007 preserve user data. The Appendix 9-C pattern supplies targeted regression evidence, not proof of all values' intent or general conformance of example text. Recognition coverage must be explicit where reviewed name grammar is unavailable. Existing bounded-resource/source-mapping contracts apply; the detector selects no report layout, public diagnostic spelling beyond L1's existing wording, apply-all command or new parser recovery rule.
+
+**Verification Method**: Test (T)
+
+
+## Session format and configuration-change evidence (family 2, batch 38)
+
+These partially derive L1-CH10-005 with supplied decoded CSDW and explicit
+session/provenance evidence; they do not implement packet routing or a
+configuration timeline. The [source/gap note](research/2026-11-27-session-evidence-requirements.md)
+retains F7 event identification/prior-ordering and per-edition source gates.
+No new interpretation is chosen; INT-030's indeterminate-until-identified
+policy is approved, while its evidence and development gates remain.
+
+#### L2-CH10-008
+
+**Parent**: L1-CH10-005
+
+**Statement**: Within an explicitly supplied session scope, the library SHALL retain setup FRMT observations with source locations and qualifications; formal coexistence-finding eligibility SHALL remain gated on the pending owner scope decision, with Complete-record-only Option A recommended and broader non-Complete-candidate Option B unapproved. Unsupported XML SHALL not be parsed as ASCII, and unavailable scope/format evidence SHALL not become a clean no-mixture conclusion.
+
+**Rationale**: 106-24R1 Chapter 11 section 11.2.7.2 Figure 11-34 p. 11-50 prohibits both formats in the same session. Format observation is CSDW evidence, not XML-body interpretation, successful assembly or governing use. The source defines a recording session as .RECORD to .STOP; existing INT-045 caller assertions remain labelled provenance, not inferred sessions from gaps/time/channel changes. This child approves no guessed boundary or per-fragment FRMT conflict summary. A whole recording is one session only under explicit labelled caller assertion or actual supplied session evidence, never by inference. The standard's format prohibition does not silently broaden L1's Complete-record scope; A retains non-Complete FRMT as qualified evidence without the formal finding, B broadens it and needs owner approval.
+
+**Verification Method**: Test (T)
+
+#### L2-CH10-009
+
+**Parent**: L1-CH10-005
+
+**Statement**: For a supplied established configuration-change trigger, the library SHALL preserve record/fragment SRCC observations, session context and candidate-event provenance while reporting the required-event check indeterminate until verified event identity and its separately reviewed prior-ordering scope are available; it SHALL never choose a nearby generic event as proof, infer agreement among fragment bits or make the uncertainty imply a positive/negative event-presence verdict.
+
+**Rationale**: Chapter 11 section 11.2.7.2 pp. 11-50–51 requires a configuration-change event before the new setup. Approved INT-030/F7 requires verified identification and indeterminate meanwhile; its analysis notes keep first-record SRCC=1, fragment disagreement and prior-ordering open. Core owns packet admission and edition-dependent channel rules under ADR-0036; this does not derive or duplicate a channel-0 threshold in tmats. The archived per-edition header text is re-verified in the batch-39 source note. L1-CH10-005 wording change remains PENDING OWNER: recommended A aligns the setup-channel obligation with the verified 106-11 onset while consuming core's evidence; B defers the wording change and leaves the acceptance gap explicit. Neither is approved here; the normative L1 text is unchanged.
+
+**Verification Method**: Test (T)
+
+
+## Host-supplied argument parsing (family 2, batch 39)
+
+These derive accepted ADR-0013's hand-rolled, table-driven mechanism and
+L1-CLI-009's reusable host runner, not new command syntax or report formats.
+The [contract/source note](research/2026-11-27-argument-contract-and-session-scope.md)
+records reviewed-table and owner gates. No argument-parsing dependency,
+option-default policy or output renderer is selected by this batch.
+
+#### L2-CLI-014
+
+**Parent**: L1-CLI-009
+
+**Statement**: The reusable runner SHALL parse only its caller-supplied argument sequence through a hand-rolled, table-driven parser using the applicable reviewed command/option grammar, returning an internal command request or distinguishable usage failure without acquiring process arguments, selecting files, performing command I/O or terminating the host; it SHALL not infer an unrecognized command or repair a rejected argument into an accepted request.
+
+**Rationale**: ADR-0013 and CLAUDE.md require a hand-rolled parser and tests for every flag/value/usage error; ADR-0034 W3 shares computation between the host and thin binary. This isolates parsing from existing routing, record selection, source acquisition and rendering. It approves no unreviewed duplicate-flag, abbreviation, -- separator, stdin, non-Unicode-token or numeric option grammar.
+
+**Verification Method**: Test (T)
+
+#### L2-CLI-015
+
+**Parent**: L1-CLI-009
+
+**Statement**: Parser acceptance SHALL cover every implemented reviewed command/option/value rule and usage failure with independently specified supplied-token cases, and preserve command/request/usage distinctions through both host-runner and individual-command integration without a second parser, environment-derived defaults or side effects on rejected requests.
+
+**Rationale**: ADR-0013's per-flag tests and W3's shared runner make parsing behavior observable to an orchestrating host. Mechanism tests against a synthetic table do not prove full product grammar coverage; unsupported or held table rules remain explicit readiness gaps. Public argument forms, numeric CLI syntax, record defaults, output/exit policy and rendering still require their own reviewed definitions where pending.
+
+**Verification Method**: Test (T)
+
+
+## Bounded time-view lookup states (family 2, batch 40)
+
+This supplies the missing primary derivation of L1-VIEW-006's owner-directed
+0.1 subset identified by the coverage audit. General link resolution remains
+0.2. Exact-name/multiplicity and effective-field children under other parents
+remain unchanged; these children compose their already reviewed behavior.
+The [contract note](research/2026-11-27-bounded-lookup-state-requirements.md)
+distinguishes lookup identity, field value and clock association.
+
+#### L2-VIEW-016
+
+**Parent**: L1-VIEW-006
+
+**Statement**: For an available definition-bound attribute lookup in a supplied time-view document/revision and exact recorder/entry scope, the library SHALL retain every matching canonical-key occurrence and report resolved for one identified candidate, unresolved for zero, or ambiguous for several, without selecting by value validity, source order or equality; unavailable lookup prerequisites SHALL remain observable rather than becoming fabricated zero-candidate success.
+
+**Rationale**: The 2026-11-21 owner contract brings bounded time-view lookup states forward from L1-VIEW-006; ADR-0026 supplies no arbitrary winner, INT-036/038 key projection/identity and INT-039 preserved duplicates. This is attribute-candidate cardinality, not a general TMATS link resolver or data-to-time-channel evidence. The definition determines actual recorder/entry arity; a TK1 value does not replace the entry index. Empty raw collections alone do not establish unrelated links, physical absence or default applicability.
+
+**Verification Method**: Test (T)
+
+#### L2-VIEW-017
+
+**Parent**: L1-VIEW-006
+
+**Statement**: Bounded lookup answers SHALL keep candidate cardinality separate from Explicit/Defaulted/Missing/Invalid/Ambiguous field interpretation, availability limitations, original source findings and record qualification; successful identity lookup SHALL not validate a value, erase a duplicate, fabricate a default occurrence, establish a clock association or authorize access/governing use.
+
+**Rationale**: RELEASE-0.1 explicitly separates lookup/link states from effective values and association_unestablished/conflicting/evidenced. INT-039/041/048 and the existing time-view/caller-assumption children retain those boundaries. Owner-signed INT-031 still gates general qualified-record access; ADR-0037's raw extract permission is not typed time-view permission. No new selection, interpretation, public enum spelling or rendered schema is chosen.
+
+**Verification Method**: Test (T)
+
+
+## Explicit normalization transforms (family 2, batch 41)
+
+These extend L2-WRT-004's opt-in boundary. Joey signed INT-064 A+D,
+INT-065 A and INT-066 A on 2026-11-28; independent pre-checks concurred.
+Source freshness, written analysis/review and executable tests still gate
+implementation of ordering, newline scope and counter recomputation. The [source/options note](research/2026-11-27-normalization-policy-drafts.md)
+keeps the full 0.1 library obligation distinct from the later CLI clean-up.
+
+#### L2-WRT-005
+
+**Parent**: L1-WRT-002
+
+**Statement**: A normalization request SHALL identify its input document/revision, explicitly requested transform kinds and selected reviewed policy/parameters; execution SHALL remain gated by each policy's approval/readiness, preserve every original source byte in the unchanged input and limit output changes to those authorized transforms, without selecting a missing canonical order/newline/counter rule implicitly.
+
+**Rationale**: ADR-0002/0007 and UC-09 retain exact output unless requested. Ch9 section 9.4.2 allows arbitrary order, so canonical choice is not a standard default. INT-064/065/066 are owner-signed choices, not implemented transforms. This derives bounded order/newline/counter behavior, not arbitrary set/delete/renumber edits or the 0.2+ clean-up command. INT-064 selects validated A plus the named built-in Chapter 9 group order, v1 profile D; A alone supplies no built-in canonical order. No L1 reinterpretation is needed; default replay never invokes normalization.
+
+**Verification Method**: Test (T)
+
+#### L2-WRT-006
+
+**Parent**: L1-WRT-002
+
+**Statement**: Normalization SHALL retain source-item identity/correspondence, multiplicity and untouched content across a validated bounded transform plan, report unavailable/rejected rules rather than emit guessed successful output, and distinguish changed output/checksum evidence from unedited input; successful normalization SHALL NOT imply standard conformance, positive integrity or governing eligibility.
+
+**Rationale**: Unknown/vendor/extension/malformed source is evidence, not disposable formatting. Reordering/line-ending/counter changes can alter the SHA byte domain; existing stamp remains a separate explicit final transaction. Detailed transform bytes depend on the proposed policy choices and reviewed source correspondence, with independent oracles required. No report rendering or general edit API is selected here.
+
+**Verification Method**: Test (T)
+
+
+## Open-run retention and limit evidence (family 2, batch 42)
+
+These refine L2-ROB-003's finite aggregate budget under ADR-0036 without
+choosing numeric defaults, a charging formula or failure atomicity/resume.
+The [contract/gate note](research/2026-11-27-retention-limit-evidence.md)
+separates an observable retained-resource inventory from a policy that turns
+that inventory into charges. Production accounting and API evidence remain
+required; synthetic policy inputs do not certify a hard memory bound.
+
+#### L2-ROB-006
+
+**Parent**: L1-ROB-001
+
+**Statement**: The assembler SHALL retain a testable inventory of its in-scope retained text/owners, span/fragment/run metadata, provenance, retained snapshots and error-path state across all open channels, identifying shared ownership and known size/capacity or unavailable quantity, with core BlockPool credits held by retained DATA spans inside the budget domain; it SHALL bind accounting claims to the declared budget domain and selected reviewed model rather than infer memory use from logical text length or zero payload copies.
+
+**Rationale**: ADR-0036 requires borrowed blocks to stay alive and accounts for retained block owners/span metadata; L3-ROB-004 already covers aggregate text/metadata/snapshots with no hard-bound claim from an incomplete model. Owner identity/reference facts are distinct from the still-open charging/overhead and caller-owned accounting choices. This adds no packet metadata field, numeric limit or allocation threshold. Retained pool credits are not excluded as caller-owned storage. Reader progress while spans retain those credits is PENDING OWNER: a retained-credit cap, an early copy, or typed failure; none is selected here.
+
+**Verification Method**: Test (T)
+
+#### L2-ROB-007
+
+**Parent**: L1-ROB-001
+
+**Statement**: A budget-limited operation SHALL preserve explicit evidence of the configured model/limit, in-scope charged state and what source/ownership was accepted, retained, returned or rejected, using checked arithmetic and bounded failure reporting; operational limitation SHALL not silently discard source, forge a joining/finality event or claim an unchosen atomicity/resume policy.
+
+**Rationale**: L3-ROB-005/006 already require typed failure, observable acceptance and no hidden eviction/finalization or unbounded error buffer. This derives failure evidence and ownership truth independently of whether a future reviewed API rejects an entire operation or reports an accepted prefix. It does not approve partial acceptance, rollback, retry, spill I/O or semantic snapshot use.
+
+**Verification Method**: Test (T)
+
+
+## Show-free command orchestration (family 2, batch 43)
+
+These compose the existing runner, routing, selection and command boundaries
+under L1-CLI-009. They do not derive report/rendered formats, new command
+syntax or public default selection. See the [integration/gate note](research/2026-11-27-show-free-command-orchestration.md).
+
+#### L2-CLI-016
+
+**Parent**: L1-CLI-009
+
+**Statement**: For an explicitly supplied reviewed command request, reusable CLI orchestration SHALL bind acquisition/routing, selected source/document/revision and command computation to that invocation, preserving supplied provenance, qualifications and independent core evidence through the existing command boundary; it SHALL NOT replace an explicit selection with an inferred record, repaired source or remembered caller choice.
+
+**Rationale**: ADR-0010/0034 W3 require thin I/O glue over reusable computation, and ADR-0036 keeps packet traversal in core. Existing routing, enumeration and checksum/extract contracts establish the component rules; this derives their composition rather than another implementation or public request schema. Approved INT-060 requires an explicit choice per query. Reviewed access/selection rules remain prerequisites, not defaults filled by orchestration. Input sources must be explicitly supplied; stdin via a '-' operand or an omitted path remains owner-held, with no stdin fallback. Mounted packet orchestration consumes only the host-routed packets/observations through the existing adapter, not a second dispatch loop. Extract carries the supplied --force/--strict flags into ADR-0037 policy; its destination refusals precede destructive access, and --strict on unlisted findings remains pending.
+
+**Verification Method**: Test (T)
+
+#### L2-CLI-017
+
+**Parent**: L1-CLI-009
+
+**Statement**: Runner and individual-command integration acceptance SHALL compare independently specified command inputs, selected source/revision, semantic results and stage failures for every implemented unheld path, distinguishing computation from delivery and retaining invocation-specific options/evidence without terminating the host or claiming that synthetic adapters qualify real dependency or command behavior.
+
+**Rationale**: W3's two entry paths must share actual command computation, not merely have matching help/version scaffolds. Existing L3-CLI-023/024/025 and L3-CLI-055/056 establish shared entry behavior and failure boundaries. This adds a cross-stage acceptance obligation without selecting renderer bytes, numeric exits, writer retry/rollback or unfinished command policies. Production-source and dependency compatibility evidence remain necessary.
+
+**Verification Method**: Test (T)

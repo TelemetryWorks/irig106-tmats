@@ -788,41 +788,37 @@ the sequence.
 
 ![Which setup record governs which packets](diagrams/configuration-timeline.svg)
 
-*The timeline.* Setup record A occupies the first packets; its description
-governs the time packet and the data that follow. A repeated record with
-SRCC = 0 and the same bytes changes nothing. After the configuration-change
-event packet, record B (SRCC = 1) arrives before the changed data, and its
-description governs from there.
+*Illustrative happy path only.* The timeline assumes independently established
+valid control transitions. SRCC, identity or a Complete label alone cannot
+prove those transitions; approved INT-045–053 qualifications remain binding.
+It is not an implementation algorithm or an approved owner governance rule.
 
-The rule (register entry INT-028, proposed): **a packet is governed by the
-most recent complete setup record before it in file order**, starting with
-the packet after that record's last fragment. A repeated record with the
-same bytes keeps the same description. Packets before the first complete
-setup record have no governing description; section 6 says what happens to
-them. File order is the stream's commit order for a single-file recording;
-a recording written as several simultaneous files (Chapter 10 §10.5.1) is
-left for section 6.
+The rewritten [INT-028 umbrella](INTERPRETATIONS.md#int-028), still PROPOSED,
+composes those approved constraints. The former “latest Complete record
+wins after its last fragment” proposal is withdrawn. Comparison uses the
+CURRENTLY GOVERNING setup or an explicit unresolved target (INT-053), never
+an automatic previous/latest record. Distinguish no governing setup from
+unresolved governing evidence. First-fragment versus completion file order
+and exact takeover boundaries still need owner decisions; multiple
+simultaneous files remain out of scope.
 
 ### 5.3 Kinds of setup record, and what is reported
 
-| Kind | How it is recognised | Reported |
-|------|----------------------|----------|
-| First | the first complete record of the recording | its description; `SRCC = 1` on it is a finding, since there is no previous record to have changed |
-| Repeat | `SRCC = 0` and the same bytes, or the same configuration written differently | nothing new; it shares the governing description (a rewrite is noted as information) |
-| Change | `SRCC = 1` and a changed configuration | its description, and how it differs from the one it replaces |
-| Unannounced change | `SRCC = 0` but a changed configuration | a finding: the configuration changed without the change bit; it governs from here all the same |
-| Announced non-change | `SRCC = 1` but the same bytes or the same configuration | a finding: the change bit is set with nothing changed |
-| Not comparable | malformed attributes, or differences only in attributes the registry does not define | the textual differences; no SRCC finding either way |
+The rewritten [INT-029](INTERPRETATIONS.md#int-029) is a PROPOSED findings-only
+SRCC/comparison table. It uses INT-050 raw identity, SHA-only, layout-only,
+other raw and independently established semantic differences; generic
+case/order folding does not prove semantic equivalence. Incomplete comparison
+or unresolved target stays unresolved. Duplicate ambiguity is not cured by
+equality, and SRCC=0 raw differences do not establish governing takeover.
+Governing effects defer to INT-053 and the pending INT-028 umbrella.
 
-"The same configuration" means the same attributes regardless of order and
-case — Chapter 9 says "Attributes may appear in any order" and "TMATS is not
-case sensitive" (§9.4.2) — so reordering is never mistaken for a change
-(team spec alignment review, 2026-09-27). The attribute-by-attribute
-comparison (L1-WRT-005, UC-11) says what changed and whether anything a
-decoder depends on did — channels, formats, measurements, conversions. The
-kinds and findings are register entry INT-029 (proposed). The session rules already required — ASCII and XML not
-mixed, the event packet before a change, setup records on channel `0x0000`
-from 106-17 — stay as L1-CH10-005 states them.
+The owner must decide the proposed table and the descriptive-only G COM/G OD
+sub-question. No rendered findings, output schema or reset policy is chosen.
+The attribute-level comparison/timeline obligations remain in their planned
+later scope; their existence does not approve these pending policies. Session
+mixture/channel wording and F7 identity/prior evidence retain their existing
+gates. The future-return sketch below must follow those decisions rather
+than silently reinstate the withdrawn latest-Complete/semantic-fold rules.
 
 ### 5.4 What the library returns
 
@@ -1142,9 +1138,11 @@ requirements' own release notes and the contracts of section 4:
   "To be written" (module structure).
 - **`docs/USE-CASES.md`** — UC-18 to UC-20 (8.2); the actors table gains a
   time correlator (`irig106-time`) and a catalogue builder (`irig106-index`).
-- **`docs/CLI.md`** — show the configuration timeline in `tmats show`, and
-  consider a `tmats check` command for the packet check (UC-18), both
-  reusable by `irig106-cli` (ROADMAP W3).
+- **`docs/CLI.md`** — show the configuration timeline in `tmats show`,
+  reusable by `irig106-cli` (ROADMAP W3). Per the [2026-11-27 roadmap
+  direction](ROADMAP.md#small-increments-after-01-owner-direction-2026-11-27),
+  recording/setup cross-check tooling (UC-18) belongs to `irig106-validator`,
+  rather than a `tmats check` command; `tmats validate` checks TMATS text rules.
 - **`docs/ROADMAP.md`** — the release plan changes of 8.4.
 
 ### 8.6 Notes for the other repositories (awaiting the owner's direction)

@@ -263,8 +263,8 @@ and the emitted bytes are re-read and verified. Each edit names its target
 by an item ID from the current revision or by code name; overlapping edits,
 IDs from another revision, ambiguous duplicates, and renumbering onto an
 index in use are rejected with a finding, and the document is unchanged.
-Removing an attribute that X extensions point to is an open question
-(follow-up F2) (team review T7; ADR-0029; `docs/diagrams/edit-transaction.svg`).
+Owner-signed INT-022 (Joey, 2026-11-28) refuses removal while X extensions
+attach; a cascade is a separate explicit edit, still 0.5 scope (F2; ADR-0029).
 
 ### UC-11 Compare two documents — *0.2*
 
@@ -381,9 +381,8 @@ Programmers' Handbook) and the viewing parts of `igDisplayTMATS`:
 | `tmats verify FILE` | Check the embedded `G\SHA`; exit status reflects the result | 0.1 |
 | `tmats stamp FILE -o OUT` | Write a copy with `G\SHA` inserted or updated | 0.1 |
 | `tmats checksum --flex [--include ...] FILE` | irig106.org flex signature (UC-16) | 0.1 |
-| `tmats validate FILE` | Validation report (UC-06/07) | 0.3 |
+| `tmats validate FILE` | TMATS text rules: syntax, required fields, valid values, duplicates and cross-references (UC-06/07); recording or text input by content | 0.2+ increments |
 | `tmats diff A B` | Compare two documents (UC-11) | 0.2 |
-| `tmats check FILE.ch10` | Check every packet against its governing setup record (UC-18) | 0.2 |
 
 Input is detected by content (a Chapter 10 file starts with the packet sync
 pattern; anything else is treated as TMATS text). Unlike `idmptmat`, which
@@ -399,6 +398,13 @@ subcommand). A GUI view belongs in `irig106-studio`, using the same library
 calls.
 
 ### UC-18 Check a recording's packets against its setup records — *0.2*
+
+Per the [2026-11-27 roadmap direction](ROADMAP.md#small-increments-after-01-owner-direction-2026-11-27),
+recording/setup cross-check tooling belongs to `irig106-validator`, not a
+`tmats check` command. The TMATS library support described below remains
+separate from `tmats validate`, which checks TMATS text rules and accepts
+recording or text input through content-based routing. The 0.1 scope stays
+unchanged; this placement does not set a release version for the other tool.
 
 **Actor:** recording reader, validator/QA. **Trigger:** a tool walks a
 recording and wants to know whether its data agree with its configuration.

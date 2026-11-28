@@ -843,7 +843,7 @@ requirements are added. The requirement entries below and the generated
 
 **Verification Method**: Inspection (I)
 
-**Evidence**: `.github/workflows/ci.yml` job `deny` (`EmbarkStudios/cargo-deny-action`, policy `deny.toml`)
+**Prototype configuration (not redesigned acceptance)**: `.github/workflows/ci.yml` job `deny` (`EmbarkStudios/cargo-deny-action`, policy `deny.toml`)
 
 ### L1-REL-006
 

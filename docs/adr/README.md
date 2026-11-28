@@ -42,7 +42,7 @@ status line points to the later record.
 | [0026](0026-counter-scopes-link-namespaces-and-comparison.md) | Counters declare their scope, links their namespace, selector, and cardinality; keys unique per attribute; case-insensitive comparison | accepted; extended by 0027 |
 | [0027](0027-interpretation-register-and-three-source-relationships.md) | An interpretation register; relationships from Links to, Links from, and §9.5.1 b; the H group | accepted; interpretation review superseded by 0033 |
 | [0028](0028-edition-declarations-and-validation-basis.md) | TMATS edition and recording-format version kept apart; validation basis labelled; fallback and compatibility checks named | accepted; RCCVER wording refined by 0032 |
-| [0029](0029-transactional-edits-and-checksum-stamping.md) | Edits are transactions over defined targets; a stamp hashes the final bytes (F1 revised by 0034; F2/F3 open) | accepted; F1 superseded by 0034; F2–F3 open |
+| [0029](0029-transactional-edits-and-checksum-stamping.md) | Edits are transactions over defined targets; a stamp hashes the final bytes (F1 revised by 0034; F2/F3 signed in INT-022/023) | accepted; F1 superseded by 0034; F2–F3 owner-signed 2026-11-28; [record](../research/2026-11-28-interpretation-owner-signoffs.md) |
 | [0030](0030-core-independent-of-tmats.md) | `irig106-core` does not depend on `irig106-tmats`; plain data through `irig106-types`; the packet check lives in `irig106-tmats` | accepted |
 | [0031](0031-setup-record-completeness.md) | A setup record is complete, incomplete, or ambiguous — each with its basis | accepted; interpretation review superseded by 0033 |
 | [0032](0032-rccver-read-literally.md) | RCCVER is read literally; later editions' reuse of a code is a labelled note; the fallback is labelled policy | accepted |
@@ -50,6 +50,7 @@ status line points to the later record.
 | [0034](0034-coordinator-release-foundation-decisions.md) | W1-W3 and F1/F7 release-foundation decisions | coordinator-decided (2026-11-21); W1 superseded by owner decision 0035; others unchanged |
 | [0035](0035-virtual-workspace-with-library-crate-and-cli-app.md) | Virtual root, library under crates/, CLI under apps/, exact shared dependency | accepted (owner, 2026-11-21); supersedes 0034 W1 only |
 | [0036](0036-core-reader-and-borrowed-data-spans.md) | One core reader; unchanged core evidence; borrowed non-contiguous DATA input with zero extra payload copy | accepted owner architecture (2026-11-22); coordinator-decided integration (2026-11-26) |
+| [0037](0037-extract-destination-and-findings-policy.md) | Extract overwrite/identity policy and byte-exact extraction under findings; --force/--strict | accepted (owner, 2026-11-27) |
 
 New records take the next number and use the same front matter
 (`status`, `date`, `decision-makers`).

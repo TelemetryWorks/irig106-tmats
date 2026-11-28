@@ -55,6 +55,39 @@ Packet data-checksum verification remains a separately owner-scheduled core
 feature; pass NotChecked until core provides it. No publishing action is
 authorised/performed by this documentation change.
 
+### Family-2 remaining gates
+
+Use the [post-integration reassessment](research/2026-11-27-family2-unheld-queue-reassessment.md)
+for the remaining owner/source gates and the [owner-item/blocker table](research/2026-11-27-family2-coverage-audit.md#owner-items-and-the-work-they-block)
+for decision routing. The previously identified unheld decomposition queue
+has no further scoped batch; reassess new review findings rather than assume
+complete design from child links. Family two remains incomplete. Do not start
+family three/parser code or claim readiness from prototype CI.
+
+Obtain the existing owner answers before deriving dependent report formats,
+normalization policy, std/build acceptance, flex qualification, X/V semantics,
+record access/governance, resource policy, selection/order or public grammar.
+The reader-progress choice for retained BlockPool credits remains owner-held,
+as does stdin input via '-' or an omitted path; never fall back to stdin.
+Extract's decided destination policies are not new questions, while strict
+on unlisted findings remains pending. Keep the full documented scope.
+
+Verify source freshness and independent interpretation review, actual borrowed
+ownership/dependency APIs and development evidence where required. Component
+contracts or synthetic adapters do not prove real text/recording integration,
+a complete accounting model, qualified flex vectors or release compatibility.
+The maintainer must do the historical Chapter 10/11 CSDW-layout source review,
+approved-INT development analyses and Appendix 9-C vocabulary inventory after
+the reassessment PR merges, one PR per item. The reviewer owns outstanding
+legacy independent checks; the normalization-order recheck CONCUR is
+recorded separately from the still-pending owner choice;
+the coordinator and core maintainer own types/core publication with owner
+go-ahead. The owner decides decision items only; source/analysis work must
+not be left idle awaiting an unrelated policy answer.
+Route answered work as bounded reviewed requirement slices; executable tests
+follow in the appropriate implementation family. The earlier audit's batch
+estimate is historical, not permission to bypass remaining gates.
+
 ### Streaming setup-record follow-ups
 
 Carry the reviewer consequences relayed by the owner after INT-011's
@@ -62,11 +95,29 @@ reconfirmation on 2026-11-23: same-channel completeness boundaries; labelled
 complete EOF records; provisional open-run observations that never stop
 joining; and an explicit aggregate open-run memory budget with a typed limit
 error, never silently dropped runs. INT-034's precise completeness rules and
-INT-028/031 governance still need review. Decide how irig106-time's CLI may
-use and later invalidate provisional snapshots before EOF, plus resource
-accounting/defaults and recovery semantics, before implementation. The
-[batch 15 draft](research/2026-11-23-completeness-contracts-draft.md) presents
-opt-in labelled snapshots versus final-only semantic use; no choice is made.
+INT-028/031 have owner sign-off (Joey, 2026-11-28), with remaining
+independent checks and development/source/test gates. INT-034 permits explicit
+versioned snapshots with invalidation and no automatic governance, plus the
+exact padding/source-availability/modulo-256 rules; padding-only/leading-damage
+precedence remains open. Review resource accounting/defaults separately.
+
+Review the [retention/limit contract](research/2026-11-27-retention-limit-evidence.md)
+and verify actual ownership APIs, capacity evidence and retained reference
+lifetimes before implementing resource accounting. Distinguish a retained-owner
+inventory from its charging policy and an open-run budget from process-wide
+memory. Qualify the full accounting domain, including metadata, snapshots and
+error paths; supplied synthetic charges are not production memory evidence.
+Choose numeric defaults, shared/caller/allocator accounting and failure
+atomicity/recovery separately; typed source-disposition evidence must not
+silently choose those policies or manufacture closure on resource exhaustion.
+
+**PENDING OWNER — reader progress under retained pool credits:** core BlockPool
+credits held by retained DATA spans are inside the budget domain. Decide how
+an open assembler run avoids stalling the reader: cap retained pool credits,
+make an early copy, or return a typed failure. Do not select a policy or
+threshold until the owner answers; the reader-stall fixture remains blocked.
+Core admission refusals and drain reports remain unchanged core evidence,
+separate from the assembler-retention limit, with no double-counting of bytes.
 
 ### Remaining bounded time-view derivations
 
@@ -90,7 +141,73 @@ target/feature binding and completed CI results; prototype checks do not
 verify replacement code. Keep dependency publication/API and semantic-use
 gates separate from compile success.
 
+### Remaining edition-independent reading acceptance
+
+Review the common text-reader boundary independently of historical definition
+coverage: retain every source item and qualification when declaration/basis
+metadata is missing, unknown, older or future. Synthetic syntax fixtures do
+not prove historical conformance. Complete source-freshness/development
+analysis and executable tests before claiming the reader implemented; do not
+use baseline aliases/defaults to fill missing historical definitions.
+Full edition deltas and compatibility validation remain their later scope.
+
+### Remaining dependency and artifact acceptance
+
+Review redesigned dependency-graph evidence against existing deny.toml and
+crate and binary SBOM/checksum/provenance identity/verification before release
+implementation. Resolve published types 0.2/core 0.2 from crates.io without
+external source overrides; CI overrides are not release evidence. Adopt the
+org TRUSTED-PUBLISHING.md binary variant: one trusted-publishing.yml pipeline,
+self-attesting reusable builder, attested package cmp/served-copy checks and
+one draft-then-publish release with verified assets. This supersedes the old
+separate release.yml/cargo-dist plan (owner direction, 2026-11-22). Old
+prototype passes/workflow names are not completed evidence. This planning
+adds no policy exception, credential or publishing authority.
+
+### Remaining performance evidence
+
+Review parser and whole-recording benchmarks with independent expected-work
+inventories before treating timings as evidence. Use core for packet finding,
+keep parser/scan phases and byte domains explicit, and label reference-tool
+partial work, unsupported inputs and timeouts. Plan bounded CI workloads and
+authorized sample comparisons; set numeric budgets only after measurement.
+Recording-scan measurement must use ADR-0036 borrowed-span assembly without
+coalescing or extra payload copies. Report allocation counts and payload-copy
+bytes from paired untimed instrumentation (test allocator plus copy
+accounting), with no new numeric threshold; retain compile-time target
+features as well as Cargo features. Retaining the prototype Criterion dev
+dependency requires owner approval.
+PENDING OWNER: whether the tmats host must also do zero per-packet allocation
+in steady state for non-setup packets, analogous to core L2-HOT-008.
+This does not approve the full proposed ADR-0021 scanner design.
+
+### Remaining library guard-rail and coverage acceptance
+
+Review effective library lint enforcement and the existing 80% line-coverage
+floor before adding their checks with the first redesigned library code.
+Inspect actual package inheritance, failure propagation and measured library
+scope at the reviewed head; prototype CI and overall green status cannot
+substitute. Keep semantic/requirements coverage and owner gates separate.
+This does not approve the remainder of proposed ADR-0020 or resolve #59's
+held std choice.
+
+Compile-fail fixtures for the guard rails use CI-scripted cargo clippy runs
+on fixture crates. Do NOT add trybuild/ui_test or any dev dependency without
+owner approval.
+
 ### Remaining raw lookup and extension derivations
+
+Review the indexed X/original attachment and V source/vendor derivations
+against Joey's 2026-11-28 INT-061/062/063 A sign-offs. Unindexed-original X
+mapping is cannot-evaluate; decomposition uses only reviewed registry code
+names (106-24R1 baseline until deltas exist), not private/document-only names.
+Keep registry basis beside INT-044 labels; no renamed-code alias or heuristic
+split. Vendor attribution needs exactly one usable VN agreeing with the path
+acronym: INT-036 projection, INT-041 availability, three characters under
+section 9.5.13, ASCII case comparison. Otherwise attribution is unconfirmed,
+with all evidence/raw bytes. Complete remaining independent rule checks and
+source/development analysis/review/tests before implementation; unique-path C
+and hybrid vocabulary are not selected.
 
 Owner decisions PENDING before pattern-query implementation: 0.1 pattern
 scope (reviewed registry patterns only is a proposal, not approved), and
@@ -106,21 +223,105 @@ complete V/X grouping/linkage derivations before their implementation.
 
 ### Remaining output derivations
 
-BLOCK implementation pending owner decisions on `-o` overwrite policy,
-fail-closed identity checking for pipes/devices/stdout/network shares, and
-extraction eligibility under integrity/encoding findings. These remain
-unapproved; raw-byte preservation tests do not decide eligibility.
+ADR-0037 records the owner's 2026-11-27 extract policy, removing the three
+#57 owner holds: existing unrelated regular output refuses unless --force;
+write through the non-truncating identity-checked same handle, never
+temp-file+rename. Stdout/pipes are allowed without identity proof; a regular
+file with unproven identity refuses unless --force. Known input aliases
+still refuse. Extract despite findings by default, byte-exact with every
+finding reported, with no default always-refuse class. --strict refuses the
+listed bad-data kinds; whether it refuses on ANY finding remains PENDING OWNER.
+Neither option is approved by the earlier shorthand. Overwrite/identity and
+raw default extraction decisions remain made; this is a narrower clarification.
 
-Review selected-record extraction and input-preserving destination acquisition
-before CLI output implementation, including platform file identity and races.
-Keep byte replay separate from record eligibility/selection and from a general
-existing-destination overwrite or atomicity policy.
+Review executable byte, qualification, identity/race and destination tests
+before implementation; owner policy is not completed evidence. --force and
+--strict spellings are decided; the rest of argument grammar and report
+format remain held. Raw extraction is not semantic or governing use and does
+not settle owner-signed INT-031. Other commands' destination policy is not
+silently approved. No new atomic replacement/durability promise is made.
 
 Review the lossless-replay/caller-supplied-output and explicit-normalization
 boundary before writer implementation. Derive transformation-specific
 canonical ordering, line-ending and counter-rewrite rules with independent
 byte oracles before claiming the full normalization capability. The boundary
 requirements do not choose those rules or reduce the 0.1 obligations.
+Implement Joey's 2026-11-28 INT-064 A+D / INT-065 A / INT-066 A only
+after source/development analysis, review and independent byte oracles.
+A validates caller region order; built-in Chapter 9 group order, v1 uses
+G/T/R/M/P/D/B/S/Q/C/H/V/X, stable within groups and bounded by anchors.
+Newline conversion touches only positively identified layout, with explicit
+LF/CRLF. Counter rewrite requires complete contiguous distinct 1..k within
+range, otherwise refusal. No implicit normalization or L1 scope reduction.
+
+### Remaining session-format and configuration-change evidence
+
+Review same-session ASCII/XML observations without requiring unsupported XML
+body parsing or inferring session boundaries. Keep first-record SRCC=1,
+fragment disagreement and nearby generic event candidates as separate evidence.
+F7 remains indeterminate until event identification and a cited reviewed prior
+scope are established; no event type is guessed. Core owns edition-dependent
+packet/channel rules. Archived 106-05/07/09/11/13/15/17 header sources are
+re-verified in the argument-contract/session-scope research note: setup-only-on-0
+begins in the explicit 106-11 rule; 106-13/17 change channel-0 exclusivity.
+**PENDING OWNER (recommended A):** align the L1 wording with that onset while
+consuming core evidence; alternative B defers the change and keeps the gap
+explicit. No L1 wording change or local routing threshold is approved here.
+**PENDING OWNER (recommended A):** mixture finding only across Complete
+records, retaining other candidates' qualified FRMT evidence without that
+finding; alternative B broadens finding eligibility and is not approved.
+Treating one whole recording as one session requires explicit labelled caller
+assertion or supplied session evidence; otherwise scope is unavailable.
+
+### Remaining flex source qualification and acceptance
+
+Qualify the exact irig106lib reference revision, relevant source/options and
+build/runtime environment before implementing bit-for-bit flex compatibility.
+Spell out byte/line preparation, filters and complete arithmetic; retain the
+accepted D7 quirk rather than silently fixing it. Independently fixed vectors
+and arithmetic checks must cover default/inclusion options and bounded edge
+cases. Historical prose or wrapper mocks alone are not compatibility evidence.
+Raise undefined/platform-sensitive behavior before selecting product policy;
+no source vendoring, new dependency or output-format choice is approved here.
+Coordinator calls carried after #69: run the reference only in bounded
+GitHub CI, with synthetic inputs and no new project dependency. Record output
+values and pinned revision/file hashes, never paste reference source into
+this repository. **PENDING OWNER:** which reference and revision to qualify
+(bbaggerman/irig106lib versus the atac fork). Neither is silently selected;
+reference execution and numeric-vector qualification wait for that decision.
+
+### Remaining checksum command acceptance
+
+Review checksum/verify/stamp command computation as thin library consumers
+for explicitly selected eligible records: preserve defined-domain versus
+value-verdict distinctions, every refusal/finding and final-byte verified
+stamp results. Flex remains explicitly requested, non-standard and never a
+G\SHA replacement; finish its exact compatibility derivation before use.
+Owner-signed INT-031 gates incomplete/ambiguous access. Public selection defaults,
+rendered formats and stamp's remaining destination/eligibility policy stay
+separate; ADR-0037 settles extract only.
+
+### Remaining complete-record enumeration acceptance
+
+Review internal all-record enumeration against final evaluated assembly
+outcomes: retain distinct records, exact fragment provenance and first-fragment
+file order independently of finalization order. Qualifying a record as
+Complete does not approve command eligibility or governing use. Preserve
+non-Complete evidence and partial-traversal failures without inventing a clean
+full inventory. Public selection/numbering, live provisional emission and
+report rendering remain their separate owner-review scope. Owner-signed INT-031
+explicitly gates incomplete/ambiguous record access; enumeration never approves
+its optional labelled split. First-fragment versus completion order is being
+put to the owner for confirmation; no new approval is recorded here.
+
+### Remaining argument-parser acceptance
+
+Review the hand-rolled table-driven mechanism over caller-supplied tokens,
+returning request/usage outcomes without I/O, printing or process exit.
+Independently cover every implemented reviewed flag/value/error rule; a
+synthetic table or help/version pass does not qualify the product grammar.
+Do not silently decide held option syntax, defaults, numeric CLI grammar,
+non-Unicode handling, output schema or exit mapping through table entries.
 
 ### Remaining CLI input and presentation derivations
 
@@ -151,6 +352,16 @@ not split attributes or apply an edit. Complete code-name recognition,
 requirements and test derivations precede implementation. This is a planned
 addition alongside L1-READ-007, not an implemented diagnostic or a change
 to the semicolon-only framing approved in INT-035.
+Review the colon-for-semicolon detector's positive whole-name recognition,
+raw edit locations and independent negative/lookalike cases before its own
+implementation. Suggestions remain unapplied, framing and raw bytes unchanged;
+S1 stays suspect until separately authorized real-data confirmation. Recognizer
+coverage gaps are not permission to guess private/extension grammar.
+The 0.1 recognizer must cover the Appendix 9-C names and index patterns,
+including D MML/N, MNF/N and WP; an explicit inventory exposes missing coverage
+rather than silently losing warnings. Skip unterminated suffixes and retain
+cut/Incomplete/Ambiguous qualifications on any permitted diagnostic access;
+a suggestion never makes the record usable or bypasses owner-signed INT-031.
 
 ## Queued for the next release (`[Unreleased]`)
 
@@ -749,9 +960,10 @@ validation rules selected.** Verified against the archived editions:
   necessary." "Range: 0 to 99" (Table 9-2, 106-24R1). `24` cannot tell 106-24
   from 106-24R1 (their Chapter 9 is identical, ADR-0016); "should" makes the
   two-digit form a recommendation, and "0 to 99" admits `4` for `04`.
-- *Also found — the format is recent*: the year rule first appears in 106-17.
+- *Also found — the format is recent*: the year rule is already printed in 106-15 (INT-015 source correction).
   106-05 and 106-07 say only "VERSION OF IRIG 106 STANDARD USED TO GENERATE
-  THIS TMATS FILE"; 106-13 adds a maximum field size of 2. Files written to
+  THIS TMATS FILE", with maximum field size 2 already present; 106-13 also
+  has MFS 2 but no year-format wording. Files written to
   earlier editions may hold other forms.
 - *RCCVER declares what the recorded data complies with, not the TMATS
   edition*: "Bits 7-0 specify which RCC release version applies and to which
@@ -980,8 +1192,8 @@ owner decides; the decision is then recorded in
 | # | Question | Why it is open | Where it lands |
 |---|----------|----------------|----------------|
 | F1 | **Owner-approved, 2026-11-23, under ADR-0033; AI CONCUR at #30 head 13173b0.** Duplicate SHA items are indeterminate. | List every occurrence, preserve every byte, never claim positive verification, and refuse stamping until fixed. Review and test evidence still required. | INT-021; ADR-0034 |
-| F2 | What should happen when an edit removes an attribute that X extensions point to? | As F1: needs the options and their consequences for editing, for vendors' extensions, and for §9.5.14's "preserve it". | INT-022; L1-WRT-003; ADR-0029 |
-| F3 | Should the reader suggest `:` where `=` was typed, as in Chapter 6's own `G\DSI\N=18;`? | As F1: needs the options and the risk of a suggestion that is wrong. | INT-023; `docs/TEST-DATA.md` E3 |
+| F2 | **Owner-signed A, Joey, 2026-11-28:** refuse deletion while extensions attach; cascade is a separate explicit edit (0.5). | Remaining independent final check and source/development/test evidence; never guess attachment. | INT-022; L1-WRT-003; ADR-0029 |
+| F3 | **Owner-signed A, Joey, 2026-11-28:** suggest-only `=` to `:` when the complete code name is recognized and no colon occurs; never automatic. | Remaining independent final check and source/development/test evidence; raw reading/finding stays. | INT-023; `docs/TEST-DATA.md` E3 |
 | F5 | **Decided 2026-09-26: A**, with C possible later (ADR-0030). Does `irig106-core` depend on `irig106-tmats`, or do the tools join them? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 1.6; proposal in section 2.4 (core stays structural and independent; checking packets against TMATS belongs to the layer holding both) awaits the owner. | `docs/TMATS-IN-CHAPTER-10.md` section 2.4; ROADMAP X3 |
 | F6 | **Decided 2026-09-26: yes** — L1-REL-003, a CI check added with the first new library code. Must the library build for WebAssembly (a CI check that the plain library compiles for a `wasm32` target), so studio's browser build can use it? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 4.8. ADR-0015 moved WASM *bindings* out of the library; building the plain library for WebAssembly is a separate question. The library already performs no I/O (L1-IO-001), which is the main condition. | ADR-0015; a possible L1 requirement and CI job |
 | F7 | **Owner-approved, 2026-11-23, under ADR-0033; AI CONCUR at #30 head 13173b0.** Require verified identification; report indeterminate meanwhile. | Never guess a packet type. The event identity still needs evidence; the decision does not supply it. | INT-030; L1-CH10-005; ADR-0034 |
@@ -1195,12 +1407,47 @@ this list once that repository has it.
 
 ## Planned releases
 
+### Small increments after 0.1 (owner direction, 2026-11-27)
+
+The owner wants each feature released quickly in small, reviewed increments
+AFTER tmats 0.1. Coordinator placement is tmats 0.2+ for the additions below;
+do not wait for a whole later-release theme to be complete before shipping a
+ready increment. The full tmats 0.1 scope is unchanged. In particular, the
+existing 0.1 `show`, JSON and L1-WRT-002 library rule stay in 0.1; the
+follow-on CLI clean-up command and actual transformation rules are planned
+for 0.2+. The owner's report-format decision still blocks JSON/output-format
+derivation.
+
+| tmats 0.2+ increment | Planned behavior |
+| --- | --- |
+| `tmats validate` | Validate TMATS text rules: syntax, required fields, valid values, duplicates and cross-references. Accept a recording (`.ch10`) or a text file through the content-based routing derived in #55; this is TMATS validation, with recording cross-checks owned separately below. |
+| `tmats show` | Extend the readable summary: channel table, data types, time sources and recorder information. |
+| `tmats diff` | Compare two setups at both field level and byte level. |
+| `--tmats <file>` external override | Owner direction: FULL REPLACEMENT for the WHOLE input file/recording. The in-file setup is still parsed, including every mid-recording change, and its differences from the external setup are reported. Every result using the override is clearly labelled (exact wording follows the report-format decision) as using the external setup. There is never any merge of external and in-file setups. |
+| Explicit format clean-up | 0.2+ adds the CLI clean-up command and the actual transformation rules, building on the L1-WRT-002 library rule that stays in 0.1. Clean-up is only on explicit request; no automatic clean-up or implicit source rewriting. |
+| JSON output | Follow-on output work remains blocked on the owner's report-format decision; no schema or layout is selected here. |
+
+Cross-repository placement (recorded here only; no changes to those repos):
+
+- **Cross-check setup versus recording:** `irig106-validator` owns that tool
+  behavior; the `tmats validate` increment checks TMATS text rules.
+- **Rewrite a recording with corrected TMATS:** `irig106-write` owns it. It
+  always writes a NEW file, with checksums recomputed.
+
+These additions record release intent and ownership, not implementation or
+approval of pending report formats, field interpretations or access policies.
+The release themes below remain planning context; this dated direction
+supersedes any implication that initial `tmats validate` must wait for all
+of 0.3 or that recording cross-checks belong in a `tmats check` command.
+
+### Release themes
+
 | Version | Theme | Scope |
 |---------|-------|-------|
 | before 0.1 | Restructure | The workspace layout and the reusable CLI library (virtual root and crates/apps layout per owner-decided W1, with W2/W3 unchanged), with CI green before and after; no new library code until it is done. |
 | 0.1 | Read | Lossless parser for code-name (ASCII) TMATS, with the suspected-semicolon diagnostic (L1-READ-007). Setup records assembled from their packet fragments, with provenance, the CSDW fields, and the session rules (L1-CH10-001, 002, 004–006). The TMATS edition and recording-format version declared, and a labelled validation basis (L1-EDN-002, 005). Lookup by code name. V and X groups preserved and linked. Byte-faithful writer. `G\SHA` compute, verify, and stamp — the stamp as the minimal verified transaction it needs (L1-SUM-004) — and the flex signature. The interpretation register seeded. The WebAssembly build checked in CI (L1-REL-003). First crates.io release of both crates. Bounded time view for irigtime (L1-VIEW-007 channel fields and applicable L1-VIEW-004/005/006/008), as specified in `docs/RELEASE-0.1.md`. **`tmats` CLI**: `show` in raw, tree, and channel-summary form (the three `idmptmat` formats), `extract`, `checksum` (`G\SHA`, `--flex`), `verify`, `stamp`; every setup record in a recording; plain text and JSON output. |
-| 0.2 | Registry and views | Spec-derived registry for the baseline edition (106-24R1) covering every group in Chapter 9 (G, T, R, M, P, D, B, S, Q, C, H, V, X), with counter and link declarations. Typed accessors generated from it. Channel views resolving R through P/B/S/Q to D and C, with link states (L1-VIEW-002, 003, 006) and effective values (L1-VIEW-004): each channel's recorder settings, format definition, measurement locations, and conversions — what `irig106-decode` needs first. The channel-type table and each channel's packet data types (L1-VIEW-009), the remaining measurement time-word views (L1-VIEW-007) beyond the bounded channel subset delivered in 0.1, and the remaining labelled assumptions (L1-VIEW-008). The packet check (L1-CH10-007) and the configuration timeline (L1-CH10-008), with the attribute-by-attribute comparison it uses (L1-WRT-005). **`tmats` CLI**: `show` uses the resolved links and lists the configuration timeline; `check`; `diff`. |
-| 0.3 | Validate | Registry-driven validation in four passes: required/allowed-when rules, keywords, ranges, value types, counters and index consistency, cross-group references. Derived parameters parsed, validated, and described (L1-DER-001 to 005). User registries, severity policy, custom rules. `tmats validate`. |
+| 0.2 | Registry and views | Spec-derived registry for the baseline edition (106-24R1) covering every group in Chapter 9 (G, T, R, M, P, D, B, S, Q, C, H, V, X), with counter and link declarations. Typed accessors generated from it. Channel views resolving R through P/B/S/Q to D and C, with link states (L1-VIEW-002, 003, 006) and effective values (L1-VIEW-004): each channel's recorder settings, format definition, measurement locations, and conversions — what `irig106-decode` needs first. The channel-type table and each channel's packet data types (L1-VIEW-009), the remaining measurement time-word views (L1-VIEW-007) beyond the bounded channel subset delivered in 0.1, and the remaining labelled assumptions (L1-VIEW-008). TMATS-side support for the packet check (L1-CH10-007) consumed by `irig106-validator`, and the configuration timeline (L1-CH10-008), with the attribute-by-attribute comparison it uses (L1-WRT-005). **`tmats` CLI**: incremental `validate`, readable `show`, field/byte `diff`, full external override and requested clean-up per the 2026-11-27 direction above; resolved-link/timeline views grow as ready. JSON remains behind the owner report-format gate. |
+| 0.3 | Validate | Registry-driven validation in four passes: required/allowed-when rules, keywords, ranges, value types, counters and index consistency, cross-group references. Derived parameters parsed, validated, and described (L1-DER-001 to 005). User registries, severity policy, custom rules. Extend `tmats validate` incrementally; its initial text-rule functionality is planned for 0.2+ above and does not wait for this whole theme. |
 | 0.4 | Editions | Registry deltas for every edition from 106-04 to 106-24R1 (including renamed codes such as `R-x\DST-n` → `R-x\CDT-n`, to be confirmed), a generated `VERSION-DELTAS.md`, edition-aware validation, and compatibility checks, named as such, for editions the registry does not cover (L1-EDN-006). |
 | 0.5 | Generate and edit | Edit API (set, insert, remove, renumber) as verified transactions (L1-WRT-003, 007), grown from 0.1's stamp; validation diagnostics carrying suggested edits with explicit apply; a generator that returns valid TMATS or an incomplete draft with missing-input findings (L1-WRT-006); the setup-record payload for `irig106-write` (L1-CH10-003). Applying chosen fixes from `tmats`. |
 

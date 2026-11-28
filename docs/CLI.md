@@ -29,6 +29,19 @@ by INT-011/045 remain available even when another consumer gets that
 packet's DATA. L2-CLI-007 and L3-CLI-022–029 refine these boundaries; they
 select no argument grammar, report format, exit mapping or adoption policy.
 
+### Checksum command computation boundary
+
+L2-CLI-012/013 derive checksum, verify, explicit flex and stamp computation
+for a supplied eligible document/revision. They preserve library verdicts,
+findings and transaction failures; they do not define rendered output or
+selection defaults. Owner-signed INT-031 gates incomplete/ambiguous access.
+A successful stamp result still needs successful delivery under the separate
+input-preserving output contract. ADR-0037 settles extract's destination and
+findings policies; that approval is not extended to stamp's remaining policy.
+Core PacketInfo data-checksum state passes through unchanged: a G\SHA result
+neither upgrades nor is upgraded by core Mismatch/NotChecked. Their separate
+results do not bypass packet admission or record-access gates.
+
 ## 2. Commands (from UC-17)
 
 | Command | Does | Release |
@@ -36,14 +49,18 @@ select no argument grammar, report format, exit mapping or adoption policy.
 | `tmats show FILE` | Channel summary (default): channel ID, data type, enabled, data source — `idmptmat -c` | 0.1 (R-group items); 0.2 (resolved links) |
 | `tmats show --tree FILE` | Hierarchy: data sources → recorders → channels, then every group by occurrence and code path — `idmptmat -t` | 0.1 |
 | `tmats show --raw FILE` | The TMATS exactly as stored — `idmptmat -r` | 0.1 |
-| `tmats extract FILE.ch10 -o OUT` | Write the setup-record TMATS bytes to a file | 0.1 |
+| `tmats extract FILE.ch10 -o OUT` | Byte-exact extraction; --force and --strict are owner-approved spellings (2026-11-27, ADR-0037); remaining grammar held | 0.1 |
 | `tmats checksum FILE` | Print the `G\SHA` value (`2-` + 64 lower-case hex) | 0.1 |
 | `tmats checksum --flex [--include ...] FILE` | irig106.org flex signature (non-standard; UC-16) | 0.1 |
 | `tmats verify FILE` | Compare the embedded `G\SHA` with the computed value | 0.1 |
 | `tmats stamp FILE -o OUT` | Write a copy with `G\SHA` inserted or updated | 0.1 |
-| `tmats validate FILE` | Validation report (UC-06/07) | 0.3 |
+| `tmats validate FILE` | TMATS text rules: syntax, required fields, valid values, duplicates and cross-references (UC-06/07); recording or text input by content | 0.2+ increments |
 | `tmats diff A B` | Compare two documents (UC-11) | 0.2 |
-| `tmats check FILE.ch10` | Check every packet against the setup record that governs it (UC-18) | 0.2 |
+
+Per the [2026-11-27 roadmap direction](ROADMAP.md#small-increments-after-01-owner-direction-2026-11-27), recording/setup
+cross-check tooling (UC-18) belongs to `irig106-validator`, rather than a
+`tmats check` command. `tmats validate` checks TMATS text rules and uses the
+existing content-based recording/text input route. The 0.1 scope is unchanged.
 
 ## 3. Behaviour already decided
 
@@ -53,11 +70,15 @@ select no argument grammar, report format, exit mapping or adoption policy.
   selection is not packet validation or permission to retry the other mode.
 - **The configuration timeline.** From 0.2, `show` lists every setup record
   with its kind (first, repeat, change), its findings, and what changed
-  (UC-19; L1-CH10-008), and `check` runs the packet check (UC-18).
+  (UC-19; L1-CH10-008). Recording/setup cross-check tooling (UC-18) belongs
+  to `irig106-validator` per the 2026-11-27 roadmap direction.
 - **Every setup record.** A recording's setup records are all reported, in
   file order (the `idmptmat` first-packet-only limitation, defect D2, is not
   repeated). Each record's output is labelled with its position and packet
-  offset.
+  offset. L2-CLI-010/011 derive internal enumeration and provenance while
+  leaving rendered labels, public numbering/selection and live emission
+  policy for owner review. Complete is not a governing/eligibility verdict;
+  owner-signed INT-031 gates incomplete/ambiguous record access.
 - **Recordings are memory-mapped**, and packet finding/trust comes from
   `irig106-core` (ADR-0036), with borrowed DATA spans into TMATS slicing/
   assembly. The temporary CLI reader is superseded; no header or packet-data
@@ -67,15 +88,24 @@ select no argument grammar, report format, exit mapping or adoption policy.
   JSON schema so scripts and `irig106-cli` can rely on it.
 - **Labels are the code names actually read.** A value is never shown under
   another code name (defect D4).
-- **Extraction preserves bytes.** L2-CLI-008 derives exact extraction of one
-  explicitly selected eligible record; record eligibility/selection stays
-  separate. L2-CLI-009 requires preserving input files, including aliases,
-  before destructive destination access for tool-opened outputs; shell
-  redirection is outside that acquisition guarantee. Implementation is BLOCKED
-  on owner decisions for `-o` overwrite, fail-closed identity checks for
-  pipes/devices/stdout/network shares, and extraction eligibility under
-  integrity/encoding findings. No pending policy is selected.
-- **Nothing is changed in place.** Commands that produce modified TMATS
+- **Extraction preserves bytes.** ADR-0037 records the owner policy of
+  2026-11-27: extract the explicitly selected original bytes despite findings,
+  reporting every finding; --strict refuses the listed bad-data kinds.
+  Its listed-kinds-only versus any-finding scope is PENDING OWNER. There is no
+  always-refuse finding class. Cut/ambiguous/invalid/marker qualifications
+  and core integrity evidence stay unchanged; raw extraction does not make
+  them semantically usable or governing.
+- **Extract destination policy.** An existing unrelated -o file refuses
+  unless --force. Open without truncation, compare identities and truncate/
+  write through the same handle, with no temp-file+rename. Known input aliases
+  refuse even with --force. Stdout/pipes are allowed without identity proof;
+  a regular file with unproven identity refuses unless --force. The exception
+  never claims identity was proved. Tool-opened output and external shell
+  redirection remain distinct. These three #57 holds are removed; source,
+  development and executable verification remain. The rest of argument
+  grammar and report formats remain held; only these flag spellings and
+  owner policies are decided.
+- **Inputs are not edited in place.** Commands that produce modified TMATS
   (`stamp`, and later fix application) write to a new output file.
 - **`stamp` is a verified transaction.** It hashes the final output bytes
   outside the `G\SHA` item (a line break it inserts is included), writes
@@ -110,6 +140,8 @@ select no argument grammar, report format, exit mapping or adoption policy.
   own; that code is kept table-driven and every flag, value, and usage error
   has a test. The scaffold's `--version` / `--help` handling already follows
   this approach.
+  L2-CLI-014/015 derive parser mechanism/acceptance from host-supplied tokens;
+  they choose no new grammar, defaults, report rendering or exit mappings.
 
 ## 4. Proposed rules (to confirm)
 

@@ -780,9 +780,9 @@ completeness. No new test marker or implementation status is added here.
 section 9.4.2 page 9-2; Chapter 11 section 11.2.7.2 page 11-50 and
 section 11.2.1.1 f; ADR-0031; reviewer consequences relayed by the owner
 2026-11-23 after #38. INT-011 is reconfirmed (AI CONCURS on #38 at c623b15).
-INT-034's precise classification and INT-028/031 governance remain proposed.
-Fixtures supply reviewed classification/accounting bindings; their success
-cannot approve those bindings or close the open streaming-use question.
+Joey signed INT-028/031 and INT-034's snapshot/padding/availability/continuity
+choices on 2026-11-28. Padding-only/leading-damage precedence stays open;
+remaining final review and development/testing gates are not executable coverage.
 
 | Planned check | Fixture or stimulus | Expected observation | Requirement |
 | --- | --- | --- | --- |
@@ -882,7 +882,7 @@ and Ch9 Table 9-2 p. 9-13 checksum; INT-011/018–021/034/039/043/045 and owner-
 | `cut_observation_cannot_claim_mismatch_or_only_sha_layout_delta` | Every sealed X with checksum F or content H/W, plus following X with checksum F, including intersections | Explicit R0 consistency/rejection test, not parser coverage: checksum F must instead be U and bounded H/W cannot explain the cut | L3-REG-014 |
 | `other_field_ambiguity_blocks_identity_and_digest` | Repeated definition-bound G\PN within one candidate (INT-039), including identical repeats and sealed G\SHA verification, with byte-identical following text | Supplied A remains assembly Ambiguous under INT-048; no first/last winner or Complete upgrade; retain every item/digest/identity finding | L3-REG-015 |
 | `cut_duplicate_keeps_cut_evidence_and_ambiguity` | `0.D.DN.G.SS.X.T.I` plus cut text containing repeated G\PN | Aggregate Ambiguous under strict QD WITH A RETAINED CUT FACET; retain Incomplete's full blocking force, both raw occurrences and cut location. No ambiguous acceptance can make it usable/governing | L3-REG-015 |
-| `cut_facet_blocks_ambiguous_acceptance` | Cut text with duplicate SHA or another established field ambiguity, then request the proposed INT-031 labelled ambiguous-split acceptance | Acceptance cannot make the retained-cut candidate usable or governing, even if the split option is later approved; preserve the cut facet and all findings | L3-REG-015 |
+| `cut_facet_blocks_ambiguous_acceptance` | Cut text with duplicate SHA or another established field ambiguity, then request the owner-signed INT-031 labelled ambiguous-split acceptance | Acceptance cannot make the retained-cut candidate usable or governing, under the signed option; preserve the cut facet and all findings | L3-REG-015 |
 | `duplicate_g106_fallback_does_not_cure_assembly_ambiguity` | Duplicate G\106 with INT-044 labelled fallback | Assembly Ambiguous remains; fallback selects diagnostic rule basis, never a winning declaration or governing setup | L3-REG-015 |
 | `following_duplicate_is_assembly_ambiguous` | `0.D.ND.G.SS.T.T.I`, then cut-following variant X | Following candidate assembly Ambiguous under QD even if sealed candidate is Complete; block following adoption and retain incomplete comparison evidence | L3-REG-015 |
 | `integrity_findings_default_no_silent_quarantine` | Otherwise eligible initial and mid-session setup with checksum F/M, plus separate F1/framing/trust/ambiguous-scope controls | Default prominent findings; no implicit quarantine or silent old fallback. Controls remain blocking; quarantine opt-in requires separate review | L3-REG-015 |
@@ -1309,16 +1309,17 @@ formats and numeric exit mappings need their own owner-reviewed derivations.
 ## Planned extraction and safe-output batch 25
 
 These are planned acceptance cases for L2-CLI-008/009, not executable tests.
-Mechanical extraction receives one explicitly selected record and an already
-established eligibility basis; malformed-byte cases test replay only, not
-permission to select an incomplete, ambiguous or unsupported record. Core
-supplies DATA; existing adapter/assembly contracts supply fragment text.
-
-**Implementation BLOCKED**: owner decisions on `-o` overwrite, fail-closed
-identity checking for pipes/devices/stdout/network shares, and extraction
-eligibility under integrity/encoding findings are pending. The following
-raw-byte fixtures do not decide those policies. File-acquisition guarantees
-cover destinations the tool opens itself, not shell redirection.
+Extraction receives one explicitly selected record/candidate and available
+raw text extent. ADR-0037 records the owner's 2026-11-27 policy, removing
+#57's three owner holds: raw extract under findings by default, every finding
+reported; --strict refuses the listed bad-data kinds. Its listed-kinds-only
+versus any-finding scope is PENDING OWNER. Known cut prefixes are valid raw
+extraction inputs, not missing whole-document failures. Stdout/pipes are
+allowed; unproven regular identity and existing unrelated -o files require
+--force; same-handle writes, no temp-file+rename. Known input aliases refuse.
+These are policy decisions, not passing implementation evidence. Other
+argument grammar/report format remains held; file-acquisition guarantees
+cover tool-opened destinations, not shell redirection.
 
 | Planned test | Independent input and expected boundary result | Requirements |
 |---|---|---|
@@ -1327,11 +1328,11 @@ cover destinations the tool opens itself, not shell redirection.
 | `extract_csdw_split_is_removed_once` | Synthetic arbitrary-span partition: four logical CSDW bytes straddle spans; expected text excludes four bytes total, not four per span. With core 0.2 default 512 KiB blocks the CSDW is always in the first block; this is not a production-layout claim | L3-CLI-030, L3-CLI-037 |
 | `extract_text_split_does_not_change_bytes` | A text fragment crosses several span boundaries including inside a name/value; compare to the same independent literal | L3-CLI-030, L3-CLI-037 |
 | `extract_layout_and_case_survive` | Mixed case, leading/inter-item layout and CR/LF are replayed exactly; no canonical case, order or newline conversion | L3-CLI-031 |
-| `extract_comment_control_is_view_only` | Mechanical source `COMMENT:a\tb;` with a real TAB: INT-036 interpreted value is `ab` but extraction keeps `a\tb` byte-for-byte; the same applies to an omitted CR/LF/control; eligibility remains owner-pending | L3-CLI-031 |
-| `extract_numeric_control_invalid_keeps_raw` | Mechanical source `R-1\NSB:0\r\n4;` with real CR/LF: INT-055 raw-byte numeric check returns Invalid, never repaired to 4; extraction keeps every control/raw byte; eligibility remains owner-pending | L3-CLI-031 |
-| `extract_assembled_leading_bom_is_not_stripped` | Same-channel +1 fragments with matching FRMT/RCCVER: first text starts EF, following text starts BB BF then `COMMENT:a;` (after each packet CSDW); leading assembled EF BB BF is detected under INT-037 at text offset zero, never stripped from extraction; eligibility remains owner-pending | L3-CLI-030, L3-CLI-031 |
+| `extract_comment_control_is_view_only` | Mechanical source `COMMENT:a\tb;` with a real TAB: INT-036 interpreted value is `ab` but extraction keeps `a\tb` byte-for-byte; the same applies to an omitted CR/LF/control; default extract allowed with all findings; strict arm for this unlisted information-only case is BLOCKED PENDING OWNER | L3-CLI-031 |
+| `extract_numeric_control_invalid_keeps_raw` | Mechanical source `R-1\NSB:0\r\n4;` with real CR/LF: INT-055 raw-byte numeric check returns Invalid, never repaired to 4; extraction keeps every control/raw byte; default extract allowed with all findings, --strict refuses when findings exist | L3-CLI-031 |
+| `extract_assembled_leading_bom_is_not_stripped` | Same-channel +1 fragments with matching FRMT/RCCVER: first text starts EF, following text starts BB BF then `COMMENT:a;` (after each packet CSDW); leading assembled EF BB BF is detected under INT-037 at text offset zero, never stripped from extraction; default extract allowed with all findings, --strict refuses when findings exist | L3-CLI-030, L3-CLI-031 |
 | `extract_raw_unknown_vendor_extension_survive` | Supplied raw text contains unknown, V and X items; none is dropped or rendered from a typed model | L3-CLI-031 |
-| `extract_raw_damage_is_not_repaired` | Mechanical sink input contains duplicate/malformed items, high bytes and an unterminated suffix; exact replay is asserted without asserting CLI eligibility | L3-CLI-031 |
+| `extract_raw_damage_is_not_repaired` | Mechanical sink input contains duplicate/malformed items, high bytes and an unterminated suffix; default exact replay with all findings; strict refuses listed bad-data kinds, with other-finding scope pending owner | L3-CLI-031 |
 | `extract_raw_padding_is_not_packet_fill` | Record text contains trailing preserved NUL/space bytes; replay them, while packet filler remains excluded by core DATA extents | L3-CLI-030, L3-CLI-031 |
 | `extract_read_only_views_do_not_stamp` | Read-only views/findings/checksum verification precede extraction; original text, including original checksum spelling/value, stays unchanged | L3-CLI-031 |
 | `extract_selected_identity_never_substituted` | Two distinct supplied records have different literal texts; the explicit eligible selection alone supplies output and provenance | L3-CLI-032 |
@@ -1343,9 +1344,9 @@ cover destinations the tool opens itself, not shell redirection.
 | `output_relative_absolute_input_alias_is_refused` | Distinct relative/absolute spellings name the input; no destructive open, input unchanged | L3-CLI-034, L3-CLI-035 |
 | `output_symbolic_link_input_alias_is_refused` | Supported platform symlink destination identifies input; refuse before modifying either input contents or replacing its file | L3-CLI-034, L3-CLI-035 |
 | `output_hard_link_input_alias_is_refused` | Supported platform hard-link destination identifies input despite path inequality; refuse before destructive open | L3-CLI-034, L3-CLI-035 |
-| `output_unestablished_input_safety_never_opens_destructively` | Inject inability to establish input preservation; no destructive acquisition proceeds and no output success is claimed | L3-CLI-034, L3-CLI-036 |
+| `output_unestablished_input_safety_never_opens_destructively` | Unproven regular identity without --force: no destructive acquisition or successful output; the explicit-force case is covered by owner-policy fixtures | L3-CLI-034, L3-CLI-036 |
 | `output_acquisition_failure_never_redirects` | Destination acquisition fails; observable failure returns, no automatic stdout/alternate-file output or input repair | L3-CLI-035, L3-CLI-036 |
-| `output_distinct_sink_success_keeps_input` | Isolated distinct regular-file output, conditional on approved overwrite policy: non-truncating open, compare input identities, truncate/write through the SAME handle (no pathname reopen); input snapshot remains identical | L3-CLI-035, L3-CLI-037 |
+| `output_distinct_sink_success_keeps_input` | Isolated distinct regular-file output, with ADR-0037 authorization (--force when existing): non-truncating open, compare input identities, truncate/write through the SAME handle (no pathname reopen); input snapshot remains identical | L3-CLI-035, L3-CLI-037 |
 | `output_failure_returns_to_mounting_host` | Host calls shared command with failing sink/acquisition; failure is observable and host executes subsequent sentinel | L3-CLI-033, L3-CLI-036 |
 | `extract_oracle_is_independent` | Expected text comes from literal source/fragment descriptors; fixture never invokes production extraction/writer to calculate expected bytes | L3-CLI-037 |
 
@@ -1353,10 +1354,11 @@ Filesystem cases need isolated temporary fixtures and platform-identity/
 acquisition analysis, including race behavior; instrument open/check/truncate
 ordering and assert no pathname reopen before truncation. String checks alone cannot
 verify the obligation. Unsupported link creation is recorded as unavailable
-coverage, not a safety pass. No existing unrelated-file overwrite policy,
-cleanup/atomicity/durability promise or report/rendered format is selected.
-Actual record eligibility, selection and XML behavior require their own
-reviewed fixtures before end-to-end extraction implementation is accepted.
+coverage, not a safety pass. ADR-0037 now selects extract's overwrite and
+finding policy; other grammar, cleanup/durability and report layout remain
+separate. Preserve source/format observations without inventing core byte
+extents or parsing unsupported bodies; end-to-end implementation still needs
+meaningful tests, including the owner-policy cases below.
 
 ## Planned raw pattern lookup batch 26
 
@@ -1370,7 +1372,7 @@ Owner decisions on 0.1 pattern scope (reviewed registry patterns only) and
 public query syntax (wildcards/escaping) are PENDING; implementation is
 blocked. Diagnostic candidate fixtures do not approve incomplete/ambiguous
 access: see the [open item](ROADMAP.md#streaming-setup-record-follow-ups)
-and [proposed INT-031](INTERPRETATIONS.md#int-031). Any supplied record
+and [owner-signed INT-031](INTERPRETATIONS.md#int-031). Any supplied record
 qualification, including Ambiguous, cut facets and Incomplete, stays attached
 and unchanged when candidates are returned.
 
@@ -1441,6 +1443,863 @@ can check documentation drift and the prototype, but cannot execute an
 unimplemented redesign. Heavy builds/tests remain in bounded GitHub CI;
 local checks for this batch stay lightweight. No feature, workflow or
 manifest is changed, and no publishing/package operation is performed.
+
+## Planned library guard-rail/coverage inspection batch 28
+
+These cases refine L1-ROB-002/003 and L2-ROB-004/005. They are planned
+inspection/CI acceptance specifications, not executed tests or Evidence.
+Use CI-scripted cargo clippy runs on isolated fixture crates under the actual
+lint settings, not prohibited operations inserted into this requirements PR
+or production library. Do NOT add trybuild/ui_test or any dev dependency
+without owner approval.
+
+| Planned acceptance case | Independent failure/success evidence required | Requirements |
+|---|---|---|
+| `guard_unwrap_used_is_rejected` | Syntactically valid non-test library unwrap operation fails with unwrap_used, not a grep hit or unrelated compiler error | L3-ROB-007, L3-ROB-009 |
+| `guard_expect_used_is_rejected` | Typed expect operation in non-test library code fails with expect_used | L3-ROB-007, L3-ROB-009 |
+| `guard_panic_is_rejected` | Explicit panic macro in non-test library code fails with panic lint | L3-ROB-007, L3-ROB-009 |
+| `guard_todo_is_rejected` | Non-test library todo macro fails with todo lint | L3-ROB-007, L3-ROB-009 |
+| `guard_unimplemented_is_rejected` | Non-test library unimplemented macro fails with unimplemented lint | L3-ROB-007, L3-ROB-009 |
+| `guard_unreachable_is_rejected` | Non-test library unreachable macro fails with unreachable lint | L3-ROB-007, L3-ROB-009 |
+| `guard_debug_macro_is_rejected` | Non-test library dbg macro fails with dbg_macro lint | L3-ROB-007, L3-ROB-009 |
+| `guard_stdout_print_is_rejected` | Non-test library stdout print macro fails with print_stdout lint | L3-ROB-007, L3-ROB-009 |
+| `guard_stderr_print_is_rejected` | Non-test library stderr print macro fails with print_stderr lint | L3-ROB-007, L3-ROB-009 |
+| `guard_comments_strings_are_not_operations` | Benign comments/string literals containing prohibited spellings do not fail as typed operations; no text scanner substitutes for Clippy | L3-ROB-007 |
+| `guard_workspace_table_must_bind_library` | Table exists in virtual root but library fails to inherit it: configuration is not accepted as effective enforcement | L3-ROB-008 |
+| `guard_scoped_test_allowance_keeps_production_denied` | Test helper/CLI-main exception is scoped; separately checked non-test library still rejects the same prohibited operation, including in an included submodule | L3-ROB-008, L3-ROB-009 |
+| `guard_failure_cannot_be_skipped_or_ignored` | Lint job skipped or command failure swallowed: enforcement obligation remains unsatisfied, not an overall-green pass | L3-ROB-009 |
+| `coverage_library_below_floor_fails` | Controlled completed library result below 80% fails the actual gate; retain source/configuration and tool result | L3-ROB-010, L3-ROB-012 |
+| `coverage_library_at_floor_still_needs_other_checks` | Completed library measurement meeting 80% satisfies only line floor, not lints, semantic fixtures or owner gates | L3-ROB-010, L3-ROB-012, L3-ROB-013 |
+| `coverage_missing_measurement_is_not_success` | Threshold flag exists but measurement/artifact is missing or failed: no library acceptance claimed | L3-ROB-010, L3-ROB-012 |
+| `coverage_cli_score_cannot_replace_library` | CLI has high line coverage while library is below 80%: library obligation fails, not averaged into a passing score | L3-ROB-010, L3-ROB-011 |
+| `coverage_scope_and_omissions_remain_visible` | Untested library files or conditional/generated code cannot be silently excluded; record source scope, features, exclusions and unmeasured configurations | L3-ROB-011 |
+| `coverage_old_head_or_prototype_report_is_not_evidence` | Coverage report belongs to a different SHA/prototype rather than reviewed implementation: no current acceptance; inspect real command/tool/source identity | L3-ROB-011 |
+| `coverage_gate_result_is_not_rounded_display` | Below-floor enforcement is checked from actual gate result, not a rounded display or green unrelated job; ignored command failure cannot pass | L3-ROB-012 |
+| `guard_coverage_pass_does_not_approve_interpretation` | Lints/line floor pass while a semantic fixture, arbitrary-input property or owner/interpretation gate is unresolved: keep that independent obligation unsatisfied | L3-ROB-013 |
+
+All negative lint fixtures require the intended diagnostic, not just any
+nonzero exit. Coverage evidence must name actual library scope/configuration
+and completed matching-head result. No new coverage exclusion list, numeric
+resource budget, test framework or full ADR-0020 acceptance is selected.
+The std, pattern, extraction, report-format and qualified-record-use holds
+remain independent of these planned checks.
+
+## Planned performance-evidence inspection batch 29
+
+These are planned acceptance cases for L2-PERF-001/002, not executed
+benchmarks or new numeric gates. Fixtures need independent expected-work
+inventories under reviewed semantics. Heavy synthesized runs belong in
+bounded GitHub CI; local/sample work requires the existing authorization
+and data/compute plan. No reference tool or recording is accessed here.
+Retaining the prototype Criterion dev dependency requires owner approval.
+PENDING OWNER: zero per-packet steady-state allocation by the tmats host for
+non-setup packets (core L2-HOT-008 analogy); no such threshold is set here.
+
+| Planned acceptance case | Independent evidence or rejection condition | Requirements |
+|---|---|---|
+| `perf_parser_consumes_expected_source` | Literal source and expected item inventory establish full work before timing acceptance; preserved bytes alone do not hide missing parsed items | L3-PERF-001, L3-PERF-002 |
+| `perf_empty_early_result_is_not_fast_parse` | Parser returns early/empty while fixture contains expected items: reject timing as incomplete work, not an optimization success | L3-PERF-001 |
+| `perf_parser_result_is_observable` | Timed operation consumes a real result and records actual scope; an optimized-away/no-op path cannot count as parsing | L3-PERF-002 |
+| `perf_parser_scope_lists_included_work` | Record acquisition/allocation/index/checksum/view/render inclusion so differently scoped runs cannot silently compare | L3-PERF-002, L3-PERF-004 |
+| `perf_recording_scan_includes_later_setups` | Reviewed synthetic recording has later setup records/updates; independently listed inventory must all be accounted for, not only the first packet | L3-PERF-001, L3-PERF-003 |
+| `perf_fragments_are_not_records` | Several fragments form one reviewed candidate/record: distinguish fragment/run/record counts with source extents and qualification intact | L3-PERF-001, L3-PERF-003 |
+| `perf_interleaved_channels_keep_reviewed_work` | Synthetic per-channel runs/interleaving follow INT-011/045 fixtures; benchmark cannot reduce work by dropping another channel or inventing a completion | L3-PERF-001, L3-PERF-003 |
+| `perf_core_is_the_only_packet_reader` | Recording benchmark uses core facts/sideband/DATA and TMATS slicing; local sync scanner/checksum fallback or a second traversal oracle is not accepted | L3-PERF-003 |
+| `perf_recording_and_text_byte_denominators_differ` | Large recording with smaller setup text reports actual processed byte domains; parser text rate is not labelled full-file scan throughput | L3-PERF-004 |
+| `perf_borrowed_assembly_mode_is_identified` | Recording traversal uses ADR-0036 borrowed spans without coalescing/extra payload copies; any owned parse-source construction is a separate parser workload. Paired untimed allocator/copy instrumentation reports allocation counts and payload-copy bytes, with counter scope and no new numeric threshold | L3-PERF-003, L3-PERF-004 |
+| `perf_coalescing_or_copying_scan_is_not_accepted` | A run coalesces/copies setup payloads instead of ADR-0036 borrowed-span assembly: reject it as recording-scan evidence even if fast/correct; untimed test-allocator and explicit copy counters remain reported, without a new allocation threshold | L3-PERF-003, L3-PERF-004 |
+| `perf_reproducible_input_build_identity` | Record source SHA, input fingerprint/size, compiler/tool versions, profile/Cargo features, compile-time target features, hardware/OS/architecture and run settings | L3-PERF-005 |
+| `perf_unlike_cache_or_acquisition_modes_are_labelled` | Warm in-memory run versus file acquisition/cold mode cannot masquerade as equal-scope timing; actual modes retained | L3-PERF-004, L3-PERF-005 |
+| `perf_reference_uses_same_file` | Input fingerprints and reference version/command show same-file comparison; another input or unreported scope cannot yield an equivalent-work speedup claim | L3-PERF-005, L3-PERF-006 |
+| `perf_reference_first_packet_only_is_partial` | idmptmat consumes first packet while tmats traverses later setups: record partial/non-equivalent work, never unqualified whole-recording ratio | L3-PERF-006 |
+| `perf_reference_standalone_rejection_is_not_timing_success` | Reference cannot accept standalone TMATS: unsupported outcome stays visible, not a successful zero-time parse | L3-PERF-006 |
+| `perf_reference_timeout_is_not_speedup` | Reference nontermination hits the explicit bound: retain timeout/extent and stop owned process, no fabricated completed rate | L3-PERF-006, L3-PERF-007 |
+| `perf_reference_semantic_disagreement_is_investigated` | Independent inventory disagrees: investigate cited rules, retain mismatch; reference output alone cannot settle correctness | L3-PERF-001, L3-PERF-006 |
+| `perf_run_limits_and_cleanup_are_explicit` | Future plan bounds input/time/memory/repetitions and stops only its owned jobs on completion/limit; missing plan is not authorization for background runs | L3-PERF-007 |
+| `perf_missing_sample_evidence_remains_missing` | Synthetic CI exists but authorized sample/reference work unavailable: sample obligation remains unverified; do not upload local-use data or silently run heavy local work | L3-PERF-005, L3-PERF-007 |
+| `perf_initial_measurement_is_not_guessed_budget` | First measured baseline is retained for later explicit budget review; historical 100 Mbps context is not promoted into an accepted pass/fail threshold | L3-PERF-008 |
+| `perf_speed_does_not_waive_semantics_or_owner_holds` | Fast run with missing source/candidates, unapproved interpretation or unresolved qualified-record policy cannot count as full acceptance | L3-PERF-001, L3-PERF-008 |
+
+Future Evidence names completed, matching-source runs and their actual
+workload/limitations. These rows select no public report format, timing
+threshold, benchmark dependency, reference-tool patch or numeric timeout.
+Prototype benchmark comments are not requirement verification markers for
+this new contract, and timing does not approve proposed ADR-0021.
+
+## Planned X-extension association batch 30
+
+Source: 106-24R1 Ch9 section 9.5.14 p. 9-172; original D-x\MN-y-n is
+Table 9-7 MEASUREMENT NAME p. 9-115, D-x\MNF\N-y-n-m is NUMBER OF
+FRAGMENTS p. 9-117. G\PN is Table 9-2 PROGRAM NAME p. 9-10. These
+fixtures test structural attachment, not whole-file conformance or private
+extension-value semantics. A/B below are independent source item identities.
+Record qualification/access restrictions remain intact. Joey signed INT-061/062
+A on 2026-11-28. Selected A expectations are now owner-decided; formerly
+alternative inputs below assert A's unavailability/refusal instead. Remaining
+independent final review, development analysis/review and tests still gate code. Indexed candidate tests
+can receive explicit reviewed decomposition metadata; they do not sign off
+runtime vocabulary selection. Under owner-signed registry-vocabulary A,
+registry-name matching plus EXTENSION_CODE uniqueness determines the split,
+not a free-form greedy parser or target presence in the document.
+
+| Planned test | Independent source/binding and expected evidence | Requirements |
+|---|---|---|
+| `x_section_example_attaches_to_original` | A=`D-1\MN-1-2:MEAS1;`, X=`X-1\MYORG\D\MN\SGAIN-1-2:10.75;`; resolved to A, raw bytes/locations retained; no Sensor Gain value decoder asserted | L3-EXT-001, L3-EXT-002, L3-EXT-004 |
+| `x_extra_indices_remain_extension_private` | Same A, X ends SGAIN-1-2-7-8: first [1,2] binds A; [7,8] stays private, not another original index/counter declaration | L3-EXT-002, L3-EXT-006 |
+| `x_nested_origcode_uses_full_path` | A=`D-1\MNF\N-1-1-1:2;`, X=`X-1\ORG\D\MNF\N\NOTE-1-1-1-8:v;`; reviewed three-index arity/path binds A, final 8 remains private | L3-EXT-001, L3-EXT-002 |
+| `x_wrong_group_or_path_never_matches_value` | Another code/path holds MEAS1 or looks like a prefix: it is not a target solely through value/prefix similarity | L3-EXT-002, L3-EXT-004 |
+| `x_occurrence_mismatch_is_not_repaired` | Only original D-2 exists, X occurrence is 1: available matching gives unresolved, no substitution of nearest/only occurrence | L3-EXT-002, L3-EXT-004 |
+| `x_carried_index_order_is_exact` | A indices [1,2], X leading [2,1]: no match; a matching subsequence later in private indices cannot repair it | L3-EXT-002 |
+| `x_too_few_carried_indices_is_unavailable` | Original arity two is reviewed, X supplies one usable carried index: cannot-evaluate malformed binding, not a fabricated second index | L3-EXT-001, L3-EXT-002 |
+| `x_canonical_indices_keep_raw_findings` | A=`D-01\MN-01-02:m;`, X=`X-1\MYORG\D\MN\SGAIN-1-2:v;`: canonical positions agree, raw spellings/INT-038 findings remain; X/D are different full keys | L3-EXT-003 |
+| `x_long_index_has_no_field_digit_limit` | Reviewed indexed name contains a 40-digit identity; compare canonical strings without integer conversion or INT-055's field-value ten-digit rule | L3-EXT-003 |
+| `x_ascii_case_is_not_unicode_folding` | Lowercase original-path spelling compares under ASCII case rules; a high-byte look-alike never folds into a matching ASCII original path | L3-EXT-003 |
+| `x_name_projection_retains_omission_finding` | A real internal control omitted under INT-036 leaves canonical matching possible only through approved projection; original source and located omission remain | L3-EXT-003, L3-EXT-005 |
+| `x_orphan_is_not_new_original_or_counter_member` | Reviewed X targets an absent original: unresolved, all bytes retained, no D member/counter entry created (INT-040) | L3-EXT-004, L3-EXT-006 |
+| `x_duplicate_originals_are_all_candidates` | A and B are repeated original scalar keys, even with equal values: ambiguous [A,B] in source order, no winner, record INT-048 Ambiguous attached/unchanged | L3-EXT-004, L3-EXT-005 |
+| `x_unknown_extension_value_does_not_erase_attachment` | Unique matching original exists, private value unknown/contains high bytes: structural attachment retains raw evidence/field findings, never interprets it as a clock/measurement rule | L3-EXT-004, L3-EXT-005, L3-EXT-006 |
+| `x_noncontiguous_occurrences_are_not_created` | Originals/related X occurrences use 1 and 3: section 9.5.14's X occurrence rule does not demand 2 or synthesize original 2; other index rules stay separate | L3-EXT-006 |
+| `x_unknown_arity_never_uses_greedy_prefix` | Reviewed registry code-name/arity metadata missing or split uniqueness unproved: cannot-evaluate with retained raw items, not guessed longest-prefix match or false absence; the standard's registry-match decomposition rule is not treated as absent | L3-EXT-001, L3-EXT-004 |
+| `x_separate_record_cannot_supply_original` | Target only exists in another setup record/document: query never borrows it or chooses a governing record | L3-EXT-005 |
+| `x_cross_fragment_target_shares_one_document` | Same-channel sequence +1 fragments with matching FRMT/RCCVER form ONE ADR-0025/INT-011 record: original and X across fragments retain target IDs and packet/body provenance | L3-EXT-005 |
+| `x_attachment_preserves_cut_and_ambiguous_qualification` | Diagnostic source has Ambiguous and/or retained cut/Incomplete facets: any returned attachment keeps them and their blocking force, without approving access/adoption | L3-EXT-005 |
+| `x_leading_marker_blocks_semantic_attachment` | Assembled text begins EF BB BF: INT-037 availability gate remains; keep raw evidence and reason, not resolved/empty semantic success | L3-EXT-001, L3-EXT-005 |
+| `x_unindexed_original_mapping_unavailable` | **Owner-signed INT-061 A:** raw X appears to target unindexed G\PN; retain plausible raw evidence and cannot-evaluate mapping, not resolved or proven no-target | L3-EXT-007 |
+| `x_unindexed_zero_one_never_default` | **Owner-signed INT-061 A:** hypothetical X-0/X-1 forms for G\PN cannot introduce an implicit sentinel/default occurrence or source rewrite | L3-EXT-007 |
+| `x_unindexed_value_never_supplies_occurrence` | **Owner-signed INT-061 A:** numeric-looking G\PN value/order supplies no missing source index; no association invented from its data | L3-EXT-007 |
+| `x_unindexed_unique_path_option_c` | **A selected; C not active:** exactly one G\PN still leaves occurrence mapping cannot-evaluate with raw evidence; unique path does not authorize C attachment or an invented sentinel | L3-EXT-007 |
+| `x_unindexed_duplicate_path_option_c` | **A selected; C not active:** duplicate G\PN stays field Ambiguous/all listed; X mapping cannot-evaluate with qualification retained; no duplicate winner | L3-EXT-005, L3-EXT-007 |
+| `x_unindexed_nonconforming_option_d` | **A selected; D not active:** preserve X and cannot-evaluate occurrence mapping; do not impose D's blanket malformed/nonconforming verdict merely because G\PN has no index | L3-EXT-007 |
+| `x_registry_decomposition_survives_absent_target` | **Owner-signed INT-062 A:** reviewed 106-24R1 baseline registry contains D\MN pattern/arity, but no matching original item is present; registry split remains defined, then instance lookup reports unresolved/orphan, not absent grammar | L3-EXT-001, L3-EXT-004 |
+| `x_document_only_code_does_not_define_registry_split` | **Owner-signed INT-062 A:** a document-only/private code is present but absent from reviewed registry metadata; presence cannot create a registry code definition or heuristic split; retain raw/cannot-evaluate evidence | L3-EXT-001 |
+| `x_extension_overlap_prevents_heuristic_split` | **Owner-signed INT-062 A:** fixture metadata establishes EXTENSION_CODE overlap with an existing registry code name; retain violation/raw evidence and cannot-evaluate split, do not pick a longest prefix or rename source | L3-EXT-001, L3-EXT-006 |
+| `x_private_target_registry_only_cost` | **Owner-signed INT-062 A:** private V original is present but outside standard registry vocabulary (section 9.5.13); X remains cannot-evaluate. Standard V ID/VN do not grant private-name grammar | L3-EXT-001 |
+| `x_baseline_registry_keeps_edition_basis` | **Owner-signed INT-062 A:** supplied declaration/override/fallback evidence and INT-044 reason stay unchanged; identify registry as 106-24R1 until deltas exist, not a fake older catalog | L3-EXT-001, L3-EXT-005 |
+| `x_legacy_renamed_original_is_unavailable` | **Owner-signed INT-062 A:** coordinator's legacy R\DST/R\CDT example has no reviewed baseline metadata for the legacy original: cannot-evaluate, raw bytes kept, no automatic translation; no historical rename date asserted | L3-EXT-001 |
+| `x_hybrid_no_vocabulary_uses_labelled_document_names` | **A selected; hybrid C not active:** document-only original in a group lacking registry vocabulary remains cannot-evaluate; never emit document-defined vocabulary as an adopted basis | L3-EXT-001 |
+| `x_hybrid_existing_vocabulary_never_falls_back` | **A selected; hybrid C not active:** reviewed registry vocabulary exists but requested code is missing: cannot-evaluate, no document-name fallback | L3-EXT-001 |
+| `x_hybrid_v_private_boundary_needs_owner` | **A selected; historical test name retained:** standard V ID/VN vocabulary never authorizes private names as decomposition metadata; private original remains cannot-evaluate even when present | L3-EXT-001 |
+| `x_association_oracle_is_not_resolver_output` | Independently listed target IDs/path/arity/spans determine expected outcomes; production resolver/round trip alone is not the oracle; all bytes and qualifiers unchanged | L3-EXT-008 |
+
+No public query syntax, concrete result/error names, report layout, private
+value/counter semantics, namespace-uniqueness validator or edit/renumber API
+is selected here. V-group derivations remain separate; a partial X child
+does not complete L1-EXT-003. Future metadata coverage and executable tests
+must satisfy the claimed 0.1 support rather than silently reduce its scope.
+
+## Planned V-group context batch 31
+
+Source: 106-24R1 Ch9 section 9.5.13 p. 9-171 (V ID/VN/private form) and
+Table 9-2 DATA SOURCE ID p. 9-11. These are structural/context fixtures,
+not whole-file conformance or private-value decoders. Header composition
+can receive evaluated field states under reviewed metadata; it does not
+settle unreviewed blanks/required-presence rules. Eight INT-063 A/definition expectations are owner-decided (Joey,
+2026-11-28); remaining independent final review/development/test gates apply.
+
+| Planned test | Independent source/context and expected evidence | Requirements |
+|---|---|---|
+| `v_standard_headers_are_not_private_suffixes` | V-1\ID and V-1\VN are standard headers; V-1\ABC\ID is a private suffix and cannot replace the local ID header | L3-EXT-009, L3-EXT-010 |
+| `v_private_items_keep_observed_namespace` | Readable V-1\ABC\GAIN with opaque value stays in observed ABC inventory, with original item/span/value; no gain decoder claimed | L3-EXT-009, L3-EXT-015 |
+| `v_private_nested_digits_do_not_create_counters` | Private suffix contains paths, N or -1-2; retain opaque bytes without a standard counter/member/index grammar | L3-EXT-009, L3-EXT-015 |
+| `v_context_with_agreeing_evaluated_headers` | Supplied usable ID=SRC and VN=ABC agree with observed ABC namespace; retain explicit header/source context. Any vendor-confirmation policy remains conditional on INT-063 | L3-EXT-010, L3-EXT-014 |
+| `v_header_only_occurrence_is_retained` | ID/VN headers exist with zero private items: retain occurrence context and empty private collection, not no V occurrence or a fabricated payload | L3-EXT-010 |
+| `v_canonical_occurrence_keeps_raw_findings` | V-01 and V-1 share canonical occurrence identity; retain raw spellings/normalization findings and repeated header candidates rather than deduplicate | L3-EXT-010, L3-EXT-011 |
+| `v_ascii_acronym_comparison_preserves_raw` | ABC/abc literal/evaluated identifiers compare by ASCII case rule; high-byte look-alike never folds into ASCII; raw source remains | L3-EXT-011 |
+| `v_textual_source_ids_are_not_numeric_indices` | Usable source label 01 does not equal G source label 1; INT-038/055 cannot strip its zeros as a decimal value | L3-EXT-011, L3-EXT-012 |
+| `v_source_link_uses_text_not_occurrence` | V occurrence 2 has usable ID=SRC, G\DSI-1 is SRC: matching textual source context can resolve; x need not equal n | L3-EXT-012 |
+| `v_missing_g_source_keeps_local_label` | Usable local ID exists but no equal G source candidate: keep label and unresolved source link distinct, no synthesized G item | L3-EXT-012 |
+| `v_duplicate_g_sources_keep_all_candidates` | Multiple G\DSI-n occurrences have same textual source identity: keep ambiguous candidates/all source IDs in order, no winner or record upgrade | L3-EXT-012, L3-EXT-013 |
+| `v_ambiguous_local_id_never_selects_source` | Reviewed local ID state is Ambiguous, even with equal candidate text: preserve state/all evidence; no source chosen by equality | L3-EXT-010, L3-EXT-012 |
+| `v_other_occurrence_cannot_supply_headers` | V-2 has headers missing on V-1: retain V-1 missing context; do not borrow V-2's vendor/source even if a private path matches | L3-EXT-010, L3-EXT-013 |
+| `v_separate_record_cannot_supply_context` | Context exists only in another setup document/record: no cross-record source/vendor binding | L3-EXT-013 |
+| `v_cross_fragment_context_has_packet_provenance` | Same channel, sequence +1 and matching FRMT/RCCVER give ONE ADR-0025/INT-011 record; headers/private items span packets, retaining item/body/packet mappings | L3-EXT-013 |
+| `v_record_qualifications_never_upgrade` | Inventory/source candidates remain available diagnostically only under reviewed access; Ambiguous/Incomplete/cut/encoding qualifications and blocking force stay attached | L3-EXT-013 |
+| `v_missing_vn_keeps_namespace_unconfirmed` | **Owner-signed INT-063 A:** usable path namespace but VN Missing: preserve items/context, unavailable confirmed attribution, no default or invented required-presence finding | L3-EXT-010, L3-EXT-014 |
+| `v_duplicate_vn_never_picks_vendor` | **Owner-signed INT-063 A:** repeated known-scalar VN, even equal: keep Ambiguous/all headers; no first/last/path-selected confirmed vendor | L3-EXT-010, L3-EXT-014 |
+| `v_path_header_mismatch_keeps_both` | **Owner-signed INT-063 A:** evaluated VN=ABC and private path=XYZ: preserve both, unavailable confirmed attribution with located reason, no raw reassignment/repair | L3-EXT-014 |
+| `v_invalid_unavailable_vn_keeps_namespace` | **Owner-signed INT-063 A:** evaluated Invalid or unavailable VN does not hide observed items or become an inferred vendor; preserve distinct state/reason | L3-EXT-010, L3-EXT-014 |
+| `v_unknown_private_duplicates_stay_unclassified` | Repeated opaque private name retains every raw occurrence; unknown private cardinality does not create a proved scalar duplicate merely from shape | L3-EXT-010, L3-EXT-015 |
+| `v_vn_projected_three_chars_ascii_match` | **Owner-signed INT-063 A:** VN a<TAB>Bc (real TAB) projects under INT-036 to aBc, exactly three ASCII characters; compares to ABC path without rewriting raw value; existing diagnostics remain | L3-EXT-011, L3-EXT-014 |
+| `v_vn_wrong_length_is_invalid_unconfirmed` | **Owner-signed INT-063 A:** available projected empty, two- or four-character VN is Invalid (not Missing/generic unavailable), so confirmed attribution is unconfirmed; raw bytes retained | L3-EXT-011, L3-EXT-014 |
+| `v_vn_blank_handling_does_not_trim` | **Owner-signed INT-063 A:** three-character value space+AB has leading blank; INT-041 unreviewed blank handling remains unavailable, never trim it or invent a numeric/strict alphabet rule | L3-EXT-011, L3-EXT-014 |
+| `v_vn_high_byte_is_not_usable` | **Owner-signed INT-063 A:** raw three-byte VN containing FF is Invalid under INT-037, not a usable acronym through Latin-1/Unicode/high-byte folding; unconfirmed and raw evidence unchanged | L3-EXT-011, L3-EXT-014 |
+| `v_grouping_oracle_is_not_implementation_output` | Independently listed IDs/header states/source candidates and literal spans determine expected inventory; no production grouping path calculates the oracle | L3-EXT-016 |
+
+No vendor decoder/plug-in, generic user overlay, acronym alphabet, required-
+presence rule, result schema, exact rendered label or repair policy is chosen.
+Observed raw grouping is not confirmed interpretation, clock proof or a
+waiver of INT-061/062/063 and the other owner/implementation gates.
+
+## Planned dependency/artifact inspection batch 32
+
+These are planned evidence/acceptance cases for L2-REL-005/006, not executed
+policy checks, generated SBOMs, verified attestations or permission to release.
+Inputs can supply synthetic graph/artifact facts and independently expected
+failure reasons. The intended applicable check must fail; an unrelated tool
+error is not proof that policy/artifact enforcement worked.
+
+| Planned acceptance case | Independent evidence or rejection condition | Requirements |
+|---|---|---|
+| `dep_actual_graph_not_manifest_strings` | Resolved library/CLI graph, features/targets, lock/source identity and policy revision match the reviewed head; a direct manifest list alone is insufficient | L3-REL-009 |
+| `dep_transitive_or_feature_edge_not_omitted` | Finding lies in a checked transitive/optional graph edge: actual policy result retained; another feature graph cannot silently hide it | L3-REL-009, L3-REL-010 |
+| `dep_advisory_source_context_is_recorded` | Completed command/tool result identifies advisory source/snapshot/time or its unavailability; no invented freshness window or clean status from missing data | L3-REL-009 |
+| `dep_denied_finding_fails_acceptance` | Applicable non-exempt denial is present: failed acceptance with intended reason, not a swallowed command failure or unrelated-network-error pass | L3-REL-010 |
+| `dep_duplicate_warning_is_not_new_ban` | Existing multiple-version warning remains distinguishable from denial; this contract does not silently tighten policy | L3-REL-010 |
+| `dep_internal_path_is_not_external_exception` | Accepted exact-version workspace path does not become an unlisted external path/git/registry-source allowance | L3-REL-010 |
+| `dep_exception_reason_is_scoped` | Listed exception is matched to identifier/dependency/context/reason; unrelated replacement dependency cannot inherit its prototype rationale | L3-REL-011 |
+| `dep_prototype_xml_ignore_retirement_is_checked` | Prototype XML code is removed in future restructure: review/removal of its prototype-only advisory ignores accompanies that change, not blanket retention | L3-REL-011 |
+| `dep_past_pass_does_not_approve_new_dependency` | Old policy pass or existing Criterion entry cannot approve retention/new dev dependency without required owner approval | L3-REL-009, L3-REL-011 |
+| `artifact_binary_digest_matches_released_bytes` | Actual downloaded binary bytes/digest match its intended source/version/target and checksum/provenance association | L3-REL-012, L3-REL-014 |
+| `artifact_same_filename_stale_digest_is_rejected` | Rebuilt/different bytes retain filename but stale evidence: acceptance fails rather than trusting the name | L3-REL-012 |
+| `artifact_sbom_is_per_binary_build_context` | Matching target/features/resolved build identity associates CycloneDX SBOM with intended binary; library-only requirements list is insufficient | L3-REL-013 |
+| `artifact_other_target_sbom_is_not_substitute` | Windows or another-version graph supplied for intended Linux build: mismatch/missing evidence remains unsatisfied, no cross-target substitution | L3-REL-012, L3-REL-013 |
+| `artifact_missing_sbom_is_not_green_build_success` | Binary exists and workflow is green, required per-binary SBOM absent: L1 release-artifact obligation remains unsatisfied | L3-REL-013 |
+| `artifact_attestation_is_for_intended_file` | Builder provenance verification covers intended .crate/binary/SBOM subject bytes and source/build identity, not another digest or signing-step name; manifest/bundle validation does not imply their individual attestation | L3-REL-014 |
+| `artifact_wrong_source_or_changed_payload_fails` | Verification/evidence gives another repository/head or modified payload: preserve mismatch/failure, not accepted build provenance | L3-REL-014, L3-REL-015 |
+| `artifact_user_recipe_has_applicable_result` | Documented verification path and actual completed matching-file result are available; docs/upload alone cannot claim verification | L3-REL-015 |
+| `artifact_missing_or_failed_verification_stays_unsatisfied` | Required artifact/verification missing, failed or not run: no inference from release notes or unrelated green job | L3-REL-014, L3-REL-015 |
+| `artifact_distribution_does_not_gain_publish_authority` | Unified trusted-publishing.yml uses a non-publishing self-attesting builder and crates-io-gated publish job; artifact acceptance cannot add a stored credential, token fallback or maintainer bootstrap | L3-REL-016 |
+| `artifact_signed_build_is_not_tmats_integrity` | SBOM/provenance verifies build evidence only; no positive G\SHA, trusted recorder data, semantic coverage or qualified-record-use permission follows | L3-REL-016 |
+| `dep_release_uses_published_types_core` | Release graph resolves compatible types 0.2/core 0.2 APIs from crates.io and exercises them; reject unpublished/path/git/[patch]/source overrides, including a CI-only override; internal packaged CLI resolves its matching published library | L3-REL-009, L3-REL-010 |
+| `artifact_unified_release_set_is_complete` | Both .crate files, all binary archives, SBOMs, exactly one SHA256SUMS and one irig106-tmats-<version>.intoto.jsonl bundle; missing/extra manifest or bundle fails | L3-REL-012, L3-REL-016 |
+| `artifact_builder_attests_only_own_output` | Nested signer independently guards v* tag push, checks github.sha/verified output and rejects caller-selected inputs; PR/manual runs never sign; no top-level attest job | L3-REL-014 |
+| `artifact_publish_repackage_cmp_before_upload` | Non-compiling publish needs gate/build, validates checksums and cmp's cargo package --locked --no-verify output with attested .crate; changed bytes block upload | L3-REL-016 |
+| `artifact_served_crate_bytes_and_registry_checksum` | New and already-published packages must match attested bytes and registry checksum; retry never skips comparisons; a mismatch fails | L3-REL-015, L3-REL-016 |
+| `artifact_draft_resume_checks_metadata_and_assets` | Wrong tag/title/body/draft state or asset name/size/digest blocks publication; check again after publish, never replace an asset or modify published release | L3-REL-016 |
+| `artifact_verifier_checks_served_release` | Verify actual downloaded release assets with repository/tag/builder signer constraints, not only staging artifacts; tampering fails | L3-REL-015 |
+
+No workflow/policy/credential/settings action is performed by these cases.
+Existing deny.toml and RELEASING.md govern, including coordinator/owner-only
+bootstrap and TP-only real releases. New requirements remain Draft until
+matching graph/distribution evidence is reviewed; no new Evidence is claimed.
+
+## Planned release follow-up checks carried from #65
+
+These extend the batch-32 acceptance specification, not executed release
+checks. The org standard governs any difference from the local summary.
+
+| Planned acceptance case | Independent evidence or rejection condition | Requirements |
+|---|---|---|
+| `artifact_gate_uses_remote_annotated_tag` | Remote API shows annotated tag peeling to github.sha on main with intended CI green at that commit; lightweight/local-only/wrong-commit tag or unrelated CI fails | L3-REL-012 |
+| `artifact_sbom_generator_is_pinned_locked` | Exact cargo-cyclonedx pin and --locked installation match recorded evidence; floating tool selection is rejected | L3-REL-013 |
+| `artifact_publish_reuses_build_toolchain` | publish and publish-path-check install/check build's recorded rust-version; a newer stable resolved after approval is rejected | L3-REL-013 |
+
+## Planned edition-independent reading batch 33
+
+These are synthetic structural/evidence cases for L1-EDN-001, not a claim of
+historical/future conformance or an implemented reader. Source framing uses
+106-24R1 Ch9 sections 9.4.1/9.4.2 p. 9-2 and approved INT-035–039.
+The metadata matrix supplies missing/known/unknown/older/future labels to the
+same byte input without inventing numeric historical mappings. Internal
+states/spans are asserted; rendered output remains owner-gated.
+
+| Planned test | Independent input and expected result | Requirements |
+|---|---|---|
+| `edition_read_without_declaration` | Synthetic `COMMENT:x;`: one framed item, source/item [0,10), name [0,7), value [8,9); no G\106 prerequisite | L3-EDN-008 |
+| `edition_read_metadata_does_not_reframe` | Same bytes above with each supplied metadata label: identical source, spans, order and scanner findings; semantic findings are not equated | L3-EDN-008, L3-EDN-013 |
+| `edition_read_unknown_g106_kept_raw` | `G\106:zz;COMMENT:x;`: raw values and exact replay retained; no guessed year or mapping; declaration interpretation tested separately | L3-EDN-008, L3-EDN-009 |
+| `edition_read_changed_declaration_has_own_offsets` | `G\106:24;COMMENT:x;` versus `G\106:unknown;COMMENT:x;`: independent item spans [0,9)/[9,19) versus [0,14)/[14,24); no assertion that byte-changing edits keep offsets | L3-EDN-008, L3-EDN-013 |
+| `edition_read_unregistered_name_is_retained` | Synthetic `UNREGISTERED_TEST:x;`: registry does not know this name; raw item [0,20), name [0,17), value [18,19); unknown definition never drops bytes | L3-EDN-009 |
+| `edition_read_unregistered_order_and_repeats` | Synthetic unregistered items interleaved with COMMENT: all occurrences in source order, replay exact; unknown multiplicity never guessed scalar | L3-EDN-009, L3-EDN-010 |
+| `edition_read_no_historical_alias` | Supplied unavailable definition: raw key/value retained; no renamed-code alias or baseline range/default inferred | L3-EDN-009, L3-EDN-011 |
+| `edition_read_recovery_independent_of_basis` | `:v;COMMENT:x;tail` under each metadata label: empty-name finding, intact COMMENT and retained suffix; no suffix explicit lookup item | L3-EDN-010 |
+| `edition_read_projection_does_not_rewrite_source` | `CO\r\nMMENT:x;` with real CR/LF under every metadata label: INT-036 projection and internal-omission information, raw bytes unchanged | L3-EDN-010 |
+| `edition_read_high_byte_never_disappears` | COMMENT value contains 0xFF: INT-037 interpretation limits retained with exact raw bytes; metadata does not transcode/repair | L3-EDN-009, L3-EDN-010 |
+| `edition_read_duplicate_uses_reviewed_metadata` | Known scalar definition supplied twice: INT-039 retains all occurrences; absent multiplicity metadata cannot invent historical scalar behavior | L3-EDN-010 |
+| `edition_read_semantic_unavailability_separate` | Readable structural item with no applicable definition: raw candidates retained, no usable typed meaning invented or conformance claim | L3-EDN-011 |
+| `edition_read_fallback_is_not_historical_validation` | Given an already evaluated labelled basis, raw reading does not relabel it as the declared/validated historical edition; no INT-017 mapping is exercised | L3-EDN-011 |
+| `edition_read_preserves_record_qualification` | Supply Complete, Incomplete, Ambiguous and Ambiguous-with-cut qualifications separately: each remains attached unchanged; no governing authorization | L3-EDN-012 |
+| `edition_read_documents_never_merge` | Two separately identified inputs retain their own source/revision/qualification; equal labels or keys never concatenate their attribute sets | L3-EDN-012 |
+| `edition_read_xml_gate_remains` | Supplied XML format is unsupported through the setup adapter, not silently routed as ASCII because the declaration is unknown | L3-EDN-012 |
+| `edition_read_limit_failure_not_empty_success` | Same bytes/context with an exhausted supplied budget: existing typed limit contract remains observable; no empty successful document | L3-EDN-008, L3-EDN-013 |
+| `edition_read_oracle_is_independent` | Fixture oracle lists exact input bytes/spans and metadata variants independently; a production-scanner-derived oracle is rejected as evidence | L3-EDN-013 |
+
+No public report format, historical code semantics, default, registry delta
+or owner interpretation is approved by these cases. Future implementation
+must replace planned rows with executable tests and trace markers.
+
+## Planned complete-record enumeration batch 34
+
+These planned tests assert internal command computation for L1-CLI-003,
+not report layouts, public record ordinals or command eligibility. Inputs
+supply independently evaluated final assembly results and core source facts;
+assembly-specific integration cases retain their existing interpretation
+gates. No synthetic packet is claimed conforming merely by its channel.
+Source: 106-24R1 Ch11 section 11.2.7.2 p. 11-50; ADR-0025/0036.
+
+| Planned test | Independent input and expected result | Requirements |
+|---|---|---|
+| `records_all_complete_not_first_only` | Complete candidates A/B/C at first-fragment offsets 100/500/900, with intervening data observations: entries A/B/C exactly once | L3-CLI-038, L3-CLI-040 |
+| `records_one_fragmented_document_one_entry` | A consists of three fragments with explicit ordered membership: one A entry retaining all spans, not three packet entries | L3-CLI-039 |
+| `records_fragmented_and_single_both_retained` | Multi-fragment A followed by single-fragment B: two entries with separate body extents and provenance | L3-CLI-038, L3-CLI-039 |
+| `records_identical_separate_copies_not_deduplicated` | Distinct bounded A/B have identical text and digest: both remain; equality is information, no governing/eligibility upgrade | L3-CLI-039, L3-CLI-043 |
+| `records_order_uses_first_fragment_not_finalization` | Supplied Complete A begins at 100 and ends at 800; independent B begins at 300 and ends at 400: internal order A/B, despite completion order B/A | L3-CLI-040 |
+| `records_not_sorted_by_channel_or_timestamp` | Supplied source order A/B disagrees with both channel and timestamp order: retain A/B and their original provenance | L3-CLI-040 |
+| `records_complete_list_does_not_absorb_noncomplete` | A Complete, B Incomplete, C Ambiguous, D provisional: Complete entries contain A; B/C/D evidence and distinct states remain, no text borrowed into A | L3-CLI-041 |
+| `records_cut_facet_retains_blocking_force` | Ambiguous-with-cut B retains cut and all findings; no Complete entry or usable/governing setup manufactured | L3-CLI-041, L3-CLI-043 |
+| `records_revised_time_seal_uses_final_outcome` | A formerly observed as Complete now supplied finally Ambiguous after continuation: no stale Complete A entry; revision history and premature-seal finding retained | L3-CLI-041 |
+| `records_unknown_or_xml_format_not_reparsed` | Supplied unsupported-format candidate remains unsupported with source facts; no ASCII reparse or format guessing | L3-CLI-041 |
+| `records_no_complete_is_not_empty_document` | Successfully traversed extent contains only evaluated non-Complete candidates: no Complete entries, evidence retained, no synthesized empty document | L3-CLI-038, L3-CLI-041 |
+| `records_failure_is_not_clean_empty_scan` | Acquisition/traversal fails before any Complete record: failure distinct from successful zero-result inventory | L3-CLI-038, L3-CLI-042 |
+| `records_late_failure_does_not_claim_full_inventory` | Complete A observed before supplied core failure at 700 in a larger extent: A identity retained with traversal failure/extent, no claim of absent later records or publication policy | L3-CLI-042 |
+| `records_limit_never_silently_drops_channel_run` | Supplied typed aggregate-run limit error: preserved with context, no retry as text, no silently forgotten run or invented success | L3-CLI-042 |
+| `records_selection_does_not_renumber_internal_identity` | Same A/B set passed to two command consumers with explicit A versus B context: selected identity changes, underlying inventory/provenance does not | L3-CLI-043 |
+| `records_separate_documents_do_not_create_duplicate` | A and B each contain one scalar field: enumeration retains two scoped documents, never combines their fields into an INT-039 duplicate group | L3-CLI-039 |
+| `records_complete_is_not_governing_or_integrity_pass` | Evaluated Complete A with integrity findings/unresolved governing effect: those facts stay attached; no checksum match or adoption inferred | L3-CLI-041, L3-CLI-043 |
+| `records_oracle_uses_independent_candidate_sets` | Expected set/order/membership listed independently from supplied facts; production enumeration or a local replacement packet reader is not an oracle | L3-CLI-044 |
+
+Pending owner choices for access/governance, public selection policy and
+report rendering remain pending. No executable tests or packet reader are
+added by these specifications.
+
+## Planned checksum command computation batch 35
+
+Internal computation only, given explicitly selected eligible records.
+Incomplete/ambiguous access follows owner-signed INT-031; refused-result
+propagation tests can inject evaluated outcomes rather than access such text.
+No output schema, selection default or numeric exit code is fixed here.
+Sources: existing L3-SUM-001–010; INT-018–021/043; ADR-0014/0029.
+
+| Planned test | Independent input and expected result | Requirements |
+|---|---|---|
+| `checksum_command_keeps_selected_record` | Different eligible A/B sources: explicitly select B; computation and findings refer only to B, not first A or joined A+B | L3-CLI-045, L3-CLI-051 |
+| `checksum_command_rejects_stale_context_substitution` | Distinct revisions of the same document: supplied revision remains attached; no cached earlier digest presented for it | L3-CLI-045 |
+| `checksum_command_recording_domain_is_text_only` | Eligible assembled text from borrowed spans: independent SHA oracle excludes headers/CSDWs/filler/packet checksum by using the specified text domain | L3-CLI-045, L3-CLI-051 |
+| `checksum_command_malformed_value_compute_allowed` | Complete G\SHA:2-ABC; with defined exclusion: compute allowed and matches independent hashlib oracle, verify malformed; no command-level conflation | L3-CLI-046, L3-CLI-047 |
+| `checksum_command_placeholder_is_not_verification` | Complete G\SHA:0;: compute allowed under established domain, verification stays placeholder/unverified, not match | L3-CLI-046, L3-CLI-047 |
+| `checksum_command_undefined_domain_stays_refused` | Inject missing-terminator/truncation/damage/BOM refusal: no authoritative result or silently substituted raw hash | L3-CLI-046 |
+| `checksum_command_duplicate_refusal_keeps_all_findings` | Inject F1 duplicate outcome with occurrence locations: indeterminate/refusal and every occurrence preserved, no selected winner or positive match | L3-CLI-046, L3-CLI-047 |
+| `verify_command_preserves_outcome_partition` | Independently supplied match/mismatch/absent/unknown/malformed/indeterminate/unavailable/placeholder results remain distinct with their source context | L3-CLI-047 |
+| `verify_command_noncanonical_2_keeps_warning` | Eligible 02-/002- algorithm-2 cases with independently calculated matching digest: match plus located warning, raw spelling unchanged | L3-CLI-047 |
+| `verify_command_blocked_keeps_noncanonical_warning` | Inject blocked result plus located noncanonical-2 warning: both remain visible internally; no fabricated verified result | L3-CLI-047 |
+| `checksum_command_flex_is_explicit_and_separate` | Explicit flex request/options remain attached to non-standard result; standard request cannot be satisfied by flex | L3-CLI-048 |
+| `checksum_command_flex_never_stamps_gsha` | Flex result passed through computation leaves input and G\SHA unchanged; no standard-verification claim | L3-CLI-048, L3-CLI-049 |
+| `stamp_command_duplicate_is_not_auto_repair` | Inject duplicate/refused transaction: no successful stamped result, input/findings/occurrences retained, no implicit remove | L3-CLI-049 |
+| `stamp_command_explicit_exact_item_repair_then_stamp` | Permitted exact-item duplicate removal in supplied revision-bound transaction precedes re-read and stamp; wrapper never selects the item itself | L3-CLI-049, L3-CLI-050 |
+| `stamp_command_keeps_noncanonical_name_finding` | Eligible g\sha: slot: successful value stamp keeps name finding and rename recommendation; raw name not silently changed | L3-CLI-049 |
+| `stamp_command_final_bytes_verify_independently` | Transaction inserts a separator/newline outside exclusion: command result matches independent final-byte SHA and library re-read verification, canonical 2-/lower-case hex | L3-CLI-050, L3-CLI-051 |
+| `stamp_command_verification_failure_is_not_success` | Inject final verification failure after emission: original input unchanged and failure retained, no successful stamped-result value | L3-CLI-049, L3-CLI-050 |
+| `stamp_command_result_is_not_delivery_success` | Verified in-memory result followed by supplied destination delivery failure: computation result never suppresses that failure or authorizes in-place writes | L3-CLI-050 |
+| `checksum_command_oracles_not_wrapper_mocks_only` | Integration evidence uses eligible actual documents/independent digests; an injected call/result alone is not SHA correctness or flex compatibility coverage | L3-CLI-051 |
+
+Flex's exact source/algorithm and independent compatibility derivation remain
+outstanding. Output delivery and ambiguous/incomplete access cases do not
+remove their owner gates; new tests are planned, not executed coverage.
+
+## Planned flex compatibility acceptance batch 36
+
+These are source-qualification/acceptance obligations, not executed vectors.
+All flex expected numeric values are **BLOCKED on the owner's reference/revision
+choice**, then pinned-reference analysis and independent oracle qualification.
+ADR-0014 already chose bit-for-bit compatibility including D7; it does not
+choose bbaggerman/irig106lib versus the atac fork or a revision. Reference runs
+are bounded, GitHub CI only, synthetic inputs only, no new project dependency.
+Record outputs/revision/hashes, never paste reference source into this repo.
+References: L1-SUM-003, ADR-0014/0018 and the 2026-09-25 tool investigation.
+Synthetic filter tokens below are not assertions of Chapter 9 field meaning.
+
+| Planned test | Independent input/evidence and expected obligation | Requirements |
+|---|---|---|
+| `flex_reference_snapshot_is_reproducible` | Pin revision/files/function/options/environment and fixed vectors; moving branch or historical prose alone fails readiness | L3-SUM-014 |
+| `flex_raw_source_not_effective_projection` | Controls, leading-zero tokens and raw spelling differ from typed views: use qualified reference preparation, source unchanged; do not assume INT projections equivalent | L3-SUM-011 |
+| `flex_reference_line_boundaries_are_explicit` | Qualified cases with CR/LF, delimiters, empty/layout-only input and no final semicolon have source-derived handling; no parser repair guessed | L3-SUM-011, L3-SUM-014 |
+| `flex_uppercase_is_reference_byte_operation` | Mixed-case bytes use the reference's defined preparation, not unrelated locale/Unicode folding; no source rewrite | L3-SUM-011 |
+| `flex_default_comment_and_group_filters` | Qualified complete COMMENT/group COM/G/V cases use the recorded default selection, with expected reference values fixed independently | L3-SUM-012 |
+| `flex_r_identity_filter_is_exact_not_prefix_family` | Listed R filter tokens and neighboring nonmatching tokens retain the pinned source's exact selection behavior, never a guessed family-wide exclusion | L3-SUM-012 |
+| `flex_d7_dpoc4_is_not_silently_fixed` | Qualified DPOC1/2/3 versus DPOC4 and MPOC4 vectors pin the accepted exclusion slip; no corrected symmetry | L3-SUM-012, L3-SUM-015 |
+| `flex_each_inclusion_option_has_reference_vectors` | Every supported reference inclusion option and accepted combination has independently fixed results; public CLI syntax remains separate | L3-SUM-012, L3-SUM-014 |
+| `flex_arithmetic_matches_independent_reference` | Qualified lines check initialization/packing/odd length/reduction/final sum with a separately derived arithmetic oracle, not production functions | L3-SUM-013, L3-SUM-015 |
+| `flex_long_line_and_carry_boundaries` | Bounded source-derived length/carry/overflow cases agree across qualified host environments or expose a documented readiness gap; no host-width accident accepted | L3-SUM-013, L3-SUM-015 |
+| `flex_line_permutation_preserves_sum` | Reorder independently qualified complete contributing lines: same reference sum; do not generalize to fragments or malformed text | L3-SUM-013, L3-SUM-015 |
+| `flex_repeated_line_is_not_set_deduplication` | Repeated qualified contributing line participates twice according to reference accumulation; fixed vector detects accidental deduplication | L3-SUM-013, L3-SUM-015 |
+| `flex_byte_domain_gaps_block_positive_claims` | NUL/high-byte/odd/truncated stimuli without defined reference behavior remain recorded gaps, never fabricated positive compatibility vectors | L3-SUM-011, L3-SUM-014 |
+| `flex_options_and_source_identity_survive_wrapper` | Result retains non-standard identity and the actual options/source/revision; no exact public serialization chosen | L3-SUM-016 |
+| `flex_is_not_sha_or_packet_integrity` | Flex result neither enters G\SHA nor substitutes for standard verification or core data-checksum evidence; all states stay separate | L3-SUM-016 |
+| `flex_mocked_wrapper_is_not_algorithm_coverage` | Wrapper propagation succeeds but no pinned arithmetic/filter vectors exist: flex implementation readiness remains unsatisfied | L3-SUM-014, L3-SUM-015 |
+
+## Planned checksum-evidence independence follow-up from #68
+
+These test supplied independent outcomes, not an admission bypass. A real
+integration test must first satisfy its reviewed source/access gates; it may
+not read a rejected packet just to manufacture a G\SHA result.
+
+| Planned test | Independent input and expected result | Requirements |
+|---|---|---|
+| `checksum_core_data_mismatch_and_gsha_match_stay_separate` | Given core PacketInfo data-checksum Mismatch and independently evaluated G\SHA match: both retained unchanged, no packet-integrity upgrade or forced G\SHA mismatch | L3-CLI-010, L3-CLI-047 |
+| `checksum_core_data_notchecked_and_gsha_match_stay_separate` | Given NotChecked and independently evaluated G\SHA match: NotChecked never becomes checked/match, G\SHA result unchanged | L3-CLI-010, L3-CLI-047 |
+| `checksum_core_evidence_never_repairs_gsha_failure` | Supplied core Mismatch/NotChecked paired with G\SHA mismatch/indeterminate: preserve each state/findings, no promotion of either or access authority | L3-CLI-010, L3-CLI-047 |
+
+## Planned suspect-terminator batch 37
+
+Planned internal warning/suggestion checks for L1-READ-007, still suspect
+under ROADMAP S1. Sources: 106-24R1 Ch9 section 9.4.2 p. 9-2, Appendix
+9-C p. C-8, and ADR-0007/0026. G\PN's reviewed name is Table 9-2 PROGRAM
+NAME p. 9-10; synthetic COMMENT values below are intentional byte fixtures,
+not an assertion that all such values are errors. Use independently supplied
+recognizer coverage where private-name grammar is pending.
+
+| Planned test | Independent input and expected result | Requirements |
+|---|---|---|
+| `suspect_colon_keeps_one_original_item` | `COMMENT:before: G\PN:x;`: one original item [0,23), value [8,22), warning at [14,15), proposal replaces only that byte; no G\PN lookup item | L3-READ-034, L3-READ-035, L3-READ-036 |
+| `suspect_colon_no_blank_still_matches` | `COMMENT:before:G\PN:x;`: no optional blank, complete reviewed name/colon still qualifies; source unchanged | L3-READ-034 |
+| `suspect_colon_multiple_candidates_stay_one_value` | Two independently located recognized name/colon patterns in one COMMENT value: two proposals, no recursive splitting or applied edits | L3-READ-035, L3-READ-037 |
+| `suspect_colon_mixed_case_uses_whole_name_rule` | Lowercase g\pn lookahead with own colon qualifies under ASCII comparison, preserving spelling and raw edit location | L3-READ-034, L3-READ-037 |
+| `suspect_colon_control_projection_maps_raw_span` | Following G\P<CR><LF>N: recognized under INT-036 projection: locate the original triggering colon, retain omission information and every control byte | L3-READ-035, L3-READ-037 |
+| `suspect_colon_time_and_url_are_not_code_names` | Separate COMMENT values contain Time 12:30 or https://example.test: no complete recognized code name with own colon, no targeted warning | L3-READ-034 |
+| `suspect_colon_partial_name_or_no_own_colon` | Following G\ or G\PN without its own colon: predicate not satisfied; no prefix match | L3-READ-034 |
+| `suspect_colon_actual_name_delimiter_not_candidate` | `G\PN:x;`: its actual name/value delimiter is not inside the value, no targeted warning | L3-READ-034 |
+| `suspect_colon_does_not_cross_semicolon` | `COMMENT:before:;G\PN:x;`: no lookahead across first item's semicolon, no targeted warning or merged item | L3-READ-034, L3-READ-036 |
+| `suspect_colon_eof_never_invents_delimiter` | `COMMENT:before: G\PN` at EOF: no own colon/terminated lookup item invented, framing/suffix evidence retained | L3-READ-034, L3-READ-036 |
+| `suspect_colon_intentional_lookalike_stays_possible` | Author intentionally quotes complete G\PN:x text after a colon: heuristic may warn but never claims knowledge of intent, changes source or closes S1 | L3-READ-037, L3-READ-038 |
+| `suspect_colon_default_output_and_hash_domain_unchanged` | Read/inspect suggestions then default replay/hash on an eligible input: exact original bytes/domain and unchanged item inventory, proposals unapplied | L3-READ-036 |
+| `suspect_colon_unknown_grammar_is_not_guessed` | Supplied unresolved V/X recognition metadata: no fabricated complete-name evidence; coverage limitation explicit rather than a claimed all-name pass | L3-READ-034, L3-READ-038 |
+| `suspect_colon_appendix_targeted_locations_only` | Source code-name excerpt retains documented colon-ended patterns: target proposals independently listed; other literal-example findings not suppressed or mistaken for extra targeted warnings | L3-READ-037 |
+| `suspect_colon_s1_not_cleared_by_regressions` | Synthetic/source-excerpt checks pass: real-recording confirmation still outstanding, no new severity decision or removed suspect mark | L3-READ-038 |
+| `suspect_colon_limit_failure_is_not_no_candidates` | Bounded colon-rich input triggers supplied recognition/finding budget failure: preserve typed failure/limits, not clean complete no-candidate status or silent dropping | L3-READ-039 |
+
+No report renderer, automatic repair, private grammar, future line-break
+heuristic or sample-data run is introduced by these planned checks.
+
+## Detector clarifications carried after #70
+
+| Planned test | Independent input and expected result | Requirements |
+|---|---|---|
+| `suspect_colon_skips_unterminated_suffix` | `COMMENT:before: G\PN:x` at EOF contains a lookalike but no terminating semicolon: retained suffix, no detector warning/proposal or new lookup item | L3-READ-035, L3-READ-036 |
+| `suspect_colon_cut_qualification_never_upgraded` | Given permitted diagnostic inspection of a terminated value within supplied cut-qualified text: suggestion retains cut/Incomplete or Ambiguous-with-cut qualification, never usable/governing and never an INT-031 bypass | L3-READ-035, L3-READ-036 |
+| `suspect_colon_appendix_vocabulary_is_required` | Independently listed Appendix 9-C names/patterns include complete D-1\MML\N-1-1, D-1\MNF\N-1-1-1 and D-1\WP-1-1-1-1 forms and the rest of the [source-fixed pattern/literal inventory](research/2026-11-28-appendix9c-recognizer-inventory.md): recognition coverage is required for every listed full shape; XML relative/defective annotations do not become accepted names | L3-READ-034, L3-READ-037 |
+| `suspect_colon_missing_appendix_name_is_coverage_failure` | Remove one required reviewed excerpt pattern from a synthetic recognizer catalog: readiness visibly fails, never counts a missed warning as clean no-candidate output | L3-READ-034, L3-READ-038 |
+
+## Planned session-evidence batch 38
+
+Synthetic supplied CSDW/session/trigger evidence only; no invented packet
+identity or body access. Sources: 106-24R1 Ch11 section 11.2.7.2 Figure
+11-34 pp. 11-50–51 and approved INT-030/F7. Core routing/channel checks and
+owner-signed INT-031 access gates remain independent.
+
+Mixture-scope Option A (Complete records only) is RECOMMENDED, PENDING OWNER;
+B broadens finding eligibility to non-Complete candidates. Scope-sensitive
+finding expectations are BLOCKED on that decision; evidence-only cases do
+not approve either branch. L1 wording Option A is also recommended-pending.
+
+| Planned test | Independent input and expected result | Requirements |
+|---|---|---|
+| `session_ascii_xml_same_scope_reports_mixture` | Given Complete ASCII and Complete XML records in supplied S: retain source/qualification/scope evidence; formal-finding eligibility follows the owner-pending scope decision, never approval of broader candidate scope | L3-CH10-022 |
+| `session_formats_in_separate_scopes_not_mixture` | ASCII in supplied S1, XML in S2: no cross-scope mixture; scopes/provenance retained, not merged by file proximity | L3-CH10-022 |
+| `session_caller_scope_keeps_assertion_label` | S is caller asserted rather than observed control commands: check retains that basis, never certifies .RECORD/.STOP was seen | L3-CH10-022 |
+| `session_xml_observation_does_not_parse_body` | Readable XML FRMT with unsupported body: retain format evidence without ASCII/XML body parsing or eligibility upgrade | L3-CH10-022, L3-CH10-023 |
+| `session_unknown_scope_is_not_clean_pass` | Readable ASCII/XML observations but no established shared session: retain unavailable scope, no guessed grouping or clean full-scope result | L3-CH10-023 |
+| `session_unknown_frmt_is_not_default_ascii` | Unreadable format evidence: retain unknown and coverage limitation, no ASCII default | L3-CH10-023 |
+| `session_partial_extent_never_proves_global_no_mixture` | Known supplied prefix contains only ASCII, later traversal unavailable: no observed mixture limited to prefix, never whole-recording conformance | L3-CH10-023 |
+| `session_frmt_conflict_keeps_record_qualification` | Conflicting format observations within supplied Ambiguous candidate: all evidence retained, no winning FRMT or repaired boundary | L3-CH10-023 |
+| `session_f7_unidentified_event_is_indeterminate` | Established SRCC=1 trigger, event identity unverified: indeterminate missing basis, no pass/fail claim | L3-CH10-024 |
+| `session_nearby_format2_event_is_candidate_only` | Same trigger with nearby generic Format 2 recording event: candidate provenance retained, result still indeterminate | L3-CH10-024 |
+| `session_no_guessed_event_match_is_not_missing_event` | No packet matches a guessed event type: no missing-event verdict while identity/prior scope remain unreviewed | L3-CH10-024 |
+| `session_first_record_srcc1_is_separate_evidence` | Caller supplies first-record context and SRCC=1: separately located observation plus F7 uncertainty, not automatic missing-event conclusion | L3-CH10-025 |
+| `session_fragment_srcc_disagreement_is_not_aggregated` | Same FRMT/RCCVER but SRCC 0/1/unreadable across fragments: retain every reading; no OR/AND/first/last general summary or event verdict | L3-CH10-025 |
+| `session_srcc0_never_proves_byte_identity` | SRCC=0 with independently differing content evidence: bit retained, no unchanged-byte assertion from it alone | L3-CH10-025 |
+| `session_core_channel_evidence_passes_through` | Supplied core legacy/edition admission and integrity evidence retained with PacketFacts, not reclassified by a local threshold or event/format result | L3-CH10-026 |
+| `session_oracle_has_no_reader_or_scope_guess` | Independently listed observations/context/expected results; production scope inference or invented packet identity cannot establish fixture correctness | L3-CH10-027 |
+
+F7's determinate presence/absence check remains BLOCKED on verified identity,
+reviewed prior-ordering, source freshness, analysis and executable tests.
+Per-edition parent/channel wording needs source reconciliation; these cases
+do not select a packet routing rule or authorize new access/governing policy.
+
+## Session-scope follow-ups after #71 (owner decisions pending)
+
+| Planned test | Independent input and expected result | Requirements |
+|---|---|---|
+| `session_complete_ascii_incomplete_xml_scope_pending` | Complete ASCII plus Incomplete XML candidate in explicit S: **BLOCKED PENDING OWNER**. Recommended A retains qualified XML evidence without formal mixture finding; B would broaden eligibility. No qualification upgrade under either | L3-CH10-022, L3-CH10-023 |
+| `session_same_bytes_without_session_assertion` | Same supplied recording bytes/facts contain ASCII/XML observations, no actual session evidence and no caller assertion: unavailable scope, never inferred one-session or no-mixture | L3-CH10-022, L3-CH10-023 |
+| `session_same_bytes_with_labelled_whole_recording_assertion` | Exact same bytes/facts plus explicit caller assertion that this recording is one session: scope available with asserted basis retained; formal finding still follows the pending eligibility gate, not inferred command observations | L3-CH10-022, L3-CH10-023 |
+
+## Planned argument-parser mechanism batch 39
+
+Internal requests/usage results only, not new public grammar or rendering.
+Mechanism fixtures may supply a synthetic reviewed table; product coverage
+requires every actual implemented rule to have reviewed independent cases.
+Authority: accepted ADR-0013 and ADR-0034 W3, L1-CLI-009.
+
+| Planned test | Independent input and expected result | Requirements |
+|---|---|---|
+| `args_only_supplied_tokens_are_consumed` | Supplied tokens produce the table-defined request regardless of unrelated process arguments/environment; no global argv read | L3-CLI-052 |
+| `args_parser_no_source_or_stream_acquisition` | Parser request/usage paths use bounded in-memory tokens only; file/stdin/output/process-exit hooks are never reached | L3-CLI-052, L3-CLI-055 |
+| `args_reviewed_show_raw_request` | Reviewed show --raw operand form yields that internal request with the exact operand; no file acquisition, rendering or input-route claim | L3-CLI-053, L3-CLI-054 |
+| `args_missing_required_operand_is_usage` | Reviewed row requires a value, supplied sequence ends first: usage classification, no executable partial request | L3-CLI-053 |
+| `args_unknown_under_table_is_not_guessed` | Supplied token is unaccepted by the fixture's reviewed grammar: usage failure, no nearest command/option repair | L3-CLI-053 |
+| `args_declared_conflict_is_not_executed` | Fixture table explicitly defines a conflict: conflicting input yields usage; this does not define product duplicate/precedence policy | L3-CLI-053, L3-CLI-055 |
+| `args_operand_identity_not_tmats_projection` | Supplied path/value tokens preserve identity unless the reviewed grammar explicitly decodes them; INT-036/038/055 does not silently rewrite arguments | L3-CLI-054 |
+| `args_decoder_failure_keeps_usage_result` | Reviewed value decoder refuses an operand: no guessed edition/record/clock target or command execution | L3-CLI-053, L3-CLI-054 |
+| `args_empty_and_truncated_use_reviewed_rows` | Bounded empty/truncated token lists produce their table-defined usage/request outcome, with no automatic undocumented command default | L3-CLI-053, L3-CLI-057 |
+| `args_usage_reaches_host_without_exit` | Rejected request returns its classification to the calling host, which continues running; no output-text/exit-number assertion | L3-CLI-055 |
+| `args_success_does_not_hide_later_failures` | Parsed valid request later hits acquisition/library/delivery failure: preserve the failure, no claim of successful command from parse success | L3-CLI-055 |
+| `args_binary_and_host_share_parser` | Identical supplied arguments at both adapters construct identical request/usage outcomes before rendering, not two separately maintained parsers | L3-CLI-056 |
+| `args_individual_command_needs_no_global_parse` | Explicit request calls an individual command without main/global argv parsing or process lifetime changes | L3-CLI-056 |
+| `args_help_version_have_no_hidden_exit` | Reviewed help/version table entries return their request/outcome; no parser-side print/exit or claim of full command coverage | L3-CLI-052, L3-CLI-055 |
+| `args_each_implemented_row_has_independent_cases` | Inventory of actual implemented reviewed command/flag/value/error rules maps to independent positive/negative tests; missing cases or unreviewed active rows fail readiness | L3-CLI-057 |
+| `args_synthetic_table_is_not_product_coverage` | Mechanism fixtures pass on a synthetic table while product rows are absent/unreviewed: product readiness still unsatisfied, not inferred from parser unit success | L3-CLI-057 |
+
+Held grammar rules need their own review before activation. No report-format,
+numeric CLI syntax, separator/abbreviation, non-Unicode policy or new default
+is selected; no dependency or executable parser is added by these cases.
+
+## Planned extract owner-policy cases (ADR-0037, 2026-11-27)
+
+**Owner clarification after #73:** --strict's scope (listed bad-data kinds
+versus any finding) is PENDING OWNER. Listed-kind/default/no-finding cases
+below are common to both options; other-finding strict cases remain blocked.
+The verbatim ADR-0037 owner text is unchanged, not reinterpreted as an answer.
+
+Extract row spellings --force and --strict are owner-approved (2026-11-27);
+the rest of argument grammar remains on hold.
+
+No finding is an always-refuse extraction class. For EACH of data-checksum
+mismatch, secondary-header failure, INT-045 cut, INT-048 ambiguity, INT-037
+marker and INT-055 invalidity, and for ALL SIX combined, instantiate both
+default and --strict fixtures below: default exact bytes plus every finding;
+strict refusal without successful extraction. Use synthetic retained extents
+and unchanged core/record evidence; no repaired/guessed byte ranges.
+
+| Planned test | Independent input and expected result | Requirements |
+|---|---|---|
+| `extract_findings_default_each_kind` | Six individually named variants as above: extraction proceeds with exact original bytes and every finding, no semantic/governing upgrade | L3-CLI-031, L3-CLI-060, L3-CLI-061 |
+| `extract_findings_strict_each_kind` | Same six variants with --strict: observable refusal, all findings retained, no successful byte-delivery claim | L3-CLI-060, L3-CLI-061 |
+| `extract_all_findings_default_and_strict` | All six kinds combined: default extracts exact bytes and reports all; strict refuses, no always-refuse kind fabricated | L3-CLI-060, L3-CLI-061 |
+| `extract_cut_prefix_is_available_raw_data` | Supplied original cut prefix under Incomplete or Ambiguous-with-cut: default extracts the retained prefix, never demands an invented complete suffix; strict refuses on its findings | L3-CLI-030, L3-CLI-060 |
+| `extract_strict_unlisted_information_scope_pending` | Only an information finding outside the six listed bad-data kinds: **BLOCKED PENDING OWNER**. Listed-only option permits byte-exact strict extraction with the finding; any-finding option refuses. Neither expectation activated | L3-CLI-060, L3-CLI-061 |
+| `extract_strict_without_findings_is_allowed` | Explicit selected synthetic input has no findings: --strict does not itself refuse; exact bytes, normal destination policy | L3-CLI-060 |
+| `extract_findings_never_enter_raw_stream` | Default emits exact bytes on selected sink and retains every diagnostic separately; no labels/diagnostic text inserted into extracted bytes, no layout/stream mapping pinned | L3-CLI-031, L3-CLI-060 |
+| `extract_existing_unrelated_refuses_without_force` | Existing unrelated regular destination: observable default refusal without truncation/write/rename | L3-CLI-034, L3-CLI-058 |
+| `extract_existing_unrelated_force_same_handle` | Same destination with --force: non-truncating open, identity check, truncate/write via SAME handle; no reopen or temp-file+rename | L3-CLI-034, L3-CLI-058 |
+| `extract_known_input_alias_force_still_refuses` | Same-path/symlink/hard-link known input alias plus --force: refusal before destructive access, input unchanged | L3-CLI-034, L3-CLI-058, L3-CLI-059 |
+| `extract_stdout_and_pipe_identity_not_required` | Synthetic stdout and pipe sinks have no regular-file identity: allowed, exact bytes, ordinary fallible delivery; no proof-failure refusal | L3-CLI-059 |
+| `extract_unproven_regular_refuses_without_force` | Inject regular-file identity unavailable (network-share analogue): refusal before truncate/write, no fabricated proof | L3-CLI-059 |
+| `extract_unproven_regular_force_allows_without_proof_claim` | Same facts plus --force: owner-authorized write through same non-truncating opened handle, identity remains unproven and is never relabelled checked | L3-CLI-034, L3-CLI-059 |
+| `extract_force_does_not_override_strict` | --force plus --strict with a listed INT-055 invalidity finding: strict refusal, unrelated destination not truncated/written; flags govern separate decisions | L3-CLI-058, L3-CLI-060 |
+| `extract_force_write_failure_keeps_failure_visible` | Authorized in-place unrelated-file write fails after prefix: observable partial delivery/failure, no rename fallback or success claim | L3-CLI-033, L3-CLI-058 |
+| `extract_no_extent_is_not_a_findings_refusal_class` | No selected raw extent available at all: observable operational unavailability, never guessed core boundaries or fabricated bytes; distinct from available cut prefix | L3-CLI-032, L3-CLI-060 |
+
+These are planned checks, not current CLI behavior. Source/development,
+independent review and executable testing remain; the three #57 owner holds
+are removed. General semantic/governing access is not raw extract permission.
+
+## Planned bounded lookup-state batch 40
+
+These supply L1-VIEW-006's direct 0.1 trace with internal exact-candidate
+states, not a general link engine. Table 9-4 (106-24R1) TK1 p. 9-48,
+DSI/CHE pp. 9-49, SHTF p. 9-51, TTF/TFMT/TSRC pp. 9-71–72 and NSB p.
+9-33 supply the reviewed scope; INT-036/038/039/041/042 supply existing key,
+multiplicity and value/presence behavior. Availability/record qualifications
+are supplied explicitly where their interpretation remains gated.
+
+| Planned test | Independent input and expected result | Requirements |
+|---|---|---|
+| `bounded_lookup_zero_exact_candidates` | Available scoped TFMT lookup with no matching item: unresolved, zero candidates; no proof of generic-link or clock association resolution | L3-VIEW-066 |
+| `bounded_lookup_one_item_is_identity_resolved` | One R-1\TFMT-3:B;: resolved to its exact identity/location, with separate reviewed field result | L3-VIEW-065, L3-VIEW-066 |
+| `bounded_lookup_equal_repeats_are_ambiguous` | Two identical TFMT occurrences at the same key: ambiguous, both IDs/locations retained, never deduplicated | L3-VIEW-066 |
+| `bounded_lookup_invalid_candidate_not_filtered` | TFMT B plus a second same-key invalid value: two candidates/ambiguous, not resolved to B; both findings retained | L3-VIEW-066, L3-VIEW-068 |
+| `bounded_lookup_one_empty_or_invalid_stays_present` | Single TFMT with zero-length or invalid value in separate cases: identity resolved, value Invalid/unavailable per its existing rule, never zero candidates | L3-VIEW-068 |
+| `bounded_lookup_actual_id_is_not_entry_index` | Entry 3 has TK1 value 42: TFMT-3 lookup binds entry 3, never TFMT-42 or an item in another entry | L3-VIEW-065 |
+| `bounded_lookup_recorder_context_not_borrowed` | Same entry index under R-1/R-2 with different formats: each exact recorder query retains only its own items | L3-VIEW-065 |
+| `bounded_lookup_recorder_level_nsb_has_no_entry` | Recorder-level R-1\NSB:0; queried under its reviewed arity: no fabricated -3 suffix or per-entry source-bit item | L3-VIEW-065 |
+| `bounded_lookup_case_and_index_collisions_keep_occurrences` | R-1\TFMT-3:B; and r-01\tfmt-03:B;: same canonical full key, ambiguous with all raw spellings and INT-038 information retained | L3-VIEW-066 |
+| `bounded_lookup_reorder_changes_listing_not_winner` | Reorder same-key candidates with fixed identities: cardinality remains ambiguous, listing follows retained source order, no first/last winner | L3-VIEW-066, L3-VIEW-070 |
+| `bounded_lookup_default_is_not_a_candidate` | TFMT absent with supplied already evaluated applicable baseline default-A condition: lookup unresolved/zero explicit items, effective field Defaulted A with citation; source unchanged | L3-VIEW-068 |
+| `bounded_lookup_unavailable_prerequisite_not_empty_success` | Supplied unresolved scope/key or blocked interpreted lookup (e.g. INT-037 marker): limitation retained, no invented usable zero-candidate state | L3-VIEW-067 |
+| `bounded_lookup_damage_zero_matches_not_absence_proof` | Zero exact TFMT matches plus compatible R-1\TF\xFFMT-3:A; evidence: retain no exact item plus damage; never infer physically unspecified/default applicability; presence cannot-evaluate per INT-042 | L3-VIEW-067 |
+| `bounded_lookup_suffix_not_explicit_item` | R-1\TFMT-3:A at EOF: suffix retained but not a candidate; zero exact matches never prove absence or a default condition | L3-VIEW-067 |
+| `bounded_lookup_documents_and_revisions_stay_scoped` | Same canonical key in separate documents/revisions: never combined into one result or borrowed to fill a missing field | L3-VIEW-065, L3-VIEW-069 |
+| `bounded_lookup_qualification_not_upgraded` | Permitted diagnostic candidate evidence under Complete/Incomplete/Ambiguous-with-cut separately: lookup never changes qualification, removes cut or grants INT-031 access/governing use | L3-VIEW-069 |
+| `bounded_lookup_assumption_does_not_change_candidates` | Supplied association/caller-choice context and Quiet level: original field/source evidence and lookup cardinality unchanged; assumption emission policy is separate | L3-VIEW-069 |
+| `bounded_lookup_oracle_is_independent` | Fixed source/key/candidate/state fixtures, including supplied condition evidence, independent of production lookup or a positive clock-association invention | L3-VIEW-070 |
+
+All are planned checks, not executed tests. No new default, public query
+syntax, report schema or incomplete/ambiguous access option is approved.
+
+## Planned normalization-policy batch 41
+
+Joey signed INT-064 A+D / INT-065 A / INT-066 A on 2026-11-28; independent
+pre-checks concurred. Their owner-choice holds are removed; source freshness,
+written analysis/review and intensive executable tests remain prerequisites. Definitions/byte oracles come from reviewed
+source regions and explicitly supplied condition/member evidence; no implicit
+policy is calculated through the production normalizer.
+
+| Planned test | Independent input/expected obligation | Requirements |
+|---|---|---|
+| `normalize_request_without_policy_is_not_default_repair` | Missing/unready policy returns unavailable/refusal with original unchanged; default output still exact replay, never guessed canonical profile | L3-WRT-012 |
+| `normalize_stale_revision_or_conflicting_plan_refuses` | Wrong revision, conflicting exact targets or unresolved composition: observable refusal, no partial successful normalization or source mutation | L3-WRT-012 |
+| `normalize_order_explicit_bijection` | **Owner-signed INT-064 A:** source COMMENT:b;COMMENT:a;, explicit region order [second,first] gives exact COMMENT:a;COMMENT:b;, no byte changes inside either region | L3-WRT-013, L3-WRT-017 |
+| `normalize_order_missing_or_repeated_identity` | **Owner-signed INT-064 A:** omission/repetition in requested full region order refuses, never deduplicates, drops unknown content or invents a copy | L3-WRT-013 |
+| `normalize_order_preserves_raw_regions` | **Owner-signed INT-064 A:** complete selected regions with mixed case/duplicates/opaque bytes retain every byte exactly once; anchored prefix/suffix mapping must be positively established | L3-WRT-013, L3-WRT-017 |
+| `normalize_order_region_mapping_unavailable` | **Owner-signed INT-064 A:** no unambiguous complete-region partition: order request refuses rather than treating a malformed suffix as a complete item or guessing ownership | L3-WRT-012, L3-WRT-013 |
+| `normalize_group_profile_section_order` | **Owner-signed INT-064 A+D:** supplied positively grouped region IDs X1,R1,G1,T1,M1,P1,D1,B1,S1,Q1,C1,H1,V1,R2 yield G1,T1,R1,R2,M1,P1,D1,B1,S1,Q1,C1,H1,V1,X1 within one anchor-free run; raw regions intact | L3-WRT-013, L3-WRT-017 |
+| `normalize_group_profile_stable_within_group` | **Owner-signed INT-064 D:** source R regions with entry indices 10 then 2 retain that order and duplicate occurrences; D does not perform B's numeric/full-key sort or deduplicate | L3-WRT-013 |
+| `normalize_group_profile_anchors` | **Owner-signed INT-064 D:** supplied regions R1,G1,COMMENT,R2,G2 reorder to G1,R1,COMMENT,G2,R2; COMMENT/opaque/malformed anchors stay in place, no false claim of global group order across anchors | L3-WRT-013 |
+| `normalize_group_profile_private_and_unknown_placement` | **Owner-signed INT-064 D:** complete positively grouped V/X regions preserve private bytes and within-group order; unknown/unavailable group classification anchors rather than guessing placement or resolving private attachment | L3-WRT-013, L3-WRT-017 |
+| `normalize_newlines_layout_only` | **Owner-signed INT-065 A:** explicitly identified CRLF/lone-CR/lone-LF layout ranges convert to the caller's LF or CRLF target; CRLF is one token, all other bytes unchanged | L3-WRT-014 |
+| `normalize_newlines_field_controls_untouched` | **Owner-signed INT-065 A:** real CR/LF within COMMENT value or internal code name stays raw; only positively classified layout converts, no INT-036 projection written back | L3-WRT-014 |
+| `normalize_newlines_unknown_layout_unavailable` | **Owner-signed INT-065 A:** opaque/unclassified range prevents claiming complete requested conversion; no inferred trim/platform default or silent partial success | L3-WRT-012, L3-WRT-014 |
+| `normalize_newlines_padding_is_not_linebreak` | **Owner-signed INT-065 A:** NUL/0x1A/space padding is retained; explicit newline conversion never deletes padding or inserts a missing semicolon | L3-WRT-014 |
+| `normalize_counter_contiguous_distinct_members` | **Owner-signed INT-066 A:** evaluated applicable D MNF/N scope has child identities 1/01 and 2: k=2, proposed canonical value 2, every duplicate/spelling finding retained; invalid WP VALUE remains a structural member. Supplied reviewed MML/N membership descriptors likewise count canonical identities once with their own range, preserving duplicates; no MNF range import | L3-WRT-015, L3-WRT-017 |
+| `normalize_counter_gap_refuses` | **Owner-signed INT-066 A:** child identities {1,3}: refuse counter rewrite; B would use 2 with gap findings, never silently write maximum 3 as a member count | L3-WRT-015 |
+| `normalize_counter_invalid_old_value_explicit_rewrite` | **Owner-signed INT-066 A:** one complete identified target with malformed old value, established contiguous members {1,2}, accepted cited range: explicit counter operation proposes 2, old validation failure remains in old revision | L3-WRT-015, L3-WRT-016 |
+| `normalize_counter_compatible_damage_blocks` | **Owner-signed INT-066 A:** compatible unassigned/damaged member evidence makes count incomplete: refuse, never count only readable children as complete | L3-WRT-015 |
+| `normalize_counter_target_or_range_missing_refuses` | **Owner-signed INT-066 A:** absent/duplicate target, unavailable applicability/scope/range or count outside cited range refuses; no target insertion, clipping or renumbering | L3-WRT-015 |
+| `normalize_checksum_is_not_implicitly_restamped` | Authorized changed-output fixture retains G\SHA bytes unless stamp separately requested; input match not reused as output proof, verify final domain independently | L3-WRT-016 |
+| `normalize_source_and_old_findings_remain` | Original bytes/revision/item identities/findings stay available after proposed success/refusal; new revision has its own correspondence/reevaluated results, no automatic governing promotion | L3-WRT-016 |
+| `normalize_explicit_compound_plan_has_coordinates` | Explicit reviewed composition order and source correspondence required; unresolved order/newline/counter overlap never runs in a guessed sequence | L3-WRT-012, L3-WRT-016 |
+| `normalize_oracles_are_exact_bytes_not_typed_values` | Expected full output and untouched-region identities fixed independently; matching typed values/multiset or calling production writer again is not proof | L3-WRT-017 |
+
+The default lossless writer and ADR-0037 extraction remain unchanged. These
+are bounded library transform contracts, not an apply-all/general 0.5 edit
+API or a 0.2+ CLI clean-up command. The 0.1 normalization obligation is not
+claimed complete merely by adding gated children.
+
+## Planned retention/limit evidence batch 42
+
+Internal evidence tests use bounded synthetic ownership/span descriptors and
+explicit fixture-model charges. They do not choose production charging,
+allocator overhead, numeric defaults, failure atomicity, resume API or the
+owner-held non-setup host allocation rule. Source: L2-ROB-003/L3-ROB-004–006,
+ADR-0036 and existing per-channel/provenance contracts.
+
+| Planned test | Independent fixture and expected evidence | Requirements |
+|---|---|---|
+| `retention_inventory_covers_all_categories` | Supplied runs, owned/borrowed text, spans/fragments, provenance, snapshot and error storage all appear with domain/owner/size evidence; no hidden category | L3-ROB-014, L3-ROB-016 |
+| `retention_small_slice_keeps_backing_owner_visible` | Two text bytes borrow a much larger retained owner: used length and backing capacity remain distinct, zero copy is not zero retained memory | L3-ROB-014, L3-ROB-016 |
+| `retention_empty_fragments_still_have_metadata` | Empty text from several fragments/channels retains their metadata/provenance/owner references and declared charges, never a zero-length loophole | L3-ROB-014, L3-ROB-016 |
+| `retention_shared_owner_keeps_all_references` | Two runs point to one supplied owner identity: inventory preserves both references and sharing; no charging formula inferred from it | L3-ROB-014, L3-ROB-015 |
+| `retention_closing_one_reference_is_not_free` | One shared run closes while another/snapshot retains the owner: owner still live, no dangling reference or falsely claimed full release | L3-ROB-015 |
+| `retention_handoff_is_not_deallocation` | Completed record/caller takes a retained span: ownership/domain transfer distinguished from physical release; no claim of total application heap reduction | L3-ROB-015, L3-ROB-016 |
+| `retention_snapshot_and_error_state_are_in_scope` | Assembler-owned snapshot/error reference still retains owner/metadata after main run changes: visible under the declared model, no budget escape | L3-ROB-014, L3-ROB-018 |
+| `retention_unknown_capacity_is_not_zero` | Backing capacity/overhead needed for claimed bound is unavailable: readiness limitation exposed, not assumed zero or a hard memory guarantee | L3-ROB-016 |
+| `retention_model_does_not_claim_rss_bound` | Fixture covers open-run bytes but excludes caller outputs/allocator unknowns: scope/limitations retained, no global process/RSS claim | L3-ROB-016 |
+| `retention_limit_equality_is_not_excess` | Fixture limit 64, charged 50, proposed charge 14: arithmetic fits exactly; no other constraints supplied, so byte comparison alone is not excess | L3-ROB-017 |
+| `retention_excess_is_not_full_admission` | Same limit/state, proposed full charge 15: cannot claim full operation admitted within 64; actual acceptance/disposition follows the separately supplied failure-policy result | L3-ROB-017, L3-ROB-018 |
+| `retention_integer_overflow_is_typed_limit` | Synthetic integer max 255, charged 254, delta 2: typed arithmetic/limit failure evidence, no wrap/panic or enormous allocation | L3-ROB-017, L3-ROB-018 |
+| `retention_channels_share_aggregate_limit` | Fixture charges from several independent runs combine under one supplied limit; do not enforce each channel as if it had a separate full budget | L3-ROB-016, L3-ROB-017 |
+| `retention_failure_disposition_is_exact` | Injected failure record lists accepted fragment/prefix and rejected remainder with origins/ownership: no lost/duplicated ranges or fabricated bytes | L3-ROB-018, L3-ROB-019 |
+| `retention_failure_ledger_does_not_choose_atomicity` | Separately supplied all-rejected versus explicit-prefix failure records exercise common evidence validation only; neither is approved as the production failure contract or a safe retry promise | L3-ROB-018 |
+| `retention_error_payload_copy_cannot_escape_budget` | Proposed full rejected-payload copy hidden in error path: inventory/claimed-domain check detects unaccounted retention, no false bounded-state success | L3-ROB-014, L3-ROB-018 |
+| `retention_limit_is_not_joining_or_validity_signal` | Limit failure with an open run: preserve its actual state/source context, never invent EOF/stop/Complete, malformed findings or governing adoption | L3-ROB-018 |
+| `retention_fixture_model_is_not_production_evidence` | Synthetic charge totals pass but real ownership/allocation model is unverified: implementation hard-bound readiness still unsatisfied | L3-ROB-016, L3-ROB-019 |
+| `retention_core_refusals_and_drains_stay_core_owned` | Supplied core HardLimit / BudgetTooSmall / TargetLimit refusals and drain reports retain identity, extent and context unchanged; distinct from injected tmats assembler-retention failure, never reclassified | L3-CLI-042, L3-ROB-018 |
+| `retention_pool_credits_are_in_domain_not_counted_twice` | Retained DATA spans hold supplied core BlockPool credits: inventory includes them inside the budget domain, not a borrowed/caller exclusion; overlapping core/assembler byte totals are not added twice | L3-ROB-014, L3-ROB-016, L3-ROB-018 |
+| `retention_open_run_holds_pool_to_b_reader_stall` | **BLOCKED, PENDING OWNER reader-progress policy:** synthetic pool budget B; an open run retains DATA spans holding credits up to B and the reader needs another block. Preserve the credit inventory and core evidence; expected cap/early-copy/typed-failure behavior awaits owner choice, no assumed progress or silent eviction | L3-ROB-016, L3-ROB-019 |
+
+Operational failure is not a new always-refuse extraction finding. Raw
+extract still requires an available selected extent; no guessed byte ranges,
+silent eviction, local spill, partial-acceptance policy or source truncation
+is authorized. Tests are planned, not executed memory/performance evidence.
+
+## Planned show-free command orchestration batch 43
+
+These are bounded integration cases using explicit reviewed internal requests,
+source/revision descriptors and independent stage oracles. No CLI syntax,
+rendered findings/assumption labels/suppression marker, numeric exits or new
+record-selection/access policy is specified. Policy-dependent real-command
+arms remain gated, not silently enabled by a successful injected adapter.
+
+| Planned test | Supplied scenario and expected internal evidence | Requirements |
+|---|---|---|
+| `command_chain_preserves_selected_source` | Two sources have equal text but different identities; explicit selection reaches computation with its own identity, never a value-based replacement | L3-CLI-062 |
+| `command_chain_preserves_selected_revision` | Selected input and distinct proposed output revisions stay separate; stamp verification refers to the explicit output, not input proof | L3-CLI-062 |
+| `command_chain_does_not_pick_identical_copy` | Two equal scoped candidates retain their separate bindings; requested candidate is used, no latest/first/digest winner | L3-CLI-062 |
+| `command_chain_raw_extract_keeps_control_bytes` | Use existing byte-exact extract fixture with controls/BOM: handoff bytes remain original, with existing findings; no projection/serialization inserted | L3-CLI-063 |
+| `command_chain_checksum_keeps_raw_domain` | Use independently fixed checksum-domain fixture: orchestration supplies raw selected source and established exclusion, not interpreted text or flex | L3-CLI-063 |
+| `command_chain_keeps_core_and_sha_independent` | Supplied core Mismatch/NotChecked and independent G\SHA result remain separate through command result, without trust/qualification upgrade | L3-CLI-063 |
+| `command_chain_keeps_limit_owners_distinct` | Inject core admission refusal/drain evidence versus tmats limit failure: unchanged source/stage ownership, no alternate route or double-counted bytes | L3-CLI-063, L3-CLI-065 |
+| `command_chain_next_call_has_no_clock_default` | First query supplies a caller choice; next supplied query omits it: no remembered choice, INT-060 state unchanged | L3-CLI-064 |
+| `command_chain_next_call_has_no_edition_override` | First supplied request has an override; next has none: apply its existing labelled basis policy, never inherit previous override | L3-CLI-064 |
+| `command_chain_failure_does_not_leak_selection` | Failed first request selected source A; next explicit request selects B: no reused A binding or stale request options | L3-CLI-064 |
+| `command_chain_prior_result_keeps_binding` | Host retains result A while running B: A source/revision/qualification evidence unchanged; no concurrency promise | L3-CLI-064 |
+| `command_chain_acquisition_failure_is_not_empty` | Injected source acquisition failure differs from acquired empty text; no successful empty report, no fabricated source | L3-CLI-065 |
+| `command_chain_traversal_failure_keeps_extent` | Injected core traversal failure preserves visited/unvisited extent and incomplete inventory, never asserts no later records | L3-CLI-065 |
+| `command_chain_access_failure_is_not_adoption` | Inject refused access under supplied reviewed policy: no computation claiming semantic/governing success; enforces the owner-signed INT-031 per-query/cut constraints | L3-CLI-065 |
+| `command_chain_computation_and_delivery_differ` | Supplied sink fails after successful computation: command result and delivery failure stay distinguishable; no success-of-delivery claim or retry policy | L3-CLI-065 |
+| `command_chain_runner_matches_direct_computation` | Same explicit request/source/context through runner handoff and direct command path: equivalent pre-render semantic data/qualifications and host stays alive | L3-CLI-066 |
+| `command_chain_failure_returns_to_host` | Shared command returns injected failure through both paths; host can perform next explicit call, no process exit or silent success | L3-CLI-066 |
+| `command_chain_mock_is_not_product_acceptance` | Synthetic adapters pass but real core/text paths or command policies unverified: full product acceptance remains unproven, missing paths visible | L3-CLI-067 |
+| `command_chain_never_falls_back_to_stdin` | Absent explicitly supplied source or acquisition failure never reads stdin or chooses it as fallback; '-' and omitted-path stdin grammar arms stay BLOCKED PENDING OWNER, no error spelling/exit chosen | L3-CLI-062, L3-CLI-065 |
+| `command_chain_mounted_consumes_host_routes_only` | Host supplies a routed Format-1 fragment and required non-fragment observations while another consumer gets other DATA: adapter consumes only supplied routes, no own dispatch/header reconstruction/claim on other packets; standalone host dispatch reaches same adapter with typed wrong-kind guard | L3-CLI-062, L3-CLI-026, L3-CLI-027, L3-CLI-028 |
+| `command_chain_extract_flags_match_direct_policy` | Runner and direct extract receive identical --force/--strict settings plus destination/identity evidence. Existing unrelated file and unproven regular identity refuse without --force; known alias refuses with or without it; each refusal happens before truncate/write. Authorized unrelated/unproven --force arms follow the same-handle sequence. Strict listed-kind/no-finding arms use the common approved rule; unlisted-finding strict arms remain BLOCKED PENDING OWNER. Outcomes/forwarded flags match before rendering | L3-CLI-064, L3-CLI-066, L3-CLI-034 |
+
+No record-order default, strict predicate, stamp destination exception or
+flex oracle is chosen. Extraction keeps ADR-0037's separate permission;
+semantic/governing access stays gated by owner-signed INT-031. Test observations
+are internal handoffs and outcomes, not a public report/schema design.
+No test in this table has been executed against replacement code.
+
+## Legacy independent-check batches 3/4 selected-policy follow-ups
+
+Joey signed the recommended choices on 2026-11-28. Owner-choice holds
+are removed except INT-034 padding-only/leading-damage precedence. Remaining
+independent checks, source/development analysis/review and tests still apply;
+no executable coverage is claimed.
+
+| Planned case | Independent source/evidence and expected selected-policy boundary | Interpretation |
+|---|---|---|
+| `extension_removal_requires_explicit_reviewed_plan` | **Owner-signed F2 A:** ordinary removal refuses while extensions attach; any cascade is a separately explicit revision-bound edit; unresolved attachment never becomes a guessed cascade or proof of no attachment | INT-022 |
+| `equals_suggestion_needs_complete_recognized_name` | Owner-signed F3 A suggests only positively recognized full name before '=' with no colon; always keep raw/missing-delimiter finding, never apply | INT-023 |
+| `packet_mapping_unusable_operands_are_not_mismatch` | Missing/Invalid/duplicate/unavailable CDT or format: cannot-evaluate with all evidence, not a mismatch; usable baseline versus unavailable historical mapping distinguished | INT-024 |
+| `tspiin_condition_does_not_repair_tspin` | TDTF p. 9-81 condition reading TSPIIN; a document's CDT=TSPIN is still unknown | INT-025 |
+| `duplicate_conversion_source_is_no_op` | C DCN references R AMN twice but only AMN/DMN have R-side Links-to; no fabricated EV/IPMN/BME/SMF source | INT-027 |
+| `governing_umbrella_composes_approved_guards` | Complete copy with ambiguity/unreadable SRCC/unresolved takeover never adopts from completion alone; approved INT-045..053 constraints preserved | INT-028 |
+| `governing_complete_is_not_takeover` | A later Complete candidate has no established valid control transition: no latest-Complete replacement of current/unresolved governing evidence | INT-028, INT-053 |
+| `governing_unresolved_is_not_no_setup` | Distinguish unresolved comparison/control target from known ungoverned packet range; no guessed previous setup | INT-028, INT-031, INT-053 |
+| `srcc_raw_subtypes_do_not_infer_semantics` | SHA-only/layout-only/other raw difference crossed with SRCC 0/1/unreadable: preserve claim/subtype evidence, no generic case/order equivalence, reset or automatic takeover | INT-029, INT-050 |
+| `governance_assumptions_are_per_query` | Prior ambiguity opt-in or assigned description cannot silently supply next query; cut facet always blocks semantic use, Complete integrity alone follows INT-051 | INT-031, INT-032, INT-048, INT-051, INT-060 |
+| `appendix_fragment_defaults_find_example_collision` | The standard's D-3 example itself has two fragments and no WFP; both default 1 with finding/ambiguous order, never infer from index or C-2 prose | INT-033 |
+| `completeness_rollover_is_not_gap` | Source sequences FE/FF/00/01 on same channel retain +1 continuity; no false gap at FF->00 | INT-034, INT-011 |
+| `completeness_padding_precedence_remains_open` | **Owner-signed padding rule; precedence arm still held:** ';' plus suffix bytes from hex {20,00–1F,7F} retains semicolon boundary/raw bytes. A high byte is not padding; X:a plus padding keeps substantive unterminated suffix. Empty/padding-only and leading-damage precedence still need the explicit owner choice; no field-value trim | INT-034, INT-035, INT-036 |
+| `completeness_integrity_is_not_source_unavailability` | Otherwise available well-framed text with core Mismatch/secondary-integrity findings is distinct from unavailable DATA bounds; no integrity-only Incomplete quarantine; resource refusal remains operational | INT-034, INT-051 |
+
+## Legacy independent-check batch 1 follow-up fixtures
+
+Independent review at main c682e05 (2026-11-27); these are PLANNED, not
+executed tests or implementation approval. INT-005/006 amendments await
+independent recheck. General link/H semantics retain their release scope;
+this does not bring general resolved links forward into the bounded time view.
+
+| Planned case | Independent premise and expected result | Interpretation |
+|---|---|---|
+| `definition_placeholder_arity_must_match` | Definition B-d\DLN matches B-x\DLN with the same path/one index position; differing index arity cannot match merely because placeholder letters are ignored | INT-004 |
+| `definition_placeholders_do_not_equal_document_indices` | Definition placeholder equivalence never equates actual document B-1 and B-2 occurrences; preserve raw/canonical index identities independently | INT-004, INT-038 |
+| `link_target_unusable_cdt_keeps_all_groups` | Same-channel CDT separately Missing, Invalid, duplicate equal/unequal, or unavailable (leading blank): R\CDLN target selection cannot-evaluate, retaining every P/B/S/Q candidate and every CDT occurrence/finding, never resolved or no-target from uncertainty | INT-005, INT-039, INT-041 |
+| `link_target_fibre_channel_uses_int007` | Usable same-channel FBCHIN admits S/Q by INT-007's condition reading; explicit CDT=FBCIN retains unknown-keyword/Invalid evidence and cannot-evaluate selection, never silently repaired | INT-005, INT-007 |
+| `h_test_item_ascii_match_keeps_raw` | H\TA:TeSt;G\TA:test; compares ASCII-insensitively with original bytes/locations kept; B/S TA fields do not supply a G target and high-byte look-alikes do not fold | INT-006, INT-036, INT-037 |
+| `h_test_item_leading_blank_is_unavailable` | Leading blank on either H\TA or G\TA makes that value unavailable under INT-041; no trim or invented match. Other unreviewed blank-bearing forms stay unavailable rather than choosing a blank rule | INT-006, INT-041 |
+| `h_test_item_duplicate_occurrences_are_ambiguous` | Multiple H\TA, multiple G\TA, or both, including identical repeats: Ambiguous with EVERY occurrence retained, never first/last or an equality winner; record qualification unchanged | INT-006, INT-039, INT-048 |
+| `derived_default_labels_prose_origin` | Same-occurrence DER condition and absent DPNO: default 1 cites Table 9-11 Definition prose p. 9-167, distinguishable from table Default usage metadata; no other occurrence supplies the condition | INT-008 |
+
+## Legacy independent-check batch 2 source follow-ups
+
+Planned only; INT-010/015 source corrections need exact-head recheck.
+These do not satisfy development-analysis or executable-test gates.
+
+| Planned case | Source and expected boundary | Interpretation |
+|---|---|---|
+| `equality_spacing_cites_e6_not_e3` | 106-24R1 E-3 p. E-2 has ==; E-6 p. E-3 has spaced = =; grammar remains == and spaced form warns, no behavior change | INT-010 |
+| `g106_year_wording_is_present_in_10615` | Archived 106-15 year wording/range already present; MFS 2 also in 106-05/07/13. Do not gate recognition-format source metadata on 106-17 or treat MFS 2 as new in 106-13 | INT-015 |
+| `fallback_intended_basis_is_not_applied_vocabulary` | Intended fallback basis 106-13, available registry 106-24R1 baseline: retain both and availability limitation, never claim edition-specific 106-13 validation; policy code mapping unchanged | INT-017 |
+
+## Planned historical CSDW source-word fixtures
+
+Source: [14-edition layout matrix](research/2026-11-27-historical-csdw-layout-sources.md).
+Explicit layout premises only, not automatic identification. These are planned
+checks of existing requirements, not executed decoder evidence.
+
+| Planned case | Independent word/source and expected boundary | Requirements |
+|---|---|---|
+| `csdw_10604_10605_no_declared_fields` | All-reserved 32-bit word; preserve all bytes and four-byte text offset; no declared CH10VER/SRCC/FRMT, even when raw bits 8/9 are set | L2-CH10-001, L2-CH10-002 |
+| `csdw_10607_srcc_without_frmt` | Explicit 106-07 layout; low byte 07, SRCC 1; bit 9 is reserved, not XML; retain its raw evidence without inventing a reserved-bit refusal policy | L2-CH10-002 |
+| `csdw_10609_introduces_frmt` | Explicit 106-09 layout: bit 9=1 is XML unsupported with original bytes retained; bit 8 independently SRCC, low byte 08 literal 106-09 | L2-CH10-002 |
+| `csdw_zero_byte_does_not_identify_layout` | Same zero low byte supplied with different reviewed layout premises: reserved/not-declared readings retain their premise, no modern/legacy layout guessed from byte alone | L2-CH10-001, L2-CH10-002 |
+| `csdw_unavailable_layout_never_guesses` | No established supported layout or contradictory supplied context: gap observable, no fabricated modern fields/empty successful text; final unavailable-context API/policy still requires review | L2-CH10-001 |
+| `csdw_10611_source_layout` | Explicit 106-11 section/figure from matrix; independently set bit 9, bit 8 and low byte with all original word/body bytes retained; verify defined field positions and cited table separately from fallback policy | L2-CH10-001, L2-CH10-002 |
+| `csdw_10613_source_layout` | Explicit 106-13 section/figure from matrix; independently set bit 9, bit 8 and low byte with all original word/body bytes retained; verify defined field positions and cited table separately from fallback policy | L2-CH10-001, L2-CH10-002 |
+| `csdw_10615_source_layout` | Explicit 106-15 section/figure from matrix; independently set bit 9, bit 8 and low byte with all original word/body bytes retained; verify defined field positions and cited table separately from fallback policy | L2-CH10-001, L2-CH10-002 |
+| `csdw_10617_source_layout` | Explicit 106-17 section/figure from matrix; independently set bit 9, bit 8 and low byte with all original word/body bytes retained; verify defined field positions and cited table separately from fallback policy | L2-CH10-001, L2-CH10-002 |
+| `csdw_10619_source_layout` | Explicit 106-19 section/figure from matrix; independently set bit 9, bit 8 and low byte with all original word/body bytes retained; verify defined field positions and cited table separately from fallback policy | L2-CH10-001, L2-CH10-002 |
+| `csdw_10620_source_layout` | Explicit 106-20 section/figure from matrix; independently set bit 9, bit 8 and low byte with all original word/body bytes retained; verify defined field positions and cited table separately from fallback policy | L2-CH10-001, L2-CH10-002 |
+| `csdw_10622_source_layout` | Explicit 106-22 section/figure from matrix; independently set bit 9, bit 8 and low byte with all original word/body bytes retained; verify defined field positions and cited table separately from fallback policy | L2-CH10-001, L2-CH10-002 |
+| `csdw_10623_source_layout` | Explicit 106-23 section/figure from matrix; independently set bit 9, bit 8 and low byte with all original word/body bytes retained; verify defined field positions and cited table separately from fallback policy | L2-CH10-001, L2-CH10-002 |
+| `csdw_10624_source_layout` | Explicit 106-24 section/figure from matrix; independently set bit 9, bit 8 and low byte with all original word/body bytes retained; verify defined field positions and cited table separately from fallback policy | L2-CH10-001, L2-CH10-002 |
+| `csdw_10624r1_source_layout` | Explicit 106-24R1 section/figure from matrix; independently set bit 9, bit 8 and low byte with all original word/body bytes retained; verify defined field positions and cited table separately from fallback policy | L2-CH10-001, L2-CH10-002 |
+
+No record-governance, checksum trust upgrade, layout default or new historical
+validator severity is inferred. Present-but-reserved code values and absent
+fields stay distinguishable. Baseline L3 bit cases remain unchanged.
+
+## INT-035/036/037 development-analysis edge oracles
+
+Source: [written analysis](research/2026-11-28-framing-character-development-analysis.md).
+PLANNED only; analysis owner/independent review and executable tests remain.
+These framing fixtures do not assert private/unknown code-name validity.
+
+| Planned case | Independent input/expected boundary | Interpretation |
+|---|---|---|
+| `analysis_empty_run_spans` | ';;' -> [0,2); CR LF ';' -> [0,3); ';;COMMENT:x;;;' -> [0,2) and [12,14); silent EOF layout is outside the runs | INT-035, INT-036 |
+| `analysis_first_colon_only` | COMMENT:a:b; has one raw value a:b, never two items or code-like recovery | INT-035 |
+| `analysis_empty_fields_distinct` | :v; gives empty-name finding; X:; gives present zero-length raw value; neither an empty-region run | INT-035 |
+| `analysis_control_name_span` | CO CR LF MMENT:a TAB b; raw name [0,9), value [10,13); projected COMMENT/ab; internal omission [2,4), no raw rewrite | INT-036 |
+| `analysis_nul_per_field` | Two NULs per name/value: one NUL finding per field, listing every location, plus internal-name omission if independently applicable | INT-036 |
+| `analysis_numeric_projection_is_not_repair` | NSB raw 0 CR LF 4 remains Invalid; never repaired through character projection, extraction unchanged | INT-036, INT-055 |
+| `analysis_marker_every_split` | Every 2/3/4-byte full signature from the analysis at every fragment partition after CSDW slicing: same true-offset-zero finding, all bytes preserved | INT-037 |
+| `analysis_partial_marker_not_full` | EF, EF BB, FE alone, or 00 00 FE at EOF is not a full marker; existing high-byte/framing evidence remains | INT-037 |
+| `analysis_marker_after_layout_is_midstream` | CR LF or NUL then EF BB BF is midstream; no skipped padding, BOM stripping or encoding guess | INT-037 |
+| `analysis_high_byte_sweep` | Every 80–FF byte in name/value, including B0 and valid-looking UTF-8 sequences, prevents silently usable affected fields | INT-037 |
+
+The analysis additionally requires bounded property/fuzz cases and a distinct
+source-qualified fixture for EACH of 106-04/05/07/09/11/13/15/17/19/20/22/23/
+24/24R1. Shared test bodies cannot erase edition evidence. No real recording
+was accessed; local-only sample checks are still outstanding where available.
+
+## INT-038/039/040 development-analysis edge oracles
+
+Source: [written analysis](research/2026-11-28-index-duplicate-counter-development-analysis.md).
+PLANNED only; written analysis owner/independent review and intensive
+executable tests remain pending. These independently specified boundaries
+supplement the existing approved-interpretation cases, not executed coverage.
+
+| Planned case | Independent input/expected boundary | Interpretation |
+|---|---|---|
+| `index_identity_40_digit_pair` | 01234567890123456789012345678901234567890 and its 40-digit nonzero suffix have equal canonical identity/hash input, original spellings retained; no integer conversion | INT-038 |
+| `index_zero_is_not_field_value_zero` | Arbitrarily long all-zero INDEX -> identity 0; an eleven-digit numeric FIELD VALUE is Invalid under INT-055; neither grants range validity | INT-038 |
+| `index_collision_lists_every_occurrence` | D-1\MN-1-2, D-01\MN-01-02, D-1\MN-1-2: one collision group listing all three, not just two distinct spellings | INT-038 |
+| `index_case_only_has_no_spelling_collision` | Case-only key variants with the same digit tuples: no INT-038 collision finding, scalar duplicate still Ambiguous | INT-038 |
+| `index_internal_control_keeps_raw_tuple` | R-1 CR LF 0\TK1-1 and R-10\TK1-1: projected identity 10, internal-omission evidence and distinct raw-token collision retained, no projection-based loss of witnesses | INT-038 |
+| `scalar_valid_invalid_candidates_stay_ambiguous` | Known scalar with one usable and one Invalid/empty occurrence: both kept, no winner/default | INT-039 |
+| `scalar_comment_and_group_com_differ` | Repeated standalone COMMENT is collection; repeated G/R COM same slot is Ambiguous even when equal; raw all retained | INT-039 |
+| `scalar_fragment_scope_is_one_document` | Explicit same-channel +1 modulo 256, same FRMT/RCCVER and no closure: cross-fragment G PN duplicates; separate records do not | INT-039 |
+| `counter_invalid_payload_is_member_evidence` | N=2 with WP identities 1/2 and first payload FF: structural set {1,2}, Invalid value remains; counter [0,18), value [16,17), bad payload [33,34) | INT-040 |
+| `counter_duplicate_properties_count_once` | WP/WI properties and exact/01 member repeats contribute one e identity; field ambiguity and collision findings still retained | INT-040 |
+| `counter_malformed_parent_blocks_compatible_scopes` | D-1\WP-1-1-x-2 blocks all compatible (1,1,1,m), even known set {1,2} already matches N=2; x=2 parent scope unaffected by this evidence | INT-040 |
+| `counter_wrong_arity_never_guesses_alignment` | Matching literal family with wrong index arity stays rule-level unassigned; only unambiguous readable positions constrain compatible scopes | INT-040 |
+| `counter_unrelated_damage_is_not_member` | Unrelated literal family, code-like value text, unframed suffix and X original-path text are not D-member evidence; other findings remain | INT-040 |
+| `counter_bad_parent_does_not_hide_child` | m=0/00 is one scope; parent-domain violation/unusable MML does not suppress a child with explicit indices and independently usable MNF | INT-040 |
+| `counter_range_is_not_mfs` | Older printed MFS 1 is not baseline MNF range 1–8; applied baseline versus intended historical basis is labelled, unsupported edition mappings stay unavailable | INT-040 |
+| `counter_cardinality_is_not_contiguity` | N=2 set {1,3} and N=3 set {1,3} both fail their respective checks; no max/count substitution, no eager array allocation | INT-040 |
+
+The invalid-payload oracle uses the existing corrected byte sequence:
+`D-1\MNF\N-1-1-1:2;D-1\WP-1-1-1-1:<FF>;D-1\WP-1-1-1-2:4;`
+(`<FF>` is one raw byte). Counter [0,18), counter value [16,17), invalid
+payload [33,34). Future implementations must assert these independent spans.
+Each historical fixture uses its own cited table metadata; early maximum
+field sizes are not modern ranges. Canonical identity, duplicate ambiguity,
+structural membership and all record qualifications remain separate results.
+
+## Owner-sign-off acceptance edges — 2026-11-28
+
+Source: [verbatim owner sign-offs](research/2026-11-28-interpretation-owner-signoffs.md).
+PLANNED, not executed tests. Owner-choice holds for these selected policies
+are removed; remaining independent final checks, source freshness, written
+analysis/review and executable tests still gate implementation. INT-022 is
+0.5 scope; none of these cases selects rendered output or the remaining
+INT-034 padding-only/leading-damage precedence.
+
+| Planned case | Independently specified expected result | Interpretation |
+|---|---|---|
+| `owner_f2_attached_delete_refuses` | Reviewed unique attachment to exact original: ordinary deletion refuses and lists attachments; a cascade needs a separate explicit edit, never implicit removal | INT-022 |
+| `owner_f3_equals_suggestion_guard` | Recognized complete G\DSI\N=18; with no colon: preserve bytes/missing-delimiter finding and offer only the suggested delimiter edit; unknown/incomplete name or any colon: no such suggestion | INT-023 |
+| `owner_packet_mapping_unusable_is_not_mismatch` | Missing/Invalid/Ambiguous/unavailable CDT or format, and unsupported edition mapping separately: cannot-evaluate with evidence, no mismatch; reviewed usable map supplies expected code, never arithmetic family guessing | INT-024 |
+| `owner_tspiin_condition_not_user_repair` | Standard TSPIN condition is read TSPIIN; literal document CDT=TSPIN remains unknown; no field-byte rewrite | INT-025 |
+| `owner_polarity_condition_is_channel_local` | RPS/MFF RPS use same recorder/channel R CDT; missing/bad/duplicate/unavailable local CDT never borrows another channel and remains cannot-evaluate | INT-026 |
+| `owner_conversion_edge_not_item_dedup` | Repeated definition link yields one graph edge; repeated raw document items remain multiple with their duplicate/ambiguity findings | INT-027 |
+| `governing_sealing_time_packet_is_inclusive` | Validly taking-control candidate closes at trusted time packet P: new setup governs P and later eligible packets, never packets between its last fragment and P retroactively | INT-028 |
+| `governing_unresolved_needs_independent_rule` | Complete candidate with unresolved target: no restoration without separately reviewed independent takeover proof; supplied such proof restores target and preserves earlier uncertainty/findings | INT-028, INT-053 |
+| `governing_f7_indeterminate_is_not_independent_veto` | Otherwise independently valid takeover with unverified event: no block/delay solely for F7; keep its indeterminate finding; no claim of event presence/absence | INT-028, INT-030 |
+| `governing_nonzero_legacy_source_has_no_guessed_partition` | Admitted legacy distributed/nonzero setup: retain/parse candidate but withhold governing source assignment until a reviewed partition rule exists | INT-028 |
+| `owner_inventory_first_fragment_takeover_closure` | A starts, B starts, B closes, A closes: inventory A then B; eligibility/governing follows separately established closure/takeover, never inventory position | INT-028 |
+| `owner_descriptive_change_is_still_raw_change` | Independently proven comment/date-only change: not semantic configuration change, but raw subtype and SRCC discrepancy remain; unknown/private changes never assumed descriptive | INT-029, INT-050 |
+| `owner_ambiguous_access_per_query_only` | Non-cut Ambiguous text: default refuses description; explicit labelled opt-in permits assumption access for that query only; next query without opt-in refuses; no automatic takeover or ambiguity upgrade | INT-031 |
+| `owner_cut_refuses_even_ambiguity_opt_in` | Incomplete or Ambiguous with cut facet: per-query acceptance never makes it usable/governing; diagnostic inventory and separately approved raw extract remain possible | INT-031, INT-048 |
+| `owner_ungoverned_assignment_is_not_session_default` | Explicit assigned description on one ungoverned-range query is labelled assumption; next query gets no remembered setup and no declared-governing upgrade | INT-032 |
+| `owner_fragment_default_collision_not_index_order` | Two WFP positions default 1: retain defaults and collision/ambiguous ordering; explicit caller order labelled, never inferred from fragment indices or Appendix 9-C prose | INT-033 |
+| `owner_provisional_snapshot_version_and_invalidation` | Explicit opt-in snapshot S1 binds exact extent/version; later text yields S2 and visible S1 invalidation without erasing S1 evidence or automatically governing; known cut never usable | INT-034 |
+| `owner_boundary_padding_preserves_raw_bytes` | Otherwise complete substantive text ending ';' followed by each SP/00–1F/7F suffix remains terminated, bytes retained; high bytes are not layout; padding-only/leading-damage precedence arm stays BLOCKED OWNER | INT-034 |
+| `owner_sequence_rollover_is_continuity` | Same channel FF -> 00 with matching FRMT/RCCVER and no layered closure joins; missing/other sequence not repaired and other-channel traffic never breaks continuity | INT-011, INT-034 |
+| `owner_available_integrity_failure_is_not_cut` | Admitted available DATA with core Mismatch/NotChecked/secondary readings remains available text, findings unchanged; independently missing required run bytes add incomplete-source facet, operational refusal alone does not invent a cut | INT-034, INT-051 |
 
 ## Real Chapter 10 recordings (local use only)
 
@@ -1595,11 +2454,13 @@ archived 106-24R1 Chapter 9 (Distribution A), including page C-8.
   `D-1\MNF\N-1-2-1`, `D-1\MML\N-1-3`, `D-1\MNF\N-1-3-1` to
   `D-1\MNF\N-1-3-6`, `D-1\MML\N-1-4`, `D-1\MNF\N-1-4-1`, `D-2\MML\N-1-1`,
   `D-2\MNF\N-1-1-1`, `D-2\MML\N-1-2`, `D-2\MNF\N-1-2-1`.
-- No other reading diagnostic; D-3 and D-4 (correctly delimited) produce
-  none.
+- Correctly delimited D-3/D-4 code-name excerpts produce no targeted
+  suspect-colon warning. Preserve any other findings from literal example
+  text/prose separately; this is not a blanket no-diagnostics/conformance claim.
 - Writing the document back reproduces the input bytes exactly.
-- Applying all 18 suggestions yields a document in which each of those
-  counters is a separate attribute with a numeric value.
+- A separately authorized later general-edit test can apply the 18 explicit
+  proposals and check the resulting separated fields; the 0.1 detector itself
+  never applies suggestions or declares the literal example conforming.
 
 *Companion cases*: `C-1\DPA:A?B:C;` and the Appendix 9-E expressions
 produce no such warning; a value ending `: G\COM:x;` is reported (the G group

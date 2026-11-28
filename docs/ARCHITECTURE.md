@@ -453,8 +453,10 @@ required. Input owners keep borrowed blocks alive through use.
 Completeness follow-up (2026-11-23): INT-034's "followed by another packet"
 means SAME-CHANNEL. An otherwise complete boundary-ending EOF run remains
 complete with its labelled basis. PROVISIONAL open-run observations never
-stop joining. Pre-EOF semantic snapshot use and invalidation are open owner
-choices, not an approved exception to complete-only parsing/governance.
+stop joining. Joey signed explicit versioned provisional snapshots with
+visible invalidation on 2026-11-28 (INT-034), without automatic governance or
+cut-text use. INT-028/031 preserve independent takeover/access gates; only
+padding-only/leading-damage precedence remains owner-open in INT-034.
 Finite aggregate open-run retention and a typed limit error are required;
 accounting, numeric policy and recovery details remain review work. See the
 [batch 15 draft](research/2026-11-23-completeness-contracts-draft.md).

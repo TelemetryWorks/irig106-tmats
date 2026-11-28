@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through build-compatibility contracts drafted (family 2, batches 1-27).**
+> **Status: foundations through show-free command orchestration drafted (family 2, batches 1-26 and 28-43).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -1104,6 +1104,9 @@ adds no automatic repair or new refusal gate when stamping is otherwise eligible
 
 Planned obligations, not implementation. Baseline layout is explicitly
 106-24R1 Figure 11-34; historical era/declaration routing remains later work.
+The [historical source matrix](research/2026-11-27-historical-csdw-layout-sources.md)
+verifies per-edition fields and absent flags; it does not choose automatic
+layout routing or qualify shared dependency APIs.
 INT-012 was reconfirmed by Joey, 2026-11-23, with AI CONCURRED at #34 head
 e352323. Source freshness, deep analysis and executable verification remain.
 
@@ -1269,7 +1272,9 @@ under L1-EDN-006 is a later derivation, not an implied fallback here.
 
 Planned, not implemented. INT-011 is reconfirmed by Joey, 2026-11-23,
 with AI CONCURS on #38 at c623b15; development gates remain;
-INT-034's precise completeness rules remain proposed under ADR-0031/0033.
+INT-034's padding/availability/continuity and snapshots are owner-signed
+(2026-11-28); remaining final checks and padding-only/leading-damage precedence
+remain, alongside development/source/test gates.
 These children describe the joining/provenance stage within a phase only.
 INT-045 separately records approved time-packet phase closure (AI CONCURS
 on #41 at 79b94eb); it adds no per-channel joining predicate. A later +1 fragment
@@ -1361,7 +1366,7 @@ these reasons do not assert that the beginning is intact. Other-channel
 traffic never creates a new start for an existing run. Implementation of
 reconfirmed INT-011 still requires completed analysis and executable checks.
 INT-034
-requires its own owner sign-off and independent check for the precise rules;
+has owner sign-off for the exact padding/availability/continuity rules (2026-11-28); final checks and padding-only/leading-damage precedence remain;
 INT-039 duplicate classification applies to a document only after assembly
 scope is established. Cross-fragment duplicate evidence must not silently
 select a split or a scalar winner. These dependencies remain visible even
@@ -1369,8 +1374,9 @@ when fixture-provided reviewed bindings make individual joining tests pass.
 
 ## Completeness-contract batch 15: observation versus authority
 
-Planned obligations; INT-034's precise rules and INT-028/031 governance are
-not approved. Their supplied reviewed fixture bindings isolate the cases
+Planned obligations; Joey signed INT-034's padding/availability/continuity
+and snapshot choices plus INT-028/031 on 2026-11-28. Remaining final checks
+and INT-034 padding-only/leading-damage precedence still gate affected cases. Their supplied reviewed fixture bindings isolate the cases
 below without completing any interpretation gate. The open-run observation
 is PROVISIONAL, not a fourth final completeness outcome or a joining stop.
 
@@ -1401,13 +1407,14 @@ retains Complete as classification evidence, never a backward rejoin; every
 mid-session Complete under this layer carries `time-boundary seal (owner policy)`.
 Revised outcomes/findings remain visible to spool-before-publish consumers.
 INT-045 is approved (Joey, 2026-11-23; AI CONCURS on #41 at 79b94eb). This EOF case ends exactly at `;`;
-trailing padding/controls require reconciliation with INT-035/036, not a new
-unreviewed trim operation. Finality is not proof of source data validity.
+the signed INT-034 boundary-layout suffix rule handles trailing controls/SP
+without changing bytes; padding-only/leading-damage precedence remains open. Finality is not proof of source data validity.
 
 **L3-CH10-019** · Parent: L2-CH10-006 · Verification: T
 *Incomplete/ambiguous classification evidence SHALL retain the affected spans, gap/trust/boundary facts and all competing readings without concatenating across a missing segment, synthesizing a terminator or selecting one repeated scalar occurrence as the intended record boundary.*
 
-INT-034's precise branch conditions remain proposed. INT-039's duplicate
+INT-034's stated padding/availability/continuity rules are owner-signed;
+remaining final checks and padding-only/leading-damage precedence stay open. INT-039's duplicate
 field rule and INT-044's ambiguous-declaration fallback do not establish a
 record split or override assembly ambiguity. Locating evidence is mandatory;
 deciding which classification wins when several kinds coexist is still an
@@ -1418,20 +1425,19 @@ open owner-review item. No positive governing or checksum verdict follows.
 
 The observation can change when more text arrives; it never asserts EOF or
 closes a run to make a streaming result available. An in-value suffix remains
-visible rather than being discarded to expose the preceding `;`. Proposed
-semantic snapshots would need exact revision/extent and invalidation rules;
-this requirement exposes evidence without approving that interpretation.
+visible rather than being discarded to expose the preceding `;`. Owner-signed
+INT-034 permits explicit versioned snapshots with exact revision/extent and
+visible invalidation, never automatic governance or cut-text use.
 
 **L3-CH10-021** · Parent: L2-CH10-007 · Verification: T
 *Any consumer-facing report carrying provisional setup evidence SHALL retain that provisional status and its basis separately from the governing-record decision; absent a reviewed provisional-use contract, it SHALL NOT present the observation as a complete, verified or automatically governing setup record.*
 
-Open owner choice in INT-034: opt-in, explicitly labelled semantic snapshots
-for irig106-time's CLI versus final-only semantic use. Recommend opt-in
-snapshots to avoid waiting until EOF while requiring later changes and every
-assumption to remain visible. This recommendation is undecided; it requires
-reconciling the current complete-only parse/checksum boundary and INT-028/031,
-including what to do with outputs already emitted when later text invalidates
-a snapshot. No default permission or new public API is selected here.
+Joey selected explicit versioned provisional snapshots on 2026-11-28 under
+INT-034. Retain exact revision/extent, provisional evidence and visible later
+invalidation; no automatic governance, no upgrade to final completeness, and
+no cut-text use. INT-028/031 takeover/access guards still apply. This does not
+choose rendered labels, a stable Rust symbol or padding-only/leading-damage
+precedence; source/analysis/final-review and executable checks remain.
 
 **L3-ROB-004** · Parent: L2-ROB-003 · Verification: T
 *The open-run budget SHALL be finite and explicit across all retained channels, with a documented byte-accounting model covering retained text, fragment/run metadata, provenance and any assembler-retained snapshots; an operation SHALL use non-wrapping arithmetic to check its additional charge and SHALL NOT accept retained state beyond the budget.*
@@ -1496,7 +1502,7 @@ owner-signed baseline with QD/INT-048 before QI/INT-046: field ambiguity
 forces assembly Ambiguous, never upgraded by identity/equality/digest, while
 cut evidence and INT-045 findings remain visible. A retained cut facet SHALL
 keep Incomplete's full blocking force: no ambiguous-split acceptance, including
-proposed INT-031 if later approved, SHALL make that cut text usable or governing. Named compound fixtures
+owner-signed INT-031 if later approved, SHALL make that cut text usable or governing. Named compound fixtures
 SHALL cover non-SHA field ambiguity, cut-plus-ambiguity, and both candidates;
 input-state flattening must not be mistaken for exhaustive byte-shape coverage.
 QM composition is owner-signed in INT-053 and verified separately by
@@ -2101,7 +2107,12 @@ packet integrity evidence. No optional local checksum fallback is authorised.
 
 PacketFacts (irig106-types) contains HEADER FACTS ONLY, no trust/integrity
 fields; do not add fields or silently embed sideband state there. Use core's
-PacketInfo evidence, not a tmats verdict assembled from header subfields. This
+PacketInfo evidence, not a tmats verdict assembled from header subfields.
+Core's PacketInfo data-checksum state SHALL pass through unchanged: a G\SHA
+result neither upgrades nor is upgraded by a core Mismatch or NotChecked.
+A matching G\SHA does not repair packet integrity; a core Mismatch or
+NotChecked does not, by itself, change the separately evaluated G\SHA result.
+This does not grant access/admission when its own gate is unsatisfied. This
 selects no failed-payload adoption, report severity/format or RDG-008 rule.
 Core DATA excludes filler/checksum; TMATS neither rechecks nor adds them.
 
@@ -2275,13 +2286,18 @@ Derived from L1-CLI-004/007, ADR-0002/0003/0010/0036 and L2-WRT-003.
 The [batch note](research/2026-11-26-extraction-requirements.md) distinguishes
 mechanical byte extraction from pending record-selection and output policies.
 
-**Implementation BLOCKED on owner decisions**: `-o` overwrite policy;
-fail-closed identity-check policy for pipes/devices/stdout/network shares;
-and extraction eligibility under integrity/encoding findings. These are
-pending choices, not approved defaults; source/development/test gates remain.
+**Owner decisions recorded, 2026-11-27 (ADR-0037):** extract refuses existing
+unrelated files and unproven regular-file identity unless --force; stdout and
+pipes are allowed. Findings do not block byte-exact extraction by default,
+with every finding reported. --strict refuses the listed bad-data kinds;
+listed-kinds-only versus any-finding scope is now PENDING OWNER. This does not
+reopen overwrite/identity policy or default byte preservation. These remove the
+three #57 owner holds, not source/development/test or independent review.
+Other argument grammar stays on hold. L3-CLI-052–057 came from merged #72;
+this separate follow-up uses 058–061 without changing its reviewed record.
 
 **L3-CLI-030** · Parent: L2-CLI-008 · Verification: T
-*For one explicitly selected eligible setup record, extraction SHALL deliver its original logical TMATS text in fragment order, excluding each packet's four-byte CSDW and all packet headers, filler and packet checksums; physical DATA-span/block boundaries SHALL NOT insert, remove or duplicate output bytes.*
+*For one explicitly selected setup record/candidate permitted by ADR-0037 extraction policy, extraction SHALL deliver its original logical TMATS text in fragment order, excluding each packet's four-byte CSDW and all packet headers, filler and packet checksums; physical DATA-span/block boundaries SHALL NOT insert, remove or duplicate output bytes.*
 
 Chapter 11 (106-24R1) section 11.2.7.2/Figure 11-34 p. 11-50 supplies
 CSDW-before-text framing. Core supplies DATA extents excluding trailers;
@@ -2291,20 +2307,20 @@ packet boundaries or repeat CSDW removal once per physical span.
 **L3-CLI-031** · Parent: L2-CLI-008 · Verification: T
 *Extraction SHALL preserve the selected record's text bytes exactly, including layout, case, unknown/vendor/extension attributes, duplicates, high/control bytes and preserved suffix/padding where present in that record's original text; read-only interpretation or findings SHALL NOT cause byte filtering, text conversion, normalization, repair or checksum stamping; INT-036/037 projections and INT-055 raw-byte numeric checks SHALL be VIEW-ONLY and SHALL NOT change extracted bytes.*
 
-ADR-0002/0003 and L3-WRT-004–010 govern replay. Raw preservation does not
-make any field or setup usable; test byte preservation separately from
-eligibility. Fixtures with malformed content exercise the mechanical sink
-boundary without asserting that those records are CLI-eligible. Controls
-omitted from interpreted views, numeric Invalid verdicts and a BOM detected
-after fragment assembly never authorize changing the raw extraction bytes.
-Extraction eligibility under those findings awaits the owner decision.
+ADR-0002/0003 and L3-WRT-004–010 govern replay. ADR-0037 permits default
+raw extraction under findings, including cut/ambiguous/marker/Invalid cases;
+this is not semantic or governing usability. Report every finding without
+changing bytes; --strict's additional-finding scope remains PENDING OWNER.
+The listed bad-data refusal cases are common to both options. Controls omitted from views,
+numeric Invalid verdicts and a detected BOM never authorize source changes.
 
 **L3-CLI-032** · Parent: L2-CLI-008 · Verification: T
 *Extraction SHALL receive and retain the explicit selected record/source identity and its established eligibility basis, without silently substituting the first, latest or governing record, merging distinct records, or treating absent/unresolved selection as a successfully extracted empty record.*
 
 This pins an internal precondition, not the public record-selection rule.
-Ordinal ordering, incomplete/ambiguous access and multi-record destination
-behavior remain for their own reviewed derivations. A failure to establish
+Ordinal ordering and multi-record destination behavior remain separate.
+ADR-0037 authorizes raw extract under incomplete/ambiguous findings; semantic
+access and governing use remain gated by owner-signed INT-031. A failure to establish
 that precondition cannot be repaired by choosing another record implicitly.
 
 **L3-CLI-033** · Parent: L2-CLI-008 · Verification: T
@@ -2317,27 +2333,30 @@ flush/durability guarantee or error rendering is introduced by this
 requirement.
 
 **L3-CLI-034** · Parent: L2-CLI-009 · Verification: T
-*For a regular-file destination the tool opens itself, CLI filesystem glue SHALL open without truncating, compare the opened handle's file identity with the input-file identities, and only then, if distinct and authorized by the reviewed overwrite policy, truncate through that SAME handle; it SHALL NOT close and reopen by pathname between the identity check and truncation. A known input alias SHALL be refused observably before destructive access, and inability to establish input preservation SHALL NOT authorize truncation.*
+*For a regular-file destination the tool opens itself, CLI filesystem glue SHALL open without truncating, compare the opened handle's file identity with the input-file identities, and only then, when not a known input alias and authorized by the applicable overwrite/identity policy (including extract's explicit --force exception for unproven identity), truncate through that SAME handle; it SHALL NOT close and reopen by pathname between the identity check and truncation. --force NEVER overrides a KNOWN input alias (L1-CLI-007), which SHALL always be refused observably before destructive access. For extract only, unproven regular-file identity SHALL refuse truncation unless --force; stdout/pipes are allowed under ADR-0037. An existing unrelated file SHALL require --force, and no temp-file+rename SHALL replace this in-place sequence.*
 
 L1-CLI-007 applies to same-path, relative/absolute aliases, symbolic links
 and hard links where supported. String inequality is insufficient. The
 implementation must review platform file-identity and acquisition/race
 behavior. A pathname preflight check alone is insufficient; comparison must
 use the non-truncating opened destination handle before truncation/writing.
-Exact platform APIs remain implementation analysis. The owner decisions on
-`-o` overwrite and fail-closed identity checks for pipes/devices/stdout/network
-shares BLOCK implementation; no such destination policy, public error
-spelling or numeric status is selected here.
+Exact platform APIs remain implementation analysis. The owner decision of
+2026-11-27 (ADR-0037) settles extract's
+policy: --force is an explicit exception to proof/default-overwrite refusal,
+not permission to write a known input alias or a claim of proved identity.
+This does not set public error spelling, numeric statuses or device grammar.
 
 **L3-CLI-035** · Parent: L2-CLI-009 · Verification: T
 *For destinations the tool opens itself, successful or failed CLI extraction and other output-producing commands SHALL leave input-file contents unchanged, and SHALL NOT acquire input files for in-place writing, truncation, replacement or implicit repair as part of producing output; shell redirection performed outside the tool SHALL be out of scope for this file-acquisition guarantee.*
 
 ADR-0010 keeps this at the CLI/caller boundary; the TMATS library still
 receives bytes/writers rather than filenames. The prohibition also covers
-alias destinations and writer/acquisition failures for tool-opened outputs.
+known input-alias destinations and writer/acquisition failures for tool-opened outputs.
 The tool cannot undo truncation already performed by a shell before it runs.
 Delivery to supplied writers remains fallible under L3-WRT-007/008; this
-does not settle the pending stdout/other-destination identity policy.
+retains ADR-0037's extract-specific stdout/pipe allowance and --force exception
+for unproven regular identity. It does not claim a shell-opened redirect was
+made safe by the tool or approve all other commands' destination policies.
 It is not an approval of pending general edit commands or a packet-writing
 implementation.
 
@@ -2422,7 +2441,7 @@ equality or a readable value. The cut facet keeps its full blocking
 force; query success does not make the record usable or governing.
 This preservation contract does not settle the [open incomplete/ambiguous
 access and governance item](ROADMAP.md#streaming-setup-record-follow-ups)
-or [proposed INT-031](INTERPRETATIONS.md#int-031). It applies when diagnostic
+or [owner-signed INT-031](INTERPRETATIONS.md#int-031). It applies when diagnostic
 candidate retrieval is available, not as a new authorization to access or
 accept a qualified record. The query does not select a governing record or
 establish a time association.
@@ -2498,3 +2517,1178 @@ ADR-0015 and RELEASE-0.1 keep these distinct. Shared types/core 0.2 must be
 published before tmats 0.1, and actual compatible published APIs must still
 be verified. No passing build can approve pending pattern scope/syntax,
 extraction eligibility/output policies, report formats or governing use.
+
+## Library lint and line-coverage acceptance (family 2, batch 28)
+
+These are planned inspection obligations, with no Evidence line until the
+actual configuration and completed checks are reviewed. The [batch note](research/2026-11-27-robustness-evidence-requirements.md)
+distinguishes existing source inspection from future execution and preserves
+ADR-0020's proposed status. No workflow/manifest or runtime code changes here.
+
+**L3-ROB-007** · Parent: L2-ROB-004 · Verification: I
+*The redesigned library's effective Clippy configuration SHALL deny unwrap_used, expect_used, panic, todo, unimplemented, unreachable, dbg_macro, print_stdout and print_stderr for non-test library code; CI SHALL run compiler-aware Clippy against the actual library package rather than accept a textual occurrence scan as enforcement.*
+
+This is the exact L1-ROB-002 list, not a newly selected policy. String
+literals/comments containing these words are not prohibited operations.
+Inspect the actual typed operation and lint result; do not infer that a
+similarly named function or a broad grep result proves a violation.
+
+**L3-ROB-008** · Parent: L2-ROB-004 · Verification: I
+*Inspection SHALL verify that the actual redesigned library inherits/applies the intended lint settings after the virtual-workspace restructure and that no broad production-code allow or invocation override disables them; permitted test-only and CLI-main exceptions SHALL NOT weaken the non-test library check.*
+
+L1-ROB-002's planned workspace table must bind to the package that builds
+the library, not just the virtual manifest or CLI. Non-test library checking
+must still occur independently of a test configuration's allowed assertions/
+helpers. No extra lint set, new exception or unsafe-code policy is approved.
+
+**L3-ROB-009** · Parent: L2-ROB-004 · Verification: I
+*The guard-rail acceptance evidence SHALL demonstrate a nonzero CI/check result for each prohibited typed operation in non-test library scope, alongside scoped permitted test helpers, without accepting a configured-but-skipped lint job, ignored command failure or comment-only negative fixture as proof of enforcement.*
+
+Use CI-scripted cargo clippy runs on isolated fixture crates under the real
+lint configuration. Do NOT add trybuild/ui_test or any dev dependency without
+owner approval. Do not insert prohibited operations into production code as
+part of this requirements PR. Retain actual command, compiler/Clippy version and source
+head. The current baseline command is cargo clippy --workspace --all-targets
+--all-features -- -D warnings; bind it to redesigned packages/features.
+
+**L3-ROB-010** · Parent: L2-ROB-005 · Verification: I
+*CI line-coverage acceptance SHALL measure the redesigned irig106-tmats library at the reviewed head and fail below 80%, using the planned cargo llvm-cov --fail-under-lines 80 gate or a separately reviewed equivalent; a missing artifact, failed measurement, disabled threshold or CLI-only result SHALL remain unsatisfied.*
+
+The measured quantity is the coverage tool's library line metric, not raw
+physical line count, CLI line coverage, branch coverage or a requirements
+marker percentage. This selects no new feature matrix, tool dependency or
+format for user-facing findings; any equivalent enforcement needs review.
+
+**L3-ROB-011** · Parent: L2-ROB-005 · Verification: I
+*Coverage evidence SHALL identify the library package/source scope, tested features, command/tool version, exact source head, line metric and result, with exclusions and unmeasured configurations explicit; it SHALL NOT silently remove untested production library files, combine unrelated heads or substitute prototype/CLI coverage to meet the floor.*
+
+Instrumented library calls from applicable project tests can contribute;
+CLI application lines cannot inflate the library denominator/numerator.
+Generated or conditional library code must be accounted for in the declared
+measurement scope; this is not an approval of an arbitrary exclusion list
+or a claim that unmeasured configurations are covered.
+
+**L3-ROB-012** · Parent: L2-ROB-005 · Verification: I
+*Line-coverage acceptance SHALL verify the actual failure boundary with a controlled below-floor result and retain a matching-head passing result for acceptance; source inspection of a threshold flag, a rounded display value or an overall green unrelated run SHALL NOT substitute for the enforcement result.*
+
+A future bounded fixture demonstrates that below-floor measurement cannot exit successfully; at or above 80% must
+still satisfy the other checks. No coverage run or artificial threshold
+mutation is performed locally by this docs-only PR.
+
+**L3-ROB-013** · Parent: L2-ROB-005 · Verification: I
+*Passing lints or the 80% line floor SHALL NOT be represented as standards conformance, verified interpretation behavior, exhaustive arbitrary-input safety or complete requirements coverage; the trace matrix, independent semantic fixtures, resource/termination tests and owner gates SHALL remain separately assessable.*
+
+L1-ROB-001, source-span/framing/open-run-budget requirements and the
+interpretation development gates remain independent. This slice neither
+approves the rest of ADR-0020 nor chooses pending memory budgets/recovery,
+std features, pattern scope/syntax, output policies or report formats.
+
+
+## Parser and whole-recording measurement evidence (family 2, batch 29)
+
+These are future inspection obligations. No Evidence line or executable
+benchmark coverage is claimed. See the [batch note](research/2026-11-27-performance-evidence-requirements.md)
+for source inspection, independent expected-work oracles and pending budgets.
+
+**PENDING OWNER**: whether the tmats host must also perform zero per-packet
+allocation in steady state for non-setup packets, analogous to core
+L2-HOT-008. No such host allocation threshold is approved here. Retaining
+the prototype Criterion dev dependency also requires owner approval.
+
+**L3-PERF-001** · Parent: L2-PERF-001 · Verification: I
+*Before accepting a benchmark result, verification SHALL compare its consumed source extent and applicable item/fragment/run/record inventory with independently specified fixture expectations, preserving source bytes and qualification evidence rather than accepting timing alone or deriving the oracle through the production parser/assembler.*
+
+Use reviewed TEST-DATA contracts; a fragment is not automatically a record.
+Unresolved completeness/access rules cannot be silently settled by a timing
+fixture. Benchmark success does not make malformed/qualified data usable.
+
+**L3-PERF-002** · Parent: L2-PERF-001 · Verification: I
+*Text-reading measurement SHALL identify the exact supplied byte sequence, measured parser operation and whether acquisition, allocation/source ownership, indexing, checksums, views or rendering are included; it SHALL consume an observable parser result so discarded/optimized-away work or an early empty result cannot count as full text reading.*
+
+Record the byte denominator actually processed. Do not compare a memory-only
+parse with end-to-end file processing as if their measured scopes were equal.
+This does not choose a scanner algorithm, benchmark framework or new API.
+
+**L3-PERF-003** · Parent: L2-PERF-001 · Verification: I
+*Whole-recording measurement SHALL traverse the declared input extent through core using ADR-0036 borrowed-span assembly directly, without coalescing or extra payload copies, and account for all expected setup fragments/candidates/records under the reviewed assembly rules; a coalescing/copying run SHALL NOT be accepted as recording-scan evidence, nor SHALL first-setup-only timing, a local packet reader, fragment-count-as-record-count or silently skipped later updates.*
+
+ADR-0036 preserves core header facts, integrity sideband and borrowed DATA;
+INT-011/045 define joining/closure separately from complete/governing use.
+Synthetic fixture inventories can establish expected work without copying
+core's packet-finding algorithm into a benchmark oracle.
+
+**L3-PERF-004** · Parent: L2-PERF-001 · Verification: I
+*Measurement evidence SHALL distinguish TMATS text bytes from recording bytes and report whether timing covers core traversal, ADR-0036 borrowed-span slicing/assembly, parsing, acquisition and output; it SHALL retain the units and run mode needed to interpret rates without presenting one phase's throughput as another's or hiding mandatory work outside the timer, and SHALL report allocation counts and payload-copy bytes from a matching untimed measurement using a test allocator like core's plus explicit copy accounting, with reporting only and no new numeric threshold.*
+
+Recording-scan evidence MUST use borrowed-span assembly, not merely label
+coalescing/copying as another scan mode. Any owned parse-source construction
+belongs to a separately identified parser workload. Allocation/copy counters
+are measured OUTSIDE the timer in a paired run with matching input, build,
+configuration and workload scope: allocator instrumentation counts allocations;
+separate copy accounting measures payload-copy bytes. Record counter scope.
+No new numeric allocation/copy budget or cold/warm-cache policy is selected;
+rejection of coalescing enforces ADR-0036, not a new metric threshold.
+
+**L3-PERF-005** · Parent: L2-PERF-002 · Verification: I
+*Each accepted measurement SHALL identify source head, tool/compiler versions, build profile/Cargo features and compile-time target features, hardware/OS/architecture, input fingerprint/size, repetition and cache/acquisition mode, measured scope and completed result, so results from different sources, environments or workloads cannot masquerade as a same-condition comparison.*
+
+Compile-time CPU/target features are distinct from Cargo features; retain
+both with the actual build configuration.
+Keep authorized sample bytes out of CI/public artifacts under TEST-DATA's
+local-use policy; identify evidence without uploading the recording. No
+user-facing report schema, benchmark tool dependency or numeric run default
+is selected here. Future run plans must be bounded and reviewed.
+
+**L3-PERF-006** · Parent: L2-PERF-002 · Verification: I
+*The idmptmat comparison SHALL use the same input files and identify the reference version/build, command/options, timed scope and actual completion/consumed extent; unsupported standalone input, first-packet-only behavior, mismatch, failure or timeout SHALL remain explicitly non-equivalent rather than yield an unqualified whole-recording speedup claim.*
+
+TEST-DATA D1/D2 and reference limitations remain visible. Reference output
+is not the authority for TMATS semantics or completeness; investigate
+correctness disagreements against cited rules. Do not require changing a
+reference binary or adding a second reader to manufacture equivalence.
+
+**L3-PERF-007** · Parent: L2-PERF-002 · Verification: I
+*Benchmark/reference execution SHALL follow an explicit finite time/memory/input/repetition plan, keep failed or timed-out cases distinct from successful measurements, and stop its own jobs when finished or limited; substantive synthesized work SHALL use GitHub CI, while sample work SHALL await an authorized data/compute plan consistent with the local-use and light-local rules.*
+
+No numeric resource default, background watcher or unattended benchmark loop
+is selected. Only owned processes may be stopped; no global process kill is
+authorized. This docs PR executes no benchmark or reference tool locally.
+
+**L3-PERF-008** · Parent: L2-PERF-002 · Verification: I
+*Initial measurements SHALL inform a later explicit budget decision rather than invent a throughput/latency acceptance threshold or treat historical performance targets as already approved release gates; performance success SHALL NOT waive source preservation, semantic/interpretation tests, lint/coverage obligations or pending owner policies.*
+
+L1-PERF-001 mentions the retired ecosystem draft's 100 Mbps sustained figure
+for first-measurement comparison; it is not a newly approved floor here.
+ADR-0021's overall proposal remains proposed. Held std, pattern, extraction,
+record-access/governance and report-format decisions remain unresolved.
+
+
+## X attachment and evidence boundaries (family 2, batch 30)
+
+Source: 106-24R1 Chapter 9 section 9.5.14 p. 9-172, ADR-0008/0026 and
+approved INT-038/039/040/048. These are proposed derivations, not runtime
+coverage. [INT-061](INTERPRETATIONS.md#int-061) A is owner-signed: unindexed-
+original mapping follows owner-signed INT-061 A: retain raw/cannot-evaluate.
+Joey also selected INT-062 A on 2026-11-28: registry vocabulary only,
+106-24R1 baseline until edition deltas exist, with the actual vocabulary
+basis separate from raw declarations and INT-044 selection/fallback labels.
+Private/non-registry originals and older renamed codes without metadata
+remain cannot-evaluate. Hybrid C is not selected. Remaining independent
+checks and source/development evidence still gate implementation; public
+pattern grammar is a separate decision batch.
+
+**L3-EXT-001** · Parent: L2-EXT-001 · Verification: T
+*X association SHALL decompose the name by matching original code names against the reviewed registry, made unambiguous for conforming extensions by the EXTENSION_CODE uniqueness rule, retaining X occurrence, organization, original group/full path, extension code and suffix indices with raw correspondence; missing metadata or unproved uniqueness SHALL retain source and an observable cannot-evaluate reason, not a heuristic split or fabricated key. Decomposition SHALL use owner-signed INT-062 A: reviewed registry code names for the applied basis, currently the 106-24R1 baseline until edition deltas exist; remaining independent review/development gates SHALL precede implementation.*
+
+Section 9.5.14 p. 9-172: “Everything to the right of ORGANIZATION that
+matches an existing TMATS code is used to associate the extension with an
+existing object defined by the TMATS file.” It also says “The EXTENSION_CODE
+identifies the specific extension and shall be unique (i.e., not overlapping
+any existing TMATS code name).” Match reviewed registry names; do not infer
+that the standard supplies no split. Joey selected INT-062 registry-vocabulary A on 2026-11-28;
+document presence cannot supply missing registry vocabulary.
+Missing/incomplete registry metadata still cannot justify a longest-prefix
+heuristic. Section 9.5.14 allows multiple backslashes in ORIGCODE, with no
+hyphens in that original-code text. Its D-1\MN-1-2 / X-1\MYORG\D\MN\SGAIN-1-2
+example is a structural oracle, not a complete conforming setup fixture.
+Private extension grammar is not inferred from familiar-looking suffixes.
+
+**L3-EXT-002** · Parent: L2-EXT-001 · Verification: T
+*For an original with a reviewed occurrence/index layout, association SHALL require matching original group and complete code path, matching X/original occurrence and the same ordered leading suffix-index tuple of the original's declared arity; only the remaining suffix positions SHALL be treated as extension-private indices, without using them to repair a mismatch or guess a target.*
+
+Section 9.5.14 p. 9-172 supplies leftmost-index matching. Get arity and
+segment attachment from reviewed original-name metadata, not the number of
+indices that happen to follow one extension. Too few/unusable carried
+indices cannot be silently completed from a nearby original.
+
+**L3-EXT-003** · Parent: L2-EXT-001 · Verification: T
+*Literal original-path comparison SHALL use ASCII case-insensitive comparison under Chapter 9 section 9.4.2 p. 9-2, with INT-036 name projection and INT-038 canonical digit-string identity for X/original indices, preserving all raw spelling, omission, normalization and collision findings without locale/Unicode/high-byte folding or numeric field-value limits.*
+
+INT-038 explicitly covers embedded original indices. X and original remain
+different full keys; canonical index agreement is not association proof by
+itself. A 40-digit index must not require integer conversion or allocation
+up to that index. Private trailing indices retain their own positions.
+
+**L3-EXT-004** · Parent: L2-EXT-001 · Verification: T
+*With association prerequisites available, zero matching original occurrences SHALL give unresolved, one SHALL give resolved to that source item, and several SHALL give ambiguous with every original occurrence/location in source order; original or extension value equality, first/last order and checksum agreement SHALL NOT select or deduplicate a target.*
+
+ADR-0026 supplies candidate semantics; INT-039 preserves scalar duplicates.
+This associates code-name identity, not a link through the data item's
+value. Unsupported metadata is cannot-evaluate, not established no-target.
+No concrete Rust result/error spelling or rendered format is selected.
+
+**L3-EXT-005** · Parent: L2-EXT-002 · Verification: T
+*Association SHALL remain within one supplied document, retaining X and every target item identity, raw bytes/spans and assembled-packet provenance, with the setup's Ambiguous/Incomplete/cut/encoding qualifications unchanged; a successful structural attachment SHALL NOT upgrade field validity, authorize record access or establish a governing setup/time-source association.*
+
+INT-039 treats an assembled setup as one document; separate setup records
+cannot supply a missing original. INT-048 retains duplicate ambiguity/cut
+blocking force and INT-037 blocks semantic lookup for leading encoding
+markers. The [open access/governance item](ROADMAP.md#streaming-setup-record-follow-ups)
+remains open; internal attachment does not approve the public pattern API.
+
+**L3-EXT-006** · Parent: L2-EXT-002 · Verification: T
+*Unrecognized extension meaning and orphan X items SHALL retain their raw content and attachment evidence without creating an original object/member, inserting missing indices, rewriting source or imposing contiguity on X occurrence values; extension-private index range/count/uniqueness semantics SHALL remain unclassified without their own reviewed definition.*
+
+Section 9.5.14 p. 9-172 exempts X occurrence contiguity and disallows new
+original values; INT-040 says X does not create a D member. This is not a
+blanket contiguity exemption for every embedded/trailing index. EXTENSION_CODE
+uniqueness is a prerequisite for the registry-name split, not permission to
+auto-rename an overlap or implement all private value/namespace rules. Unknown values are
+not evaluated as a sensor conversion or clock-association rule.
+
+**L3-EXT-007** · Parent: L2-EXT-002 · Verification: T
+*Any mapping from the printed X-x form to an original with no numeric index SHALL remain gated by INT-061 owner sign-off and independent AI review before implementation; the association layer SHALL NOT silently invent occurrence zero/one, omit the required comparison or infer an index from the original's value/order.*
+
+The printed section 9.5.14 form and index-match sentence do not explain how
+to target G\PN, whose Table 9-2 p. 9-10 code name has no numeric index.
+Joey selected INT-061 A on 2026-11-28: raw X remains and mapping is
+cannot-evaluate. C remains a possible future refinement; neither C nor D
+is selected. Remaining independent check/development gates apply. A retains raw evidence so a
+later approved B/C can refine the result without a source/result-shape break.
+This gate
+does not decide indexed fields of groups without an occurrence or any
+other unsupported original grammar.
+
+**L3-EXT-008** · Parent: L2-EXT-001 · Verification: T
+*Association tests SHALL use independently enumerated original item IDs, code-path/index metadata and source spans to verify resolved/unresolved/ambiguous or unavailable outcomes, including raw retention and record qualifications, rather than compute expected targets through the production resolver or infer correctness from a successful round trip alone.*
+
+Use the section 9.5.14 example and cited original-code rows, then controlled
+index/spelling/duplicate/scope variants. Values remain opaque. Source
+freshness, development analysis and executable tests precede implementation;
+unknown grammar or unresolved INT-061/062 metadata cannot become a passing conformance
+case.
+
+
+## V namespace inventory and attribution (family 2, batch 31)
+
+Source: section 9.5.13 p. 9-171 and Table 9-2 DATA SOURCE ID p. 9-11
+(106-24R1). These are draft contracts; [INT-063](INTERPRETATIONS.md#int-063)
+remains proposed. Header-local validity can be supplied by reviewed field
+results; this slice does not invent blank, required-presence or private-code
+rules. See the [source/owner-options note](research/2026-11-27-v-group-and-int062-followup.md).
+
+**L3-EXT-009** · Parent: L2-EXT-003 · Verification: T
+*V inventory SHALL distinguish standard V-x\ID and V-x\VN headers from private V-x\acr\attribute-string items, retaining the occurrence and observed three-character acronym prefix when structurally readable and preserving the complete remaining private suffix/value as raw content without inventing its grammar.*
+
+Section 9.5.13 p. 9-171 defines only those two standard V headers; other
+attributes are vendor-specific. The private suffix may resemble paths or
+indices but cannot become a standard counter/member/value rule from shape
+alone. Malformed/opaque names stay retained, not fabricated into valid keys.
+
+**L3-EXT-010** · Parent: L2-EXT-003 · Verification: T
+*Within a V occurrence, inventory SHALL retain every local ID/VN candidate and observed private namespace in input order, keeping Missing, known scalar Ambiguous, Invalid and unavailable field results distinct; no path item or prior occurrence SHALL silently supply a missing header, pick a repeated header or suppress an empty/header-only context.*
+
+INT-039 applies where the reviewed standard header definition declares
+scalar cardinality; raw multiplicity of private fields does not infer their
+cardinality. Receiving evaluated header states avoids settling unreviewed
+blank/type rules. No required-presence finding is invented merely from a
+private item or from the header's absence.
+
+**L3-EXT-011** · Parent: L2-EXT-003 · Verification: T
+*V occurrence comparison SHALL use INT-038 canonical index identity and INT-036 name projection; literal code/acronym and usable textual source/vendor comparisons SHALL use the ASCII case rule from section 9.4.2 p. 9-2 without locale/Unicode/high-byte folding, preserving raw spelling and every applicable finding.*
+
+Data Source ID and vendor acronym are textual identifiers, not integer
+field values. A source named 01 is not numerically canonicalized to 1 by
+INT-038 or INT-055. No acronym alphabet beyond the cited rules, private
+value decoder or default vendor is introduced here. INT-063's usable VN is
+one usable non-Ambiguous INT-036-projected value with INT-041 blank handling
+and INT-037 character guards, exactly three characters under section 9.5.13,
+compared ASCII case-insensitively. Available projected wrong length is
+Invalid/unconfirmed under A; unreviewed blank handling stays unavailable,
+not silently trimmed. This defines no policy winner or source rewrite.
+
+**L3-EXT-012** · Parent: L2-EXT-004 · Verification: T
+*Given a usable explicit local V ID and available reviewed source-key metadata, source-context matching SHALL list every same-document G\DSI-n candidate with equal textual identity, retaining resolved/unresolved/ambiguous evidence without equating V occurrence x to G source entry n; ambiguous/unavailable local ID SHALL not become an arbitrarily selected source binding.*
+
+Table 9-2 DATA SOURCE ID p. 9-11 links to V-x\ID; section 9.5.13 ties V to
+General Information. A retained local label is distinct from successful
+G-source resolution. Zero/one/many matches follow ADR-0026; source lookup
+availability remains separate from an established no-target result.
+
+**L3-EXT-013** · Parent: L2-EXT-004 · Verification: T
+*Every V context, namespace and source candidate SHALL retain original item identities/raw spans and fragment provenance, with all setup Ambiguous/Incomplete/cut/encoding qualifications unchanged; inventory/source grouping SHALL NOT authorize record access, a governing setup or any private clock/measurement interpretation.*
+
+INT-037/039/048 and the [open access/governance item](ROADMAP.md#streaming-setup-record-follow-ups)
+remain in force. One assembled record is one document under ADR-0025/INT-011;
+separate records and V occurrences cannot lend missing headers to each other.
+Equal source/vendor labels do not erase their contributing occurrences.
+
+**L3-EXT-014** · Parent: L2-EXT-004 · Verification: T
+*Confirmation or reassignment of vendor attribution when V VN is missing, repeated, invalid/unavailable or disagrees with a private path acronym SHALL remain gated by INT-063 owner sign-off and independent AI check; under owner-signed A, confirmation SHALL require exactly one usable VN agreeing with the path acronym; inventory SHALL NOT adopt path-only or header-only authority.*
+
+Joey selected INT-063 A on 2026-11-28: observed namespaces remain, with
+unconfirmed attribution unless one usable VN agrees. B/C remain unselected
+alternatives. All original field/record evidence stays; remaining independent
+check/development gates and the report-format hold are not waived.
+
+**L3-EXT-015** · Parent: L2-EXT-003 · Verification: T
+*Unknown private V suffix/value content SHALL remain attached to its observed raw namespace without synthesized members, inferred counters/defaults, value repair or source rewriting; successful grouping SHALL NOT claim the private meaning was decoded, while unavailable structural decomposition SHALL remain observable with raw evidence retained.*
+
+Section 9.5.13 explicitly leaves vendor equipment details outside the
+standard. A private suffix ending in N or digits is not automatically a
+standard count/index declaration. Malformed source is not silently discarded
+just because a vendor namespace cannot be confirmed.
+
+**L3-EXT-016** · Parent: L2-EXT-003 · Verification: T
+*V-group tests SHALL use independently listed item IDs, header states, namespace/source candidates and raw spans to verify retention, grouping and blocked attribution, without deriving expected groups through the production implementation or declaring opaque private fields conforming from their names.*
+
+Positive names cite section 9.5.13; source targets cite Table 9-2 p. 9-11.
+Missing/duplicate/invalid header composition can receive evaluated states.
+INT-063 A fixture expectations are owner-decided, with remaining final
+review/development gates; they are not executed conformance tests.
+
+
+## Dependency/SBOM/provenance acceptance (family 2, batch 32)
+
+L3-REL-002–008 are reserved by held #59; this independent slice starts at
+009. Requirements are Draft inspection obligations with no Evidence lines.
+See the [batch note](research/2026-11-27-release-evidence-and-vn-followup.md).
+No dependency, workflow, publishing, settings or credential change is made.
+
+**L3-REL-009** · Parent: L2-REL-005 · Verification: I
+*Dependency-check evidence SHALL identify the redesigned packages and resolved graph/lock state, supported checked features/targets, exact source head, deny.toml revision, tool command/version and advisory-source snapshot/time; a configured job without matching completed results SHALL NOT establish dependency acceptance.*
+
+Inspect actual graph coverage rather than only direct manifest entries.
+Record unavailable checks/data as limitations, not clean results. This does
+not invent a database-freshness window, feature matrix or new source policy.
+The release graph SHALL resolve compatible published irig106-types 0.2 and
+irig106-core 0.2 APIs from crates.io and exercise those APIs. Merged source
+or a CI-only source override (including #59's consumer check) is never release
+evidence; publication of both dependencies precedes tmats 0.1.
+
+**L3-REL-010** · Parent: L2-REL-005 · Verification: I
+*The existing vulnerability, maintenance/yank, licence and source rules SHALL remain effective on the checked graph, with denials causing failed acceptance unless an applicable existing documented exception covers them; warnings SHALL remain distinguishable from denials, and an internal workspace path SHALL NOT silently permit arbitrary third-party path/git/registry sources.*
+
+L1-REL-005 and deny.toml govern the actual rule set; validate tool behavior,
+not comments alone. Duplicate-version warnings are not turned into a new
+blanket ban. For the release graph, external types/core dependencies SHALL
+have no path/git/[patch]/source override; inspect their actual resolved source.
+The exact-version internal workspace library path remains allowed, with its
+packaged dependency resolving the matching published crates.io library.
+No exception, licence list or registry allowance is added here.
+
+**L3-REL-011** · Parent: L2-REL-005 · Verification: I
+*Each dependency exception SHALL remain traceable to its listed identifier, affected dependency/context and written reason; retirement of the prototype XML code SHALL include review/removal of its prototype-only advisory ignores, without transferring that rationale to replacement code or treating a past exception as approval of a new dependency.*
+
+The current deny.toml comments explicitly require removing those ignores
+with the retired code. This is future restructure acceptance, not an edit
+of the policy file now. Criterion retention and any dev dependency still
+need owner approval under the carried instructions.
+
+**L3-REL-012** · Parent: L2-REL-006 · Verification: I
+*Release-artifact acceptance SHALL identify the reviewed source/tag/version and actual bytes/digests of every .crate, binary archive and SBOM; one SHA256SUMS and one irig106-tmats-<version>.intoto.jsonl bundle SHALL cover the signed files in the single GitHub release, with target/build identity for binaries and no substitution by filename or another build's evidence.*
+
+The org binary variant governs where this summary differs. The release gate
+SHALL verify the annotated tag through the remote API, peel it to github.sha,
+confirm that commit is on main and require successful intended CI on that
+exact commit. A local tag or unrelated green run is not evidence. The
+manifest and bundle are validated evidence, not necessarily individually
+attested subjects. This selects no new target/architecture or release action.
+
+**L3-REL-013** · Parent: L2-REL-006 · Verification: I
+*Each released binary SHALL have its required CycloneDX SBOM from the actual build/dependency context, with target/features/source identity sufficient to associate it with that binary; a library-only manifest list, different-target graph or missing SBOM SHALL NOT be accepted as per-binary inventory.*
+
+The builder SHALL use an exact pinned cargo-cyclonedx installed with --locked
+and record its Rust toolchain as rust-version output; publish and
+publish-path-check SHALL install/check that same toolchain rather than resolve
+stable again. No new generator or SBOM schema is selected here, and this
+requirement performs no installation. Include those SBOMs
+in the unified checksums/bundle and release asset verification.
+
+**L3-REL-014** · Parent: L2-REL-006 · Verification: I
+*The caller's build SHALL invoke ./.github/workflows/build-binaries.yml, using read-only build-binaries-core.yml for target qualification and packaging; the reusable builder SHALL sign only its own verified output in its nested Checksums and attestations job on v* tag push, independently guarded, with no caller-supplied signing inputs or top-level attest job.*
+
+The org binary variant requires source checkout at github.sha and explicit
+gate decision input. PR/manual builds never sign. All building/signing
+finishes before crates-io approval; provenance alone claims no SLSA level.
+
+**L3-REL-015** · Parent: L2-REL-006 · Verification: I
+*Release evidence SHALL include completed verification of the actual published assets and documented user verification path, constrained to intended repository, tag and reusable-builder signer; missing, changed, wrong-source or failed verification SHALL remain unsatisfied, never inferred from an upload or workflow badge.*
+
+The user path includes gh attestation verify <file> --owner TelemetryWorks,
+with repository, --source-ref refs/tags/vX.Y.Z and expected builder workflow
+constraints for the signed files in the bundle. Validate SHA256SUMS and the
+bundle without claiming they necessarily have individual attestations.
+
+**L3-REL-016** · Parent: L2-REL-006 · Verification: I
+*Acceptance SHALL follow the org binary variant in trusted-publishing.yml (Trusted publishing), with gate/build/publish/github-release/verify and read-only publish-path-check: publish needs [gate, build], uses crates-io, compiles nothing, reproduces each package with cargo package --locked --no-verify and cmp against the attested .crate before upload, then compares every served .crate byte for byte and against the registry checksum, including already-published versions.*
+
+Use fresh ephemeral OIDC credentials per dependency wave, never stored tokens.
+The github-release job SHALL create/resume a draft, verify tag/title/exact
+committed docs/releases/vX.Y.Z.md body/draft state, upload and check every
+asset name/size/digest, publish and check again; never modify a published
+release or replace an asset. verify checks actual published release files.
+All real releases remain TP-only; the coordinator/owner-only first-upload
+exception is unchanged, never CI or this maintainer. Artifact acceptance
+neither authorizes publishing/settings actions nor proves TMATS integrity.
+
+
+## Edition-independent text-reader acceptance (family 2, batch 33)
+
+These derive L2-EDN-003/004; they add no historical meaning or new
+interpretation. Names/codes in synthetic negative cases are byte fixtures,
+not registry entries. See the [source/scope note](research/2026-11-27-edition-independent-reading.md).
+Planned checks are not executed tests or Evidence for the redesigned reader.
+
+**L3-EDN-008** · Parent: L2-EDN-003 · Verification: T
+*Given identical text bytes and resource limits, changing only supplied declaration/basis metadata SHALL leave source bytes, scanner item order/multiplicity, raw spans/delimiters and scanner recovery findings unchanged; the parser SHALL NOT require a recognised G\106 value, RCCVER or caller edition before framing text.*
+
+The test varies supplied metadata, not bytes containing G\106. When that
+attribute itself changes, compare independently expected spans for each input,
+not offsets from the shorter input. Edition/registry semantic findings may
+differ; they are not scanner invariants. Existing resource failures remain
+observable and cannot become empty successful documents.
+
+**L3-EDN-009** · Parent: L2-EDN-003 · Verification: T
+*Every framed item unknown to the selected registry SHALL remain in raw lookup and default byte replay with its complete raw name/value, source location and order; lack of an edition definition SHALL NOT drop it, replace its value, invent a canonical alias or make the structural parse fail.*
+
+Use an explicitly synthetic unregistered name, with no claim that the name
+is conforming in any edition. An unavailable semantic key does not prevent
+raw byte enumeration. Definition-dependent interpretation and its findings
+remain separate from retention and scanner recovery.
+
+**L3-EDN-010** · Parent: L2-EDN-003 · Verification: T
+*The common scanner SHALL apply its reviewed framing/name/character policies without edition-based repair, preserving malformed regions, unterminated suffixes and unknown/high-byte source as required by INT-035–038; scalar duplicate classification SHALL use available reviewed multiplicity metadata under INT-039, never guessed historical cardinality.*
+
+Unterminated suffixes remain outside explicit-value lookup (INT-035).
+The check compares scanner evidence across metadata contexts, not a blanket
+claim that every character/value verdict or historical cardinality is equal.
+An unknown multiplicity is not silently assigned the baseline scalar rule.
+
+**L3-EDN-011** · Parent: L2-EDN-004 · Verification: T
+*Raw reading SHALL remain available independently of definition-dependent semantic lookup; an unavailable historical/future definition SHALL remain unavailable, with raw candidates retained, and SHALL NOT be replaced by baseline code renaming, value parsing, defaulting or positive edition-conformance claims.*
+
+A labelled rules basis under the existing edition-selection contract is
+still permitted; it identifies applied rules, not proof of the document's
+actual edition. This adds no fallback policy or renamed-code mapping.
+Owner-signed INT-062 A keeps older names without baseline metadata
+unavailable, never silently translated; later edition deltas need source review.
+
+**L3-EDN-012** · Parent: L2-EDN-004 · Verification: T
+*Edition-independent text reading SHALL preserve all supplied setup qualifications and document/revision identity; decoding text SHALL NOT upgrade Incomplete, Ambiguous, retained-cut, trust or encoding qualifications, authorize governing use, merge documents or turn XML into supported ASCII input.*
+
+Core-backed payload slicing, format gating and assembly stay in their existing
+requirements. Raw access is not semantic-use permission. Qualification
+composition follows INT-045/048 and the open access/governance item; this
+requirement does not select an ambiguous/incomplete acceptance option. Packet-level edition rules (channel-0-only setup from 106-11, core's legacy_setup_any_channel, 106-04 time CSDW EXT bits and Time F2) stay in core / L3-CH10; edition-independent TEXT reading does not imply edition-independent packet routing.
+
+**L3-EDN-013** · Parent: L2-EDN-004 · Verification: T
+*Edition-independent reader tests SHALL independently specify raw source/spans, structural items and expected qualification retention across supplied edition contexts, including missing, known, unknown, older and future labels, and SHALL distinguish synthetic syntax fixtures from source-cited historical conformance fixtures.*
+
+Do not derive expected spans through the production scanner or treat a round
+trip alone as proof that semantic interpretation is correct. A historical
+code/range/default fixture needs its own edition/table/row source and review;
+none is fabricated to fill this batch. Structured internal assertions do not
+select report rendering, assumption text or a JSON schema.
+
+
+## Complete-record enumeration acceptance (family 2, batch 34)
+
+These consume evaluated assembler outcomes and core-owned source/provenance;
+they introduce no packet routing, record-splitting or governing rule. Planned
+checks use supplied final outcomes where the classification rule is pending.
+See the [scope note](research/2026-11-27-record-enumeration-requirements.md).
+No public output layout, numbering or report-schema choice is implied.
+
+**L3-CLI-038** · Parent: L2-CLI-010 · Verification: T
+*Within the supplied recording extent, enumeration SHALL return one command-computation entry for every independently identified finalized Complete record, including later records after intervening data, without stopping after the first setup packet or first Complete result; zero Complete records SHALL not fabricate an empty successful setup document.*
+
+An empty record list is distinct from acquisition/traversal failure and from
+an explicitly supplied complete empty text document. This defines internal
+computation, not whether a command prints a heading or exits successfully.
+Full-file completeness can be claimed only when the supplied traversal
+successfully reaches that extent's end; partial results retain their limits.
+
+**L3-CLI-039** · Parent: L2-CLI-010 · Verification: T
+*Each enumerated record SHALL correspond to exactly its assembler candidate/revision and ordered fragment membership, with original assembled-text extent and source mapping; one multi-fragment record SHALL yield one entry, while distinct bounded records SHALL remain distinct even when their bytes, channel, declarations or checksum values agree.*
+
+ADR-0025 and INT-039 define one assembled record as one document. Enumeration
+must not concatenate documents to satisfy scalar fields or hash the entire
+recording as a TMATS body. INT-053 previous-copy identity stays information,
+not permission to remove a record or change governing/eligibility outcomes.
+
+**L3-CLI-040** · Parent: L2-CLI-010 · Verification: T
+*The internal record sequence SHALL follow the source position of each record's first contributing fragment in the supplied recording order, independently of channel number, packet timestamp, record length or order in which independent channel runs finalize; every entry SHALL keep that source position and all contributing packet/span provenance.*
+
+A first fragment is not a complete text record by itself. Core supplies
+packet positions; do not reconstruct them from lengths/timestamps or add a
+second scanner. A synthetic out-of-order-finalization fixture receives
+already evaluated independent runs; it asserts no new packet-admission rule.
+This defines neither public record ordinals nor streaming emission timing.
+
+**L3-CLI-041** · Parent: L2-CLI-011 · Verification: T
+*Enumeration SHALL preserve each supplied final classification, retained cut facet, trust/integrity evidence, format/edition facts and findings, and SHALL keep non-Complete/provisional/unsupported candidates distinguishable from Complete entries without promoting them, hiding their existence or using their text to repair another record.*
+
+A revised time-seal outcome supersedes its earlier observed classification
+for this final inventory, retaining its history/findings under INT-045/048.
+Duplicate-field ambiguity cannot be cured by byte identity or digest evidence.
+General incomplete/ambiguous access is gated by [owner-signed INT-031](INTERPRETATIONS.md#int-031); ADR-0037 separately allows raw extract under findings, never semantic/governing use. Enumeration alone approves neither.
+No severity suppression or rendering rule is selected here.
+
+**L3-CLI-042** · Parent: L2-CLI-011 · Verification: T
+*Enumeration SHALL pass through core/assembler traversal failure and resource-limit evidence with its supplied extent and source context, retaining the distinction between no Complete records and an incomplete inventory; it SHALL NOT restart under the alternate input route, silently drop runs or assert that unvisited input contained no further records.*
+
+Core's admission refusals (HardLimit / BudgetTooSmall / TargetLimit) and
+drain reports are core-owned evidence passed through unchanged, with supplied
+extent/context. They remain separate from tmats' assembler-retention limit:
+tmats never reclassifies them or double-counts bytes across the two accounts.
+
+Already observed records do not establish successful full traversal after a
+later failure. This requirement selects no continue/stop/recovery mode,
+partial-result publication, exit code or process policy. Existing bounded
+resource rules still apply; no unbounded whole-file staging is authorized.
+
+**L3-CLI-043** · Parent: L2-CLI-011 · Verification: T
+*Enumerated-record identity and order SHALL remain independent of per-command selection, integrity mode or governing-setup use; selecting a record for extraction/checksum/view computation SHALL refer to that same scoped candidate/revision and SHALL not silently choose the first, latest, byte-identical or checksum-valid record as a global default.*
+
+Command argument grammar, public numbering, multiple-output framing and
+selection defaults are not decided here. No extraction, provisional-use or
+integrity/quarantine option is unblocked by these enumeration requirements.
+The time-view caller still identifies its setup context explicitly.
+
+**L3-CLI-044** · Parent: L2-CLI-010 · Verification: T
+*Enumeration tests SHALL independently list expected candidate/revision identities, first-fragment source positions, ordered fragment sets, final states and traversal extents, including multiple complete records, fragmented records, identical separate records, non-Complete candidates and failure after a valid record; expected enumeration SHALL not be generated by the production enumerator or a second packet reader.*
+
+Tests of classification itself remain with the assembler's source-cited
+fixtures and interpretation gates. Adapter integration uses core evidence
+alongside PacketFacts and borrowed spans; no checksum/trust fields are
+invented in PacketFacts. Structured assertions choose no rendered schema.
+
+
+## Checksum command computation acceptance (family 2, batch 35)
+
+Existing library contracts provide digest/exclusion/transaction semantics;
+these command children preserve them without a second implementation.
+Owner-signed INT-031 gates incomplete/ambiguous record access. Tests of refused
+outcomes may inject library results; they do not bypass the access gate.
+Public report formats, exit mappings and selection defaults remain held.
+
+**L3-CLI-045** · Parent: L2-CLI-012 · Verification: T
+*Checksum/verify command computation SHALL use the explicitly supplied scoped document/revision and operation, preserving their association with the library result and findings; a different record, earlier revision or concatenation of records SHALL not silently replace that input.*
+
+Recording inputs use the assembled TMATS text domain, not packet headers,
+CSDWs, filler or data checksums. Standalone text uses its retained source.
+Existing library/source and core-backed adapter contracts determine those
+bytes; commands neither re-scan packets nor rebuild text from typed fields.
+
+**L3-CLI-046** · Parent: L2-CLI-012 · Verification: T
+*Authoritative compute results SHALL retain the library's defined-domain/refusal distinction: a complete terminated SHA item with a malformed value alone SHALL not become a command-level compute refusal, while an undefined/ambiguous exclusion SHALL not become a successful authoritative checksum or be replaced silently by an unlabelled raw-byte hash.*
+
+L3-SUM-002 permits compute with G\SHA:2-ABC;, a 63-digit value, a zero
+placeholder or unsupported algorithm when the domain is established; verify
+retains its different verdict. A blocked access path is not permission to
+compute by reading partial/ambiguous input through another API.
+
+**L3-CLI-047** · Parent: L2-CLI-012 · Verification: T
+*Verification command computation SHALL preserve the library's match, mismatch, absent, unknown-algorithm, malformed, indeterminate, unavailable and placeholder distinctions and every applicable finding, without choosing a duplicate, repairing bytes or treating inability to verify as a match.*
+
+These are semantic distinctions, not a frozen result enum or output schema.
+INT-043 permits canonical numeric algorithm 2 with leading zeros, retaining
+every located noncanonical-designator warning even when another cause blocks
+verification. F1/INT-021 retains all duplicate evidence and no positive match.
+No whole-document validity or governing authority follows from a SHA match. Core PacketInfo data-checksum Mismatch/NotChecked is independent and passes through unchanged; neither it nor a G\SHA result upgrades the other. Admission/access gates remain separate.
+
+**L3-CLI-048** · Parent: L2-CLI-012 · Verification: T
+*An explicitly requested flex computation SHALL stay distinguishable from standard SHA computation/verification with its non-standard identity and supplied compatibility options attached to the result; it SHALL neither write a flex value into G\SHA nor satisfy a standard checksum request by returning flex instead.*
+
+ADR-0014 and L1-SUM-003 are the compatibility authority; no new flag syntax,
+option default, digest algorithm or output spelling is selected. Bit-for-bit
+algorithm/source qualification and independent flex fixtures remain their
+own unfinished derivation. No digest or checksum is a keyed signature here.
+
+**L3-CLI-049** · Parent: L2-CLI-013 · Verification: T
+*Stamp command computation SHALL delegate explicit revision-bound edits and the final stamp to the existing transaction, reject its refused/failed outcome without a successful stamped-result claim, and preserve original source, findings and failure evidence; it SHALL not silently remove duplicate SHA items or repair damaged names to create a stamp target.*
+
+An explicit permitted exact-item removal may precede stamp in the transaction;
+rebuild/re-read before computing. Noncanonical name-slot findings remain
+prominent in the result with the recommendation for an explicit rename first;
+a stamp alone is not a rename. No new edit syntax or ambiguous-access option
+is authorized by this command wrapper.
+
+**L3-CLI-050** · Parent: L2-CLI-013 · Verification: T
+*Only a successful final-byte verified stamp transaction SHALL yield the command's successful stamped-result bytes, with canonical 2- and lower-case hex and all transaction findings retained; command computation SHALL not hash before emission, omit inserted bytes from the domain, return an unverified intermediate result as success or modify the input.*
+
+Delivery is separate: a valid result in memory does not prove a destination
+write succeeded. Existing input-identity and delivery/failure contracts apply;
+ADR-0037's extract-only output/eligibility policy does not settle stamp's
+remaining choices. This requirement approves
+neither early file truncation nor a numeric process-status mapping.
+
+**L3-CLI-051** · Parent: L2-CLI-012 · Verification: T
+*Command/library integration tests SHALL independently check selected source/revision, operation, domain, semantic outcome and retained findings for compute/verify/flex/stamp paths, with explicit library refusal and transaction-verification failure cases; a mocked call alone SHALL not establish digest correctness or flex compatibility.*
+
+Contract tests may inject already evaluated blocked results; meaningful
+integration later exercises eligible real documents, independently calculated
+SHA digests and the reviewed transaction. Negative fixtures assert intended
+reasons, not unrelated errors. No second parser/packet reader or production
+command path computes its own expected oracle. Stamp cases also trace to
+L3-CLI-049/050; flex readiness still requires its own source-derived tests.
+
+
+## Flex source-fidelity and acceptance (family 2, batch 36)
+
+These derive L2-SUM-004/005 from ADR-0014 and the existing investigation,
+not newly verified reference code. The full source/arithmetic derivation is
+still required before implementation; no fixture below claims conformance
+or executed reference output. See the [source/gap note](research/2026-11-27-flex-compatibility-acceptance.md).
+
+**L3-SUM-011** · Parent: L2-SUM-004 · Verification: T
+*Flex computation SHALL use its reference-defined byte preparation and item/line selection over the explicitly supplied document source, preserving raw bytes and source/revision identity; it SHALL not silently use typed/effective values, INT-036 control omission, INT-038/055 numeric normalization, repaired names or a SHA-exclusion interval as a substitute.*
+
+Reference-specific uppercasing is part of compatibility, not a source rewrite
+or permission to use locale/Unicode folding from an unrelated API. The
+source-qualification analysis must define exact byte/line/terminator handling,
+including embedded controls/high bytes and absent final delimiters; unknown
+behavior is not inferred from the TMATS reader's semantics.
+
+**L3-SUM-012** · Parent: L2-SUM-004 · Verification: T
+*The accepted reference's default exclusion and explicit inclusion-option behavior SHALL be reproduced exactly, including D7's MPOC4/DPOC4 distinction, with source options bound to the result; no extension of an exclusion family, spelling correction or substitution of standard attribute meanings SHALL silently alter the compatibility filter.*
+
+The existing investigation identifies default COMMENT/group COM, G/V and
+R-identity exclusions and their inclusion flags. D7 deliberately retains
+DPOC4 as contributing while the documented adjacent DPOC1–DPOC3 filters do
+not contribute by default. These are compatibility tokens, not definitions
+of Chapter 9 attributes or a new public CLI flag grammar.
+
+**L3-SUM-013** · Parent: L2-SUM-004 · Verification: T
+*Flex line-checksum accumulation and algorithm/options identity SHALL match the qualified reference's exact arithmetic and byte-order rules, retaining its documented per-line Fletcher-32 summation behavior without substituting whole-document Fletcher-32, SHA-256 or a host-word-size-dependent calculation.*
+
+Before implementation, analysis must specify initialization, byte/word
+packing, odd lengths, arithmetic width/reduction/carry/overflow and final
+identity encoding from the pinned source. Reordering checks apply only to
+independently qualified complete reference lines, not arbitrary fragments.
+No numeric constant or malformed-input repair is invented to fill these gaps.
+
+**L3-SUM-014** · Parent: L2-SUM-005 · Verification: T
+*Compatibility evidence SHALL identify the exact reference revision, relevant source-file hashes/function and option definitions, build/runtime environment and fixture bytes/options/expected results; a moving branch name, historical prose or production-generated expectation SHALL not establish bit-for-bit compatibility.*
+
+The historical investigation names enI106_Tmats_Signature but supplies no
+newly verified pinned snapshot in this batch. Record reference behavior's
+preconditions and any undefined/locale/platform sensitivity. Such gaps must
+be resolved by source analysis and, where a product choice is needed, owner
+review before claiming support; do not hide them behind a passing example.
+
+**L3-SUM-015** · Parent: L2-SUM-005 · Verification: T
+*Flex verification SHALL include fixed independently recorded reference vectors plus an independent arithmetic check, default/inclusion-option coverage, D7, line-order/duplicate-line relations and bounded byte/length boundary cases; equality against the new flex implementation alone SHALL not supply its own oracle or establish malformed/high-byte behavior not defined by the reference.*
+
+Reference execution/source analysis belongs to later reviewed development,
+not this documentation PR. Keep expected values fixed with source provenance,
+not recomputed through production code during the test. Undefined cases are
+explicit readiness gaps, not fabricated positive vectors. Respect existing
+resource limits; this introduces no unbounded fuzz campaign or new dependency.
+
+**L3-SUM-016** · Parent: L2-SUM-005 · Verification: T
+*Every flex result SHALL retain its non-standard compatibility identity and option/source context independently of standard SHA and core PacketInfo integrity evidence; flex SHALL not be written into G\SHA, repair input, upgrade packet integrity/record qualification or satisfy a request for authoritative standard checksum verification.*
+
+No public label spelling, text layout, JSON field or process status is
+selected here. Owner-signed INT-031 still gates incomplete/ambiguous access.
+Core data-checksum Mismatch/NotChecked passes through unchanged; neither
+flex nor G\SHA upgrades it, and it does not upgrade either result.
+Command-computation wrappers remain L3-CLI-048/051, not a flex oracle.
+
+
+## Suspect-terminator diagnostic acceptance (family 2, batch 37)
+
+These derive L2-READ-014/015 without changing INT-035 framing. Detection
+uses the reviewed whole-name recognizer and retains raw source mapping;
+unavailable private/extension grammar is not guessed. All checks are planned,
+not executed scanner or real-data evidence. See the [source note](research/2026-11-27-suspect-terminator-requirements.md).
+
+**L3-READ-034** · Parent: L2-READ-014 · Verification: T
+*For each colon inside an established value, the detector SHALL test the L1-READ-007 optional-blank/complete-code-name/own-colon predicate within that value's bounds, requiring positive whole-name recognition under available reviewed grammar; a mere group-looking prefix, partial name or ordinary value colon SHALL not be sufficient.*
+
+The item's actual name/value delimiter is not inside the value. Do not cross
+its terminating semicolon, read past EOF or borrow a name from another item.
+Existing surrounding-name blank, ASCII-case, character-projection and index
+rules apply to recognition, never source rewriting. Missing grammar coverage
+stays explicit rather than being filled with speculative V/X path splitting.
+The 0.1 recognizer vocabulary SHALL include the Appendix 9-C code names and
+their reviewed index patterns, including D-x\MML\N, D-x\MNF\N and D-x\WP;
+an independently listed excerpt-name inventory SHALL expose any coverage
+gap as unready coverage, never a silently missed warning. These are pattern
+stems, not literal complete names without their required indices.
+Source-fixed [pattern/literal inventory](research/2026-11-28-appendix9c-recognizer-inventory.md)
+supplies the independent minimum; all runtime recognition coverage remains unimplemented.
+
+**L3-READ-035** · Parent: L2-READ-014 · Verification: T
+*Each positive predicate occurrence SHALL retain a located suspect warning and a suggested edit replacing exactly the triggering raw colon byte with semicolon; the suggestion SHALL identify its source/document revision and retain the evidence for the recognized following name without converting that lookahead into a lookup item.*
+
+Use checked source correspondence: a projected-name position is not a raw
+byte offset. The original item/value and the original source remain unchanged.
+Detection SHALL skip unterminated suffixes. A suggestion inside supplied
+cut-qualified text SHALL retain the record's qualification/cut facet and
+never make it usable; diagnostic inspection remains subject to proposed
+INT-031 access, not an exception to that gate.
+No public result type, renderer text/layout or JSON encoding is fixed; L1's
+existing warning meaning and severity are not a new presentation choice.
+
+**L3-READ-036** · Parent: L2-READ-014 · Verification: T
+*Detection SHALL leave raw/default output, item count/order, original spans, explicit-value lookup and checksum byte domains unchanged; it SHALL neither apply its suggestion nor synthesize a semicolon, split the value, insert a field or replace an independently retained finding.*
+
+INT-035/018 and ADR-0002/0007 remain authoritative. Any explicitly chosen
+future edit goes through its own reviewed revision-bound transaction and
+subsequent checksum handling. A warning is not an implicit repair request;
+this slice does not implement the later general edit/apply-all interface.
+
+**L3-READ-037** · Parent: L2-READ-015 · Verification: T
+*Tests SHALL independently fix positive and negative predicate cases, raw spans and expected one-byte proposals, including repeated candidates in one value, mixed case, source-mapped controls and item/EOF boundaries; the production detector SHALL not calculate its own expected candidate set or edit locations.*
+
+Synthetic fixtures can intentionally put a code-looking string in COMMENT;
+they are not declared malformed solely because the heuristic triggers.
+The Appendix 9-C fixture measures its targeted warning locations separately
+from other findings caused by literal example/prose text. Broad parser tests
+and independent byte oracles remain required beyond these focused cases.
+
+**L3-READ-038** · Parent: L2-READ-015 · Verification: T
+*Diagnostic readiness SHALL retain the S1 suspect status and distinguish synthetic/source-excerpt regression results from real-recording confirmation; no passing fixture, warning count or reference-tool agreement SHALL remove that mark or assert the writer intended a semicolon.*
+
+The existing owner-required real-data review must record observed candidates,
+legitimate lookalikes/false positives and severity assessment before S1 is
+closed. This authorizes no sample access or local heavy/reference workload.
+The colon detector does not enable the separately planned suggestion for a
+line break followed by a complete code name; that remains its own future item.
+
+**L3-READ-039** · Parent: L2-READ-015 · Verification: T
+*The detector SHALL respect checked source bounds and the existing finite resource contract for input, recognition work and findings/suggestions; resource exhaustion SHALL remain observable under that contract, never silently drop candidates, claim complete detection coverage or repair text to make progress.*
+
+No new numeric budget, truncation/recovery policy or complexity claim is made
+without analysis of the actual recognizer. Repeated colon-rich values require
+bounded workload tests, not an unbounded local scan or arbitrary cap. Resource
+failure remains distinct from no candidate or unavailable grammar coverage.
+
+
+## Session-format/F7 evidence acceptance (family 2, batch 38)
+
+These consume supplied decoded CSDW/session evidence, not a new reader,
+packet classifier or SRCC aggregation rule. Unsupported/inaccessible bodies
+are not read merely to obtain metadata. See the [source/gap note](research/2026-11-27-session-evidence-requirements.md).
+Final admission, access and governing qualifications remain unchanged.
+
+**L3-CH10-022** · Parent: L2-CH10-008 · Verification: T
+*Session-format checking SHALL retain each supplied readable FRMT observation with its setup/candidate qualification, fragment, source position and explicit session scope/provenance; formal coexistence-finding eligibility SHALL remain BLOCKED on the owner scope decision, recommended Complete-only A versus broader non-Complete B, with neither silently selected.*
+
+Source: Figure 11-34, 106-24R1 section 11.2.7.2 p. 11-50. Preserve all
+contributing occurrences; multiple fragments are not silently summarized
+as one chosen format. Caller-asserted session labels retain that basis and
+never become evidence that recorder control commands were observed. Treating an
+entire recording as one session requires explicit labelled caller assertion
+or supplied session evidence; without either, report unavailable scope,
+not no mixture. Recommended A keeps non-Complete FRMT as qualified evidence
+without a formal finding; B broadens eligibility and remains unapproved.
+
+**L3-CH10-023** · Parent: L2-CH10-008 · Verification: T
+*Format-check results SHALL distinguish established coexistence, no observed coexistence within the supplied known extent and unavailable scope/format evidence, retaining incomplete coverage and all supplied trust/record qualifications; XML unsupported for text parsing SHALL not erase its decoded FRMT evidence or make the whole check pass.*
+
+Observed format coexistence and eligibility to issue the formal finding are
+separate; the owner-pending scope gate is not bypassed by this result contract.
+No observed mixture is not proof about unvisited input, and an unknown FRMT
+is not ASCII by default. FRMT disagreements within a candidate remain located
+evidence; this check never resolves its boundary or promotes its completeness.
+Owner-signed INT-031 still gates incomplete/ambiguous text access.
+
+**L3-CH10-024** · Parent: L2-CH10-009 · Verification: T
+*With an established SRCC=1 trigger but no verified configuration-change-event identity, the required-event check SHALL remain indeterminate with its missing basis and raw observations retained, regardless of whether a nearby Format 2 recording-event packet or other event-like candidate is supplied.*
+
+Approved INT-030 does not identify a packet type. A candidate is not proof
+of compliance or violation; absence of a matching guessed type cannot mean
+missing required event. Event identification and a cited reviewed rule for
+what prior means remain prerequisites before implementing a determinate check.
+
+**L3-CH10-025** · Parent: L2-CH10-009 · Verification: T
+*Session-change evidence SHALL retain each fragment's SRCC reading and supplied first-record/session context; disagreement, unreadable bits or absent summary policy SHALL remain unresolved rather than be repaired by OR/AND, last/first wins or presumed agreement from matching FRMT/RCCVER.*
+
+INT-045's first-fragment SRCC controls its specific mid-session closure
+eligibility only, not a general event-check aggregation rule. SRCC=1 on a
+session's first record is separately identifiable evidence, not automatically
+settled as a missing-event finding. SRCC=0 alone is not proof of unchanged
+bytes; approved retransmission rules still apply in their separate scope.
+
+**L3-CH10-026** · Parent: L2-CH10-009 · Verification: T
+*Session checking SHALL preserve core-supplied admission/trust, integrity and edition-dependent channel-rule evidence alongside header-only PacketFacts without rerouting packets, recomputing checksums, guessing unavailable edition mappings or using a format/event finding to override that evidence or authorize governing use.*
+
+Packet-level channel policy, including legacy_setup_any_channel, remains in
+core / existing L3-CH10 integration. No new 106-11/106-17 transition is encoded
+here. The source evidence is re-verified in the batch-39 note; changing the
+parent is recommended A, PENDING OWNER, not approved or applied here.
+A separately observed format conflict does not erase or repair core findings.
+
+**L3-CH10-027** · Parent: L2-CH10-008 · Verification: T
+*Session-evidence tests SHALL independently list scope/provenance, FRMT/SRCC observations, locations and expected uncertainty/findings, including mixed/separate sessions, XML without body parsing, unknown coverage, first-record SRCC=1, fragment disagreement and nearby generic events; they SHALL not use a second packet reader, invented event identity or production scope inference as the oracle.*
+
+Tests may supply already evaluated triggers/context; that does not qualify a
+missing aggregation or prior-ordering rule. Keep F7 identification, source
+freshness, development analysis and executable verification gates explicit.
+No public report format, severity mapping or output schema is selected.
+
+
+## Argument-parser mechanism acceptance (family 2, batch 39)
+
+These refine the existing runner/API contracts under ADR-0013. They select
+no new grammar for held flags, numeric arguments, labels, streams or exit
+codes. The [source note](research/2026-11-27-argument-contract-and-session-scope.md)
+separates parser mechanism from complete product-command acceptance.
+
+**L3-CLI-052** · Parent: L2-CLI-014 · Verification: T
+*The parser SHALL consume the exact supplied argument sequence for that invocation without reading global argv, environment, stdin or source files, and SHALL return its internal request/usage outcome to the calling host without printing or exiting.*
+
+Existing runner/render APIs own supplied output streams, not the token parser.
+No implicit shell expansion, filename-content routing or process-state default
+belongs to this parser; the outer caller supplies tokens, not a shell string.
+Representation/grammar of platform-specific or non-Unicode tokens is not
+chosen here, and must not be settled by a silent lossy conversion.
+
+**L3-CLI-053** · Parent: L2-CLI-014 · Verification: T
+*Implemented commands/options SHALL be described by the applicable reviewed parsing table, with supplied values associated with the declared command/option rule and passed to its reviewed decoder; unaccepted tokens, missing required operands and declared conflicts SHALL produce a distinguishable usage failure rather than a partially executable request.*
+
+Tests derive expected requests/failures independently of production tables.
+This fixes no new alias, duplicate-option, ordering, abbreviation, equals-form
+or -- behavior; such rules must be reviewed before their rows are enabled.
+TMATS INT-055 field-value grammar does not automatically apply to CLI numbers.
+
+**L3-CLI-054** · Parent: L2-CLI-014 · Verification: T
+*Parsing SHALL preserve supplied operand/token identity and association without silently trimming, folding case, normalizing, splitting or repairing it beyond an explicitly reviewed grammar rule; a rejected selector/edition/options operand SHALL not become a guessed record, edition, input route or caller clock choice.*
+
+An input path token is not TMATS text. A parsed command request is not proof
+that the file exists or that its contents select a valid recording/text route.
+Record numbering/defaults and file-order owner confirmation remain separate;
+no fabricated record identity is produced to complete an incomplete request.
+
+**L3-CLI-055** · Parent: L2-CLI-015 · Verification: T
+*Parser and runner tests SHALL demonstrate that rejected requests never reach command execution or input/output acquisition, and that the host receives their usage classification and remains running; parser success SHALL not suppress later acquisition, library or delivery failures.*
+
+Keep semantic return classifications distinct without assigning numeric exits,
+usage text, help layout or diagnostic streams. Help/version token handling
+uses its own reviewed table entries, not a hidden process-exit path.
+
+**L3-CLI-056** · Parent: L2-CLI-015 · Verification: T
+*The standalone binary and mounted host runner SHALL share the same parser/request construction for the same supplied arguments, while individual command APIs SHALL remain callable with explicit requests without re-parsing global arguments or invoking main.*
+
+W3 requires both entry paths. Compare the same request/outcome before rendering;
+no host-only remembered selector, implicit environment default or second
+command computation may create different semantics for identical inputs.
+
+**L3-CLI-057** · Parent: L2-CLI-015 · Verification: T
+*Acceptance SHALL independently enumerate each implemented reviewed flag/value/usage rule and its positive/negative token cases, including bounded empty/truncated/unknown inputs and decoder failures; missing tests or unreviewed enabled table rows SHALL remain readiness gaps rather than inferred coverage from help/version or a synthetic parser table.*
+
+Use bounded in-memory token lists, not shell subprocess expansion as oracle.
+Assertions target request/usage states and execution boundaries, not public
+rendering. No parser dependency, fixture dev dependency or unbounded campaign
+is authorized. Existing finite input/resource rules still apply.
+
+## Extract owner-policy acceptance (ADR-0037, 2026-11-27)
+
+These refine L2-CLI-008/009 under the verbatim owner direction, with no
+new interpretation of TMATS or packet trust. #72's parser IDs are unchanged.
+Flags are the owner's exact spellings; the rest of argument grammar is held.
+
+**L3-CLI-058** · Parent: L2-CLI-009 · Verification: T
+*Extract SHALL refuse an existing unrelated -o regular file by default, allowing overwrite only with --force; an authorized overwrite SHALL open without truncation, compare identities and truncate/write through that same handle, without pathname reopen or temp-file+rename.*
+
+Known input aliases still refuse, including with --force. Source/content
+validation, identity checks and policy refusals must precede destructive
+access; output failures retain their existing partial-delivery contract.
+
+**L3-CLI-059** · Parent: L2-CLI-009 · Verification: T
+*Extract SHALL allow stdout and pipes without a provable file identity, and SHALL refuse a regular-file destination whose identity cannot be proven unless --force is explicit; acceptance with that exception SHALL retain the unproven identity as such, never represent it as a successful identity check or override a known input alias.*
+
+The owner authorizes the regular-file proof exception, not a new temporary
+replacement protocol, implicit force default or invented destination grammar.
+Shell redirection remains outside the tool-opened acquisition guarantee.
+
+**L3-CLI-060** · Parent: L2-CLI-008 · Verification: T
+*Extract SHALL deliver the selected supplied original bytes despite findings by default, reporting every finding; --strict SHALL refuse for data-checksum mismatch, secondary-header failure, INT-045 cut, INT-048 ambiguity, INT-037 marker and INT-055 invalidity. Whether --strict also refuses on every other finding is PENDING OWNER, with neither option silently selected. There SHALL be no default always-refuse finding class.*
+
+The findings/qualifications and core integrity states remain unchanged.
+This is extraction-only raw delivery, not a positive checksum, semantic
+access or governing verdict. No second reader, guessed byte extent, data
+repair, UTF conversion or source-byte fabrication is authorized. Absent selection or an unavailable raw extent (not a retained cut prefix)
+and sink/limit failures remain operational failures rather
+than findings-based always-refuse exceptions. No report format is selected.
+
+**L3-CLI-061** · Parent: L2-CLI-008 · Verification: T
+*Extract policy tests SHALL cover every listed finding kind and their combination under default/--strict, preserving exact bytes and all findings or observing strict refusal; they SHALL also cover existing unrelated files, known aliases, stdout/pipes and unproven regular identity with/without --force, asserting same-handle write order and absence of rename replacement.*
+
+Use synthetic owned inputs, injected core evidence and isolated destinations;
+no real recording is needed. Failures are observable to a host without fixing
+message layout or numeric exit status. A flag-propagation mock alone cannot
+verify byte preservation, file identity or delivery behavior.
+
+
+## Bounded time-view lookup acceptance (family 2, batch 40)
+
+These derive L2-VIEW-016/017. They compose existing key/candidate/field
+contracts, selecting no new clock proof, general link selector or query
+language. See the [contract note](research/2026-11-27-bounded-lookup-state-requirements.md).
+All tests below remain planned, not executable implementation evidence.
+
+**L3-VIEW-065** · Parent: L2-VIEW-016 · Verification: T
+*Each bounded attribute lookup SHALL bind the supplied document/revision, canonical recorder occurrence, definition path and required entry/index tuple, retaining only exact full-key matches within that scope; it SHALL not substitute channel-ID values, borrow another entry/recorder/document or invent an index for a recorder-level attribute.*
+
+106-24R1 Table 9-4 TK1 p. 9-48 defines the channel-ID value separately from
+entry n; NSB p. 9-33 is recorder-scoped. Existing full-key/source rules apply
+to the remaining reviewed time fields. This adds no semantic selector based
+on TSRC/DSI/CHE, packet proximity or a presumed governing setup.
+
+**L3-VIEW-066** · Parent: L2-VIEW-016 · Verification: T
+*When interpreted scoped lookup is available, its identified exact-candidate collection SHALL yield resolved for one occurrence, unresolved for zero and ambiguous for two or more, retaining each item identity, location and source order even for equal repeated values or canonical-index spelling collisions.*
+
+This is the bounded attribute-lookup state, not proof that a general link
+resolved/unresolved. Source order lists evidence only. Positive identity
+resolution neither calls the field Explicit nor verifies it. Canonical-key
+collisions retain INT-038's spelling/collision information and INT-039's
+scalar duplicate evidence; an invalid value is not filtered to create a winner.
+
+**L3-VIEW-067** · Parent: L2-VIEW-016 · Verification: T
+*Unavailable scope/key/definition or interpreted-lookup gating SHALL remain an explicit prerequisite limitation, never a fabricated usable unresolved answer; zero identified exact candidates with compatible damaged/unterminated evidence SHALL retain that evidence and SHALL not prove physical absence, a false specified predicate or default applicability.*
+
+INT-037 lookup gating, INT-042 physical-presence uncertainty and existing
+raw-candidate contracts remain separate. A zero-exact-match collection can
+coexist with related evidence that makes a presence predicate cannot-evaluate;
+it never manufactures the damaged/suffix text into an exact lookup item.
+This requirement selects no fourth cardinality enum or new absence policy.
+
+**L3-VIEW-068** · Parent: L2-VIEW-017 · Verification: T
+*Lookup cardinality SHALL remain separate from the effective field state: a uniquely identified item with an empty, invalid or unavailable value SHALL not disappear, and an applicable default for an absent attribute SHALL not become an explicit lookup candidate or resolve an otherwise zero-candidate lookup.*
+
+Use already evaluated condition/default evidence where needed: TFMT may be
+Defaulted A under approved INT-041 while its explicit-item lookup identifies
+zero candidates. A single invalid candidate is identity-resolved but its
+field remains Invalid; multiple candidates keep ambiguity even if one is valid.
+No default, type/blank or numeric rule is newly interpreted in this batch.
+
+**L3-VIEW-069** · Parent: L2-VIEW-017 · Verification: T
+*Bounded lookup answers SHALL retain record/source/revision qualifications, cut facets, core evidence and source diagnostics unchanged; they SHALL not upgrade record usability, alter association state, inherit another query's caller choice or erase field evidence through assumption-level suppression.*
+
+General incomplete/ambiguous access remains gated by owner-signed INT-031. Tests
+can receive permitted diagnostic candidate evidence without granting that
+access. INT-056 governs only bad-data finding emission on an assumption answer;
+original field/source diagnostics remain readable. Lookup success is neither
+association_evidenced nor a positive SHA/packet-integrity/governing verdict.
+
+**L3-VIEW-070** · Parent: L2-VIEW-017 · Verification: T
+*Tests SHALL independently specify full keys, source item identities/locations, availability and expected cardinality/field/qualification results across zero/one/many cases, with source-order changes, duplicates, invalid values, defaulted absence, canonical collisions and document/entry separation; expectations SHALL not be calculated by production lookup or a guessed clock resolver.*
+
+Actual Table 9-4 field fixtures keep their citations and reviewed definitions.
+Synthetic damaged/availability cases assert evidence boundaries, not invented
+conforming codes. Tests use internal states and supplied condition evidence;
+public query syntax, report rendering and stable Rust symbols remain held.
+
+
+## Normalization transform acceptance (family 2, batch 41)
+
+These derive L2-WRT-005/006. Joey signed INT-064 A+D / INT-065 A /
+INT-066 A on 2026-11-28 under ADR-0033; development gates remain; common validation/retention tests
+are not approval of those options. No normalization code is added.
+
+**L3-WRT-012** · Parent: L2-WRT-005 · Verification: T
+*Before transforming, normalization SHALL bind the requested order/newline/counter operations and selected policy parameters to the exact input revision and checked source correspondence, reject stale plans and unresolved overlaps/incompatible compositions, and refuse unavailable/unready policy without applying a partial guessed result or changing the original.*
+
+Only the requested bounded transform kinds are in scope. This is not a
+public arbitrary-patch API, an apply-all suggestion command or a default
+formatting mode. Missing target order/newline/count semantics stay unavailable.
+
+**L3-WRT-013** · Parent: L2-WRT-005 · Verification: T
+*Order normalization SHALL retain every selected source region exactly once, preserve raw bytes within each region and preserve all opaque/prefix/suffix content under the selected approved mapping; no equality, invalidity, case-folded key or unknown group SHALL authorize dropping/coalescing an occurrence or renumbering a name.*
+
+INT-064 selects A's validated complete-region bijection plus built-in D,
+Chapter 9 group order, v1 (Joey, 2026-11-28). D uses G/T/R/M/P/D/B/S/Q/C/H/V/X
+within runs between standalone-comment/opaque/malformed anchors, stable
+within groups. Unknown groups anchor; positively grouped V/X retain private
+bytes and stable placement without interpreting them. Missing partition
+still refuses. A+D meets the named-profile policy; no L1 reinterpretation or
+implicit normalization. Written analysis/review and executable tests remain.
+
+**L3-WRT-014** · Parent: L2-WRT-005 · Verification: T
+*Line-ending normalization SHALL use the explicitly selected target and approved conversion scope, identify CRLF as one token where conversion applies, preserve all non-target bytes and report unavailable layout rather than silently trim, project or transcode fields to achieve a claimed global newline convention.*
+
+Owner-signed INT-065 A requires positively identified layout-only ranges and LF/CRLF
+chosen by the caller; B/C remain unapproved alternatives. Raw leading layout
+and internal name/value controls are not interchangeable; NUL/0x1A padding
+is not a newline token. Do not infer a platform default. Owner-choice holds are removed; development gates remain.
+
+**L3-WRT-015** · Parent: L2-WRT-005 · Verification: T
+*Counter normalization SHALL use a reviewed counter definition, explicit target/scope and independently established canonical member identities, retain every supporting occurrence/finding and check the computed value against the cited range without clipping, renumbering or synthesizing missing members/targets; unapproved evidence/contiguity policy SHALL not be guessed.*
+
+Owner-signed INT-066 A requires complete contiguous membership and range-checked canonical
+count, including explicit replacement of a malformed old value only when the
+target/domain are established; B/C differ and remain unapproved. INT-040's
+unusable-old-counter validation result is not erased by calculating a proposed
+replacement. Invalid member values do not silently remove structural members.
+
+**L3-WRT-016** · Parent: L2-WRT-006 · Verification: T
+*Normalization SHALL keep original source/revision immutable and distinguish proposed/emitted output plus old-to-new item/span correspondence; changing the hash domain SHALL not silently restamp G\SHA, reuse the input's positive verification as output proof or claim automatic record/field/core qualification upgrades from normalization success.*
+
+An explicitly requested stamp may occur only after final normalization output
+under the existing stamp transaction. No output checksum is claimed stale or
+valid solely because a transform ran: establish its actual domain/result.
+A changed counter field can be reevaluated in the new revision under reviewed
+rules; old findings stay bound to the original revision, not silently erased.
+Compound plans need explicit sequence/correspondence, not a guessed pipeline.
+No file acquisition, atomic replacement or sink rollback promise is added.
+
+**L3-WRT-017** · Parent: L2-WRT-006 · Verification: T
+*Tests SHALL independently specify requested policy/revision, exact affected bytes and untouched source/item sets for order/newline/counter cases and refusal paths; planned policy-specific oracles SHALL retain remaining review/development gates and SHALL NOT be counted as implemented transformations or generated through production normalization.*
+
+Use synthetic owned text and reviewed counter/fragment descriptors. Compare
+complete output bytes and source immutability, not only typed values or a
+multiset. Source-freshness/analysis/executable verification remain required
+beyond focused fixtures. No renderer/schema or stable Rust API is frozen.
+
+
+## Retained-resource inventory and limit evidence (family 2, batch 42)
+
+These derive L2-ROB-006/007 and refine the already stated finite-budget/
+borrowed-span contracts. No production byte tariff, allocator-overhead rule,
+numeric default, post-error API or host steady-state allocation rule is chosen.
+See the [contract note](research/2026-11-27-retention-limit-evidence.md).
+
+**L3-ROB-014** · Parent: L2-ROB-006 · Verification: T
+*The in-scope retention inventory SHALL identify open runs/channels, ordered fragment/span references, backing owner identities and their live references, owned text where present, provenance, assembler-retained snapshots and error-path storage, distinguishing logical used length from retained allocation/capacity and unavailable size information.*
+
+This is an internal test/evidence contract, not a public report schema or a
+new field on PacketFacts/PacketInfo. Memory-owner/capacity evidence must come
+from verified actual ownership APIs or explicit caller descriptors, never
+inferred from header lengths. Empty text is not zero metadata retention.
+
+**L3-ROB-015** · Parent: L2-ROB-006 · Verification: T
+*Shared backing ownership SHALL remain represented while any in-scope retained span/snapshot/error path still depends on it; closing one run or changing a run's lifecycle SHALL not falsely mark the owner released while another retained reference remains, and handoff outside the declared domain SHALL be distinguished from deallocation.*
+
+The inventory tracks owner identity/reference relationships, not a choice
+between unique-owner, per-reference or conservative charge formulas. Closing
+an open run is not proof a completed output or caller released its buffers.
+No source may dangle/rebind; ADR-0036's no-required-coalescing remains intact.
+A budget for open-run state is not a bound on the caller's entire heap/RSS.
+
+**L3-ROB-016** · Parent: L2-ROB-006 · Verification: T
+*Accounting evidence SHALL name its domain, including core BlockPool credits held by retained DATA spans, selected model/units and known quantities or reviewed bounds for every covered retention category; it SHALL expose excluded/caller-owned or unknown quantities and SHALL NOT advertise a hard aggregate byte bound from logical text totals, incomplete overhead/owner accounting or a synthetic fixture model.*
+
+Selected policies must cover their claimed domain, including metadata-only
+streams, backing retention and failure/snapshot state. This does not decide
+allocator overhead or shared/caller charging. An unavailable required quantity
+is a readiness limitation, not zero charge or a fabricated successful proof.
+The owner-held zero-allocation non-setup host rule is not selected here.
+
+Retained pool credits stay inside this domain, not an exclusion for borrowed
+or caller-owned bytes. PENDING OWNER: how the assembler keeps the reader
+progressing while it retains spans (cap retained pool credits, early copy,
+or typed failure). No policy, threshold or copy trigger is selected; the
+open-run reader-stall fixture is BLOCKED on that decision.
+
+**L3-ROB-017** · Parent: L2-ROB-007 · Verification: T
+*An admission/limit calculation SHALL compare the configured finite limit, charged state and proposed charge under the selected model without wrapping arithmetic; a full proposed operation whose charge exceeds the remaining limit or arithmetic domain SHALL not be reported as fully admitted within budget, and its actual accepted/rejected extent SHALL remain explicit.*
+
+Tests may provide a small independent integer domain and charges. Equality
+with the byte limit does not exceed that limit, though another declared
+constraint may still reject. This fixes no default, fragment-size cap or
+atomicity: a future selected policy must still define actual acceptance.
+No integer-sized source allocation is needed to test arithmetic boundaries.
+
+**L3-ROB-018** · Parent: L2-ROB-007 · Verification: T
+*Typed limit evidence SHALL retain the affected operation/run/channel, input/provenance context, configured limit/model and actual accepted/retained/returned/rejected source boundaries with their ownership disposition, without an uncharged full-payload error copy or a fabricated EOF, malformed-data verdict, joining stop, Complete result or governing/checksum success.*
+
+Source disposition must be truthful under whichever reviewed failure contract
+is eventually selected. Do not infer all-or-nothing rollback, partial-prefix
+support or safe retry/resume from this ledger; those remain review items.
+Failure reporting itself is retained state if the assembler owns it, not an
+escape from the existing budget. No spill I/O, forced eviction or renderer
+format is authorized. Missing input cannot be repaired with an empty record.
+
+Core admission refusals and drain reports remain core-owned evidence under
+L3-CLI-042, passed through unchanged and separate from this assembler limit.
+Do not relabel a core refusal as an assembler limit or double-count retained
+bytes by adding overlapping core and assembler accounting totals.
+
+**L3-ROB-019** · Parent: L2-ROB-007 · Verification: T
+*Resource tests SHALL independently specify retained owner/reference/category inventories, selected fixture-model charges, arithmetic boundaries and failure/source disposition, including multiple channels, shared owners, empty fragments, snapshots and error paths; fixture accounting shall not substitute for verification of actual production allocations/ownership or approve a pending policy.*
+
+Assert internal evidence and exact retained source, not only a final numeric
+counter. Test native checked arithmetic in appropriate CI profiles when code
+exists; debug/release differences must not hide overflow. No new dev dependency,
+local heavy run or production memory/throughput threshold is approved.
+
+
+## Show-free command orchestration acceptance (family 2, batch 43)
+
+These refine L2-CLI-016/017 using supplied reviewed internal requests and
+unheld computation. No public command grammar, rendering or exit mapping is
+chosen. Owner-signed INT-031 still gates semantic access to incomplete/ambiguous
+records; raw extract remains separately authorized by ADR-0037.
+
+**L3-CLI-062** · Parent: L2-CLI-016 · Verification: T
+*Orchestration SHALL carry the acquired source identity and explicitly selected scoped document/revision into the requested library operation, preserving source extents, occurrence multiplicity and qualifications; a path, inventory position, checksum result or byte-identical copy SHALL NOT silently substitute a different candidate or revision.*
+
+Assert the selected binding through routing/enumeration and command handoff,
+not only identical final values. This chooses no public numbering/default,
+file-order interpretation, live publication policy or filesystem snapshot
+atomicity. Stamp's explicit new output revision and required verification
+are not forbidden; distinguish them from the selected input revision.
+
+Acquire only explicitly supplied input sources. Stdin as an input source
+(a '-' operand or stdin when no path is given) stays PENDING OWNER; never
+fall back to stdin on an absent path or acquisition failure.
+
+When mounted, consume only packets and observations the host routed to this
+adapter, preserving the non-fragment observation path under L3-CLI-028.
+Never run a separate dispatcher, claim other consumers' packets or rebuild
+dispatch from headers. The standalone binary is one host that performs its
+own dispatch through the same L3-CLI-026/027 adapter boundary and observable
+typed wrong-input refusal; this adds no reader or dispatcher inside tmats
+command computation.
+
+**L3-CLI-063** · Parent: L2-CLI-016 · Verification: T
+*Command composition SHALL preserve original selected bytes for raw extraction and checksum-domain computation, together with core-supplied trust/integrity/admission evidence and record qualifications, without silently normalizing, serializing an interpreted view, reparsing packet headers or using one integrity result to upgrade another.*
+
+L3-CLI-030/031 and the checksum-domain rules remain authoritative. Projected
+fields cannot replace raw source. CSDW exclusion follows existing fragment
+slicing, not a second reader. Core refusals/drain reports and tmats retention
+limits stay distinct under L3-CLI-042/ROB-018; no double-counting or fallback.
+This does not authorize access or govern a record merely because it was read.
+
+**L3-CLI-064** · Parent: L2-CLI-016 · Verification: T
+*Each invocation SHALL use its supplied request/selection/options and output handles; prior successful or failed calls SHALL NOT supply an omitted record, edition override, clock choice or command mode to a later call, nor overwrite evidence/results already returned for another source/revision.*
+
+INT-060 forbids remembered per-query association choices. Reviewed edition
+fallback remains applicable; absence of an override does not forbid that
+policy. This does not require global cache flushing, prohibit explicit
+caller-managed context, choose a reset API or promise concurrent execution.
+A result's source identity and qualifications must not silently rebind.
+
+Carry the invocation's --force/--strict choices unchanged into extract's
+ADR-0037 path. Every destination refusal precedes any destructive operation:
+existing unrelated file without --force; unproven regular-file identity
+without --force; known input alias ALWAYS, even with --force. Apply the
+open-without-truncation, identity check, same-handle truncate/write sequence
+of L3-CLI-034, never truncate/write first and refuse afterward. Stdout/pipes
+remain allowed as destinations under ADR-0037; that does not approve stdin
+as an input source. --strict on unlisted findings remains PENDING OWNER.
+
+**L3-CLI-065** · Parent: L2-CLI-017 · Verification: T
+*Integration tests SHALL distinguish acquisition/routing, traversal/assembly, selection/access, computation and delivery outcomes under their reviewed contracts; an earlier failure SHALL NOT become a successful empty command result, and successful computation SHALL NOT be reported as successful delivery when the supplied sink fails.*
+
+Use injected distinguishable failures to verify the shared boundary without
+choosing numeric process codes, rendered diagnostics or warning suppression.
+Retain actual stage/source evidence; do not turn unavailable semantic access
+into permission to continue. No new retry, continuation or failure-atomicity
+policy is selected; existing output contracts govern partial delivery.
+
+**L3-CLI-066** · Parent: L2-CLI-017 · Verification: T
+*For the same reviewed request, source/revision and supplied context, the runner's command handoff and individual-command path SHALL use shared command computation and yield equivalent semantic results, source bindings and qualifications before rendering, while returning control to the host on both success and failure.*
+
+Compare pre-render command data and stage identity, not JSON/text snapshots
+or unreviewed exit mappings. A bounded instrumented adapter can observe the
+handoff; adapter success alone does not qualify an actual command. The thin
+binary remains responsible only for process-edge translation under W3.
+
+Runner and direct extract paths must give the same ADR-0037 outcome for the
+same supplied flags and destination/identity evidence, including refusal
+before destructive access; this does not settle the strict unlisted-finding
+predicate or extend extract's policy to stamp.
+
+**L3-CLI-067** · Parent: L2-CLI-017 · Verification: T
+*Acceptance evidence SHALL identify which real reviewed command/routing paths were exercised and their independent byte/result/failure oracles; synthetic stage adapters, help/version coverage or a passing component suite SHALL NOT be reported as full integrated command acceptance when real paths, dependency compatibility or owner-held policies remain unverified.*
+
+Bounded synthetic composition fixtures test boundary mechanics. Actual text
+and core-backed recording command paths need their own executable evidence
+once implemented, using existing source-cited fixtures. Flex qualification,
+std/consumer checks, report formats, strict scope and general record access
+retain their gates. No new dependency or local heavy check is authorized.
