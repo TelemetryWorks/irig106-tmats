@@ -1639,7 +1639,7 @@ not silently changed. Demonstrated high-byte/other failures remain visible.
 
 **Test**: `unavailable_definition_is_not_data_invalidity`, `unknown_validity_operand_blocks_explicit`, `known_multiplicity_survives_unavailable_value_rule`, `lowercase_tfmt_keeps_raw_case`, `blank_enum_requires_reviewed_handling`, `present_non_timein_tfmt_is_not_absence`, `ambiguous_cdt_makes_default_condition_unknown`, `invalid_under_fallback_keeps_basis` (planned, not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-effective-presence-basis-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Draft analysis**: [sources, alternatives and remaining work](research/2026-11-23-effective-value-draft.md)
 
@@ -1731,7 +1731,7 @@ Boolean semantics or new default is selected by this interpretation.
 
 **Test**: `specified_absent_is_false`, `specified_invalid_and_duplicate_stays_true`, `presence_scope_unknown_is_not_absence`, `missing_value_does_not_make_inequality_true`, `default_does_not_make_item_specified`, `unterminated_text_is_not_specified`, `damaged_name_blocks_false_presence`, `presence_uses_canonical_name_identity`, `damaged_child_parent_blocks_compatible_scopes`, `not_specified_preserves_unknown`, `other_document_does_not_supply_presence`, `unterminated_literal_prefix_blocks_compatible_presence`, `high_byte_inside_literal_blocks_false_presence`, `projected_controls_preserve_exact_presence`, `high_byte_run_covers_missing_literal_tail`, `damaged_literal_readable_order_is_required`, `high_byte_run_can_match_empty`, `terminated_literal_has_no_implicit_gap`, `high_byte_run_hiding_separator_is_unassigned` (planned, not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-effective-presence-basis-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Draft analysis**: [sources, alternatives and remaining work](research/2026-11-23-condition-scope-draft.md)
 
@@ -1855,7 +1855,7 @@ INT-014; that rule and all other review/coverage gates remain unchanged.
 
 **Test**: `ambiguous_g106_uses_labelled_fallback`, `identical_g106_duplicates_still_fall_back`, `override_keeps_ambiguous_declaration_evidence`, `ambiguous_fallback_uses_existing_policy`, `ambiguous_fallback_labels_defaults_and_findings`, `single_damaged_or_blank_g106_is_not_duplicate`, `ambiguous_fallback_is_prominent`, `mixed_g106_duplicates_keep_ambiguity`, `ambiguous_g106_json_reason_is_structured` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-effective-presence-basis-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Draft analysis**: [original alternatives](research/2026-11-23-edition-basis-draft.md); [owner Option B decision and conditions](research/2026-11-23-int044-owner-decision.md)
 

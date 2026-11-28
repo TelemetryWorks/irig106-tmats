@@ -1213,8 +1213,9 @@ G\106 items Ambiguous, even when values agree; raw lookup keeps every item.
 *G\106 reading SHALL use only an available reviewed edition-specific binding and retain all candidate editions it establishes; one year naming multiple editions SHALL use a newest shared-rules basis only when reviewed evidence establishes those candidates share the applicable Chapter 9 rules, not by arbitrarily choosing a candidate or borrowing a baseline parser.*
 
 INT-014 covers the year/candidate decision; INT-015 covers unrecognised older
-spellings. Their owner decisions are recorded but independent review remains
-pending. No unknown value format, high-byte/blank projection or missing rule
+spellings. Their independent rule checks CONCUR at main c682e05/#81; source
+freshness, development analysis/review and tests still gate implementation.
+No unknown value format, high-byte/blank projection or missing rule
 is silently reclassified as a known year or data-level unrecognised verdict.
 Historical absence/CH10VER semantics remain INT-016's separate dependency.
 
@@ -1236,8 +1237,9 @@ edition selection. Unsupported candidate interpretation remains unavailable.
 **L3-EDN-005** · Parent: L2-EDN-002 · Verification: T
 *With no override and an established missing or reviewed unrecognised G\106 declaration, fallback SHALL be labelled policy with its reason: eligible Format 1 RCCVER 0x0D selects 106-20 rules and 0x0E selects 106-24R1 rules under INT-017; without a usable eligible RCCVER the baseline fallback SHALL remain labelled 106-24R1 policy, not a declaration.*
 
-ADR-0032/INT-017 are the policy authority; INT-017's own review gate remains
-pending and is not cleared by INT-012 reconfirmation. Test raw 0D/0E literal
+ADR-0032/INT-017 are the policy authority; INT-017's independent rule check
+CONCURS at main c682e05/#81, separately from INT-012 reconfirmation. Its own
+source/development-analysis/review/tests still gate code. Test raw 0D/0E literal
 readings independently from these supplied policy outputs. Format 4's table
 and header Data Type Version cannot supply this Format 1 policy operand.
 Unknown interpretation knowledge is not proof of missing/unrecognised data.

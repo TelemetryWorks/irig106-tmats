@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-28-effective-presence-basis-development-analysis.md](2026-11-28-effective-presence-basis-development-analysis.md) | Written draft development analysis for approved INT-041/042/044: 32 unique source PDFs, historical usage/default limits, presence/value guards, labelled fallback and planned byte/scope oracles; analysis review/tests pending |
 | [2026-11-28-owner-policy-signoffs.md](2026-11-28-owner-policy-signoffs.md) | ADR-0038 owner policy record, exact original irig106lib qualification pin/hashes, current scope/progress/strict boundaries and remaining executable evidence |
 | [2026-11-28-int022-066-final-concurrences.md](2026-11-28-int022-066-final-concurrences.md) | Final ADR-0033 concurrences at #87 e0a0cce, uncertain-attachment refusal clarification and explicit INT-034 precedence-arm hold; development gates remain |
 | [2026-11-28-interpretation-owner-signoffs.md](2026-11-28-interpretation-owner-signoffs.md) | Verbatim Joey sign-offs for INT-022–029/031–034 and INT-061–066, prior independent check scope, remaining final checks and open INT-034 precedence/report formats |
