@@ -317,8 +317,8 @@ An open run may expose PROVISIONAL boundary evidence, never a joining stop.
 Joey signed explicit versioned provisional snapshots with invalidation and
 no automatic governance on 2026-11-28 (INT-034), alongside INT-028/031's
 closure/takeover and per-query ambiguity-only access rules. Cut text stays
-unusable. Final rule checks CONCUR at #87 e0a0cce; source/development/tests and
-padding-only/leading-damage precedence are separate gates.
+unusable. Final rule checks CONCUR at #87 e0a0cce; source/development/tests remain. Q25 A now signs padding-only/leading-loss
+precedence; its new independent check is separate from #87's earlier check.
 Per-channel open-run state needs an explicit finite aggregate memory budget
 and typed limit error, never silent dropping; numeric policy, full accounting
 and recovery/resume details need review before implementation. See the
@@ -477,7 +477,8 @@ analysis/review and executable oracles remain implementation prerequisites.
 
 INT-061/062/063 A and INT-022–029/031–034 sign-offs are recorded in the
 [verbatim owner record](research/2026-11-28-interpretation-owner-signoffs.md).
-INT-034 padding-only/leading-damage precedence and report formats stay open.
+Q25 A signs INT-034 padding-only/leading-loss precedence, with new check
+pending; Q26 report formatting is recorded in its own decision PR.
 Final rule checks CONCUR at #87 e0a0cce; analysis review and tests remain.
 
 ## Decomposition/readiness audit
@@ -533,8 +534,8 @@ explicit '-' stdin only; and dropping Criterion for ignored CI benchmarks.
 These choices unblock dependent fixture expectations, not source/API proof,
 reference vectors, development analyses/reviews or executable acceptance.
 Std A is owner-decided and recorded separately through #59/ADR-0015.
-Only INT-034 padding-only/leading-damage precedence and report formats
-remain owner-open; no release, dependency install or publication occurs here.
+Q25 A signs the remaining INT-034 precedence (new check pending), and Q26
+report-format direction has its own PR; no release, dependency install or publication occurs here.
 
 ## std feature decision — 2026-11-28
 
