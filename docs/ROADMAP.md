@@ -69,8 +69,9 @@ and the current decision table below, plus the INT sign-off/final-check
 records. #59 records the selected std policy separately. The dated audit
 blocker table is historical; it is not a current list of owner questions.
 Owner Q26 A now selects reports/show policy through ADR-0039; Q25 A
-precedence is recorded in its separate INT-034 sign-off PR. No owner-format
-guess is left to implementation; source/analysis/review/test gates remain. Source freshness, actual core/ownership/dependency APIs,
+precedence is recorded in INT-034 (FINAL CONCUR at #91 5f4f3c4). ASCII-only
+report encoding remains open for owner/schema review, with raw/extract bytes
+unchanged either way. Source freshness, actual core/ownership/dependency APIs,
 resource design and development analysis/review/tests are still readiness
 work, not completed by a decision record. Keep the full documented scope.
 
@@ -85,9 +86,10 @@ work, not completed by a decision record. Keep the full documented scope.
 | Reader progress | Cap retained pool credits to leave verified progress reserve; over-cap run fails/reports typed budget error, reader continues; actual core proof/accounting required |
 | Stdin | Explicit - only, never fallback |
 | Criterion | Drop in restructure; informational ignored CI benchmark tests, no new dependency |
-| INT-022–034 / 061–066 | Signed choices plus recorded final checks; Q25 precedence has its own sign-off PR; written analyses/tests still required |
+| INT-022–034 / 061–066 | Signed choices plus recorded final checks; Q25 precedence FINAL CONCUR at #91 5f4f3c4; written analyses/tests still required |
 | std / #59 | Owner Q6 A selected; ADR-0015/build acceptance amendment in #59 |
-| Latest owner decisions | Q25 A precedence in its own INT-034 PR; Q26 A reports/show in ADR-0039. Reviewed development/executable evidence remains required |
+| Latest owner decisions | Q25 A precedence in INT-034; Q26 A reports/show in ADR-0039. Reviewed development/executable evidence remains required |
+| Open encoding item | ASCII-only text/diagnostic and JSON output scope/escaping remains for owner/schema review (CLI section 4); raw/extract stay byte-exact |
 
 Verify source freshness and independent interpretation review, actual borrowed
 ownership/dependency APIs and development evidence where required. Component

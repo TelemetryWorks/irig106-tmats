@@ -1389,7 +1389,7 @@ ADR-0031/INT-034 define the three final ASCII outcomes in principle. FRMT=1
 remains unsupported/unknown completeness, not parsed as ASCII. An unavailable
 reviewed classification rule cannot be presented as a positive completeness
 verdict. Q25 A now supplies the owner-signed padding-only/leading-loss precedence;
-its independent check and development evidence remain required.
+its independent check FINAL CONCURS at #91 5f4f3c4; development evidence remains required.
 
 **L3-CH10-018** · Parent: L2-CH10-006 · Verification: T
 *Under a supplied reviewed INT-034 classification binding, an otherwise complete run whose text ends in semicolon at supplied EOF SHALL be Complete with labelled basis "end of input"; "followed by another packet" SHALL refer only to a SAME-CHANNEL packet that actually ends joining, never another channel's traffic.*

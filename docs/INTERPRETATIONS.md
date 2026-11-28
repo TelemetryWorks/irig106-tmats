@@ -394,7 +394,7 @@ or packet-header byte. Full development analysis and tests remain outstanding.
 - **incomplete** — the body is cut inside an attribute (a substantive unterminated suffix remains after the boundary-layout check), a fragment has unavailable required source bytes/bounds, or a sequence gap splits text that continues an attribute across it;
 - **ambiguous** — a sequence gap or a CSDW change where the text before it ends at `;`, or a gap-free run whose text repeats a single-entry attribute (for example `G\106` or `G\PN`); both readings and the split point are reported.
 
-**Owner-signed precise definitions (2026-11-28); earlier signed parts FINAL CONCUR at #87 e0a0cce, new Q25 check pending**:
+**Owner-signed precise definitions (2026-11-28); earlier signed parts FINAL CONCUR at #87 e0a0cce, Q25 A FINAL CONCUR at #91 5f4f3c4**:
 - **Boundary layout/padding** is exactly ASCII SP (0x20), controls 0x00–0x1F,
   and DEL (0x7F), per INT-035/036. Thus it includes CR/LF, TAB, NUL and 0x1A,
   not Unicode whitespace or any high byte. For the owner-signed final-terminator

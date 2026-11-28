@@ -477,7 +477,7 @@ analysis/review and executable oracles remain implementation prerequisites.
 
 INT-061/062/063 A and INT-022–029/031–034 sign-offs are recorded in the
 [verbatim owner record](research/2026-11-28-interpretation-owner-signoffs.md).
-Q25 A precedence is recorded separately under INT-034; Q26 A report/show
+Q25 A precedence is recorded in INT-034 (FINAL CONCUR at #91 5f4f3c4); Q26 A report/show
 policy is owner-signed in ADR-0039, with implementation/evidence still required.
 Final rule checks CONCUR at #87 e0a0cce; analysis review and tests remain.
 
@@ -558,3 +558,7 @@ included); additive minor/breaking major; exit 0–4 and complete JSON on 0/1,
 with discarded output on 4. No new threshold, alias, wire artifact or expanded
 0.2 resolved view is introduced by recording the policy. Schema/renderers,
 source/analysis review and executable acceptance remain implementation work.
+
+ASCII-only report encoding remains explicitly open for owner/schema review
+(CLI section 4); Q26 is not interpreted as choosing either direction.
+Raw show/extract remain byte-exact regardless.

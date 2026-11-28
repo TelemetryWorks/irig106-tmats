@@ -456,9 +456,10 @@ means SAME-CHANNEL. An otherwise complete boundary-ending EOF run remains
 complete with its labelled basis. PROVISIONAL open-run observations never
 stop joining. Joey signed explicit versioned provisional snapshots with
 visible invalidation on 2026-11-28 (INT-034), without automatic governance or
-cut-text use. INT-028/031 preserve independent takeover/access gates; only
-Q25 padding-only/leading-damage precedence is recorded in its separate
-INT-034 sign-off PR; Q26 report/show policy is recorded in ADR-0039.
+cut-text use. INT-028/031 preserve independent takeover/access gates.
+Q25 A precedence is recorded in INT-034 with FINAL CONCUR at #91 5f4f3c4;
+Q26 report/show policy is recorded in ADR-0039. ASCII-only report encoding
+remains open for the owner/schema review (CLI section 4).
 Finite aggregate open-run retention and a typed limit error are required;
 accounting, numeric policy and recovery details remain review work. See the
 [batch 15 draft](research/2026-11-23-completeness-contracts-draft.md).

@@ -2360,7 +2360,7 @@ INT-034 padding-only/leading-loss precedence, with its independent check pending
 Owner-choice holds below are removed. All cases are PLANNED, not measured
 or executed; [policy/pin record](research/2026-11-28-owner-policy-signoffs.md).
 Q26 report rendering now follows ADR-0039; Q25 precedence is recorded in
-its separate sign-off PR. Concrete development/verification remains planned.
+INT-034 with FINAL CONCUR at #91 5f4f3c4. Concrete development/verification remains planned.
 Q18 class membership beyond its six listed kinds still needs an explicit
 reviewed mapping and independent fixtures before additional-member refusal
 coverage can be claimed. Current rows do not invent such members from severity.
