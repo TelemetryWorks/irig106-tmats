@@ -97,6 +97,8 @@ jobs:
       # Stable since Rust 1.90: packages and verifies the library and the CLI
       # together, library first, exactly as a release would.
       - run: cargo publish --workspace --dry-run
+      - name: Test the packaged CLI against the packaged library
+        run: python3 scripts/check-packaged-tests.py
 
   trace-matrix:
     name: Trace matrix up to date

@@ -18,19 +18,30 @@ fn cli_and_library_versions_match() {
 /// Requirements: L1-REL-001
 #[test]
 fn library_dependency_is_pinned_exactly() {
-    let manifest = include_str!("../../../Cargo.toml");
-    let expected = format!("version = \"={}\"", env!("CARGO_PKG_VERSION"));
-    let line = manifest
-        .lines()
-        .find(|l| l.trim_start().starts_with("irig106-tmats ="))
-        .expect("workspace irig106-tmats dependency line");
-    assert!(
-        line.contains(&expected),
-        "dependency line `{line}` must contain `{expected}`"
-    );
-    assert!(line.contains(r#"path = "crates/irig106-tmats""#));
+    // This file also ships in the crate archive: never include a parent
+    // workspace manifest at compile time. Cargo normalizes inherited fields
+    // into ordinary dependency tables when packaging.
     let app_manifest = include_str!("../Cargo.toml");
-    assert!(app_manifest.contains("irig106-tmats.workspace = true"));
+    let expected = format!("version = \"={}\"", env!("CARGO_PKG_VERSION"));
+    if app_manifest.contains("irig106-tmats.workspace = true") {
+        let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../Cargo.toml");
+        let manifest = std::fs::read_to_string(root).expect("source workspace manifest");
+        let line = manifest
+            .lines()
+            .find(|l| l.trim_start().starts_with("irig106-tmats ="))
+            .expect("workspace irig106-tmats dependency line");
+        assert!(line.contains(&expected), "exact workspace pin: {line}");
+        assert!(line.contains(r#"path = "crates/irig106-tmats""#));
+    } else {
+        let dependency = app_manifest
+            .split("[dependencies.irig106-tmats]")
+            .nth(1)
+            .expect("packaged library dependency")
+            .split("\n[")
+            .next()
+            .expect("dependency section");
+        assert!(dependency.lines().any(|line| line.trim() == expected));
+    }
 }
 
 /// `tmats --version` prints both versions and succeeds.

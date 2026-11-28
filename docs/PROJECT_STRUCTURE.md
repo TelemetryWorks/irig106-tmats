@@ -158,14 +158,17 @@ irig106-tmats/
 │   ├── REQUIREMENTS.md        prototype: single-file requirements; replaced by L1/L2/L3-REQ.md
 │   └── FOR_IRIG106_DOCS_REPO.md  prototype: cross-crate contract notes intended for irig106-docs
 ├── scripts/
-│   └── build-trace-matrix.py  Regenerates docs/TRACE-MATRIX.md; --check fails CI if it drifted
+│   ├── build-trace-matrix.py  Regenerates docs/TRACE-MATRIX.md; --check fails CI if it drifted
+│   └── check-packaged-tests.py  Checks archived license text and runs the packaged CLI tests against the packaged library in CI
 ├── crates/irig106-tmats/   Library skeleton (workspace member)
 │   ├── Cargo.toml         Shared version/metadata; default-on required std feature
 │   ├── README.md          Package status and design pointer
+│   ├── LICENSE            Apache-2.0 text shipped in the library archive
 │   └── src/lib.rs         VERSION only; no TMATS APIs
 └── apps/irig106-tmats-cli/ Reusable CLI scaffold and thin executable
     ├── Cargo.toml         Inherits exact library dependency from workspace
     ├── README.md          Package status and design pointer
+    ├── LICENSE            Apache-2.0 text shipped in the CLI archive
     ├── src/lib.rs         Existing help/version/usage logic through caller-owned sinks
     ├── src/main.rs        Arguments/stdio adapter; returns the scaffold exit status
     └── tests/lockstep.rs  Pair version/pin, binary and reusable scaffold checks

@@ -16,6 +16,20 @@ corrects the placeholder's repository link). The original implementation was a
 prototype, preserved at the git tag `prototype-0`; the project is being
 rebuilt documentation first (`docs/ROADMAP.md`).
 
+### Changed
+
+- Both: virtual workspace layout, with the library in `crates/irig106-tmats`
+  and the CLI in `apps/irig106-tmats-cli`, still version 0.1.0 in lockstep.
+- CLI: existing help/version scaffold moved behind reusable `run()` with
+  caller-owned arguments/output sinks and a thin executable.
+
+### Removed
+
+- Library: incorrect prototype implementation, tests, generated registry,
+  benchmark and fuzz harness; history remains at `prototype-0`.
+- Both: Criterion and all other third-party dependencies; the workspace now
+  contains only the two crate skeletons.
+
 ### Added
 
 - Both: a Cargo workspace releasing the library and the CLI in lockstep —
