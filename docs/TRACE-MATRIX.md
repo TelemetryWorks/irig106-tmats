@@ -163,7 +163,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-VIEW-012 | L3-VIEW-040, L3-VIEW-041, L3-VIEW-042 | _(TBD)_ | Draft |
 | L2-VIEW-013 | L3-VIEW-043, L3-VIEW-044, L3-VIEW-045, L3-VIEW-046, L3-VIEW-047, L3-VIEW-056 | _(TBD)_ | Draft |
 | L2-VIEW-014 | L3-VIEW-048, L3-VIEW-049, L3-VIEW-050, L3-VIEW-051, L3-VIEW-052, L3-VIEW-053, L3-VIEW-054, L3-VIEW-055, L3-VIEW-057 | _(TBD)_ | Draft |
-| L2-VIEW-015 | L3-VIEW-058, L3-VIEW-059, L3-VIEW-060, L3-VIEW-061, L3-VIEW-062, L3-VIEW-063, L3-VIEW-064 | _(TBD)_ | Draft |
+| L2-VIEW-015 | L3-VIEW-058, L3-VIEW-059, L3-VIEW-060, L3-VIEW-061, L3-VIEW-062, L3-VIEW-063, L3-VIEW-064, L3-VIEW-071 | _(TBD)_ | Draft |
 | L2-VIEW-016 | L3-VIEW-065, L3-VIEW-066, L3-VIEW-067 | _(TBD)_ | Draft |
 | L2-VIEW-017 | L3-VIEW-068, L3-VIEW-069, L3-VIEW-070 | _(TBD)_ | Draft |
 
@@ -347,6 +347,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
 | L1-PERF-001 | L2-PERF-001, L2-PERF-002 | _(none)_ | Draft |
+| L1-PERF-002 | L2-PERF-003 | _(none)_ | Draft |
 
 **L2 -> L3 -> Verification Artifacts**
 
@@ -354,6 +355,7 @@ This matrix is the single source of truth for live status; the requirement docum
 |-------|-------------|----------------|--------|
 | L2-PERF-001 | L3-PERF-001, L3-PERF-002, L3-PERF-003, L3-PERF-004 | _(TBD)_ | Draft |
 | L2-PERF-002 | L3-PERF-005, L3-PERF-006, L3-PERF-007, L3-PERF-008 | _(TBD)_ | Draft |
+| L2-PERF-003 | L3-PERF-009 | _(TBD)_ | Draft |
 
 ### L1-REL: Versioning and release
 
@@ -392,7 +394,7 @@ This matrix is the single source of truth for live status; the requirement docum
 | CH10 | 8 | 9 | 27 | 0 | 0 | 0 | 0 |
 | EDN | 6 | 4 | 13 | 0 | 0 | 0 | 0 |
 | REG | 8 | 7 | 16 | 0 | 0 | 0 | 0 |
-| VIEW | 9 | 17 | 70 | 0 | 0 | 0 | 0 |
+| VIEW | 9 | 17 | 71 | 0 | 0 | 0 | 0 |
 | VAL | 6 | 3 | 12 | 0 | 0 | 0 | 0 |
 | DER | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
 | EXT | 4 | 4 | 16 | 0 | 0 | 0 | 0 |
@@ -401,15 +403,15 @@ This matrix is the single source of truth for live status; the requirement docum
 | IO | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
 | CLI | 9 | 17 | 67 | 0 | 0 | 0 | 0 |
 | ROB | 3 | 7 | 19 | 0 | 0 | 0 | 0 |
-| PERF | 1 | 2 | 8 | 0 | 0 | 0 | 0 |
+| PERF | 2 | 3 | 9 | 0 | 0 | 0 | 0 |
 | REL | 6 | 6 | 16 | 0 | 0 | 0 | 0 |
-| **Total** | **84** | **103** | **337** | **0** | **0** | **0** | **0** |
+| **Total** | **85** | **104** | **339** | **0** | **0** | **0** | **0** |
 
 The countable requirement set is every L2 and L3 requirement plus the 29 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 469 (0.0%).
+**Tested by at least one test marker**: 0 of 472 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 0 of 469 (0.0%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 0 of 472 (0.0%).
 
 ### Orphan check
 

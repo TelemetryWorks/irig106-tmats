@@ -51,8 +51,8 @@ integrity/trust sideband and borrowed DATA spans. Core 0.1.0 already being
 published, or the core 0.2 reader being merged, does not satisfy publication
 of these 0.2 dependencies. Verify the compatible published APIs before the
 tmats release; do not add fields to PacketFacts or ship a fallback reader.
-Packet data-checksum verification remains a separately owner-scheduled core
-feature; pass NotChecked until core provides it. No publishing action is
+Owner Q7 selects core data-checksum verification on by default with opt-out
+(core #29); consume its actual state unchanged, including NotChecked when reported. No publishing action is
 authorised/performed by this documentation change.
 
 ### Family-2 remaining gates
@@ -64,13 +64,29 @@ has no further scoped batch; reassess new review findings rather than assume
 complete design from child links. Family two remains incomplete. Do not start
 family three/parser code or claim readiness from prototype CI.
 
-Obtain the existing owner answers before deriving dependent report formats,
-normalization policy, std/build acceptance, flex qualification, X/V semantics,
-record access/governance, resource policy, selection/order or public grammar.
-The reader-progress choice for retained BlockPool credits remains owner-held,
-as does stdin input via '-' or an omitted path; never fall back to stdin.
-Extract's decided destination policies are not new questions, while strict
-on unlisted findings remains pending. Keep the full documented scope.
+Joey accepted the outstanding recommendations on 2026-11-28: see ADR-0038
+and the current decision table below, plus the INT sign-off/final-check
+records. #59 records the selected std policy separately. The dated audit
+blocker table is historical; it is not a current list of owner questions.
+Only INT-034 padding-only/leading-damage precedence and report formats
+remain owner-open. Source freshness, actual core/ownership/dependency APIs,
+resource design and development analysis/review/tests are still readiness
+work, not completed by a decision record. Keep the full documented scope.
+
+| Decided item | Selected policy / remaining work |
+|---|---|
+| Patterns / exact lookup | Whole-part/index * over reviewed registry only; ANY-name raw exact lookup; reviewed query implementation/acceptance still required |
+| Host allocation | Zero per-packet steady-state non-setup allocations; real host instrumentation required |
+| File order | First-fragment inventory, closure/takeover separately |
+| Flex reference | Original bbaggerman/irig106lib at the recorded exact revision; CI vectors/arithmetic still unqualified |
+| L1-CH10-005 / mixture | Archived edition wording; Complete-only mixture within supplied session; core evidence unchanged |
+| Strict extraction | Listed bad-data kinds/class, not informational notes; no severity-derived predicate |
+| Reader progress | Cap retained pool credits to leave verified progress reserve; over-cap run fails/reports typed budget error, reader continues; actual core proof/accounting required |
+| Stdin | Explicit - only, never fallback |
+| Criterion | Drop in restructure; informational ignored CI benchmark tests, no new dependency |
+| INT-022–034 / 061–066 | Signed choices plus recorded final checks; only INT-034 precedence remains owner-open; written analyses/tests still required |
+| std / #59 | Owner Q6 A selected; ADR-0015/build acceptance amendment in #59 |
+| Owner-open | INT-034 padding-only/leading-damage precedence; report/rendered formats |
 
 Verify source freshness and independent interpretation review, actual borrowed
 ownership/dependency APIs and development evidence where required. Component
@@ -80,7 +96,7 @@ The maintainer must do the historical Chapter 10/11 CSDW-layout source review,
 approved-INT development analyses and Appendix 9-C vocabulary inventory after
 the reassessment PR merges, one PR per item. The reviewer owns outstanding
 legacy independent checks; the normalization-order recheck CONCUR is
-recorded separately from the still-pending owner choice;
+recorded with the 2026-11-28 owner A+D choice;
 the coordinator and core maintainer own types/core publication with owner
 go-ahead. The owner decides decision items only; source/analysis work must
 not be left idle awaiting an unrelated policy answer.
@@ -95,8 +111,8 @@ reconfirmation on 2026-11-23: same-channel completeness boundaries; labelled
 complete EOF records; provisional open-run observations that never stop
 joining; and an explicit aggregate open-run memory budget with a typed limit
 error, never silently dropped runs. INT-034's precise completeness rules and
-INT-028/031 have owner sign-off (Joey, 2026-11-28), with remaining
-independent checks and development/source/test gates. INT-034 permits explicit
+INT-028/031 have owner sign-off and final CONCUR at #87 e0a0cce;
+development/source/test gates remain. INT-034 permits explicit
 versioned snapshots with invalidation and no automatic governance, plus the
 exact padding/source-availability/modulo-256 rules; padding-only/leading-damage
 precedence remains open. Review resource accounting/defaults separately.
@@ -111,11 +127,12 @@ Choose numeric defaults, shared/caller/allocator accounting and failure
 atomicity/recovery separately; typed source-disposition evidence must not
 silently choose those policies or manufacture closure on resource exhaustion.
 
-**PENDING OWNER — reader progress under retained pool credits:** core BlockPool
-credits held by retained DATA spans are inside the budget domain. Decide how
-an open assembler run avoids stalling the reader: cap retained pool credits,
-make an early copy, or return a typed failure. Do not select a policy or
-threshold until the owner answers; the reader-stall fixture remains blocked.
+**Owner Q22, 2026-11-28 — reader progress:** cap retained core BlockPool
+credits to leave verified progress capacity; an over-cap run fails/reports a
+typed assembly budget exhausted error while the reader continues. No early
+copy, silent eviction or invented EOF. Bound the reserve against actual core
+admission and outstanding caller-held references before claiming progress;
+no arbitrary credit cap or numeric default is supplied by this note.
 Core admission refusals and drain reports remain unchanged core evidence,
 separate from the assembler-retention limit, with no double-counting of bytes.
 
@@ -182,10 +199,10 @@ Recording-scan measurement must use ADR-0036 borrowed-span assembly without
 coalescing or extra payload copies. Report allocation counts and payload-copy
 bytes from paired untimed instrumentation (test allocator plus copy
 accounting), with no new numeric threshold; retain compile-time target
-features as well as Cargo features. Retaining the prototype Criterion dev
-dependency requires owner approval.
-PENDING OWNER: whether the tmats host must also do zero per-packet allocation
-in steady state for non-setup packets, analogous to core L2-HOT-008.
+features as well as Cargo features. Owner Q24 drops Criterion during the
+restructure; use informational ignored CI benchmark tests, no new dependency.
+Q9 requires zero per-packet steady-state non-setup host allocation, analogous
+to core L2-HOT-008; qualify the real host paths with untimed instrumentation.
 This does not approve the full proposed ADR-0021 scanner design.
 
 ### Remaining library guard-rail and coverage acceptance
@@ -212,15 +229,15 @@ Keep registry basis beside INT-044 labels; no renamed-code alias or heuristic
 split. Vendor attribution needs exactly one usable VN agreeing with the path
 acronym: INT-036 projection, INT-041 availability, three characters under
 section 9.5.13, ASCII case comparison. Otherwise attribution is unconfirmed,
-with all evidence/raw bytes. Complete remaining independent rule checks and
+with all evidence/raw bytes. Final rule checks CONCUR at #87 e0a0cce; complete
 source/development analysis/review/tests before implementation; unique-path C
 and hybrid vocabulary are not selected.
 
-Owner decisions PENDING before pattern-query implementation: 0.1 pattern
-scope (reviewed registry patterns only is a proposal, not approved), and
-public query syntax including wildcards/escaping. Candidate retrieval must
-retain record qualifications; it does not resolve the open incomplete/
-ambiguous access and governance item under streaming setup-record follow-ups.
+Owner Q4/5 (2026-11-28) selects one-whole-name-part/index * and no partial
+wildcards/regex in 0.1; wildcard queries use only reviewed registry patterns.
+Exact literal raw lookup works for ANY name, vendor/unknown included. Keep
+record qualifications and owner-signed INT-031 access guards; grammar beyond
+the selected spelling is not invented by these source/query contracts.
 
 Review structural pattern retrieval alongside exact lookup before query
 implementation: retain every raw candidate/location and canonical index
@@ -237,9 +254,9 @@ temp-file+rename. Stdout/pipes are allowed without identity proof; a regular
 file with unproven identity refuses unless --force. Known input aliases
 still refuse. Extract despite findings by default, byte-exact with every
 finding reported, with no default always-refuse class. --strict refuses the
-listed bad-data kinds; whether it refuses on ANY finding remains PENDING OWNER.
-Neither option is approved by the earlier shorthand. Overwrite/identity and
-raw default extraction decisions remain made; this is a narrower clarification.
+listed bad-data kinds and that bad-data class, not informational notes
+(owner Q18, 2026-11-28). No all-findings or severity-derived predicate.
+Overwrite/identity and raw extraction permissions remain as previously signed.
 
 Review executable byte, qualification, identity/race and destination tests
 before implementation; owner policy is not completed evidence. --force and
@@ -271,12 +288,11 @@ scope are established; no event type is guessed. Core owns edition-dependent
 packet/channel rules. Archived 106-05/07/09/11/13/15/17 header sources are
 re-verified in the argument-contract/session-scope research note: setup-only-on-0
 begins in the explicit 106-11 rule; 106-13/17 change channel-0 exclusivity.
-**PENDING OWNER (recommended A):** align the L1 wording with that onset while
-consuming core evidence; alternative B defers the change and keeps the gap
-explicit. No L1 wording change or local routing threshold is approved here.
-**PENDING OWNER (recommended A):** mixture finding only across Complete
-records, retaining other candidates' qualified FRMT evidence without that
-finding; alternative B broadens finding eligibility and is not approved.
+Owner Q16/17 (2026-11-28) selects the archived 106-11 setup-channel onset,
+106-13/15 Format-1-only channel 0 and 106-17+ Format-1/4 content wording in
+L1-CH10-005; consume core evidence, never add a tmats reader/route threshold.
+The mixture finding uses Complete records only, retaining non-Complete FRMT
+as qualified evidence without that finding.
 Treating one whole recording as one session requires explicit labelled caller
 assertion or supplied session evidence; otherwise scope is unavailable.
 
@@ -293,9 +309,11 @@ no source vendoring, new dependency or output-format choice is approved here.
 Coordinator calls carried after #69: run the reference only in bounded
 GitHub CI, with synthetic inputs and no new project dependency. Record output
 values and pinned revision/file hashes, never paste reference source into
-this repository. **PENDING OWNER:** which reference and revision to qualify
-(bbaggerman/irig106lib versus the atac fork). Neither is silently selected;
-reference execution and numeric-vector qualification wait for that decision.
+this repository. Owner Q15 selects original bbaggerman/irig106lib; the
+[qualification pin](research/2026-11-28-owner-policy-signoffs.md#flex-qualification-pin)
+records exact revision and inspected file hashes. Other revisions/forks are
+known differences, not substitute oracles. Output vectors/build/API/arithmetic
+qualification still requires bounded GitHub CI; no local execution is implied.
 
 ### Remaining checksum command acceptance
 
@@ -318,8 +336,8 @@ non-Complete evidence and partial-traversal failures without inventing a clean
 full inventory. Public selection/numbering, live provisional emission and
 report rendering remain their separate owner-review scope. Owner-signed INT-031
 explicitly gates incomplete/ambiguous record access; enumeration never approves
-its optional labelled split. First-fragment versus completion order is being
-put to the owner for confirmation; no new approval is recorded here.
+its optional labelled split. Owner Q14 confirms first-fragment order (2026-11-28); takeover follows
+INT-028 closure, never inventory/completion order by itself.
 
 ### Remaining argument-parser acceptance
 
@@ -1199,8 +1217,8 @@ owner decides; the decision is then recorded in
 | # | Question | Why it is open | Where it lands |
 |---|----------|----------------|----------------|
 | F1 | **Owner-approved, 2026-11-23, under ADR-0033; AI CONCUR at #30 head 13173b0.** Duplicate SHA items are indeterminate. | List every occurrence, preserve every byte, never claim positive verification, and refuse stamping until fixed. Review and test evidence still required. | INT-021; ADR-0034 |
-| F2 | **Owner-signed A, Joey, 2026-11-28:** refuse deletion while extensions attach; cascade is a separate explicit edit (0.5). | Remaining independent final check and source/development/test evidence; never guess attachment. | INT-022; L1-WRT-003; ADR-0029 |
-| F3 | **Owner-signed A, Joey, 2026-11-28:** suggest-only `=` to `:` when the complete code name is recognized and no colon occurs; never automatic. | Remaining independent final check and source/development/test evidence; raw reading/finding stays. | INT-023; `docs/TEST-DATA.md` E3 |
+| F2 | **Owner-signed A, Joey, 2026-11-28:** refuse deletion while extensions attach; cascade is a separate explicit edit (0.5). | Final rule CONCUR at #87 e0a0cce; source/development/test evidence still needed; never guess attachment. | INT-022; L1-WRT-003; ADR-0029 |
+| F3 | **Owner-signed A, Joey, 2026-11-28:** suggest-only `=` to `:` when the complete code name is recognized and no colon occurs; never automatic. | Final rule CONCUR at #87 e0a0cce; source/development/test evidence still needed; raw reading/finding stays. | INT-023; `docs/TEST-DATA.md` E3 |
 | F5 | **Decided 2026-09-26: A**, with C possible later (ADR-0030). Does `irig106-core` depend on `irig106-tmats`, or do the tools join them? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 1.6; proposal in section 2.4 (core stays structural and independent; checking packets against TMATS belongs to the layer holding both) awaits the owner. | `docs/TMATS-IN-CHAPTER-10.md` section 2.4; ROADMAP X3 |
 | F6 | **Decided 2026-09-26: yes** — L1-REL-003, a CI check added with the first new library code. Must the library build for WebAssembly (a CI check that the plain library compiles for a `wasm32` target), so studio's browser build can use it? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 4.8. ADR-0015 moved WASM *bindings* out of the library; building the plain library for WebAssembly is a separate question. The library already performs no I/O (L1-IO-001), which is the main condition. | ADR-0015; a possible L1 requirement and CI job |
 | F7 | **Owner-approved, 2026-11-23, under ADR-0033; AI CONCUR at #30 head 13173b0.** Require verified identification; report indeterminate meanwhile. | Never guess a packet type. The event identity still needs evidence; the decision does not supply it. | INT-030; L1-CH10-005; ADR-0034 |

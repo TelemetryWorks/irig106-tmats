@@ -91,7 +91,7 @@ existing content-based recording/text input route. The 0.1 scope is unchanged.
 - **Extraction preserves bytes.** ADR-0037 records the owner policy of
   2026-11-27: extract the explicitly selected original bytes despite findings,
   reporting every finding; --strict refuses the listed bad-data kinds.
-  Its listed-kinds-only versus any-finding scope is PENDING OWNER. There is no
+  Owner Q18 (2026-11-28) selects listed bad-data kinds/class, not informational notes. There is no
   always-refuse finding class. Cut/ambiguous/invalid/marker qualifications
   and core integrity evidence stay unchanged; raw extraction does not make
   them semantically usable or governing.
@@ -142,6 +142,16 @@ existing content-based recording/text input route. The 0.1 scope is unchanged.
   this approach.
   L2-CLI-014/015 derive parser mechanism/acceptance from host-supplied tokens;
   they choose no new grammar, defaults, report rendering or exit mappings.
+
+## Owner policy additions — 2026-11-28
+
+ADR-0038 records Q4/5: exact literal raw lookup for ANY name, including
+vendor/unknown; wildcard patterns use only reviewed registry metadata.
+Each * matches one whole name part or index, e.g. R-*\TK1-*; no partial
+wildcards or regex in 0.1. No other query/CLI escaping form is invented.
+Q23 permits stdin only through an explicit '-' operand, never an implicit
+fallback. Q14 confirms first-fragment inventory order, separately from
+closure/takeover. Report layout, schema/labels/exit mapping remain held.
 
 ## 4. Proposed rules (to confirm)
 
