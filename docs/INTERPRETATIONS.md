@@ -321,7 +321,7 @@ record remains; leading-boundary evidence is now retained as well.
 
 **Test**: `multi_packet_setup_record_is_assembled`, `other_channel_packets_do_not_stop_joining`, `two_setup_channels_have_independent_runs`, `same_channel_packet_stops_joining`, `run_start_reasons_remain_evidence`, `setup_channel_restriction_is_not_joining` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Decision record**: [owner per-channel clarification and review status](research/2026-11-23-int011-per-channel-owner-decision.md).
 
@@ -483,7 +483,7 @@ blocking reason; the aggregate label does not relax incomplete-input policy.
 
 **Test**: `q25_padding_only_is_incomplete_without_loss_claim`, `q25_leading_loss_blocks_ambiguity_opt_in`, `q25_final_semicolon_keeps_leading_cut`, `q25_input_start_does_not_prove_loss`, `setup_record_completeness_outcomes`, `eof_boundary_is_complete_and_labelled`, `other_channel_packet_cannot_finalize_run`, `open_boundary_is_provisional_not_complete`, `provisional_extension_never_closes_run` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Q25 A — owner-signed Joey, 2026-11-28, under ADR-0033**:
 - A padding-only record with no substantive attributes is **Incomplete**, reason
@@ -1069,7 +1069,7 @@ out of scope. Approved INT-045/048/050/051/052/053 constrain every answer.
 
 **Test**: `governing_umbrella_composes_approved_guards`, `governing_complete_is_not_takeover`, `governing_unresolved_is_not_no_setup` (planned; owner choice recorded; final rule check recorded; development-analysis review/test gates apply)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-029
 
@@ -1127,7 +1127,7 @@ bytes and approved governance guards; neither authorizes implicit adoption.
 
 **Test**: `setup_record_kinds_and_srcc_findings`, `srcc_raw_subtypes_do_not_infer_semantics`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-030
 
@@ -1159,7 +1159,7 @@ bytes and approved governance guards; neither authorizes implicit adoption.
 
 **Test**: `configuration_change_event_packet` (planned; event identification still unverified)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Sign-off and AI-check reference**: [owner approval record](research/2026-11-23-int021-int030-owner-signoff.md); independent AI concurrence is tied to PR #30 head `13173b04faac989fa581b8e9ebbd0df6c80d6b98`, not claimed for later amended wording. Approval is not implementation or completed development evidence.
 
@@ -1198,7 +1198,7 @@ takeover to INT-028/053. Raw extraction remains separately authorized.
 
 **Test**: `nothing_governs_after_an_incomplete_setup_record`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-032
 
@@ -1228,7 +1228,7 @@ session-wide default.
 
 **Test**: `ungoverned_packets_are_reported_and_assumptions_labelled`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ## Measurements
 
@@ -2026,7 +2026,7 @@ in the #40 draft; neither the event nor a nearby 0x02 is guessed as an end.
 
 **Test**: `initial_first_time_seals_before_dispatch`, `initial_time_type_is_edition_specific`, `non_time_timestamps_do_not_close_setup`, `initial_marker_requires_start_order_and_trust`, `initial_time_does_not_repair_incomplete_setup`, `no_initial_time_uses_eof_or_provisional`, `initial_runs_and_later_documents_do_not_mix`, `mid_session_time_seals_srcc_update`, `mid_session_cut_update_is_incomplete`, `post_boundary_plus_one_is_continuous_but_split`, `all_non_format1_initial_packets_violate_order`, `session_starts_are_asserted_and_independent`, `untrusted_first_time_cannot_be_replaced`, `channel_zero_time_has_conformance_finding`, `semicolon_seal_continuation_is_finally_ambiguous`, `verified_sha_keeps_sealed_candidate_complete`, `srcc_eligibility_comes_from_first_fragment`, `premature_seal_signals_do_not_replace_verified_sha`, `continuation_sha_is_diagnostic_only` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-assembly-governing-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Draft analysis**: [original sources/options](research/2026-11-23-initial-time-boundary-proposal.md); [owner layered closure decision, source fingerprint and amended safety cases](research/2026-11-23-int045-layered-owner-decision.md).
 

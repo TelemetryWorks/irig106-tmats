@@ -106,6 +106,9 @@ completing other analyses/executable evidence.
 Read the [link/condition analysis](research/2026-11-28-link-condition-development-analysis.md)
 before its implementation; historical H/PDLN differences are not approved
 aliases, and general cross-group resolution keeps its later release scope.
+Review the [assembly/governing analysis](research/2026-11-28-assembly-governing-development-analysis.md)
+for separate joining, closure, cut/access and takeover evidence; concrete
+source/profile bindings, resource-progress proof and executable checks remain.
 Legacy independent checks are recorded; the normalization-order recheck CONCUR is
 recorded with the 2026-11-28 owner A+D choice;
 the coordinator and core maintainer own types/core publication with owner

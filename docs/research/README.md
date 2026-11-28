@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-28-assembly-governing-development-analysis.md](2026-11-28-assembly-governing-development-analysis.md) | Draft INT-011/028–032/034/045 analysis: per-channel joining, layered time closure, Q25 cut precedence, F7 uncertainty, explicit access and governing proof; 32 source PDFs and 41 planned cases; analysis review/tests pending |
 | [2026-11-28-edition-syntax-development-analysis.md](2026-11-28-edition-syntax-development-analysis.md) | Draft INT-009/010/012–017 analysis: scoped counters, equality spelling, suspect framing, year/wire declarations and labelled fallback; 32 source PDFs, separate code spaces, 35 planned cases; S1 unchanged, analysis review/tests pending |
 | [2026-11-28-extension-transform-development-analysis.md](2026-11-28-extension-transform-development-analysis.md) | Draft analysis for approved INT-061–066: 19 source PDFs, X/V unavailable/attribution guards, explicit A+D ordering/layout newlines/scoped counter rewrites, exact byte oracles and 37 planned cases; analysis review/tests pending |
 | [2026-11-28-time-choice-development-analysis.md](2026-11-28-time-choice-development-analysis.md) | Draft analysis for approved INT-054–060: 19 source PDFs, CHE context/raw decimal representation gates, reviewed Range accounting, exact Quiet counts, scope/evidence/per-query guards and 39 planned cases; analysis review/tests pending |
