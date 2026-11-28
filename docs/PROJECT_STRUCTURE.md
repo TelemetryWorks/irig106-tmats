@@ -7,8 +7,8 @@ kept here.
 
 The project is in a documentation-first redesign (see `docs/ROADMAP.md`).
 The prototype code is retired to git tag `prototype-0`; retained prototype-era
-documents are historical, not a specification. Current Rust code is only a
-version/help scaffold; no TMATS behavior is implemented.
+documents are historical, not a specification. Current Rust code supplies version/help
+scaffolds and checked byte spans; no TMATS parser is implemented.
 
 ```text
 irig106-tmats/
@@ -164,7 +164,8 @@ irig106-tmats/
 │   ├── Cargo.toml         Shared version/metadata; default-on required std feature
 │   ├── README.md          Package status and design pointer
 │   ├── LICENSE            Apache-2.0 text shipped in the library archive
-│   ├── src/lib.rs         VERSION only; no TMATS APIs
+│   ├── src/lib.rs         VERSION and checked Span export; no TMATS parser
+│   ├── src/span.rs        Private byte-range bounds, checked construction and borrowed access
 │   └── tests/spans.rs     Checked-constructor and actual-source access fixtures (family 4)
 └── apps/irig106-tmats-cli/ Reusable CLI scaffold and thin executable
     ├── Cargo.toml         Inherits exact library dependency from workspace

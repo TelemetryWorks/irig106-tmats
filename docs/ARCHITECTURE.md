@@ -8,8 +8,8 @@
 > `docs/adr/` (ADR-0020 and ADR-0021 capture this proposal, pending review). Use cases are in `docs/USE-CASES.md`.
 
 Current code layout (ADR-0035): `crates/irig106-tmats` and
-`apps/irig106-tmats-cli` under a virtual workspace. Only version/help skeletons
-exist; the proposal below is not implemented by moving the crates.
+`apps/irig106-tmats-cli` under a virtual workspace. Version/help skeletons and checked byte
+spans exist; the parser and the proposal below are not implemented by them.
 
 ## 1. Direction from the project owner
 
