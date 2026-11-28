@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-28-time-choice-development-analysis.md](2026-11-28-time-choice-development-analysis.md) | Draft analysis for approved INT-054–060: 19 source PDFs, CHE context/raw decimal representation gates, reviewed Range accounting, exact Quiet counts, scope/evidence/per-query guards and 39 planned cases; analysis review/tests pending |
 | [2026-11-28-link-condition-development-analysis.md](2026-11-28-link-condition-development-analysis.md) | Draft analysis for approved INT-001–008: 19 source PDFs, three-source links, namespace/selector/placeholder guards, H comparison, FBCIN source reading and same-C prose default; 34 planned cases, analysis review/tests pending |
 | [2026-11-28-retransmission-development-analysis.md](2026-11-28-retransmission-development-analysis.md) | Written draft development analysis for approved INT-046–053: shared historical source review, QD/QI precedence, integrity/target provenance, unchanged 139,968-member matrix audit and 30 planned compound cases; analysis review/tests pending |
 | [2026-11-28-checksum-domain-development-analysis.md](2026-11-28-checksum-domain-development-analysis.md) | Written draft analysis for approved INT-018/019/020/021/043: 32 hash-checked archived PDFs, raw exclusion/value separation, mandatory warnings, independent digest/span oracles and 26 planned cases; analysis review/tests pending |

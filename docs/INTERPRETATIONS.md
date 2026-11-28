@@ -2243,7 +2243,7 @@ consumer needs to inspect.
 
 **Test**: `che_disabled_timein_is_still_enumerated`, `che_missing_duplicate_invalid_preserve_entry`, `che_caller_filter_is_explicit_and_nonmutating` (planned, not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-055
 
@@ -2313,7 +2313,7 @@ not a source edit.
 
 **Test**: `numeric_ascii_syntax_and_digit_limit`, `numeric_zero_padding_keeps_warning_and_raw`, `numeric_ranges_follow_canonicalisation`, `numeric_codes_accept_02_without_changing_letters`, `numeric_leading_blank_keeps_int041_exception`, `numeric_rn_condition_never_guesses`, `numeric_projection_keeps_character_findings`, `numeric_exclusions_dispatch_by_definition` (planned, not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Review history**: The [earlier concerns](research/2026-11-25-che-numeric-independent-review.md) are retained as history; the [owner answers](research/2026-11-25-int055-owner-answers.md) settle the three choices. Final AI concurrence at #51 ebd5c98 is recorded in the [final review record](research/2026-11-26-int054-int055-final-concurrence.md). The eight-mask inventory correction does not change the concurred decimal-only behaviour. Source freshness, development analysis and executable tests remain required.
 
@@ -2375,7 +2375,7 @@ Accepting a choice is not a usable-field or governing-setup claim.
 
 **Test**: `assumption_strict_invalid_target`, `assumption_warn_invalid_target`, `assumption_quiet_invalid_target`, `assumption_strict_duplicate_target`, `assumption_warn_duplicate_target`, `assumption_quiet_duplicate_target`, `assumption_strict_unavailable_target`, `assumption_warn_unavailable_target`, `assumption_quiet_unavailable_target`, `assumption_quiet_suppressed_count_zero`, `assumption_quiet_suppressed_count_nonzero`, `assumption_quiet_marker_survives_derived_result` (planned, not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-057
 
@@ -2404,7 +2404,7 @@ an unresolvable/nonexistent ID-only selection into an existing candidate.
 
 **Test**: `assumption_refuses_non_timein_target`, `assumption_refuses_other_recorder`, `assumption_refuses_nonexistent_id` (planned, not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-058
 
@@ -2438,7 +2438,7 @@ resolved; retain INT-059 uncertainty rather than invent a precedence.
 
 **Test**: `assumption_no_01_contradiction_rule`, `assumption_heuristics_never_contradict`, `assumption_future_evidence_requires_own_int` (planned, not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-059
 
@@ -2466,7 +2466,7 @@ retention; they do not implement or claim an actual baseline evidence path.
 
 **Test**: `association_unproven_multiplicity_is_unestablished`, `association_conflict_requires_competing_evidence` (planned, not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-060
 
@@ -2493,7 +2493,7 @@ not a default target; it never supplies a missing choice.
 
 **Test**: `assumption_next_query_needs_explicit_choice`, `assumption_warn_default_is_not_target_default` (planned, not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 
 ### INT-061
