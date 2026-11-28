@@ -97,6 +97,7 @@ irig106-tmats/
 │   │                          2026-11-25-time-view-metadata-requirements.md derives bounded channel/time-field requirements and acceptance scope;
 │   │                          2026-11-25-source-bit-requirements.md derives explicit NSB splitting and records DSI/CHE remaining boundaries;
 │   │                          2026-11-28-appendix9c-recognizer-inventory.md and 2026-11-28-appendix9c-literal-names.csv inventory complete code-name shapes/source spellings without implementing a recognizer;
+│   │                          2026-11-28-index-duplicate-counter-development-analysis.md analyzes approved index/duplicate/counter rules with historical source limits and planned edge oracles; review/tests pending;
 │   │                          2026-11-28-framing-character-development-analysis.md analyzes approved framing/character/marker rules without marking analysis review or executable tests complete;
 │   │                          2026-11-27-int022-034-owner-brief.md gives the owner a single sitting brief for all INT-022..034 options and remaining decisions;
 │   │                          2026-11-27-legacy-int-independent-check-batches3-4.md records remaining legacy verdicts, owner-pending rewrites and normalization-order recheck;
