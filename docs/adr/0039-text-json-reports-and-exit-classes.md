@@ -33,8 +33,12 @@ implementation work, not an unresolved report-format owner choice. Q25's
 INT-034 sign-off is recorded in its own PR. This ADR implements no code,
 schema artifact, dependency, release or publishing operation.
 
-Owner clarification, 2026-11-28 (Q26 A, matching irigtime): adopt the
-[irigtime ASCII-only JSON stdout rule](https://github.com/TelemetryWorks/irig106-time/blob/5899806ae684ed38d8cad8f422cabb3d47c6be0f/docs/cli-report-schema.md#L51).
+Coordinator reading of Q26 “matching irigtime” (2026-11-28), pending owner
+confirmation: adopt the
+[irigtime ASCII-only JSON stdout rule](https://github.com/TelemetryWorks/irig106-time/blob/5899806ae684ed38d8cad8f422cabb3d47c6be0f/docs/cli-report-schema.md#L53-L54).
 Non-ASCII characters use Unicode escapes, including surrogate pairs.
-Raw show/extract remain byte-exact. This clarification chooses JSON output
-encoding, not an additional ASCII-only text/diagnostic requirement.
+Raw show/extract remain byte-exact. This is a coordinator reading, not a
+separate quoted Joey sign-off or an additional ASCII-only text/diagnostic
+requirement. The original owner Q26 text above is unchanged. Non-UTF-8 TMATS
+source-byte representation inside JSON remains a schema-review item;
+Unicode escaping specifies characters, not arbitrary source-byte decoding.

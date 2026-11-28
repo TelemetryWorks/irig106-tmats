@@ -559,6 +559,8 @@ with discarded output on 4. No new threshold, alias, wire artifact or expanded
 0.2 resolved view is introduced by recording the policy. Schema/renderers,
 source/analysis review and executable acceptance remain implementation work.
 
-Owner Q26 A matches irigtime’s ASCII-only JSON stdout: non-ASCII characters
-use Unicode escapes, including surrogate pairs (ADR-0039; CLI section 4).
+Coordinator reading of Q26 “matching irigtime” (2026-11-28), pending owner
+confirmation: ASCII-only JSON stdout with Unicode escapes/surrogate pairs
+(ADR-0039; CLI section 4). Non-UTF-8 source-byte representation remains for
+schema review.
 Raw show/extract remain byte-exact; no ASCII-only text/diagnostic rule is added.

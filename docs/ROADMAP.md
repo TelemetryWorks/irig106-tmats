@@ -69,8 +69,9 @@ and the current decision table below, plus the INT sign-off/final-check
 records. #59 records the selected std policy separately. The dated audit
 blocker table is historical; it is not a current list of owner questions.
 Owner Q26 A now selects reports/show policy through ADR-0039; Q25 A
-precedence is recorded in INT-034 (FINAL CONCUR at #91 5f4f3c4). JSON stdout follows irigtime’s ASCII-only Unicode-escape rule, including
-surrogate pairs (ADR-0039), with raw/extract bytes unchanged. Source freshness, actual core/ownership/dependency APIs,
+precedence is recorded in INT-034 (FINAL CONCUR at #91 5f4f3c4). The coordinator reading of Q26 “matching irigtime” (2026-11-28) is
+ASCII-only JSON with Unicode escapes/surrogate pairs, pending owner
+confirmation (ADR-0039); raw/extract bytes remain unchanged. Source freshness, actual core/ownership/dependency APIs,
 resource design and development analysis/review/tests are still readiness
 work, not completed by a decision record. Keep the full documented scope.
 
@@ -88,7 +89,7 @@ work, not completed by a decision record. Keep the full documented scope.
 | INT-022–034 / 061–066 | Signed choices plus recorded final checks; Q25 precedence FINAL CONCUR at #91 5f4f3c4; written analyses/tests still required |
 | std / #59 | Owner Q6 A selected; ADR-0015/build acceptance amendment in #59 |
 | Latest owner decisions | Q25 A precedence in INT-034; Q26 A reports/show in ADR-0039. Reviewed development/executable evidence remains required |
-| JSON encoding | Owner Q26 A matches irigtime: ASCII-only JSON stdout, Unicode escapes including surrogate pairs; raw/extract stay byte-exact |
+| JSON encoding | Coordinator reading of Q26 “matching irigtime” (2026-11-28), pending owner confirmation: ASCII-only JSON stdout with Unicode escapes/surrogate pairs. Non-UTF-8 source-byte representation remains for schema review; raw/extract stay byte-exact |
 
 Verify source freshness and independent interpretation review, actual borrowed
 ownership/dependency APIs and development evidence where required. Component

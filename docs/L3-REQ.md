@@ -3791,9 +3791,12 @@ selector, escaping or repetition grammar beyond the owner-approved spelling.
 **L3-CLI-072** · Parent: L2-CLI-019 · Verification: T
 *Text and JSON SHALL render the same supplied command results, findings, locations and qualifications without rerunning parsing/interpretation or selecting different candidates; results SHALL be written only to the selected result sink/stdout, and operational diagnostics to stderr, without plaintext/progress/diagnostic interleaving corrupting JSON or raw payload bytes.*
 
-JSON stdout SHALL be ASCII-only, with non-ASCII characters represented by
-Unicode escapes including surrogate pairs, matching the pinned irigtime
-contract cited in ADR-0039. This never transforms raw show/extract payloads.
+Coordinator reading of Q26 “matching irigtime” (2026-11-28), pending owner
+confirmation: JSON stdout is ASCII-only, with non-ASCII characters represented
+by Unicode escapes including surrogate pairs (ADR-0039’s pinned citation).
+This encoding arm awaits confirmation; it never transforms raw show/extract
+payloads. Non-UTF-8 source-byte representation remains a schema-review item,
+not a decoding rule inferred from character escaping.
 
 Text needs readable evidence/labels; JSON needs the schema's machine facts.
 This is representation parity, not identical layout. Existing -o and writer
