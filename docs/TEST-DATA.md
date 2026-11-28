@@ -2297,6 +2297,56 @@ association-proof path or a new production recovery/evidence rule.
 | `time_policy_analysis_next_query_no_target_default` | After a successful explicit choice, a second query with omitted target stays unassumed; Warn level default does not supply that target. | L3-VIEW-057; INT-060 |
 | `time_policy_analysis_revision_and_parallel_queries` | Equal metadata in a new revision or independent/interleaved query never inherits the earlier target/level/count; immutable parsed-data reuse is not ambient caller choice. | L3-VIEW-057; INT-060 |
 
+## Planned extension/transform development-analysis cases — 2026-11-28
+
+[Written analysis](research/2026-11-28-extension-transform-development-analysis.md)
+for approved INT-061–066. These 37 cases are PLANNED, not executed splitter/
+vendor/normalizer tests. Supply independently reviewed definition/registry,
+layout/region/parent/member/revision evidence. Existing source/field/cut and
+access qualifications remain; a successful grouping or formatting operation
+is not conformance, an association proof or a usable governing setup. Named
+byte/count oracles are synthetic/scoped, not complete conforming recordings.
+
+| Planned case | Independent expected evidence | Requirements / interpretations |
+|---|---|---|
+| `ext_transform_analysis_unindexed_g_unavailable` | X naming G/PN plus a unique existing PN retains raw candidates and cannot-evaluate; no zero/one sentinel, value/order guess, unselected unique-path C or blanket-malformed D. | L3-EXT-007; INT-061 |
+| `ext_transform_analysis_g_inner_index_not_outer` | G/DSI-n does not supply an invented G-x occurrence mapping; missing rule stays unavailable, with raw evidence. | L3-EXT-007; INT-061 |
+| `ext_transform_analysis_known_code_orphan_not_grammar` | Known reviewed original pattern with no instance decomposes first and reports orphan/unresolved; another document cannot supply the original. | L3-EXT-004; INT-062 |
+| `ext_transform_analysis_registry_not_document_vocabulary` | A physically present private V code or old renamed name cannot define the split, activate hybrid C or silently alias to the baseline; both intended basis and actual vocabulary stay visible. | L3-EXT-001; INT-062 |
+| `ext_transform_analysis_overlap_no_greedy_split` | Unavailable registry/arity or established overlap/nonunique split remains cannot-evaluate with all source evidence, never longest-prefix recovery. | L3-EXT-001; INT-062 |
+| `ext_transform_analysis_original_indices_private_tail` | Source D-1 MN-1-2 and X-1 MYORG D MN SGAIN-01-02 use canonical leading original identities, preserving raw collisions; extra private indices do not become counters/D members. | L3-EXT-003; INT-062 |
+| `ext_transform_analysis_target_duplicates_keep_qualification` | Equal/invalid duplicate original occurrences stay ambiguous with all locations; attachment success cannot remove record/cut/encoding or field evidence. | L3-EXT-005; INT-062 |
+| `ext_transform_analysis_vendor_agreement_is_local` | One usable ABC VN confirms only agreeing ABC namespace; DEF remains unconfirmed, and a header in another V occurrence cannot be borrowed. | L3-EXT-014; INT-063 |
+| `ext_transform_analysis_vendor_missing_duplicate` | Missing/equal duplicate VN retains every source/header/private item with unconfirmed attribution, no required/default finding invented. | L3-EXT-010; INT-063 |
+| `ext_transform_analysis_vendor_wrong_length` | Available ABCD VN is Invalid length and attribution unconfirmed, not a generic unavailable result or silent trim. | L3-EXT-014; INT-063 |
+| `ext_transform_analysis_vendor_blank_high_byte_guards` | Unreviewed blank handling stays unavailable; high-byte VN is not folded; no guessed valid/invalid result from a trim. | L3-EXT-014; INT-063 |
+| `ext_transform_analysis_vendor_projection_raw_preserved` | INT-036-projected three-character VN can compare ASCII case-insensitively with located control findings and unchanged source; no uppercase rewrite. | L3-EXT-011; INT-063 |
+| `ext_transform_analysis_vendor_digits_not_numbers` | Usable three-character 001 VN/acronym stays 001; no numeric zero stripping, added alphabet restriction or fabricated source binding from V/G occurrence equality. | L3-EXT-011; INT-063 |
+| `ext_transform_analysis_source_context_not_vendor_proof` | G source-ID candidates and V attribution remain separate textual evidence; missing/ambiguous source context never reassigns a private namespace or proves time association. | L3-EXT-012; INT-063 |
+| `ext_transform_analysis_default_replay_unchanged` | Available metadata/profile never activates ordering/newline/counter transforms without an explicit request; every raw region remains source order. | L3-WRT-012; INT-064/065/066 |
+| `ext_transform_analysis_order_bijection` | Known complete-region A plan retains every region exactly once and its raw bytes, explicit prefix/EOF anchors and revision correspondence. | L3-WRT-013; INT-064 |
+| `ext_transform_analysis_order_bad_or_stale_plan` | Missing/repeated/cross-document/stale region identities or unknown partition refuse; no partial guessed result or deduplication. | L3-WRT-012; INT-064 |
+| `ext_transform_analysis_group_profile_stable` | Fixed R2/G/R1 byte oracle emits G/R2/R1 in 25 bytes under D; no R-index/full-key sort or source rewrite. | L3-WRT-013; INT-064 |
+| `ext_transform_analysis_group_profile_barriers` | D sorts only within runs between standalone COMMENT/opaque/malformed/unknown-group barriers, keeping anchors and within-group order; no global-order claim. | L3-WRT-013; INT-064 |
+| `ext_transform_analysis_private_group_placement_not_meaning` | Complete positively grouped V/X regions keep raw private bytes/relative order without confirmation/attachment; unavailable group classification anchors rather than decodes. | L3-WRT-013; INT-064 |
+| `ext_transform_analysis_newline_explicit_target` | Missing LF/CRLF target does not select a platform default; the supplied [9,11) layout oracle converts CRLF to one LF with all other bytes exact. | L3-WRT-014; INT-065 |
+| `ext_transform_analysis_newline_field_content_kept` | COMMENT/value and internal-name CR/LF stay exact under layout normalization; code-looking text after a value line break is not a new boundary. | L3-WRT-014; INT-065 |
+| `ext_transform_analysis_newline_seam_one_token` | CR and LF split across borrowed spans/assembled fragments but adjacent in proved logical layout remain one token, preserving contributing source positions without required coalescing. | L3-WRT-014; INT-065 |
+| `ext_transform_analysis_unknown_layout_not_guessed` | Unproved layout ranges remain unavailable; mixed field newlines prevent a false globally uniform raw-newline claim. | L3-WRT-014; INT-065 |
+| `ext_transform_analysis_padding_bom_not_cleanup` | NUL/1A padding, BOM/high bytes and blanks are not dropped or transcoded by newline/profile operations; unknown partition refuses rather than strips. | L3-WRT-014; INT-065 |
+| `ext_transform_analysis_numeric_controls_not_repaired` | Numeric value 0 CR LF 4 remains raw/Invalid during layout-only conversion; no INT-036 projection used as output repair. | L3-WRT-014; INT-065 |
+| `ext_transform_analysis_counter_exact_old_value` | Known unique MNF target with old value bad at [16,19), complete e=1,2 and applicable metadata permits explicit replacement by 2; old Invalid finding remains input-bound. | L3-WRT-015; INT-066 |
+| `ext_transform_analysis_counter_gap_refuses` | Complete observed e=1,3 or 2,4 cannot be rewritten to highest or cardinality; no inserted/renumbered child to make it pass. | L3-WRT-015; INT-066 |
+| `ext_transform_analysis_counter_each_range` | MNF k=0/9 refuses its 1–8 range; complete MML m=1..9 and boundary k=9999 use its own 1–9999 range, k=10000 refuses with no clipping; all other prerequisites remain, no borrowed MNF cap. | L3-WRT-015; INT-066 |
+| `ext_transform_analysis_counter_missing_duplicate_target` | Missing/defaulted, duplicate/equal or unidentifiable counter target refuses; no insertion, first/last selection or new name repair. | L3-WRT-015; INT-066 |
+| `ext_transform_analysis_counter_canonical_members` | Members with 1/01/2 spellings contribute distinct identities 1,2, not three; preserve duplicate/collision/invalid-value findings and every source occurrence. | L3-WRT-015; INT-066 |
+| `ext_transform_analysis_counter_compatible_damage` | Damaged/unassigned member evidence blocks complete evidence for every compatible scope; no convenient parent guess or swallowed suffix ignored. | L3-WRT-015; INT-066 |
+| `ext_transform_analysis_counter_x_not_member` | X attaching to or orphaning a D/WP target creates no D member and no private counter semantics; separate link findings remain observable. | L3-WRT-015; INT-062/066 |
+| `ext_transform_analysis_counter_unknown_policy_refuses` | Unavailable applicability/range/scope or private count grammar cannot be guessed from trailing indices/N or a successful raw lookup. | L3-WRT-015; INT-066 |
+| `ext_transform_analysis_compound_correspondence` | Explicit operation sequence retains checked source/output correspondence; stale offsets after permutation or unresolved overlaps refuse without a partial guessed result. | L3-WRT-012; INT-064/065/066 |
+| `ext_transform_analysis_hash_domain_separate_stamp` | Changed outside-exclusion bytes do not reuse input verification/restamp; output domain/result must be established. An explicit final stamp retains F1/damage/cut guards. | L3-WRT-016; INT-064/065/066 |
+| `ext_transform_analysis_original_and_qualifications_persist` | Original bytes/findings/record qualifiers remain input-bound; successful formatting/attachment does not mean valid fields, usable setup or governing/time association. | L3-WRT-016; INT-061/063/064/065/066 |
+
 ## Planned owner Q26 report/show acceptance — 2026-11-28
 
 Owner Q26 A/ADR-0039 removes the report-format hold for CLI-002/006 and

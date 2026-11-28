@@ -290,6 +290,9 @@ byte oracles before claiming the full normalization capability. The boundary
 requirements do not choose those rules or reduce the 0.1 obligations.
 Implement Joey's 2026-11-28 INT-064 A+D / INT-065 A / INT-066 A only
 after source/development analysis, review and independent byte oracles.
+Use the [extension/transform analysis](research/2026-11-28-extension-transform-development-analysis.md)
+for the shared evidence/explicitness boundaries; it does not implement or
+complete review/testing of those policies or their dependencies.
 A validates caller region order; built-in Chapter 9 group order, v1 uses
 G/T/R/M/P/D/B/S/Q/C/H/V/X, stable within groups and bounded by anchors.
 Newline conversion touches only positively identified layout, with explicit

@@ -2534,7 +2534,7 @@ A is reversible: later approved B/C can refine missing-rule cannot-evaluate to r
 
 **Test**: `x_unindexed_original_mapping_unavailable`, `x_unindexed_zero_one_never_default`, `x_unindexed_value_never_supplies_occurrence` (planned Option A expectations), `x_unindexed_unique_path_option_c`, `x_unindexed_duplicate_path_option_c`, `x_unindexed_nonconforming_option_d` (non-selected alternatives, not active expectations; selected A cases are planned, with final rule check recorded; development-analysis review/test gates retained)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 
 ### INT-062
@@ -2582,7 +2582,7 @@ historical edition mappings still need their own cited delta sources.
 
 **Test**: `x_registry_decomposition_survives_absent_target`, `x_document_only_code_does_not_define_registry_split`, `x_extension_overlap_prevents_heuristic_split`, `x_private_target_registry_only_cost`, `x_baseline_registry_keeps_edition_basis`, `x_legacy_renamed_original_is_unavailable` (planned Option A/baseline expectations), `x_hybrid_no_vocabulary_uses_labelled_document_names`, `x_hybrid_existing_vocabulary_never_falls_back`, `x_hybrid_v_private_boundary_needs_owner` (non-selected C inputs now assert A refusal/unavailability; final rule check recorded; development-analysis review/test gates retained)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 
 ### INT-063
@@ -2633,7 +2633,7 @@ confirmation. Private meanings remain opaque.
 
 **Test**: `v_missing_vn_keeps_namespace_unconfirmed`, `v_duplicate_vn_never_picks_vendor`, `v_path_header_mismatch_keeps_both`, `v_invalid_unavailable_vn_keeps_namespace`, `v_vn_projected_three_chars_ascii_match`, `v_vn_wrong_length_is_invalid_unconfirmed`, `v_vn_blank_handling_does_not_trim`, `v_vn_high_byte_is_not_usable` (planned owner-signed A/definition expectations; final rule check recorded; development-analysis review/test gates retained)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 
 ## Explicit normalization policy drafts
@@ -2701,7 +2701,7 @@ neither it nor D may be advertised as the standard's unique canonical form.
 
 **Test**: `normalize_order_explicit_bijection`, `normalize_order_missing_or_repeated_identity`, `normalize_order_preserves_raw_regions`, `normalize_group_profile_section_order`, `normalize_group_profile_stable_within_group`, `normalize_group_profile_anchors`, `normalize_group_profile_private_and_unknown_placement` (planned owner-signed A+D expectations; development/test gates retained)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-065
 
@@ -2738,7 +2738,7 @@ is a product policy choice, not a new delimiter or an INT-036 view rewrite.
 
 **Test**: `normalize_newlines_layout_only`, `normalize_newlines_field_controls_untouched`, `normalize_newlines_unknown_layout_unavailable` (planned owner-signed A expectations; development/test gates retained)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-066
 
@@ -2781,4 +2781,4 @@ OF MEASUREMENT LOCATIONS, p. 9-117), never import MNF\N's 1–8 range.
 
 **Test**: `normalize_counter_contiguous_distinct_members`, `normalize_counter_gap_refuses`, `normalize_counter_invalid_old_value_explicit_rewrite`, `normalize_counter_compatible_damage_blocks` (planned owner-signed A expectations; development/test gates retained)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (owner/independent analysis review and intensive tests pending)
