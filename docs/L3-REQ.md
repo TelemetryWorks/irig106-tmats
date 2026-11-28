@@ -1275,8 +1275,8 @@ under L1-EDN-006 is a later derivation, not an implied fallback here.
 Planned, not implemented. INT-011 is reconfirmed by Joey, 2026-11-23,
 with AI CONCURS on #38 at c623b15; development gates remain;
 INT-034's padding/availability/continuity and snapshots are owner-signed
-(2026-11-28); final rule checks CONCUR at #87 e0a0cce; padding-only/leading-damage precedence
-remains open, alongside development/source/test gates.
+(2026-11-28); final rule checks CONCUR at #87 e0a0cce; Q25 A owner sign-off now covers padding-only/leading-loss precedence;
+Q25 A has FINAL CONCUR at #91 5f4f3c4; development/source/test gates remain.
 These children describe the joining/provenance stage within a phase only.
 INT-045 separately records approved time-packet phase closure (AI CONCURS
 on #41 at 79b94eb); it adds no per-channel joining predicate. A later +1 fragment
@@ -1368,7 +1368,7 @@ these reasons do not assert that the beginning is intact. Other-channel
 traffic never creates a new start for an existing run. Implementation of
 reconfirmed INT-011 still requires completed analysis and executable checks.
 INT-034
-has owner sign-off for the exact padding/availability/continuity rules (2026-11-28); final rule checks CONCUR at #87 e0a0cce; padding-only/leading-damage precedence remains;
+has owner sign-off for the exact padding/availability/continuity rules (2026-11-28); final rule checks CONCUR at #87 e0a0cce; Q25 A now signs padding-only/leading-loss precedence; Q25 A has FINAL CONCUR at #91 5f4f3c4;
 INT-039 duplicate classification applies to a document only after assembly
 scope is established. Cross-fragment duplicate evidence must not silently
 select a split or a scalar winner. These dependencies remain visible even
@@ -1377,8 +1377,8 @@ when fixture-provided reviewed bindings make individual joining tests pass.
 ## Completeness-contract batch 15: observation versus authority
 
 Planned obligations; Joey signed INT-034's padding/availability/continuity
-and snapshot choices plus INT-028/031 on 2026-11-28. Final rule checks CONCUR at #87 e0a0cce; INT-034 padding-only/leading-damage
-precedence still gates affected cases. Their supplied reviewed fixture bindings isolate the cases
+and snapshot choices plus INT-028/031 on 2026-11-28. Final rule checks CONCUR at #87 e0a0cce; Q25 A signs the remaining
+INT-034 precedence; independent FINAL CONCUR is recorded at #91 5f4f3c4. Their supplied reviewed fixture bindings isolate the cases
 below without completing source/development/test gates. The open-run observation
 is PROVISIONAL, not a fourth final completeness outcome or a joining stop.
 
@@ -1388,7 +1388,8 @@ is PROVISIONAL, not a fourth final completeness outcome or a joining stop.
 ADR-0031/INT-034 define the three final ASCII outcomes in principle. FRMT=1
 remains unsupported/unknown completeness, not parsed as ASCII. An unavailable
 reviewed classification rule cannot be presented as a positive completeness
-verdict. This does not approve the precise proposed branch precedence.
+verdict. Q25 A now supplies the owner-signed padding-only/leading-loss precedence;
+its independent check and development evidence remain required.
 
 **L3-CH10-018** · Parent: L2-CH10-006 · Verification: T
 *Under a supplied reviewed INT-034 classification binding, an otherwise complete run whose text ends in semicolon at supplied EOF SHALL be Complete with labelled basis "end of input"; "followed by another packet" SHALL refer only to a SAME-CHANNEL packet that actually ends joining, never another channel's traffic.*
@@ -1397,7 +1398,7 @@ Owner-relayed review consequence, 2026-11-23. EOF alone must not turn a valid
 final record into incomplete or ambiguous. Preserve the START observation
 without interpreting "start of supplied input" as known leading damage.
 Independently established damage/ambiguous split evidence remains reported;
-its precedence needs review. INT-045's layered time boundary is a separate
+Q25 A preserves proven leading loss as a blocking cut facet; its independent FINAL CONCUR is recorded at #91 5f4f3c4. INT-045's layered time boundary is a separate
 reason, not relabelled as this ordinary same-channel joining stop. At that
 boundary, cut text is INCOMPLETE with a located finding, and a later
 same-channel +1 fragment is continuous-but-split, never rejoined backward;
@@ -1410,13 +1411,13 @@ mid-session Complete under this layer carries `time-boundary seal (owner policy)
 Revised outcomes/findings remain visible to spool-before-publish consumers.
 INT-045 is approved (Joey, 2026-11-23; AI CONCURS on #41 at 79b94eb). This EOF case ends exactly at `;`;
 the signed INT-034 boundary-layout suffix rule handles trailing controls/SP
-without changing bytes; padding-only/leading-damage precedence remains open. Finality is not proof of source data validity.
+without changing bytes; Q25 A now records the padding-only/leading-loss owner decision. Finality is not proof of source data validity.
 
 **L3-CH10-019** · Parent: L2-CH10-006 · Verification: T
 *Incomplete/ambiguous classification evidence SHALL retain the affected spans, gap/trust/boundary facts and all competing readings without concatenating across a missing segment, synthesizing a terminator or selecting one repeated scalar occurrence as the intended record boundary.*
 
 INT-034's stated padding/availability/continuity rules are owner-signed;
-final rule checks CONCUR at #87 e0a0cce; padding-only/leading-damage precedence stay open. INT-039's duplicate
+final rule checks CONCUR at #87 e0a0cce; Q25 A settles padding-only/leading-loss precedence, with FINAL CONCUR at #91 5f4f3c4. INT-039's duplicate
 field rule and INT-044's ambiguous-declaration fallback do not establish a
 record split or override assembly ambiguity. Locating evidence is mandatory;
 deciding which classification wins when several kinds coexist is still an
@@ -1438,8 +1439,27 @@ Joey selected explicit versioned provisional snapshots on 2026-11-28 under
 INT-034. Retain exact revision/extent, provisional evidence and visible later
 invalidation; no automatic governance, no upgrade to final completeness, and
 no cut-text use. INT-028/031 takeover/access guards still apply. This does not
-choose rendered labels, a stable Rust symbol or padding-only/leading-damage
+choose rendered labels or stable Rust symbols; Q25 A separately signs padding-only/leading-loss
 precedence; source/analysis/final-review and executable checks remain.
+
+**L3-CH10-028** · Parent: L2-CH10-006 · Verification: T
+*An established padding-only closed candidate with no substantive attributes SHALL be Incomplete with reason no substantive attributes, without inferring truncation; all raw bytes and existing scanner findings SHALL remain, and unknown/invalid attributes or present empty values SHALL NOT be discarded to manufacture padding-only input.*
+
+Owner Q25 A (Joey, 2026-11-28), recorded verbatim in INT-034. Use existing
+INT-035/036 framing/layout classes, not semantic validity as an emptiness
+filter. Scanner silence for EOF padding and located findings for terminated
+empty regions remain unchanged. This selects no new severity or format.
+
+**L3-CH10-029** · Parent: L2-CH10-006 · Verification: T
+*Independently proven missing leading text SHALL retain its evidence/location and blocking cut facet through a final semicolon, duplicate-induced aggregate Ambiguous, supplied equality/digest evidence and any INT-031 ambiguity opt-in; an ordinary supplied-input START observation SHALL NOT create that loss claim, and no such opt-in SHALL make cut text usable or governing.*
+
+Owner Q25 A composes INT-048; the aggregate Ambiguous label does not relax
+the cut facet. Proven loss must be tied by reviewed source evidence to this
+candidate; missing metadata, unexpected content, a nonzero initial sequence
+or ordinary input-start observation alone cannot fabricate missing bytes.
+Known loss and no-substantive-attribute evidence remain independent; the
+latter alone is not truncation. Raw extraction follows its separate contract.
+
 
 **L3-ROB-004** · Parent: L2-ROB-003 · Verification: T
 *The open-run budget SHALL be finite and explicit across all retained channels, with a documented byte-accounting model covering retained text, fragment/run metadata, provenance and any assembler-retained snapshots; an operation SHALL use non-wrapping arithmetic to check its additional charge and SHALL NOT accept retained state beyond the budget.*
@@ -2677,8 +2697,8 @@ authorized. This docs PR executes no benchmark or reference tool locally.
 L1-PERF-001 mentions the retired ecosystem draft's 100 Mbps sustained figure
 for first-measurement comparison; it is not a newly approved floor here.
 ADR-0021's overall proposal remains proposed. Owner Q6 resolves std here;
-other 2026-11-28 policy records are in PR #88. Report formats and INT-034
-padding-only/leading-damage precedence remain owner-open. Decisions alone
+other 2026-11-28 policy records are in PR #88. Q25 A now signs INT-034 padding-only/leading-loss precedence; its new
+independent check remains pending. Q26 report formatting is a separate PR. Decisions alone
 do not implement feature, semantic, resource or reference contracts.
 
 

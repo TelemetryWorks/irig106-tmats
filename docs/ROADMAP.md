@@ -115,8 +115,8 @@ error, never silently dropped runs. INT-034's precise completeness rules and
 INT-028/031 have owner sign-off and final CONCUR at #87 e0a0cce;
 development/source/test gates remain. INT-034 permits explicit
 versioned snapshots with invalidation and no automatic governance, plus the
-exact padding/source-availability/modulo-256 rules; padding-only/leading-damage
-precedence remains open. Review resource accounting/defaults separately.
+exact padding/source-availability/modulo-256 rules; Q25 A now adds the
+padding-only/leading-loss precedence, with independent FINAL CONCUR at #91 5f4f3c4. Review resource accounting/defaults separately.
 
 Review the [retention/limit contract](research/2026-11-27-retention-limit-evidence.md)
 and verify actual ownership APIs, capacity evidence and retained reference
