@@ -2336,6 +2336,43 @@ coverage can be claimed. Current rows do not invent such members from severity.
 | `stdin_explicit_dash_only` | Explicit '-' selects supplied stdin source; no operands, failed path acquisition or absence of a filesystem path never reads stdin automatically; runner/direct paths agree before rendering | L3-CLI-062, L3-CLI-065 |
 | `benchmark_uses_ignored_ci_without_criterion` | Restructured manifest has no Criterion; bounded informational ignored-test benchmark job records workload/toolchain/timing plus untimed allocation/copy evidence, not a new throughput acceptance gate or dependency | L3-PERF-003, L3-PERF-005, L3-PERF-009 |
 
+## INT-041/042/044 development-analysis edge oracles
+
+Source: [written analysis](research/2026-11-28-effective-presence-basis-development-analysis.md).
+PLANNED, not executed tests. Owner/independent analysis review and intensive
+executable checks remain; Q25 precedence and Q26 report format are untouched.
+Bindings/scope/conditions are supplied and reviewed explicitly; these rows
+do not invent historical registry metadata, reference scope or governance.
+
+| Planned case | Independent expected boundary | Interpretation |
+|---|---|---|
+| `availability_default_needs_absence_rule_and_true_condition` | No raw TFMT, known baseline binding/TIMEIN applicability: Defaulted A with source/citation/condition, no input value span or inserted item; remove any prerequisite and never invent A | INT-041 |
+| `availability_missing_false_is_not_unknown` | Actually absent supported TFMT with false versus unknown applicability: both Missing with DISTINCT reasons; unknown CDT operand retains condition finding, not confirmed false | INT-041 |
+| `availability_present_empty_never_defaults` | One empty or control-only candidate remains present; local validity follows definition, never default by empty-string truthiness | INT-041 |
+| `availability_proved_bad_or_duplicate_survives_gap` | Known scalar multiplicity remains Ambiguous; demonstrated high-byte/range failure remains visible when another rule is unavailable; no candidate winner | INT-041 |
+| `availability_numeric_raw_controls_not_repaired` | NSB raw 0 CR LF 4 is Invalid under INT-055, retaining control/source findings; no projection-first Explicit 4 | INT-041 |
+| `availability_tfmt_default_keeps_packet_conflict` | Evaluated TIMEIN/TTF=2 plus absent TFMT: baseline Defaulted A with existing inconsistency finding and unchanged packet evidence; no association inference | INT-041 |
+| `presence_empty_invalid_duplicate_values_still_true` | Available exact T-1\ID items with empty/Invalid/duplicate values: true presence; all candidate/field/record findings remain and no usable singular ID inferred | INT-042 |
+| `presence_exact_with_related_damage_still_true` | One actual exact T-1\ID plus compatible damaged name: true, both evidence sets kept; reversing order changes no predicate answer or value-validity claim | INT-042 |
+| `presence_default_is_not_physical` | Supplied reviewed default result with no raw item does not make that field physically specified; no synthetic input span or requirement satisfaction | INT-042 |
+| `presence_high_byte_has_independent_witnesses` | I<FF>D -> ID via empty replacement; I<FF> -> ID via D; T-1<FF>D can hide separator plus I; D<FF>I has no ID witness; all remain diagnostic, not keys | INT-042 |
+| `presence_terminated_literal_has_no_unread_tail` | Terminated T-1\I:a; without damage is not ID; unterminated T-1\I at EOF can complete to ID and blocks false without becoming a lookup item | INT-042 |
+| `presence_scope_projection_and_record_are_distinct` | t-01\id projects to T-1\ID with normalization information; contradictory recorder occurrence/other setup never contributes; valid cross-fragment scope stays one document | INT-042 |
+| `presence_marker_block_precedes_zero_match` | INT-037 leading marker blocks semantic lookup: cannot-evaluate with raw bytes/reason, never false/default from zero usable matches | INT-042 |
+| `presence_unknown_negation_and_inequality` | Cannot-evaluate remains so under is-not-specified; missing/unusable value operands make both equality and inequality cannot-evaluate, never guessed Boolean | INT-042 |
+| `fallback_counts_items_not_years_or_candidates` | G106 24/zz/24 in one document -> n=3, ambiguous reason; one 24 with two edition candidates is one source item, not duplicate; separate records never combine | INT-044 |
+| `fallback_override_never_upgrades_qualified_record` | Valid override changes basis only; duplicate source/assembly Ambiguous and any cut stay. Unusable override blocks selection rather than falling through | INT-044 |
+| `fallback_wire_literal_policy_and_eligibility` | Supplied eligible Format 1 0D/0E yields unchanged policy targets, literal readings kept; wrong/absent layout or other code-space operand never supplies eligibility | INT-044 |
+| `fallback_intended_edition_is_not_coverage` | Intended policy 106-20 plus current baseline vocabulary retains actual coverage limit; unavailable field binding cannot claim a historical default/Invalid result or implicit alias | INT-044 |
+| `fallback_basis_survives_default_and_invalid` | Baseline default and separately demonstrated Invalid under ambiguous-G106 fallback both carry ambiguous reason/count and applied-basis metadata; no report-shape or severity choice | INT-041, INT-044 |
+| `historical_usage_is_not_silently_backfilled` | 04–13 inspected TFMT/AN1 rows versus later explicit usage metadata: each fixture uses its own source/binding; no inherited modern default/condition or old field-size-as-range | INT-041, INT-042, INT-044 |
+
+The source note fixes literal byte-span/completion witnesses independently.
+Every touched archived edition needs its own source-qualified fixture, with
+unsupported coverage explicit. No annotated standard/handbook sample is a
+whole-file conformance oracle. No real recording was accessed in this cloud
+analysis; local-only checks remain outstanding where available.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample

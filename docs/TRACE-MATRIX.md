@@ -464,10 +464,10 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-038 | Decimal index identity without source normalization or machine-word limits | approved (Joey, owner sign-off, 2026-11-22) | [written development analysis](research/2026-11-28-index-duplicate-counter-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-039 | Repeated scalar slots remain ambiguous even when values agree | approved (Joey, owner sign-off, 2026-11-22) | [written development analysis](research/2026-11-28-index-duplicate-counter-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-040 | Count structurally identified entries independently of value validity | approved (Joey, owner sign-off, 2026-11-22) | [written development analysis](research/2026-11-28-index-duplicate-counter-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
-| INT-041 | Unavailable interpretation is not proof of missing or invalid field data | approved (Joey, owner sign-off, 2026-11-23) | not yet written | _(none)_ |
-| INT-042 | A reviewed is-specified predicate tests actual presence, not value usability | approved (Joey, owner sign-off, 2026-11-23) | not yet written | _(none)_ |
+| INT-041 | Unavailable interpretation is not proof of missing or invalid field data | approved (Joey, owner sign-off, 2026-11-23) | [written development analysis](research/2026-11-28-effective-presence-basis-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-042 | A reviewed is-specified predicate tests actual presence, not value usability | approved (Joey, owner sign-off, 2026-11-23) | [written development analysis](research/2026-11-28-effective-presence-basis-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-043 | Leading-zero algorithm 2 designators are accepted with a warning | approved (Joey, Option B, 2026-11-23) | not yet written | _(none)_ |
-| INT-044 | Duplicate G\106 retains ambiguity with an explicitly labelled fallback basis | approved (Joey, Option B, 2026-11-23) | not yet written | _(none)_ |
+| INT-044 | Duplicate G\106 retains ambiguity with an explicitly labelled fallback basis | approved (Joey, Option B, 2026-11-23) | [written development analysis](research/2026-11-28-effective-presence-basis-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-045 | Layered time-packet closure for initial setup and SRCC=1 updates | approved (Joey, initial A and guarded mid-session extension, 2026-11-23) | not yet written | _(none)_ |
 | INT-046 | Bounded byte-identity exception retains the premature-seal finding (QI) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) | not yet written | _(none)_ |
 | INT-047 | Inconsistent matrix observations remain counted but never parser coverage (Q0) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) | not yet written | _(none)_ |
@@ -491,7 +491,7 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-065 | Scope of line-ending normalization | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
 | INT-066 | Preconditions for explicit counter recomputation | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
 
-* Entries without a written analysis: **60** of 66
+* Entries without a written analysis: **57** of 66
 * Entries without a test: **66** of 66
 * Entries missing the development mark: **0**
 
