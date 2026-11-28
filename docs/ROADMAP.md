@@ -129,9 +129,10 @@ silently choose those policies or manufacture closure on resource exhaustion.
 
 **Owner Q22, 2026-11-28 — reader progress:** cap retained core BlockPool
 credits to leave verified progress capacity; an over-cap run fails/reports a
-typed assembly budget exhausted error while the reader continues. No early
-copy, silent eviction or invented EOF. Bound the reserve against actual core
-admission and outstanding caller-held references before claiming progress;
+typed assembly budget exhausted error while the reader continues. Early copy
+was not selected as the progress policy; it is not required or blanket-banned.
+Silent eviction and invented EOF remain forbidden. Bound the reserve against
+actual core admission and outstanding caller-held references before claiming progress;
 no arbitrary credit cap or numeric default is supplied by this note.
 Core admission refusals and drain reports remain unchanged core evidence,
 separate from the assembler-retention limit, with no double-counting of bytes.
@@ -147,6 +148,23 @@ INT-054/055 and INT-056–060 have final independent AI concurrence. Complete so
 and development analysis (including the complete non-decimal representation inventory),
 and implement the planned executable tests before relying on them. The owner
 choices are recorded; independent review and development gates remain.
+
+### Remaining build-compatibility acceptance
+
+Review MSRV, plain-library WASM, native-platform and isolated consumer
+acceptance before implementing their checks against the redesigned packages.
+Add the WASM check with the first new library code and the exact std-only
+consumer build once the time view exists. Inspect actual source/toolchain/
+target/feature binding and completed CI results; prototype checks do not
+verify replacement code. Keep dependency publication/API and semantic-use
+gates separate from compile success.
+
+Owner Q6 (Joey, 2026-11-28) keeps std default-on and always required,
+"not a no_std promise"; ADR-0015 is amended. Positive supported builds cover
+default std and isolated explicit std with defaults disabled. Std-disabled
+is an unsupported negative case. Retain the exact irigtime consumer line,
+actual rustc -V and per-target/features/source/CI evidence. Source overrides
+for prepublication CI are separate from crates.io-only release evidence.
 
 ### Remaining edition-independent reading acceptance
 
@@ -196,7 +214,7 @@ Inspect actual package inheritance, failure propagation and measured library
 scope at the reviewed head; prototype CI and overall green status cannot
 substitute. Keep semantic/requirements coverage and owner gates separate.
 This does not approve the remainder of proposed ADR-0020 or resolve #59's
-held std choice.
+owner-selected std A contract, amended in ADR-0015 (2026-11-28).
 
 Compile-fail fixtures for the guard rails use CI-scripted cargo clippy runs
 on fixture crates. Do NOT add trybuild/ui_test or any dev dependency without
@@ -240,6 +258,10 @@ finding reported, with no default always-refuse class. --strict refuses the
 listed bad-data kinds and that bad-data class, not informational notes
 (owner Q18, 2026-11-28). No all-findings or severity-derived predicate.
 Overwrite/identity and raw extraction permissions remain as previously signed.
+Remaining design/review item: define Q18 bad-data-class membership beyond
+the six listed kinds with an explicit reviewed mapping and named fixtures.
+No additional member is decided here; message text or severity cannot supply
+membership. This is unfinished derivation, not a new owner-choice hold.
 
 Review executable byte, qualification, identity/race and destination tests
 before implementation; owner policy is not completed evidence. --force and
@@ -1200,7 +1222,7 @@ owner decides; the decision is then recorded in
 | # | Question | Why it is open | Where it lands |
 |---|----------|----------------|----------------|
 | F1 | **Owner-approved, 2026-11-23, under ADR-0033; AI CONCUR at #30 head 13173b0.** Duplicate SHA items are indeterminate. | List every occurrence, preserve every byte, never claim positive verification, and refuse stamping until fixed. Review and test evidence still required. | INT-021; ADR-0034 |
-| F2 | **Owner-signed A, Joey, 2026-11-28:** refuse deletion while extensions attach; cascade is a separate explicit edit (0.5). | Final rule CONCUR at #87 e0a0cce; source/development/test evidence still needed; never guess attachment. | INT-022; L1-WRT-003; ADR-0029 |
+| F2 | **Owner-signed A, Joey, 2026-11-28:** refuse deletion while X items attach or may attach with unresolved/ambiguous/cannot-evaluate evidence; list every attached/possibly attached X item. Cascade is a separate explicit edit (0.5). | Final rule CONCUR at #87 e0a0cce; source/development/test evidence still needed; never guess attachment. | INT-022; L1-WRT-003; ADR-0029 |
 | F3 | **Owner-signed A, Joey, 2026-11-28:** suggest-only `=` to `:` when the complete code name is recognized and no colon occurs; never automatic. | Final rule CONCUR at #87 e0a0cce; source/development/test evidence still needed; raw reading/finding stays. | INT-023; `docs/TEST-DATA.md` E3 |
 | F5 | **Decided 2026-09-26: A**, with C possible later (ADR-0030). Does `irig106-core` depend on `irig106-tmats`, or do the tools join them? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 1.6; proposal in section 2.4 (core stays structural and independent; checking packets against TMATS belongs to the layer holding both) awaits the owner. | `docs/TMATS-IN-CHAPTER-10.md` section 2.4; ROADMAP X3 |
 | F6 | **Decided 2026-09-26: yes** — L1-REL-003, a CI check added with the first new library code. Must the library build for WebAssembly (a CI check that the plain library compiles for a `wasm32` target), so studio's browser build can use it? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 4.8. ADR-0015 moved WASM *bindings* out of the library; building the plain library for WebAssembly is a separate question. The library already performs no I/O (L1-IO-001), which is the main condition. | ADR-0015; a possible L1 requirement and CI job |
@@ -1496,6 +1518,10 @@ forgotten; none has a committed version.
   `irig106-studio`'s in-browser TMATS view. To bring it back: a separate
   `irig106-tmats-wasm` crate (`crate-type = ["cdylib", "rlib"]`) so the core
   crate's dependency graph and semver are unaffected.
+- **Required std feature (owner amendment, 2026-11-28).** Keep default-on,
+  always-required std, labelled "not a no_std promise" (ADR-0015). Explicit
+  std with defaults disabled is supported; std-disabled is unsupported.
+  The following no_std discussion is historical/future scope, not a promise.
 - **`no_std` support.** The prototype declared a `std` feature but used `std`
   unconditionally. To bring it back: a real `no_std` + `alloc` build with an
   output sink abstraction, verified in CI on a `no_std` target. Only worth it

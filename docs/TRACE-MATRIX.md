@@ -364,9 +364,9 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
 | L1-REL-001 | L2-REL-001 | `irig106-tmats-cli/tests/lockstep.rs::cli_and_library_versions_match`<br>`irig106-tmats-cli/tests/lockstep.rs::library_dependency_is_pinned_exactly`<br>`irig106-tmats-cli/tests/lockstep.rs::version_flag_reports_both_versions` | Partially Implemented |
-| L1-REL-002 | _(none)_ | _(none)_ | Draft |
-| L1-REL-003 | _(none)_ | _(none)_ | Draft |
-| L1-REL-004 | _(none)_ | _(none)_ | Draft |
+| L1-REL-002 | L2-REL-002 | _(none)_ | Draft |
+| L1-REL-003 | L2-REL-003 | _(none)_ | Draft |
+| L1-REL-004 | L2-REL-004 | _(none)_ | Draft |
 | L1-REL-005 | L2-REL-005 | _(none)_ | Draft |
 | L1-REL-006 | L2-REL-006 | _(none)_ | Draft |
 
@@ -375,6 +375,9 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2 ID | L3 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
 | L2-REL-001 | L3-REL-001 | _(TBD)_ | Draft |
+| L2-REL-002 | L3-REL-002, L3-REL-003, L3-REL-006 | _(TBD)_ | Draft |
+| L2-REL-003 | L3-REL-004, L3-REL-008 | _(TBD)_ | Draft |
+| L2-REL-004 | L3-REL-005, L3-REL-007 | _(TBD)_ | Draft |
 | L2-REL-005 | L3-REL-009, L3-REL-010, L3-REL-011 | _(TBD)_ | Draft |
 | L2-REL-006 | L3-REL-012, L3-REL-013, L3-REL-014, L3-REL-015, L3-REL-016 | _(TBD)_ | Draft |
 
@@ -401,14 +404,14 @@ This matrix is the single source of truth for live status; the requirement docum
 | CLI | 9 | 17 | 67 | 0 | 0 | 0 | 0 |
 | ROB | 3 | 7 | 19 | 0 | 0 | 0 | 0 |
 | PERF | 2 | 3 | 9 | 0 | 0 | 0 | 0 |
-| REL | 6 | 3 | 9 | 0 | 0 | 0 | 0 |
-| **Total** | **85** | **101** | **332** | **0** | **0** | **0** | **0** |
+| REL | 6 | 6 | 16 | 0 | 0 | 0 | 0 |
+| **Total** | **85** | **104** | **339** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 32 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 29 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 465 (0.0%).
+**Tested by at least one test marker**: 0 of 472 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 0 of 465 (0.0%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 0 of 472 (0.0%).
 
 ### Orphan check
 

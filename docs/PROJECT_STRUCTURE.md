@@ -126,6 +126,7 @@ irig106-tmats/
 │   │                          2026-11-27-x-association-requirements.md derives X attachment and proposes INT-061/062 for unindexed originals and existing-code vocabulary;
 │   │                          2026-11-27-performance-evidence-requirements.md derives correctness-qualified performance measurements and reference/compute boundaries;
 │   │                          2026-11-27-robustness-evidence-requirements.md derives library lint/line-coverage acceptance and evidence gates;
+│   │                          2026-11-26-build-compatibility-requirements.md derives MSRV/WASM/platform/consumer build acceptance and evidence boundaries;
 │   │                          2026-11-26-pattern-lookup-requirements.md derives bound-index raw pattern retrieval and its review/oracle boundaries;
 │   │                          2026-11-26-extraction-requirements.md derives byte extraction/input immutability and audits remaining family-2 work;
 │   │                          2026-11-26-cli-mounting-requirements.md derives reusable mounting, host dispatch, adapter guard and assembly observations;

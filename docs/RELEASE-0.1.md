@@ -535,3 +535,13 @@ reference vectors, development analyses/reviews or executable acceptance.
 Std A is owner-decided and recorded separately through #59/ADR-0015.
 Only INT-034 padding-only/leading-damage precedence and report formats
 remain owner-open; no release, dependency install or publication occurs here.
+
+## std feature decision — 2026-11-28
+
+Owner Q6 (Joey), recorded verbatim in ADR-0015's dated amendment: std is
+kept, on by default and always required, "not a no_std promise". The exact
+irigtime consumer declaration remains unchanged. L2-REL-002/003/004 and
+L3-REL-002–008 require separate actual MSRV/WASM/platform/consumer evidence;
+std-disabled is not a supported build. No manifest/workflow or release action
+is performed here. Published types/core 0.2 APIs and crates.io-only release
+evidence remain prerequisites; a prepublication CI override does not satisfy them.
