@@ -3145,6 +3145,8 @@ their reviewed index patterns, including D-x\MML\N, D-x\MNF\N and D-x\WP;
 an independently listed excerpt-name inventory SHALL expose any coverage
 gap as unready coverage, never a silently missed warning. These are pattern
 stems, not literal complete names without their required indices.
+Source-fixed [pattern/literal inventory](research/2026-11-28-appendix9c-recognizer-inventory.md)
+supplies the independent minimum; all runtime recognition coverage remains unimplemented.
 
 **L3-READ-035** · Parent: L2-READ-014 · Verification: T
 *Each positive predicate occurrence SHALL retain a located suspect warning and a suggested edit replacing exactly the triggering raw colon byte with semicolon; the suggestion SHALL identify its source/document revision and retain the evidence for the recognized following name without converting that lookahead into a lookup item.*

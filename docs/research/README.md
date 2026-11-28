@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-28-appendix9c-recognizer-inventory.md](2026-11-28-appendix9c-recognizer-inventory.md) | Source-fixed Appendix 9-C recognizer vocabulary and literal CSV, exact index arities/citations and explicit XML-annotation gaps; no runtime coverage claim |
 | [2026-11-27-int022-034-owner-brief.md](2026-11-27-int022-034-owner-brief.md) | PR B plain-English options/recommendations for every INT-022..034; owner choices remain pending, INT-030 already approved |
 | [2026-11-27-legacy-int-independent-check-batches3-4.md](2026-11-27-legacy-int-independent-check-batches3-4.md) | Received batches 3/4 plus INT-064 recheck; unapproved governance rewrites, corrected pages, owner questions and planned edge cases |
 | [2026-11-27-legacy-int-independent-check-batch2.md](2026-11-27-legacy-int-independent-check-batch2.md) | Legacy batch 2: five CONCURs, INT-010/015 source corrections, INT-017 baseline limitation and open 0.5 F2 owner item |
