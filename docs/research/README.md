@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-28-appendix9c-recognizer-inventory.md](2026-11-28-appendix9c-recognizer-inventory.md) | Source-fixed Appendix 9-C recognizer vocabulary and literal CSV, exact index arities/citations and explicit XML-annotation gaps; no runtime coverage claim |
 | [2026-11-28-index-duplicate-counter-development-analysis.md](2026-11-28-index-duplicate-counter-development-analysis.md) | Written draft analysis for approved INT-038/039/040: 14-edition index/cardinality/counter sources, five handbooks, collision/duplicate/membership boundaries and planned edge oracles; review/tests pending |
 | [2026-11-28-framing-character-development-analysis.md](2026-11-28-framing-character-development-analysis.md) | Written draft development analysis for approved INT-035/036/037: 14-edition/common clauses, five handbooks, character/marker sources, independent edge oracles and remaining review/tests |
 | [2026-11-27-int022-034-owner-brief.md](2026-11-27-int022-034-owner-brief.md) | PR B plain-English options/recommendations for every INT-022..034; owner choices remain pending, INT-030 already approved |

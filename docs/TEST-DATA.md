@@ -1828,7 +1828,7 @@ heuristic or sample-data run is introduced by these planned checks.
 |---|---|---|
 | `suspect_colon_skips_unterminated_suffix` | `COMMENT:before: G\PN:x` at EOF contains a lookalike but no terminating semicolon: retained suffix, no detector warning/proposal or new lookup item | L3-READ-035, L3-READ-036 |
 | `suspect_colon_cut_qualification_never_upgraded` | Given permitted diagnostic inspection of a terminated value within supplied cut-qualified text: suggestion retains cut/Incomplete or Ambiguous-with-cut qualification, never usable/governing and never an INT-031 bypass | L3-READ-035, L3-READ-036 |
-| `suspect_colon_appendix_vocabulary_is_required` | Independently listed Appendix 9-C names/patterns include complete D-1\MML\N-1-1, D-1\MNF\N-1-1-1 and D-1\WP-1-1-1-1 forms and the rest of the excerpt vocabulary: recognition coverage is required | L3-READ-034, L3-READ-037 |
+| `suspect_colon_appendix_vocabulary_is_required` | Independently listed Appendix 9-C names/patterns include complete D-1\MML\N-1-1, D-1\MNF\N-1-1-1 and D-1\WP-1-1-1-1 forms and the rest of the [source-fixed pattern/literal inventory](research/2026-11-28-appendix9c-recognizer-inventory.md): recognition coverage is required for every listed full shape; XML relative/defective annotations do not become accepted names | L3-READ-034, L3-READ-037 |
 | `suspect_colon_missing_appendix_name_is_coverage_failure` | Remove one required reviewed excerpt pattern from a synthetic recognizer catalog: readiness visibly fails, never counts a missed warning as clean no-candidate output | L3-READ-034, L3-READ-038 |
 
 ## Planned session-evidence batch 38
