@@ -1275,7 +1275,7 @@ blanks under L1-READ-006 and preserves the original span.
 
 **Test**: `missing_colon_recovers_at_semicolon`, `unterminated_suffix_is_retained`, `code_like_value_text_does_not_split`, `empty_region_run_has_one_information_finding`, `unterminated_layout_at_eof_is_silent` (planned, not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-framing-character-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Draft analysis**: [baseline draft and remaining work](research/2026-11-21-scanner-framing-recovery.md)
 
@@ -1336,7 +1336,7 @@ projection remains unchanged. INT-055 has final independent CONCUR at #51 ebd5c9
 
 **Test**: `control_projection_preserves_raw_spans`, `nul_fields_have_one_information_finding_each`, `code_name_and_value_blanks_differ`, `character_classes_keep_int035_run_policy` (planned, not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-framing-character-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Draft analysis**: [baseline draft and 2026-11-21 review amendments](research/2026-11-21-character-interpretation-drafts.md#review-amendments--2026-11-21)
 
@@ -1375,7 +1375,7 @@ converted data the original TMATS bytes, and never infer an edition from a BOM.
 
 **Test**: `leading_encoding_marker_blocks_semantic_lookup`, `split_marker_is_recognised_after_assembly`, `marker_after_padding_is_midstream`, `high_bytes_are_not_silently_decoded`, `unmarked_zero_patterns_do_not_select_encoding` (planned, not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-framing-character-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Draft analysis**: [baseline draft and 2026-11-21 review amendments](research/2026-11-21-character-interpretation-drafts.md#review-amendments--2026-11-21)
 
