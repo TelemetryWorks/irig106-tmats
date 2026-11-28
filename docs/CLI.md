@@ -134,8 +134,8 @@ existing content-based recording/text input route. The 0.1 scope is unchanged.
   2026-09-25: "Go with hand-rolled argument parsing like mie-decoder"). The
   CLI adds no argument-parsing crate such as `clap`. What this buys: no
   dependency or its MSRV and semver churn, a small binary, and full control
-  of every help and error message (including any encoding/escaping contract
-  selected by the schema review).
+  of every help and error message. JSON report output follows the owner-selected
+  ASCII/Unicode-escape rule in section 4; raw/extract output stays byte-exact.
   What it costs: no generated shell completions and more parsing code to
   own; that code is kept table-driven and every flag, value, and usage error
   has a test. The scaffold's `--version` / `--help` handling already follows
@@ -180,13 +180,13 @@ keeps its original byte contract. Command/mode/format applicability must be
 explicit in the reviewed request table, not silently ignored, wrapped or
 converted. Full resolved-link/timeline views stay later scope.
 
-**OPEN — ASCII-only report output.** The earlier proposal remains open for
-the owner or schema review: whether text/diagnostics and JSON stdout must
-be ASCII-only, and which escaping rules apply. The cited irigtime report
-contract specifies ASCII-only JSON stdout; Q26 does not settle the scope
-of that requirement for tmats. Do not assume acceptance or rejection. Raw
-show/extract stay byte-exact either way; no source bytes are repaired or
-silently converted.
+**Owner Q26 A — ASCII-only JSON stdout.** Matching
+[irigtime’s pinned report contract](https://github.com/TelemetryWorks/irig106-time/blob/5899806ae684ed38d8cad8f422cabb3d47c6be0f/docs/cli-report-schema.md#L51),
+JSON stdout is ASCII-only: non-ASCII characters use Unicode escapes,
+including surrogate pairs for supplementary characters. This is JSON
+representation, not a source projection or a rule to repair raw bytes.
+Raw show/extract stay byte-exact. The owner clarification selects JSON
+encoding; it does not add an ASCII-only text/diagnostic rule.
 
 
 ## 5. Decisions made on 2026-09-25

@@ -3791,6 +3791,10 @@ selector, escaping or repetition grammar beyond the owner-approved spelling.
 **L3-CLI-072** · Parent: L2-CLI-019 · Verification: T
 *Text and JSON SHALL render the same supplied command results, findings, locations and qualifications without rerunning parsing/interpretation or selecting different candidates; results SHALL be written only to the selected result sink/stdout, and operational diagnostics to stderr, without plaintext/progress/diagnostic interleaving corrupting JSON or raw payload bytes.*
 
+JSON stdout SHALL be ASCII-only, with non-ASCII characters represented by
+Unicode escapes including surrogate pairs, matching the pinned irigtime
+contract cited in ADR-0039. This never transforms raw show/extract payloads.
+
 Text needs readable evidence/labels; JSON needs the schema's machine facts.
 This is representation parity, not identical layout. Existing -o and writer
 contracts still apply; renderer success is not source conformance or delivery.

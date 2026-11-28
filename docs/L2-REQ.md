@@ -1620,7 +1620,7 @@ configuration timeline or validate/diff commands. All verification is planned.
 
 **Parent**: L1-CLI-006
 
-**Statement**: Report commands SHALL default to readable text, select JSON with --format json and explicit text with --format text, using the same semantic results/findings in both representations; results SHALL use stdout and operational diagnostics stderr without corrupting JSON or byte-exact payload streams, and representation selection SHALL NOT alter interpretation, record access, caller assumptions or command outcome.
+**Statement**: Report commands SHALL default to readable text, select ASCII-only JSON with --format json (non-ASCII characters Unicode-escaped, including surrogate pairs) and explicit text with --format text, using the same semantic results/findings in both representations; results SHALL use stdout and operational diagnostics stderr without corrupting JSON or byte-exact payload streams, and representation selection SHALL NOT alter interpretation, record access, caller assumptions or command outcome.
 
 **Rationale**: Owner Q26 A/ADR-0039 and the pinned irigtime parser establish this spelling. No new alias, severity threshold or implicit source choice is introduced. Raw/extract payload delivery remains its separate byte contract; mode/format applicability must be explicit in the reviewed request table, never silently ignored or converted to a different payload.
 

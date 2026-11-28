@@ -458,8 +458,8 @@ stop joining. Joey signed explicit versioned provisional snapshots with
 visible invalidation on 2026-11-28 (INT-034), without automatic governance or
 cut-text use. INT-028/031 preserve independent takeover/access gates.
 Q25 A precedence is recorded in INT-034 with FINAL CONCUR at #91 5f4f3c4;
-Q26 report/show policy is recorded in ADR-0039. ASCII-only report encoding
-remains open for the owner/schema review (CLI section 4).
+Q26 report/show policy is recorded in ADR-0039. JSON stdout is ASCII-only with Unicode escapes including surrogate pairs,
+matching irigtime under Q26 A; raw/extract bytes remain unchanged (CLI section 4).
 Finite aggregate open-run retention and a typed limit error are required;
 accounting, numeric policy and recovery details remain review work. See the
 [batch 15 draft](research/2026-11-23-completeness-contracts-draft.md).
