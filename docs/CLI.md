@@ -34,7 +34,7 @@ select no argument grammar, report format, exit mapping or adoption policy.
 L2-CLI-012/013 derive checksum, verify, explicit flex and stamp computation
 for a supplied eligible document/revision. They preserve library verdicts,
 findings and transaction failures; they do not define rendered output or
-selection defaults. Proposed INT-031 gates incomplete/ambiguous access.
+selection defaults. Owner-signed INT-031 gates incomplete/ambiguous access.
 A successful stamp result still needs successful delivery under the separate
 input-preserving output contract. ADR-0037 settles extract's destination and
 findings policies; that approval is not extended to stamp's remaining policy.
@@ -78,7 +78,7 @@ existing content-based recording/text input route. The 0.1 scope is unchanged.
   offset. L2-CLI-010/011 derive internal enumeration and provenance while
   leaving rendered labels, public numbering/selection and live emission
   policy for owner review. Complete is not a governing/eligibility verdict;
-  proposed INT-031 gates incomplete/ambiguous record access.
+  owner-signed INT-031 gates incomplete/ambiguous record access.
 - **Recordings are memory-mapped**, and packet finding/trust comes from
   `irig106-core` (ADR-0036), with borrowed DATA spans into TMATS slicing/
   assembly. The temporary CLI reader is superseded; no header or packet-data

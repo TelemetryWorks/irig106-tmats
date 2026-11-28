@@ -96,6 +96,7 @@ irig106-tmats/
 │   │                          2026-11-25-retained-cut-and-qm-review-followups.md records the independent review and narrow blocking/test amendments;
 │   │                          2026-11-25-time-view-metadata-requirements.md derives bounded channel/time-field requirements and acceptance scope;
 │   │                          2026-11-25-source-bit-requirements.md derives explicit NSB splitting and records DSI/CHE remaining boundaries;
+│   │                          2026-11-28-interpretation-owner-signoffs.md preserves signed interpretation choices and their remaining review/development gates;
 │   │                          2026-11-28-appendix9c-recognizer-inventory.md and 2026-11-28-appendix9c-literal-names.csv inventory complete code-name shapes/source spellings without implementing a recognizer;
 │   │                          2026-11-28-index-duplicate-counter-development-analysis.md analyzes approved index/duplicate/counter rules with historical source limits and planned edge oracles; review/tests pending;
 │   │                          2026-11-28-framing-character-development-analysis.md analyzes approved framing/character/marker rules without marking analysis review or executable tests complete;

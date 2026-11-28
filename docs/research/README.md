@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-28-interpretation-owner-signoffs.md](2026-11-28-interpretation-owner-signoffs.md) | Verbatim Joey sign-offs for INT-022–029/031–034 and INT-061–066, prior independent check scope, remaining final checks and open INT-034 precedence/report formats |
 | [2026-11-28-appendix9c-recognizer-inventory.md](2026-11-28-appendix9c-recognizer-inventory.md) | Source-fixed Appendix 9-C recognizer vocabulary and literal CSV, exact index arities/citations and explicit XML-annotation gaps; no runtime coverage claim |
 | [2026-11-28-index-duplicate-counter-development-analysis.md](2026-11-28-index-duplicate-counter-development-analysis.md) | Written draft analysis for approved INT-038/039/040: 14-edition index/cardinality/counter sources, five handbooks, collision/duplicate/membership boundaries and planned edge oracles; review/tests pending |
 | [2026-11-28-framing-character-development-analysis.md](2026-11-28-framing-character-development-analysis.md) | Written draft development analysis for approved INT-035/036/037: 14-edition/common clauses, five handbooks, character/marker sources, independent edge oracles and remaining review/tests |

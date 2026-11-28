@@ -694,7 +694,7 @@ owner after #38 are recorded here; unresolved streaming-use policy stays open.
 
 **Statement**: An open run SHALL expose a PROVISIONAL observation distinct from final completeness, with its channel, observed text extent and boundary evidence; observing a provisional attribute boundary SHALL NOT stop joining, assert a complete record or silently establish a governing configuration.
 
-**Rationale**: Owner-relayed reviewer consequence, 2026-11-23, enables the streaming-consumer design discussion without treating other-channel data as an end marker. INT-034 records the explicit open question of pre-EOF semantic use; INT-028/031 govern final descriptions and remain proposed. A temporary lack of input is not EOF. No current-only-complete parsing rule is silently relaxed by adding an observation.
+**Rationale**: Owner-relayed reviewer consequence, 2026-11-23, enables the streaming-consumer design discussion without treating other-channel data as an end marker. INT-034 now permits explicit versioned provisional snapshots with invalidation and no automatic governance (Joey, 2026-11-28); owner-signed INT-028/031 govern final descriptions, with their separate evidence/review gates. A temporary lack of input is not EOF. No current-only-complete parsing rule is silently relaxed by adding an observation.
 
 **Verification Method**: Test (T)
 
@@ -764,7 +764,7 @@ Source: 106-24R1 Chapter 9 section 9.5.4, Table 9-4, rows/pages cited below.
 
 **Statement**: Every bounded time-view result SHALL retain its source document/revision, recorder/entry scope, source locations and supplied assembly/edition context or explicit limitations, preserve every original byte and finding, and keep locally read metadata separate from any claim that a setup governs or a data channel has an evidenced time-source association.
 
-**Rationale**: RELEASE-0.1's API/uncertainty contract and ADR-0002/0003 require byte-faithful views and stable source ownership. L1-VIEW-004 effective values are brought forward for this subset. Incomplete, retained-cut, ambiguous or unsupported setup evidence cannot become an unqualified usable view; INT-048's cut facet keeps its blocking force. This does not select open INT-028/031 general governance, create a timeline, approve provisional semantic use, or expose a stable Rust symbol before API review.
+**Rationale**: RELEASE-0.1's API/uncertainty contract and ADR-0002/0003 require byte-faithful views and stable source ownership. L1-VIEW-004 effective values are brought forward for this subset. Incomplete, retained-cut, ambiguous or unsupported setup evidence cannot become an unqualified usable view; INT-048's cut facet keeps its blocking force. This does not select owner-signed INT-028/031 general governance, create a timeline, approve provisional semantic use, or expose a stable Rust symbol before API review.
 
 **Verification Method**: Test (T)
 
@@ -891,7 +891,7 @@ Owner answers of 2026-11-26 now specify caller policy in INT-056–060
 
 **Statement**: A time-view answer using an explicit caller choice without association proof SHALL retain the choice, its caller-supplied assumption basis and scoped identities on every answer derived from it, alongside the unchanged underlying association uncertainty, target states and selected Strict/Warn/Quiet level, with bad-data finding emission governed by INT-056; it SHALL NOT relabel that choice as association_evidenced, silently propagate it to another setup/revision or make otherwise unusable setup evidence usable or governing.
 
-**Rationale**: Owner direction 2026-11-21, the owner answers of 2026-11-26 (INT-056–060, final CONCUR at #52 3fcbd2c), and RELEASE-0.1 permit labelled caller assumptions for the bounded time view, not silent guesses or global configuration overrides. Other assumption uses in L1-VIEW-008 remain 0.2. This does not approve proposed INT-028/031/032/033, select a governing setup or authorise provisional semantic use; source and eligibility limitations remain visible.
+**Rationale**: Owner direction 2026-11-21, the owner answers of 2026-11-26 (INT-056–060, final CONCUR at #52 3fcbd2c), and RELEASE-0.1 permit labelled caller assumptions for the bounded time view, not silent guesses or global configuration overrides. Other assumption uses in L1-VIEW-008 remain 0.2. This does not approve owner-signed INT-028/031/032/033, select a governing setup or authorise provisional semantic use; source and eligibility limitations remain visible.
 
 **Verification Method**: Test (T)
 
@@ -1020,7 +1020,7 @@ Neither broader refusal nor narrower acceptance is silently selected.
 
 **Statement**: For an explicitly selected setup record/candidate with supplied original text bytes, extract SHALL proceed byte-exact by default despite findings, reporting every finding; --strict SHALL refuse for the listed bad-data kinds, while its behavior on other findings SHALL remain PENDING OWNER. It SHALL extract exactly that selection's original text bytes to the requested output, using core-backed fragment extents and the byte-faithful writer contract without packet framing, decoding/re-encoding, normalization or implicit edits.
 
-**Rationale**: UC-17, CLI command table and L1-CLI-004 require extracting TMATS bytes, not rendering a typed view. ADR-0002/0003 preserve source bytes; ADR-0010 leaves destination acquisition to the CLI/caller; ADR-0036 supplies borrowed DATA. Chapter 11 (106-24R1) section 11.2.7.2/Figure 11-34 p. 11-50 places a CSDW before each fragment's text. ADR-0037 allows raw extraction despite the listed integrity, cut, ambiguity, encoding and invalid-value findings, with no always-refuse finding class. This does not adopt a qualified setup for semantic/governing use, choose a default record, combine records or invent bytes/packet extents not supplied by core. Proposed INT-031's general semantic-access gate is not silently approved by this extraction-only owner direction.
+**Rationale**: UC-17, CLI command table and L1-CLI-004 require extracting TMATS bytes, not rendering a typed view. ADR-0002/0003 preserve source bytes; ADR-0010 leaves destination acquisition to the CLI/caller; ADR-0036 supplies borrowed DATA. Chapter 11 (106-24R1) section 11.2.7.2/Figure 11-34 p. 11-50 places a CSDW before each fragment's text. ADR-0037 allows raw extraction despite the listed integrity, cut, ambiguity, encoding and invalid-value findings, with no always-refuse finding class. This does not adopt a qualified setup for semantic/governing use, choose a default record, combine records or invent bytes/packet extents not supplied by core. Owner-signed INT-031's general semantic-access gate is not silently approved by this extraction-only owner direction.
 
 **Verification Method**: Test (T)
 
@@ -1125,24 +1125,23 @@ this slice does not approve that host allocation threshold.
 This is the X portion of L1-EXT-003; V grouping remains to derive, so this
 child does not complete that parent. ADR-0008/0026 and section 9.5.14 supply
 the baseline. The [source/gap note](research/2026-11-27-x-association-requirements.md)
-drafts proposed INT-061 for unindexed originals; that case is BLOCKED on
-owner sign-off and independent AI check under ADR-0033. Proposed INT-062
-separately gates “existing TMATS code”: registry, document-present names or
-a guarded hybrid. A excludes private/non-registry codes; C only falls back
-for groups with no registry vocabulary and carries a document-defined basis.
+records the earlier options. Joey signed INT-061/062 A on 2026-11-28:
+unindexed-original mapping is cannot-evaluate, and decomposition uses only
+reviewed registry vocabulary. Private/non-registry originals remain unavailable;
+the document-defined hybrid is not selected. Remaining independent checks,
+source freshness, development analysis/review and tests still gate implementation.
 The catalog is 106-24R1 until deltas exist, with INT-044-compatible labels
 kept separate from the document declaration. Older renamed originals are
-unavailable rather than silently aliased. Vocabulary choice and the V
-namespace boundary remain pending owner review. No edit/renumber implementation or public query-language decision
+unavailable rather than silently aliased. Registry-only A settles vocabulary scope; private V names cannot supply it. No edit/renumber implementation or public query-language decision
 is selected here.
 
 #### L2-EXT-001
 
 **Parent**: L1-EXT-003
 
-**Statement**: Given X-name decomposition by matching reviewed registry code names, made unambiguous by EXTENSION_CODE uniqueness, and original-code index metadata (with the vocabulary interpretation pending INT-062), the library SHALL associate an X item with every source occurrence matching its original group/code path, occurrence and carried leading indices in the same document, using ASCII case comparison and INT-038 identity; it SHALL retain resolved/unresolved/ambiguous candidate evidence without selecting a duplicate winner or inferring association from extension values.
+**Statement**: Given X-name decomposition by matching reviewed registry code names, made unambiguous by EXTENSION_CODE uniqueness, and original-code index metadata (under owner-signed INT-062 A), the library SHALL associate an X item with every source occurrence matching its original group/code path, occurrence and carried leading indices in the same document, using ASCII case comparison and INT-038 identity; it SHALL retain resolved/unresolved/ambiguous candidate evidence without selecting a duplicate winner or inferring association from extension values.
 
-**Rationale**: 106-24R1 Chapter 9 section 9.5.14 p. 9-172 defines ORIGCODE, occurrence/leading-index agreement and extension-private remaining indices. ADR-0008 makes X first-class, ADR-0026 lists link candidates without arbitrary selection, and approved INT-038 explicitly applies canonical identity to X/original indices. Association is structural attachment, not evidence that an original value or setup is valid, complete or governing. Section 9.5.14's matching-existing-code and EXTENSION_CODE uniqueness sentences supply decomposition, not a missing grammar convention. Unknown registry metadata/arity/uniqueness must remain unavailable rather than be guessed; INT-062's choice needs owner/AI review.
+**Rationale**: 106-24R1 Chapter 9 section 9.5.14 p. 9-172 defines ORIGCODE, occurrence/leading-index agreement and extension-private remaining indices. ADR-0008 makes X first-class, ADR-0026 lists link candidates without arbitrary selection, and approved INT-038 explicitly applies canonical identity to X/original indices. Association is structural attachment, not evidence that an original value or setup is valid, complete or governing. Section 9.5.14's matching-existing-code and EXTENSION_CODE uniqueness sentences supply decomposition, not a missing grammar convention. Unknown registry metadata/arity/uniqueness must remain unavailable rather than be guessed; INT-062 A is owner-signed; its remaining independent rule check and development gates remain.
 
 **Verification Method**: Test (T)
 
@@ -1150,9 +1149,9 @@ is selected here.
 
 **Parent**: L1-EXT-003
 
-**Statement**: Extension association SHALL preserve all X/original bytes, identities, locations, record qualifications and unknown extension content independently of decoding support, without creating a missing original, editing indices or extending parent counters; missing evidence/unsupported mappings SHALL remain distinguishable from an established no-target result, and no unindexed-original mapping SHALL bypass the proposed INT-061 review gate.
+**Statement**: Extension association SHALL preserve all X/original bytes, identities, locations, record qualifications and unknown extension content independently of decoding support, without creating a missing original, editing indices or extending parent counters; missing evidence/unsupported mappings SHALL remain distinguishable from an established no-target result, and no unindexed-original mapping SHALL bypass the INT-061 review/development gates.
 
-**Rationale**: Section 9.5.14 p. 9-172 requires association preservation even when extension meaning is unknown and says X occurrence values match originals rather than create new ones; ADR-0002/0003 retain raw source. INT-040 excludes X from D membership and leaves extension-private indices unclassified. The source's no-index gap for G\PN (Table 9-2 PROGRAM NAME p. 9-10) needs an owner decision, not a fabricated zero/one occurrence. Renumber edits remain their later transaction scope.
+**Rationale**: Section 9.5.14 p. 9-172 requires association preservation even when extension meaning is unknown and says X occurrence values match originals rather than create new ones; ADR-0002/0003 retain raw source. INT-040 excludes X from D membership and leaves extension-private indices unclassified. The source's no-index gap for G\PN (Table 9-2 PROGRAM NAME p. 9-10) is owner-decided cannot-evaluate under INT-061 A, not a fabricated zero/one occurrence. Renumber edits remain their later transaction scope.
 
 **Verification Method**: Test (T)
 
@@ -1162,8 +1161,8 @@ is selected here.
 This derives the V portion of L1-EXT-003 alongside the X children, without
 claiming the parent implemented or approving pending interpretation choices.
 The [source/follow-up note](research/2026-11-27-v-group-and-int062-followup.md)
-records section 9.5.13 and the INT-062 amendments. Proposed INT-063 gates
-missing/conflicting vendor evidence under ADR-0033; raw inventory must never
+records section 9.5.13 and the INT-062 amendments. Joey signed INT-063 A
+on 2026-11-28; remaining independent check/development evidence still gate implementation; raw inventory must never
 be mistaken for confirmed vendor attribution or a private-value decoder.
 
 #### L2-EXT-003
@@ -1172,7 +1171,7 @@ be mistaken for confirmed vendor attribution or a private-value decoder.
 
 **Statement**: The library SHALL retain V occurrence contexts, local V-x\ID and V-x\VN candidates and structurally readable V-x\acr\attribute-string items, grouping by explicit data-source context and observed vendor acronym while preserving every occurrence, raw suffix/value and location; it SHALL keep incomplete/unavailable source or vendor attribution explicit rather than drop, merge or reassign items to manufacture a complete group.
 
-**Rationale**: 106-24R1 Ch9 section 9.5.13 p. 9-171 defines V-x\ID, V-x\VN and the three-character acronym/private attribute-string form. ADR-0008 accepts grouping by source/vendor; ADR-0002/0003 retain raw items. INT-038 supplies occurrence identity and INT-039 governs known scalar multiplicity. Structural namespaces and evaluated header context remain separate; missing/conflicting header-versus-path policy is proposed INT-063, not silently inferred from a sole vendor path.
+**Rationale**: 106-24R1 Ch9 section 9.5.13 p. 9-171 defines V-x\ID, V-x\VN and the three-character acronym/private attribute-string form. ADR-0008 accepts grouping by source/vendor; ADR-0002/0003 retain raw items. INT-038 supplies occurrence identity and INT-039 governs known scalar multiplicity. Structural namespaces and evaluated header context remain separate; missing/conflicting header-versus-path policy is owner-signed INT-063 A: only one usable VN agreeing with the path confirms attribution.
 
 **Verification Method**: Test (T)
 
@@ -1180,7 +1179,7 @@ be mistaken for confirmed vendor attribution or a private-value decoder.
 
 **Parent**: L1-EXT-003
 
-**Statement**: V source/vendor context SHALL stay within its document and V occurrence, retain header/source-link multiplicity and record qualifications, and leave private attribute-string/value semantics opaque without a reviewed definition; source-context matching SHALL use the declared textual Data Source ID namespace rather than occurrence-number equality or numeric field/index normalization, and pending INT-063 SHALL block speculative vendor attribution.
+**Statement**: V source/vendor context SHALL stay within its document and V occurrence, retain header/source-link multiplicity and record qualifications, and leave private attribute-string/value semantics opaque without a reviewed definition; source-context matching SHALL use the declared textual Data Source ID namespace rather than occurrence-number equality or numeric field/index normalization, and owner-signed INT-063 A SHALL withhold confirmed attribution unless one usable VN agrees with the path acronym.
 
 **Rationale**: Section 9.5.13 p. 9-171 ties V ID to General Information; Table 9-2 DATA SOURCE ID G\DSI-n p. 9-11 names textual sources and links to V-x\ID. ADR-0026 keeps namespaces/cardinality explicit. This supports context, not clock associations, auto-repair, vendor plug-ins, counter inference or the later user-registry overlay. Existing availability, record access and report-format gates remain unchanged.
 
@@ -1276,7 +1275,7 @@ eligibility/governance decisions. No new owner interpretation is selected.
 
 **Statement**: Record enumeration SHALL retain the source/candidate identities and upstream findings needed to distinguish Complete records from incomplete, ambiguous, provisional, unsupported or failed candidates; it SHALL preserve qualifications and observable traversal failures without manufacturing records, silently treating a failed scan as a complete inventory or making enumeration confer command eligibility or governing authority.
 
-**Rationale**: INT-011/039/045/048 and existing assembly/core-boundary requirements determine input evidence, not this enumerator. A Complete classification is not checksum success, valid metadata, a publishable provisional result or authority to extract/use a setup. Final classification may revise an earlier time seal; this slice consumes evaluated outcomes rather than deciding provisional publication, access, quarantine or recovery. Presentation and command-specific eligibility remain owner-gated; general access to incomplete/ambiguous records is explicitly gated by [proposed INT-031](INTERPRETATIONS.md#int-031), not authorized by enumeration. ADR-0037 separately allows raw extract under findings without approving semantic/governing use.
+**Rationale**: INT-011/039/045/048 and existing assembly/core-boundary requirements determine input evidence, not this enumerator. A Complete classification is not checksum success, valid metadata, a publishable provisional result or authority to extract/use a setup. Final classification may revise an earlier time seal; this slice consumes evaluated outcomes rather than deciding provisional publication, access, quarantine or recovery. Presentation and command-specific eligibility remain owner-gated; general access to incomplete/ambiguous records is explicitly gated by [owner-signed INT-031](INTERPRETATIONS.md#int-031), not authorized by enumeration. ADR-0037 separately allows raw extract under findings without approving semantic/governing use.
 
 **Verification Method**: Test (T)
 
@@ -1287,7 +1286,7 @@ These derive L1-CLI-005 for explicitly selected, eligible document/revision
 inputs; no public selection syntax, multi-record default or report rendering
 is chosen. The [source/owner brief](research/2026-11-27-checksum-commands-and-owner-questions.md)
 records the boundary and the requested INT-031/file-order summaries.
-Access to incomplete/ambiguous records is gated by proposed INT-031;
+Access to incomplete/ambiguous records is gated by owner-signed INT-031;
 no command below implicitly approves its labelled ambiguous-split option.
 
 #### L2-CLI-012
@@ -1341,7 +1340,7 @@ values/revision/hashes, never copy reference source into this repository.
 
 **Statement**: Flex compatibility acceptance SHALL require a reproducibly identified reference source/environment and independently fixed byte/options/result vectors, including exclusions, arithmetic/byte boundaries and the retained D7 quirk; implementation SHALL remain unready until the reference-defined behavior is analyzed explicitly and unresolved or undefined cases are raised rather than silently assigned SHA, parser or normalization semantics.
 
-**Rationale**: ADR-0018 makes reference tools compatibility oracles, not authorities for the standard. Bit-for-bit compatibility cannot be established by two calls to the new implementation, a historical prose summary, one wrapper mock or an unpinned moving branch. No new runtime/dev dependency, source vendoring, install or reference execution is authorized by these planned acceptance obligations. Proposed INT-031 access and existing resource/report-format gates stay in force.
+**Rationale**: ADR-0018 makes reference tools compatibility oracles, not authorities for the standard. Bit-for-bit compatibility cannot be established by two calls to the new implementation, a historical prose summary, one wrapper mock or an unpinned moving branch. No new runtime/dev dependency, source vendoring, install or reference execution is authorized by these planned acceptance obligations. Owner-signed INT-031 access and existing resource/report-format gates stay in force.
 
 **Verification Method**: Test (T)
 
@@ -1460,17 +1459,17 @@ distinguishes lookup identity, field value and clock association.
 
 **Statement**: Bounded lookup answers SHALL keep candidate cardinality separate from Explicit/Defaulted/Missing/Invalid/Ambiguous field interpretation, availability limitations, original source findings and record qualification; successful identity lookup SHALL not validate a value, erase a duplicate, fabricate a default occurrence, establish a clock association or authorize access/governing use.
 
-**Rationale**: RELEASE-0.1 explicitly separates lookup/link states from effective values and association_unestablished/conflicting/evidenced. INT-039/041/048 and the existing time-view/caller-assumption children retain those boundaries. Proposed INT-031 still gates general qualified-record access; ADR-0037's raw extract permission is not typed time-view permission. No new selection, interpretation, public enum spelling or rendered schema is chosen.
+**Rationale**: RELEASE-0.1 explicitly separates lookup/link states from effective values and association_unestablished/conflicting/evidenced. INT-039/041/048 and the existing time-view/caller-assumption children retain those boundaries. Owner-signed INT-031 still gates general qualified-record access; ADR-0037's raw extract permission is not typed time-view permission. No new selection, interpretation, public enum spelling or rendered schema is chosen.
 
 **Verification Method**: Test (T)
 
 
 ## Explicit normalization transforms (family 2, batch 41)
 
-These extend L2-WRT-004's opt-in boundary without activating unapproved
-transform rules. Proposed INT-064/065/066 govern ordering, newline scope and
-counter recomputation; owner sign-off/AI check and development evidence are
-required before those policies are implemented. The [source/options note](research/2026-11-27-normalization-policy-drafts.md)
+These extend L2-WRT-004's opt-in boundary. Joey signed INT-064 A+D,
+INT-065 A and INT-066 A on 2026-11-28; independent pre-checks concurred.
+Source freshness, written analysis/review and executable tests still gate
+implementation of ordering, newline scope and counter recomputation. The [source/options note](research/2026-11-27-normalization-policy-drafts.md)
 keeps the full 0.1 library obligation distinct from the later CLI clean-up.
 
 #### L2-WRT-005
@@ -1479,7 +1478,7 @@ keeps the full 0.1 library obligation distinct from the later CLI clean-up.
 
 **Statement**: A normalization request SHALL identify its input document/revision, explicitly requested transform kinds and selected reviewed policy/parameters; execution SHALL remain gated by each policy's approval/readiness, preserve every original source byte in the unchanged input and limit output changes to those authorized transforms, without selecting a missing canonical order/newline/counter rule implicitly.
 
-**Rationale**: ADR-0002/0007 and UC-09 retain exact output unless requested. Ch9 section 9.4.2 allows arbitrary order, so canonical choice is not a standard default. INT-064/065/066 are proposed choices, not approvals. This derives bounded order/newline/counter behavior, not arbitrary set/delete/renumber edits or the 0.2+ clean-up command. INT-064 now recommends validated A plus the proposed named built-in D profile; A alone supplies no built-in canonical order. Approval of a built-in profile or explicit owner reinterpretation/clarification of L1 is still required; this PR does neither.
+**Rationale**: ADR-0002/0007 and UC-09 retain exact output unless requested. Ch9 section 9.4.2 allows arbitrary order, so canonical choice is not a standard default. INT-064/065/066 are owner-signed choices, not implemented transforms. This derives bounded order/newline/counter behavior, not arbitrary set/delete/renumber edits or the 0.2+ clean-up command. INT-064 selects validated A plus the named built-in Chapter 9 group order, v1 profile D; A alone supplies no built-in canonical order. No L1 reinterpretation is needed; default replay never invokes normalization.
 
 **Verification Method**: Test (T)
 

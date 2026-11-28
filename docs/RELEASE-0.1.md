@@ -314,10 +314,11 @@ complete analysis or tests. See the [reconfirmation record](research/2026-11-23-
 INT-034's "followed by another packet" means SAME-CHANNEL; an otherwise
 complete run ending in `;` at EOF stays complete, labelled "end of input".
 An open run may expose PROVISIONAL boundary evidence, never a joining stop.
-Pre-EOF semantic use by irig106-time's CLI, snapshot invalidation and its
-interaction with INT-028/031 remain explicit owner-review items. Recommended
-option: opt-in labelled snapshots; alternative: final-only semantic use. No
-option is selected here or silently relaxes the complete-only contract above.
+Joey signed explicit versioned provisional snapshots with invalidation and
+no automatic governance on 2026-11-28 (INT-034), alongside INT-028/031's
+closure/takeover and per-query ambiguity-only access rules. Cut text stays
+unusable. Remaining independent final checks, source/development/tests and
+padding-only/leading-damage precedence are separate gates.
 Per-channel open-run state needs an explicit finite aggregate memory budget
 and typed limit error, never silent dropping; numeric policy, full accounting
 and recovery/resume details need review before implementation. See the
@@ -461,18 +462,23 @@ last step. Refusal to stamp ambiguous input is not refusal to allow its repair.
 F7 decides the uncertainty behavior, not the actual event identity. The latter
 still needs verified evidence before the event-presence check is implementable.
 These approvals do not mark requirements implemented or development evidence complete.
-F2/F3 and other unreviewed interpretations remain open where already recorded.
+F2/F3 are owner-signed (Joey, 2026-11-28); remaining independent final
+checks and development/source/tests still gate their implementation.
 
 ## Normalization policy boundary
 
 L2-WRT-005/006 and L3-WRT-012–017 extend the explicit-normalization contract;
-proposed INT-064/065/066 present its order/newline/counter choices. They need
-owner sign-off and independent AI review, source analysis and executable
-oracles before implementation. The 0.1 library obligation remains unchanged;
-no general-edit or later CLI clean-up feature is silently brought forward.
-INT-064 A alone supplies no built-in canonical order: the owner must approve
-a named B/D profile (A + D recommended) for 0.1, or explicitly reinterpret
-and clarify L1-WRT-002. Neither choice or L1 text change is made here.
+Joey signed INT-064 A+D / INT-065 A / INT-066 A on 2026-11-28, after
+independent pre-check concurrences. The named built-in Chapter 9 group order,
+v1 accompanies validated caller order; newline changes are layout-only to
+explicit LF/CRLF, and counter rewrite requires contiguous distinct 1..k in
+range. No L1 reinterpretation or scope reduction. Source freshness, written
+analysis/review and executable oracles remain implementation prerequisites.
+
+INT-061/062/063 A and INT-022–029/031–034 sign-offs are recorded in the
+[verbatim owner record](research/2026-11-28-interpretation-owner-signoffs.md).
+INT-034 padding-only/leading-damage precedence and report formats stay open.
+Owner approval alone is not remaining independent review or passing tests.
 
 ## Decomposition/readiness audit
 
