@@ -164,7 +164,8 @@ irig106-tmats/
 │   ├── Cargo.toml         Shared version/metadata; default-on required std feature
 │   ├── README.md          Package status and design pointer
 │   ├── LICENSE            Apache-2.0 text shipped in the library archive
-│   └── src/lib.rs         VERSION only; no TMATS APIs
+│   ├── src/lib.rs         VERSION only; no TMATS APIs
+│   └── tests/spans.rs     Checked-constructor and actual-source access fixtures (family 4)
 └── apps/irig106-tmats-cli/ Reusable CLI scaffold and thin executable
     ├── Cargo.toml         Inherits exact library dependency from workspace
     ├── README.md          Package status and design pointer
