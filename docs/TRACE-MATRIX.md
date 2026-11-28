@@ -328,7 +328,7 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
-| L1-ROB-001 | L2-ROB-001, L2-ROB-002, L2-ROB-003, L2-ROB-006, L2-ROB-007 | _(none)_ | Draft |
+| L1-ROB-001 | L2-ROB-001, L2-ROB-002, L2-ROB-003, L2-ROB-006, L2-ROB-007 | _(none)_ | Partially Implemented |
 | L1-ROB-002 | L2-ROB-004 | _(none)_ | Draft |
 | L1-ROB-003 | L2-ROB-005 | _(none)_ | Draft |
 
@@ -336,7 +336,7 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | L2 ID | L3 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
-| L2-ROB-001 | L3-ROB-001, L3-ROB-002 | _(TBD)_ | Draft |
+| L2-ROB-001 | L3-ROB-001, L3-ROB-002 | `crates/irig106-tmats/tests/spans.rs::every_small_valid_interval_returns_the_original_bytes`<br>`crates/irig106-tmats/tests/spans.rs::span_access_rechecks_actual_source`<br>`crates/irig106-tmats/tests/spans.rs::span_constructor_checks_boundaries` | Implemented |
 | L2-ROB-002 | L3-ROB-003 | _(TBD)_ | Draft |
 | L2-ROB-003 | L3-ROB-004, L3-ROB-005, L3-ROB-006 | _(TBD)_ | Draft |
 | L2-ROB-004 | L3-ROB-007, L3-ROB-008, L3-ROB-009 | _(TBD)_ | Draft |
@@ -406,16 +406,16 @@ This matrix is the single source of truth for live status; the requirement docum
 | SUM | 4 | 5 | 16 | 0 | 0 | 0 | 0 |
 | IO | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
 | CLI | 9 | 21 | 78 | 0 | 0 | 0 | 0 |
-| ROB | 3 | 7 | 19 | 0 | 0 | 0 | 0 |
+| ROB | 3 | 7 | 19 | 0 | 2 | 0 | 2 |
 | PERF | 2 | 3 | 9 | 0 | 0 | 0 | 0 |
 | REL | 6 | 6 | 16 | 0 | 0 | 0 | 0 |
-| **Total** | **85** | **108** | **352** | **0** | **0** | **0** | **0** |
+| **Total** | **85** | **108** | **352** | **0** | **2** | **0** | **2** |
 
 The countable requirement set is every L2 and L3 requirement plus the 27 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 487 (0.0%).
+**Tested by at least one test marker**: 2 of 487 (0.4%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 0 of 487 (0.0%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 2 of 487 (0.4%).
 
 ### Orphan check
 

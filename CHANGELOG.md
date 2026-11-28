@@ -32,6 +32,9 @@ rebuilt documentation first (`docs/ROADMAP.md`).
 
 ### Added
 
+- Library: checked `Span` construction and borrowed raw-byte access, with
+  integer-boundary, shorter-source and bounded interval tests.
+
 - Both: a Cargo workspace releasing the library and the CLI in lockstep —
   one version in `[workspace.package]`, the CLI pinned to the library with an
   exact `=X.Y.Z` requirement, and tests that fail if either drifts.

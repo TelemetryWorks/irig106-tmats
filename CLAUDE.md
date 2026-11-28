@@ -42,7 +42,8 @@ The owner-decided target (2026-11-21, ADR-0035) is a virtual workspace:
 `crates/irig106-tmats/` for the library, `apps/irig106-tmats-cli/` for the
 CLI, shared workspace version and an exact-version library path dependency
 in `[workspace.dependencies]`. Family 3 now supplies this mechanical layout
-at version 0.1.0; the library currently exposes only its version constant.
+at version 0.1.0; the library currently exposes its version constant and
+checked raw Span. The parser is not implemented.
 W2 prototype removal is complete. W3 has a reusable help/version runner
 and thin main only; no TMATS command or semantic API is implemented.
 
@@ -71,6 +72,11 @@ cargo publish --workspace --dry-run          # package both crates, library firs
 python scripts/build-trace-matrix.py         # regenerate docs/TRACE-MATRIX.md
 python scripts/build-trace-matrix.py --check # fail if it has drifted (CI)
 ```
+
+Archive reproduction uses Python 3.12+ and current stable Cargo for
+`cargo package --workspace --no-verify` / the paired publish dry run. The
+Rust 1.85 MSRV is for compiling the crates, not workspace packaging; the
+reviewed archive flow works on Cargo 1.99 and is not supported on Cargo 1.85.
 
 Requirements live in `docs/L1-REQ.md`, `docs/L2-REQ.md`, `docs/L3-REQ.md`;
 regenerate the matrix after changing them or any test marker (CI runs

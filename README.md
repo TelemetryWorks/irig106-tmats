@@ -12,7 +12,7 @@ Do not use the skeleton for compliance validation or rewriting telemetry.
 The virtual workspace contains:
 
 - [crates/irig106-tmats](crates/irig106-tmats): library skeleton, currently
-  exposing only `VERSION`.
+  exposing `VERSION` and checked raw byte `Span` ranges; parsing is not implemented.
 - [apps/irig106-tmats-cli](apps/irig106-tmats-cli): reusable help/version CLI
   scaffold and thin `tmats` executable. TMATS commands are not implemented.
 

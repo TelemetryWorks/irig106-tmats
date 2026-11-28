@@ -20,4 +20,5 @@ The two things most likely to trip an agent up, in short:
 
 The virtual workspace sources live in `crates/irig106-tmats/` and
 `apps/irig106-tmats-cli/`. The retired prototype is available at `prototype-0`;
-the current code is a version/help skeleton, not TMATS behavior.
+the current code has version/help skeletons and checked byte spans, not a
+TMATS parser or semantic interpretation.

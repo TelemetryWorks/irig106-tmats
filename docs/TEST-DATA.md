@@ -104,6 +104,11 @@ endings belong in the matrix; comparing only decoded fields is insufficient.
 
 ### Span arithmetic
 
+The named span checks are now implemented in
+`crates/irig106-tmats/tests/spans.rs`, supplemented by bounded enumeration of
+all valid intervals in an eight-byte arbitrary-byte fixture. These tests do
+not implement scanner rules, source ownership, item identity or TMATS semantics.
+
 | Planned check | Inputs | Required observation | Requirement |
 | --- | --- | --- | --- |
 | `span_constructor_checks_boundaries` | Empty range at zero/end; exact-end range; start beyond end; length beyond remaining source; values around `usize::MAX` | Valid ranges accepted, invalid/overflow ranges rejected without a panic or oversized allocation | L3-ROB-001 |

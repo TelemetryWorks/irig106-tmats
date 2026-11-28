@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""CI-only archive checks and tests of the unpublished lockstep package pair."""
+"""CI-only archive checks of the lockstep pair; requires Python 3.12+.
+
+Create the workspace archives with current stable Cargo before running this
+script. Workspace packaging of the unpublished pair is not an MSRV-1.85 task.
+"""
 
 import json
 from pathlib import Path
