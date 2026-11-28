@@ -453,9 +453,9 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-031 | After a setup record that cannot be assembled, nothing governs | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
 | INT-032 | Packets that no setup record governs | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
 | INT-033 | Fragment positions that default to the same value | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
-| INT-035 | Recover malformed framing only at an actual semicolon | approved (Joey, owner sign-off, 2026-11-21) | not yet written | _(none)_ |
-| INT-036 | Omit ASCII nonprintables only from semantic projections | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
-| INT-037 | Diagnose Unicode markers without automatic transcoding | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
+| INT-035 | Recover malformed framing only at an actual semicolon | approved (Joey, owner sign-off, 2026-11-21) | [written development analysis](research/2026-11-28-framing-character-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-036 | Omit ASCII nonprintables only from semantic projections | approved (Joey, owner sign-off, 2026-11-22) | [written development analysis](research/2026-11-28-framing-character-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-037 | Diagnose Unicode markers without automatic transcoding | approved (Joey, owner sign-off, 2026-11-22) | [written development analysis](research/2026-11-28-framing-character-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-038 | Decimal index identity without source normalization or machine-word limits | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
 | INT-039 | Repeated scalar slots remain ambiguous even when values agree | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
 | INT-040 | Count structurally identified entries independently of value validity | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
@@ -486,7 +486,7 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-065 | Scope of line-ending normalization | proposed (2026-11-27; A recommended) | not yet written | _(none)_ |
 | INT-066 | Preconditions for explicit counter recomputation | proposed (2026-11-27; A recommended) | not yet written | _(none)_ |
 
-* Entries without a written analysis: **66** of 66
+* Entries without a written analysis: **63** of 66
 * Entries without a test: **66** of 66
 * Entries missing the development mark: **0**
 

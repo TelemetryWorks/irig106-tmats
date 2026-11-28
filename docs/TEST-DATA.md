@@ -2172,6 +2172,30 @@ No record-governance, checksum trust upgrade, layout default or new historical
 validator severity is inferred. Present-but-reserved code values and absent
 fields stay distinguishable. Baseline L3 bit cases remain unchanged.
 
+## INT-035/036/037 development-analysis edge oracles
+
+Source: [written analysis](research/2026-11-28-framing-character-development-analysis.md).
+PLANNED only; analysis owner/independent review and executable tests remain.
+These framing fixtures do not assert private/unknown code-name validity.
+
+| Planned case | Independent input/expected boundary | Interpretation |
+|---|---|---|
+| `analysis_empty_run_spans` | ';;' -> [0,2); CR LF ';' -> [0,3); ';;COMMENT:x;;;' -> [0,2) and [12,14); silent EOF layout is outside the runs | INT-035, INT-036 |
+| `analysis_first_colon_only` | COMMENT:a:b; has one raw value a:b, never two items or code-like recovery | INT-035 |
+| `analysis_empty_fields_distinct` | :v; gives empty-name finding; X:; gives present zero-length raw value; neither an empty-region run | INT-035 |
+| `analysis_control_name_span` | CO CR LF MMENT:a TAB b; raw name [0,9), value [10,13); projected COMMENT/ab; internal omission [2,4), no raw rewrite | INT-036 |
+| `analysis_nul_per_field` | Two NULs per name/value: one NUL finding per field, listing every location, plus internal-name omission if independently applicable | INT-036 |
+| `analysis_numeric_projection_is_not_repair` | NSB raw 0 CR LF 4 remains Invalid; never repaired through character projection, extraction unchanged | INT-036, INT-055 |
+| `analysis_marker_every_split` | Every 2/3/4-byte full signature from the analysis at every fragment partition after CSDW slicing: same true-offset-zero finding, all bytes preserved | INT-037 |
+| `analysis_partial_marker_not_full` | EF, EF BB, FE alone, or 00 00 FE at EOF is not a full marker; existing high-byte/framing evidence remains | INT-037 |
+| `analysis_marker_after_layout_is_midstream` | CR LF or NUL then EF BB BF is midstream; no skipped padding, BOM stripping or encoding guess | INT-037 |
+| `analysis_high_byte_sweep` | Every 80–FF byte in name/value, including B0 and valid-looking UTF-8 sequences, prevents silently usable affected fields | INT-037 |
+
+The analysis additionally requires bounded property/fuzz cases and a distinct
+source-qualified fixture for EACH of 106-04/05/07/09/11/13/15/17/19/20/22/23/
+24/24R1. Shared test bodies cannot erase edition evidence. No real recording
+was accessed; local-only sample checks are still outstanding where available.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample
