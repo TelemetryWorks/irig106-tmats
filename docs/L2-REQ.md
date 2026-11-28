@@ -437,7 +437,7 @@ only its reviewed applicable subset. See the
 
 **Statement**: Every executable condition SHALL bind its source/citation and reviewed interpretation to declared operand scopes, link traversal and default visibility, and SHALL distinguish a physical-presence predicate from a predicate requiring an interpreted value; unreviewed mappings SHALL remain unavailable rather than be inferred from a source-name abbreviation or another occurrence.
 
-**Rationale**: ADR-0022 defines the shared condition contract. 106-24R1 Chapter 9 section 9.5.1 a, page 9-6, distinguishes Allowed/Required usage from defaults. Table 9-3 TRANSMIT ANTENNA TYPE T-x\AN1, page 9-18, uses an explicit T-x\ID presence condition; Table 9-4 TIME FORMAT R-x\TFMT-n, page 9-72, instead compares R\CDT with TIMEIN. Approved INT-042 makes presence/value operands distinct without treating a missing value operand as false. INT-008/009's existing abbreviated-reference interpretations keep their own pending review obligations.
+**Rationale**: ADR-0022 defines the shared condition contract. 106-24R1 Chapter 9 section 9.5.1 a, page 9-6, distinguishes Allowed/Required usage from defaults. Table 9-3 TRANSMIT ANTENNA TYPE T-x\AN1, page 9-18, uses an explicit T-x\ID presence condition; Table 9-4 TIME FORMAT R-x\TFMT-n, page 9-72, instead compares R\CDT with TIMEIN. Approved INT-042 makes presence/value operands distinct without treating a missing value operand as false. INT-008/009's abbreviated-reference rule checks CONCUR at main c682e05/#81; source freshness, development-analysis review and executable tests remain readiness gates.
 
 **Verification Method**: Test (T)
 

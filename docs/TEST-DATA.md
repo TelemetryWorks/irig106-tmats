@@ -2347,6 +2347,56 @@ byte/count oracles are synthetic/scoped, not complete conforming recordings.
 | `ext_transform_analysis_hash_domain_separate_stamp` | Changed outside-exclusion bytes do not reuse input verification/restamp; output domain/result must be established. An explicit final stamp retains F1/damage/cut guards. | L3-WRT-016; INT-064/065/066 |
 | `ext_transform_analysis_original_and_qualifications_persist` | Original bytes/findings/record qualifiers remain input-bound; successful formatting/attachment does not mean valid fields, usable setup or governing/time association. | L3-WRT-016; INT-061/063/064/065/066 |
 
+## Planned edition/syntax development-analysis cases — 2026-11-28
+
+[Written analysis](research/2026-11-28-edition-syntax-development-analysis.md)
+for INT-009/010/012–017: seven accepted/reconfirmed entries and S1 SUSPECT
+INT-013, whose real-data qualification stays open. These 35 cases are PLANNED,
+not executed parser/decoder/selector tests. Supply independently reviewed
+field/grammar/registry/profile evidence; a locator or candidate archive label
+is not historical rule coverage. Fixed spans are synthetic/source-shaped
+oracles, not conforming complete recordings. Preserve unavailable bindings,
+raw bytes, qualifications and separate declaration/rules-policy evidence;
+no repair, new layout or 0.1 expression evaluator is authorized.
+
+| Planned case | Independent expected evidence | Requirements / interpretations |
+|---|---|---|
+| `edition_syntax_analysis_counter_own_parent` | Count 1 in location m=4 and count 2 in m=5 yield false/true >1 only in their own (x,y,n,m); WFP upper bound uses that same count, never another location/record. | L3-REG-005; INT-009 |
+| `edition_syntax_analysis_counter_canonical_scope` | Parent 01/1 identity follows INT-038 with collision evidence; equal duplicate scoped counts stay Ambiguous, not an operand winner. | L3-REG-005; INT-009 |
+| `edition_syntax_analysis_counter_unusable_is_unknown` | Missing/Invalid/Ambiguous/unavailable MNF, including out-of-range 0/9, gives cannot-evaluate, not false or a comparison of an unusable numeric nine. | L3-VAL-009; INT-009 |
+| `edition_syntax_analysis_position_default_not_count` | WFP default position 1 or observed highest fragment never creates MNF default/count; a false Allowed condition does not discard a present field. | L3-VAL-011; INT-009 |
+| `edition_syntax_analysis_equality_both_spellings` | Fixed A==B/[1,3) and A= =B/[1,4) raw operators share equality meaning under supplied grammar; spaced form warns, neither rewrites source. | L1-DER-002; INT-010 |
+| `edition_syntax_analysis_operator_role_not_substring` | COMMENT or a reviewed quoted-operand token is not rewritten by finding = =; no assignment/framing repair or strip-all-spaces operator recovery. | L1-DER-002; INT-010 |
+| `edition_syntax_analysis_expression_grammar_own_constants` | Full Appendix expression constants/precedence use their reviewed language, not INT-055 decimal FIELD syntax, host C precedence or usage-condition grammar. | L1-DER-002; INT-010 |
+| `edition_syntax_analysis_unavailable_old_grammar` | Missing historical formula grammar stays unavailable/raw, not Invalid from a borrowed baseline parser or a new 0.1 evaluator. | L1-DER-002; INT-010 |
+| `edition_syntax_analysis_literal_wire_mapping` | Eligible Format 1 07–0E codes map to the exact listed editions; 0D is 19, 0E is 22, F–FF unknown, with raw/table identity preserved. | L3-CH10-007; INT-012 |
+| `edition_syntax_analysis_reuse_is_bounded_note` | Reuse notes identify inspected 20/23/24/24R1 only, never declare 22-or-later or invent code F for a later edition. | L3-CH10-008; INT-012 |
+| `edition_syntax_analysis_three_code_spaces` | Same byte 0A reads header=22, Format1=13, Format4=reserved under the cited baseline tables; Format4 0D never borrows Format1=19. | L3-CH10-008; INT-012 |
+| `edition_syntax_analysis_format4_guard_not_reader` | A Format4/header fact cannot enter the Format1 fallback path or bypass the observable typed Format1 adapter refusal; no new reader is qualified. | L3-CLI-027; INT-012 |
+| `edition_syntax_analysis_colon_oracle_not_three_items` | 54-byte source-shaped sample remains one item/value [14,53); only proposals [15,16)/[34,35), never explicit MNF/WP lookups or applied edits. | L3-READ-035; INT-013 |
+| `edition_syntax_analysis_complete_name_required` | Only supplied complete reviewed names/arity can satisfy the lookahead predicate; missing Appendix9C coverage is unready, not silently skipped or prefix-guessed. | L3-READ-034; INT-013 |
+| `edition_syntax_analysis_ordinary_colons_negative` | Ordinary Time 12:30 and group-looking partial/private syntax do not trigger without the whole-name/own-colon predicate; do not reinterpret the item delimiter. | L3-READ-034; INT-013 |
+| `edition_syntax_analysis_suffix_skip_cut_preserved` | Remove final terminator: no established value for this detector, suffix skipped. Separately supplied cut-qualified terminated text keeps its cut/qualification on any diagnostic suggestion. | L3-READ-035; INT-013 |
+| `edition_syntax_analysis_s1_not_closed_by_count` | Source/synthetic tests or an extraction-sensitive count 18 never close S1, prove intended repairs or enable the separate future line-break suggestion. | L3-READ-038; INT-013 |
+| `edition_syntax_analysis_24_candidate_set` | One year 24 retains 24 and 24R1 candidates; reviewed shared-rule evidence permits naming newest applied rules, not a precise declared R1 identity. | L3-EDN-002; INT-014 |
+| `edition_syntax_analysis_year_leading_zero` | Available reviewed year binding reads 4/04 as year04 with raw spellings and missing-recommended-zero note; independent field syntax/range findings are not erased or replaced with index canonicalization. | L3-EDN-002; INT-014 |
+| `edition_syntax_analysis_year_zero_not_wire_zero` | Available year binding can locate archived 00/96 identities while keeping historical rule coverage unavailable where needed; year00 is not wire00 not-declared. | L3-EDN-001; INT-014/016 |
+| `edition_syntax_analysis_rule_equivalence_required` | Multiple candidate editions with different/unproved shared rules are not arbitrarily newest-selected; source-text comparison is not a generic semantic-PDF equality oracle. | L3-EDN-002; INT-014 |
+| `edition_syntax_analysis_scalar_vs_same_year` | One 24 item/two candidates differs from duplicate/equal 24 items; all occurrences remain Ambiguous with n=2 and the distinct fallback reason, no collapse. | L3-EDN-006; INT-014/017 |
+| `edition_syntax_analysis_year_format_onset` | Source 15 wording is recognized as present before17; 05/07 MFS2 is not new in13 and does not itself supply the missing old grammar. | L3-EDN-002; INT-015 |
+| `edition_syntax_analysis_other_forms_raw_unrecognised` | Under reviewed reader, 106-05/2005/IRIG 106-05/revision-label forms are preserved unrecognised, not prefix-stripped, last-digit-truncated or used as a data-repair rule. | L3-EDN-001; INT-015 |
+| `edition_syntax_analysis_publication_not_edition_year` | 24R1 January2025 publication does not create archive106-25 or make declaration25 its code; manifest retrieval dates never select a year. | L3-EDN-002; INT-015 |
+| `edition_syntax_analysis_unavailable_binding_not_bad_value` | Unknown historical binding/blank/high-byte interpretation retains original availability/field evidence, not guessed unrecognised/missing data to force fallback; applicable numeric dispatch is not a year-recognition shortcut. | L3-EDN-002; INT-015 |
+| `edition_syntax_analysis_pre07_no_field` | 04/05 all-reserved CSDW contains no recording-version declaration, even if low raw bits look like a modern code; original reserved/core evidence retained. | L3-CH10-008; INT-016 |
+| `edition_syntax_analysis_low_reserved_no_new_error` | Eligible 00–06 field codes are not-declared/reserved with raw evidence, never a new tmats error or zero-to-G106 inference. | L3-EDN-001; INT-016 |
+| `edition_syntax_analysis_profile_before_latest_lookup` | Reviewed field presence/extents precede newest-table lookup; raw low byte or G106 cannot choose a historical layout, fabricate short-word bytes or invent metadata fields. | L3-CH10-008; INT-016 |
+| `edition_syntax_analysis_fallback_fixed_epochs` | Missing/unrecognised G106/no override and eligible Format1: 07–0C intended named editions, 0D->20, 0E->24R1 as policy; later-table presence of old codes never maps them all to24R1. | L3-EDN-005; INT-017 |
+| `edition_syntax_analysis_actual_vocabulary_label` | Intended13/20 fallback versus actual baseline24R1 vocabulary remains explicit; missing historical coverage cannot claim old rules, a default or proved Invalid. | L3-EDN-005; INT-017 |
+| `edition_syntax_analysis_declared_override_precedence` | Usable G106 or valid explicit override retains its proper precedence/label and all wire/source facts; unusable override blocks rather than falls through, with no automatic version-conflict finding. | L3-EDN-003; INT-017 |
+| `edition_syntax_analysis_no_eligible_rccver_baseline` | No usable eligible Format1 RCCVER yields labelled baseline policy only when other fallback prerequisites hold; readable header/Format4 bytes are not substitutes or declarations. | L3-EDN-005; INT-017 |
+| `edition_syntax_analysis_mixed_duplicate_reason` | zz/24 or equal24/24 keeps every occurrence and ambiguous reason count2 before individual value recognition; same INT017 policy, not missing/unrecognised reason or a winner. | L3-EDN-006; INT-017 |
+| `edition_syntax_analysis_qualifications_not_upgraded` | Basis/candidate/operator/suggestion success never upgrades cut/ambiguity/core integrity, invents a time association or authorizes source normalization. | L3-CH10-008; INT-009/012/013/017 |
+
 ## Planned owner Q26 report/show acceptance — 2026-11-28
 
 Owner Q26 A/ADR-0039 removes the report-format hold for CLI-002/006 and

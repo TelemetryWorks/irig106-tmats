@@ -436,16 +436,16 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-006 | `H\TA` ties the H group to the G group by test item | accepted (owner, 2026-09-26) | [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-007 | The Q group's condition names `FBCIN`, which is not a channel type | accepted (owner, 2026-09-26) | [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-008 | `C-d\DPNO`'s condition names `C\DCT` without an index | accepted (owner, 2026-09-26) | [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
-| INT-009 | Counters named without indices in conditions | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
-| INT-010 | Equality is `==`, although Table E-6 prints `= =` | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-009 | Counters named without indices in conditions | accepted (owner, 2026-09-26) | [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-010 | Equality is `==`, although Table E-6 prints `= =` | accepted (owner, 2026-09-26) | [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-011 | Per-channel joining of multi-packet setup-record fragments | approved (Joey, owner reconfirmation, 2026-11-23) | not yet written | _(none)_ |
-| INT-012 | RCCVER codes are read as their table states; later editions' reuse is a note | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26, revised 2026-09-27) | not yet written | _(none)_ |
+| INT-012 | RCCVER codes are read as their table states; later editions' reuse is a note | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26, revised 2026-09-27) | [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-034 | A joined run is complete, incomplete, or ambiguous | owner-approved (Joey, 2026-11-28; Q25 A precedence signed) | not yet written | _(none)_ |
-| INT-013 | Appendix 9-C ends 18 attributes with `:` instead of `;` | suspect (owner, 2026-09-26; `docs/ROADMAP.md`, S1) | not yet written | _(none)_ |
-| INT-014 | `G\106` gives two year digits, so one value can name two editions | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
-| INT-015 | `G\106` year-format wording appears by 106-15 | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
-| INT-016 | What the setup record's version byte declares, and when it did not exist | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
-| INT-017 | The fallback edition taken from RCCVER | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-013 | Appendix 9-C ends 18 attributes with `:` instead of `;` | suspect (owner, 2026-09-26; `docs/ROADMAP.md`, S1) | [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-014 | `G\106` gives two year digits, so one value can name two editions | accepted (owner, 2026-09-26) | [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-015 | `G\106` year-format wording appears by 106-15 | accepted (owner, 2026-09-26) | [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-016 | What the setup record's version byte declares, and when it did not exist | accepted (owner, 2026-09-26) | [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-017 | The fallback edition taken from RCCVER | accepted (owner, 2026-09-26) | [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-018 | `G\SHA` is recognised in any letter case, and never inside a value | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26) | [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-019 | A `G\SHA` item with no following semicolon | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26) | [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-020 | Upper-case hexadecimal in a `G\SHA` value | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26) | [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
@@ -495,7 +495,7 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-065 | Scope of line-ending normalization | approved by owner (Joey, 2026-11-28) | [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-066 | Preconditions for explicit counter recomputation | approved by owner (Joey, 2026-11-28) | [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 
-* Entries without a written analysis: **23** of 66
+* Entries without a written analysis: **15** of 66
 * Entries without a test: **66** of 66
 * Entries missing the development mark: **0**
 

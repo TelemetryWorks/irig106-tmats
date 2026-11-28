@@ -258,7 +258,7 @@ never upgrades record qualifications or approves semantic access.
 
 **Test**: `fragment_position_allowed_only_when_its_own_location_has_fragments`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-010
 
@@ -276,7 +276,7 @@ never upgrades record qualifications or approves semantic access.
 
 **Test**: `spaced_equality_operator_is_accepted_with_warning`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ## Chapter 10 setup records
 
@@ -374,7 +374,7 @@ or packet-header byte. Full development analysis and tests remain outstanding.
 
 **Test**: `rccver_codes_read_as_their_table_states`, `version_code_spaces_do_not_share_mapping`, `literal_rccver_is_not_fallback_policy` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Reconfirmation and AI-check reference**: [owner approval record](research/2026-11-23-int012-owner-signoff.md); AI concurrence on #34 head `e352323` after seven-edition source review is owner-relayed, not a claim that this new PR or these later notes have been independently reviewed.
 
@@ -524,7 +524,7 @@ remains suspect and no repair is authorized.
 
 **Test**: `appendix_9c_example_reports_suspected_semicolons` (`docs/TEST-DATA.md`)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ## Editions and versions
 
@@ -544,7 +544,7 @@ remains suspect and no repair is authorized.
 
 **Test**: `g106_24_names_106_24_and_106_24r1`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-015
 
@@ -568,7 +568,7 @@ edition year. The archived-edition year set remains INT-014's source.
 
 **Test**: `g106_other_forms_are_unrecognised_and_preserved`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-016
 
@@ -593,7 +593,7 @@ RCCVER alone.
 
 **Test**: `zero_csdw_version_is_not_declared`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-017
 
@@ -618,7 +618,7 @@ options. No new RCCVER mapping, renderer or fallback reason is selected.
 
 **Test**: `missing_g106_falls_back_to_rccver_edition_labelled`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-edition-syntax-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ## Edits and the checksum
 
