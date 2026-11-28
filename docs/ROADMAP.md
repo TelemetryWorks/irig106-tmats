@@ -129,9 +129,10 @@ silently choose those policies or manufacture closure on resource exhaustion.
 
 **Owner Q22, 2026-11-28 — reader progress:** cap retained core BlockPool
 credits to leave verified progress capacity; an over-cap run fails/reports a
-typed assembly budget exhausted error while the reader continues. No early
-copy, silent eviction or invented EOF. Bound the reserve against actual core
-admission and outstanding caller-held references before claiming progress;
+typed assembly budget exhausted error while the reader continues, with no
+required early copy, silent eviction or invented EOF. The selected progress
+policy does not impose an additional blanket early-copy ban. Bound the reserve
+against actual core admission and outstanding caller-held references before claiming progress;
 no arbitrary credit cap or numeric default is supplied by this note.
 Core admission refusals and drain reports remain unchanged core evidence,
 separate from the assembler-retention limit, with no double-counting of bytes.
@@ -257,6 +258,10 @@ finding reported, with no default always-refuse class. --strict refuses the
 listed bad-data kinds and that bad-data class, not informational notes
 (owner Q18, 2026-11-28). No all-findings or severity-derived predicate.
 Overwrite/identity and raw extraction permissions remain as previously signed.
+Remaining design/review item: define Q18 bad-data-class membership beyond
+the six listed kinds with an explicit reviewed mapping and named fixtures.
+No additional member is decided here; message text or severity cannot supply
+membership. This is unfinished derivation, not a new owner-choice hold.
 
 Review executable byte, qualification, identity/race and destination tests
 before implementation; owner policy is not completed evidence. --force and
@@ -1217,7 +1222,7 @@ owner decides; the decision is then recorded in
 | # | Question | Why it is open | Where it lands |
 |---|----------|----------------|----------------|
 | F1 | **Owner-approved, 2026-11-23, under ADR-0033; AI CONCUR at #30 head 13173b0.** Duplicate SHA items are indeterminate. | List every occurrence, preserve every byte, never claim positive verification, and refuse stamping until fixed. Review and test evidence still required. | INT-021; ADR-0034 |
-| F2 | **Owner-signed A, Joey, 2026-11-28:** refuse deletion while extensions attach; cascade is a separate explicit edit (0.5). | Final rule CONCUR at #87 e0a0cce; source/development/test evidence still needed; never guess attachment. | INT-022; L1-WRT-003; ADR-0029 |
+| F2 | **Owner-signed A, Joey, 2026-11-28:** refuse deletion while X items attach or may attach with unresolved/ambiguous/cannot-evaluate evidence; list every attached/possibly attached X item. Cascade is a separate explicit edit (0.5). | Final rule CONCUR at #87 e0a0cce; source/development/test evidence still needed; never guess attachment. | INT-022; L1-WRT-003; ADR-0029 |
 | F3 | **Owner-signed A, Joey, 2026-11-28:** suggest-only `=` to `:` when the complete code name is recognized and no colon occurs; never automatic. | Final rule CONCUR at #87 e0a0cce; source/development/test evidence still needed; raw reading/finding stays. | INT-023; `docs/TEST-DATA.md` E3 |
 | F5 | **Decided 2026-09-26: A**, with C possible later (ADR-0030). Does `irig106-core` depend on `irig106-tmats`, or do the tools join them? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 1.6; proposal in section 2.4 (core stays structural and independent; checking packets against TMATS belongs to the layer holding both) awaits the owner. | `docs/TMATS-IN-CHAPTER-10.md` section 2.4; ROADMAP X3 |
 | F6 | **Decided 2026-09-26: yes** — L1-REL-003, a CI check added with the first new library code. Must the library build for WebAssembly (a CI check that the plain library compiles for a `wasm32` target), so studio's browser build can use it? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 4.8. ADR-0015 moved WASM *bindings* out of the library; building the plain library for WebAssembly is a separate question. The library already performs no I/O (L1-IO-001), which is the main condition. | ADR-0015; a possible L1 requirement and CI job |

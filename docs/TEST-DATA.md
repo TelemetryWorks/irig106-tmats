@@ -1332,7 +1332,7 @@ cover tool-opened destinations, not shell redirection.
 | `extract_numeric_control_invalid_keeps_raw` | Mechanical source `R-1\NSB:0\r\n4;` with real CR/LF: INT-055 raw-byte numeric check returns Invalid, never repaired to 4; extraction keeps every control/raw byte; default extract allowed with all findings, --strict refuses when findings exist | L3-CLI-031 |
 | `extract_assembled_leading_bom_is_not_stripped` | Same-channel +1 fragments with matching FRMT/RCCVER: first text starts EF, following text starts BB BF then `COMMENT:a;` (after each packet CSDW); leading assembled EF BB BF is detected under INT-037 at text offset zero, never stripped from extraction; default extract allowed with all findings, --strict refuses when findings exist | L3-CLI-030, L3-CLI-031 |
 | `extract_raw_unknown_vendor_extension_survive` | Supplied raw text contains unknown, V and X items; none is dropped or rendered from a typed model | L3-CLI-031 |
-| `extract_raw_damage_is_not_repaired` | Mechanical sink input contains duplicate/malformed items, high bytes and an unterminated suffix; default exact replay with all findings; strict refuses listed bad-data kinds, with other findings follow owner Q18: bad-data class, not informational notes | L3-CLI-031 |
+| `extract_raw_damage_is_not_repaired` | Mechanical sink input contains duplicate/malformed items, high bytes and an unterminated suffix; default exact replay with all findings; strict refuses listed bad-data kinds, other findings follow owner Q18's reviewed bad-data-class rule, while informational notes alone do not refuse | L3-CLI-031 |
 | `extract_raw_padding_is_not_packet_fill` | Record text contains trailing preserved NUL/space bytes; replay them, while packet filler remains excluded by core DATA extents | L3-CLI-030, L3-CLI-031 |
 | `extract_read_only_views_do_not_stamp` | Read-only views/findings/checksum verification precede extraction; original text, including original checksum spelling/value, stays unchanged | L3-CLI-031 |
 | `extract_selected_identity_never_substituted` | Two distinct supplied records have different literal texts; the explicit eligible selection alone supplies output and provenance | L3-CLI-032 |
@@ -1439,10 +1439,9 @@ no-default-features + explicit std consumer declaration stays unchanged.
 | `compat_each_check_retains_own_qualifications` | Native success cannot substitute for WASM/MSRV/consumer; retain targets/features, job state and command for every obligation | L3-REL-007 |
 | `compat_compile_does_not_claim_bindings_or_no_std` | Plain-WASM or std consumer compiles: bindings, no_std and semantic parser coverage remain separate/unproved | L3-REL-004, L3-REL-008 |
 | `compat_source_override_is_not_dependency_publication` | Local reviewed source builds: types/core publication/API prerequisites and qualified-record owner gates remain outstanding unless separately satisfied | L3-REL-006, L3-REL-008 |
-
 | `compat_std_default_is_required_and_supported` | Actual default-feature redesigned builds enable required std on supported native/MSRV/library-WASM targets; declaration alone does not count as executed acceptance | L3-REL-003, L3-REL-004 |
 | `compat_std_explicit_without_defaults_is_supported` | Isolated positive build disables defaults and enables exactly std, preserving the owner consumer declaration; workspace feature unification cannot hide a missing required feature | L3-REL-003, L3-REL-006 |
-| `compat_std_absent_is_unsupported` | Build omitting std is rejected/unsupported, never counted as a positive no_std build; keep it distinct from plain-library WASM and from the positive explicit-std consumer | L3-REL-003, L3-REL-008 |
+| `compat_std_absent_is_unsupported` | Build omitting std is documented as unsupported and excluded from supported acceptance even if compilation succeeds; no compile-time failure is mandated by the owner support policy. Record actual outcome if run, never claim positive no_std support; keep plain-WASM and positive explicit-std consumer distinct | L3-REL-003, L3-REL-008 |
 
 Future Evidence must name inspected configuration plus the actual run/job
 artifacts; these rows alone provide no evidence. The current docs-only CI
@@ -2093,7 +2092,7 @@ ADR-0036 and existing per-channel/provenance contracts.
 | `retention_fixture_model_is_not_production_evidence` | Synthetic charge totals pass but real ownership/allocation model is unverified: implementation hard-bound readiness still unsatisfied | L3-ROB-016, L3-ROB-019 |
 | `retention_core_refusals_and_drains_stay_core_owned` | Supplied core HardLimit / BudgetTooSmall / TargetLimit refusals and drain reports retain identity, extent and context unchanged; distinct from injected tmats assembler-retention failure, never reclassified | L3-CLI-042, L3-ROB-018 |
 | `retention_pool_credits_are_in_domain_not_counted_twice` | Retained DATA spans hold supplied core BlockPool credits: inventory includes them inside the budget domain, not a borrowed/caller exclusion; overlapping core/assembler byte totals are not added twice | L3-ROB-014, L3-ROB-016, L3-ROB-018 |
-| `retention_open_run_holds_pool_to_b_reader_stall` | Owner Q22: synthetic B credits with independently supplied verified progress reserve R; open run attempts retaining beyond B-R. Refuse/fail/report run with typed assembly budget exhausted error before consuming reserve, preserve truthful ownership/disposition and core evidence, reader continues; no silent eviction, early copy or invented EOF. Actual API reserve proof remains required | L3-ROB-016, L3-ROB-019 |
+| `retention_open_run_holds_pool_to_b_reader_stall` | Owner Q22: synthetic B credits with independently supplied verified progress reserve R; open run attempts retaining beyond B-R. Refuse/fail/report run with typed assembly budget exhausted error before consuming reserve, preserve truthful ownership/disposition and core evidence, reader continues; no silent eviction, required early copy or invented EOF; no blanket early-copy ban is inferred. Actual API reserve proof remains required | L3-ROB-016, L3-ROB-019 |
 
 Operational failure is not a new always-refuse extraction finding. Raw
 extract still requires an available selected extent; no guessed byte ranges,
@@ -2314,6 +2313,9 @@ INT-034 padding-only/leading-damage precedence.
 Owner-choice holds below are removed. All cases are PLANNED, not measured
 or executed; [policy/pin record](research/2026-11-28-owner-policy-signoffs.md).
 Report rendering and INT-034 padding-only/leading-damage precedence stay open.
+Q18 class membership beyond its six listed kinds still needs an explicit
+reviewed mapping and independent fixtures before additional-member refusal
+coverage can be claimed. Current rows do not invent such members from severity.
 
 | Planned test | Independent expected result / boundary | Requirements |
 |---|---|---|

@@ -1,6 +1,6 @@
 # irig106-tmats — Level 3 Requirements
 
-> **Status: foundations through show-free command orchestration drafted (family 2, batches 1-26 and 28-43).**
+> **Status: foundations through show-free command orchestration drafted (family 2, batches 1-43).**
 > INT-056–060 are approved (Joey, 2026-11-26; final AI CONCUR at #52 3fcbd2c).
 > INT-054/055 are approved (Joey, 2026-11-25; final AI CONCUR at #51 ebd5c98).
 > INT-012 is reconfirmed; INT-044 Option B is approved (Joey, 2026-11-23; AI CONCURS on #36 at 6f6e080).
@@ -2483,9 +2483,11 @@ root is not itself a package. No local manifest change is made in this slice.
 
 Supported evidence SHALL cover default-on std and an isolated
 no-default-features + explicit std configuration. A configuration omitting
-std entirely SHALL be rejected as unsupported, not advertised as no_std or
-counted as a supported build. This does not require dev-tooling on 1.85 or
-retired prototype features. Dependency/toolchain failures remain gaps; do
+std entirely SHALL be documented as unsupported and excluded from supported-
+build acceptance even if compilation succeeds; it SHALL NOT be advertised
+as no_std. The owner support policy does not mandate a compile-time failure.
+Record the actual outcome if a std-disabled check runs. This does not require
+dev-tooling on 1.85 or retired prototype features. Dependency/toolchain failures remain gaps; do
 not silently drop the CLI, weaken required std or raise the declared floor.
 
 **L3-REL-004** · Parent: L2-REL-003 · Verification: I
@@ -3429,6 +3431,11 @@ access or governing verdict. No second reader, guessed byte extent, data
 repair, UTF conversion or source-byte fabrication is authorized. Absent selection or an unavailable raw extent (not a retained cut prefix)
 and sink/limit failures remain operational failures rather
 than findings-based always-refuse exceptions. No report format is selected.
+
+Remaining design/review work: Q18's class has no defined members beyond the
+six listed kinds yet. Add an explicit reviewed membership mapping and named
+independent fixtures before claiming additional-member refusal coverage;
+this owner-signed class policy does not itself decide those members.
 
 **L3-CLI-061** · Parent: L2-CLI-008 · Verification: T
 *Extract policy tests SHALL cover every listed finding kind and their combination under default/--strict, preserving exact bytes and all findings or observing strict refusal; they SHALL also cover existing unrelated files, known aliases, stdout/pipes and unproven regular identity with/without --force, asserting same-handle write order and absence of rename replacement.*
