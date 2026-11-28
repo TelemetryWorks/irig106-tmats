@@ -17,3 +17,7 @@ The two things most likely to trip an agent up, in short:
    library should repair, normalize, or reorder a user's TMATS is a decision
    to raise rather than settle: the default is that nothing the user wrote is
    ever changed or dropped.
+
+The virtual workspace sources live in `crates/irig106-tmats/` and
+`apps/irig106-tmats-cli/`. The retired prototype is available at `prototype-0`;
+the current code is a version/help skeleton, not TMATS behavior.

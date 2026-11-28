@@ -12,13 +12,7 @@ all-features = true
 [advisories]
 unmaintained = "all"
 yanked = "deny"
-ignore = [
-    # quick-xml 0.36 is used only by the prototype's optional `xml` feature,
-    # which the rebuild removes (ADR-0015); upgrading it would mean rewriting
-    # code that is being deleted. Remove these entries with that code.
-    { id = "RUSTSEC-2026-0194", reason = "prototype-only optional xml feature; removed by ADR-0015" },
-    { id = "RUSTSEC-2026-0195", reason = "prototype-only optional xml feature; removed by ADR-0015" },
-]
+ignore = []
 
 # Permissive licences only; anything else must be added here on purpose.
 [licenses]
@@ -34,8 +28,7 @@ allow = [
 confidence-threshold = 0.93
 
 [bans]
-# Duplicate versions are reported, not fatal: dev-dependencies such as
-# criterion bring their own.
+# Duplicate versions are reported, not fatal.
 multiple-versions = "warn"
 # No `*` versions; path dependencies inside a workspace are allowed.
 wildcards = "deny"

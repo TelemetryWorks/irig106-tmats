@@ -28,7 +28,8 @@ jobs:
         with:
           toolchain: stable
       - run: cargo test --workspace --all-features
-      - run: cargo test --workspace --no-default-features
+      # Supported default-disabled configuration: std remains explicitly required.
+      - run: cargo test --workspace --no-default-features --features std
 
   msrv:
     name: MSRV (1.85)

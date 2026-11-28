@@ -1,0 +1,17 @@
+[package]
+name = "irig106-tmats"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "TMATS library for the IRIG 106 ecosystem (redesign scaffold)"
+keywords = ["irig106", "tmats", "telemetry", "flight-test", "chapter9"]
+categories = ["aerospace", "parser-implementations", "encoding"]
+readme = "README.md"
+
+[features]
+# Required, default-on std; disabling it is unsupported, not a no_std promise.
+default = ["std"]
+std = []

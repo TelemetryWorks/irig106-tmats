@@ -6,29 +6,23 @@ purpose, not metrics: counts of lines, tests, or requirements drift and are not
 kept here.
 
 The project is in a documentation-first redesign (see `docs/ROADMAP.md`).
-Everything marked **prototype** is the original implementation, preserved at
-the git tag `prototype-0`; it is removed from `main` when the redesigned code
-lands and is not a specification.
+The prototype code is retired to git tag `prototype-0`; retained prototype-era
+documents are historical, not a specification. Current Rust code is only a
+version/help scaffold; no TMATS behavior is implemented.
 
 ```text
 irig106-tmats/
-├── .github/dependabot.yml   Weekly Actions and Cargo updates (root, CLI, fuzz)
+├── .github/dependabot.yml   Weekly Actions and Cargo updates (root, library, app)
 ├── .github/workflows/scorecard.yml  Main/scheduled Scorecard analysis, SARIF and public results
 ├── .github/workflows/zizmor.yml     PR workflow security audit (regular persona, failing mode)
 ├── .github/workflows/ci.yml  CI: tests (Linux, Windows, macOS), MSRV 1.85, clippy, fmt, rustdoc, publish dry run
 ├── AGENTS.md              Pointer for coding agents; the two things most likely to trip one up
 ├── CHANGELOG.md           One changelog for the library and the CLI (released in lockstep)
 ├── CLAUDE.md              Working context for any coding agent: state, commands, conventions, git rules
-├── Cargo.toml             Workspace root: members, the one shared version ([workspace.package]),
-│                          and the library crate's manifest (edition 2024, MSRV 1.85)
-├── Cargo.lock             Locked dependency versions for tests, benches, and CI
+├── Cargo.toml             Virtual workspace: members, shared version 0.1.0, metadata and exact library dependency
+├── Cargo.lock             Only the lockstep library/app pair; no third-party dependencies
 ├── LICENSE                Apache-2.0
-├── README.md              Crate overview (prototype-era; rewritten with the redesign)
-├── build.rs               prototype: generates an attribute registry from data/attributes.toml that
-│                          nothing includes; to be deleted (registry generation moves to scripts/)
-├── data/
-│   └── attributes.toml    prototype: attribute metadata without spec citations; superseded by the
-│                          spec-cited registry source
+├── README.md              Redesign status and workspace/check entry points
 ├── docs/
 │   ├── PROJECT_STRUCTURE.md   This file
 │   ├── evals/2026-11-15-supply-chain-rollout.md  Workflow pin evidence and rollout validation
@@ -165,42 +159,27 @@ irig106-tmats/
 │   └── FOR_IRIG106_DOCS_REPO.md  prototype: cross-crate contract notes intended for irig106-docs
 ├── scripts/
 │   └── build-trace-matrix.py  Regenerates docs/TRACE-MATRIX.md; --check fails CI if it drifted
-├── src/                   prototype: library source
-│   ├── lib.rs             Crate root, prelude, re-exports
-│   ├── model.rs           One struct per TMATS group plus code-name types
-│   ├── parse.rs           Tokenizer and attribute routing into the group structs
-│   ├── serial.rs          Code-name (ASCII) serializer
-│   ├── error.rs           Error and diagnostic types
-│   ├── validate.rs        Validation rules and profiles
-│   ├── query.rs           Channel resolution and document diff
-│   ├── version.rs         Hand-written attribute registry and version queries
-│   ├── types_bridge.rs    Local copies of types meant for irig106-types
-│   ├── ch10.rs            Chapter 10 setup-record CSDW and payload conversion
-│   ├── generate.rs        TmatsBuilder (feature `generate`)
-│   ├── repair.rs          Automatic repair rules (feature `repair`)
-│   ├── xml.rs             Invented XML mapping, not the RCC schema (feature `xml`)
-│   └── wasm.rs            wasm-bindgen bindings (feature `wasm`)
-├── tests/                 prototype: integration and property tests
-├── irig106-tmats-cli/     The `tmats` CLI crate (workspace member, lockstep version)
-│   ├── Cargo.toml         Binary `tmats`; exact `=X.Y.Z` pin on the library
-│   ├── README.md          crates.io readme
-│   ├── src/main.rs        Scaffold: --version (both versions), --help; commands not yet implemented
-│   └── tests/lockstep.rs  Fails if the CLI and library versions or the exact pin drift apart
-├── benches/
-│   └── parse_bench.rs     prototype: criterion parse benchmarks
-└── fuzz/                  prototype: cargo-fuzz targets (parse, round trip, Ch10 decode) and corpus
+├── crates/irig106-tmats/   Library skeleton (workspace member)
+│   ├── Cargo.toml         Shared version/metadata; default-on required std feature
+│   ├── README.md          Package status and design pointer
+│   └── src/lib.rs         VERSION only; no TMATS APIs
+└── apps/irig106-tmats-cli/ Reusable CLI scaffold and thin executable
+    ├── Cargo.toml         Inherits exact library dependency from workspace
+    ├── README.md          Package status and design pointer
+    ├── src/lib.rs         Existing help/version/usage logic through caller-owned sinks
+    ├── src/main.rs        Arguments/stdio adapter; returns the scaffold exit status
+    └── tests/lockstep.rs  Pair version/pin, binary and reusable scaffold checks
+
 ```
 
 ADR-0037 (`docs/adr/0037-extract-destination-and-findings-policy.md`) records
 the owner's verbatim extract overwrite/identity and findings policy.
 
-## Planned layout
+## Layout and future additions
 
-Owner decision, 2026-11-21 (ADR-0035): a virtual root Cargo.toml with no
-package; library in `crates/irig106-tmats/`, CLI in `apps/irig106-tmats-cli/`,
-shared workspace.package version and exact library path/version in
-workspace.dependencies. The tree above describes the current checkout; no
-files move in the decision PR. W2/W3 are unchanged.
+ADR-0035's virtual crates/apps layout is present. Version 0.1.0 is unchanged;
+prototype code/build registry/tests/benches/fuzz and Criterion are retired.
+W3 is a runner/thin-main skeleton only; behavior follows in later families.
 
 The research index includes `docs/research/2026-09-27-spec-alignment-review.md`,
 which records the 106-24R1 review, prototype reproductions, and recommendations
