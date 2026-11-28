@@ -3266,7 +3266,7 @@ Use checked source correspondence: a projected-name position is not a raw
 byte offset. The original item/value and the original source remain unchanged.
 Detection SHALL skip unterminated suffixes. A suggestion inside supplied
 cut-qualified text SHALL retain the record's qualification/cut facet and
-never make it usable; diagnostic inspection remains subject to proposed
+never make it usable; diagnostic inspection remains subject to owner-signed
 INT-031 access, not an exception to that gate.
 No public result type, renderer text/layout or JSON encoding is fixed; L1's
 existing warning meaning and severity are not a new presentation choice.

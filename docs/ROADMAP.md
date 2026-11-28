@@ -290,6 +290,10 @@ byte oracles before claiming the full normalization capability. The boundary
 requirements do not choose those rules or reduce the 0.1 obligations.
 Implement Joey's 2026-11-28 INT-064 A+D / INT-065 A / INT-066 A only
 after source/development analysis, review and independent byte oracles.
+Review the [edition/syntax analysis](research/2026-11-28-edition-syntax-development-analysis.md)
+for scoped counters, equality/framing and declaration-versus-fallback evidence;
+keep S1 suspect qualification and actual historical binding coverage separate
+from source inspection and planned tests.
 Use the [extension/transform analysis](research/2026-11-28-extension-transform-development-analysis.md)
 for the shared evidence/explicitness boundaries; it does not implement or
 complete review/testing of those policies or their dependencies.
