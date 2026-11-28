@@ -287,11 +287,11 @@ This matrix is the single source of truth for live status; the requirement docum
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
 | L1-CLI-001 | L2-CLI-005, L2-CLI-006 | _(none)_ | Draft |
-| L1-CLI-002 | _(none)_ | _(none)_ | Draft |
+| L1-CLI-002 | L2-CLI-018 | _(none)_ | Draft |
 | L1-CLI-003 | L2-CLI-010, L2-CLI-011 | _(none)_ | Draft |
 | L1-CLI-004 | L2-CLI-008 | _(none)_ | Draft |
 | L1-CLI-005 | L2-CLI-012, L2-CLI-013 | _(none)_ | Draft |
-| L1-CLI-006 | _(none)_ | _(none)_ | Draft |
+| L1-CLI-006 | L2-CLI-019, L2-CLI-020, L2-CLI-021 | _(none)_ | Draft |
 | L1-CLI-007 | L2-CLI-009 | _(none)_ | Draft |
 | L1-CLI-008 | L2-CLI-003, L2-CLI-004 | _(none)_ | Draft |
 | L1-CLI-009 | L2-CLI-001, L2-CLI-002, L2-CLI-007, L2-CLI-014, L2-CLI-015, L2-CLI-016, L2-CLI-017 | _(none)_ | Draft |
@@ -317,6 +317,10 @@ This matrix is the single source of truth for live status; the requirement docum
 | L2-CLI-015 | L3-CLI-055, L3-CLI-056, L3-CLI-057 | _(TBD)_ | Draft |
 | L2-CLI-016 | L3-CLI-062, L3-CLI-063, L3-CLI-064 | _(TBD)_ | Draft |
 | L2-CLI-017 | L3-CLI-065, L3-CLI-066, L3-CLI-067 | _(TBD)_ | Draft |
+| L2-CLI-018 | L3-CLI-068, L3-CLI-069, L3-CLI-070 | _(TBD)_ | Draft |
+| L2-CLI-019 | L3-CLI-071, L3-CLI-072 | _(TBD)_ | Draft |
+| L2-CLI-020 | L3-CLI-073, L3-CLI-074, L3-CLI-075, L3-CLI-078 | _(TBD)_ | Draft |
+| L2-CLI-021 | L3-CLI-076, L3-CLI-077 | _(TBD)_ | Draft |
 
 ### L1-ROB: Robustness against arbitrary input
 
@@ -401,17 +405,17 @@ This matrix is the single source of truth for live status; the requirement docum
 | WRT | 7 | 6 | 17 | 0 | 0 | 0 | 0 |
 | SUM | 4 | 5 | 16 | 0 | 0 | 0 | 0 |
 | IO | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
-| CLI | 9 | 17 | 67 | 0 | 0 | 0 | 0 |
+| CLI | 9 | 21 | 78 | 0 | 0 | 0 | 0 |
 | ROB | 3 | 7 | 19 | 0 | 0 | 0 | 0 |
 | PERF | 2 | 3 | 9 | 0 | 0 | 0 | 0 |
 | REL | 6 | 6 | 16 | 0 | 0 | 0 | 0 |
-| **Total** | **85** | **104** | **341** | **0** | **0** | **0** | **0** |
+| **Total** | **85** | **108** | **352** | **0** | **0** | **0** | **0** |
 
-The countable requirement set is every L2 and L3 requirement plus the 29 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
+The countable requirement set is every L2 and L3 requirement plus the 27 L1 *leaf* requirement(s) (L1s with no L2 decomposition yet). Composite L1s are verified through their children.
 
-**Tested by at least one test marker**: 0 of 474 (0.0%).
+**Tested by at least one test marker**: 0 of 487 (0.0%).
 
-**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 0 of 474 (0.0%).
+**Verified (Test or evidenced Inspection/Analysis/Demonstration)**: 0 of 487 (0.0%).
 
 ### Orphan check
 

@@ -102,9 +102,8 @@ existing content-based recording/text input route. The 0.1 scope is unchanged.
   a regular file with unproven identity refuses unless --force. The exception
   never claims identity was proved. Tool-opened output and external shell
   redirection remain distinct. These three #57 holds are removed; source,
-  development and executable verification remain. The rest of argument
-  grammar and report formats remain held; only these flag spellings and
-  owner policies are decided.
+  development and executable verification remain. Other argument forms need their reviewed request table; report formats
+  now follow Q26/ADR-0039. This does not authorize a new raw-byte encoding.
 - **Inputs are not edited in place.** Commands that produce modified TMATS
   (`stamp`, and later fix application) write to a new output file.
 - **`stamp` is a verified transaction.** It hashes the final output bytes
@@ -135,7 +134,8 @@ existing content-based recording/text input route. The 0.1 scope is unchanged.
   2026-09-25: "Go with hand-rolled argument parsing like mie-decoder"). The
   CLI adds no argument-parsing crate such as `clap`. What this buys: no
   dependency or its MSRV and semver churn, a small binary, and full control
-  of every help and error message (which the ASCII-only rule below needs).
+  of every help and error message. JSON report encoding has the coordinator reading of Q26
+  documented in section 4, pending owner confirmation; raw/extract output stays byte-exact.
   What it costs: no generated shell completions and more parsing code to
   own; that code is kept table-driven and every flag, value, and usage error
   has a test. The scaffold's `--version` / `--help` handling already follows
@@ -151,21 +151,46 @@ Each * matches one whole name part or index, e.g. R-*\TK1-*; no partial
 wildcards or regex in 0.1. No other query/CLI escaping form is invented.
 Q23 permits stdin only through an explicit '-' operand, never an implicit
 fallback. Q14 confirms first-fragment inventory order, separately from
-closure/takeover. Report layout, schema/labels/exit mapping remain held.
+closure/takeover. Report layout, schema/labels/exit mapping follow owner Q26/ADR-0039; implementation remains reviewed work.
 
-## 4. Proposed rules (to confirm)
+## 4. Owner Q26 A report contract — 2026-11-28
 
-- **ASCII-only output.** Everything the tool writes to stdout and stderr is
-  ASCII — data, diagnostics, and help — so a Windows console at an OEM code
-  page never garbles it (a lesson from `mie-decoder`, whose CLI enforces the
-  same rule). TMATS bytes are written through unchanged only by `show --raw`
-  and `extract`, which are byte-exact by definition.
-- **Exit codes** (draft): `0` success; `1` the check failed (`verify`
-  mismatch, `validate` findings at or above the failure threshold); `2` usage
-  error; `3` input could not be read or is not TMATS/Chapter 10; `4` output
-  could not be written. To be fixed before 0.1 and never renumbered.
-- **Streams:** results on stdout, diagnostics on stderr; `-o FILE` writes the
-  result to a file instead of stdout.
+[ADR-0039](adr/0039-text-json-reports-and-exit-classes.md) records the owner
+text verbatim and immutable irigtime citations. Readable text is the default;
+`--format json` selects JSON and `--format text` selects text, matching the
+peer's actual parser. No --json alias is introduced. Results use stdout;
+operational diagnostics use stderr, without corrupting structured/raw output.
+
+The minimal published JSON schema carries stable finding codes, severity/
+locations, explicit unavailable states and record qualifications, separate
+assumption/default/fallback evidence, caller-choice level and Quiet's
+mandatory `suppressed: N bad-data findings`, including N=0. Keep the existing
+schema_version identity and independent schema versioning; additive changes
+increment minor and breaking changes major. Schema/artifact/layout/catalogue
+implementation is review work, not a remaining owner-format hold.
+
+Exit classes are 0 success, 1 failed check, 2 usage, 3 input and 4 output.
+JSON on 0/1 is complete; discard partial or unsuccessfully delivered output
+on 4. The host runner returns a class without exiting. This selects no new
+check threshold, --fail-on flag or simultaneous-failure tie rule.
+
+Show's existing 0.1 raw/tree/R-channel-summary forms and CLI-002/006 are
+unblocked. Text/JSON share semantic facts, while byte-exact raw/extract output
+keeps its original byte contract. Command/mode/format applicability must be
+explicit in the reviewed request table, not silently ignored, wrapped or
+converted. Full resolved-link/timeline views stay later scope.
+
+**Coordinator reading of Q26 “matching irigtime” (2026-11-28), pending
+owner confirmation — ASCII-only JSON stdout.** Matching
+[irigtime’s pinned report contract](https://github.com/TelemetryWorks/irig106-time/blob/5899806ae684ed38d8cad8f422cabb3d47c6be0f/docs/cli-report-schema.md#L53-L54),
+JSON stdout is ASCII-only: non-ASCII characters use Unicode escapes,
+including surrogate pairs for supplementary characters. This is JSON
+representation, not a source projection or a rule to repair raw bytes.
+Raw show/extract stay byte-exact. This coordinator reading awaits owner
+confirmation and adds no ASCII-only text/diagnostic rule. How non-UTF-8 TMATS
+source bytes appear inside JSON remains for schema review; character escaping
+does not define a byte-to-character decoding or justify a lossy conversion.
+
 
 ## 5. Decisions made on 2026-09-25
 
@@ -189,4 +214,4 @@ five"):
    macOS binaries and SHA-256 checksums from one tag), set up before 0.1.
 
 No CLI design decisions remain open; the command-by-command reference
-(flags, output layouts, exit codes) is written with the L2/L3 requirements.
+(reviewed request tables, schema artifacts, output layouts and renderer/exit acceptance) follows the owner Q26 policy and L2/L3 requirements.

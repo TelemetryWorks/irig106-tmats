@@ -691,7 +691,7 @@ requirements are added. The requirement entries below and the generated
 
 **Statement**: `tmats` SHALL show TMATS in raw, tree, and channel-summary forms.
 
-**Rationale**: `idmptmat`'s three formats (`-r`, `-t`, `-c`), which the owner wants kept (UC-17). Delivered in 0.1.
+**Rationale**: `idmptmat`'s three formats (`-r`, `-t`, `-c`), which the owner wants kept (UC-17). Owner Q26 A, 2026-11-28 (ADR-0039), removes the report-format hold; 0.1 uses the reviewed raw/tree/R-channel scope, with full resolved views later. Delivered in 0.1.
 
 **Verification Method**: Test (T)
 
@@ -723,7 +723,7 @@ requirements are added. The requirement entries below and the generated
 
 **Statement**: `tmats` SHALL provide plain-text output and JSON output conforming to a published, versioned schema, and SHALL use documented exit codes.
 
-**Rationale**: Scripts and `irig106-cli` must be able to rely on the output (UC-17; `docs/CLI.md`). Delivered in 0.1.
+**Rationale**: Scripts and `irig106-cli` must be able to rely on output. Owner Q26 A, 2026-11-28 (ADR-0039), selects text default, --format json, stdout/stderr roles, the minimum schema/evidence fields, additive minor/breaking major versions and exit 0–4 with JSON completeness/discard rules. Detailed artifacts and executable acceptance remain required (UC-17; `docs/CLI.md`). Delivered in 0.1.
 
 **Verification Method**: Test (T)
 

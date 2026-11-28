@@ -394,7 +394,7 @@ or packet-header byte. Full development analysis and tests remain outstanding.
 - **incomplete** — the body is cut inside an attribute (a substantive unterminated suffix remains after the boundary-layout check), a fragment has unavailable required source bytes/bounds, or a sequence gap splits text that continues an attribute across it;
 - **ambiguous** — a sequence gap or a CSDW change where the text before it ends at `;`, or a gap-free run whose text repeats a single-entry attribute (for example `G\106` or `G\PN`); both readings and the split point are reported.
 
-**Owner-signed precise definitions (2026-11-28); earlier signed parts FINAL CONCUR at #87 e0a0cce, new Q25 check pending**:
+**Owner-signed precise definitions (2026-11-28); earlier signed parts FINAL CONCUR at #87 e0a0cce, Q25 A FINAL CONCUR at #91 5f4f3c4**:
 - **Boundary layout/padding** is exactly ASCII SP (0x20), controls 0x00–0x1F,
   and DEL (0x7F), per INT-035/036. Thus it includes CR/LF, TAB, NUL and 0x1A,
   not Unicode whitespace or any high byte. For the owner-signed final-terminator
@@ -479,7 +479,7 @@ blocking reason; the aggregate label does not relax incomplete-input policy.
 
 **Reason**: The packets alone cannot tell where a record ends; the text's final byte and repeated single-entry attributes are the only evidence the standard gives, and neither is proof in every case.
 
-**Design**: owner-approved (Joey, 2026-11-28; Q25 A precedence signed) · **Review**: pre-Q25 signed parts complete under ADR-0033; new Q25 A independent check pending; draft author: maintainer agent; owner sign-off: Joey, 2026-11-28; independent AI FINAL CONCUR at [PR #87 head `e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9`](https://github.com/TelemetryWorks/irig106-tmats/pull/87/commits/e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9), reviewer @thread:thr_qsvwmtnn8f, received 2026-11-28; [final-check record](research/2026-11-28-int022-066-final-concurrences.md); source freshness, written development analysis/review and intensive executable tests remain required; Q25 A owner sign-off recorded 2026-11-28; independent AI check of the new Q25 wording pending · **Origin**: team spec alignment review, 2026-09-27
+**Design**: owner-approved (Joey, 2026-11-28; Q25 A precedence signed) · **Review**: pre-Q25 signed parts complete under ADR-0033; FINAL CONCUR on Q25 A at PR #91 head 5f4f3c4410592b90fe316fb47383d738d5f8507d (reviewer @thread:thr_qsvwmtnn8f, 2026-11-28); draft author: maintainer agent; owner sign-off: Joey, 2026-11-28; independent AI FINAL CONCUR at [PR #87 head `e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9`](https://github.com/TelemetryWorks/irig106-tmats/pull/87/commits/e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9), reviewer @thread:thr_qsvwmtnn8f, received 2026-11-28; [final-check record](research/2026-11-28-int022-066-final-concurrences.md); source freshness, written development analysis/review and intensive executable tests remain required; Q25 A owner sign-off recorded 2026-11-28; Q25 A independent check complete under ADR-0033 · **Origin**: team spec alignment review, 2026-09-27
 
 **Test**: `q25_padding_only_is_incomplete_without_loss_claim`, `q25_leading_loss_blocks_ambiguity_opt_in`, `q25_final_semicolon_keeps_leading_cut`, `q25_input_start_does_not_prove_loss`, `setup_record_completeness_outcomes`, `eof_boundary_is_complete_and_labelled`, `other_channel_packet_cannot_finalize_run`, `open_boundary_is_provisional_not_complete`, `provisional_extension_never_closes_run` (planned; not yet written)
 

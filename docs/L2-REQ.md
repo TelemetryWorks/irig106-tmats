@@ -684,7 +684,7 @@ owner after #38 are recorded here; unresolved streaming-use policy stays open.
 
 **Statement**: A closed per-channel candidate run SHALL carry its final completeness outcome or unavailable-format/rule reason, its START and stop evidence, and all relevant competing readings; an otherwise complete semicolon-terminated run at supplied EOF SHALL be complete with an explicit end-of-input basis, not downgraded solely because EOF cannot prove the recording was never cut.
 
-**Rationale**: ADR-0031/INT-034 distinguish evidence from certainty. Chapter 9 section 9.4.2 page 9-2 supplies semicolon framing and Chapter 11 section 11.2.7.2 page 11-50 supplies fragmentation without an end marker (106-24R1). INT-011's per-channel joining is reconfirmed; "followed by another packet" means same-channel. Joey signed Q25 A on 2026-11-28: padding-only/no substantive attributes is Incomplete without a truncation claim; proven leading loss retains blocking cut even under aggregate Ambiguous, never erased by a final semicolon or ambiguity opt-in. Ordinary supplied-input start proves no loss. The new independent check, source/development evidence and XML's unknown completeness remain separate.
+**Rationale**: ADR-0031/INT-034 distinguish evidence from certainty. Chapter 9 section 9.4.2 page 9-2 supplies semicolon framing and Chapter 11 section 11.2.7.2 page 11-50 supplies fragmentation without an end marker (106-24R1). INT-011's per-channel joining is reconfirmed; "followed by another packet" means same-channel. Joey signed Q25 A on 2026-11-28: padding-only/no substantive attributes is Incomplete without a truncation claim; proven leading loss retains blocking cut even under aggregate Ambiguous, never erased by a final semicolon or ambiguity opt-in. Ordinary supplied-input start proves no loss. The Q25 A independent check CONCURS at #91 5f4f3c4; source/development evidence and XML's unknown completeness remain separate.
 
 **Verification Method**: Test (T)
 
@@ -1230,7 +1230,7 @@ be mistaken for confirmed vendor attribution or a private-value decoder.
 
 **Statement**: V source/vendor context SHALL stay within its document and V occurrence, retain header/source-link multiplicity and record qualifications, and leave private attribute-string/value semantics opaque without a reviewed definition; source-context matching SHALL use the declared textual Data Source ID namespace rather than occurrence-number equality or numeric field/index normalization, and owner-signed INT-063 A SHALL withhold confirmed attribution unless one usable VN agrees with the path acronym.
 
-**Rationale**: Section 9.5.13 p. 9-171 ties V ID to General Information; Table 9-2 DATA SOURCE ID G\DSI-n p. 9-11 names textual sources and links to V-x\ID. ADR-0026 keeps namespaces/cardinality explicit. This supports context, not clock associations, auto-repair, vendor plug-ins, counter inference or the later user-registry overlay. Existing availability, record access and report-format gates remain unchanged.
+**Rationale**: Section 9.5.13 p. 9-171 ties V ID to General Information; Table 9-2 DATA SOURCE ID G\DSI-n p. 9-11 names textual sources and links to V-x\ID. ADR-0026 keeps namespaces/cardinality explicit. This supports context, not clock associations, auto-repair, vendor plug-ins, counter inference or the later user-registry overlay. Existing availability/record-access gates remain; report/schema implementation follows owner Q26/ADR-0039.
 
 **Verification Method**: Test (T)
 
@@ -1274,8 +1274,9 @@ framing, character projection, canonical index identity and known-scalar
 multiplicity without using an edition declaration to discard source.
 The [scope/source note](research/2026-11-27-edition-independent-reading.md)
 separates these mechanical obligations from edition-dependent semantics.
-No owner decision blocks this derivation; outstanding interpretation,
-record-access, historical-layout and report-format gates remain unchanged.
+No owner decision blocks this derivation; interpretation, record-access and
+historical-layout gates remain independently applicable. Report/schema
+implementation follows owner Q26/ADR-0039.
 
 #### L2-EDN-003
 
@@ -1389,7 +1390,7 @@ values/revision/hashes, never copy reference source into this repository.
 
 **Statement**: Flex compatibility acceptance SHALL require a reproducibly identified reference source/environment and independently fixed byte/options/result vectors, including exclusions, arithmetic/byte boundaries and the retained D7 quirk; implementation SHALL remain unready until the reference-defined behavior is analyzed explicitly and unresolved or undefined cases are raised rather than silently assigned SHA, parser or normalization semantics.
 
-**Rationale**: ADR-0018 makes reference tools compatibility oracles, not authorities for the standard. Bit-for-bit compatibility cannot be established by two calls to the new implementation, a historical prose summary, one wrapper mock or an unpinned moving branch. No new runtime/dev dependency, source vendoring, install or reference execution is authorized by these planned acceptance obligations. Owner-signed INT-031 access and existing resource/report-format gates stay in force.
+**Rationale**: ADR-0018 makes reference tools compatibility oracles, not authorities for the standard. Bit-for-bit compatibility cannot be established by two calls to the new implementation, a historical prose summary, one wrapper mock or an unpinned moving branch. No new runtime/dev dependency, source vendoring, install or reference execution is authorized by these planned acceptance obligations. Owner-signed INT-031 access and existing resource/report implementation follows owner Q26/ADR-0039.
 
 **Verification Method**: Test (T)
 
@@ -1478,7 +1479,7 @@ option-default policy or output renderer is selected by this batch.
 
 **Statement**: Parser acceptance SHALL cover every implemented reviewed command/option/value rule and usage failure with independently specified supplied-token cases, and preserve command/request/usage distinctions through both host-runner and individual-command integration without a second parser, environment-derived defaults or side effects on rejected requests.
 
-**Rationale**: ADR-0013's per-flag tests and W3's shared runner make parsing behavior observable to an orchestrating host. Mechanism tests against a synthetic table do not prove full product grammar coverage; unsupported or held table rules remain explicit readiness gaps. Public argument forms, numeric CLI syntax, record defaults, output/exit policy and rendering still require their own reviewed definitions where pending.
+**Rationale**: ADR-0013's per-flag tests and W3's shared runner make parsing behavior observable to an orchestrating host. Mechanism tests against a synthetic table do not prove full product grammar coverage; unsupported or held table rules remain explicit readiness gaps. Public argument forms, numeric CLI syntax and record defaults still need their own reviewed request definitions. Q26/ADR-0039 supplies output/exit policy; renderer/schema implementation remains required.
 
 **Verification Method**: Test (T)
 
@@ -1595,5 +1596,52 @@ syntax or public default selection. See the [integration/gate note](research/202
 **Statement**: Runner and individual-command integration acceptance SHALL compare independently specified command inputs, selected source/revision, semantic results and stage failures for every implemented unheld path, distinguishing computation from delivery and retaining invocation-specific options/evidence without terminating the host or claiming that synthetic adapters qualify real dependency or command behavior.
 
 **Rationale**: W3's two entry paths must share actual command computation, not merely have matching help/version scaffolds. Existing L3-CLI-023/024/025 and L3-CLI-055/056 establish shared entry behavior and failure boundaries. This adds a cross-stage acceptance obligation without selecting renderer bytes, numeric exits, writer retry/rollback or unfinished command policies. Production-source and dependency compatibility evidence remain necessary.
+
+**Verification Method**: Test (T)
+
+## Owner Q26 report/show contracts — 2026-11-28
+
+ADR-0039 records the owner choice and pinned irigtime --format source.
+CLI-002/006 and show are unblocked for reviewed development. Scope is the
+existing 0.1 raw/tree/R-channel views, not the full 0.2 resolved graph,
+configuration timeline or validate/diff commands. All verification is planned.
+
+#### L2-CLI-018
+
+**Parent**: L1-CLI-002
+
+**Statement**: Show SHALL provide byte-exact raw output and readable structural-tree and channel-summary views from the same selected source/model, retaining unknown/vendor/duplicate items, field availability and record qualifications without editing input or inventing resolved relationships; 0.1 channel summaries SHALL use reviewed R-entry/time-view context without silently filtering disabled TIMEIN or turning context into a clock association.
+
+**Rationale**: L1-CLI-002/UC-17 already require the three forms. Q26 removes the report-format hold; ADR-0002/0003 and reviewed lookup/INT-054/056–060 contracts preserve source, candidate multiplicity and labelled assumptions. Later resolved-link views stay later scope.
+
+**Verification Method**: Test (T)
+
+#### L2-CLI-019
+
+**Parent**: L1-CLI-006
+
+**Statement**: Report commands SHALL default to readable text, select JSON with --format json and explicit text with --format text, using the same semantic results/findings in both representations; results SHALL use stdout and operational diagnostics stderr without corrupting JSON or byte-exact payload streams, and representation selection SHALL NOT alter interpretation, record access, caller assumptions or command outcome.
+
+**Rationale**: Owner Q26 A/ADR-0039 and the pinned irigtime parser establish this spelling. The ASCII-only JSON/Unicode-escape arm is the coordinator reading of Q26 “matching irigtime” (2026-11-28), pending owner confirmation, not a separate owner sign-off. No new alias, severity threshold or implicit source choice is introduced. Raw/extract payload delivery remains its separate byte contract; mode/format applicability must be explicit in the reviewed request table, never silently ignored or converted to a different payload.
+
+**Verification Method**: Test (T)
+
+#### L2-CLI-020
+
+**Parent**: L1-CLI-006
+
+**Statement**: JSON reports SHALL conform to a published, versioned minimal schema carrying stable finding codes, severity/locations, explicit unavailable states and record qualifications, assumption/default/fallback distinctions, caller-choice level and every Quiet suppression count including zero; schema changes SHALL increment minor for additive changes and major for breaking changes, with the declared schema version and compatibility policy identifiable independently of crate version.
+
+**Rationale**: Owner Q26 fixes the policy; existing INT-041/044/056–060 supply semantics, not a substitute for a schema. Schema artifacts/goldens must be reviewed before acceptance; this adds no library serialization API or dependency. Existing ambiguous_g106/numeric candidates and both lockstep version metadata obligations remain.
+
+**Verification Method**: Test (T)
+
+#### L2-CLI-021
+
+**Parent**: L1-CLI-006
+
+**Statement**: The host-callable runner SHALL return exit classes mapping to 0 success, 1 failed check, 2 usage, 3 input and 4 output, without exiting the host; JSON report output on 0/1 SHALL be complete, and output failure SHALL return 4 with any partial or unsuccessfully delivered output treated as discarded, never a successful report or successful delivery.
+
+**Rationale**: Owner Q26 adopts the peer Q-CLI-EXIT mapping and publication boundary. W3 keeps a thin main and reusable command/render APIs. A report format does not invent check thresholds or turn severity alone into a new failed-check criterion; operational failures remain distinct from semantic results.
 
 **Verification Method**: Test (T)

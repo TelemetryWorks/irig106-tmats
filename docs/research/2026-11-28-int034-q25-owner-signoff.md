@@ -8,9 +8,9 @@ Owner: Joey. Process: ADR-0033. Owner direction, verbatim:
 - A final ';' never erases proven leading loss.
 - Merely being the start of the supplied input is NOT proof of loss.
 
-This completes the previously open owner choice, not the independent check
-of this new wording. Earlier signed parts retain their #87 e0a0cce FINAL
-CONCUR; Q25's independent AI check is pending. Written development analysis,
+This completes the previously open owner choice. Earlier signed parts retain
+their #87 e0a0cce FINAL CONCUR. Independent review received 2026-11-28:
+FINAL CONCUR on Q25 A at PR #91 head 5f4f3c4410592b90fe316fb47383d738d5f8507d (reviewer @thread:thr_qsvwmtnn8f, 2026-11-28). Written development analysis,
 analysis review, source freshness and intensive executable tests still gate
 implementation. No final analysis approval or passing parser test is claimed.
 

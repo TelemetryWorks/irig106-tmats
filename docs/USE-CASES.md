@@ -364,6 +364,11 @@ labels it non-standard everywhere it appears.
 
 ### UC-17 Inspect TMATS from the command line (`tmats`) — *0.1 onward*
 
+Owner Q26 A (2026-11-28), recorded in ADR-0039, removes the presentation
+hold for 0.1 raw/tree/R-channel-summary show and CLI-002/006. Reports default
+to readable text; --format json requests the versioned JSON contract. Raw
+payloads remain byte-exact, and later resolved-link views stay later scope.
+
 **Actor:** every human actor; CI scripts. **Trigger:** someone has a Chapter 10
 file or a TMATS text file and wants to look at it.
 

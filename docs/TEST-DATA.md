@@ -816,7 +816,7 @@ analysis/review/tests remain. All cases are PLANNED, not executed.
 
 | Planned case | Independently specified expectation | Requirements |
 |---|---|---|
-| `q25_padding_only_is_incomplete_without_loss_claim` | Closed zero-text candidate, SP/CR/LF/NUL/1A/DEL-only text, and terminated empty regions (;; / CR LF ;) separately: Incomplete, reason no substantive attributes; raw bytes kept, no inferred truncation; existing scanner information/silence rules unchanged | L3-CH10-028 |
+| `q25_padding_only_is_incomplete_without_loss_claim` | Closed zero-text candidate, SP/CR/LF/NUL/1A/DEL-only text, and terminated empty regions (;; / CR LF ;) separately (the latter contain no substantive attributes under Q25, not because semicolon is a layout byte): Incomplete, reason no substantive attributes; raw bytes kept, no inferred truncation; existing scanner information/silence rules unchanged | L3-CH10-028 |
 | `q25_present_empty_or_unknown_not_padding_only` | COMMENT:; or an unknown framed X:; remains a substantive retained item, not padding-only through value/validity filtering; other classification/validation guards remain independent | L3-CH10-028 |
 | `q25_leading_loss_blocks_ambiguity_opt_in` | Independently evidenced lost prefix plus duplicate G PN or SHA: aggregate Ambiguous retains blocking cut/location; labelled per-query ambiguity opt-in never makes it usable/governing | L3-CH10-029 |
 | `q25_final_semicolon_keeps_leading_cut` | Known missing leading text but observed suffix ends ';': cut remains; equality/digest evidence cannot remove it or bypass the separate checksum truncation refusal | L3-CH10-029 |
@@ -1280,7 +1280,7 @@ to checksum them. Core data verification is an owner-scheduled feature
 request, not a second local implementation or mandatory new release blocker.
 All fixtures are planned; no compatible core API/version, runtime ownership
 safety or large-case performance is claimed as tested here. Report/rendered
-formats remain behind the owner-decision gate. Standard checksum facts and
+formats now follow owner Q26/ADR-0039; concrete acceptance remains planned. Standard checksum facts and
 example values remain reference evidence, not TMATS acceptance algorithms.
 
 ## Planned CLI-mounting batch 24
@@ -1320,7 +1320,8 @@ requirements, not a new classifier in the fixture. No local packet or
 secondary/data-checksum verification oracle is permitted. Executable tests
 must cover the actual reviewed commands when implemented; scaffold/help
 success does not demonstrate every command's mountability. Full report
-formats and numeric exit mappings need their own owner-reviewed derivations.
+formats and numeric exit mappings now follow Q26/ADR-0039 and the report
+acceptance rows below; this earlier mounting batch does not test rendering.
 
 ## Planned extraction and safe-output batch 25
 
@@ -1334,7 +1335,7 @@ extraction inputs, not missing whole-document failures. Stdout/pipes are
 allowed; unproven regular identity and existing unrelated -o files require
 --force; same-handle writes, no temp-file+rename. Known input aliases refuse.
 These are policy decisions, not passing implementation evidence. Other
-argument grammar/report format remains held; file-acquisition guarantees
+argument forms need reviewed definitions; Q26/ADR-0039 supplies report policy; file-acquisition guarantees
 cover tool-opened destinations, not shell redirection.
 
 | Planned test | Independent input and expected boundary result | Requirements |
@@ -1503,8 +1504,8 @@ All negative lint fixtures require the intended diagnostic, not just any
 nonzero exit. Coverage evidence must name actual library scope/configuration
 and completed matching-head result. No new coverage exclusion list, numeric
 resource budget, test framework or full ADR-0020 acceptance is selected.
-The std, pattern, extraction, report-format and qualified-record-use holds
-remain independent of these planned checks.
+Owner decisions now select std/pattern/extraction/report/access policies;
+their development/review/test gates remain independent of these planned checks.
 
 ## Planned performance-evidence inspection batch 29
 
@@ -1714,7 +1715,7 @@ historical/future conformance or an implemented reader. Source framing uses
 106-24R1 Ch9 sections 9.4.1/9.4.2 p. 9-2 and approved INT-035–039.
 The metadata matrix supplies missing/known/unknown/older/future labels to the
 same byte input without inventing numeric historical mappings. Internal
-states/spans are asserted; rendered output remains owner-gated.
+states/spans are asserted; owner Q26/ADR-0039 now supplies the report policy, with renderer/schema work still unimplemented.
 
 | Planned test | Independent input and expected result | Requirements |
 |---|---|---|
@@ -1772,7 +1773,7 @@ Source: 106-24R1 Ch11 section 11.2.7.2 p. 11-50; ADR-0025/0036.
 | `records_oracle_uses_independent_candidate_sets` | Expected set/order/membership listed independently from supplied facts; production enumeration or a local replacement packet reader is not an oracle | L3-CLI-044 |
 
 Owner-signed INT-028/031 governs access and Q14 fixes first-fragment order;
-report rendering and other unselected public forms remain held. No executable tests or packet reader are
+report rendering follows owner Q26/ADR-0039; other unselected public forms need reviewed request tables. No executable tests or packet reader are
 added by these specifications.
 
 ## Planned checksum command computation batch 35
@@ -2115,6 +2116,37 @@ extract still requires an available selected extent; no guessed byte ranges,
 silent eviction, local spill, partial-acceptance policy or source truncation
 is authorized. Tests are planned, not executed memory/performance evidence.
 
+## Planned owner Q26 report/show acceptance — 2026-11-28
+
+Owner Q26 A/ADR-0039 removes the report-format hold for CLI-002/006 and
+show. These are planned executable cases, not implemented schema artifacts
+or passing renderer tests. Concrete schema/catalogue/request-table review
+remains development work. No new dependency or severity threshold is chosen.
+
+| Planned test | Supplied scenario and expected result | Requirements |
+|---|---|---|
+| `q26_raw_show_preserves_original_bytes` | Selected raw text includes TAB, BOM, high bytes, unknown and duplicate items; exact source bytes are delivered, no interpreted projection or JSON wrapper. Findings/qualifications remain available separately | L3-CLI-068 |
+| `q26_tree_keeps_unknown_and_duplicate_items` | Reviewed structure plus opaque private items and equal duplicates: every source occurrence remains identifiable, no guessed link or merged node | L3-CLI-069 |
+| `q26_channel_summary_keeps_disabled_time_context` | R-entry summary includes disabled TIMEIN with CHE/DSI/TSRC as context; no candidate silently filtered and no association inferred | L3-CLI-070 |
+| `q26_report_does_not_upgrade_qualifications` | Supplied Invalid/Ambiguous/unavailable fields and cut-qualified record remain qualified in tree/summary and JSON; display is not permission to govern | L3-CLI-070, L3-CLI-073 |
+| `q26_default_text_and_explicit_format_values` | Omitted format selects readable text; --format json and --format text select the pinned peer values; byte-exact mode applicability is explicit in the reviewed request table | L3-CLI-071 |
+| `q26_unknown_format_returns_usage` | Unsupported format value follows the usage-refusal path before command execution; no invented --json alias or silently ignored option | L3-CLI-071, L3-CLI-076 |
+| `q26_result_and_operational_streams_separate` | Independent stdout/stderr sinks see results versus operational diagnostics; stderr text never corrupts JSON/raw payload | L3-CLI-072 |
+| `q26_json_ascii_escaping_preserves_unicode` | **Coordinator reading of the owner's "matching irigtime" (Q26 A), pending owner confirmation (2026-11-28)**; proposed expectation follows. Supplied report string café plus U+1F680: JSON stdout contains ASCII bytes only, with Unicode escapes for é and a surrogate pair for U+1F680; parsed string equals the supplied string. Raw show/extract retain original bytes, including high bytes; JSON encoding is not source repair | L3-CLI-072, L3-CLI-078 |
+| `q26_text_json_share_supplied_facts` | Fixed command facts/findings and qualifications appear in both representations without re-parsing or candidate reselection | L3-CLI-072 |
+| `q26_schema_preserves_finding_identity_and_locations` | Independently specified finding codes/severity/source spans and ambiguous_g106 with numeric candidates survive schema validation; unknown locations are not fabricated | L3-CLI-073 |
+| `q26_unavailable_not_zero_or_missing_location` | Explicit unavailable reason and retained cut survive; unavailable is not zero/false/empty success, and unknown source location is distinguishable from offset zero | L3-CLI-073 |
+| `q26_assumption_default_fallback_are_distinct` | Explicit, assumed, defaulted and fallback facts retain their distinct basis, citations and caller-choice level; no next-query default | L3-CLI-074 |
+| `q26_quiet_zero_marker_is_present` | Quiet with zero attached Warn bad-data findings still carries suppressed: 0 bad-data findings, caller level and assumption label in both representations | L3-CLI-074 |
+| `q26_quiet_suppresses_exact_warn_attachment_set` | Quiet with N>0 suppresses exactly Warn attachments of every severity, reports the count, preserves target states/source diagnostics and cannot upgrade validity or command outcome | L3-CLI-074 |
+| `q26_additive_schema_change_increments_minor` | Independently specified compatible additive schema change increments minor, preserving major and predecessor identity; crate version is not the schema version | L3-CLI-075 |
+| `q26_breaking_schema_change_increments_major` | Changed field type/meaning or incompatible shape increments major; peer schema_revision alone cannot satisfy the policy | L3-CLI-075 |
+| `q26_runner_returns_all_five_exit_classes` | Fixed success/failed-check/usage/input/output outcomes return 0/1/2/3/4 in runner/direct paths; mounted host survives and format changes no criterion | L3-CLI-076 |
+| `q26_json_success_is_complete` | Exit 0 delivers one complete schema-conforming report from independent expected facts, not a renderer-generated oracle | L3-CLI-077 |
+| `q26_json_failed_check_is_complete` | Exit 1 still delivers complete schema-conforming JSON with findings/qualifications, never partial because the check failed | L3-CLI-077 |
+| `q26_writer_or_flush_failure_returns_output_class` | Injected write or flush failure returns 4; consumers discard output even if bytes appear complete. No atomic stdout/rollback promise | L3-CLI-077 |
+| `q26_independent_oracles_reject_mutated_reports` | Independently specified expected facts/raw bytes and reviewed schema/goldens reject missing suppression counts, altered qualifications, wrong version/types and corrupt payloads; renderer agreement alone is insufficient | L3-CLI-078 |
+
 ## Planned show-free command orchestration batch 43
 
 These are bounded integration cases using explicit reviewed internal requests,
@@ -2174,7 +2206,7 @@ no executable coverage is claimed.
 | `governance_assumptions_are_per_query` | Prior ambiguity opt-in or assigned description cannot silently supply next query; cut facet always blocks semantic use, Complete integrity alone follows INT-051 | INT-031, INT-032, INT-048, INT-051, INT-060 |
 | `appendix_fragment_defaults_find_example_collision` | The standard's D-3 example itself has two fragments and no WFP; both default 1 with finding/ambiguous order, never infer from index or C-2 prose | INT-033 |
 | `completeness_rollover_is_not_gap` | Source sequences FE/FF/00/01 on same channel retain +1 continuity; no false gap at FF->00 | INT-034, INT-011 |
-| `completeness_padding_precedence_remains_open` | **Owner-signed Q25 A (precedence arm unblocked for owner choice):** ';' plus suffix bytes from hex {20,00–1F,7F} retains semicolon boundary/raw bytes. A high byte is not padding; X:a plus padding keeps substantive unterminated suffix. Padding-only/no substantive attributes is Incomplete without a truncation claim; proven leading loss keeps blocking cut through a final semicolon and aggregate Ambiguous; ordinary input start proves no loss; no field-value trim | INT-034, INT-035, INT-036 |
+| `completeness_padding_precedence_remains_open` | **Owner-signed Q25 A (precedence arm unblocked by owner Q25 A; fixture name is historical):** ';' plus suffix bytes from hex {20,00–1F,7F} retains semicolon boundary/raw bytes. A high byte is not padding; X:a plus padding keeps substantive unterminated suffix. Padding-only/no substantive attributes is Incomplete without a truncation claim; proven leading loss keeps blocking cut through a final semicolon and aggregate Ambiguous; ordinary input start proves no loss; no field-value trim | INT-034, INT-035, INT-036 |
 | `completeness_integrity_is_not_source_unavailability` | Otherwise available well-framed text with core Mismatch/secondary-integrity findings is distinct from unavailable DATA bounds; no integrity-only Incomplete quarantine; resource refusal remains operational | INT-034, INT-051 |
 
 ## Legacy independent-check batch 1 follow-up fixtures
@@ -2328,8 +2360,8 @@ INT-034 padding-only/leading-loss precedence, with its independent check pending
 
 Owner-choice holds below are removed. All cases are PLANNED, not measured
 or executed; [policy/pin record](research/2026-11-28-owner-policy-signoffs.md).
-Q25 A signs INT-034 padding-only/leading-loss precedence with new check
-pending; Q26 report-format direction is recorded separately.
+Q26 report rendering now follows ADR-0039; Q25 precedence is recorded in
+INT-034 with FINAL CONCUR at #91 5f4f3c4. Concrete development/verification remains planned.
 Q18 class membership beyond its six listed kinds still needs an explicit
 reviewed mapping and independent fixtures before additional-member refusal
 coverage can be claimed. Current rows do not invent such members from severity.
@@ -2357,7 +2389,8 @@ coverage can be claimed. Current rows do not invent such members from severity.
 
 Source: [written analysis](research/2026-11-28-effective-presence-basis-development-analysis.md).
 PLANNED, not executed tests. Owner/independent analysis review and intensive
-executable checks remain; Q25 precedence and Q26 report format are untouched.
+executable checks remain; Q25 precedence is handled separately, and Q26
+report policy is now recorded in ADR-0039.
 Bindings/scope/conditions are supplied and reviewed explicitly; these rows
 do not invent historical registry metadata, reference scope or governance.
 

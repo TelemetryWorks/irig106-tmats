@@ -53,5 +53,7 @@ status line points to the later record.
 | [0037](0037-extract-destination-and-findings-policy.md) | Extract overwrite/identity policy and byte-exact extraction under findings; --force/--strict | accepted (owner, 2026-11-27); strict scope refined by 0038 |
 | [0038](0038-owner-lookup-streaming-and-cli-policies.md) | Owner pattern/scope, host allocation, file order, flex, channel/mixture, strict, reader-progress, stdin and benchmark policies | accepted (owner, 2026-11-28) |
 
+| [0039](0039-text-json-reports-and-exit-classes.md) | Text by default, JSON on request, versioned report evidence and five exit classes | accepted (owner Q26 A, 2026-11-28) |
+
 New records take the next number and use the same front matter
 (`status`, `date`, `decision-makers`).
