@@ -2051,7 +2051,7 @@ in the #40 draft; neither the event nor a nearby 0x02 is guessed as an end.
 
 **Test**: `srcc1_identical_is_not_assumed_change`, `identical_duplicate_sha_never_verifies`, `identity_keeps_premature_seal_finding` (planned; not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Decision record**: [dated owner sign-off and alternatives](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; completed semantic review does not waive these gates.
 
@@ -2071,7 +2071,7 @@ in the #40 draft; neither the event nor a nearby 0x02 is guessed as an end.
 
 **Test**: `cut_observation_cannot_claim_mismatch_or_only_sha_layout_delta`, `matrix_inconsistent_observations_never_parser_coverage` (planned; not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Decision record**: [dated owner sign-off and alternatives](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; completed semantic review does not waive these gates.
 
@@ -2101,7 +2101,7 @@ any bytes, cut locations or findings. See the [exact-head review follow-up](rese
 
 **Test**: `duplicate_sha_without_related_follower_is_ambiguous`, `identical_duplicate_sha_never_verifies`, `cut_duplicate_keeps_cut_evidence_and_ambiguity`, `cut_facet_blocks_ambiguous_acceptance`, `other_field_ambiguity_blocks_identity_and_digest`, `following_duplicate_is_assembly_ambiguous` (planned; not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Decision record**: [dated owner sign-off and alternatives](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; completed semantic review does not waive these gates.
 
@@ -2121,7 +2121,7 @@ any bytes, cut locations or findings. See the [exact-head review follow-up](rese
 
 **Test**: `identity_outside_guard_is_information_only`, `EOF_comparison_never_rejoins_inputs` (planned; not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Decision record**: [dated owner sign-off and alternatives](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; completed semantic review does not waive these gates.
 
@@ -2141,7 +2141,7 @@ any bytes, cut locations or findings. See the [exact-head review follow-up](rese
 
 **Test**: `srcc0_different_is_reported_change`, `raw_change_subtype_never_resets_time`, `partial_copy_never_proves_identity` (planned; not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Decision record**: [dated owner sign-off and alternatives](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; completed semantic review does not waive these gates.
 
@@ -2162,7 +2162,7 @@ any bytes, cut locations or findings. See the [exact-head review follow-up](rese
 
 **Test**: `integrity_findings_default_no_silent_quarantine`, `quarantine_opt_in_requires_review`, `integrity_mode_never_waives_framing_trust_or_ambiguity` (planned; not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Decision record**: [dated owner sign-off and alternatives](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; completed semantic review does not waive these gates.
 
@@ -2182,7 +2182,7 @@ any bytes, cut locations or findings. See the [exact-head review follow-up](rese
 
 **Test**: `unreadable_srcc_identity_is_evidence_not_eligibility` (planned; not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Decision record**: [dated owner sign-off and alternatives](research/2026-11-25-retransmission-owner-signoffs.md); [explicit matrix](research/2026-11-23-retransmission-decision-matrix.md). Source freshness, development analysis and executable tests still block implementation; completed semantic review does not waive these gates.
 
@@ -2208,7 +2208,7 @@ Preserve every earlier copy's located findings without overwrite. Earlier govern
 
 **Test**: `qm_B_then_D_uses_governing_target`, `qm_H_then_B_previous_identity_is_information_only`, `qm_third_copy_only_checksum_does_not_select_target`, `qm_changed_srcc_claims_never_select_target`, `qm_unresolved_governing_blocks_later_target`, `qm_ambiguous_copy_does_not_prove_old_target`, `qm_valid_takeover_updates_governing_target`, `qm_unresolved_then_valid_takeover_resolves_target`, `qm_unresolved_persists_through_non_takeover`, `qm_previous_identity_mutation_preserves_decisions`, `qm_findings_and_prior_decoding_provenance_are_persistent` (planned; not implemented or executed)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-retransmission-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Decision record**: [owner wording and bounded scope](research/2026-11-25-qm-governing-comparison-owner-decision.md); [sequence contract and named fixtures](research/2026-11-23-retransmission-decision-matrix.md#multiple-following-copies-owner-signed-qm-sequence-contract). The pairwise product stays unchanged; sequence coverage is separate, bounded and planned. Independent AI review is complete at the exact head cited above; source freshness, development analysis and executable verification remain required before implementation.
 

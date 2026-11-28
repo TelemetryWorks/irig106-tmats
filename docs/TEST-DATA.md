@@ -2132,6 +2132,7 @@ Owner/independent analysis review and intensive executable tests remain.
 | `sum_analysis_value_and_x_are_not_sha` | COMMENT value text and X-carried G/SHA path do not create checksum items or exclusions. | L3-SUM-001; INT-018 |
 | `sum_analysis_missing_previous_semicolon` | Later apparent SHA remains previous value; no inserted boundary; recognizer-based suggestion only where reviewed vocabulary is present. | L3-SUM-001; INT-018 |
 | `sum_analysis_damaged_name_keeps_all_blockers` | Exact SHA plus compatible damaged name prevents unique exclusion/positive verification; raw candidate evidence and warnings retained. | L3-SUM-003; INT-018/021 |
+| `sum_analysis_bom_alone_refuses_compute` | Otherwise complete source with a leading EF BB BF marker and one terminated canonical G/SHA item, with no damaged name, duplicate or noncanonical designator: blocking BOM alone leaves semantic exclusion unavailable, VERIFY indeterminate and authoritative COMPUTE refused; raw bytes remain intact and any raw-byte hash is separately labelled non-authoritative. | L3-SUM-002, L3-SUM-003; INT-018/019 |
 | `sum_analysis_bom_diagnostic_does_not_admit` | Blocking BOM plus located 02 token keeps warning but never restores lookup/exclusion/positive verification. | L3-SUM-003; INT-018/043 |
 | `sum_analysis_bad_value_defined_exclusion` | Separate complete 2-ABC and 63-digit items: VERIFY malformed, authoritative COMPUTE allowed for established document/exclusion. | L3-SUM-002; INT-019 |
 | `sum_analysis_unknown_or_unavailable_value_compute` | Defined complete exclusion permits COMPUTE despite unsupported token or unavailable value; no positive VERIFY inferred. | L3-SUM-002; INT-019/020/043 |
@@ -2152,6 +2153,49 @@ Owner/independent analysis review and intensive executable tests remain.
 | `sum_analysis_multiple_warnings_never_short_circuit` | Two located noncanonical-2 items each keep warning plus F1/assembly ambiguity; uppercase hex warning remains distinct. | L3-SUM-004; INT-020/021/043 |
 | `sum_analysis_stamp_is_canonical_not_flex` | Stamp output algorithm is 2 with lower-case hex; noncanonical name finding remains; flex never occupies G/SHA; core integrity unchanged. | L3-SUM-005; INT-018/020/043 |
 | `sum_analysis_edition_evidence_is_not_aliasing` | Baseline rule/basis and source coverage remain labelled; 106-13 deferred algorithm is not treated as a historical SHA-256 definition. | L3-SUM-004; INT-018/019/020/043 |
+
+## Planned retransmission development-analysis cases — 2026-11-28
+
+[Written analysis](research/2026-11-28-retransmission-development-analysis.md)
+for approved INT-046–053. These 30 PLANNED compound cases supplement every
+L3-REG-014 matrix member and the existing eleven L3-REG-016 QM sequences;
+they do not replace either obligation or count as executed parser coverage.
+Named product consistency checks remain separate from realizable byte witnesses.
+Any supplied takeover proof must have its own reviewed rule/evidence; synthetic
+control inputs never establish a new governing rule or independent recovery.
+
+| Planned case | Independent expected evidence | Requirements / interpretations |
+|---|---|---|
+| `retx_analysis_srcc0_differs_is_visible` | Bounded distinct whole raw texts plus SRCC=0 retain changed-claim discrepancy and subtype; no assumed unchanged or time reset. | L3-REG-015; INT-050 |
+| `retx_analysis_srcc1_identical_is_not_takeover` | Bounded QI identity with SRCC=1 can preserve otherwise-Complete seal, with label and premature-seal finding, never automatic takeover. | L3-REG-015; INT-046/050 |
+| `retx_analysis_following_only_sha_is_not_sealed_proof` | Only following copy adds the first verified SHA: inventory difference R, not H; no sealed verification or classification exception supplied by that digest. | L3-REG-015; INT-046/051 |
+| `retx_analysis_sealed_only_sha_stays_domain_bound` | Sealed-only verified digest supports only the eligible sealed-text exception with its own guards, not verification/adoption of the following copy. | L3-REG-015; INT-046/051 |
+| `retx_analysis_identity_all_srcc_values` | QI guards independently fixed; following 0/1/U cannot change raw identity classification; every result retains INT-045 finding, and U stays unreadable. | L3-REG-015; INT-046/052 |
+| `retx_analysis_identity_is_not_prefix` | Matching prefix with incomplete following extent never proves whole B identity; comparison remains unresolved and no QI rescue is fabricated. | L3-REG-015; INT-046/050 |
+| `retx_analysis_qd_dominates_identity` | Equal raw texts each contain duplicate SHA: both Ambiguous, all occurrences/identity/premature-seal evidence kept; no Complete upgrade. | L3-REG-015; INT-046/048 |
+| `retx_analysis_qd_without_follower` | Known duplicate SHA and no related follower still forces assembly Ambiguous; digest agreement is irrelevant. | L3-REG-015; INT-048 |
+| `retx_analysis_other_scalar_ambiguity` | Reviewed scalar duplicates other than SHA force QD; equal unknown-cardinality private items alone do not assert QD. | L3-REG-015; INT-048 |
+| `retx_analysis_cut_and_ambiguity_cannot_opt_in` | Proven leading or trailing cut plus duplicate ambiguity retains blocking cut under final semicolon, identity, digest and per-query ambiguity acceptance. | L3-REG-015; INT-048 |
+| `retx_analysis_r0_is_consistency_not_parser` | Cut text with authoritative V/F, or B with conflicting SHA observations, receives separately counted rejection/hold; never a fabricated byte witness. | L3-REG-014; INT-047 |
+| `retx_analysis_nonconflicting_row_still_needs_witness` | Nominal non-R0 tuple with no independently qualified bytes remains a coverage gap rather than a passing parser test. | L3-REG-014; INT-047 |
+| `retx_analysis_gap_rollover_are_distinct` | FF to 00 is same-channel +1; gap/other sequence is not. Raw identity across the gap is information, not QI or a rejoin. | L3-REG-015; INT-046/049 |
+| `retx_analysis_other_channel_does_not_extend` | Different channel with equal bytes retains independent channel/run evidence and no identity-based extension or governing partition guess. | L3-REG-015; INT-049 |
+| `retx_analysis_profile_unknown_not_ss` | Unavailable historical layout/FRMT/RCCVER is not same-profile SS; reserved 04/05 bits do not become SRCC=0. | L3-REG-015; INT-049/052 |
+| `retx_analysis_profile_change_keeps_mixture_scope` | Different FRMT/RCCVER prevents QI. Non-Complete XML observation stays qualified; formal mixture finding requires Complete/session evidence. | L3-REG-015; INT-049 |
+| `retx_analysis_stop_or_eof_no_hidden_join` | Equal texts across same-channel stop or actual EOF retain equality only; EOF comparison is explicitly cross-input. | L3-REG-015; INT-049 |
+| `retx_analysis_sha_and_layout_delta_not_semantics` | Independently established H/W subtype changes no clock/reset/association rule and never implies whole raw equality. | L3-REG-015; INT-050 |
+| `retx_analysis_integrity_default_keeps_guards` | Otherwise eligible initial/update integrity mismatch stays prominent without automatic quarantine/old-setup selection; F1/trust/cut/scope remain blockers. | L3-REG-015; INT-051 |
+| `retx_analysis_no_unreviewed_quarantine` | Request for unreviewed strict quarantine cannot silently replace the signed default policy. | L3-REG-015; INT-051 |
+| `retx_analysis_unreadable_srcc_equality_not_bit` | U plus equal text preserves equality; no SRCC bit, eligibility or governing target is inferred, including from later readable bits. | L3-REG-015; INT-052 |
+| `retx_analysis_governing_vs_previous_pairs` | Fixed G0, definitely unadopted C1 and C2: distinguish governing comparison from previous equality in B->D and H->B sequences. | L3-REG-016; INT-053 |
+| `retx_analysis_unresolved_then_proven_takeover` | Unresolved C1, independently reviewed valid C2 takeover, then C3: target resolves to C2 with earlier findings/unresolved history retained. A merely Complete/good C2 is insufficient. | L3-REG-016; INT-053 |
+| `retx_analysis_unresolved_then_definite_non_takeover` | Unresolved C1 then definitely unadopted C2 leaves C3 target unresolved, not C2 or guessed G0. | L3-REG-016; INT-053 |
+| `retx_analysis_previous_equality_mutation` | Hold G/candidate/control evidence fixed and change only previous-copy equality; classification/eligibility/target stay unchanged. | L3-REG-016; INT-053 |
+| `retx_analysis_qd_does_not_prove_old_governor` | QD Ambiguous blocks new adoption but unresolved actual recorder takeover does not establish that old G0 governed later bytes. | L3-REG-016; INT-048/053 |
+| `retx_analysis_history_survives_takeover` | G0-decoded data, valid G1 takeover, then unresolved copy: preserve every prior finding and original packet-to-governor/source reference. | L3-REG-016; INT-053 |
+| `retx_analysis_raw_span_partition_invariance` | Independently fixed whole raw texts across DATA span/fragment partitions preserve classifications/comparisons with zero required coalescing and unchanged core evidence. | L3-REG-015; INT-046/049/050 |
+| `retx_analysis_pending_extent_cannot_publish_identity` | Open follower lacks bounded whole identity; candidate revision and premature-seal evidence stay observable without an invented timeout, EOF or automatic governing use. | L3-REG-015; INT-046/050 |
+| `retx_analysis_all_guard_findings_survive` | Combine located 02/uppercase/name spelling, F1 and cut/BOM blockers: no early return drops warnings, chooses an exclusion or upgrades core integrity. | L3-REG-015; INT-046/048/051 |
 
 ## Planned owner Q26 report/show acceptance — 2026-11-28
 

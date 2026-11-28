@@ -238,7 +238,8 @@ For the projected-name fixture, raw source is CR LF SP then `g\s` CR LF
 `G\PN:TEST;`. Independently fixed raw exclusion is [3,78), not [0,78).
 The preimage is exactly hex 0d0a200a475c504e3a544553543b above. Changing
 input name/value bytes inside that known exclusion does not change the
-preimage; changing the leading layout or following COMMENT/TAB bytes does.
+preimage; changing the leading layout or following LF/G\PN bytes does.
+The separate COMMENT:a<TAB>b; oracle covers retained value-control bytes.
 Digest independence from excluded bytes does not bypass damage/uniqueness,
 framing or other eligibility guards. Equality of digests never proves equality
 of raw sources or governing identity.
@@ -257,6 +258,7 @@ Source excerpts are not automatically conforming whole TMATS fixtures.
 | `sum_analysis_value_and_x_are_not_sha` | COMMENT value text and X-carried G/SHA path do not create checksum items or exclusions. | L3-SUM-001; INT-018 |
 | `sum_analysis_missing_previous_semicolon` | Later apparent SHA remains previous value; no inserted boundary; recognizer-based suggestion only where reviewed vocabulary is present. | L3-SUM-001; INT-018 |
 | `sum_analysis_damaged_name_keeps_all_blockers` | Exact SHA plus compatible damaged name prevents unique exclusion/positive verification; raw candidate evidence and warnings retained. | L3-SUM-003; INT-018/021 |
+| `sum_analysis_bom_alone_refuses_compute` | Otherwise complete source with a leading EF BB BF marker and one terminated canonical G/SHA item, with no damaged name, duplicate or noncanonical designator: blocking BOM alone leaves semantic exclusion unavailable, VERIFY indeterminate and authoritative COMPUTE refused; raw bytes remain intact and any raw-byte hash is separately labelled non-authoritative. | L3-SUM-002, L3-SUM-003; INT-018/019 |
 | `sum_analysis_bom_diagnostic_does_not_admit` | Blocking BOM plus located 02 token keeps warning but never restores lookup/exclusion/positive verification. | L3-SUM-003; INT-018/043 |
 | `sum_analysis_bad_value_defined_exclusion` | Separate complete 2-ABC and 63-digit items: VERIFY malformed, authoritative COMPUTE allowed for established document/exclusion. | L3-SUM-002; INT-019 |
 | `sum_analysis_unknown_or_unavailable_value_compute` | Defined complete exclusion permits COMPUTE despite unsupported token or unavailable value; no positive VERIFY inferred. | L3-SUM-002; INT-019/020/043 |
