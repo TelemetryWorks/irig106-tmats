@@ -19,6 +19,11 @@ specifies future release mechanics; it does not claim the workflow exists.
 ## Published dependency prerequisites for tmats 0.1
 
 Publish `irig106-types` 0.2 and `irig106-core` 0.2 BEFORE tmats 0.1.
+Owner-reported 2026-11-28: core 0.2.0 is published, with
+[release run 46162767638](https://github.com/TelemetryWorks/irig106-core/actions/runs/46162767638)
+green; its publication prerequisite is met. Types 0.2 is still unpublished.
+This workspace skeleton adds neither dependency; compatible API/release-graph
+evidence remains required when integration is implemented.
 The integration uses header-only PacketFacts from types, core's PacketInfo
 integrity/trust sideband and borrowed DATA spans. Core 0.1.0 already being
 published, or the core 0.2 reader being merged, does not satisfy publication
@@ -28,8 +33,8 @@ path/git/[patch]/source overrides and exercise their compatible published
 APIs; a CI-only source override is never release evidence. The internal exact
 workspace library path is retained, with a matching published dependency in
 the packaged CLI. Do not add fields to PacketFacts or ship a fallback reader.
-Packet data-checksum verification remains a separately owner-scheduled core
-feature; pass NotChecked until core provides it. No publishing action is
+Packet data-checksum verification is core-owned; pass its supplied evidence
+unchanged, including NotChecked when reported. No publishing action is
 authorised/performed by this documentation change.
 
 ## What gets released
@@ -39,9 +44,10 @@ authorised/performed by this documentation change.
 | `irig106-tmats` | library | yes | a dependency: `irig106-tmats = "0.1"` |
 | `irig106-tmats-cli` | binary `tmats` | yes | `cargo install irig106-tmats-cli` → `tmats` |
 
-The release target after the owner-directed restructure (ADR-0035) is a
+The current owner-directed layout (ADR-0035) is a
 virtual workspace: library in `crates/irig106-tmats/`, CLI in
-`apps/irig106-tmats-cli/`. The current files have not moved in this docs PR. Prebuilt `tmats` binaries for Windows, Linux, and
+`apps/irig106-tmats-cli/`. The mechanical skeleton remains at 0.1.0,
+without a release/publish. Prebuilt `tmats` binaries for Windows, Linux, and
 macOS are attached to each GitHub release for users without a Rust toolchain
 (the way `idmptmat.exe` is distributed today).
 

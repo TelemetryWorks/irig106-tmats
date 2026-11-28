@@ -16,7 +16,5 @@ name = "tmats"
 path = "src/main.rs"
 
 [dependencies]
-# Exact pin: the CLI is only ever built against the library version released
-# with it (docs/RELEASING.md). `tests/lockstep.rs` fails if this drifts from
-# the workspace version.
-irig106-tmats = { path = "..", version = "=0.1.0" }
+# Exact path/version pin is declared once in the virtual workspace root.
+irig106-tmats.workspace = true

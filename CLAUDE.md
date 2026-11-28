@@ -19,7 +19,7 @@ in the same parent directory): `irig106-types` (shared foundational types),
 
 ### Current state: redesign, documentation first
 
-The original implementation was a prototype that could not be made correct
+The retired original implementation was a prototype that could not be made correct
 incrementally (it lost data on round trips and mis-mapped Chapter 9 code
 names). It is preserved at the git tag **`prototype-0`**. The project is being
 rebuilt **documentation first**: use cases → architecture and data flow →
@@ -35,28 +35,32 @@ std feature, on by default and always required, documented as "not a no_std
 promise". With defaults disabled, callers explicitly enable std; disabling
 it is unsupported. The exact irigtime consumer declaration stays
 `irig106-tmats = { version = "0.1", default-features = false, features = ["std"] }`.
-This is the target feature contract; the prototype feature table is not
-redesigned acceptance evidence.
+The skeleton feature table follows this contract; it is not evidence of
+implemented TMATS APIs or build/consumer acceptance beyond scaffold CI.
 
 The owner-decided target (2026-11-21, ADR-0035) is a virtual workspace:
 `crates/irig106-tmats/` for the library, `apps/irig106-tmats-cli/` for the
 CLI, shared workspace version and an exact-version library path dependency
-in `[workspace.dependencies]`. The restructure has not happened yet.
-W2 prototype removal and W3 reusable APIs remain unchanged.
+in `[workspace.dependencies]`. Family 3 now supplies this mechanical layout
+at version 0.1.0; the library currently exposes only its version constant.
+W2 prototype removal is complete. W3 has a reusable help/version runner
+and thin main only; no TMATS command or semantic API is implemented.
 
 The two crates are released **in lockstep**: the library `irig106-tmats` and the focused CLI
 `irig106-tmats-cli` (binary `tmats`, the Rust successor to irig106.org's
 `idmptmat`). One version, one tag, one changelog; the CLI pins the library
 with `=X.Y.Z`. Never bump one crate's version without the other. The complete
 ecosystem CLI is `irig106-cli`, a separate repository. See
-`docs/RELEASING.md`.
+`docs/RELEASING.md`. The root manifest is virtual; source/test roots are
+`crates/irig106-tmats/{src,tests}` and `apps/irig106-tmats-cli/{src,tests}`.
 
 ## Common Commands
 
 ```bash
 cargo build --workspace
 cargo test --workspace --all-features        # library + CLI, every feature
-cargo test -p irig106-tmats-cli              # CLI only (includes the lockstep guard)
+cargo test -p irig106-tmats-cli              # scaffold + lockstep guard
+cargo test --workspace --no-default-features --features std # supported explicit std
 cargo run -p irig106-tmats-cli -- --version  # run `tmats`
 cargo clippy --workspace --all-targets --all-features -- -D warnings
 cargo fmt --all -- --check

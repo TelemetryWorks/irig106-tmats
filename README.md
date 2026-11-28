@@ -2,115 +2,39 @@
 
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/TelemetryWorks/irig106-tmats/badge)](https://scorecard.dev/viewer/?uri=github.com/TelemetryWorks/irig106-tmats)
 
-**TMATS parser, validator, and generator for the IRIG 106 ecosystem.**
+**Documentation-first TMATS redesign: workspace skeleton, not a parser yet.**
 
-> **Status: prototype — do not use for compliance validation or to rewrite
-> authoritative TMATS.** The code in this repository is the retired
-> prototype (git tag `prototype-0`). Reviews against IRIG 106-24R1 found that
-> it misreads PCM attributes, rejects standard keywords, drops the setup
-> record's format bit, confuses the recording-format version with the TMATS
-> edition, and can lose a whole document in lenient mode
-> (`docs/research/2026-09-25-prototype-review.md`,
-> `docs/research/2026-09-27-spec-alignment-review.md`). The library is being
-> rebuilt documentation first (`docs/ROADMAP.md`); the features listed below
-> describe the prototype, not the design.
+The incorrect prototype and its tests, build-script registry, benchmarks and
+fuzz harness have been retired. Its history remains at
+[`prototype-0`](https://github.com/TelemetryWorks/irig106-tmats/tree/prototype-0).
+Do not use the skeleton for compliance validation or rewriting telemetry.
 
-The [planned 0.1 field-state contract](docs/RELEASE-0.1.md#effective-values-and-default-evidence)
-requires consumers to read each Missing reason: "default applicability not
-established" signals uncertainty, not a proven inapplicable default. Value
-states, raw evidence and interpretation-basis labels travel together.
+The virtual workspace contains:
 
-Part of the [TelemetryWorks](https://github.com/TelemetryWorks) organization — open, high-performance telemetry tooling for flight test and range instrumentation, built in Rust.  
+- [crates/irig106-tmats](crates/irig106-tmats): library skeleton, currently
+  exposing only `VERSION`.
+- [apps/irig106-tmats-cli](apps/irig106-tmats-cli): reusable help/version CLI
+  scaffold and thin `tmats` executable. TMATS commands are not implemented.
 
-## What is TMATS?
+Both packages remain **0.1.0**, in lockstep. The root manifest owns their
+metadata and the exact-version internal dependency. The library's `std`
+feature is default-on and required; disabling it is unsupported, not a
+`no_std` promise. No new dependency or release is introduced by this layout.
 
-The Telemetry Attributes Transfer Standard (TMATS) is defined in IRIG 106 Chapter 9. It provides a standardized way to describe the configuration of telemetry data — channel definitions, PCM formats, bus configurations, measurement descriptions, and calibration data. TMATS records are embedded as the first packet (Type 0x01) in every IRIG 106 Chapter 10 recording file.  
-
-## Features
-
-|Capability|Description|Feature Flag|
-|-|-|-|
-|**Parse**|Tokenize and structure TMATS ASCII data|always|
-|**Model**|Strongly-typed Rust domain model for all 9 attribute groups|always|
-|**Serialize**|Emit spec-compliant `code-name:value;` format|always|
-|**Ch10 Integration**|Decode/encode Type 0x01 setup record payloads|always|
-|**Validate**|Rule-based validation against Ch9 §9.5 normative tables|always|
-|**Query**|Channel resolution, hierarchy traversal, diff|always|
-|**XML**|Parse/serialize TMATS XML (Tmats.xsd)|`xml`|
-|**Generate**|Synthesize TMATS from channel inventory|`generate`|
-|**Repair**|Auto-fix broken counters, missing attributes|`repair`|
-|**Serde**|JSON/YAML interchange on model types|`serde`|
-|**WASM**|Browser-compatible API for irig106-studio|`wasm`|
-
-## Quick Start
-
-```rust
-use irig106\_tmats::prelude::\*;
-
-// Parse TMATS from raw bytes
-let input = b"G\\\\PN:FLIGHT\_TEST;G\\\\106:17;R-1\\\\ID:MDR;R-1\\\\N:1;R-1\\\\TK1-1:1;";
-let doc = parse(input)?;
-
-assert\_eq!(doc.general.program\_name.as\_deref(), Some("FLIGHT\_TEST"));
-assert\_eq!(doc.source\_version, Some(Irig106Version::V106\_17));
-
-// Validate against spec
-let report = validate(\&doc);
-println!("{} errors, {} warnings", report.errors, report.warnings);
-
-// Resolve a channel's full configuration chain
-if let Some(config) = resolve\_channel(\&doc, 1) {
-    println!("Channel 1 recorder: {:?}", config.recorder.recorder\_id);
-}
-
-// Serialize back to ASCII
-let output = serialize\_to\_vec(\&doc)?;
+```bash
+cargo run -p irig106-tmats-cli -- --version
+cargo test --workspace --all-features
+cargo test --workspace --no-default-features --features std
+python3 scripts/build-trace-matrix.py --check
 ```
 
-## Ecosystem Integration
+TMATS is defined by IRIG 106 Chapter 9. The planned lossless library preserves
+raw source and uncertainty, with no silent repair. See the
+[0.1 release contract](docs/RELEASE-0.1.md), [roadmap](docs/ROADMAP.md),
+[architecture](docs/ARCHITECTURE.md), [CLI design](docs/CLI.md),
+[requirements trace](docs/TRACE-MATRIX.md) and [project structure](docs/PROJECT_STRUCTURE.md).
+Written analyses, source inspection and scaffold CI are not implemented TMATS
+acceptance. Parsing, views, checksums and release workflows follow in later
+families after their review gates. The documented 0.1 scope is unchanged.
 
-```
-┌─────────────────────┐     ┌──────────────┐     ┌──────────────┐
-│ irig106-ch10-reader │────>│ irig106-tmats│<────│ irig106-write│
-│ (reads Ch10 files)  │     │ (this crate) │     │ (writes Ch10)│
-└─────────────────────┘     └──────┬───────┘     └──────────────┘
-                                   │
-                    ┌──────────────┼──────────────┐
-                    │              │              │
-              ┌─────┴─────┐ ┌─────┴─────┐ ┌─────┴──────┐
-              │irig106-cli│ │irig106-   │ │irig106-    │
-              │           │ │validator  │ │studio      │
-              └───────────┘ └───────────┘ └────────────┘
-```
-
-**Important boundary:** This crate produces *payloads*, not *packets*. The `ch10::encode\_setup\_payload()` function returns `(CSDW + TMATS bytes)` which `irig106-write` wraps in a Ch10 packet header and trailer.
-
-## Types That Belong in `irig106-types`
-
-The following types are defined in `src/types\_bridge.rs` temporarily and should migrate to the shared `irig106-types` crate:
-
-* `Irig106Version` — version enum used across all crates
-* `DataTypeCode` — Ch10 data type codes
-* `ChannelId` — u16 channel ID newtype
-* `GroupPrefix` — TMATS group letter identifiers
-
-## Requirements Traceability
-
-All public APIs trace to requirements documented in `docs/REQUIREMENTS.md`:
-
-* **L1** (13 capabilities): PARSE, MODEL, SERIAL, XML, VALID, VERSION, CH10, GEN, REPAIR, QUERY, ERR, PERF, INTEROP
-* **L2** (62 functional requirements)
-* **L3** (107 design requirements)
-
-See `docs/ARCHITECTURE.md` for module structure and design decisions.
-
-## Standards References
-
-* **IRIG 106 Chapter 9** — Telemetry Attributes Transfer Standard (primary)
-* **IRIG 106 Chapter 10** — Type 0x01 Setup Record format
-* **RCC 123-20** — Chapter 10 Programmer's Handbook
-* **RCC 124-13** — TMATS Handbook
-
-## License
-
-Apache-2.0
+The library/CLI use the [Apache-2.0 license](LICENSE).

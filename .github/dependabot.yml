@@ -21,8 +21,8 @@ updates:
   - package-ecosystem: cargo
     directories:
       - /
-      - /irig106-tmats-cli
-      - /fuzz
+      - /crates/irig106-tmats
+      - /apps/irig106-tmats-cli
     schedule:
       interval: weekly
     open-pull-requests-limit: 5

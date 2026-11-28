@@ -1,10 +1,8 @@
 [workspace]
-members = [".", "irig106-tmats-cli"]
-# The prototype's cargo-fuzz crate declares its own workspace.
-exclude = ["fuzz"]
+resolver = "3"
+members = ["crates/irig106-tmats", "apps/irig106-tmats-cli"]
 
-# One version for every crate in this repository: the library and the `tmats`
-# CLI are released in lockstep (docs/RELEASING.md). Bump it here only.
+# One version for the library and CLI; no release is performed by this scaffold.
 [workspace.package]
 version = "0.1.0"
 edition = "2024"
@@ -13,52 +11,8 @@ license = "Apache-2.0"
 repository = "https://github.com/TelemetryWorks/irig106-tmats"
 homepage = "https://github.com/TelemetryWorks/irig106-tmats"
 
-[package]
-name = "irig106-tmats"
-version.workspace = true
-edition.workspace = true
-rust-version.workspace = true
-license.workspace = true
-repository.workspace = true
-homepage.workspace = true
-description = "TMATS (Telemetry Attributes Transfer Standard) parser, validator, and generator for the IRIG 106 ecosystem"
-keywords = ["irig106", "tmats", "telemetry", "flight-test", "chapter9"]
-categories = ["aerospace", "parser-implementations", "encoding"]
-
-[features]
-default = ["std"]
-std = []
-xml = ["dep:quick-xml"]
-serde = ["dep:serde", "dep:serde_json", "indexmap/serde", "smallvec/serde"]
-wasm = ["dep:wasm-bindgen", "dep:serde-wasm-bindgen", "serde"]
-rich-errors = ["dep:miette"]
-generate = []
-repair = []
-full = ["xml", "serde", "rich-errors", "generate", "repair"]
-
-[dependencies]
-# Core — always available
-indexmap = "2"
-smallvec = "1.13"
-# NOTE: irig106-types will be a path/registry dependency once published
-# irig106-types = { version = "0.1", default-features = false }
-
-# Optional
-quick-xml = { version = "0.36", optional = true }
-serde = { version = "1", features = ["derive"], optional = true }
-serde_json = { version = "1", optional = true }
-wasm-bindgen = { version = "0.2", optional = true }
-serde-wasm-bindgen = { version = "0.6", optional = true }
-miette = { version = "7", features = ["fancy"], optional = true }
-
-[dev-dependencies]
-pretty_assertions = "1"
-proptest = "1"
-criterion = { version = "0.5", features = ["html_reports"] }
-
-[[bench]]
-name = "parse_bench"
-harness = false
+[workspace.dependencies]
+irig106-tmats = { path = "crates/irig106-tmats", version = "=0.1.0" }
 
 # Profiles apply to the whole workspace; they shape the `tmats` binary's
 # release build (a library's own profile has no effect on its dependents).

@@ -367,7 +367,7 @@ This matrix is the single source of truth for live status; the requirement docum
 
 | L1 ID | L2 Children | Test Artifacts | Status |
 |-------|-------------|----------------|--------|
-| L1-REL-001 | L2-REL-001 | `irig106-tmats-cli/tests/lockstep.rs::cli_and_library_versions_match`<br>`irig106-tmats-cli/tests/lockstep.rs::library_dependency_is_pinned_exactly`<br>`irig106-tmats-cli/tests/lockstep.rs::version_flag_reports_both_versions` | Partially Implemented |
+| L1-REL-001 | L2-REL-001 | `apps/irig106-tmats-cli/tests/lockstep.rs::cli_and_library_versions_match`<br>`apps/irig106-tmats-cli/tests/lockstep.rs::library_dependency_is_pinned_exactly`<br>`apps/irig106-tmats-cli/tests/lockstep.rs::version_flag_reports_both_versions` | Partially Implemented |
 | L1-REL-002 | L2-REL-002 | _(none)_ | Draft |
 | L1-REL-003 | L2-REL-003 | _(none)_ | Draft |
 | L1-REL-004 | L2-REL-004 | _(none)_ | Draft |

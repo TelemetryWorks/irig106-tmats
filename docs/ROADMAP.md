@@ -21,8 +21,9 @@ The original implementation was a prototype. A review against IRIG 106
 Chapter 9 found that its core design could not be made correct incrementally:
 it lost data on a parse/serialize round trip, mapped several P-group code names
 to the wrong meanings, and hand-coded validation that disagreed with its own
-attribute registry. It is preserved at the git tag `prototype-0` and will be
-removed from `main` when the new implementation's first code lands.
+attribute registry. Its history is preserved at the git tag `prototype-0`. The current virtual
+workspace is a version/help skeleton; the prototype code is retired.
+No TMATS behavior is implemented by that mechanical change.
 
 The project is being rebuilt **documentation first**: nothing below is
 implemented until the design phase has produced reviewed use cases,
@@ -46,6 +47,11 @@ ADR-0034's W2/W3 remain coordinator-decided. Joey approved F1/F7 under ADR-0033,
 ### Published dependency prerequisites for tmats 0.1
 
 Publish `irig106-types` 0.2 and `irig106-core` 0.2 BEFORE tmats 0.1.
+Owner-reported 2026-11-28: core 0.2.0 is published, with
+[release run 46162767638](https://github.com/TelemetryWorks/irig106-core/actions/runs/46162767638)
+green; its publication prerequisite is met. Types 0.2 is still unpublished.
+This workspace skeleton adds neither dependency; compatible API/release-graph
+evidence remains required when integration is implemented.
 The integration uses header-only PacketFacts from types, core's PacketInfo
 integrity/trust sideband and borrowed DATA spans. Core 0.1.0 already being
 published, or the core 0.2 reader being merged, does not satisfy publication
@@ -61,9 +67,9 @@ Use the [post-integration reassessment](research/2026-11-27-family2-unheld-queue
 for the remaining owner/source gates and the [owner-item/blocker table](research/2026-11-27-family2-coverage-audit.md#owner-items-and-the-work-they-block)
 for decision routing. Use the [current completion audit](research/2026-11-28-family2-completion-audit.md)
 for the documentary closure recommendation and remaining component gates.
-Close family two only after exact-head and owner review plus accepted phase
-handoff; then proceed to mechanical ADR-0035 layout work. No family-three or
-parser work is started by the audit, and prototype CI is not readiness evidence.
+The owner explicitly authorized the mechanical ADR-0035 restructure on
+2026-11-28. Keep semantic implementation behind its component source/analysis/
+acceptance gates; layout/scaffold CI is not parser readiness evidence.
 
 Joey accepted the outstanding recommendations on 2026-11-28: see ADR-0038
 and the current decision table below, plus the INT sign-off/final-check
