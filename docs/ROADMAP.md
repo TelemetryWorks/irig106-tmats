@@ -155,8 +155,9 @@ only after source/development/verification gates, keeping
 DATA SOURCE ID (`R-x\DSI-n`, 106-24R1 Chapter 9 Table 9-4 p. 9-49) as
 source context, never a clock reference. Owner-signed INT-054/055 record CHE
 context without silent filtering and general numeric field-value syntax.
-INT-054/055 and INT-056–060 have final independent AI concurrence. Complete source-freshness
-and development analysis (including the complete non-decimal representation inventory),
+INT-054/055 and INT-056–060 have final independent AI concurrence. Review the [time-view/choice development analysis](research/2026-11-28-time-choice-development-analysis.md)
+(including its complete non-decimal representation inventory/accounting scope),
+retain source-freshness/actual metadata readiness,
 and implement the planned executable tests before relying on them. The owner
 choices are recorded; independent review and development gates remain.
 

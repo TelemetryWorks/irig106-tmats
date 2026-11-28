@@ -2244,6 +2244,59 @@ is not an executable alias map or evidence that older editions are supported.
 | `link_analysis_dpno_canonical_scope_collision` | C-01/C-1 DCT occurrences use canonical index identity with collision/duplicate evidence, not an operand/default winner. | L3-REG-004; INT-008 |
 | `link_analysis_historical_prose_not_usage_column` | Archived DPNO prose default remains distinguishable from modern Default usage fields; missing historical applicability metadata stays unavailable. | L3-REG-003; INT-008 |
 
+## Planned time-view/choice development-analysis cases — 2026-11-28
+
+[Written analysis](research/2026-11-28-time-choice-development-analysis.md)
+for approved INT-054–060. These 39 cases are PLANNED, not executed numeric/
+time-view/chooser tests. Existing per-level/per-kind ID and format fixtures
+remain required. Supply independent definition/representation/applicability,
+entry/document/revision and access bindings: duplicate fields retain assembly
+Ambiguous and any applicable explicit INT-031 access, never fabricated Complete.
+Synthetic evidence inputs qualify composition only, not a nonexistent 0.1
+association-proof path or a new production recovery/evidence rule.
+
+| Planned case | Independent expected evidence | Requirements / interpretations |
+|---|---|---|
+| `time_policy_analysis_disabled_timein_retained` | Confirmed TIMEIN with CHE F remains enumerated and selectable if otherwise eligible; explicit caller filtering changes only its view, not source or association. | L3-VIEW-040; INT-054 |
+| `time_policy_analysis_che_missing_presence` | Proved applicable R\N condition and absent CHE give Missing plus required-presence finding, never default enabled/disabled; unknown applicability retains its reason. | L3-VIEW-041; INT-054 |
+| `time_policy_analysis_che_invalid_duplicate_context` | Invalid/duplicate/unavailable CHE remains located context without reclassifying CDT or silently filtering an entry; record qualification preserved. | L3-VIEW-042; INT-054 |
+| `time_policy_analysis_raw_control_is_invalid` | Raw NSB 30 0d 0a 34 has value [8,12) and is Invalid, never Explicit 4; bytes and omission findings survive. | L3-VIEW-037; INT-055 |
+| `time_policy_analysis_control_positions` | Each control at numeric value start/middle/end is Invalid, including TAB/NUL/lone CR/LF/DEL; no projection/encoding guess repairs it. | L3-VIEW-037; INT-055 |
+| `time_policy_analysis_digit_limit_before_zeros` | Ten raw digits are within syntax; eleven zeros are Invalid before stripping. No clipping, wrap, arbitrary host-parser suffix acceptance or u32 overflow. | L3-VIEW-037; INT-055 |
+| `time_policy_analysis_leading_blank_uniform` | Leading blank in NSB/TK1/R\N/SHTF/TTF/numeric TFMT remains unavailable; trailing/embedded blanks Invalid and other proven faults retained. Letter TFMT blank rule stays separate. | L3-VIEW-037; INT-055 |
+| `time_policy_analysis_leading_blank_keeps_proved_failure` | Leading SP plus independently proven control/high byte/other syntax defect never erases Invalid evidence or turns it into a repaired numeric value. | L3-VIEW-037; INT-055 |
+| `time_policy_analysis_non_ascii_and_signs` | Signs, decimal/exponent strings, Unicode digits/high bytes and empty decimal value are Invalid without repair, preserving raw and character diagnostics. | L3-VIEW-037; INT-055 |
+| `time_policy_analysis_canonical_range_boundaries` | NSB 00 is Explicit 0 with warning, 014 invalid range with warning; TK1 65535/65536 and R\N 65536/65537 use their separate bounds. | L3-VIEW-038; INT-055 |
+| `time_policy_analysis_rn_invalid_not_false` | R\N 0/Invalid, unavailable, Missing or duplicate/equal operands leave >0 cannot-evaluate, not assumed zero/positive or false; 01 succeeds with warning. | L3-VIEW-039; INT-055 |
+| `time_policy_analysis_numeric_codes_letter_separate` | TTF/TFMT 02 and SHTF 00/01/02 match reviewed numeric codes with warning; letter TFMT B and CHE F do not enter a numeric/boolean repair branch. | L3-VIEW-038; INT-055 |
+| `time_policy_analysis_no_absence_from_bad_numeric` | Present invalid/empty/ambiguous numeric data never becomes absence/default; missing NSB remains Missing with applicable required-presence finding, not Explicit zero. | L3-VIEW-039; INT-055 |
+| `time_policy_analysis_binary_widths_excluded` | MFD TRA 00101, 32-bit DMSK, 64-bit AMSK, 81-bit UCSV, FW/X arms and P ADM FDP 0011 get no INT-055 zero-strip/warning/ten-digit limit; their own reviewed grammar or availability applies. | L3-VIEW-037; INT-055 |
+| `time_policy_analysis_float_hex_text_excluded` | ITH -12.5 or digit-only float, MRC SPM 0001/0A3F, string/date/IP digit spellings stay outside INT-055; G/SHA retains its separate projected grammar. | L3-VIEW-037; INT-055 |
+| `time_policy_analysis_dispatch_not_inventory_count` | All 729 table Range rows remain accounted for, but unknown/mixed representation metadata cannot become an executable decimal rule from a digit-looking value or bucket count. | L3-VIEW-037; INT-055 |
+| `time_policy_analysis_strict_invalid_id_format` | Otherwise eligible target with independently Invalid ID and format arms: Strict typed refusal, original states/qualifications and source evidence unchanged. | L3-VIEW-052; INT-056 |
+| `time_policy_analysis_warn_invalid_id_format` | Invalid ID/format arms: Warn default accepts labelled assumption with every bad-data attachment and no field/association upgrade. | L3-VIEW-052; INT-056 |
+| `time_policy_analysis_quiet_invalid_id_format` | Invalid ID/format arms: Quiet labelled acceptance, exact suppressed count and level visible; Invalid and source findings preserved. | L3-VIEW-053; INT-056 |
+| `time_policy_analysis_strict_duplicate_id_format` | Duplicate ID/format arms retain Ambiguous/record facets and supplied applicable access qualification; Strict refuses with typed bad-data reason. | L3-VIEW-052; INT-056 |
+| `time_policy_analysis_warn_duplicate_id_format` | Duplicate ID/format arms with required independent ambiguity-access qualification: Warn labelled acceptance never chooses a field winner or makes assembly Complete/governing. | L3-VIEW-052; INT-056 |
+| `time_policy_analysis_quiet_duplicate_id_format` | Duplicate ID/format arms: Quiet suppresses Warn attachments only, keeping every original occurrence, ambiguity/cut restrictions and count/level/assumption. | L3-VIEW-053; INT-056 |
+| `time_policy_analysis_strict_unavailable_id_format` | Unavailable ID/format arms: Strict typed refusal keeps unavailable reason, not Invalid or repaired data. | L3-VIEW-052; INT-056 |
+| `time_policy_analysis_warn_unavailable_id_format` | Unavailable ID/format arms: Warn labelled acceptance attaches all bad-data findings without restoring unavailable interpretation. | L3-VIEW-052; INT-056 |
+| `time_policy_analysis_quiet_unavailable_id_format` | Unavailable ID/format arms: Quiet retains availability reasons/source diagnostics and exact suppression evidence, no fabricated usable field. | L3-VIEW-053; INT-056 |
+| `time_policy_analysis_quiet_zero_marker` | Eligible explicit Quiet query with zero Warn bad-data attachments still has suppressed: 0 bad-data findings, level and assumption label. | L3-VIEW-053; INT-056 |
+| `time_policy_analysis_quiet_any_severity_exact_count` | Distinct b1/info,b2/warning,b3/error Warn attachments suppress with N=3; unrelated n1 remains, all source/field findings readable; count findings not fields. | L3-VIEW-053; INT-056 |
+| `time_policy_analysis_derived_marker_and_no_reemission` | Dependent answer keeps its own choice/level/count and source binding; original diagnostics stay accessible but suppressed assumption findings are not re-emitted by another result path. | L3-VIEW-049; INT-056/060 |
+| `time_policy_analysis_all_levels_refuse_wrong_target` | Non-TIMEIN, other recorder, nonexistent or unresolvable ID-only target refuses with typed eligibility reason for every level; Quiet cannot suppress that refusal. | L3-VIEW-054; INT-057 |
+| `time_policy_analysis_entry_identity_not_actual_id` | Existing canonical TIMEIN entry with bad TK1 may be explicitly addressed and use INT-056; no guessed actual ID, entry-index-as-ID or duplicate ID-only winner. | L3-VIEW-054; INT-057 |
+| `time_policy_analysis_choice_keeps_cut_and_scope` | Any local level acceptance retains cut/trust/scope/access restrictions and does not make the setup usable/governing; bad field policy is not a framing override. | L3-VIEW-047; INT-056/057 |
+| `time_policy_analysis_no_01_contradiction_path` | No production 0.1 evidence rule exists, so no local metadata, bad target or packet observation triggers the approved-evidence contradiction refusal. | L3-VIEW-055; INT-058 |
+| `time_policy_analysis_future_proof_gate` | Injected separately reviewed conclusive contradictory evidence tests refusal composition at every level, not a new baseline association-proof rule or a guessed precedence among competing claims. | L3-VIEW-055; INT-058 |
+| `time_policy_analysis_heuristics_never_proof` | Candidate order/count, CHE filtering, TSRC/DSI/NSB, equal formats, observed time packets and hashes never turn a choice into evidenced/contradictory association. | L3-VIEW-045; INT-058/059 |
+| `time_policy_analysis_zero_one_many_unestablished` | Zero/one/many unproven TIMEIN candidates retain candidates/reasons and association_unestablished; no sole-survivor default or conflicting-by-count. | L3-VIEW-056; INT-059 |
+| `time_policy_analysis_preclassified_conflict_only` | Synthetic conflicting input remains classified with evidence; composition is not acceptance of any actual 0.1 evidence source and no winner is chosen. | L3-VIEW-056; INT-059 |
+| `time_policy_analysis_state_axes_stay_distinct` | Caller assumption/level is orthogonal to field states/availability, lookup cardinality, record qualification and association state; no default A or accepted choice upgrades another axis. | L3-VIEW-044; INT-056/059 |
+| `time_policy_analysis_next_query_no_target_default` | After a successful explicit choice, a second query with omitted target stays unassumed; Warn level default does not supply that target. | L3-VIEW-057; INT-060 |
+| `time_policy_analysis_revision_and_parallel_queries` | Equal metadata in a new revision or independent/interleaved query never inherits the earlier target/level/count; immutable parsed-data reuse is not ambient caller choice. | L3-VIEW-057; INT-060 |
+
 ## Planned owner Q26 report/show acceptance — 2026-11-28
 
 Owner Q26 A/ADR-0039 removes the report-format hold for CLI-002/006 and
