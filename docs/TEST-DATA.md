@@ -1413,12 +1413,15 @@ not executed Rust tests or Evidence. Inspect actual package/configuration
 binding and completed artifacts at one exact review head. Negative cases
 are future acceptance-oracle examples, not mutations performed by this PR.
 No prototype build is presented as redesigned-library acceptance.
+Owner Q6 (Joey, 2026-11-28) removes the std-choice hold: default-on,
+always-required std; "not a no_std promise" (ADR-0015 amendment). The exact
+no-default-features + explicit std consumer declaration stays unchanged.
 
 | Planned acceptance case | Evidence required or independent rejection condition | Requirements |
 |---|---|---|
 | `compat_msrv_inherits_both_packages` | Resolve actual library/CLI TOML inheritance to rust-version 1.85 under ADR-0035; comments or virtual-root-only metadata cannot pass | L3-REL-002 |
 | `compat_msrv_detects_one_package_mismatch` | Library inherits 1.85 but CLI declares a different floor: mismatch remains visible, not hidden by the library manifest | L3-REL-002 |
-| `compat_msrv_runs_real_185_check` | Completed Rust 1.85 check includes both redesigned packages and resolved production dependencies/configuration; actual compiler version and head are identifiable | L3-REL-003 |
+| `compat_msrv_runs_real_185_check` | Completed Rust 1.85 check includes both redesigned packages and resolved production dependencies/configuration; actual rustc -V output, compiler/toolchain/features and head are identifiable | L3-REL-003 |
 | `compat_stable_is_not_msrv_evidence` | Stable succeeds while the 1.85 job is missing/failed: MSRV is unsatisfied; do not infer success or silently raise the floor | L3-REL-003, L3-REL-007 |
 | `compat_dependency_msrv_failure_is_not_waived` | Dependency check fails on 1.85: retain compatibility gap, do not omit CLI/supported features or substitute publishing toolchain | L3-REL-003 |
 | `compat_wasm_targets_plain_library` | Completed CI check explicitly targets wasm32-unknown-unknown and redesigned library with recorded features, not native/default host or CLI | L3-REL-004 |
@@ -1436,6 +1439,10 @@ No prototype build is presented as redesigned-library acceptance.
 | `compat_each_check_retains_own_qualifications` | Native success cannot substitute for WASM/MSRV/consumer; retain targets/features, job state and command for every obligation | L3-REL-007 |
 | `compat_compile_does_not_claim_bindings_or_no_std` | Plain-WASM or std consumer compiles: bindings, no_std and semantic parser coverage remain separate/unproved | L3-REL-004, L3-REL-008 |
 | `compat_source_override_is_not_dependency_publication` | Local reviewed source builds: types/core publication/API prerequisites and qualified-record owner gates remain outstanding unless separately satisfied | L3-REL-006, L3-REL-008 |
+
+| `compat_std_default_is_required_and_supported` | Actual default-feature redesigned builds enable required std on supported native/MSRV/library-WASM targets; declaration alone does not count as executed acceptance | L3-REL-003, L3-REL-004 |
+| `compat_std_explicit_without_defaults_is_supported` | Isolated positive build disables defaults and enables exactly std, preserving the owner consumer declaration; workspace feature unification cannot hide a missing required feature | L3-REL-003, L3-REL-006 |
+| `compat_std_absent_is_unsupported` | Build omitting std is rejected/unsupported, never counted as a positive no_std build; keep it distinct from plain-library WASM and from the positive explicit-std consumer | L3-REL-003, L3-REL-008 |
 
 Future Evidence must name inspected configuration plus the actual run/job
 artifacts; these rows alone provide no evidence. The current docs-only CI

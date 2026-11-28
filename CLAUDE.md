@@ -30,6 +30,14 @@ until the design documents for that area exist and have been reviewed.** Read
 Edition 2024, MSRV 1.85 (the edition-2024 floor). Raise the MSRV only for a
 concrete language or library feature, and record why here.
 
+Owner Q6, 2026-11-28 (ADR-0015 amendment): the redesigned library keeps a
+std feature, on by default and always required, documented as "not a no_std
+promise". With defaults disabled, callers explicitly enable std; disabling
+it is unsupported. The exact irigtime consumer declaration stays
+`irig106-tmats = { version = "0.1", default-features = false, features = ["std"] }`.
+This is the target feature contract; the prototype feature table is not
+redesigned acceptance evidence.
+
 The owner-decided target (2026-11-21, ADR-0035) is a virtual workspace:
 `crates/irig106-tmats/` for the library, `apps/irig106-tmats-cli/` for the
 CLI, shared workspace version and an exact-version library path dependency

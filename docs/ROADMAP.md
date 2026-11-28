@@ -141,6 +141,13 @@ target/feature binding and completed CI results; prototype checks do not
 verify replacement code. Keep dependency publication/API and semantic-use
 gates separate from compile success.
 
+Owner Q6 (Joey, 2026-11-28) keeps std default-on and always required,
+"not a no_std promise"; ADR-0015 is amended. Positive supported builds cover
+default std and isolated explicit std with defaults disabled. Std-disabled
+is an unsupported negative case. Retain the exact irigtime consumer line,
+actual rustc -V and per-target/features/source/CI evidence. Source overrides
+for prepublication CI are separate from crates.io-only release evidence.
+
 ### Remaining edition-independent reading acceptance
 
 Review the common text-reader boundary independently of historical definition
@@ -189,7 +196,7 @@ Inspect actual package inheritance, failure propagation and measured library
 scope at the reviewed head; prototype CI and overall green status cannot
 substitute. Keep semantic/requirements coverage and owner gates separate.
 This does not approve the remainder of proposed ADR-0020 or resolve #59's
-held std choice.
+owner-selected std A contract, amended in ADR-0015 (2026-11-28).
 
 Compile-fail fixtures for the guard rails use CI-scripted cargo clippy runs
 on fixture crates. Do NOT add trybuild/ui_test or any dev dependency without
@@ -1488,6 +1495,10 @@ forgotten; none has a committed version.
   `irig106-studio`'s in-browser TMATS view. To bring it back: a separate
   `irig106-tmats-wasm` crate (`crate-type = ["cdylib", "rlib"]`) so the core
   crate's dependency graph and semver are unaffected.
+- **Required std feature (owner amendment, 2026-11-28).** Keep default-on,
+  always-required std, labelled "not a no_std promise" (ADR-0015). Explicit
+  std with defaults disabled is supported; std-disabled is unsupported.
+  The following no_std discussion is historical/future scope, not a promise.
 - **`no_std` support.** The prototype declared a `std` feature but used `std`
   unconditionally. To bring it back: a real `no_std` + `alloc` build with an
   output sink abstraction, verified in CI on a `no_std` target. Only worth it

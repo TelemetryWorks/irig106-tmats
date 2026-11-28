@@ -1071,9 +1071,9 @@ and actual run artifacts have been inspected.
 
 **Parent**: L1-REL-002
 
-**Statement**: The redesigned library and CLI SHALL retain Rust 1.85 as their declared minimum and demonstrate compatible builds of the supported 0.1 configuration with actual dependency resolution on that toolchain; once the bounded time view exists, CI SHALL separately compile a consumer of the public library using the exact owner-required default-features=false, features=["std"] declaration, without relying on workspace all-features unification to make that consumer work.
+**Statement**: The redesigned library and CLI SHALL retain Rust 1.85 as their declared minimum and demonstrate compatible builds of the supported 0.1 std-required configuration with actual dependency resolution on that toolchain; once the bounded time view exists, CI SHALL separately compile a consumer of the public library using the exact owner-required default-features=false, features=["std"] declaration, without relying on workspace all-features unification to make that consumer work.
 
-**Rationale**: L1-REL-002 and CLAUDE.md record the owner's edition-2024-floor requirement. RELEASE-0.1's owner-required irigtime declaration and CI consumer build are a separate compatibility obligation. The dependency is CLI-only in irigtime; no time-library dependency or new no_std claim follows. Published types/core 0.2 and actual compatible APIs remain prerequisites; neither published core 0.1.0 nor a merged core 0.2 reader proves compatibility. Distribution/publishing toolchains do not change the consumer MSRV.
+**Rationale**: Joey selected std A on 2026-11-28 (ADR-0015 amendment): default-on and always required, "not a no_std promise"; no-default-features is supported only with explicit std. L1-REL-002 and CLAUDE.md record the owner's edition-2024-floor requirement. RELEASE-0.1's owner-required irigtime declaration and CI consumer build are a separate compatibility obligation. The dependency is CLI-only in irigtime; no time-library dependency or new no_std claim follows. Published types/core 0.2 and actual compatible APIs remain prerequisites; neither published core 0.1.0 nor a merged core 0.2 reader proves compatibility. Distribution/publishing toolchains do not change the consumer MSRV.
 
 **Verification Method**: Inspection (I)
 
@@ -1101,7 +1101,7 @@ and actual run artifacts have been inspected.
 
 These derive L1-ROB-002/003 only. ADR-0020 remains proposed as a whole;
 this slice does not approve its other architecture choices, introduce
-numeric resource budgets or resolve held #59's std decision. See the
+numeric resource budgets or implement #59's owner-selected std contract. See the
 [source and acceptance note](research/2026-11-27-robustness-evidence-requirements.md).
 Planned checks provide no current Evidence for the redesigned library.
 

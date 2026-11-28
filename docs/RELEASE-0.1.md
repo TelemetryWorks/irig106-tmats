@@ -519,3 +519,13 @@ publisher-registration verification and release execution are later work.
 Every PR is handed to the independent reviewer with its exact commit head
 before the owner merges. Changed heads require fresh review; no admin bypass,
 force push or tool-attribution trailers.
+
+## std feature decision — 2026-11-28
+
+Owner Q6 (Joey), recorded verbatim in ADR-0015's dated amendment: std is
+kept, on by default and always required, "not a no_std promise". The exact
+irigtime consumer declaration remains unchanged. L2-REL-002/003/004 and
+L3-REL-002–008 require separate actual MSRV/WASM/platform/consumer evidence;
+std-disabled is not a supported build. No manifest/workflow or release action
+is performed here. Published types/core 0.2 APIs and crates.io-only release
+evidence remain prerequisites; a prepublication CI override does not satisfy them.

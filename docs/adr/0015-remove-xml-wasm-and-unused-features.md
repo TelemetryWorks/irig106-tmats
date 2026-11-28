@@ -1,10 +1,27 @@
 ---
-status: accepted
+status: accepted; std policy amended by owner 2026-11-28
 date: 2026-09-25
 decision-makers: Joey
 ---
 
 # Remove XML, WASM bindings, and the unused `std` / `rich-errors` features until they can be done properly
+
+## Owner amendment — 2026-11-28
+
+Owner Joey's Q6 decision, verbatim:
+
+- Q6 `std` feature: kept, on by default, always required, documented as "not a no_std promise". ADR-0015 is amended. The RELEASE-0.1 consumer line stays.
+
+This supersedes only the historical removal of the std feature below.
+The supported 0.1 library configuration requires std, enabled by default;
+with defaults disabled callers must explicitly enable std. Disabling std
+is unsupported and must not be accepted as a supported no_std configuration.
+The exact consumer declaration remains default-features=false,
+features=["std"]. XML, wasm bindings, rich-errors and actual alloc-only/no_std
+support remain deferred as previously decided. Plain-library wasm32 builds
+still use std; these decisions do not imply CLI/core or bindings support.
+Manifest/code/CI implementation follows the reviewed restructure and feature
+contracts; this amendment itself changes no Cargo feature table.
 
 ## Context and Problem Statement
 

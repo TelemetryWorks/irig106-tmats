@@ -28,7 +28,7 @@ status line points to the later record.
 | [0012](0012-publishing-and-release-binaries.md) | Publish both crates together; `tmats` binaries via `cargo-dist` | accepted |
 | [0013](0013-hand-rolled-cli-argument-parsing.md) | Hand-rolled argument parsing for the CLI | accepted |
 | [0014](0014-tmats-checksums.md) | `G\SHA` over the original bytes; flex signature as a labelled compatibility option | accepted; refined by 0029 |
-| [0015](0015-remove-xml-wasm-and-unused-features.md) | Remove XML, WASM, and the unused features until done properly | accepted |
+| [0015](0015-remove-xml-wasm-and-unused-features.md) | Remove XML, WASM, and the unused features until done properly | accepted; std retained/required by owner amendment 2026-11-28 |
 | [0016](0016-edition-strategy.md) | Parse every edition; baseline 106-24R1; validate 106-04 … 106-24R1 | accepted; partly superseded by 0028 |
 | [0017](0017-standards-archive-repository.md) | Mirror the RCC 106 standards in a separate repository, as release assets | accepted |
 | [0018](0018-reference-tools-and-test-data.md) | Reference tools are oracles, not authorities; real data stays local | accepted |

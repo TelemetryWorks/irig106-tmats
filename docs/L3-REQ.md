@@ -2459,7 +2459,8 @@ code or guessing standard definitions from the prototype.
 
 These are future inspection obligations. No Evidence line is supplied for
 unexecuted redesigned builds; the [batch note](research/2026-11-26-build-compatibility-requirements.md)
-records source-inspected CI and the planned acceptance cases. No targets,
+records source-inspected CI and the planned acceptance cases. Owner Q6
+(2026-11-28) resolves the std hold through the ADR-0015 amendment. No targets,
 workflows, manifests, toolchain installs or dependencies are changed here.
 
 **L3-REL-002** · Parent: L2-REL-002 · Verification: I
@@ -2472,11 +2473,12 @@ root is not itself a package. No local manifest change is made in this slice.
 **L3-REL-003** · Parent: L2-REL-002 · Verification: I
 *MSRV evidence SHALL include an actual Rust 1.85 build/check of both redesigned packages and their resolved production dependencies in supported 0.1 feature configuration, with the invoked compiler/toolchain, command and exact source head identifiable and the output of `rustc -V` recorded in the evidence; a stable-only build or rust-version declaration alone SHALL NOT satisfy the obligation.*
 
-The existing documented baseline is cargo check --workspace --all-features
-on 1.85; inspect its binding to the restructured packages and real supported
-features before acceptance. This is not a requirement to run dev-tooling on
-1.85 or keep retired prototype features. Dependency/toolchain failures are
-compatibility gaps; do not silently drop the CLI or raise the declared floor.
+Supported evidence SHALL cover default-on std and an isolated
+no-default-features + explicit std configuration. A configuration omitting
+std entirely SHALL be rejected as unsupported, not advertised as no_std or
+counted as a supported build. This does not require dev-tooling on 1.85 or
+retired prototype features. Dependency/toolchain failures remain gaps; do
+not silently drop the CLI, weaken required std or raise the declared floor.
 
 **L3-REL-004** · Parent: L2-REL-003 · Verification: I
 *Plain-WASM evidence SHALL compile the redesigned irig106-tmats library for the explicit wasm32-unknown-unknown target in CI on every change from its first new code, without satisfying the check through a native build, the CLI binary, prototype wasm-bindgen feature or a separate bindings crate.*
@@ -2488,15 +2490,17 @@ is claimed from a WASM target build or default-features=false with std enabled.
 **L3-REL-005** · Parent: L2-REL-004 · Verification: I
 *For Windows, Linux and macOS separately, CI evidence SHALL identify successful redesigned library and CLI build/test execution at the same review head in the applicable supported configurations; a matrix declaration, another platform's success, scaffold-only tests or a cached result from an older head SHALL NOT substitute for completed tests of the implemented behavior.*
 
-The current documented matrix tests --all-features and --no-default-features.
-Verify the redesigned package/feature coverage rather than treating the
-prototype matrix as future evidence. A platform-specific unavailable fixture
+The prototype matrix is configuration history, not redesigned evidence.
+Supported positive builds use default std or --no-default-features with
+--features std; std-disabled is a negative unsupported-configuration case.
+Verify actual library/CLI coverage at the reviewed head. A platform-specific unavailable fixture
 is a coverage gap to record, not a passing execution or silent policy waiver.
 
 **L3-REL-006** · Parent: L2-REL-002 · Verification: I
 *Once the bounded time view exists, CI SHALL build an isolated consumer using exactly irig106-tmats = { version = "0.1", default-features = false, features = ["std"] } and exercise the public parse/time-view API, without workspace feature unification enabling omitted features; source binding SHALL identify the reviewed library head without changing that dependency declaration or pretending an unpublished release exists.*
 
-This is the existing RELEASE-0.1 consumer contract, not a new feature set.
+This is the unchanged RELEASE-0.1 consumer contract and owner Q6 choice,
+not a no_std promise or workspace-unified default feature build.
 A CI-only local source override can bind the declaration to the reviewed
 crate before publication; record the override/source identity separately.
 The fixture is in this repo, not a modification of irigtime or its library.
@@ -2515,8 +2519,10 @@ No new report/rendered output format or machine schema is selected here.
 
 ADR-0015 and RELEASE-0.1 keep these distinct. Shared types/core 0.2 must be
 published before tmats 0.1, and actual compatible published APIs must still
-be verified. No passing build can approve pending pattern scope/syntax,
-extraction eligibility/output policies, report formats or governing use.
+be verified from crates.io without path/git/[patch]/source overrides for
+release evidence (L3-REL-009/010). A prepublication CI override is never
+release evidence. Other policy decisions are recorded separately in PR #88;
+compile success cannot approve report formats or semantic/governing use.
 
 ## Library lint and line-coverage acceptance (family 2, batch 28)
 
@@ -2659,8 +2665,10 @@ authorized. This docs PR executes no benchmark or reference tool locally.
 
 L1-PERF-001 mentions the retired ecosystem draft's 100 Mbps sustained figure
 for first-measurement comparison; it is not a newly approved floor here.
-ADR-0021's overall proposal remains proposed. Held std, pattern, extraction,
-record-access/governance and report-format decisions remain unresolved.
+ADR-0021's overall proposal remains proposed. Owner Q6 resolves std here;
+other 2026-11-28 policy records are in PR #88. Report formats and INT-034
+padding-only/leading-damage precedence remain owner-open. Decisions alone
+do not implement feature, semantic, resource or reference contracts.
 
 
 ## X attachment and evidence boundaries (family 2, batch 30)
