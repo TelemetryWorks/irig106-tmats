@@ -318,7 +318,7 @@ Joey signed explicit versioned provisional snapshots with invalidation and
 no automatic governance on 2026-11-28 (INT-034), alongside INT-028/031's
 closure/takeover and per-query ambiguity-only access rules. Cut text stays
 unusable. Final rule checks CONCUR at #87 e0a0cce; source/development/tests remain. Q25 A now signs padding-only/leading-loss
-precedence; its new independent check is separate from #87's earlier check.
+precedence; its independent FINAL CONCUR at #91 5f4f3c4 is separate from #87's earlier check.
 Per-channel open-run state needs an explicit finite aggregate memory budget
 and typed limit error, never silent dropping; numeric policy, full accounting
 and recovery/resume details need review before implementation. See the
@@ -534,7 +534,7 @@ explicit '-' stdin only; and dropping Criterion for ignored CI benchmarks.
 These choices unblock dependent fixture expectations, not source/API proof,
 reference vectors, development analyses/reviews or executable acceptance.
 Std A is owner-decided and recorded separately through #59/ADR-0015.
-Q25 A signs the remaining INT-034 precedence (new check pending), and Q26
+Q25 A signs the remaining INT-034 precedence (FINAL CONCUR at #91 5f4f3c4), and Q26
 report-format direction has its own PR; no release, dependency install or publication occurs here.
 
 ## std feature decision — 2026-11-28

@@ -1276,7 +1276,7 @@ Planned, not implemented. INT-011 is reconfirmed by Joey, 2026-11-23,
 with AI CONCURS on #38 at c623b15; development gates remain;
 INT-034's padding/availability/continuity and snapshots are owner-signed
 (2026-11-28); final rule checks CONCUR at #87 e0a0cce; Q25 A owner sign-off now covers padding-only/leading-loss precedence;
-its new independent check and development/source/test gates remain.
+Q25 A has FINAL CONCUR at #91 5f4f3c4; development/source/test gates remain.
 These children describe the joining/provenance stage within a phase only.
 INT-045 separately records approved time-packet phase closure (AI CONCURS
 on #41 at 79b94eb); it adds no per-channel joining predicate. A later +1 fragment
@@ -1368,7 +1368,7 @@ these reasons do not assert that the beginning is intact. Other-channel
 traffic never creates a new start for an existing run. Implementation of
 reconfirmed INT-011 still requires completed analysis and executable checks.
 INT-034
-has owner sign-off for the exact padding/availability/continuity rules (2026-11-28); final rule checks CONCUR at #87 e0a0cce; Q25 A now signs padding-only/leading-loss precedence; its new check remains;
+has owner sign-off for the exact padding/availability/continuity rules (2026-11-28); final rule checks CONCUR at #87 e0a0cce; Q25 A now signs padding-only/leading-loss precedence; Q25 A has FINAL CONCUR at #91 5f4f3c4;
 INT-039 duplicate classification applies to a document only after assembly
 scope is established. Cross-fragment duplicate evidence must not silently
 select a split or a scalar winner. These dependencies remain visible even
@@ -1378,7 +1378,7 @@ when fixture-provided reviewed bindings make individual joining tests pass.
 
 Planned obligations; Joey signed INT-034's padding/availability/continuity
 and snapshot choices plus INT-028/031 on 2026-11-28. Final rule checks CONCUR at #87 e0a0cce; Q25 A signs the remaining
-INT-034 precedence; independent check of this new wording remains pending. Their supplied reviewed fixture bindings isolate the cases
+INT-034 precedence; independent FINAL CONCUR is recorded at #91 5f4f3c4. Their supplied reviewed fixture bindings isolate the cases
 below without completing source/development/test gates. The open-run observation
 is PROVISIONAL, not a fourth final completeness outcome or a joining stop.
 
@@ -1398,8 +1398,7 @@ Owner-relayed review consequence, 2026-11-23. EOF alone must not turn a valid
 final record into incomplete or ambiguous. Preserve the START observation
 without interpreting "start of supplied input" as known leading damage.
 Independently established damage/ambiguous split evidence remains reported;
-Q25 A preserves proven leading loss as a blocking cut facet; its new
-independent check is pending. INT-045's layered time boundary is a separate
+Q25 A preserves proven leading loss as a blocking cut facet; its independent FINAL CONCUR is recorded at #91 5f4f3c4. INT-045's layered time boundary is a separate
 reason, not relabelled as this ordinary same-channel joining stop. At that
 boundary, cut text is INCOMPLETE with a located finding, and a later
 same-channel +1 fragment is continuous-but-split, never rejoined backward;
@@ -1418,7 +1417,7 @@ without changing bytes; Q25 A now records the padding-only/leading-loss owner de
 *Incomplete/ambiguous classification evidence SHALL retain the affected spans, gap/trust/boundary facts and all competing readings without concatenating across a missing segment, synthesizing a terminator or selecting one repeated scalar occurrence as the intended record boundary.*
 
 INT-034's stated padding/availability/continuity rules are owner-signed;
-final rule checks CONCUR at #87 e0a0cce; Q25 A settles padding-only/leading-loss precedence, with new check pending. INT-039's duplicate
+final rule checks CONCUR at #87 e0a0cce; Q25 A settles padding-only/leading-loss precedence, with FINAL CONCUR at #91 5f4f3c4. INT-039's duplicate
 field rule and INT-044's ambiguous-declaration fallback do not establish a
 record split or override assembly ambiguity. Locating evidence is mandatory;
 deciding which classification wins when several kinds coexist is still an
