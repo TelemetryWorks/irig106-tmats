@@ -134,7 +134,8 @@ existing content-based recording/text input route. The 0.1 scope is unchanged.
   2026-09-25: "Go with hand-rolled argument parsing like mie-decoder"). The
   CLI adds no argument-parsing crate such as `clap`. What this buys: no
   dependency or its MSRV and semver churn, a small binary, and full control
-  of every help and error message (which the ASCII-only rule below needs).
+  of every help and error message (including any encoding/escaping contract
+  selected by the schema review).
   What it costs: no generated shell completions and more parsing code to
   own; that code is kept table-driven and every flag, value, and usage error
   has a test. The scaffold's `--version` / `--help` handling already follows
@@ -179,9 +180,13 @@ keeps its original byte contract. Command/mode/format applicability must be
 explicit in the reviewed request table, not silently ignored, wrapped or
 converted. Full resolved-link/timeline views stay later scope.
 
-The earlier ASCII-only display proposal is not an additional Q26 mandate;
-encoding/escaping must follow the reviewed schema/text contract and preserve
-byte-exact outputs where required. No data repair or unlabelled lossy view.
+**OPEN — ASCII-only report output.** The earlier proposal remains open for
+the owner or schema review: whether text/diagnostics and JSON stdout must
+be ASCII-only, and which escaping rules apply. The cited irigtime report
+contract specifies ASCII-only JSON stdout; Q26 does not settle the scope
+of that requirement for tmats. Do not assume acceptance or rejection. Raw
+show/extract stay byte-exact either way; no source bytes are repaired or
+silently converted.
 
 
 ## 5. Decisions made on 2026-09-25
