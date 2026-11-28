@@ -1,5 +1,5 @@
 ---
-status: accepted; F1 superseded by coordinator decision 0034 (2026-11-21); F2–F3 remain open
+status: accepted; F1 superseded by coordinator decision 0034 (2026-11-21); F2–F3 owner-signed 2026-11-28 in INT-022/023 (ADR-0033); final checks/development gates remain
 date: 2026-09-26
 decision-makers: Joey
 ---

@@ -95,11 +95,11 @@ reconfirmation on 2026-11-23: same-channel completeness boundaries; labelled
 complete EOF records; provisional open-run observations that never stop
 joining; and an explicit aggregate open-run memory budget with a typed limit
 error, never silently dropped runs. INT-034's precise completeness rules and
-INT-028/031 governance still need review. Decide how irig106-time's CLI may
-use and later invalidate provisional snapshots before EOF, plus resource
-accounting/defaults and recovery semantics, before implementation. The
-[batch 15 draft](research/2026-11-23-completeness-contracts-draft.md) presents
-opt-in labelled snapshots versus final-only semantic use; no choice is made.
+INT-028/031 have owner sign-off (Joey, 2026-11-28), with remaining
+independent checks and development/source/test gates. INT-034 permits explicit
+versioned snapshots with invalidation and no automatic governance, plus the
+exact padding/source-availability/modulo-256 rules; padding-only/leading-damage
+precedence remains open. Review resource accounting/defaults separately.
 
 Review the [retention/limit contract](research/2026-11-27-retention-limit-evidence.md)
 and verify actual ownership APIs, capacity evidence and retained reference
@@ -187,30 +187,17 @@ owner approval.
 
 ### Remaining raw lookup and extension derivations
 
-Review the indexed X/original attachment and V source/vendor grouping
-derivations. Proposed INT-063 needs owner/AI review for incomplete or
-conflicting VN/path evidence: recommend retained observed inventory with
-unavailable confirmed attribution, versus labelled path-first/header-first
-policies. A usable VN is one available non-Ambiguous INT-036-projected
-value with INT-041 blank handling, exactly three characters under section
-9.5.13, compared ASCII case-insensitively. Available projected wrong length
-is Invalid/unconfirmed under A; raw bytes and unavailable blank reasons stay
-visible. Do not implement a recovery winner before that decision.
-PENDING OWNER/independent review: proposed INT-061 for X occurrence mapping
-to unindexed originals such as G\PN; recommend unavailable mapping (A), with
-labelled unique-path attachment (C) as a natural future refinement; B is an
-explicit convention and D's blanket nonconforming classification is rejected
-in the draft recommendation, not owner-decided. Separately review proposed
-INT-062: registry-only vocabulary (recommended), document-present names, or
-registry-first hybrid C limited to groups with no registry vocabulary and
-labelled document-defined vocabulary. Registry-only A cannot split private V
-or other non-registry originals; C still needs the V group/private-namespace
-boundary decided. Use the 106-24R1 baseline catalog until edition deltas
-exist, with registry basis kept beside INT-044 declaration/fallback labels;
-older renamed originals stay unavailable, never silently mapped to new codes. Registry-name matching and the section
-9.5.14 EXTENSION_CODE uniqueness rule determine decomposition; missing
-metadata does not justify a heuristic. No affected-case implementation before
-owner/AI approval; edit/renumber rules and qualifiers remain separate.
+Review the indexed X/original attachment and V source/vendor derivations
+against Joey's 2026-11-28 INT-061/062/063 A sign-offs. Unindexed-original X
+mapping is cannot-evaluate; decomposition uses only reviewed registry code
+names (106-24R1 baseline until deltas exist), not private/document-only names.
+Keep registry basis beside INT-044 labels; no renamed-code alias or heuristic
+split. Vendor attribution needs exactly one usable VN agreeing with the path
+acronym: INT-036 projection, INT-041 availability, three characters under
+section 9.5.13, ASCII case comparison. Otherwise attribution is unconfirmed,
+with all evidence/raw bytes. Complete remaining independent rule checks and
+source/development analysis/review/tests before implementation; unique-path C
+and hybrid vocabulary are not selected.
 
 Owner decisions PENDING before pattern-query implementation: 0.1 pattern
 scope (reviewed registry patterns only is a proposal, not approved), and
@@ -241,7 +228,7 @@ Review executable byte, qualification, identity/race and destination tests
 before implementation; owner policy is not completed evidence. --force and
 --strict spellings are decided; the rest of argument grammar and report
 format remain held. Raw extraction is not semantic or governing use and does
-not settle proposed INT-031. Other commands' destination policy is not
+not settle owner-signed INT-031. Other commands' destination policy is not
 silently approved. No new atomic replacement/durability promise is made.
 
 Review the lossless-replay/caller-supplied-output and explicit-normalization
@@ -249,16 +236,13 @@ boundary before writer implementation. Derive transformation-specific
 canonical ordering, line-ending and counter-rewrite rules with independent
 byte oracles before claiming the full normalization capability. The boundary
 requirements do not choose those rules or reduce the 0.1 obligations.
-Proposed INT-064/065/066 now present explicit region-order, newline-scope and
-counter-evidence options for owner choice. The ordering recommendation is A's validated region-plan mechanism plus
-one named built-in profile for 0.1, preferably D (Chapter 9 section group
-order, stable within groups and bounded by comment/opaque anchors). A alone
-has no built-in canonical order; the alternative is an explicit owner L1
-reinterpretation/clarification. Line-ending and counter recommendations remain
-A, respectively caller-selected layout-only LF/CRLF and complete contiguous
-range-checked member evidence. None is approved. Complete source/development
-review, owner sign-off and independent byte oracles before activating a policy;
-no built-in profile, field-wide conversion or gapped count is silently selected.
+Implement Joey's 2026-11-28 INT-064 A+D / INT-065 A / INT-066 A only
+after source/development analysis, review and independent byte oracles.
+A validates caller region order; built-in Chapter 9 group order, v1 uses
+G/T/R/M/P/D/B/S/Q/C/H/V/X, stable within groups and bounded by anchors.
+Newline conversion touches only positively identified layout, with explicit
+LF/CRLF. Counter rewrite requires complete contiguous distinct 1..k within
+range, otherwise refusal. No implicit normalization or L1 scope reduction.
 
 ### Remaining session-format and configuration-change evidence
 
@@ -303,7 +287,7 @@ for explicitly selected eligible records: preserve defined-domain versus
 value-verdict distinctions, every refusal/finding and final-byte verified
 stamp results. Flex remains explicitly requested, non-standard and never a
 G\SHA replacement; finish its exact compatibility derivation before use.
-Proposed INT-031 gates incomplete/ambiguous access. Public selection defaults,
+Owner-signed INT-031 gates incomplete/ambiguous access. Public selection defaults,
 rendered formats and stamp's remaining destination/eligibility policy stay
 separate; ADR-0037 settles extract only.
 
@@ -315,7 +299,7 @@ file order independently of finalization order. Qualifying a record as
 Complete does not approve command eligibility or governing use. Preserve
 non-Complete evidence and partial-traversal failures without inventing a clean
 full inventory. Public selection/numbering, live provisional emission and
-report rendering remain their separate owner-review scope. Proposed INT-031
+report rendering remain their separate owner-review scope. Owner-signed INT-031
 explicitly gates incomplete/ambiguous record access; enumeration never approves
 its optional labelled split. First-fragment versus completion order is being
 put to the owner for confirmation; no new approval is recorded here.
@@ -367,7 +351,7 @@ The 0.1 recognizer must cover the Appendix 9-C names and index patterns,
 including D MML/N, MNF/N and WP; an explicit inventory exposes missing coverage
 rather than silently losing warnings. Skip unterminated suffixes and retain
 cut/Incomplete/Ambiguous qualifications on any permitted diagnostic access;
-a suggestion never makes the record usable or bypasses proposed INT-031.
+a suggestion never makes the record usable or bypasses owner-signed INT-031.
 
 ## Queued for the next release (`[Unreleased]`)
 
@@ -1198,8 +1182,8 @@ owner decides; the decision is then recorded in
 | # | Question | Why it is open | Where it lands |
 |---|----------|----------------|----------------|
 | F1 | **Owner-approved, 2026-11-23, under ADR-0033; AI CONCUR at #30 head 13173b0.** Duplicate SHA items are indeterminate. | List every occurrence, preserve every byte, never claim positive verification, and refuse stamping until fixed. Review and test evidence still required. | INT-021; ADR-0034 |
-| F2 | What should happen when an edit removes an attribute that X extensions point to? | As F1: needs the options and their consequences for editing, for vendors' extensions, and for §9.5.14's "preserve it". | INT-022; L1-WRT-003; ADR-0029 |
-| F3 | Should the reader suggest `:` where `=` was typed, as in Chapter 6's own `G\DSI\N=18;`? | As F1: needs the options and the risk of a suggestion that is wrong. | INT-023; `docs/TEST-DATA.md` E3 |
+| F2 | **Owner-signed A, Joey, 2026-11-28:** refuse deletion while extensions attach; cascade is a separate explicit edit (0.5). | Remaining independent final check and source/development/test evidence; never guess attachment. | INT-022; L1-WRT-003; ADR-0029 |
+| F3 | **Owner-signed A, Joey, 2026-11-28:** suggest-only `=` to `:` when the complete code name is recognized and no colon occurs; never automatic. | Remaining independent final check and source/development/test evidence; raw reading/finding stays. | INT-023; `docs/TEST-DATA.md` E3 |
 | F5 | **Decided 2026-09-26: A**, with C possible later (ADR-0030). Does `irig106-core` depend on `irig106-tmats`, or do the tools join them? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 1.6; proposal in section 2.4 (core stays structural and independent; checking packets against TMATS belongs to the layer holding both) awaits the owner. | `docs/TMATS-IN-CHAPTER-10.md` section 2.4; ROADMAP X3 |
 | F6 | **Decided 2026-09-26: yes** — L1-REL-003, a CI check added with the first new library code. Must the library build for WebAssembly (a CI check that the plain library compiles for a `wasm32` target), so studio's browser build can use it? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 4.8. ADR-0015 moved WASM *bindings* out of the library; building the plain library for WebAssembly is a separate question. The library already performs no I/O (L1-IO-001), which is the main condition. | ADR-0015; a possible L1 requirement and CI job |
 | F7 | **Owner-approved, 2026-11-23, under ADR-0033; AI CONCUR at #30 head 13173b0.** Require verified identification; report indeterminate meanwhile. | Never guess a packet type. The event identity still needs evidence; the decision does not supply it. | INT-030; L1-CH10-005; ADR-0034 |

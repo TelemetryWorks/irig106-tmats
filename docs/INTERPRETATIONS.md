@@ -382,20 +382,22 @@ or packet-header byte. Full development analysis and tests remain outstanding.
 
 **Title**: A joined run is complete, incomplete, or ambiguous
 
+**Owner sign-off**: Joey, 2026-11-28, under ADR-0033; [verbatim decision](research/2026-11-28-interpretation-owner-signoffs.md#int-034).
+
 **Sources**:
 - Chapter 11 §11.2.7.2: "A single setup record may span multiple consecutive packets. When spanning multiple packets, the sequence counter shall increment in the order of segmentation of the setup record, n+1". No end-of-record marker is defined.
 - §11.2.1.1 f: "Each channel in a session shall have its own sequence counter providing a unique sequence number for that channel" — two records back to back on one channel continue one count.
 - Chapter 9 §9.4.2: each attribute is a code name and data item ended by a semicolon; "Semicolons are not allowed in any data item (including comment items)."
 
 **Behaviour**: For each run joined under INT-011:
-- **complete** — no gap or CSDW change inside it, the body's final substantive byte under the proposed boundary-layout definition below is `;`, and the run is followed by a SAME-CHANNEL packet (basis "followed by another packet") or by the end of input (basis "end of input", labelled);
+- **complete** — no gap or CSDW change inside it, the body's final substantive byte under the owner-signed boundary-layout definition below is `;`, and the run is followed by a SAME-CHANNEL packet (basis "followed by another packet") or by the end of input (basis "end of input", labelled);
 - **incomplete** — the body is cut inside an attribute (a substantive unterminated suffix remains after the boundary-layout check), a fragment has unavailable required source bytes/bounds, or a sequence gap splits text that continues an attribute across it;
 - **ambiguous** — a sequence gap or a CSDW change where the text before it ends at `;`, or a gap-free run whose text repeats a single-entry attribute (for example `G\106` or `G\PN`); both readings and the split point are reported.
 
-**Proposed precise definitions — owner decision/recheck still required**:
+**Owner-signed precise definitions (2026-11-28); remaining final check pending**:
 - **Boundary layout/padding** is exactly ASCII SP (0x20), controls 0x00–0x1F,
   and DEL (0x7F), per INT-035/036. Thus it includes CR/LF, TAB, NUL and 0x1A,
-  not Unicode whitespace or any high byte. For the proposed final-terminator
+  not Unicode whitespace or any high byte. For the owner-signed final-terminator
   check only, inspect the maximal suffix from that set after retained source
   framing: ';' plus only that suffix is semicolon-terminated. Keep every raw
   byte; do not trim field values, omit an unterminated substantive suffix or
@@ -421,7 +423,7 @@ or packet-header byte. Full development analysis and tests remain outstanding.
   A resource refusal (HardLimit/BudgetTooSmall/TargetLimit or assembler limit)
   stays operational evidence, not a manufactured malformed/cut verdict.
 
-**Owner options**: (a) A (recommended) explicit versioned provisional snapshots
+**Options considered (owner selected A, 2026-11-28)**: (a) A (recommended) explicit versioned provisional snapshots
 for caller use, with invalidation and no automatic governing effect; B final-
 only semantic use. (b) A (recommended) the boundary-layout set and source-
 availability distinction above, with known cut facets always blocking and
@@ -444,9 +446,11 @@ EOF alone does not erase those blockers or choose their precedence.
 
 An open run needs a separate **PROVISIONAL** observation, e.g. "text ends
 at ;, run still open", for streaming consumers. This is never a joining stop
-or an assertion of final completeness. How a consumer may use such data
-before EOF, and invalidate a previously used snapshot after later bytes,
-remain explicit open items below, not an approved governance extension.
+or an assertion of final completeness. Joey selected explicit versioned
+provisional snapshots with visible later
+invalidation on 2026-11-28; this is never automatic governance or permission
+to use cut text. Preserve the snapshot version/evidence and re-evaluation.
+Padding-only/leading-damage precedence remains open below.
 INT-045 now records a separate owner-decided layered closure: initial setup
 and SRCC=1 updates close at their eligible time boundary (approved, AI
 CONCURS on #41 at 79b94eb). At that boundary a mid-attribute suffix is INCOMPLETE
@@ -461,30 +465,31 @@ all other precise classification/governance rules in this entry.
 Aggregate open-run memory needs an explicit budget and typed limit error;
 exhaustion never silently drops a channel's run or synthesizes EOF.
 
-Complete alone does not prove governing adoption: proposed INT-028 must compose INT-053. Proposed INT-031 blocks incomplete/ambiguous use by default. An XML body (FRMT 1) is of unknown completeness.
+Complete alone does not prove governing adoption: owner-signed INT-028
+composes INT-053. Owner-signed INT-031 blocks incomplete/ambiguous use by default. An XML body (FRMT 1) is of unknown completeness.
 
 **INT-048 amendment (review clarification, 2026-11-25)**: The cut-text rule
 above means **Incomplete, or aggregate Ambiguous WITH A RETAINED CUT FACET**
 when established field ambiguity (including duplicate G\SHA) invokes
 INT-048. The cut facet keeps Incomplete's FULL blocking force. No acceptance
-of an ambiguous split, including proposed INT-031's labelled option if later
-approved, can make cut text usable or governing. Retain the cut location and
+of an ambiguous split, including owner-signed INT-031's labelled option,
+can make cut text usable or governing. Retain the cut location and
 blocking reason; the aggregate label does not relax incomplete-input policy.
 
 **Reason**: The packets alone cannot tell where a record ends; the text's final byte and repeated single-entry attributes are the only evidence the standard gives, and neither is proof in every case.
 
-**Design**: accepted in principle (three outcomes, owner, 2026-09-27, ADR-0031); these rules proposed · **Review**: independent batch 4 (2026-11-27) at main `283ffd5`: CONCERNS, narrow; three-outcome framework and INT-011/045/048 amendments CONCUR; revised details/open items need recheck and owner decision; [review record](research/2026-11-27-legacy-int-independent-check-batches3-4.md); source/development/test gates remain · **Origin**: team spec alignment review, 2026-09-27
+**Design**: owner-approved in part (Joey, 2026-11-28; padding-only/leading-damage precedence open) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Independent check CONCUR with the framework; exact padding/availability amendments reviewed in #83; final check of versioned-snapshot composition pending. Padding-only/leading-damage precedence remains OWNER-OPEN. Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: team spec alignment review, 2026-09-27
 
 **Test**: `setup_record_completeness_outcomes`, `eof_boundary_is_complete_and_labelled`, `other_channel_packet_cannot_finalize_run`, `open_boundary_is_provisional_not_complete`, `provisional_extension_never_closes_run` (planned; not yet written)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
-**Open items for owner review**: (a) provisional snapshots for explicit,
-labelled consumer use versus final-only semantic use; recommend opt-in
-snapshots, with their version/evidence and later invalidation visible, never
-silently governing under INT-028/031; (b) precedence for known leading damage,
-empty/padding-only bodies and competing duplicate/split evidence, including
-INT-035/036 padding at EOF. No precise algorithm is approved here. See
+**Remaining owner item**: precedence for padding-only records and leading
+damage, including their interaction with competing duplicate/split evidence
+and INT-035/036 padding at EOF. No algorithm for that precedence is approved.
+Versioned provisional snapshots, exact boundary padding/source availability
+and modulo-256 continuity ARE owner-signed; this open item does not revoke
+INT-048 retained-cut blocking force or permit automatic governance. See
 [batch 15 review draft](research/2026-11-23-completeness-contracts-draft.md).
 
 ## Errata in the standard's own examples
@@ -763,15 +768,17 @@ last step of that transaction, never run over the still-ambiguous input.
 
 **Title**: Removing an attribute that X extensions point to
 
-**Owner review packet**: [plain-English options for INT-022–034](research/2026-11-27-int022-034-owner-brief.md); all unapproved choices remain pending.
+**Owner sign-off**: Joey, 2026-11-28, under ADR-0033; [verbatim decision](research/2026-11-28-interpretation-owner-signoffs.md#int-022).
+
+**Earlier options packet**: [plain-English options for INT-022–034](research/2026-11-27-int022-034-owner-brief.md); superseded for the selected choices by the sign-off below.
 
 **Sources**:
 - §9.5.14: "If the file is being edited by a TMATS editor, it would notice the association and preserve it even if the editor doesn't know what the code means. Thus if the measurements were re-numbered and the index was 1-5 instead of 1-2, the extension code could be updated to preserve the link."
 - §9.5.14: "The "x" values must match the index of the original code word therefore no new values may be added."
 
-**Behaviour**: **Open — owner follow-up F2.** No behaviour is chosen until the owner decides.
+**Behaviour**: **Owner-signed A (F2):** refuse deletion while extensions attach. A cascade requires a separate explicit edit; scope remains 0.5.
 
-**Owner options — proposed, 0.5 scope (not a 0.1 blocker)**:
+**Options considered — A selected, 0.5 scope (not a 0.1 blocker)**:
 - A (recommended default): refuse removal while reviewed evidence attaches X
   items, listing each attachment. Do not silently override; a caller must
   explicitly choose a separately reviewed orphan-preserving or cascade plan.
@@ -788,9 +795,9 @@ C keeps output internally consistent at the cost of explicitly deleting X.
 
 **Reason**: The standard covers renumbering the original, not removing it.
 
-**Design**: open (follow-up F2, 2026-09-26) · **Review**: reviewer batch 2 at main `c682e05` (2026-11-27): NEEDS OWNER F2, no proposal to concur with; options below are new and need independent check plus owner sign-off; [received review](research/2026-11-27-legacy-int-independent-check-batch2.md) · **Origin**: T7
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Options CONCUR in the independent #83 review at `ada5328`; final check of the signed rule pending. Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: T7
 
-**Test**: `removing_an_extended_attribute` (written once F2 is decided)
+**Test**: `removing_an_extended_attribute` (planned; refusal and separately explicit cascade are now owner-decided)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -798,13 +805,15 @@ C keeps output internally consistent at the cost of explicitly deleting X.
 
 **Title**: `=` typed where `:` belongs, as in Chapter 6's own example
 
+**Owner sign-off**: Joey, 2026-11-28, under ADR-0033; [verbatim decision](research/2026-11-28-interpretation-owner-signoffs.md#int-023).
+
 **Sources**:
 - Chapter 6 §6.2.3.11 (106-24R1), `.TMATS WRITE` and `.TMATS READ` examples: "G\DSI\N=18;".
 - §9.4.2: attributes are written "CODE:value;".
 
-**Behaviour**: **Open — owner follow-up F3.** Reading follows §9.4.2 regardless: with no colon the item is reported as a missing delimiter (L1-READ-003) and kept exactly. Whether to also offer a suggested edit replacing `=` by `:` is not decided.
+**Behaviour**: **Owner-signed A (F3).** Reading follows §9.4.2 regardless: with no colon the item is reported as a missing delimiter (L1-READ-003) and kept exactly. Suggest replacing `=` by `:` only under the complete-recognized-name/no-colon guard below; never apply automatically.
 
-**Owner options (still open)**: A (reviewer-recommended) offer a suggestion
+**Options considered (A selected, 2026-11-28)**: A (reviewer-recommended) offer a suggestion
 only when bytes before '=' are a positively recognized COMPLETE code name,
 with no colon in the item; preserve raw bytes and never apply automatically,
 using the L1-READ-007 guard. B offers no suggestion. The existing reading
@@ -812,7 +821,7 @@ rule above is independent of this choice. Source: Chapter 6 p. 6-22.
 
 **Reason**: The standard's own example uses the form, so real files may too; a suggestion could help or could mislead.
 
-**Design**: open (follow-up F3, 2026-09-26) · **Review**: independent batch 3 (2026-11-27) at main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`: NEEDS OWNER F3; reading-only rule CONCUR; suggestion policy still open; [review record](research/2026-11-27-legacy-int-independent-check-batches3-4.md); source/development/test gates remain · **Origin**: T7
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Reading-only rule CONCUR in legacy batch 3 at `c682e05`; final check of the guarded suggestion pending. Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: T7
 
 **Test**: `chapter_6_example_equals_sign_is_missing_delimiter`
 
@@ -823,6 +832,8 @@ rule above is independent of this choice. Source: Chapter 6 p. 6-22.
 ### INT-024
 
 **Title**: Which packet data types a channel may carry
+
+**Owner sign-off**: Joey, 2026-11-28, under ADR-0033; [verbatim decision](research/2026-11-28-interpretation-owner-signoffs.md#int-024).
 
 **Sources**:
 - Chapter 11 Table 11-4 (106-24R1): data-type families of eight codes (for example "0x08 PCM Data, Format 0" to "0x0B - 0x0F PCM Data, Format 3 - Format 7"), except "0x78 Controller Area Network Bus" (one code) and "0x79 Fibre Channel Data, Format 0", "0x7A Fibre Channel Data, Format 1", "0x7B – 0x80 … Reserved"; no `0x22` is listed.
@@ -840,7 +851,7 @@ A mismatch requires an independently established usable expected mapping.
 Source pages: Table 11-4 begins 11-5; analog 0x20–27 rows are on 11-7;
 Table 9-4 PDTF 9-50, UTF 9-77 and FCTF 9-82.
 
-**Owner options**: A (recommended) the reviewed, edition-qualified table
+**Options considered (owner selected A, 2026-11-28)**: A (recommended) the reviewed, edition-qualified table
 with explicit cannot-evaluate for unusable operands or unavailable mappings;
 B expose only observed CDT/format/packet codes and defer expected-type
 comparison until each mapping is approved. A enables a qualified check but
@@ -850,7 +861,7 @@ code families or turn uncertainty into a mismatch.
 
 **Reason**: The families are irregular (CAN, Fibre Channel, the missing `0x22`), and several format attributes still cite Chapter 10 after the packet formats moved to Chapter 11, so the mapping cannot be computed and must be reviewed.
 
-**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: independent batch 3 (2026-11-27) at main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`: CONCERNS, narrow; edition/value-state/mapping-consumer amendments pending recheck and owner decision; [review record](research/2026-11-27-legacy-int-independent-check-batches3-4.md); source/development/test gates remain · **Origin**: F4 section 3
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Edition/value-state amendments reviewed in #83 at `ada5328`; final rule check pending. Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: F4 section 3
 
 **Test**: `channel_data_type_maps_to_packet_data_types`
 
@@ -860,13 +871,15 @@ code families or turn uncertainty into a mismatch.
 
 **Title**: `R-x\TDTF-n`'s condition names `TSPIN`, which is not a channel type
 
+**Owner sign-off**: Joey, 2026-11-28, under ADR-0033; [verbatim decision](research/2026-11-28-interpretation-owner-signoffs.md#int-025).
+
 **Sources**:
 - Table 9-4, `R-x\TDTF-n`: "Allowed when: R\CDT is "TSPIN"".
 - Table 9-4, `R-x\CDT-n` enumeration: "TSPIIN TSPI/CTS Input"; no `TSPIN`.
 
 **Behaviour**: The condition is read as `TSPIIN`, as INT-007 reads `FBCIN` as `FBCHIN`. A document's literal CDT=TSPIN still gets an unknown-keyword finding, never silent repair. Source: TDTF p. 9-81; TSPIIN enumeration p. 9-50.
 
-**Owner options**: A (recommended) read the condition's TSPIN as TSPIIN,
+**Options considered (owner selected A, 2026-11-28)**: A (recommended) read the condition's TSPIN as TSPIIN,
 retaining unknown-keyword findings for literal document TSPIN; B leave that
 condition unavailable pending formal errata rather than treating it as false.
 A makes the intended TSPI field usable; B withholds the affected default/
@@ -874,7 +887,7 @@ applicability decision. Neither repairs the document.
 
 **Reason**: Read literally, the TSPI/CTS data type format could never be allowed.
 
-**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: independent batch 3 (2026-11-27) at main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`: CONCUR with proposed reading; owner decision pending; [review record](research/2026-11-27-legacy-int-independent-check-batches3-4.md); source/development/test gates remain · **Origin**: F4 section 3
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Independent batch 3 CONCUR at `c682e05` (2026-11-27). Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: F4 section 3
 
 **Test**: `tspi_data_type_format_allowed_for_tspiin`
 
@@ -883,6 +896,8 @@ applicability decision. Neither repairs the document.
 ### INT-026
 
 **Title**: Two recorder polarity conditions name `P-d\CDT`, which does not exist
+
+**Owner sign-off**: Joey, 2026-11-28, under ADR-0033; [verbatim decision](research/2026-11-28-interpretation-owner-signoffs.md#int-026).
 
 **Sources**:
 - Table 9-4, `R-x\RPS-n` (recorder polarity setting): "Allowed when: P-d\CDT is "PCMIN"".
@@ -894,7 +909,7 @@ applicability decision. Neither repairs the document.
 Source locations: RPS p. 9-51 and MFF RPS p. 9-54; the latter also
 contains the doubled printed "When When". This does not define P CDT.
 
-**Owner options**: A (recommended) bind both mistaken P CDT references to
+**Options considered (owner selected A, 2026-11-28)**: A (recommended) bind both mistaken P CDT references to
 the same recorder/channel R CDT, preserving Missing/Invalid/Ambiguous/
 unavailable operand uncertainty; B leave those conditions cannot-evaluate
 pending formal errata. A supplies the local meaningful condition; B disables
@@ -902,7 +917,7 @@ those determinate applicability answers. Never borrow another channel.
 
 **Reason**: Both attributes are in the R group's PCM block beside attributes conditioned on `R\CDT`; `P-d\CDT` cannot be evaluated.
 
-**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: independent batch 3 (2026-11-27) at main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`: CONCUR with proposed reading; owner decision pending; [review record](research/2026-11-27-legacy-int-independent-check-batches3-4.md); source/development/test gates remain · **Origin**: F4 section 3
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Independent batch 3 CONCUR at `c682e05` (2026-11-27). Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: F4 section 3
 
 **Test**: `recorder_polarity_allowed_for_pcm_channels`
 
@@ -912,17 +927,19 @@ those determinate applicability answers. Never borrow another channel.
 
 **Title**: `C-d\DCN`'s "Links from:" lists `R-x\AMN-n-m` twice
 
+**Owner sign-off**: Joey, 2026-11-28, under ADR-0033; [verbatim decision](research/2026-11-28-interpretation-owner-signoffs.md#int-027).
+
 **Sources**:
 - Table 9-11, `C-d\DCN`: "Links from: R-x\AMN-n-m, R-x\AMN-n-m, M-x\SI\MN-n, M-x\BB\MN, D-x\MN-y-n, B-x\UMN1-i, B-x\UMN2-i, B-x\UMN3-i, B-x\MN-i-n-p, S-d\MN-i-n-p, R-x\DMN-n-m, Q-d\MMNM-i-n-m, Q-d\SMMNM-i-n-m-o".
 
-**Behaviour (still proposed)**: The duplicate reference is a no-op. The
+**Behaviour**: The duplicate reference is a no-op. The
 reviewer checked the Links-to side: only R AMN and R DMN carry Links to
 C-d\DCN in 106-24R1. EV MN, EV PM MN, IPMN, BME SMN and SMF SMN carry no
 such link, so this duplicate hides no omitted R source on that side. Retain
 INT-003's three-source process; do not invent an additional source from a
 similar name. Source: Table 9-11 p. 9-158.
 
-**Owner options**: A (recommended) deduplicate only the definition's repeated
+**Options considered (owner selected A, 2026-11-28)**: A (recommended) deduplicate only the definition's repeated
 link reference, retaining its source defect and the three-source relationship
 check; B leave relationship generation blocked for this definition until
 formal errata. A avoids duplicate graph edges without changing document
@@ -931,7 +948,7 @@ additional R source is inferred from a similar measurement name.
 
 **Reason**: A repeated source adds nothing, but may hide an omitted one.
 
-**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: independent batch 3 (2026-11-27) at main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`: CONCUR with proposed reading; owner decision pending; [review record](research/2026-11-27-legacy-int-independent-check-batches3-4.md); source/development/test gates remain · **Origin**: F4 section 3
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Independent batch 3 CONCUR at `c682e05` (2026-11-27). Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: F4 section 3
 
 **Test**: `measurement_name_sources_for_conversions`
 
@@ -943,12 +960,14 @@ additional R source is inferred from a similar measurement name.
 
 **Title**: Which setup record governs a packet
 
+**Owner sign-off**: Joey, 2026-11-28, under ADR-0033; [verbatim decision](research/2026-11-28-interpretation-owner-signoffs.md#int-028).
+
 **Sources**:
 - Chapter 11 §11.2.7.2: "the new setup record packet will be committed to the stream prior to any new or changed data packets being committed to the stream".
 - Chapter 10 §10.5.1: the setup record "as the first packets in the recording"; Table 10-9.
 - Chapter 11: "A single setup record may span multiple consecutive packets."
 
-**Behaviour — proposed umbrella, NOT APPROVED**: Compose the approved
+**Behaviour — owner-signed umbrella**: Compose the approved
 closure, qualification, comparison and takeover rules, not “latest Complete
 wins”. Compare later candidates against the CURRENTLY GOVERNING setup (the
 original sealed record or latest copy that validly took control), or retain
@@ -964,25 +983,24 @@ alone does not establish a valid takeover or its effective packet boundary.
   Complete data by default nor prove the old setup still governs a changed copy.
 - INT-052 unreadable SRCC supplies no governing inference. INT-053 keeps an
   unresolved takeover/target unresolved until independently valid takeover.
-- Proposed INT-031/032 distinguish ungoverned packet ranges from unresolved
+- Owner-signed INT-031/032 distinguish ungoverned packet ranges from unresolved
   comparison targets; no remembered caller assumption or guessed setup.
 
 The output domain must distinguish an established governing setup,
 **ungoverned (no governing setup)** and **unresolved governing/target evidence**,
-with the actual packet ranges/provenance retained. Exact takeover/boundary
-rules beyond approved dependencies need owner review; do not infer them from
-file order, completion, SRCC, integrity mode or equality alone. First-fragment
-versus completion file order remains an owner item, not an adopted rule here.
+with the actual packet ranges/provenance retained. The signed answers (a)–(e) below bind the boundary; a separately reviewed
+independent takeover/source-partition rule still needs evidence before use.
+Never infer adoption from file order, completion, SRCC, integrity or equality alone.
 Multiple simultaneous files remain out of scope.
 
-**Owner options**: A (recommended) approve this composed umbrella and answer
-these specific takeover/boundary sub-questions (none is answered here):
+**Options considered (owner selected A, 2026-11-28)**: A selected: the composed umbrella and all five recommendations below
+were signed by Joey on 2026-11-28; alternatives remain for context:
 
 (a) **Effective governing boundary:** from which packet does a validly taking-
 control setup govern: after its last fragment, after its INT-045 closure
 point, or another explicitly defined boundary? Last fragment and time closure
 may differ; specify how packets between those points are qualified.
-**Maintainer recommendation (not approved):** use the evidenced closure/
+**Owner-selected answer (2026-11-28):** use the evidenced closure/
 valid-takeover boundary, including a trusted time packet that seals the record
 rather than starting only after that packet. Do not backdate adoption to the
 last fragment merely because it arrived earlier; intervening packets retain
@@ -992,9 +1010,9 @@ their established or unresolved qualification, not an inferred new setup.
 control while INT-053's comparison target is unresolved, and which independent
 evidence establishes that valid takeover? INT-053 already allows a later
 INDEPENDENTLY ESTABLISHED valid takeover to restore a resolved target;
-Complete alone is never that evidence. The owner must define the qualifying
-rule or defer its application, not guess the old comparison target.
-**Maintainer recommendation (not approved):** allow restoration only through
+Complete alone is never that evidence. A separately reviewed rule must supply that proof; this sign-off does not
+invent it or guess the old comparison target.
+**Owner-selected answer (2026-11-28):** allow restoration only through
 a separately reviewed rule establishing independent valid takeover, as
 INT-053 permits. Until such evidence is established the target remains
 unresolved; Complete, equality, SRCC or a digest alone is insufficient.
@@ -1004,7 +1022,7 @@ check block takeover, delay it pending verified evidence, or not by itself
 affect eligibility? Preserve approved INT-030's indeterminate finding in all
 options; neither a nearby generic event nor absence of verified identification
 proves an event occurred or did not occur. Other takeover guards still apply.
-**Maintainer recommendation (not approved):** unverified F7 identity should
+**Owner-selected answer (2026-11-28):** unverified F7 identity should
 not itself block/delay an otherwise independently established valid takeover.
 Retain the indeterminate finding prominently; do not assert the event existed
 or waive any other admission, qualification or adoption requirement.
@@ -1015,7 +1033,7 @@ leave that governing case out of scope pending its own reviewed rule? No
 channel/source association is guessed. This scope question concerns governing,
 not permission to discard or stop parsing legacy raw setup candidates; core
 still owns packet admission/legacy-channel evidence.
-**Maintainer recommendation (not approved):** leave distributed-source
+**Owner-selected answer (2026-11-28):** leave distributed-source
 GOVERNING scope unavailable pending a dedicated source-partition rule;
 continue retaining/parsing legacy setup candidates and core evidence.
 Do not invent which recorder/source/channel governs which data. This is
@@ -1025,8 +1043,8 @@ not a cut to the existing legacy text/payload-reading obligation.
 completion order, and how does that ordering relate to the effective boundary
 chosen in (a)? These are distinct concepts: ordering a candidate does not
 adopt it. This is the existing [file-order owner item](research/2026-11-27-checksum-commands-and-owner-questions.md#owner-brief-what-file-order-means),
-not a new implicit default.
-**Maintainer recommendation (not approved):** first contributing fragment
+now owner-selected explicitly, not an implicit default.
+**Owner-selected answer (2026-11-28):** first contributing fragment
 orders the candidate inventory; the separate closure/takeover point in (a)
 controls when an established governing setup applies. Completion order is
 not a substitute for source order or evidence of adoption.
@@ -1038,9 +1056,9 @@ out of scope. Approved INT-045/048/050/051/052/053 constrain every answer.
 
 **Reason**: The standard orders setup records before the data they describe but never states the governing rule outright.
 
-**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: independent batch 3 (2026-11-27) at main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`: CONCERNS, substantive; umbrella rewritten as proposal, owner decision and independent recheck required; [review record](research/2026-11-27-legacy-int-independent-check-batches3-4.md); source/development/test gates remain · **Origin**: F4 section 5
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Composed umbrella reviewed in #83; five answers now owner-signed; final check of the signed boundary composition pending. Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: F4 section 5
 
-**Test**: `governing_umbrella_composes_approved_guards`, `governing_complete_is_not_takeover`, `governing_unresolved_is_not_no_setup` (planned; owner-dependent)
+**Test**: `governing_umbrella_composes_approved_guards`, `governing_complete_is_not_takeover`, `governing_unresolved_is_not_no_setup` (planned; owner choice recorded; remaining final review/development/test gates apply)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -1048,18 +1066,20 @@ out of scope. Approved INT-045/048/050/051/052/053 constrain every answer.
 
 **Title**: Repeated, changed, and inconsistent setup records
 
+**Owner sign-off**: Joey, 2026-11-28, under ADR-0033; [verbatim decision](research/2026-11-28-interpretation-owner-signoffs.md#int-029).
+
 **Sources**:
 - Chapter 11 §11.2.7.2: SRCC "indicates if the recorder configuration contained in the previous setup record packet(s) of the current recording session (defined as .RECORD to .STOP) has changed"; "The next setup record packet(s) committed to the stream, if not changed from this new setup record, shall clear the SRCC bit to 0."
 - Chapter 9 §9.4.2: "For alphanumeric data items, including keywords, either upper or lower case is allowed; TMATS is not case sensitive"; "Leading, trailing, and embedded blanks are assumed to be intentional"; "Attributes may appear in any order."
 
-**Behaviour — proposed findings-only table, NOT APPROVED**: Compare with
+**Behaviour — owner-signed findings-only table**: Compare with
 INT-053's target, never merely the previous copy. If the target/comparison
 is unresolved, preserve that uncertainty. Report INT-050 raw subtype and any
 INDEPENDENTLY ESTABLISHED semantic class, not a generic case/order-folded
 “same configuration” verdict. Shared equality or digest never cures INT-048
 field ambiguity or establishes takeover.
 
-| Comparison evidence | First-fragment SRCC | Proposed finding/evidence only |
+| Comparison evidence | First-fragment SRCC | Finding/evidence only |
 |---|---|---|
 | Byte-identical | 0 / 1 / unreadable | Retain equality; for 1 retain changed claim versus identity, not a guessed reset; unreadable stays unknown |
 | SHA-value-only / layout-whitespace-only / other raw difference | 0 | Report raw subtype and unchanged-claim discrepancy; no automatic semantic equivalence or reset |
@@ -1068,14 +1088,14 @@ field ambiguity or establishes takeover.
 | Independently established semantic difference | 0 / 1 / unreadable | Retain reviewed semantic evidence and supplied claim; do not invent evidence from generic value folding |
 | Incomplete comparison / unresolved target | any | Unresolved, all available evidence; never equality, guessed subtype or no-change |
 
-Governing effects defer to approved INT-053 and the proposed INT-028 umbrella;
+Governing effects defer to approved INT-053 and the owner-signed INT-028 umbrella;
 a finding table cannot establish control. No SRCC=0-but-different “still governs
 from there” shortcut remains. INT-048 Ambiguous stays blocking regardless of
-comparison equality. **Owner sub-question**: when do descriptive-only changes
-such as G\COM/G\OD count as configuration change? Require reviewed
-attribute semantics; do not choose a generic rule in this table.
+comparison equality. **Owner answer (2026-11-28):** proven descriptive-only comment/date changes
+are not semantic configuration changes; reviewed field semantics must prove
+that class, and raw differences remain reported.
 
-**Separate owner question — comment-only/date-only changes**: A excludes a
+**Separate choice — comment-only/date-only changes (A selected)**: A excludes a
 change proven to affect only reviewed descriptive comment/date fields from
 SEMANTIC configuration change; B counts those changes as configuration
 changes too; C makes that classification an explicitly supplied reviewed
@@ -1087,14 +1107,14 @@ never byte-identical retransmission or automatic takeover. A does not waive
 the owner rule that an SRCC=0 copy differing in raw bytes is checked and
 reported as a change. No semantic reset or governing effect is inferred.
 
-**Owner options**: A (recommended) this evidence/findings-only composition,
+**Options considered (owner selected A, 2026-11-28)**: A (recommended) this evidence/findings-only composition,
 with semantic classes only when independently reviewed; B defer the table
 until the owner defines semantic configuration equivalence. Both retain raw
 bytes and approved governance guards; neither authorizes implicit adoption.
 
 **Reason**: SRCC is a claim about configuration; raw differences alone do not define semantic equivalence. The former generic case/order-folding proposal conflicted with approved INT-050/052/053.
 
-**Design**: proposed (2026-09-26, revised 2026-09-27, awaiting the owner) · **Review**: independent batch 3 (2026-11-27) at main `c682e05babc5a9d7e6fe104e22bd278d68aba6af`: CONCERNS, substantive; findings-only proposal rewritten, owner decision and independent recheck required; [review record](research/2026-11-27-legacy-int-independent-check-batches3-4.md); source/development/test gates remain · **Origin**: F4 section 5; team spec alignment review
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Findings-only rewrite reviewed in #83 at `ada5328`; descriptive-only answer now owner-signed; final check pending. Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: F4 section 5; team spec alignment review
 
 **Test**: `setup_record_kinds_and_srcc_findings`, `srcc_raw_subtypes_do_not_infer_semantics`
 
@@ -1138,24 +1158,24 @@ bytes and approved governance guards; neither authorizes implicit adoption.
 
 **Title**: After a setup record that cannot be assembled, nothing governs
 
+**Owner sign-off**: Joey, 2026-11-28, under ADR-0033; [verbatim decision](research/2026-11-28-interpretation-owner-signoffs.md#int-031).
+
 **Sources**:
 - Chapter 11 §11.2.7.2: "A single setup record may span multiple consecutive packets. When spanning multiple packets, the sequence counter shall increment in the order of segmentation of the setup record, n+1"; "the new setup record packet will be committed to the stream prior to any new or changed data packets".
 - The standard does not say what applies after a record that cannot be read.
 
-**Behaviour**: A setup record INT-034 finds incomplete or ambiguous is reported and builds no description by default (an ambiguity-only opt-in, if approved, must be an explicit per-query caller choice, labelled; no remembered/session default); the previous description is not carried forward, and packets after it are ungoverned until a later setup validly takes control under INT-028/053, not merely the next Complete candidate. The fragment bytes are kept.
+**Behaviour**: A setup record INT-034 finds incomplete or ambiguous is reported and builds no description by default (the owner-approved ambiguity-only opt-in must be an explicit per-query caller choice, labelled; no remembered/session default); the previous description is not carried forward, and packets after it are ungoverned until a later setup validly takes control under INT-028/053, not merely the next Complete candidate. The fragment bytes are kept.
 
-**INT-048 limit on the proposed acceptance option (2026-11-25)**: A retained
+**INT-048 limit on the acceptance option (2026-11-25)**: A retained
 cut facet keeps Incomplete's full blocking force even if the aggregate
-outcome is Ambiguous. The labelled ambiguous-split option above, if later
-approved, cannot make cut text usable or governing.
+outcome is Ambiguous. The labelled ambiguous-split option above cannot make cut text usable or governing.
 
 “Ungoverned” here means no governing setup, distinct from INT-053's
 unresolved comparison target. Integrity failure on otherwise eligible COMPLETE
 text uses INT-051's prominent-finding default, not this incomplete/ambiguous
-cannot-govern predicate. Depends on the INT-028 umbrella rewrite; no new
-owner approval is implied by the independent recommendation check.
+cannot-govern predicate. Composes the owner-signed INT-028 umbrella and its separate takeover-proof gate.
 
-**Owner options**: A (recommended) the conservative default above plus an
+**Options considered (owner selected A, 2026-11-28)**: A (recommended) the conservative default above plus an
 explicit per-query, labelled ambiguity-only opt-in; B always refuse semantic
 use of ambiguous as well as incomplete records, with no ambiguity opt-in.
 A permits a deliberate caller interpretation while preserving evidence; B
@@ -1165,7 +1185,7 @@ takeover to INT-028/053. Raw extraction remains separately authorized.
 
 **Reason**: A new setup record means the configuration may have changed; applying the old description to data the new one describes would decode it wrongly without a word.
 
-**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: independent batch 4 (2026-11-27) at main `283ffd5`: CONCUR with recommendation; vocabulary/choice alignment applied, owner decision pending; [review record](research/2026-11-27-legacy-int-independent-check-batches3-4.md); source/development/test gates remain · **Origin**: F4 section 6
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Independent batch 4 CONCUR with A at `283ffd5` (2026-11-27); per-query/cut alignment reviewed in #83. Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: F4 section 6
 
 **Test**: `nothing_governs_after_an_incomplete_setup_record`
 
@@ -1174,6 +1194,8 @@ takeover to INT-028/053. Raw extraction remains separately authorized.
 ### INT-032
 
 **Title**: Packets that no setup record governs
+
+**Owner sign-off**: Joey, 2026-11-28, under ADR-0033; [verbatim decision](research/2026-11-28-interpretation-owner-signoffs.md#int-032).
 
 **Sources**:
 - Chapter 10 §10.5.1 and Table 10-9: the setup record is "the first packets in the recording".
@@ -1184,7 +1206,7 @@ takeover to INT-028/053. Raw extraction remains separately authorized.
 XML remains unsupported for tmats 0.1 under ADR-0015. Explicit caller
 assignment does not silently declare an in-file setup or settle INT-028.
 
-**Owner options**: A (recommended) expose ungoverned ranges and permit an
+**Options considered (owner selected A, 2026-11-28)**: A (recommended) expose ungoverned ranges and permit an
 explicit labelled caller-assigned description on each query; B expose those
 ranges but offer no assumed decoding until a declared setup is available.
 A supports deliberate recovery without calling an assumption declared; B
@@ -1193,7 +1215,7 @@ session-wide default.
 
 **Reason**: The standard forbids such packets but real recordings may contain them; decoding them silently with a guessed configuration would hide the problem.
 
-**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: independent batch 4 (2026-11-27) at main `283ffd5`: CONCUR with proposal; explicit per-query choice alignment applied, owner decision pending; [review record](research/2026-11-27-legacy-int-independent-check-batches3-4.md); source/development/test gates remain · **Origin**: F4 section 6
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Independent batch 4 CONCUR at `283ffd5` (2026-11-27); per-query alignment reviewed in #83. Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: F4 section 6
 
 **Test**: `ungoverned_packets_are_reported_and_assumptions_labelled`
 
@@ -1205,6 +1227,8 @@ session-wide default.
 
 **Title**: Fragment positions that default to the same value
 
+**Owner sign-off**: Joey, 2026-11-28, under ADR-0033; [verbatim decision](research/2026-11-28-interpretation-owner-signoffs.md#int-033).
+
 **Sources**:
 - Table 9-7, `D-x\WFP-y-n-m-e`: "A number from 1 to N specifying the position of this fragment within the reconstructed binary data word. 1 corresponds to the most significant fragment. Each fragment position from 1 to N must be specified only once." "Default: 1".
 - Appendix 9-C (106-24R1): `D-3\MNF\N-1-1-1:2;` with fragments at `D-3\WP-1-1-1-1:113;` and `D-3\WP-1-1-1-2:121;` and no `D-3\WFP-…`; Table C-2's prose: "the 10 msbs indicated as M and the 6 lsbs as L".
@@ -1214,7 +1238,7 @@ session-wide default.
 The cited Appendix 9-C example itself trips this duplicate-default-position
 finding; fixtures must say so, not assume standard examples are conforming.
 
-**Owner options**: A (recommended) expose the default collision and ambiguous
+**Options considered (owner selected A, 2026-11-28)**: A (recommended) expose the default collision and ambiguous
 fragment order, allowing an explicit labelled per-query caller order; B require
 explicit source positions before semantic reconstruction, with no caller-order
 option. A supports deliberate interpretation of the defective example; B
@@ -1223,7 +1247,7 @@ and never infer order from index, word order or explanatory prose.
 
 **Reason**: The default makes a measurement with several fragments invalid unless every position is given; inferring an order would be a guess that decodes wrongly when it is wrong.
 
-**Design**: proposed (2026-09-26, awaiting the owner) · **Review**: independent batch 4 (2026-11-27) at main `283ffd5`: CONCUR with proposal; owner decision pending; [review record](research/2026-11-27-legacy-int-independent-check-batches3-4.md); source/development/test gates remain · **Origin**: F4 section 7
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Independent batch 4 CONCUR at `283ffd5` (2026-11-27). Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: F4 section 7
 
 **Test**: `defaulted_fragment_positions_are_ambiguous`
 
@@ -2467,37 +2491,39 @@ not a default target; it never supplies a missing choice.
 
 **Title**: X occurrence mapping when the original has no numeric index
 
+**Owner sign-off**: Joey, 2026-11-28, under ADR-0033; [verbatim decision](research/2026-11-28-interpretation-owner-signoffs.md#int-061).
+
 **Sources**:
 - 106-24R1 Chapter 9 section 9.5.14, p. 9-172, prints `X-x\ ORGANIZATION \ORIGCODE\EXTENSION_CODE-i-j-m-n:Value;`.
 - Same section: “Everything to the right of ORGANIZATION that matches an existing TMATS code is used to associate the extension with an existing object defined by the TMATS file.”
-- Same section: “The EXTENSION_CODE identifies the specific extension and shall be unique (i.e., not overlapping any existing TMATS code name).” Registry-name matching plus this uniqueness rule determines the reviewed ORIGCODE/EXTENSION_CODE decomposition; missing metadata does not authorize a heuristic. What “existing TMATS code” means is separately proposed INT-062, not silently decided here.
+- Same section: “The EXTENSION_CODE identifies the specific extension and shall be unique (i.e., not overlapping any existing TMATS code name).” Registry-name matching plus this uniqueness rule determines the reviewed ORIGCODE/EXTENSION_CODE decomposition; missing metadata does not authorize a heuristic. What “existing TMATS code” means is separately owner-signed INT-062, not silently decided here.
 - Same section: “The ORIGCODE contains the original group identifier (i.e., G,D,P, etc.)” and “The value of “-x” must match the first level index (P-x, etc.) value”.
 - Same section: “The “x” values must match the index of the original code word therefore no new values may be added.”
 - Table 9-2 PROGRAM NAME, p. 9-10, prints code name `G\PN`, with no numeric index. Section 9.5.14's worked example uses indexed `D-1\MN-1-2`, not an unindexed original.
 - ADR-0002/0008/0026 preserve raw extensions and require evidence for attachment; no invented source index or default is authorized.
 
-**Behaviour (PROPOSED, Option A recommended; owner decision required)**:
+**Behaviour (owner-signed Option A)**:
 When an original has no numeric index, retain the X item and any plausible
 raw original evidence but report the occurrence mapping cannot-evaluate,
 with its missing-rule reason; do not report resolved or proven no-target,
 invent zero/one, infer an index from data values/order, or rewrite the X name.
-Ordinary indexed association keeps its separately sourced rules. This proposal
+Ordinary indexed association keeps its separately sourced rules. This policy
 does not claim the standard forbids all extensions of unindexed attributes;
 it declines to invent the absent occurrence mapping.
 
-**Owner options**:
+**Options considered (owner selected A, 2026-11-28)**:
 - **A — recommend:** leave the mapping unavailable until a separately reviewed representation is established. Raw data remains accessible; no fabricated match enters a consumer's model.
 - **B — explicit policy:** define an owner-chosen representation for unindexed targets (for example a labelled sentinel/omitted-occurrence convention) before supporting them. This could enable such attachments but would add project policy not printed in section 9.5.14 and needs its own exact syntax, collision and compatibility tests; no representation is chosen here.
 - **C — natural future refinement:** for a once-per-document G attribute such as G\PN, attach by a unique reviewed path when exactly one source occurrence exists, with a labelled attachment and a located finding that occurrence x cannot be verified. No sentinel is needed. This is plausible because G is explicitly listed and the text speaks of an existing object. Duplicates are still ambiguous, record/cut qualifications stay attached, and exact public label wording remains behind the report-format decision. C is not approved here.
-- **D — considered and rejected in this draft recommendation:** classify the X as nonconforming/malformed with a located finding because the required index comparison cannot be satisfied. This is the strict reading of the index sentence, but the explicit G listing makes a blanket rejection of such extensions poorly supported; raw bytes would still be kept. The owner remains the decision-maker; this is not an owner rejection record.
+- **D — considered and rejected in this draft recommendation:** classify the X as nonconforming/malformed with a located finding because the required index comparison cannot be satisfied. This is the strict reading of the index sentence, but the explicit G listing makes a blanket rejection of such extensions poorly supported; raw bytes would still be kept. D is not selected; A is the owner-signed recovery rule, not a standards ban.
 
-A is reversible: later approved B/C can refine missing-rule cannot-evaluate to resolved where their guards hold, retaining raw bytes/evidence without a breaking source/result-shape change. This does not pre-approve B/C or bypass normal published API/report compatibility review. A remains recommended now; C is the natural future refinement.
+A is reversible: later approved B/C can refine missing-rule cannot-evaluate to resolved where their guards hold, retaining raw bytes/evidence without a breaking source/result-shape change. This does not pre-approve B/C or bypass normal published API/report compatibility review. A is selected now; C remains a possible future refinement, not approved.
 
 **Reason**: The X form/index-match rule assumes an index to compare; its broad original-group description includes G, whose PROGRAM NAME has none. The cited text does not supply a sentinel or omitted-index form. Guessing one can create a false attachment or hide an orphan. Prefer an explicit unavailable result over claiming a standards-defined mapping.
 
-**Design**: proposed (2026-11-27; Option A recommended) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off pending; independent AI check pending; source freshness, development analysis and executable tests remain required · **Origin**: family 2 batch 30 source inspection
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Independent pre-check CONCUR with A on #63 at `99a052b`; expanded options reviewed before merge; final check of the signed wording pending. Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: family 2 batch 30 source inspection
 
-**Test**: `x_unindexed_original_mapping_unavailable`, `x_unindexed_zero_one_never_default`, `x_unindexed_value_never_supplies_occurrence` (planned Option A expectations), `x_unindexed_unique_path_option_c`, `x_unindexed_duplicate_path_option_c`, `x_unindexed_nonconforming_option_d` (alternative-option fixtures; all BLOCKED before owner sign-off/AI check, not implemented or executed)
+**Test**: `x_unindexed_original_mapping_unavailable`, `x_unindexed_zero_one_never_default`, `x_unindexed_value_never_supplies_occurrence` (planned Option A expectations), `x_unindexed_unique_path_option_c`, `x_unindexed_duplicate_path_option_c`, `x_unindexed_nonconforming_option_d` (non-selected alternatives, not active expectations; selected A cases are planned, with final review/development/test gates retained)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -2506,13 +2532,15 @@ A is reversible: later approved B/C can refine missing-rule cannot-evaluate to r
 
 **Title**: Meaning of existing TMATS code in X decomposition
 
+**Owner sign-off**: Joey, 2026-11-28, under ADR-0033; [verbatim decision](research/2026-11-28-interpretation-owner-signoffs.md#int-062).
+
 **Sources**:
 - 106-24R1 Chapter 9 section 9.5.14, p. 9-172: “Everything to the right of ORGANIZATION that matches an existing TMATS code is used to associate the extension with an existing object defined by the TMATS file.”
 - Same section: “The EXTENSION_CODE identifies the specific extension and shall be unique (i.e., not overlapping any existing TMATS code name).”
 - Same section says ORIGCODE contains the original group identifier and original code, potentially more backslashes, and prints the D-1\MN-1-2 / X-1\MYORG\D\MN\SGAIN-1-2 example. Table 9-7 MEASUREMENT NAME p. 9-115 defines the original code-name pattern independently of whether an instance is present.
 - ADR-0008/0026 preserve attachment and every candidate; the phrases “existing TMATS code” and “existing object defined by the TMATS file” leave vocabulary versus instance presence to review.
 
-**Behaviour (PROPOSED, Option A recommended; owner decision required)**:
+**Behaviour (owner-signed Option A)**:
 Use the reviewed 106-24R1 BASELINE code-name registry until edition deltas
 exist, recording that registry basis separately from the document's edition
 and the INT-044-labelled selection/fallback basis. Do not claim historical
@@ -2526,12 +2554,12 @@ If registry metadata is missing, overlap is established or the split cannot
 be proved unique, retain raw evidence and cannot-evaluate; no greedy/
 longest-prefix or document-presence heuristic fills the gap.
 
-**Owner options**:
+**Options considered (owner selected A, 2026-11-28)**:
 - **A — recommend:** “existing code” means the reviewed standard code-name vocabulary (106-24R1 baseline until deltas exist), independent of document presence. This separates decomposition from target lookup and permits orphan reporting. **Cost:** X targeting vendor-private V or other non-registry codes can never be split under A and is always cannot-evaluate, even if the target is present. Standard V-x\ID/VN remain registry-defined; private V codes do not become standard vocabulary. Code-name/arity metadata still needs source review, not the full later value registry.
 - **B:** “existing code” means usable code names present in the supplied document. The reference to an existing object in the file supports this reading and could admit document-defined/private codes, but the same X text could decompose differently when originals are missing/added; metadata and ambiguity rules still need review, and presence alone cannot invent unknown grammar or objects.
 - **C — hybrid proposal:** try reviewed registry vocabulary first; use document-present code names ONLY for groups with no registry vocabulary, with the basis labelled `document-defined vocabulary`. This is not a fallback for every missing registry code. The owner must settle the group/private-namespace boundary: V has standard ID/VN codes but no standard private-item vocabulary, so no blanket V fallback is silently authorized. Missing/ambiguous grammar or nonunique decomposition still stays cannot-evaluate; no overlap, index, record-qualification or source-retention guard is waived.
 
-**Registry edition/basis clarification (coordinator direction, 2026-11-27)**:
+**Registry edition/basis clarification (coordinator 2026-11-27; owner signed 2026-11-28)**:
 Use the 106-24R1 baseline until edition deltas exist, with the registry basis
 visible alongside existing INT-044 edition-selection/fallback labelling.
 This does not overwrite G\106 or relabel an older declared edition as 24R1.
@@ -2539,11 +2567,11 @@ Older renamed originals lacking baseline metadata (the supplied R\DST to
 R\CDT example) are cannot-evaluate, never silently aliased/repaired. Exact
 historical edition mappings still need their own cited delta sources.
 
-**Reason**: Registry matching and EXTENSION_CODE uniqueness provide the deterministic decomposition described by the section. The remaining vocabulary-scope question must be an explicit owner choice. A is recommended, not signed; no namespace, private-code or edition fallback policy is silently added.
+**Reason**: Registry matching and EXTENSION_CODE uniqueness provide the deterministic decomposition described by the section. The remaining vocabulary-scope question must be an explicit owner choice. A is owner-signed; no namespace, private-code or edition fallback policy is silently added.
 
-**Design**: proposed (2026-11-27; Option A recommended) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off pending; independent AI check pending; source freshness, development analysis and executable tests remain required · **Origin**: PR #63 independent review follow-up
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Registry/baseline options reviewed in #63/#64; final ADR-0033 independent rule check pending. Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: PR #63 independent review follow-up
 
-**Test**: `x_registry_decomposition_survives_absent_target`, `x_document_only_code_does_not_define_registry_split`, `x_extension_overlap_prevents_heuristic_split`, `x_private_target_registry_only_cost`, `x_baseline_registry_keeps_edition_basis`, `x_legacy_renamed_original_is_unavailable` (planned Option A/baseline expectations), `x_hybrid_no_vocabulary_uses_labelled_document_names`, `x_hybrid_existing_vocabulary_never_falls_back`, `x_hybrid_v_private_boundary_needs_owner` (Option C composition expectations; all BLOCKED before owner sign-off/AI check, not implemented or executed)
+**Test**: `x_registry_decomposition_survives_absent_target`, `x_document_only_code_does_not_define_registry_split`, `x_extension_overlap_prevents_heuristic_split`, `x_private_target_registry_only_cost`, `x_baseline_registry_keeps_edition_basis`, `x_legacy_renamed_original_is_unavailable` (planned Option A/baseline expectations), `x_hybrid_no_vocabulary_uses_labelled_document_names`, `x_hybrid_existing_vocabulary_never_falls_back`, `x_hybrid_v_private_boundary_needs_owner` (non-selected C inputs now assert A refusal/unavailability; final review/development/test gates retained)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -2551,6 +2579,8 @@ historical edition mappings still need their own cited delta sources.
 ### INT-063
 
 **Title**: Vendor attribution when V header and private path evidence are incomplete or inconsistent
+
+**Owner sign-off**: Joey, 2026-11-28, under ADR-0033; [verbatim decision](research/2026-11-28-interpretation-owner-signoffs.md#int-063).
 
 **Sources**:
 - 106-24R1 Chapter 9 section 9.5.13 p. 9-171: “The only V-group attributes defined in this standard are the following.” Data Source ID is V-x\ID; Vendor Name is V-x\VN.
@@ -2573,7 +2603,7 @@ comparison. Missing, repeated, Invalid or unavailable VN is not usable;
 equal duplicate spellings cannot erase Ambiguous. Raw bytes/findings remain.
 No additional alphabet rule or INT-055 numeric syntax is imposed on VN.
 
-**Behaviour (PROPOSED, Option A recommended; owner decision required)**:
+**Behaviour (owner-signed Option A)**:
 Always retain observed V occurrence/private-acronym namespaces and every
 local ID/VN result. Confirm vendor attribution only when one usable VN
 agrees with the observed path acronym under reviewed ASCII comparison;
@@ -2583,47 +2613,50 @@ or invent required-presence/default findings from this policy. Source ID
 context and its G-source candidate resolution stay separate from vendor
 confirmation. Private meanings remain opaque.
 
-**Owner options**:
+**Options considered (owner selected A, 2026-11-28)**:
 - **A — recommend:** retain structural inventory for every namespace, but withhold confirmed vendor attribution if VN evidence is missing, repeated, invalid/unavailable or disagrees. This avoids assigning unknown private fields to a vendor on incomplete/conflicting evidence; raw inspection still works.
 - **B — path-first:** use the observed path acronym as labelled vendor attribution despite bad/missing/disagreeing VN, retaining all header findings/states. This makes more raw namespaces attributable but chooses path authority that the recovery text does not specify.
-- **C — usable-header-first:** one usable VN determines semantic vendor attribution even when path acronyms disagree, with labels/findings and raw namespace unchanged; absent/ambiguous/unavailable VN still cannot pick a vendor. The VN definition supports this emphasis, but it can misattribute a mixed-vendor occurrence. No policy or exact public wording is chosen here.
+- **C — usable-header-first:** one usable VN determines semantic vendor attribution even when path acronyms disagree, with labels/findings and raw namespace unchanged; absent/ambiguous/unavailable VN still cannot pick a vendor. The VN definition supports this emphasis, but it can misattribute a mixed-vendor occurrence. This C alternative is not selected; exact public wording remains open.
 
-**Reason**: Section 9.5.13 provides two pieces of vendor evidence but no recovery precedence. Reporting the raw grouping separately from confirmed attribution preserves useful data without treating conflicting writers as an authority. All options keep source/field/record evidence; A is recommended, not signed.
+**Reason**: Section 9.5.13 provides two pieces of vendor evidence but no recovery precedence. Reporting the raw grouping separately from confirmed attribution preserves useful data without treating conflicting writers as an authority. All options keep source/field/record evidence; A is owner-signed; B/C are not selected.
 
-**Design**: proposed (2026-11-27; Option A recommended) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off pending; independent AI check pending; source freshness, development analysis and executable tests remain required · **Origin**: family 2 batch 31 source inspection
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Usable-VN definition reviewed in #65; final ADR-0033 independent rule check pending. Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: family 2 batch 31 source inspection
 
-**Test**: `v_missing_vn_keeps_namespace_unconfirmed`, `v_duplicate_vn_never_picks_vendor`, `v_path_header_mismatch_keeps_both`, `v_invalid_unavailable_vn_keeps_namespace`, `v_vn_projected_three_chars_ascii_match`, `v_vn_wrong_length_is_invalid_unconfirmed`, `v_vn_blank_handling_does_not_trim`, `v_vn_high_byte_is_not_usable` (planned Option A/definition expectations; BLOCKED before owner sign-off/AI check, not implemented or executed)
+**Test**: `v_missing_vn_keeps_namespace_unconfirmed`, `v_duplicate_vn_never_picks_vendor`, `v_path_header_mismatch_keeps_both`, `v_invalid_unavailable_vn_keeps_namespace`, `v_vn_projected_three_chars_ascii_match`, `v_vn_wrong_length_is_invalid_unconfirmed`, `v_vn_blank_handling_does_not_trim`, `v_vn_high_byte_is_not_usable` (planned owner-signed A/definition expectations; final review/development/test gates retained)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
 
 ## Explicit normalization policy drafts
 
-These choices implement no code and approve no behavior. L1-WRT-002 and
-UC-09 retain explicit normalization in 0.1; the owner chooses the concrete
-policies under ADR-0033. The [source/options note](research/2026-11-27-normalization-policy-drafts.md)
-records the boundary. Each proposed Option-A fixture remains BLOCKED.
+Joey signed A+D / A / A for INT-064/065/066 on 2026-11-28 under ADR-0033.
+L1-WRT-002 and UC-09 retain explicit normalization in 0.1; no code or
+completed analysis/testing is claimed. The [source/options note](research/2026-11-27-normalization-policy-drafts.md)
+records the boundary. Selected-policy fixture expectations are now owner-decided; development gates remain.
 
 ### INT-064
 
 **Title**: Ordering policy for explicitly requested normalization
+
+**Owner sign-off**: Joey, 2026-11-28, under ADR-0033; [verbatim decision](research/2026-11-28-interpretation-owner-signoffs.md#int-064).
 
 **Sources**:
 - 106-24R1 Ch9 section 9.4.2 p. 9-2: “Attributes may appear in any order.”
 - Ch9 sections 9.5.2–9.5.14, in their printed section order: G, T, R, M, P, D, B, S, Q, C, H, V, X. This supplies a possible project profile sequence, not a mandated serialized order.
 - ADR-0002/0007 and L1-WRT-002/UC-09 require preserved source by default and explicit normalization; none defines a standard canonical comparator.
 
-**Behaviour (PROPOSED A mechanism plus named D profile)**: Validate the
+**Behaviour (owner-signed A mechanism plus named D profile)**: Validate the
 selected complete-region ordering plan as a bijection over one document/
 revision and replay whole raw regions without changing name/value bytes.
 Explicitly retained prefix/EOF material stays anchored. If the partition or
 mapping is unavailable, refuse rather than invent boundaries. No implicit
 normalization, deduplication, case/counter rewrite or insertion is authorized.
-The proposed named built-in **Chapter 9 group order, v1** profile generates
-such a plan using D below; both the mechanism and profile remain owner-gated.
+The owner-selected named built-in **Chapter 9 group order, v1** profile generates
+such a plan using D below; both the mechanism and profile are owner-signed,
+with development gates retained.
 No profile is automatically selected by default byte-faithful serialization.
 
-**Options**:
+**Options considered (owner selected A+D, 2026-11-28)**:
 - **A — explicit caller-selected complete-region plan.** A is the validated
   permutation mechanism, not a built-in canonical order by itself.
 - **B — full-key sort.** Built-in stable projected-key tuple ordering:
@@ -2641,25 +2674,23 @@ No profile is automatically selected by default byte-faithful serialization.
   anchor, never acquire a guessed group. Complete positively grouped V/X
   regions retain stable within-group placement and every private byte,
   without decoding private meaning/attachment; if group/region classification
-  is unavailable, anchor it. This proposed placement rule needs approval
-  with the profile and does not resolve INT-061/062/063. Anchors can prevent
+  is unavailable, anchor it. This placement rule is included in the signed profile and does not resolve INT-061/062/063. Anchors can prevent
   global group order across the whole file; no crossing them is implied.
 
 **L1-WRT-002 consequence and recommendation**: **A alone has no built-in
 canonical order and does not by itself fully satisfy the current L1.** The
 owner must either approve one named built-in B or D profile for 0.1 alongside
 A (**A + D recommended**), or explicitly reinterpret canonical order as a
-caller-selected identified profile and clarify L1 wording. No reinterpretation
-or L1 text change is made here. D is a less disruptive built-in than full-key
+caller-selected identified profile and clarify L1 wording. Joey selected A+D on 2026-11-28; no L1 reinterpretation is needed. D is a less disruptive built-in than full-key
 sorting, with fewer tie rules and source order retained inside each group.
 Its costs are a project convention rather than a standard-mandated order,
 explicit unknown/private placement rules, anchor-limited group ordering and
 no cleanup of within-group order. A remains useful for caller-specific plans;
 neither it nor D may be advertised as the standard's unique canonical form.
 
-**Design**: proposed (2026-11-27; A mechanism plus named built-in D preferred, or explicit owner L1 reinterpretation) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off pending; independent AI recheck CONCUR at main `283ffd5` (2026-11-27) with A mechanism + named built-in D, or explicit owner L1 reinterpretation; [recheck record](research/2026-11-27-legacy-int-independent-check-batch2.md#additional-recheck-int-064); source freshness, development analysis and executable tests remain required · **Origin**: family 2 normalization source review and #77 independent review
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Independent amended recheck CONCUR with A mechanism + named D at `283ffd5` (2026-11-27). Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: family 2 normalization source review and #77 independent review
 
-**Test**: `normalize_order_explicit_bijection`, `normalize_order_missing_or_repeated_identity`, `normalize_order_preserves_raw_regions`, `normalize_group_profile_section_order`, `normalize_group_profile_stable_within_group`, `normalize_group_profile_anchors`, `normalize_group_profile_private_and_unknown_placement` (planned; A/D expectations BLOCKED)
+**Test**: `normalize_order_explicit_bijection`, `normalize_order_missing_or_repeated_identity`, `normalize_order_preserves_raw_regions`, `normalize_group_profile_section_order`, `normalize_group_profile_stable_within_group`, `normalize_group_profile_anchors`, `normalize_group_profile_private_and_unknown_placement` (planned owner-signed A+D expectations; development/test gates retained)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -2667,11 +2698,13 @@ neither it nor D may be advertised as the standard's unique canonical form.
 
 **Title**: Scope of line-ending normalization
 
+**Owner sign-off**: Joey, 2026-11-28, under ADR-0033; [verbatim decision](research/2026-11-28-interpretation-owner-signoffs.md#int-065).
+
 **Sources**:
 - 106-24R1 Ch9 section 9.4.1 p. 9-2 permits LF/CR to “improve readability”. Section 9.4.2 defines field delimiters and intentional value blanks, not a canonical newline representation.
 - INT-035/036 distinguish retained bytes, layout and interpreted omission; L1-WRT-002 asks for consistent line endings only on request.
 
-**Behaviour (PROPOSED A)**: Require the caller to choose LF or CRLF, with no
+**Behaviour (owner-signed A)**: Require the caller to choose LF or CRLF, with no
 implicit platform default. Convert CRLF pairs, lone CR and lone LF only in
 source-correspondence ranges positively established as layout, outside name/
 value content. Leading/trailing name layout may be included only where its
@@ -2681,7 +2714,7 @@ layout classification makes the requested conversion unavailable there,
 not permission to guess or claim globally consistent output. CRLF is one
 newline token; never process its CR and LF as two tokens.
 
-**Options**: A — explicit target and positively identified layout-only ranges
+**Options considered (owner selected A, 2026-11-28)**: A — explicit target and positively identified layout-only ranges
 (recommended); B — convert every raw CR/LF token in the selected source,
 including names/values, preserving all other bytes; C — require the caller
 to supply every exact conversion range rather than discover layout.
@@ -2692,9 +2725,9 @@ when field content is retained. B gives that global convention but changes
 field source; C is precise but transfers all layout work to callers. This
 is a product policy choice, not a new delimiter or an INT-036 view rewrite.
 
-**Design**: proposed (2026-11-27; A recommended) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off and independent AI check pending · **Origin**: family 2 normalization source review
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Independent pre-check CONCUR with A on #77 at `4ed91a9` (2026-11-27). Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: family 2 normalization source review
 
-**Test**: `normalize_newlines_layout_only`, `normalize_newlines_field_controls_untouched`, `normalize_newlines_unknown_layout_unavailable` (planned; Option-A expectations BLOCKED)
+**Test**: `normalize_newlines_layout_only`, `normalize_newlines_field_controls_untouched`, `normalize_newlines_unknown_layout_unavailable` (planned owner-signed A expectations; development/test gates retained)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -2702,11 +2735,13 @@ is a product policy choice, not a new delimiter or an INT-036 view rewrite.
 
 **Title**: Preconditions for explicit counter recomputation
 
+**Owner sign-off**: Joey, 2026-11-28, under ADR-0033; [verbatim decision](research/2026-11-28-interpretation-owner-signoffs.md#int-066).
+
 **Sources**:
 - 106-24R1 Ch9 Table 9-7 NUMBER OF FRAGMENTS, D-x\MNF\N-y-n-m, p. 9-117 defines the number of occupied word positions, range 1–8; WORD POSITION D-x\WP-y-n-m-e identifies the members. The source calls these “Number of word positions”, not highest index.
 - Approved INT-038/040 supply canonical numeric identity, scoped membership and compatible-unassigned evidence; INT-055 supplies bounded decimal/range rules. They do not authorize rewriting counters.
 
-**Behaviour (PROPOSED A)**: Recompute only an existing uniquely identified,
+**Behaviour (owner-signed A)**: Recompute only an existing uniquely identified,
 well-framed reviewed counter whose applicability, parent scope and complete
 member evidence are established, with contiguous distinct identities 1..k
 and no compatible unassigned evidence. Write canonical decimal k only when
@@ -2718,7 +2753,7 @@ successful validation of the old counter or an implicit general repair.
 Unknown evidence, duplicate target, gap or out-of-range result refuses the
 requested counter rewrite; it does not erase the original.
 
-**Options**: A — complete, contiguous evidence with range-checked count
+**Options considered (owner selected A, 2026-11-28)**: A — complete, contiguous evidence with range-checked count
 (recommended); B — write distinct observed cardinality even with index gaps,
 retaining gap/excess findings and never claiming repaired conformance;
 C — write highest observed index. C is listed and rejected in the draft
@@ -2733,8 +2768,8 @@ The same identity/retention rule applies to reviewed MML\N-style counters,
 not only MNF\N; use each counter's own cited scope/range (Table 9-7 NUMBER
 OF MEASUREMENT LOCATIONS, p. 9-117), never import MNF\N's 1–8 range.
 
-**Design**: proposed (2026-11-27; A recommended) · **Review**: pending under ADR-0033; draft author: maintainer agent; owner sign-off and independent AI check pending · **Origin**: family 2 normalization source review
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Independent pre-check CONCUR with A on #77 at `4ed91a9` (2026-11-27). Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: family 2 normalization source review
 
-**Test**: `normalize_counter_contiguous_distinct_members`, `normalize_counter_gap_refuses`, `normalize_counter_invalid_old_value_explicit_rewrite`, `normalize_counter_compatible_damage_blocks` (planned; Option-A expectations BLOCKED)
+**Test**: `normalize_counter_contiguous_distinct_members`, `normalize_counter_gap_refuses`, `normalize_counter_invalid_old_value_explicit_rewrite`, `normalize_counter_compatible_damage_blocks` (planned owner-signed A expectations; development/test gates retained)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written

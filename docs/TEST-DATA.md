@@ -780,9 +780,9 @@ completeness. No new test marker or implementation status is added here.
 section 9.4.2 page 9-2; Chapter 11 section 11.2.7.2 page 11-50 and
 section 11.2.1.1 f; ADR-0031; reviewer consequences relayed by the owner
 2026-11-23 after #38. INT-011 is reconfirmed (AI CONCURS on #38 at c623b15).
-INT-034's precise classification and INT-028/031 governance remain proposed.
-Fixtures supply reviewed classification/accounting bindings; their success
-cannot approve those bindings or close the open streaming-use question.
+Joey signed INT-028/031 and INT-034's snapshot/padding/availability/continuity
+choices on 2026-11-28. Padding-only/leading-damage precedence stays open;
+remaining final review and development/testing gates are not executable coverage.
 
 | Planned check | Fixture or stimulus | Expected observation | Requirement |
 | --- | --- | --- | --- |
@@ -882,7 +882,7 @@ and Ch9 Table 9-2 p. 9-13 checksum; INT-011/018–021/034/039/043/045 and owner-
 | `cut_observation_cannot_claim_mismatch_or_only_sha_layout_delta` | Every sealed X with checksum F or content H/W, plus following X with checksum F, including intersections | Explicit R0 consistency/rejection test, not parser coverage: checksum F must instead be U and bounded H/W cannot explain the cut | L3-REG-014 |
 | `other_field_ambiguity_blocks_identity_and_digest` | Repeated definition-bound G\PN within one candidate (INT-039), including identical repeats and sealed G\SHA verification, with byte-identical following text | Supplied A remains assembly Ambiguous under INT-048; no first/last winner or Complete upgrade; retain every item/digest/identity finding | L3-REG-015 |
 | `cut_duplicate_keeps_cut_evidence_and_ambiguity` | `0.D.DN.G.SS.X.T.I` plus cut text containing repeated G\PN | Aggregate Ambiguous under strict QD WITH A RETAINED CUT FACET; retain Incomplete's full blocking force, both raw occurrences and cut location. No ambiguous acceptance can make it usable/governing | L3-REG-015 |
-| `cut_facet_blocks_ambiguous_acceptance` | Cut text with duplicate SHA or another established field ambiguity, then request the proposed INT-031 labelled ambiguous-split acceptance | Acceptance cannot make the retained-cut candidate usable or governing, even if the split option is later approved; preserve the cut facet and all findings | L3-REG-015 |
+| `cut_facet_blocks_ambiguous_acceptance` | Cut text with duplicate SHA or another established field ambiguity, then request the owner-signed INT-031 labelled ambiguous-split acceptance | Acceptance cannot make the retained-cut candidate usable or governing, under the signed option; preserve the cut facet and all findings | L3-REG-015 |
 | `duplicate_g106_fallback_does_not_cure_assembly_ambiguity` | Duplicate G\106 with INT-044 labelled fallback | Assembly Ambiguous remains; fallback selects diagnostic rule basis, never a winning declaration or governing setup | L3-REG-015 |
 | `following_duplicate_is_assembly_ambiguous` | `0.D.ND.G.SS.T.T.I`, then cut-following variant X | Following candidate assembly Ambiguous under QD even if sealed candidate is Complete; block following adoption and retain incomplete comparison evidence | L3-REG-015 |
 | `integrity_findings_default_no_silent_quarantine` | Otherwise eligible initial and mid-session setup with checksum F/M, plus separate F1/framing/trust/ambiguous-scope controls | Default prominent findings; no implicit quarantine or silent old fallback. Controls remain blocking; quarantine opt-in requires separate review | L3-REG-015 |
@@ -1372,7 +1372,7 @@ Owner decisions on 0.1 pattern scope (reviewed registry patterns only) and
 public query syntax (wildcards/escaping) are PENDING; implementation is
 blocked. Diagnostic candidate fixtures do not approve incomplete/ambiguous
 access: see the [open item](ROADMAP.md#streaming-setup-record-follow-ups)
-and [proposed INT-031](INTERPRETATIONS.md#int-031). Any supplied record
+and [owner-signed INT-031](INTERPRETATIONS.md#int-031). Any supplied record
 qualification, including Ambiguous, cut facets and Incomplete, stays attached
 and unchanged when candidates are returned.
 
@@ -1495,12 +1495,12 @@ Table 9-7 MEASUREMENT NAME p. 9-115, D-x\MNF\N-y-n-m is NUMBER OF
 FRAGMENTS p. 9-117. G\PN is Table 9-2 PROGRAM NAME p. 9-10. These
 fixtures test structural attachment, not whole-file conformance or private
 extension-value semantics. A/B below are independent source item identities.
-Record qualification/access restrictions remain intact. INT-061 options and
-INT-062's vocabulary choice remain PROPOSED; their nine option-specific
-fixtures below (plus the later cost/hybrid/baseline follow-ups) are BLOCKED
-before owner/AI approval. Indexed candidate tests
+Record qualification/access restrictions remain intact. Joey signed INT-061/062
+A on 2026-11-28. Selected A expectations are now owner-decided; formerly
+alternative inputs below assert A's unavailability/refusal instead. Remaining
+independent final review, development analysis/review and tests still gate code. Indexed candidate tests
 can receive explicit reviewed decomposition metadata; they do not sign off
-runtime vocabulary selection. Under the proposed registry-vocabulary reading,
+runtime vocabulary selection. Under owner-signed registry-vocabulary A,
 registry-name matching plus EXTENSION_CODE uniqueness determines the split,
 not a free-form greedy parser or target presence in the document.
 
@@ -1526,21 +1526,21 @@ not a free-form greedy parser or target presence in the document.
 | `x_cross_fragment_target_shares_one_document` | Same-channel sequence +1 fragments with matching FRMT/RCCVER form ONE ADR-0025/INT-011 record: original and X across fragments retain target IDs and packet/body provenance | L3-EXT-005 |
 | `x_attachment_preserves_cut_and_ambiguous_qualification` | Diagnostic source has Ambiguous and/or retained cut/Incomplete facets: any returned attachment keeps them and their blocking force, without approving access/adoption | L3-EXT-005 |
 | `x_leading_marker_blocks_semantic_attachment` | Assembled text begins EF BB BF: INT-037 availability gate remains; keep raw evidence and reason, not resolved/empty semantic success | L3-EXT-001, L3-EXT-005 |
-| `x_unindexed_original_mapping_unavailable` | **BLOCKED, INT-061 Option A proposed:** raw X appears to target unindexed G\PN; retain plausible raw evidence and cannot-evaluate mapping, not resolved or proven no-target | L3-EXT-007 |
-| `x_unindexed_zero_one_never_default` | **BLOCKED, INT-061 Option A proposed:** hypothetical X-0/X-1 forms for G\PN cannot introduce an implicit sentinel/default occurrence or source rewrite | L3-EXT-007 |
-| `x_unindexed_value_never_supplies_occurrence` | **BLOCKED, INT-061 Option A proposed:** numeric-looking G\PN value/order supplies no missing source index; no association invented from its data | L3-EXT-007 |
-| `x_unindexed_unique_path_option_c` | **BLOCKED, INT-061 Option C alternative:** exactly one once-per-document G\PN occurrence can be attached by unique reviewed path with labelled status and a located occurrence-unverifiable finding, no sentinel; exact label wording pending | L3-EXT-007 |
-| `x_unindexed_duplicate_path_option_c` | **BLOCKED, INT-061 Option C alternative:** duplicate G\PN occurrences stay ambiguous/all listed, not a unique-path attachment; INT-048 record/cut qualification remains unchanged | L3-EXT-005, L3-EXT-007 |
-| `x_unindexed_nonconforming_option_d` | **BLOCKED alternative, rejected in draft recommendation, not owner-decided:** D would retain raw X and report nonconforming/malformed because the index cannot match; explicit G support is the reason not to recommend blanket rejection | L3-EXT-007 |
-| `x_registry_decomposition_survives_absent_target` | **BLOCKED, INT-062 Option A proposed:** reviewed 106-24R1 baseline registry contains D\MN pattern/arity, but no matching original item is present; registry split remains defined, then instance lookup reports unresolved/orphan, not absent grammar | L3-EXT-001, L3-EXT-004 |
-| `x_document_only_code_does_not_define_registry_split` | **BLOCKED, INT-062 Option A proposed:** a document-only/private code is present but absent from reviewed registry metadata; presence cannot create a registry code definition or heuristic split; retain raw/cannot-evaluate evidence | L3-EXT-001 |
-| `x_extension_overlap_prevents_heuristic_split` | **BLOCKED, INT-062 Option A proposed:** fixture metadata establishes EXTENSION_CODE overlap with an existing registry code name; retain violation/raw evidence and cannot-evaluate split, do not pick a longest prefix or rename source | L3-EXT-001, L3-EXT-006 |
-| `x_private_target_registry_only_cost` | **BLOCKED, INT-062 A:** private V original is present but outside standard registry vocabulary (section 9.5.13); X remains cannot-evaluate. Standard V ID/VN do not grant private-name grammar | L3-EXT-001 |
-| `x_baseline_registry_keeps_edition_basis` | **BLOCKED, INT-062 baseline composition:** supplied declaration/override/fallback evidence and INT-044 reason stay unchanged; identify registry as 106-24R1 until deltas exist, not a fake older catalog | L3-EXT-001, L3-EXT-005 |
-| `x_legacy_renamed_original_is_unavailable` | **BLOCKED, INT-062 baseline composition:** coordinator's legacy R\DST/R\CDT example has no reviewed baseline metadata for the legacy original: cannot-evaluate, raw bytes kept, no automatic translation; no historical rename date asserted | L3-EXT-001 |
-| `x_hybrid_no_vocabulary_uses_labelled_document_names` | **BLOCKED, INT-062 C:** explicitly supplied classification says this group has no registry vocabulary; registry-first attempt then reviewed document-present metadata can provide the split, with document-defined vocabulary basis; no actual group classification is approved | L3-EXT-001 |
-| `x_hybrid_existing_vocabulary_never_falls_back` | **BLOCKED, INT-062 C:** registry has group vocabulary but requested code is missing: no generic per-code miss fallback into document names | L3-EXT-001 |
-| `x_hybrid_v_private_boundary_needs_owner` | **BLOCKED, INT-062 C:** V has registry-defined ID/VN but private item names lack standard definitions; keep group/private-namespace classification unresolved pending owner choice, never enable blanket V fallback | L3-EXT-001 |
+| `x_unindexed_original_mapping_unavailable` | **Owner-signed INT-061 A:** raw X appears to target unindexed G\PN; retain plausible raw evidence and cannot-evaluate mapping, not resolved or proven no-target | L3-EXT-007 |
+| `x_unindexed_zero_one_never_default` | **Owner-signed INT-061 A:** hypothetical X-0/X-1 forms for G\PN cannot introduce an implicit sentinel/default occurrence or source rewrite | L3-EXT-007 |
+| `x_unindexed_value_never_supplies_occurrence` | **Owner-signed INT-061 A:** numeric-looking G\PN value/order supplies no missing source index; no association invented from its data | L3-EXT-007 |
+| `x_unindexed_unique_path_option_c` | **A selected; C not active:** exactly one G\PN still leaves occurrence mapping cannot-evaluate with raw evidence; unique path does not authorize C attachment or an invented sentinel | L3-EXT-007 |
+| `x_unindexed_duplicate_path_option_c` | **A selected; C not active:** duplicate G\PN stays field Ambiguous/all listed; X mapping cannot-evaluate with qualification retained; no duplicate winner | L3-EXT-005, L3-EXT-007 |
+| `x_unindexed_nonconforming_option_d` | **A selected; D not active:** preserve X and cannot-evaluate occurrence mapping; do not impose D's blanket malformed/nonconforming verdict merely because G\PN has no index | L3-EXT-007 |
+| `x_registry_decomposition_survives_absent_target` | **Owner-signed INT-062 A:** reviewed 106-24R1 baseline registry contains D\MN pattern/arity, but no matching original item is present; registry split remains defined, then instance lookup reports unresolved/orphan, not absent grammar | L3-EXT-001, L3-EXT-004 |
+| `x_document_only_code_does_not_define_registry_split` | **Owner-signed INT-062 A:** a document-only/private code is present but absent from reviewed registry metadata; presence cannot create a registry code definition or heuristic split; retain raw/cannot-evaluate evidence | L3-EXT-001 |
+| `x_extension_overlap_prevents_heuristic_split` | **Owner-signed INT-062 A:** fixture metadata establishes EXTENSION_CODE overlap with an existing registry code name; retain violation/raw evidence and cannot-evaluate split, do not pick a longest prefix or rename source | L3-EXT-001, L3-EXT-006 |
+| `x_private_target_registry_only_cost` | **Owner-signed INT-062 A:** private V original is present but outside standard registry vocabulary (section 9.5.13); X remains cannot-evaluate. Standard V ID/VN do not grant private-name grammar | L3-EXT-001 |
+| `x_baseline_registry_keeps_edition_basis` | **Owner-signed INT-062 A:** supplied declaration/override/fallback evidence and INT-044 reason stay unchanged; identify registry as 106-24R1 until deltas exist, not a fake older catalog | L3-EXT-001, L3-EXT-005 |
+| `x_legacy_renamed_original_is_unavailable` | **Owner-signed INT-062 A:** coordinator's legacy R\DST/R\CDT example has no reviewed baseline metadata for the legacy original: cannot-evaluate, raw bytes kept, no automatic translation; no historical rename date asserted | L3-EXT-001 |
+| `x_hybrid_no_vocabulary_uses_labelled_document_names` | **A selected; hybrid C not active:** document-only original in a group lacking registry vocabulary remains cannot-evaluate; never emit document-defined vocabulary as an adopted basis | L3-EXT-001 |
+| `x_hybrid_existing_vocabulary_never_falls_back` | **A selected; hybrid C not active:** reviewed registry vocabulary exists but requested code is missing: cannot-evaluate, no document-name fallback | L3-EXT-001 |
+| `x_hybrid_v_private_boundary_needs_owner` | **A selected; historical test name retained:** standard V ID/VN vocabulary never authorizes private names as decomposition metadata; private original remains cannot-evaluate even when present | L3-EXT-001 |
 | `x_association_oracle_is_not_resolver_output` | Independently listed target IDs/path/arity/spans determine expected outcomes; production resolver/round trip alone is not the oracle; all bytes and qualifiers unchanged | L3-EXT-008 |
 
 No public query syntax, concrete result/error names, report layout, private
@@ -1555,8 +1555,8 @@ Source: 106-24R1 Ch9 section 9.5.13 p. 9-171 (V ID/VN/private form) and
 Table 9-2 DATA SOURCE ID p. 9-11. These are structural/context fixtures,
 not whole-file conformance or private-value decoders. Header composition
 can receive evaluated field states under reviewed metadata; it does not
-settle unreviewed blanks/required-presence rules. Eight INT-063 Option-A/
-definition cases are BLOCKED before owner sign-off and independent AI check.
+settle unreviewed blanks/required-presence rules. Eight INT-063 A/definition expectations are owner-decided (Joey,
+2026-11-28); remaining independent final review/development/test gates apply.
 
 | Planned test | Independent source/context and expected evidence | Requirements |
 |---|---|---|
@@ -1576,15 +1576,15 @@ definition cases are BLOCKED before owner sign-off and independent AI check.
 | `v_separate_record_cannot_supply_context` | Context exists only in another setup document/record: no cross-record source/vendor binding | L3-EXT-013 |
 | `v_cross_fragment_context_has_packet_provenance` | Same channel, sequence +1 and matching FRMT/RCCVER give ONE ADR-0025/INT-011 record; headers/private items span packets, retaining item/body/packet mappings | L3-EXT-013 |
 | `v_record_qualifications_never_upgrade` | Inventory/source candidates remain available diagnostically only under reviewed access; Ambiguous/Incomplete/cut/encoding qualifications and blocking force stay attached | L3-EXT-013 |
-| `v_missing_vn_keeps_namespace_unconfirmed` | **BLOCKED, INT-063 A:** usable path namespace but VN Missing: preserve items/context, unavailable confirmed attribution, no default or invented required-presence finding | L3-EXT-010, L3-EXT-014 |
-| `v_duplicate_vn_never_picks_vendor` | **BLOCKED, INT-063 A:** repeated known-scalar VN, even equal: keep Ambiguous/all headers; no first/last/path-selected confirmed vendor | L3-EXT-010, L3-EXT-014 |
-| `v_path_header_mismatch_keeps_both` | **BLOCKED, INT-063 A:** evaluated VN=ABC and private path=XYZ: preserve both, unavailable confirmed attribution with located reason, no raw reassignment/repair | L3-EXT-014 |
-| `v_invalid_unavailable_vn_keeps_namespace` | **BLOCKED, INT-063 A:** evaluated Invalid or unavailable VN does not hide observed items or become an inferred vendor; preserve distinct state/reason | L3-EXT-010, L3-EXT-014 |
+| `v_missing_vn_keeps_namespace_unconfirmed` | **Owner-signed INT-063 A:** usable path namespace but VN Missing: preserve items/context, unavailable confirmed attribution, no default or invented required-presence finding | L3-EXT-010, L3-EXT-014 |
+| `v_duplicate_vn_never_picks_vendor` | **Owner-signed INT-063 A:** repeated known-scalar VN, even equal: keep Ambiguous/all headers; no first/last/path-selected confirmed vendor | L3-EXT-010, L3-EXT-014 |
+| `v_path_header_mismatch_keeps_both` | **Owner-signed INT-063 A:** evaluated VN=ABC and private path=XYZ: preserve both, unavailable confirmed attribution with located reason, no raw reassignment/repair | L3-EXT-014 |
+| `v_invalid_unavailable_vn_keeps_namespace` | **Owner-signed INT-063 A:** evaluated Invalid or unavailable VN does not hide observed items or become an inferred vendor; preserve distinct state/reason | L3-EXT-010, L3-EXT-014 |
 | `v_unknown_private_duplicates_stay_unclassified` | Repeated opaque private name retains every raw occurrence; unknown private cardinality does not create a proved scalar duplicate merely from shape | L3-EXT-010, L3-EXT-015 |
-| `v_vn_projected_three_chars_ascii_match` | **BLOCKED, INT-063 definition/A:** VN a<TAB>Bc (real TAB) projects under INT-036 to aBc, exactly three ASCII characters; compares to ABC path without rewriting raw value; existing diagnostics remain | L3-EXT-011, L3-EXT-014 |
-| `v_vn_wrong_length_is_invalid_unconfirmed` | **BLOCKED, INT-063 definition/A:** available projected empty, two- or four-character VN is Invalid (not Missing/generic unavailable), so confirmed attribution is unconfirmed; raw bytes retained | L3-EXT-011, L3-EXT-014 |
-| `v_vn_blank_handling_does_not_trim` | **BLOCKED, INT-063 definition/A:** three-character value space+AB has leading blank; INT-041 unreviewed blank handling remains unavailable, never trim it or invent a numeric/strict alphabet rule | L3-EXT-011, L3-EXT-014 |
-| `v_vn_high_byte_is_not_usable` | **BLOCKED, INT-063 definition/A:** raw three-byte VN containing FF is Invalid under INT-037, not a usable acronym through Latin-1/Unicode/high-byte folding; unconfirmed and raw evidence unchanged | L3-EXT-011, L3-EXT-014 |
+| `v_vn_projected_three_chars_ascii_match` | **Owner-signed INT-063 A:** VN a<TAB>Bc (real TAB) projects under INT-036 to aBc, exactly three ASCII characters; compares to ABC path without rewriting raw value; existing diagnostics remain | L3-EXT-011, L3-EXT-014 |
+| `v_vn_wrong_length_is_invalid_unconfirmed` | **Owner-signed INT-063 A:** available projected empty, two- or four-character VN is Invalid (not Missing/generic unavailable), so confirmed attribution is unconfirmed; raw bytes retained | L3-EXT-011, L3-EXT-014 |
+| `v_vn_blank_handling_does_not_trim` | **Owner-signed INT-063 A:** three-character value space+AB has leading blank; INT-041 unreviewed blank handling remains unavailable, never trim it or invent a numeric/strict alphabet rule | L3-EXT-011, L3-EXT-014 |
+| `v_vn_high_byte_is_not_usable` | **Owner-signed INT-063 A:** raw three-byte VN containing FF is Invalid under INT-037, not a usable acronym through Latin-1/Unicode/high-byte folding; unconfirmed and raw evidence unchanged | L3-EXT-011, L3-EXT-014 |
 | `v_grouping_oracle_is_not_implementation_output` | Independently listed IDs/header states/source candidates and literal spans determine expected inventory; no production grouping path calculates the oracle | L3-EXT-016 |
 
 No vendor decoder/plug-in, generic user overlay, acronym alphabet, required-
@@ -1717,7 +1717,7 @@ added by these specifications.
 ## Planned checksum command computation batch 35
 
 Internal computation only, given explicitly selected eligible records.
-Incomplete/ambiguous access remains gated by proposed INT-031; refused-result
+Incomplete/ambiguous access follows owner-signed INT-031; refused-result
 propagation tests can inject evaluated outcomes rather than access such text.
 No output schema, selection default or numeric exit code is fixed here.
 Sources: existing L3-SUM-001–010; INT-018–021/043; ADR-0014/0029.
@@ -1836,7 +1836,7 @@ heuristic or sample-data run is introduced by these planned checks.
 Synthetic supplied CSDW/session/trigger evidence only; no invented packet
 identity or body access. Sources: 106-24R1 Ch11 section 11.2.7.2 Figure
 11-34 pp. 11-50–51 and approved INT-030/F7. Core routing/channel checks and
-proposed INT-031 access gates remain independent.
+owner-signed INT-031 access gates remain independent.
 
 Mixture-scope Option A (Complete records only) is RECOMMENDED, PENDING OWNER;
 B broadens finding eligibility to non-Complete candidates. Scope-sensitive
@@ -1980,9 +1980,9 @@ syntax, report schema or incomplete/ambiguous access option is approved.
 
 ## Planned normalization-policy batch 41
 
-Common request/retention checks below do not approve proposed INT-064/065/066.
-Every Option-A and INT-064-D transformation/result expectation is **BLOCKED** pending owner
-sign-off and independent AI check. Definitions/byte oracles come from reviewed
+Joey signed INT-064 A+D / INT-065 A / INT-066 A on 2026-11-28; independent
+pre-checks concurred. Their owner-choice holds are removed; source freshness,
+written analysis/review and intensive executable tests remain prerequisites. Definitions/byte oracles come from reviewed
 source regions and explicitly supplied condition/member evidence; no implicit
 policy is calculated through the production normalizer.
 
@@ -1990,23 +1990,23 @@ policy is calculated through the production normalizer.
 |---|---|---|
 | `normalize_request_without_policy_is_not_default_repair` | Missing/unready policy returns unavailable/refusal with original unchanged; default output still exact replay, never guessed canonical profile | L3-WRT-012 |
 | `normalize_stale_revision_or_conflicting_plan_refuses` | Wrong revision, conflicting exact targets or unresolved composition: observable refusal, no partial successful normalization or source mutation | L3-WRT-012 |
-| `normalize_order_explicit_bijection` | **BLOCKED INT-064 A:** source COMMENT:b;COMMENT:a;, explicit region order [second,first] gives exact COMMENT:a;COMMENT:b;, no byte changes inside either region | L3-WRT-013, L3-WRT-017 |
-| `normalize_order_missing_or_repeated_identity` | **BLOCKED INT-064 A:** omission/repetition in requested full region order refuses, never deduplicates, drops unknown content or invents a copy | L3-WRT-013 |
-| `normalize_order_preserves_raw_regions` | **BLOCKED INT-064 A:** complete selected regions with mixed case/duplicates/opaque bytes retain every byte exactly once; anchored prefix/suffix mapping must be positively established | L3-WRT-013, L3-WRT-017 |
-| `normalize_order_region_mapping_unavailable` | **BLOCKED INT-064 A:** no unambiguous complete-region partition: order request refuses rather than treating a malformed suffix as a complete item or guessing ownership | L3-WRT-012, L3-WRT-013 |
-| `normalize_group_profile_section_order` | **BLOCKED INT-064 A+D:** supplied positively grouped region IDs X1,R1,G1,T1,M1,P1,D1,B1,S1,Q1,C1,H1,V1,R2 yield G1,T1,R1,R2,M1,P1,D1,B1,S1,Q1,C1,H1,V1,X1 within one anchor-free run; raw regions intact | L3-WRT-013, L3-WRT-017 |
-| `normalize_group_profile_stable_within_group` | **BLOCKED INT-064 D:** source R regions with entry indices 10 then 2 retain that order and duplicate occurrences; D does not perform B's numeric/full-key sort or deduplicate | L3-WRT-013 |
-| `normalize_group_profile_anchors` | **BLOCKED INT-064 D:** supplied regions R1,G1,COMMENT,R2,G2 reorder to G1,R1,COMMENT,G2,R2; COMMENT/opaque/malformed anchors stay in place, no false claim of global group order across anchors | L3-WRT-013 |
-| `normalize_group_profile_private_and_unknown_placement` | **BLOCKED INT-064 D:** complete positively grouped V/X regions preserve private bytes and within-group order; unknown/unavailable group classification anchors rather than guessing placement or resolving private attachment | L3-WRT-013, L3-WRT-017 |
-| `normalize_newlines_layout_only` | **BLOCKED INT-065 A:** explicitly identified CRLF/lone-CR/lone-LF layout ranges convert to the caller's LF or CRLF target; CRLF is one token, all other bytes unchanged | L3-WRT-014 |
-| `normalize_newlines_field_controls_untouched` | **BLOCKED INT-065 A:** real CR/LF within COMMENT value or internal code name stays raw; only positively classified layout converts, no INT-036 projection written back | L3-WRT-014 |
-| `normalize_newlines_unknown_layout_unavailable` | **BLOCKED INT-065 A:** opaque/unclassified range prevents claiming complete requested conversion; no inferred trim/platform default or silent partial success | L3-WRT-012, L3-WRT-014 |
-| `normalize_newlines_padding_is_not_linebreak` | **BLOCKED INT-065 A:** NUL/0x1A/space padding is retained; explicit newline conversion never deletes padding or inserts a missing semicolon | L3-WRT-014 |
-| `normalize_counter_contiguous_distinct_members` | **BLOCKED INT-066 A:** evaluated applicable D MNF/N scope has child identities 1/01 and 2: k=2, proposed canonical value 2, every duplicate/spelling finding retained; invalid WP VALUE remains a structural member. Supplied reviewed MML/N membership descriptors likewise count canonical identities once with their own range, preserving duplicates; no MNF range import | L3-WRT-015, L3-WRT-017 |
-| `normalize_counter_gap_refuses` | **BLOCKED INT-066 A:** child identities {1,3}: refuse counter rewrite; B would use 2 with gap findings, never silently write maximum 3 as a member count | L3-WRT-015 |
-| `normalize_counter_invalid_old_value_explicit_rewrite` | **BLOCKED INT-066 A:** one complete identified target with malformed old value, established contiguous members {1,2}, accepted cited range: explicit counter operation proposes 2, old validation failure remains in old revision | L3-WRT-015, L3-WRT-016 |
-| `normalize_counter_compatible_damage_blocks` | **BLOCKED INT-066 A:** compatible unassigned/damaged member evidence makes count incomplete: refuse, never count only readable children as complete | L3-WRT-015 |
-| `normalize_counter_target_or_range_missing_refuses` | **BLOCKED INT-066 A:** absent/duplicate target, unavailable applicability/scope/range or count outside cited range refuses; no target insertion, clipping or renumbering | L3-WRT-015 |
+| `normalize_order_explicit_bijection` | **Owner-signed INT-064 A:** source COMMENT:b;COMMENT:a;, explicit region order [second,first] gives exact COMMENT:a;COMMENT:b;, no byte changes inside either region | L3-WRT-013, L3-WRT-017 |
+| `normalize_order_missing_or_repeated_identity` | **Owner-signed INT-064 A:** omission/repetition in requested full region order refuses, never deduplicates, drops unknown content or invents a copy | L3-WRT-013 |
+| `normalize_order_preserves_raw_regions` | **Owner-signed INT-064 A:** complete selected regions with mixed case/duplicates/opaque bytes retain every byte exactly once; anchored prefix/suffix mapping must be positively established | L3-WRT-013, L3-WRT-017 |
+| `normalize_order_region_mapping_unavailable` | **Owner-signed INT-064 A:** no unambiguous complete-region partition: order request refuses rather than treating a malformed suffix as a complete item or guessing ownership | L3-WRT-012, L3-WRT-013 |
+| `normalize_group_profile_section_order` | **Owner-signed INT-064 A+D:** supplied positively grouped region IDs X1,R1,G1,T1,M1,P1,D1,B1,S1,Q1,C1,H1,V1,R2 yield G1,T1,R1,R2,M1,P1,D1,B1,S1,Q1,C1,H1,V1,X1 within one anchor-free run; raw regions intact | L3-WRT-013, L3-WRT-017 |
+| `normalize_group_profile_stable_within_group` | **Owner-signed INT-064 D:** source R regions with entry indices 10 then 2 retain that order and duplicate occurrences; D does not perform B's numeric/full-key sort or deduplicate | L3-WRT-013 |
+| `normalize_group_profile_anchors` | **Owner-signed INT-064 D:** supplied regions R1,G1,COMMENT,R2,G2 reorder to G1,R1,COMMENT,G2,R2; COMMENT/opaque/malformed anchors stay in place, no false claim of global group order across anchors | L3-WRT-013 |
+| `normalize_group_profile_private_and_unknown_placement` | **Owner-signed INT-064 D:** complete positively grouped V/X regions preserve private bytes and within-group order; unknown/unavailable group classification anchors rather than guessing placement or resolving private attachment | L3-WRT-013, L3-WRT-017 |
+| `normalize_newlines_layout_only` | **Owner-signed INT-065 A:** explicitly identified CRLF/lone-CR/lone-LF layout ranges convert to the caller's LF or CRLF target; CRLF is one token, all other bytes unchanged | L3-WRT-014 |
+| `normalize_newlines_field_controls_untouched` | **Owner-signed INT-065 A:** real CR/LF within COMMENT value or internal code name stays raw; only positively classified layout converts, no INT-036 projection written back | L3-WRT-014 |
+| `normalize_newlines_unknown_layout_unavailable` | **Owner-signed INT-065 A:** opaque/unclassified range prevents claiming complete requested conversion; no inferred trim/platform default or silent partial success | L3-WRT-012, L3-WRT-014 |
+| `normalize_newlines_padding_is_not_linebreak` | **Owner-signed INT-065 A:** NUL/0x1A/space padding is retained; explicit newline conversion never deletes padding or inserts a missing semicolon | L3-WRT-014 |
+| `normalize_counter_contiguous_distinct_members` | **Owner-signed INT-066 A:** evaluated applicable D MNF/N scope has child identities 1/01 and 2: k=2, proposed canonical value 2, every duplicate/spelling finding retained; invalid WP VALUE remains a structural member. Supplied reviewed MML/N membership descriptors likewise count canonical identities once with their own range, preserving duplicates; no MNF range import | L3-WRT-015, L3-WRT-017 |
+| `normalize_counter_gap_refuses` | **Owner-signed INT-066 A:** child identities {1,3}: refuse counter rewrite; B would use 2 with gap findings, never silently write maximum 3 as a member count | L3-WRT-015 |
+| `normalize_counter_invalid_old_value_explicit_rewrite` | **Owner-signed INT-066 A:** one complete identified target with malformed old value, established contiguous members {1,2}, accepted cited range: explicit counter operation proposes 2, old validation failure remains in old revision | L3-WRT-015, L3-WRT-016 |
+| `normalize_counter_compatible_damage_blocks` | **Owner-signed INT-066 A:** compatible unassigned/damaged member evidence makes count incomplete: refuse, never count only readable children as complete | L3-WRT-015 |
+| `normalize_counter_target_or_range_missing_refuses` | **Owner-signed INT-066 A:** absent/duplicate target, unavailable applicability/scope/range or count outside cited range refuses; no target insertion, clipping or renumbering | L3-WRT-015 |
 | `normalize_checksum_is_not_implicitly_restamped` | Authorized changed-output fixture retains G\SHA bytes unless stamp separately requested; input match not reused as output proof, verify final domain independently | L3-WRT-016 |
 | `normalize_source_and_old_findings_remain` | Original bytes/revision/item identities/findings stay available after proposed success/refusal; new revision has its own correspondence/reevaluated results, no automatic governing promotion | L3-WRT-016 |
 | `normalize_explicit_compound_plan_has_coordinates` | Explicit reviewed composition order and source correspondence required; unresolved order/newline/counter overlap never runs in a guessed sequence | L3-WRT-012, L3-WRT-016 |
@@ -2077,7 +2077,7 @@ arms remain gated, not silently enabled by a successful injected adapter.
 | `command_chain_prior_result_keeps_binding` | Host retains result A while running B: A source/revision/qualification evidence unchanged; no concurrency promise | L3-CLI-064 |
 | `command_chain_acquisition_failure_is_not_empty` | Injected source acquisition failure differs from acquired empty text; no successful empty report, no fabricated source | L3-CLI-065 |
 | `command_chain_traversal_failure_keeps_extent` | Injected core traversal failure preserves visited/unvisited extent and incomplete inventory, never asserts no later records | L3-CLI-065 |
-| `command_chain_access_failure_is_not_adoption` | Inject refused access under supplied reviewed policy: no computation claiming semantic/governing success; does not select pending INT-031 behavior | L3-CLI-065 |
+| `command_chain_access_failure_is_not_adoption` | Inject refused access under supplied reviewed policy: no computation claiming semantic/governing success; enforces the owner-signed INT-031 per-query/cut constraints | L3-CLI-065 |
 | `command_chain_computation_and_delivery_differ` | Supplied sink fails after successful computation: command result and delivery failure stay distinguishable; no success-of-delivery claim or retry policy | L3-CLI-065 |
 | `command_chain_runner_matches_direct_computation` | Same explicit request/source/context through runner handoff and direct command path: equivalent pre-render semantic data/qualifications and host stays alive | L3-CLI-066 |
 | `command_chain_failure_returns_to_host` | Shared command returns injected failure through both paths; host can perform next explicit call, no process exit or silent success | L3-CLI-066 |
@@ -2088,20 +2088,21 @@ arms remain gated, not silently enabled by a successful injected adapter.
 
 No record-order default, strict predicate, stamp destination exception or
 flex oracle is chosen. Extraction keeps ADR-0037's separate permission;
-semantic/governing access stays gated by proposed INT-031. Test observations
+semantic/governing access stays gated by owner-signed INT-031. Test observations
 are internal handoffs and outcomes, not a public report/schema design.
 No test in this table has been executed against replacement code.
 
-## Legacy independent-check batches 3/4 proposed follow-ups
+## Legacy independent-check batches 3/4 selected-policy follow-ups
 
-All policy-dependent arms below are BLOCKED pending owner approval and,
-where concerned, independent recheck. Named source-reading facts do not
-approve the proposed mapping/governance algorithms. No tests executed.
+Joey signed the recommended choices on 2026-11-28. Owner-choice holds
+are removed except INT-034 padding-only/leading-damage precedence. Remaining
+independent checks, source/development analysis/review and tests still apply;
+no executable coverage is claimed.
 
-| Planned case | Independent source/evidence and expected proposed boundary | Interpretation |
+| Planned case | Independent source/evidence and expected selected-policy boundary | Interpretation |
 |---|---|---|
-| `extension_removal_requires_explicit_reviewed_plan` | **BLOCKED F2:** A refuses an attached original; B keeps/reports every orphan; C removes only explicitly selected attachments in a revision-bound transaction; unresolved attachment never becomes a guessed cascade | INT-022 |
-| `equals_suggestion_needs_complete_recognized_name` | F3 A versus B: A suggests only positively recognized full name before '=' with no colon; always keep raw/missing-delimiter finding, never apply | INT-023 |
+| `extension_removal_requires_explicit_reviewed_plan` | **Owner-signed F2 A:** ordinary removal refuses while extensions attach; any cascade is a separately explicit revision-bound edit; unresolved attachment never becomes a guessed cascade or proof of no attachment | INT-022 |
+| `equals_suggestion_needs_complete_recognized_name` | Owner-signed F3 A suggests only positively recognized full name before '=' with no colon; always keep raw/missing-delimiter finding, never apply | INT-023 |
 | `packet_mapping_unusable_operands_are_not_mismatch` | Missing/Invalid/duplicate/unavailable CDT or format: cannot-evaluate with all evidence, not a mismatch; usable baseline versus unavailable historical mapping distinguished | INT-024 |
 | `tspiin_condition_does_not_repair_tspin` | TDTF p. 9-81 condition reading TSPIIN; a document's CDT=TSPIN is still unknown | INT-025 |
 | `duplicate_conversion_source_is_no_op` | C DCN references R AMN twice but only AMN/DMN have R-side Links-to; no fabricated EV/IPMN/BME/SMF source | INT-027 |
@@ -2112,7 +2113,7 @@ approve the proposed mapping/governance algorithms. No tests executed.
 | `governance_assumptions_are_per_query` | Prior ambiguity opt-in or assigned description cannot silently supply next query; cut facet always blocks semantic use, Complete integrity alone follows INT-051 | INT-031, INT-032, INT-048, INT-051, INT-060 |
 | `appendix_fragment_defaults_find_example_collision` | The standard's D-3 example itself has two fragments and no WFP; both default 1 with finding/ambiguous order, never infer from index or C-2 prose | INT-033 |
 | `completeness_rollover_is_not_gap` | Source sequences FE/FF/00/01 on same channel retain +1 continuity; no false gap at FF->00 | INT-034, INT-011 |
-| `completeness_padding_precedence_remains_open` | **BLOCKED classification A:** ';' plus suffix bytes from hex {20,00–1F,7F} retains semicolon boundary/raw bytes. A high byte is not padding; X:a plus padding keeps substantive unterminated suffix. Empty/padding-only and leading-damage precedence still need the explicit owner choice; no field-value trim | INT-034, INT-035, INT-036 |
+| `completeness_padding_precedence_remains_open` | **Owner-signed padding rule; precedence arm still held:** ';' plus suffix bytes from hex {20,00–1F,7F} retains semicolon boundary/raw bytes. A high byte is not padding; X:a plus padding keeps substantive unterminated suffix. Empty/padding-only and leading-damage precedence still need the explicit owner choice; no field-value trim | INT-034, INT-035, INT-036 |
 | `completeness_integrity_is_not_source_unavailability` | Otherwise available well-framed text with core Mismatch/secondary-integrity findings is distinct from unavailable DATA bounds; no integrity-only Incomplete quarantine; resource refusal remains operational | INT-034, INT-051 |
 
 ## Legacy independent-check batch 1 follow-up fixtures
@@ -2229,6 +2230,38 @@ payload [33,34). Future implementations must assert these independent spans.
 Each historical fixture uses its own cited table metadata; early maximum
 field sizes are not modern ranges. Canonical identity, duplicate ambiguity,
 structural membership and all record qualifications remain separate results.
+
+## Owner-sign-off acceptance edges — 2026-11-28
+
+Source: [verbatim owner sign-offs](research/2026-11-28-interpretation-owner-signoffs.md).
+PLANNED, not executed tests. Owner-choice holds for these selected policies
+are removed; remaining independent final checks, source freshness, written
+analysis/review and executable tests still gate implementation. INT-022 is
+0.5 scope; none of these cases selects rendered output or the remaining
+INT-034 padding-only/leading-damage precedence.
+
+| Planned case | Independently specified expected result | Interpretation |
+|---|---|---|
+| `owner_f2_attached_delete_refuses` | Reviewed unique attachment to exact original: ordinary deletion refuses and lists attachments; a cascade needs a separate explicit edit, never implicit removal | INT-022 |
+| `owner_f3_equals_suggestion_guard` | Recognized complete G\DSI\N=18; with no colon: preserve bytes/missing-delimiter finding and offer only the suggested delimiter edit; unknown/incomplete name or any colon: no such suggestion | INT-023 |
+| `owner_packet_mapping_unusable_is_not_mismatch` | Missing/Invalid/Ambiguous/unavailable CDT or format, and unsupported edition mapping separately: cannot-evaluate with evidence, no mismatch; reviewed usable map supplies expected code, never arithmetic family guessing | INT-024 |
+| `owner_tspiin_condition_not_user_repair` | Standard TSPIN condition is read TSPIIN; literal document CDT=TSPIN remains unknown; no field-byte rewrite | INT-025 |
+| `owner_polarity_condition_is_channel_local` | RPS/MFF RPS use same recorder/channel R CDT; missing/bad/duplicate/unavailable local CDT never borrows another channel and remains cannot-evaluate | INT-026 |
+| `owner_conversion_edge_not_item_dedup` | Repeated definition link yields one graph edge; repeated raw document items remain multiple with their duplicate/ambiguity findings | INT-027 |
+| `governing_sealing_time_packet_is_inclusive` | Validly taking-control candidate closes at trusted time packet P: new setup governs P and later eligible packets, never packets between its last fragment and P retroactively | INT-028 |
+| `governing_unresolved_needs_independent_rule` | Complete candidate with unresolved target: no restoration without separately reviewed independent takeover proof; supplied such proof restores target and preserves earlier uncertainty/findings | INT-028, INT-053 |
+| `governing_f7_indeterminate_is_not_independent_veto` | Otherwise independently valid takeover with unverified event: no block/delay solely for F7; keep its indeterminate finding; no claim of event presence/absence | INT-028, INT-030 |
+| `governing_nonzero_legacy_source_has_no_guessed_partition` | Admitted legacy distributed/nonzero setup: retain/parse candidate but withhold governing source assignment until a reviewed partition rule exists | INT-028 |
+| `owner_inventory_first_fragment_takeover_closure` | A starts, B starts, B closes, A closes: inventory A then B; eligibility/governing follows separately established closure/takeover, never inventory position | INT-028 |
+| `owner_descriptive_change_is_still_raw_change` | Independently proven comment/date-only change: not semantic configuration change, but raw subtype and SRCC discrepancy remain; unknown/private changes never assumed descriptive | INT-029, INT-050 |
+| `owner_ambiguous_access_per_query_only` | Non-cut Ambiguous text: default refuses description; explicit labelled opt-in permits assumption access for that query only; next query without opt-in refuses; no automatic takeover or ambiguity upgrade | INT-031 |
+| `owner_cut_refuses_even_ambiguity_opt_in` | Incomplete or Ambiguous with cut facet: per-query acceptance never makes it usable/governing; diagnostic inventory and separately approved raw extract remain possible | INT-031, INT-048 |
+| `owner_ungoverned_assignment_is_not_session_default` | Explicit assigned description on one ungoverned-range query is labelled assumption; next query gets no remembered setup and no declared-governing upgrade | INT-032 |
+| `owner_fragment_default_collision_not_index_order` | Two WFP positions default 1: retain defaults and collision/ambiguous ordering; explicit caller order labelled, never inferred from fragment indices or Appendix 9-C prose | INT-033 |
+| `owner_provisional_snapshot_version_and_invalidation` | Explicit opt-in snapshot S1 binds exact extent/version; later text yields S2 and visible S1 invalidation without erasing S1 evidence or automatically governing; known cut never usable | INT-034 |
+| `owner_boundary_padding_preserves_raw_bytes` | Otherwise complete substantive text ending ';' followed by each SP/00–1F/7F suffix remains terminated, bytes retained; high bytes are not layout; padding-only/leading-damage precedence arm stays BLOCKED OWNER | INT-034 |
+| `owner_sequence_rollover_is_continuity` | Same channel FF -> 00 with matching FRMT/RCCVER and no layered closure joins; missing/other sequence not repaired and other-channel traffic never breaks continuity | INT-011, INT-034 |
+| `owner_available_integrity_failure_is_not_cut` | Admitted available DATA with core Mismatch/NotChecked/secondary readings remains available text, findings unchanged; independently missing required run bytes add incomplete-source facet, operational refusal alone does not invent a cut | INT-034, INT-051 |
 
 ## Real Chapter 10 recordings (local use only)
 

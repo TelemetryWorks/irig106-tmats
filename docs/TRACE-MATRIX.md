@@ -431,7 +431,7 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-010 | Equality is `==`, although Table E-6 prints `= =` | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-011 | Per-channel joining of multi-packet setup-record fragments | approved (Joey, owner reconfirmation, 2026-11-23) | not yet written | _(none)_ |
 | INT-012 | RCCVER codes are read as their table states; later editions' reuse is a note | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26, revised 2026-09-27) | not yet written | _(none)_ |
-| INT-034 | A joined run is complete, incomplete, or ambiguous | accepted in principle (three outcomes, owner, 2026-09-27, ADR-0031); these rules proposed | not yet written | _(none)_ |
+| INT-034 | A joined run is complete, incomplete, or ambiguous | owner-approved in part (Joey, 2026-11-28; padding-only/leading-damage precedence open) | not yet written | _(none)_ |
 | INT-013 | Appendix 9-C ends 18 attributes with `:` instead of `;` | suspect (owner, 2026-09-26; `docs/ROADMAP.md`, S1) | not yet written | _(none)_ |
 | INT-014 | `G\106` gives two year digits, so one value can name two editions | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-015 | `G\106` year-format wording appears by 106-15 | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
@@ -441,18 +441,18 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-019 | A `G\SHA` item with no following semicolon | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26) | not yet written | _(none)_ |
 | INT-020 | Upper-case hexadecimal in a `G\SHA` value | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26) | not yet written | _(none)_ |
 | INT-021 | Two or more `G\SHA` items in one document | approved (Joey, owner sign-off, 2026-11-23; F1 originally coordinator-decided 2026-11-21) | not yet written | _(none)_ |
-| INT-022 | Removing an attribute that X extensions point to | open (follow-up F2, 2026-09-26) | not yet written | _(none)_ |
-| INT-023 | `=` typed where `:` belongs, as in Chapter 6's own example | open (follow-up F3, 2026-09-26) | not yet written | _(none)_ |
-| INT-024 | Which packet data types a channel may carry | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
-| INT-025 | `R-x\TDTF-n`'s condition names `TSPIN`, which is not a channel type | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
-| INT-026 | Two recorder polarity conditions name `P-d\CDT`, which does not exist | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
-| INT-027 | `C-d\DCN`'s "Links from:" lists `R-x\AMN-n-m` twice | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
-| INT-028 | Which setup record governs a packet | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
-| INT-029 | Repeated, changed, and inconsistent setup records | proposed (2026-09-26, revised 2026-09-27, awaiting the owner) | not yet written | _(none)_ |
+| INT-022 | Removing an attribute that X extensions point to | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-023 | `=` typed where `:` belongs, as in Chapter 6's own example | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-024 | Which packet data types a channel may carry | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-025 | `R-x\TDTF-n`'s condition names `TSPIN`, which is not a channel type | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-026 | Two recorder polarity conditions name `P-d\CDT`, which does not exist | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-027 | `C-d\DCN`'s "Links from:" lists `R-x\AMN-n-m` twice | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-028 | Which setup record governs a packet | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-029 | Repeated, changed, and inconsistent setup records | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
 | INT-030 | The "setup record configuration change event packet" is not defined | approved (Joey, owner sign-off, 2026-11-23; F7 originally coordinator-decided 2026-11-21) | not yet written | _(none)_ |
-| INT-031 | After a setup record that cannot be assembled, nothing governs | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
-| INT-032 | Packets that no setup record governs | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
-| INT-033 | Fragment positions that default to the same value | proposed (2026-09-26, awaiting the owner) | not yet written | _(none)_ |
+| INT-031 | After a setup record that cannot be assembled, nothing governs | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-032 | Packets that no setup record governs | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-033 | Fragment positions that default to the same value | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
 | INT-035 | Recover malformed framing only at an actual semicolon | approved (Joey, owner sign-off, 2026-11-21) | [written development analysis](research/2026-11-28-framing-character-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-036 | Omit ASCII nonprintables only from semantic projections | approved (Joey, owner sign-off, 2026-11-22) | [written development analysis](research/2026-11-28-framing-character-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-037 | Diagnose Unicode markers without automatic transcoding | approved (Joey, owner sign-off, 2026-11-22) | [written development analysis](research/2026-11-28-framing-character-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
@@ -479,12 +479,12 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-058 | Only an individually approved evidence rule can contradict a caller choice | approved (Joey, 2026-11-26; independent AI final CONCUR at 3fcbd2cb0e911d1bc23e4cc3a5b53d503e5d7e23) | not yet written | _(none)_ |
 | INT-059 | Unproven multiplicity is unestablished, conflicting requires evidence | approved (Joey, 2026-11-26; independent AI final CONCUR at 3fcbd2cb0e911d1bc23e4cc3a5b53d503e5d7e23) | not yet written | _(none)_ |
 | INT-060 | Each query supplies its caller choice explicitly | approved (Joey, 2026-11-26; independent AI final CONCUR at 3fcbd2cb0e911d1bc23e4cc3a5b53d503e5d7e23) | not yet written | _(none)_ |
-| INT-061 | X occurrence mapping when the original has no numeric index | proposed (2026-11-27; Option A recommended) | not yet written | _(none)_ |
-| INT-062 | Meaning of existing TMATS code in X decomposition | proposed (2026-11-27; Option A recommended) | not yet written | _(none)_ |
-| INT-063 | Vendor attribution when V header and private path evidence are incomplete or inconsistent | proposed (2026-11-27; Option A recommended) | not yet written | _(none)_ |
-| INT-064 | Ordering policy for explicitly requested normalization | proposed (2026-11-27; A mechanism plus named built-in D preferred, or explicit owner L1 reinterpretation) | not yet written | _(none)_ |
-| INT-065 | Scope of line-ending normalization | proposed (2026-11-27; A recommended) | not yet written | _(none)_ |
-| INT-066 | Preconditions for explicit counter recomputation | proposed (2026-11-27; A recommended) | not yet written | _(none)_ |
+| INT-061 | X occurrence mapping when the original has no numeric index | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-062 | Meaning of existing TMATS code in X decomposition | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-063 | Vendor attribution when V header and private path evidence are incomplete or inconsistent | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-064 | Ordering policy for explicitly requested normalization | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-065 | Scope of line-ending normalization | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-066 | Preconditions for explicit counter recomputation | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
 
 * Entries without a written analysis: **60** of 66
 * Entries without a test: **66** of 66

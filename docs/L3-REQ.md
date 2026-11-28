@@ -1272,7 +1272,9 @@ under L1-EDN-006 is a later derivation, not an implied fallback here.
 
 Planned, not implemented. INT-011 is reconfirmed by Joey, 2026-11-23,
 with AI CONCURS on #38 at c623b15; development gates remain;
-INT-034's precise completeness rules remain proposed under ADR-0031/0033.
+INT-034's padding/availability/continuity and snapshots are owner-signed
+(2026-11-28); remaining final checks and padding-only/leading-damage precedence
+remain, alongside development/source/test gates.
 These children describe the joining/provenance stage within a phase only.
 INT-045 separately records approved time-packet phase closure (AI CONCURS
 on #41 at 79b94eb); it adds no per-channel joining predicate. A later +1 fragment
@@ -1364,7 +1366,7 @@ these reasons do not assert that the beginning is intact. Other-channel
 traffic never creates a new start for an existing run. Implementation of
 reconfirmed INT-011 still requires completed analysis and executable checks.
 INT-034
-requires its own owner sign-off and independent check for the precise rules;
+has owner sign-off for the exact padding/availability/continuity rules (2026-11-28); final checks and padding-only/leading-damage precedence remain;
 INT-039 duplicate classification applies to a document only after assembly
 scope is established. Cross-fragment duplicate evidence must not silently
 select a split or a scalar winner. These dependencies remain visible even
@@ -1372,8 +1374,9 @@ when fixture-provided reviewed bindings make individual joining tests pass.
 
 ## Completeness-contract batch 15: observation versus authority
 
-Planned obligations; INT-034's precise rules and INT-028/031 governance are
-not approved. Their supplied reviewed fixture bindings isolate the cases
+Planned obligations; Joey signed INT-034's padding/availability/continuity
+and snapshot choices plus INT-028/031 on 2026-11-28. Remaining final checks
+and INT-034 padding-only/leading-damage precedence still gate affected cases. Their supplied reviewed fixture bindings isolate the cases
 below without completing any interpretation gate. The open-run observation
 is PROVISIONAL, not a fourth final completeness outcome or a joining stop.
 
@@ -1404,13 +1407,14 @@ retains Complete as classification evidence, never a backward rejoin; every
 mid-session Complete under this layer carries `time-boundary seal (owner policy)`.
 Revised outcomes/findings remain visible to spool-before-publish consumers.
 INT-045 is approved (Joey, 2026-11-23; AI CONCURS on #41 at 79b94eb). This EOF case ends exactly at `;`;
-trailing padding/controls require reconciliation with INT-035/036, not a new
-unreviewed trim operation. Finality is not proof of source data validity.
+the signed INT-034 boundary-layout suffix rule handles trailing controls/SP
+without changing bytes; padding-only/leading-damage precedence remains open. Finality is not proof of source data validity.
 
 **L3-CH10-019** · Parent: L2-CH10-006 · Verification: T
 *Incomplete/ambiguous classification evidence SHALL retain the affected spans, gap/trust/boundary facts and all competing readings without concatenating across a missing segment, synthesizing a terminator or selecting one repeated scalar occurrence as the intended record boundary.*
 
-INT-034's precise branch conditions remain proposed. INT-039's duplicate
+INT-034's stated padding/availability/continuity rules are owner-signed;
+remaining final checks and padding-only/leading-damage precedence stay open. INT-039's duplicate
 field rule and INT-044's ambiguous-declaration fallback do not establish a
 record split or override assembly ambiguity. Locating evidence is mandatory;
 deciding which classification wins when several kinds coexist is still an
@@ -1421,20 +1425,19 @@ open owner-review item. No positive governing or checksum verdict follows.
 
 The observation can change when more text arrives; it never asserts EOF or
 closes a run to make a streaming result available. An in-value suffix remains
-visible rather than being discarded to expose the preceding `;`. Proposed
-semantic snapshots would need exact revision/extent and invalidation rules;
-this requirement exposes evidence without approving that interpretation.
+visible rather than being discarded to expose the preceding `;`. Owner-signed
+INT-034 permits explicit versioned snapshots with exact revision/extent and
+visible invalidation, never automatic governance or cut-text use.
 
 **L3-CH10-021** · Parent: L2-CH10-007 · Verification: T
 *Any consumer-facing report carrying provisional setup evidence SHALL retain that provisional status and its basis separately from the governing-record decision; absent a reviewed provisional-use contract, it SHALL NOT present the observation as a complete, verified or automatically governing setup record.*
 
-Open owner choice in INT-034: opt-in, explicitly labelled semantic snapshots
-for irig106-time's CLI versus final-only semantic use. Recommend opt-in
-snapshots to avoid waiting until EOF while requiring later changes and every
-assumption to remain visible. This recommendation is undecided; it requires
-reconciling the current complete-only parse/checksum boundary and INT-028/031,
-including what to do with outputs already emitted when later text invalidates
-a snapshot. No default permission or new public API is selected here.
+Joey selected explicit versioned provisional snapshots on 2026-11-28 under
+INT-034. Retain exact revision/extent, provisional evidence and visible later
+invalidation; no automatic governance, no upgrade to final completeness, and
+no cut-text use. INT-028/031 takeover/access guards still apply. This does not
+choose rendered labels, a stable Rust symbol or padding-only/leading-damage
+precedence; source/analysis/final-review and executable checks remain.
 
 **L3-ROB-004** · Parent: L2-ROB-003 · Verification: T
 *The open-run budget SHALL be finite and explicit across all retained channels, with a documented byte-accounting model covering retained text, fragment/run metadata, provenance and any assembler-retained snapshots; an operation SHALL use non-wrapping arithmetic to check its additional charge and SHALL NOT accept retained state beyond the budget.*
@@ -1499,7 +1502,7 @@ owner-signed baseline with QD/INT-048 before QI/INT-046: field ambiguity
 forces assembly Ambiguous, never upgraded by identity/equality/digest, while
 cut evidence and INT-045 findings remain visible. A retained cut facet SHALL
 keep Incomplete's full blocking force: no ambiguous-split acceptance, including
-proposed INT-031 if later approved, SHALL make that cut text usable or governing. Named compound fixtures
+owner-signed INT-031 if later approved, SHALL make that cut text usable or governing. Named compound fixtures
 SHALL cover non-SHA field ambiguity, cut-plus-ambiguity, and both candidates;
 input-state flattening must not be mistaken for exhaustive byte-shape coverage.
 QM composition is owner-signed in INT-053 and verified separately by
@@ -2317,7 +2320,7 @@ numeric Invalid verdicts and a detected BOM never authorize source changes.
 This pins an internal precondition, not the public record-selection rule.
 Ordinal ordering and multi-record destination behavior remain separate.
 ADR-0037 authorizes raw extract under incomplete/ambiguous findings; semantic
-access and governing use remain gated by proposed INT-031. A failure to establish
+access and governing use remain gated by owner-signed INT-031. A failure to establish
 that precondition cannot be repaired by choosing another record implicitly.
 
 **L3-CLI-033** · Parent: L2-CLI-008 · Verification: T
@@ -2438,7 +2441,7 @@ equality or a readable value. The cut facet keeps its full blocking
 force; query success does not make the record usable or governing.
 This preservation contract does not settle the [open incomplete/ambiguous
 access and governance item](ROADMAP.md#streaming-setup-record-follow-ups)
-or [proposed INT-031](INTERPRETATIONS.md#int-031). It applies when diagnostic
+or [owner-signed INT-031](INTERPRETATIONS.md#int-031). It applies when diagnostic
 candidate retrieval is available, not as a new authorization to access or
 accept a qualified record. The query does not select a governing record or
 establish a time association.
@@ -2601,31 +2604,26 @@ record-access/governance and report-format decisions remain unresolved.
 
 Source: 106-24R1 Chapter 9 section 9.5.14 p. 9-172, ADR-0008/0026 and
 approved INT-038/039/040/048. These are proposed derivations, not runtime
-coverage. [INT-061](INTERPRETATIONS.md#int-061) remains proposed: unindexed-
-original mapping is blocked before implementation. Proposed
-[INT-062](INTERPRETATIONS.md#int-062) separately gates the meaning of
-“existing TMATS code” (registry vocabulary, document-present names or a
-guarded hybrid). Registry-only vocabulary is recommended, not approved.
-Until edition deltas exist, the registry is the 106-24R1 baseline, labelled
-separately from raw declarations and the INT-044 selection/fallback basis;
-older renamed originals without baseline metadata remain cannot-evaluate,
-not aliases to newer codes. Registry-only A cannot split vendor-private V
-or other non-registry originals. Hybrid C uses document names only for
-groups with no registry vocabulary, labelled document-defined vocabulary;
-the V group/private-namespace boundary is still an owner question. Other
-unknown grammar must not be guessed. Public pattern-scope/syntax and
-record-access holds remain separate and unchanged.
+coverage. [INT-061](INTERPRETATIONS.md#int-061) A is owner-signed: unindexed-
+original mapping follows owner-signed INT-061 A: retain raw/cannot-evaluate.
+Joey also selected INT-062 A on 2026-11-28: registry vocabulary only,
+106-24R1 baseline until edition deltas exist, with the actual vocabulary
+basis separate from raw declarations and INT-044 selection/fallback labels.
+Private/non-registry originals and older renamed codes without metadata
+remain cannot-evaluate. Hybrid C is not selected. Remaining independent
+checks and source/development evidence still gate implementation; public
+pattern grammar is a separate decision batch.
 
 **L3-EXT-001** · Parent: L2-EXT-001 · Verification: T
-*X association SHALL decompose the name by matching original code names against the reviewed registry, made unambiguous for conforming extensions by the EXTENSION_CODE uniqueness rule, retaining X occurrence, organization, original group/full path, extension code and suffix indices with raw correspondence; missing metadata or unproved uniqueness SHALL retain source and an observable cannot-evaluate reason, not a heuristic split or fabricated key. The edition-vocabulary versus document-presence interpretation SHALL remain gated by proposed INT-062 before implementation.*
+*X association SHALL decompose the name by matching original code names against the reviewed registry, made unambiguous for conforming extensions by the EXTENSION_CODE uniqueness rule, retaining X occurrence, organization, original group/full path, extension code and suffix indices with raw correspondence; missing metadata or unproved uniqueness SHALL retain source and an observable cannot-evaluate reason, not a heuristic split or fabricated key. Decomposition SHALL use owner-signed INT-062 A: reviewed registry code names for the applied basis, currently the 106-24R1 baseline until edition deltas exist; remaining independent review/development gates SHALL precede implementation.*
 
 Section 9.5.14 p. 9-172: “Everything to the right of ORGANIZATION that
 matches an existing TMATS code is used to associate the extension with an
 existing object defined by the TMATS file.” It also says “The EXTENSION_CODE
 identifies the specific extension and shall be unique (i.e., not overlapping
 any existing TMATS code name).” Match reviewed registry names; do not infer
-that the standard supplies no split. INT-062 records the still-open meaning
-of “existing code”; its registry-vocabulary Option A is the draft recommendation.
+that the standard supplies no split. Joey selected INT-062 registry-vocabulary A on 2026-11-28;
+document presence cannot supply missing registry vocabulary.
 Missing/incomplete registry metadata still cannot justify a longest-prefix
 heuristic. Section 9.5.14 allows multiple backslashes in ORIGCODE, with no
 hyphens in that original-code text. Its D-1\MN-1-2 / X-1\MYORG\D\MN\SGAIN-1-2
@@ -2680,10 +2678,9 @@ not evaluated as a sensor conversion or clock-association rule.
 
 The printed section 9.5.14 form and index-match sentence do not explain how
 to target G\PN, whose Table 9-2 p. 9-10 code name has no numeric index.
-INT-061 Option A recommends retaining raw X plus cannot-evaluate mapping;
-that proposed case expectation is BLOCKED, not approved behavior. C offers
-a natural future labelled unique-path refinement; D is considered/rejected
-in the draft recommendation, not by the owner. A retains raw evidence so a
+Joey selected INT-061 A on 2026-11-28: raw X remains and mapping is
+cannot-evaluate. C remains a possible future refinement; neither C nor D
+is selected. Remaining independent check/development gates apply. A retains raw evidence so a
 later approved B/C can refine the result without a source/result-shape break.
 This gate
 does not decide indexed fields of groups without an occurrence or any
@@ -2695,7 +2692,7 @@ other unsupported original grammar.
 Use the section 9.5.14 example and cited original-code rows, then controlled
 index/spelling/duplicate/scope variants. Values remain opaque. Source
 freshness, development analysis and executable tests precede implementation;
-unknown grammar or pending INT-061/062 cannot become a passing conformance
+unknown grammar or unresolved INT-061/062 metadata cannot become a passing conformance
 case.
 
 
@@ -2754,12 +2751,12 @@ separate records and V occurrences cannot lend missing headers to each other.
 Equal source/vendor labels do not erase their contributing occurrences.
 
 **L3-EXT-014** · Parent: L2-EXT-004 · Verification: T
-*Confirmation or reassignment of vendor attribution when V VN is missing, repeated, invalid/unavailable or disagrees with a private path acronym SHALL remain gated by proposed INT-063 owner sign-off and independent AI check; inventory SHALL NOT silently adopt path-only or header-only authority before that decision.*
+*Confirmation or reassignment of vendor attribution when V VN is missing, repeated, invalid/unavailable or disagrees with a private path acronym SHALL remain gated by INT-063 owner sign-off and independent AI check; under owner-signed A, confirmation SHALL require exactly one usable VN agreeing with the path acronym; inventory SHALL NOT adopt path-only or header-only authority.*
 
-INT-063 A recommends observed namespace inventory plus unavailable confirmed
-attribution until one usable VN agrees; B would use a labelled path-first
-policy, C a labelled usable-header-first policy. All retain original items
-and field/record states. These are choices, not approved output/repair rules.
+Joey selected INT-063 A on 2026-11-28: observed namespaces remain, with
+unconfirmed attribution unless one usable VN agrees. B/C remain unselected
+alternatives. All original field/record evidence stays; remaining independent
+check/development gates and the report-format hold are not waived.
 
 **L3-EXT-015** · Parent: L2-EXT-003 · Verification: T
 *Unknown private V suffix/value content SHALL remain attached to its observed raw namespace without synthesized members, inferred counters/defaults, value repair or source rewriting; successful grouping SHALL NOT claim the private meaning was decoded, while unavailable structural decomposition SHALL remain observable with raw evidence retained.*
@@ -2774,7 +2771,8 @@ just because a vendor namespace cannot be confirmed.
 
 Positive names cite section 9.5.13; source targets cite Table 9-2 p. 9-11.
 Missing/duplicate/invalid header composition can receive evaluated states.
-INT-063 policy fixtures remain BLOCKED, not executed conformance tests.
+INT-063 A fixture expectations are owner-decided, with remaining final
+review/development gates; they are not executed conformance tests.
 
 
 ## Dependency/SBOM/provenance acceptance (family 2, batch 32)
@@ -2900,7 +2898,8 @@ An unknown multiplicity is not silently assigned the baseline scalar rule.
 A labelled rules basis under the existing edition-selection contract is
 still permitted; it identifies applied rules, not proof of the document's
 actual edition. This adds no fallback policy or renamed-code mapping.
-The X vocabulary's older-name issue remains pending INT-062, not settled here.
+Owner-signed INT-062 A keeps older names without baseline metadata
+unavailable, never silently translated; later edition deltas need source review.
 
 **L3-EDN-012** · Parent: L2-EDN-004 · Verification: T
 *Edition-independent text reading SHALL preserve all supplied setup qualifications and document/revision identity; decoding text SHALL NOT upgrade Incomplete, Ambiguous, retained-cut, trust or encoding qualifications, authorize governing use, merge documents or turn XML into supported ASCII input.*
@@ -2960,7 +2959,7 @@ This defines neither public record ordinals nor streaming emission timing.
 A revised time-seal outcome supersedes its earlier observed classification
 for this final inventory, retaining its history/findings under INT-045/048.
 Duplicate-field ambiguity cannot be cured by byte identity or digest evidence.
-General incomplete/ambiguous access is gated by [proposed INT-031](INTERPRETATIONS.md#int-031); ADR-0037 separately allows raw extract under findings, never semantic/governing use. Enumeration alone approves neither.
+General incomplete/ambiguous access is gated by [owner-signed INT-031](INTERPRETATIONS.md#int-031); ADR-0037 separately allows raw extract under findings, never semantic/governing use. Enumeration alone approves neither.
 No severity suppression or rendering rule is selected here.
 
 **L3-CLI-042** · Parent: L2-CLI-011 · Verification: T
@@ -2997,7 +2996,7 @@ invented in PacketFacts. Structured assertions choose no rendered schema.
 
 Existing library contracts provide digest/exclusion/transaction semantics;
 these command children preserve them without a second implementation.
-Proposed INT-031 gates incomplete/ambiguous record access. Tests of refused
+Owner-signed INT-031 gates incomplete/ambiguous record access. Tests of refused
 outcomes may inject library results; they do not bypass the access gate.
 Public report formats, exit mappings and selection defaults remain held.
 
@@ -3119,7 +3118,7 @@ resource limits; this introduces no unbounded fuzz campaign or new dependency.
 *Every flex result SHALL retain its non-standard compatibility identity and option/source context independently of standard SHA and core PacketInfo integrity evidence; flex SHALL not be written into G\SHA, repair input, upgrade packet integrity/record qualification or satisfy a request for authoritative standard checksum verification.*
 
 No public label spelling, text layout, JSON field or process status is
-selected here. Proposed INT-031 still gates incomplete/ambiguous access.
+selected here. Owner-signed INT-031 still gates incomplete/ambiguous access.
 Core data-checksum Mismatch/NotChecked passes through unchanged; neither
 flex nor G\SHA upgrades it, and it does not upgrade either result.
 Command-computation wrappers remain L3-CLI-048/051, not a flex oracle.
@@ -3222,7 +3221,7 @@ separate; the owner-pending scope gate is not bypassed by this result contract.
 No observed mixture is not proof about unvisited input, and an unknown FRMT
 is not ASCII by default. FRMT disagreements within a candidate remain located
 evidence; this check never resolves its boundary or promotes its completeness.
-Proposed INT-031 still gates incomplete/ambiguous text access.
+Owner-signed INT-031 still gates incomplete/ambiguous text access.
 
 **L3-CH10-024** · Parent: L2-CH10-009 · Verification: T
 *With an established SRCC=1 trigger but no verified configuration-change-event identity, the required-event check SHALL remain indeterminate with its missing basis and raw observations retained, regardless of whether a nearby Format 2 recording-event packet or other event-like candidate is supplied.*
@@ -3397,7 +3396,7 @@ No default, type/blank or numeric rule is newly interpreted in this batch.
 **L3-VIEW-069** · Parent: L2-VIEW-017 · Verification: T
 *Bounded lookup answers SHALL retain record/source/revision qualifications, cut facets, core evidence and source diagnostics unchanged; they SHALL not upgrade record usability, alter association state, inherit another query's caller choice or erase field evidence through assumption-level suppression.*
 
-General incomplete/ambiguous access remains gated by proposed INT-031. Tests
+General incomplete/ambiguous access remains gated by owner-signed INT-031. Tests
 can receive permitted diagnostic candidate evidence without granting that
 access. INT-056 governs only bad-data finding emission on an assumption answer;
 original field/source diagnostics remain readable. Lookup success is neither
@@ -3414,8 +3413,8 @@ public query syntax, report rendering and stable Rust symbols remain held.
 
 ## Normalization transform acceptance (family 2, batch 41)
 
-These derive L2-WRT-005/006. Policy-sensitive behavior remains BLOCKED on
-proposed INT-064/065/066 under ADR-0033; common validation/retention tests
+These derive L2-WRT-005/006. Joey signed INT-064 A+D / INT-065 A /
+INT-066 A on 2026-11-28 under ADR-0033; development gates remain; common validation/retention tests
 are not approval of those options. No normalization code is added.
 
 **L3-WRT-012** · Parent: L2-WRT-005 · Verification: T
@@ -3428,27 +3427,26 @@ formatting mode. Missing target order/newline/count semantics stay unavailable.
 **L3-WRT-013** · Parent: L2-WRT-005 · Verification: T
 *Order normalization SHALL retain every selected source region exactly once, preserve raw bytes within each region and preserve all opaque/prefix/suffix content under the selected approved mapping; no equality, invalidity, case-folded key or unknown group SHALL authorize dropping/coalescing an occurrence or renumbering a name.*
 
-INT-064 recommends A's validated complete-region bijection plus a named
-built-in profile, preferably D (Chapter 9 group order, v1); B/C/D remain
-owner choices. D groups G/T/R/M/P/D/B/S/Q/C/H/V/X within runs between
-standalone-comment/opaque/malformed anchors, stable within each group, with
-its proposed unknown/private placement rules. Unknown partition still refuses.
-A alone is not built-in canonical-order coverage: a profile for 0.1 or explicit
-owner L1 reinterpretation is required. None is approved or activated here;
-A/D policy tests stay BLOCKED. Keep every raw region and its source mapping.
+INT-064 selects A's validated complete-region bijection plus built-in D,
+Chapter 9 group order, v1 (Joey, 2026-11-28). D uses G/T/R/M/P/D/B/S/Q/C/H/V/X
+within runs between standalone-comment/opaque/malformed anchors, stable
+within groups. Unknown groups anchor; positively grouped V/X retain private
+bytes and stable placement without interpreting them. Missing partition
+still refuses. A+D meets the named-profile policy; no L1 reinterpretation or
+implicit normalization. Written analysis/review and executable tests remain.
 
 **L3-WRT-014** · Parent: L2-WRT-005 · Verification: T
 *Line-ending normalization SHALL use the explicitly selected target and approved conversion scope, identify CRLF as one token where conversion applies, preserve all non-target bytes and report unavailable layout rather than silently trim, project or transcode fields to achieve a claimed global newline convention.*
 
-INT-065 A proposes positively identified layout-only ranges and LF/CRLF
+Owner-signed INT-065 A requires positively identified layout-only ranges and LF/CRLF
 chosen by the caller; B/C remain unapproved alternatives. Raw leading layout
 and internal name/value controls are not interchangeable; NUL/0x1A padding
-is not a newline token. Do not infer a platform default. Option-A tests block.
+is not a newline token. Do not infer a platform default. Owner-choice holds are removed; development gates remain.
 
 **L3-WRT-015** · Parent: L2-WRT-005 · Verification: T
 *Counter normalization SHALL use a reviewed counter definition, explicit target/scope and independently established canonical member identities, retain every supporting occurrence/finding and check the computed value against the cited range without clipping, renumbering or synthesizing missing members/targets; unapproved evidence/contiguity policy SHALL not be guessed.*
 
-INT-066 A proposes complete contiguous membership and range-checked canonical
+Owner-signed INT-066 A requires complete contiguous membership and range-checked canonical
 count, including explicit replacement of a malformed old value only when the
 target/domain are established; B/C differ and remain unapproved. INT-040's
 unusable-old-counter validation result is not erased by calculating a proposed
@@ -3466,7 +3464,7 @@ Compound plans need explicit sequence/correspondence, not a guessed pipeline.
 No file acquisition, atomic replacement or sink rollback promise is added.
 
 **L3-WRT-017** · Parent: L2-WRT-006 · Verification: T
-*Tests SHALL independently specify requested policy/revision, exact affected bytes and untouched source/item sets for order/newline/counter cases and refusal paths; planned policy-specific oracles SHALL remain BLOCKED until owner approval/review rather than be counted as implemented transformations or generated through production normalization.*
+*Tests SHALL independently specify requested policy/revision, exact affected bytes and untouched source/item sets for order/newline/counter cases and refusal paths; planned policy-specific oracles SHALL retain remaining review/development gates and SHALL NOT be counted as implemented transformations or generated through production normalization.*
 
 Use synthetic owned text and reviewed counter/fragment descriptors. Compare
 complete output bytes and source immutability, not only typed values or a
@@ -3550,7 +3548,7 @@ local heavy run or production memory/throughput threshold is approved.
 
 These refine L2-CLI-016/017 using supplied reviewed internal requests and
 unheld computation. No public command grammar, rendering or exit mapping is
-chosen. Proposed INT-031 still gates semantic access to incomplete/ambiguous
+chosen. Owner-signed INT-031 still gates semantic access to incomplete/ambiguous
 records; raw extract remains separately authorized by ADR-0037.
 
 **L3-CLI-062** · Parent: L2-CLI-016 · Verification: T

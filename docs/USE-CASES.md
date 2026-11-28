@@ -263,8 +263,8 @@ and the emitted bytes are re-read and verified. Each edit names its target
 by an item ID from the current revision or by code name; overlapping edits,
 IDs from another revision, ambiguous duplicates, and renumbering onto an
 index in use are rejected with a finding, and the document is unchanged.
-Removing an attribute that X extensions point to is an open question
-(follow-up F2) (team review T7; ADR-0029; `docs/diagrams/edit-transaction.svg`).
+Owner-signed INT-022 (Joey, 2026-11-28) refuses removal while X extensions
+attach; a cascade is a separate explicit edit, still 0.5 scope (F2; ADR-0029).
 
 ### UC-11 Compare two documents — *0.2*
 
