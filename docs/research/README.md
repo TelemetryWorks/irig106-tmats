@@ -14,6 +14,7 @@ dated record.
 
 | Record | Contents |
 |--------|----------|
+| [2026-11-28-retransmission-development-analysis.md](2026-11-28-retransmission-development-analysis.md) | Written draft development analysis for approved INT-046–053: shared historical source review, QD/QI precedence, integrity/target provenance, unchanged 139,968-member matrix audit and 30 planned compound cases; analysis review/tests pending |
 | [2026-11-28-checksum-domain-development-analysis.md](2026-11-28-checksum-domain-development-analysis.md) | Written draft analysis for approved INT-018/019/020/021/043: 32 hash-checked archived PDFs, raw exclusion/value separation, mandatory warnings, independent digest/span oracles and 26 planned cases; analysis review/tests pending |
 | [2026-11-28-effective-presence-basis-development-analysis.md](2026-11-28-effective-presence-basis-development-analysis.md) | Written draft development analysis for approved INT-041/042/044: 32 unique source PDFs, historical usage/default limits, presence/value guards, labelled fallback and planned byte/scope oracles; analysis review/tests pending |
 | [2026-11-28-owner-policy-signoffs.md](2026-11-28-owner-policy-signoffs.md) | ADR-0038 owner policy record, exact original irig106lib qualification pin/hashes, current scope/progress/strict boundaries and remaining executable evidence |

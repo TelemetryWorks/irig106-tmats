@@ -99,7 +99,10 @@ Historical Chapter 10/11 CSDW layout and Appendix 9-C vocabulary research
 notes are now present; retain their source/coverage limits. Continue approved-INT
 development analyses in related groups with independent exact-head review.
 The [checksum-domain analysis](research/2026-11-28-checksum-domain-development-analysis.md)
-adds the next group without completing other analyses or executable evidence.
+records checksum-domain work; the [retransmission development analysis](research/2026-11-28-retransmission-development-analysis.md)
+adds the next related approved group, preserving QD/QI precedence, raw/integrity
+evidence and governing-target history without changing matrix policy or
+completing other analyses/executable evidence.
 Legacy independent checks are recorded; the normalization-order recheck CONCUR is
 recorded with the 2026-11-28 owner A+D choice;
 the coordinator and core maintainer own types/core publication with owner
