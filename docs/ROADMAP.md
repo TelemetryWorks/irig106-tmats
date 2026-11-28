@@ -129,10 +129,10 @@ silently choose those policies or manufacture closure on resource exhaustion.
 
 **Owner Q22, 2026-11-28 — reader progress:** cap retained core BlockPool
 credits to leave verified progress capacity; an over-cap run fails/reports a
-typed assembly budget exhausted error while the reader continues, with no
-required early copy, silent eviction or invented EOF. The selected progress
-policy does not impose an additional blanket early-copy ban. Bound the reserve
-against actual core admission and outstanding caller-held references before claiming progress;
+typed assembly budget exhausted error while the reader continues. Early copy
+was not selected as the progress policy; it is not required or blanket-banned.
+Silent eviction and invented EOF remain forbidden. Bound the reserve against
+actual core admission and outstanding caller-held references before claiming progress;
 no arbitrary credit cap or numeric default is supplied by this note.
 Core admission refusals and drain reports remain unchanged core evidence,
 separate from the assembler-retention limit, with no double-counting of bytes.
