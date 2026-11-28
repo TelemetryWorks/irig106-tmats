@@ -684,7 +684,7 @@ owner after #38 are recorded here; unresolved streaming-use policy stays open.
 
 **Statement**: A closed per-channel candidate run SHALL carry its final completeness outcome or unavailable-format/rule reason, its START and stop evidence, and all relevant competing readings; an otherwise complete semicolon-terminated run at supplied EOF SHALL be complete with an explicit end-of-input basis, not downgraded solely because EOF cannot prove the recording was never cut.
 
-**Rationale**: ADR-0031/INT-034 distinguish evidence from certainty. Chapter 9 section 9.4.2 page 9-2 supplies semicolon framing and Chapter 11 section 11.2.7.2 page 11-50 supplies fragmentation without an end marker (106-24R1). INT-011's per-channel joining is reconfirmed; "followed by another packet" means same-channel. Precise classification precedence, leading-damage handling and XML's unknown completeness remain review dependencies, not solved by this requirement.
+**Rationale**: ADR-0031/INT-034 distinguish evidence from certainty. Chapter 9 section 9.4.2 page 9-2 supplies semicolon framing and Chapter 11 section 11.2.7.2 page 11-50 supplies fragmentation without an end marker (106-24R1). INT-011's per-channel joining is reconfirmed; "followed by another packet" means same-channel. Joey signed Q25 A on 2026-11-28: padding-only/no substantive attributes is Incomplete without a truncation claim; proven leading loss retains blocking cut even under aggregate Ambiguous, never erased by a final semicolon or ambiguity opt-in. Ordinary supplied-input start proves no loss. The new independent check, source/development evidence and XML's unknown completeness remain separate.
 
 **Verification Method**: Test (T)
 

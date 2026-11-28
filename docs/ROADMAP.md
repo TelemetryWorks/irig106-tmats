@@ -68,8 +68,9 @@ Joey accepted the outstanding recommendations on 2026-11-28: see ADR-0038
 and the current decision table below, plus the INT sign-off/final-check
 records. #59 records the selected std policy separately. The dated audit
 blocker table is historical; it is not a current list of owner questions.
-Only INT-034 padding-only/leading-damage precedence and report formats
-remain owner-open. Source freshness, actual core/ownership/dependency APIs,
+Owner Q25 A now signs the INT-034 padding-only/leading-loss precedence;
+its new independent check is pending. Q26 report-format direction is recorded
+in a separate decision PR, not left for an implementation to guess. Source freshness, actual core/ownership/dependency APIs,
 resource design and development analysis/review/tests are still readiness
 work, not completed by a decision record. Keep the full documented scope.
 
@@ -84,9 +85,9 @@ work, not completed by a decision record. Keep the full documented scope.
 | Reader progress | Cap retained pool credits to leave verified progress reserve; over-cap run fails/reports typed budget error, reader continues; actual core proof/accounting required |
 | Stdin | Explicit - only, never fallback |
 | Criterion | Drop in restructure; informational ignored CI benchmark tests, no new dependency |
-| INT-022–034 / 061–066 | Signed choices plus recorded final checks; only INT-034 precedence remains owner-open; written analyses/tests still required |
+| INT-022–034 / 061–066 | Signed choices plus recorded final checks; Q25 A now signs remaining INT-034 precedence (new check pending); written analyses/tests still required |
 | std / #59 | Owner Q6 A selected; ADR-0015/build acceptance amendment in #59 |
-| Owner-open | INT-034 padding-only/leading-damage precedence; report/rendered formats |
+| Latest owner decisions | Q25 A precedence signed here; Q26 report-format direction recorded separately; source/development/review/test gates remain |
 
 Verify source freshness and independent interpretation review, actual borrowed
 ownership/dependency APIs and development evidence where required. Component
@@ -114,8 +115,8 @@ error, never silently dropped runs. INT-034's precise completeness rules and
 INT-028/031 have owner sign-off and final CONCUR at #87 e0a0cce;
 development/source/test gates remain. INT-034 permits explicit
 versioned snapshots with invalidation and no automatic governance, plus the
-exact padding/source-availability/modulo-256 rules; padding-only/leading-damage
-precedence remains open. Review resource accounting/defaults separately.
+exact padding/source-availability/modulo-256 rules; Q25 A now adds the
+padding-only/leading-loss precedence, with its new independent check pending. Review resource accounting/defaults separately.
 
 Review the [retention/limit contract](research/2026-11-27-retention-limit-evidence.md)
 and verify actual ownership APIs, capacity evidence and retained reference

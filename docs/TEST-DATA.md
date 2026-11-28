@@ -781,7 +781,7 @@ section 9.4.2 page 9-2; Chapter 11 section 11.2.7.2 page 11-50 and
 section 11.2.1.1 f; ADR-0031; reviewer consequences relayed by the owner
 2026-11-23 after #38. INT-011 is reconfirmed (AI CONCURS on #38 at c623b15).
 Joey signed INT-028/031 and INT-034's snapshot/padding/availability/continuity
-choices on 2026-11-28. Padding-only/leading-damage precedence stays open;
+choices on 2026-11-28. Q25 A signs padding-only/leading-loss precedence; its independent check remains;
 final rule checks CONCUR at #87 e0a0cce; development/testing gates remain.
 
 | Planned check | Fixture or stimulus | Expected observation | Requirement |
@@ -795,7 +795,7 @@ final rule checks CONCUR at #87 e0a0cce; development/testing gates remain.
 | `provisional_use_policy_remains_explicit` | Streaming irig106-time consumer asks to use open setup data; no reviewed provisional-use binding, separately a future opt-in binding | Without binding, no claim of complete/governing authority; opt-in snapshot revision, invalidation and already-emitted-output expectations are open acceptance items, not a selected implementation | L3-CH10-021 |
 | `xml_completeness_stays_unavailable` | FRMT=1 run, body happens to end in `;`, then EOF | Unsupported/unknown completeness, not ASCII Complete inferred from one byte; bytes/evidence remain | L3-CH10-017 |
 | `competing_split_evidence_is_not_repaired` | Supplied ambiguous classification for repeated single-entry fields or a gap at `;` | All candidates, possible split points and raw bytes retained; neither an INT-044 fallback nor EOF erases independent split evidence or selects a winner | L3-CH10-019 |
-| `padding_and_known_leading_damage_need_review` | Boundary text plus trailing CR/LF/NUL padding; separately explicit leading-loss evidence | Retain evidence and open classification-precedence question; no invented trim or settled precedence. Different from normal input-start/clean exact-semicolon EOF case | L3-CH10-017, L3-CH10-018 |
+| `padding_and_known_leading_damage_need_review` | Boundary text plus trailing CR/LF/NUL padding; separately explicit leading-loss evidence | Retain raw padding/source evidence; Q25 A gives padding-only Incomplete/no loss claim, and proven leading loss blocking cut even under final semicolon/Ambiguous. No invented trim or inferred leading loss from ordinary input start. Different from normal input-start/clean exact-semicolon EOF case | L3-CH10-017, L3-CH10-018 |
 | `aggregate_open_run_budget_is_enforced` | Supplied finite byte-accounting model; two channels each below budget individually, their combined retained charge exceeds it | Typed limit error with channel/run/limit/charge evidence, no hidden per-channel-only test, eviction or cross-channel merge | L3-ROB-004, L3-ROB-005 |
 | `budget_boundary_and_overflow_are_typed` | Supplied independently charged state C=60, budget B=64, delta=4 then 5 in separate trials; separately overflowing charge arithmetic | Exact boundary fits; over-boundary operation reports typed limit error; overflow cannot wrap into acceptance or panic. These are contract stimuli, not a production accounting oracle | L3-ROB-004, L3-ROB-005 |
 | `metadata_and_snapshots_are_charged` | Empty-text fragments and additional channel/run/provenance metadata; separately assembler-retained provisional copies under supplied model | Charge grows even without text growth and includes retained copies; declared byte bound cannot omit metadata. Concrete accounting/defaults remain review work | L3-ROB-004 |
@@ -807,6 +807,22 @@ a hard memory bound. No numeric production limit is proposed by the synthetic
 B=64 case. Full timelines remain 0.2; provisional pre-EOF metadata is an open
 0.1 consumer contract, not silently implemented by a timeline or a fourth
 final state. Existing whole-record acceptance cases remain required.
+
+## INT-034 Q25 A selected precedence — 2026-11-28
+
+[Verbatim owner sign-off](research/2026-11-28-int034-q25-owner-signoff.md). Owner-choice holds are
+removed for these cases; the new independent check and full development
+analysis/review/tests remain. All cases are PLANNED, not executed.
+
+| Planned case | Independently specified expectation | Requirements |
+|---|---|---|
+| `q25_padding_only_is_incomplete_without_loss_claim` | Closed zero-text candidate, SP/CR/LF/NUL/1A/DEL-only text, and terminated empty regions (;; / CR LF ;) separately: Incomplete, reason no substantive attributes; raw bytes kept, no inferred truncation; existing scanner information/silence rules unchanged | L3-CH10-028 |
+| `q25_present_empty_or_unknown_not_padding_only` | COMMENT:; or an unknown framed X:; remains a substantive retained item, not padding-only through value/validity filtering; other classification/validation guards remain independent | L3-CH10-028 |
+| `q25_leading_loss_blocks_ambiguity_opt_in` | Independently evidenced lost prefix plus duplicate G PN or SHA: aggregate Ambiguous retains blocking cut/location; labelled per-query ambiguity opt-in never makes it usable/governing | L3-CH10-029 |
+| `q25_final_semicolon_keeps_leading_cut` | Known missing leading text but observed suffix ends ';': cut remains; equality/digest evidence cannot remove it or bypass the separate checksum truncation refusal | L3-CH10-029 |
+| `q25_input_start_does_not_prove_loss` | Otherwise complete closed substantive run at ordinary start of supplied input, including arbitrary first sequence: no leading-loss/cut inferred from START alone; unrelated findings remain | L3-CH10-029 |
+| `q25_provisional_never_hides_known_leading_loss` | Later independently proven prefix loss invalidates an earlier versioned snapshot visibly; known cut never becomes usable/governing through provisional or ambiguity-only access | L3-CH10-029 |
+| `q25_raw_extraction_is_not_semantic_access` | Available raw text from a proven-cut candidate remains byte-exact under default extract with findings; semantic/governing acceptance stays blocked, no source reconstruction or new strict-class choice | L3-CH10-029, L3-CLI-031 |
 
 ## INT-045: layered time-boundary acceptance specifications
 
@@ -2140,7 +2156,7 @@ No test in this table has been executed against replacement code.
 ## Legacy independent-check batches 3/4 selected-policy follow-ups
 
 Joey signed the recommended choices on 2026-11-28. Owner-choice holds
-are removed except INT-034 padding-only/leading-damage precedence. Remaining
+are removed, including Q25 A; its new independent check and development gates remain. Remaining
 independent checks, source/development analysis/review and tests still apply;
 no executable coverage is claimed.
 
@@ -2158,7 +2174,7 @@ no executable coverage is claimed.
 | `governance_assumptions_are_per_query` | Prior ambiguity opt-in or assigned description cannot silently supply next query; cut facet always blocks semantic use, Complete integrity alone follows INT-051 | INT-031, INT-032, INT-048, INT-051, INT-060 |
 | `appendix_fragment_defaults_find_example_collision` | The standard's D-3 example itself has two fragments and no WFP; both default 1 with finding/ambiguous order, never infer from index or C-2 prose | INT-033 |
 | `completeness_rollover_is_not_gap` | Source sequences FE/FF/00/01 on same channel retain +1 continuity; no false gap at FF->00 | INT-034, INT-011 |
-| `completeness_padding_precedence_remains_open` | **Owner-signed padding rule; BLOCKED (precedence arm):** ';' plus suffix bytes from hex {20,00–1F,7F} retains semicolon boundary/raw bytes. A high byte is not padding; X:a plus padding keeps substantive unterminated suffix. Empty/padding-only and leading-damage precedence still need the explicit owner choice; no field-value trim | INT-034, INT-035, INT-036 |
+| `completeness_padding_precedence_remains_open` | **Owner-signed Q25 A (precedence arm unblocked for owner choice):** ';' plus suffix bytes from hex {20,00–1F,7F} retains semicolon boundary/raw bytes. A high byte is not padding; X:a plus padding keeps substantive unterminated suffix. Padding-only/no substantive attributes is Incomplete without a truncation claim; proven leading loss keeps blocking cut through a final semicolon and aggregate Ambiguous; ordinary input start proves no loss; no field-value trim | INT-034, INT-035, INT-036 |
 | `completeness_integrity_is_not_source_unavailability` | Otherwise available well-framed text with core Mismatch/secondary-integrity findings is distinct from unavailable DATA bounds; no integrity-only Incomplete quarantine; resource refusal remains operational | INT-034, INT-051 |
 
 ## Legacy independent-check batch 1 follow-up fixtures
@@ -2282,8 +2298,8 @@ Source: [verbatim owner sign-offs](research/2026-11-28-interpretation-owner-sign
 PLANNED, not executed tests. Owner-choice holds for these selected policies
 are removed; final rule checks CONCUR at #87 e0a0cce; source freshness, written
 analysis/review and executable tests still gate implementation. INT-022 is
-0.5 scope; none of these cases selects rendered output or the remaining
-INT-034 padding-only/leading-damage precedence.
+0.5 scope; none of these cases selects rendered output. Q25 A now separately signs
+INT-034 padding-only/leading-loss precedence, with its independent check pending.
 
 | Planned case | Independently specified expected result | Interpretation |
 |---|---|---|
@@ -2304,7 +2320,7 @@ INT-034 padding-only/leading-damage precedence.
 | `owner_ungoverned_assignment_is_not_session_default` | Explicit assigned description on one ungoverned-range query is labelled assumption; next query gets no remembered setup and no declared-governing upgrade | INT-032 |
 | `owner_fragment_default_collision_not_index_order` | Two WFP positions default 1: retain defaults and collision/ambiguous ordering; explicit caller order labelled, never inferred from fragment indices or Appendix 9-C prose | INT-033 |
 | `owner_provisional_snapshot_version_and_invalidation` | Explicit opt-in snapshot S1 binds exact extent/version; later text yields S2 and visible S1 invalidation without erasing S1 evidence or automatically governing; known cut never usable | INT-034 |
-| `owner_boundary_padding_preserves_raw_bytes` | Otherwise complete substantive text ending ';' followed by each SP/00–1F/7F suffix remains terminated, bytes retained; high bytes are not layout; padding-only/leading-damage precedence arm stays BLOCKED OWNER | INT-034 |
+| `owner_boundary_padding_preserves_raw_bytes` | Otherwise complete substantive text ending ';' followed by each SP/00–1F/7F suffix remains terminated, bytes retained; high bytes are not layout; Q25 A classifies padding-only as Incomplete/no loss claim and retains proven leading cut; ordinary input start proves no loss | INT-034 |
 | `owner_sequence_rollover_is_continuity` | Same channel FF -> 00 with matching FRMT/RCCVER and no layered closure joins; missing/other sequence not repaired and other-channel traffic never breaks continuity | INT-011, INT-034 |
 | `owner_available_integrity_failure_is_not_cut` | Admitted available DATA with core Mismatch/NotChecked/secondary readings remains available text, findings unchanged; independently missing required run bytes add incomplete-source facet, operational refusal alone does not invent a cut | INT-034, INT-051 |
 
@@ -2312,7 +2328,8 @@ INT-034 padding-only/leading-damage precedence.
 
 Owner-choice holds below are removed. All cases are PLANNED, not measured
 or executed; [policy/pin record](research/2026-11-28-owner-policy-signoffs.md).
-Report rendering and INT-034 padding-only/leading-damage precedence stay open.
+Q25 A signs INT-034 padding-only/leading-loss precedence with new check
+pending; Q26 report-format direction is recorded separately.
 Q18 class membership beyond its six listed kinds still needs an explicit
 reviewed mapping and independent fixtures before additional-member refusal
 coverage can be claimed. Current rows do not invent such members from severity.
