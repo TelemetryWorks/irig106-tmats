@@ -96,6 +96,8 @@ irig106-tmats/
 │   │                          2026-11-25-retained-cut-and-qm-review-followups.md records the independent review and narrow blocking/test amendments;
 │   │                          2026-11-25-time-view-metadata-requirements.md derives bounded channel/time-field requirements and acceptance scope;
 │   │                          2026-11-25-source-bit-requirements.md derives explicit NSB splitting and records DSI/CHE remaining boundaries;
+│   │                          2026-11-27-int022-034-owner-brief.md gives the owner a single sitting brief for all INT-022..034 options and remaining decisions;
+│   │                          2026-11-27-legacy-int-independent-check-batches3-4.md records remaining legacy verdicts, owner-pending rewrites and normalization-order recheck;
 │   │                          2026-11-27-legacy-int-independent-check-batch2.md records second-batch verdicts, source corrections and the later-scope F2 owner item;
 │   │                          2026-11-27-legacy-int-independent-check-batch1.md records reviewer verdicts and narrow amendments without claiming completed development analysis;
 │   │                          2026-11-27-family2-unheld-queue-reassessment.md rechecks scoped parents after #79 and separates exhausted unheld drafting from remaining owner/source/implementation gates;
