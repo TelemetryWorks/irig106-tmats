@@ -478,7 +478,7 @@ blocking reason; the aggregate label does not relax incomplete-input policy.
 
 **Reason**: The packets alone cannot tell where a record ends; the text's final byte and repeated single-entry attributes are the only evidence the standard gives, and neither is proof in every case.
 
-**Design**: owner-approved in part (Joey, 2026-11-28; padding-only/leading-damage precedence open) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Independent check CONCUR with the framework; exact padding/availability amendments reviewed in #83; final check of versioned-snapshot composition pending. Padding-only/leading-damage precedence remains OWNER-OPEN. Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: team spec alignment review, 2026-09-27
+**Design**: owner-approved in part (Joey, 2026-11-28; padding-only/leading-damage precedence open) · **Review**: complete under ADR-0033 for the signed parts; draft author: maintainer agent; owner sign-off: Joey, 2026-11-28; independent AI FINAL CONCUR at [PR #87 head `e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9`](https://github.com/TelemetryWorks/irig106-tmats/pull/87/commits/e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9), reviewer @thread:thr_qsvwmtnn8f, received 2026-11-28; [final-check record](research/2026-11-28-int022-066-final-concurrences.md); source freshness, written development analysis/review and intensive executable tests remain required; padding-only/leading-damage precedence remains OWNER-OPEN · **Origin**: team spec alignment review, 2026-09-27
 
 **Test**: `setup_record_completeness_outcomes`, `eof_boundary_is_complete_and_labelled`, `other_channel_packet_cannot_finalize_run`, `open_boundary_is_provisional_not_complete`, `provisional_extension_never_closes_run` (planned; not yet written)
 
@@ -776,11 +776,12 @@ last step of that transaction, never run over the still-ambiguous input.
 - §9.5.14: "If the file is being edited by a TMATS editor, it would notice the association and preserve it even if the editor doesn't know what the code means. Thus if the measurements were re-numbered and the index was 1-5 instead of 1-2, the extension code could be updated to preserve the link."
 - §9.5.14: "The "x" values must match the index of the original code word therefore no new values may be added."
 
-**Behaviour**: **Owner-signed A (F2):** refuse deletion while extensions attach. A cascade requires a separate explicit edit; scope remains 0.5.
+**Behaviour**: **Owner-signed A (F2):** refuse deletion while extensions attach or may attach with unresolved/ambiguous/cannot-evaluate evidence; list all attached or possibly attached X items. A cascade requires a separate explicit edit; scope remains 0.5.
 
 **Options considered — A selected, 0.5 scope (not a 0.1 blocker)**:
-- A (recommended default): refuse removal while reviewed evidence attaches X
-  items, listing each attachment. Do not silently override; a caller must
+- A (selected default): refuse removal while reviewed evidence attaches X
+  items OR their attachment is unresolved/ambiguous/cannot-evaluate (including
+  INT-061 A for G\PN), listing all attached/possibly attached X items. Do not silently override; a caller must
   explicitly choose a separately reviewed orphan-preserving or cascade plan.
 - B: allow explicit original removal while preserving every X in output,
   reporting each now-orphaned extension and its former target evidence.
@@ -795,7 +796,7 @@ C keeps output internally consistent at the cost of explicitly deleting X.
 
 **Reason**: The standard covers renumbering the original, not removing it.
 
-**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Options CONCUR in the independent #83 review at `ada5328`; final check of the signed rule pending. Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: T7
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: complete under ADR-0033 for the signed parts; draft author: maintainer agent; owner sign-off: Joey, 2026-11-28; independent AI FINAL CONCUR at [PR #87 head `e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9`](https://github.com/TelemetryWorks/irig106-tmats/pull/87/commits/e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9), reviewer @thread:thr_qsvwmtnn8f, received 2026-11-28; [final-check record](research/2026-11-28-int022-066-final-concurrences.md); source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: T7
 
 **Test**: `removing_an_extended_attribute` (planned; refusal and separately explicit cascade are now owner-decided)
 
@@ -821,7 +822,7 @@ rule above is independent of this choice. Source: Chapter 6 p. 6-22.
 
 **Reason**: The standard's own example uses the form, so real files may too; a suggestion could help or could mislead.
 
-**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Reading-only rule CONCUR in legacy batch 3 at `c682e05`; final check of the guarded suggestion pending. Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: T7
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: complete under ADR-0033 for the signed parts; draft author: maintainer agent; owner sign-off: Joey, 2026-11-28; independent AI FINAL CONCUR at [PR #87 head `e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9`](https://github.com/TelemetryWorks/irig106-tmats/pull/87/commits/e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9), reviewer @thread:thr_qsvwmtnn8f, received 2026-11-28; [final-check record](research/2026-11-28-int022-066-final-concurrences.md); source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: T7
 
 **Test**: `chapter_6_example_equals_sign_is_missing_delimiter`
 
@@ -861,7 +862,7 @@ code families or turn uncertainty into a mismatch.
 
 **Reason**: The families are irregular (CAN, Fibre Channel, the missing `0x22`), and several format attributes still cite Chapter 10 after the packet formats moved to Chapter 11, so the mapping cannot be computed and must be reviewed.
 
-**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Edition/value-state amendments reviewed in #83 at `ada5328`; final rule check pending. Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: F4 section 3
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: complete under ADR-0033 for the signed parts; draft author: maintainer agent; owner sign-off: Joey, 2026-11-28; independent AI FINAL CONCUR at [PR #87 head `e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9`](https://github.com/TelemetryWorks/irig106-tmats/pull/87/commits/e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9), reviewer @thread:thr_qsvwmtnn8f, received 2026-11-28; [final-check record](research/2026-11-28-int022-066-final-concurrences.md); source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: F4 section 3
 
 **Test**: `channel_data_type_maps_to_packet_data_types`
 
@@ -1056,9 +1057,9 @@ out of scope. Approved INT-045/048/050/051/052/053 constrain every answer.
 
 **Reason**: The standard orders setup records before the data they describe but never states the governing rule outright.
 
-**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Composed umbrella reviewed in #83; five answers now owner-signed; final check of the signed boundary composition pending. Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: F4 section 5
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: complete under ADR-0033 for the signed parts; draft author: maintainer agent; owner sign-off: Joey, 2026-11-28; independent AI FINAL CONCUR at [PR #87 head `e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9`](https://github.com/TelemetryWorks/irig106-tmats/pull/87/commits/e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9), reviewer @thread:thr_qsvwmtnn8f, received 2026-11-28; [final-check record](research/2026-11-28-int022-066-final-concurrences.md); source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: F4 section 5
 
-**Test**: `governing_umbrella_composes_approved_guards`, `governing_complete_is_not_takeover`, `governing_unresolved_is_not_no_setup` (planned; owner choice recorded; remaining final review/development/test gates apply)
+**Test**: `governing_umbrella_composes_approved_guards`, `governing_complete_is_not_takeover`, `governing_unresolved_is_not_no_setup` (planned; owner choice recorded; final rule check recorded; development-analysis review/test gates apply)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -1114,7 +1115,7 @@ bytes and approved governance guards; neither authorizes implicit adoption.
 
 **Reason**: SRCC is a claim about configuration; raw differences alone do not define semantic equivalence. The former generic case/order-folding proposal conflicted with approved INT-050/052/053.
 
-**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Findings-only rewrite reviewed in #83 at `ada5328`; descriptive-only answer now owner-signed; final check pending. Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: F4 section 5; team spec alignment review
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: complete under ADR-0033 for the signed parts; draft author: maintainer agent; owner sign-off: Joey, 2026-11-28; independent AI FINAL CONCUR at [PR #87 head `e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9`](https://github.com/TelemetryWorks/irig106-tmats/pull/87/commits/e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9), reviewer @thread:thr_qsvwmtnn8f, received 2026-11-28; [final-check record](research/2026-11-28-int022-066-final-concurrences.md); source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: F4 section 5; team spec alignment review
 
 **Test**: `setup_record_kinds_and_srcc_findings`, `srcc_raw_subtypes_do_not_infer_semantics`
 
@@ -2521,9 +2522,9 @@ A is reversible: later approved B/C can refine missing-rule cannot-evaluate to r
 
 **Reason**: The X form/index-match rule assumes an index to compare; its broad original-group description includes G, whose PROGRAM NAME has none. The cited text does not supply a sentinel or omitted-index form. Guessing one can create a false attachment or hide an orphan. Prefer an explicit unavailable result over claiming a standards-defined mapping.
 
-**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Independent pre-check CONCUR with A on #63 at `99a052b`; expanded options reviewed before merge; final check of the signed wording pending. Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: family 2 batch 30 source inspection
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: complete under ADR-0033 for the signed parts; draft author: maintainer agent; owner sign-off: Joey, 2026-11-28; independent AI FINAL CONCUR at [PR #87 head `e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9`](https://github.com/TelemetryWorks/irig106-tmats/pull/87/commits/e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9), reviewer @thread:thr_qsvwmtnn8f, received 2026-11-28; [final-check record](research/2026-11-28-int022-066-final-concurrences.md); source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: family 2 batch 30 source inspection
 
-**Test**: `x_unindexed_original_mapping_unavailable`, `x_unindexed_zero_one_never_default`, `x_unindexed_value_never_supplies_occurrence` (planned Option A expectations), `x_unindexed_unique_path_option_c`, `x_unindexed_duplicate_path_option_c`, `x_unindexed_nonconforming_option_d` (non-selected alternatives, not active expectations; selected A cases are planned, with final review/development/test gates retained)
+**Test**: `x_unindexed_original_mapping_unavailable`, `x_unindexed_zero_one_never_default`, `x_unindexed_value_never_supplies_occurrence` (planned Option A expectations), `x_unindexed_unique_path_option_c`, `x_unindexed_duplicate_path_option_c`, `x_unindexed_nonconforming_option_d` (non-selected alternatives, not active expectations; selected A cases are planned, with final rule check recorded; development-analysis review/test gates retained)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -2569,9 +2570,9 @@ historical edition mappings still need their own cited delta sources.
 
 **Reason**: Registry matching and EXTENSION_CODE uniqueness provide the deterministic decomposition described by the section. The remaining vocabulary-scope question must be an explicit owner choice. A is owner-signed; no namespace, private-code or edition fallback policy is silently added.
 
-**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Registry/baseline options reviewed in #63/#64; final ADR-0033 independent rule check pending. Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: PR #63 independent review follow-up
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: complete under ADR-0033 for the signed parts; draft author: maintainer agent; owner sign-off: Joey, 2026-11-28; independent AI FINAL CONCUR at [PR #87 head `e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9`](https://github.com/TelemetryWorks/irig106-tmats/pull/87/commits/e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9), reviewer @thread:thr_qsvwmtnn8f, received 2026-11-28; [final-check record](research/2026-11-28-int022-066-final-concurrences.md); source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: PR #63 independent review follow-up
 
-**Test**: `x_registry_decomposition_survives_absent_target`, `x_document_only_code_does_not_define_registry_split`, `x_extension_overlap_prevents_heuristic_split`, `x_private_target_registry_only_cost`, `x_baseline_registry_keeps_edition_basis`, `x_legacy_renamed_original_is_unavailable` (planned Option A/baseline expectations), `x_hybrid_no_vocabulary_uses_labelled_document_names`, `x_hybrid_existing_vocabulary_never_falls_back`, `x_hybrid_v_private_boundary_needs_owner` (non-selected C inputs now assert A refusal/unavailability; final review/development/test gates retained)
+**Test**: `x_registry_decomposition_survives_absent_target`, `x_document_only_code_does_not_define_registry_split`, `x_extension_overlap_prevents_heuristic_split`, `x_private_target_registry_only_cost`, `x_baseline_registry_keeps_edition_basis`, `x_legacy_renamed_original_is_unavailable` (planned Option A/baseline expectations), `x_hybrid_no_vocabulary_uses_labelled_document_names`, `x_hybrid_existing_vocabulary_never_falls_back`, `x_hybrid_v_private_boundary_needs_owner` (non-selected C inputs now assert A refusal/unavailability; final rule check recorded; development-analysis review/test gates retained)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -2620,9 +2621,9 @@ confirmation. Private meanings remain opaque.
 
 **Reason**: Section 9.5.13 provides two pieces of vendor evidence but no recovery precedence. Reporting the raw grouping separately from confirmed attribution preserves useful data without treating conflicting writers as an authority. All options keep source/field/record evidence; A is owner-signed; B/C are not selected.
 
-**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Usable-VN definition reviewed in #65; final ADR-0033 independent rule check pending. Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: family 2 batch 31 source inspection
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: complete under ADR-0033 for the signed parts; draft author: maintainer agent; owner sign-off: Joey, 2026-11-28; independent AI FINAL CONCUR at [PR #87 head `e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9`](https://github.com/TelemetryWorks/irig106-tmats/pull/87/commits/e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9), reviewer @thread:thr_qsvwmtnn8f, received 2026-11-28; [final-check record](research/2026-11-28-int022-066-final-concurrences.md); source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: family 2 batch 31 source inspection
 
-**Test**: `v_missing_vn_keeps_namespace_unconfirmed`, `v_duplicate_vn_never_picks_vendor`, `v_path_header_mismatch_keeps_both`, `v_invalid_unavailable_vn_keeps_namespace`, `v_vn_projected_three_chars_ascii_match`, `v_vn_wrong_length_is_invalid_unconfirmed`, `v_vn_blank_handling_does_not_trim`, `v_vn_high_byte_is_not_usable` (planned owner-signed A/definition expectations; final review/development/test gates retained)
+**Test**: `v_missing_vn_keeps_namespace_unconfirmed`, `v_duplicate_vn_never_picks_vendor`, `v_path_header_mismatch_keeps_both`, `v_invalid_unavailable_vn_keeps_namespace`, `v_vn_projected_three_chars_ascii_match`, `v_vn_wrong_length_is_invalid_unconfirmed`, `v_vn_blank_handling_does_not_trim`, `v_vn_high_byte_is_not_usable` (planned owner-signed A/definition expectations; final rule check recorded; development-analysis review/test gates retained)
 
 **Development**: intensive testing and deep analysis required · **Analysis**: not yet written
 
@@ -2725,7 +2726,7 @@ when field content is retained. B gives that global convention but changes
 field source; C is precise but transfers all layout work to callers. This
 is a product policy choice, not a new delimiter or an INT-036 view rewrite.
 
-**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Independent pre-check CONCUR with A on #77 at `4ed91a9` (2026-11-27). Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: family 2 normalization source review
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: complete under ADR-0033 for the signed parts; draft author: maintainer agent; owner sign-off: Joey, 2026-11-28; independent AI FINAL CONCUR at [PR #87 head `e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9`](https://github.com/TelemetryWorks/irig106-tmats/pull/87/commits/e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9), reviewer @thread:thr_qsvwmtnn8f, received 2026-11-28; [final-check record](research/2026-11-28-int022-066-final-concurrences.md); source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: family 2 normalization source review
 
 **Test**: `normalize_newlines_layout_only`, `normalize_newlines_field_controls_untouched`, `normalize_newlines_unknown_layout_unavailable` (planned owner-signed A expectations; development/test gates retained)
 
@@ -2768,7 +2769,7 @@ The same identity/retention rule applies to reviewed MML\N-style counters,
 not only MNF\N; use each counter's own cited scope/range (Table 9-7 NUMBER
 OF MEASUREMENT LOCATIONS, p. 9-117), never import MNF\N's 1–8 range.
 
-**Design**: approved by owner (Joey, 2026-11-28) · **Review**: owner sign-off recorded under ADR-0033; draft author: maintainer agent; Independent pre-check CONCUR with A on #77 at `4ed91a9` (2026-11-27). Source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: family 2 normalization source review
+**Design**: approved by owner (Joey, 2026-11-28) · **Review**: complete under ADR-0033 for the signed parts; draft author: maintainer agent; owner sign-off: Joey, 2026-11-28; independent AI FINAL CONCUR at [PR #87 head `e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9`](https://github.com/TelemetryWorks/irig106-tmats/pull/87/commits/e0a0ccea5a61c64f7de9ca0e122adb01f376a3f9), reviewer @thread:thr_qsvwmtnn8f, received 2026-11-28; [final-check record](research/2026-11-28-int022-066-final-concurrences.md); source freshness, written development analysis/review and intensive executable tests remain required · **Origin**: family 2 normalization source review
 
 **Test**: `normalize_counter_contiguous_distinct_members`, `normalize_counter_gap_refuses`, `normalize_counter_invalid_old_value_explicit_rewrite`, `normalize_counter_compatible_damage_blocks` (planned owner-signed A expectations; development/test gates retained)
 

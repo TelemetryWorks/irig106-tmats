@@ -1273,8 +1273,8 @@ under L1-EDN-006 is a later derivation, not an implied fallback here.
 Planned, not implemented. INT-011 is reconfirmed by Joey, 2026-11-23,
 with AI CONCURS on #38 at c623b15; development gates remain;
 INT-034's padding/availability/continuity and snapshots are owner-signed
-(2026-11-28); remaining final checks and padding-only/leading-damage precedence
-remain, alongside development/source/test gates.
+(2026-11-28); final rule checks CONCUR at #87 e0a0cce; padding-only/leading-damage precedence
+remains open, alongside development/source/test gates.
 These children describe the joining/provenance stage within a phase only.
 INT-045 separately records approved time-packet phase closure (AI CONCURS
 on #41 at 79b94eb); it adds no per-channel joining predicate. A later +1 fragment
@@ -1366,7 +1366,7 @@ these reasons do not assert that the beginning is intact. Other-channel
 traffic never creates a new start for an existing run. Implementation of
 reconfirmed INT-011 still requires completed analysis and executable checks.
 INT-034
-has owner sign-off for the exact padding/availability/continuity rules (2026-11-28); final checks and padding-only/leading-damage precedence remain;
+has owner sign-off for the exact padding/availability/continuity rules (2026-11-28); final rule checks CONCUR at #87 e0a0cce; padding-only/leading-damage precedence remains;
 INT-039 duplicate classification applies to a document only after assembly
 scope is established. Cross-fragment duplicate evidence must not silently
 select a split or a scalar winner. These dependencies remain visible even
@@ -1375,9 +1375,9 @@ when fixture-provided reviewed bindings make individual joining tests pass.
 ## Completeness-contract batch 15: observation versus authority
 
 Planned obligations; Joey signed INT-034's padding/availability/continuity
-and snapshot choices plus INT-028/031 on 2026-11-28. Remaining final checks
-and INT-034 padding-only/leading-damage precedence still gate affected cases. Their supplied reviewed fixture bindings isolate the cases
-below without completing any interpretation gate. The open-run observation
+and snapshot choices plus INT-028/031 on 2026-11-28. Final rule checks CONCUR at #87 e0a0cce; INT-034 padding-only/leading-damage
+precedence still gates affected cases. Their supplied reviewed fixture bindings isolate the cases
+below without completing source/development/test gates. The open-run observation
 is PROVISIONAL, not a fourth final completeness outcome or a joining stop.
 
 **L3-CH10-017** · Parent: L2-CH10-006 · Verification: T
@@ -1414,7 +1414,7 @@ without changing bytes; padding-only/leading-damage precedence remains open. Fin
 *Incomplete/ambiguous classification evidence SHALL retain the affected spans, gap/trust/boundary facts and all competing readings without concatenating across a missing segment, synthesizing a terminator or selecting one repeated scalar occurrence as the intended record boundary.*
 
 INT-034's stated padding/availability/continuity rules are owner-signed;
-remaining final checks and padding-only/leading-damage precedence stay open. INT-039's duplicate
+final rule checks CONCUR at #87 e0a0cce; padding-only/leading-damage precedence stay open. INT-039's duplicate
 field rule and INT-044's ambiguous-declaration fallback do not establish a
 record split or override assembly ambiguity. Locating evidence is mandatory;
 deciding which classification wins when several kinds coexist is still an
@@ -2610,12 +2610,12 @@ Joey also selected INT-062 A on 2026-11-28: registry vocabulary only,
 106-24R1 baseline until edition deltas exist, with the actual vocabulary
 basis separate from raw declarations and INT-044 selection/fallback labels.
 Private/non-registry originals and older renamed codes without metadata
-remain cannot-evaluate. Hybrid C is not selected. Remaining independent
-checks and source/development evidence still gate implementation; public
+remain cannot-evaluate. Hybrid C is not selected. Final rule checks CONCUR at #87 e0a0cce;
+source/development evidence still gates implementation; public
 pattern grammar is a separate decision batch.
 
 **L3-EXT-001** · Parent: L2-EXT-001 · Verification: T
-*X association SHALL decompose the name by matching original code names against the reviewed registry, made unambiguous for conforming extensions by the EXTENSION_CODE uniqueness rule, retaining X occurrence, organization, original group/full path, extension code and suffix indices with raw correspondence; missing metadata or unproved uniqueness SHALL retain source and an observable cannot-evaluate reason, not a heuristic split or fabricated key. Decomposition SHALL use owner-signed INT-062 A: reviewed registry code names for the applied basis, currently the 106-24R1 baseline until edition deltas exist; remaining independent review/development gates SHALL precede implementation.*
+*X association SHALL decompose the name by matching original code names against the reviewed registry, made unambiguous for conforming extensions by the EXTENSION_CODE uniqueness rule, retaining X occurrence, organization, original group/full path, extension code and suffix indices with raw correspondence; missing metadata or unproved uniqueness SHALL retain source and an observable cannot-evaluate reason, not a heuristic split or fabricated key. Decomposition SHALL use owner-signed INT-062 A: reviewed registry code names for the applied basis, currently the 106-24R1 baseline until edition deltas exist; source freshness, development analysis/review and executable checks SHALL precede implementation.*
 
 Section 9.5.14 p. 9-172: “Everything to the right of ORGANIZATION that
 matches an existing TMATS code is used to associate the extension with an
@@ -2680,7 +2680,7 @@ The printed section 9.5.14 form and index-match sentence do not explain how
 to target G\PN, whose Table 9-2 p. 9-10 code name has no numeric index.
 Joey selected INT-061 A on 2026-11-28: raw X remains and mapping is
 cannot-evaluate. C remains a possible future refinement; neither C nor D
-is selected. Remaining independent check/development gates apply. A retains raw evidence so a
+is selected. Final rule check CONCURS at #87 e0a0cce; development gates apply. A retains raw evidence so a
 later approved B/C can refine the result without a source/result-shape break.
 This gate
 does not decide indexed fields of groups without an occurrence or any
@@ -2755,8 +2755,8 @@ Equal source/vendor labels do not erase their contributing occurrences.
 
 Joey selected INT-063 A on 2026-11-28: observed namespaces remain, with
 unconfirmed attribution unless one usable VN agrees. B/C remain unselected
-alternatives. All original field/record evidence stays; remaining independent
-check/development gates and the report-format hold are not waived.
+alternatives. All original field/record evidence stays; final rule check CONCURS at #87 e0a0cce; development gates and the
+report-format hold are not waived.
 
 **L3-EXT-015** · Parent: L2-EXT-003 · Verification: T
 *Unknown private V suffix/value content SHALL remain attached to its observed raw namespace without synthesized members, inferred counters/defaults, value repair or source rewriting; successful grouping SHALL NOT claim the private meaning was decoded, while unavailable structural decomposition SHALL remain observable with raw evidence retained.*
@@ -2771,8 +2771,8 @@ just because a vendor namespace cannot be confirmed.
 
 Positive names cite section 9.5.13; source targets cite Table 9-2 p. 9-11.
 Missing/duplicate/invalid header composition can receive evaluated states.
-INT-063 A fixture expectations are owner-decided, with remaining final
-review/development gates; they are not executed conformance tests.
+INT-063 A fixture expectations are owner-decided, with final rule CONCUR at #87 e0a0cce and remaining
+development gates; they are not executed conformance tests.
 
 
 ## Dependency/SBOM/provenance acceptance (family 2, batch 32)

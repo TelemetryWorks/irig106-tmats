@@ -782,7 +782,7 @@ section 11.2.1.1 f; ADR-0031; reviewer consequences relayed by the owner
 2026-11-23 after #38. INT-011 is reconfirmed (AI CONCURS on #38 at c623b15).
 Joey signed INT-028/031 and INT-034's snapshot/padding/availability/continuity
 choices on 2026-11-28. Padding-only/leading-damage precedence stays open;
-remaining final review and development/testing gates are not executable coverage.
+final rule checks CONCUR at #87 e0a0cce; development/testing gates remain.
 
 | Planned check | Fixture or stimulus | Expected observation | Requirement |
 | --- | --- | --- | --- |
@@ -1556,7 +1556,7 @@ Table 9-2 DATA SOURCE ID p. 9-11. These are structural/context fixtures,
 not whole-file conformance or private-value decoders. Header composition
 can receive evaluated field states under reviewed metadata; it does not
 settle unreviewed blanks/required-presence rules. Eight INT-063 A/definition expectations are owner-decided (Joey,
-2026-11-28); remaining independent final review/development/test gates apply.
+2026-11-28); final rule check CONCURS at #87 e0a0cce; development/test gates apply.
 
 | Planned test | Independent source/context and expected evidence | Requirements |
 |---|---|---|
@@ -2101,7 +2101,7 @@ no executable coverage is claimed.
 
 | Planned case | Independent source/evidence and expected selected-policy boundary | Interpretation |
 |---|---|---|
-| `extension_removal_requires_explicit_reviewed_plan` | **Owner-signed F2 A:** ordinary removal refuses while extensions attach; any cascade is a separately explicit revision-bound edit; unresolved attachment never becomes a guessed cascade or proof of no attachment | INT-022 |
+| `extension_removal_requires_explicit_reviewed_plan` | **Owner-signed F2 A:** ordinary removal refuses while extensions attach or may attach with unresolved/ambiguous/cannot-evaluate evidence, listing all possible X items (including INT-061 A G\PN); any cascade is a separately explicit revision-bound edit; unresolved attachment never becomes a guessed cascade or proof of no attachment | INT-022 |
 | `equals_suggestion_needs_complete_recognized_name` | Owner-signed F3 A suggests only positively recognized full name before '=' with no colon; always keep raw/missing-delimiter finding, never apply | INT-023 |
 | `packet_mapping_unusable_operands_are_not_mismatch` | Missing/Invalid/duplicate/unavailable CDT or format: cannot-evaluate with all evidence, not a mismatch; usable baseline versus unavailable historical mapping distinguished | INT-024 |
 | `tspiin_condition_does_not_repair_tspin` | TDTF p. 9-81 condition reading TSPIIN; a document's CDT=TSPIN is still unknown | INT-025 |
@@ -2113,7 +2113,7 @@ no executable coverage is claimed.
 | `governance_assumptions_are_per_query` | Prior ambiguity opt-in or assigned description cannot silently supply next query; cut facet always blocks semantic use, Complete integrity alone follows INT-051 | INT-031, INT-032, INT-048, INT-051, INT-060 |
 | `appendix_fragment_defaults_find_example_collision` | The standard's D-3 example itself has two fragments and no WFP; both default 1 with finding/ambiguous order, never infer from index or C-2 prose | INT-033 |
 | `completeness_rollover_is_not_gap` | Source sequences FE/FF/00/01 on same channel retain +1 continuity; no false gap at FF->00 | INT-034, INT-011 |
-| `completeness_padding_precedence_remains_open` | **Owner-signed padding rule; precedence arm still held:** ';' plus suffix bytes from hex {20,00–1F,7F} retains semicolon boundary/raw bytes. A high byte is not padding; X:a plus padding keeps substantive unterminated suffix. Empty/padding-only and leading-damage precedence still need the explicit owner choice; no field-value trim | INT-034, INT-035, INT-036 |
+| `completeness_padding_precedence_remains_open` | **Owner-signed padding rule; BLOCKED (precedence arm):** ';' plus suffix bytes from hex {20,00–1F,7F} retains semicolon boundary/raw bytes. A high byte is not padding; X:a plus padding keeps substantive unterminated suffix. Empty/padding-only and leading-damage precedence still need the explicit owner choice; no field-value trim | INT-034, INT-035, INT-036 |
 | `completeness_integrity_is_not_source_unavailability` | Otherwise available well-framed text with core Mismatch/secondary-integrity findings is distinct from unavailable DATA bounds; no integrity-only Incomplete quarantine; resource refusal remains operational | INT-034, INT-051 |
 
 ## Legacy independent-check batch 1 follow-up fixtures
@@ -2235,14 +2235,14 @@ structural membership and all record qualifications remain separate results.
 
 Source: [verbatim owner sign-offs](research/2026-11-28-interpretation-owner-signoffs.md).
 PLANNED, not executed tests. Owner-choice holds for these selected policies
-are removed; remaining independent final checks, source freshness, written
+are removed; final rule checks CONCUR at #87 e0a0cce; source freshness, written
 analysis/review and executable tests still gate implementation. INT-022 is
 0.5 scope; none of these cases selects rendered output or the remaining
 INT-034 padding-only/leading-damage precedence.
 
 | Planned case | Independently specified expected result | Interpretation |
 |---|---|---|
-| `owner_f2_attached_delete_refuses` | Reviewed unique attachment to exact original: ordinary deletion refuses and lists attachments; a cascade needs a separate explicit edit, never implicit removal | INT-022 |
+| `owner_f2_attached_delete_refuses` | Reviewed unique attachment, or unresolved/ambiguous/cannot-evaluate possible attachment to exact original: ordinary deletion refuses and lists attached/possibly attached X items; a cascade needs a separate explicit edit, never implicit removal | INT-022 |
 | `owner_f3_equals_suggestion_guard` | Recognized complete G\DSI\N=18; with no colon: preserve bytes/missing-delimiter finding and offer only the suggested delimiter edit; unknown/incomplete name or any colon: no such suggestion | INT-023 |
 | `owner_packet_mapping_unusable_is_not_mismatch` | Missing/Invalid/Ambiguous/unavailable CDT or format, and unsupported edition mapping separately: cannot-evaluate with evidence, no mismatch; reviewed usable map supplies expected code, never arithmetic family guessing | INT-024 |
 | `owner_tspiin_condition_not_user_repair` | Standard TSPIN condition is read TSPIIN; literal document CDT=TSPIN remains unknown; no field-byte rewrite | INT-025 |
