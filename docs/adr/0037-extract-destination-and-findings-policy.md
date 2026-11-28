@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: accepted; strict scope refined by 0038 (2026-11-28)
 date: 2026-11-27
 decision-makers: Joey
 ---

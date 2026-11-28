@@ -206,9 +206,9 @@ requirements are added. The requirement entries below and the generated
 
 ### L1-CH10-005
 
-**Statement**: Across the complete setup records of one recording, the library SHALL report a mixture of ASCII and XML setup records, a record with the setup-record-configuration-change bit set that is not preceded by a configuration-change event packet, and, for recordings of 106-17 or later, a setup record on a channel other than `0x0000`.
+**Statement**: Within a supplied evidenced or explicitly caller-asserted session scope, the library SHALL report a mixture of ASCII and XML only across Complete setup records, retaining non-Complete FRMT as qualified evidence; it SHALL retain the configuration-change-event check under INT-030 without guessing event identity. Consuming core's edition-qualified evidence, it SHALL report setup outside channel `0x0000` from 106-11 onward; channel 0 content is Format 1 only for 106-13/15 and Format 1 or 4 for 106-17 onward. Unavailable scope/evidence SHALL remain unavailable, never clean conformance.
 
-**Rationale**: "It is not permissible to have both ASCII and XML Chapter 9 TMATS attributes in the same session"; "Prior to the new setup record being committed to the stream, a setup record configuration change event packet shall be inserted" (Chapter 11 §11.2.7.2); channel `0x0000` carries setup records "as of 106-17" (§11.2.1.1 b) (team review T3; ADR-0025). Delivered in 0.1.
+**Rationale**: "It is not permissible to have both ASCII and XML Chapter 9 TMATS attributes in the same session"; "Prior to the new setup record being committed to the stream, a setup record configuration change event packet shall be inserted" (Chapter 11 §11.2.7.2); Setup-only-on-0 starts in archived 106-11 Ch10 §10.6.1.1 b p. 10-30; 106-13/15 restrict channel-0 content to Format 1 (Ch10 §10.6.1.1 b), and 106-17+ permits Format 1/4 (Ch11 §11.2.1.1 b). Owner decisions Q16/17, 2026-11-28, ADR-0038; [fingerprinted per-edition source review](research/2026-11-27-argument-contract-and-session-scope.md). Core owns packet admission/routing; tmats consumes evidence without a second threshold implementation. Delivered in 0.1.
 
 **Verification Method**: Test (T)
 
@@ -794,6 +794,14 @@ requirements are added. The requirement entries below and the generated
 **Rationale**: The owner requires "maximum performance" and efficiency; a numeric budget is set after the first measurement rather than guessed (ADR-0021). The draft ecosystem L1 of the retired `irig106-rust` asked for "minimum 100 Mbps sustained" reading and writing (REQ-L1-102); the first measurement is compared with that figure. Applies from 0.1.
 
 **Verification Method**: Inspection (I)
+
+### L1-PERF-002
+
+**Statement**: The tmats host SHALL perform zero per-packet allocations in steady state while consuming non-setup packets, with initialization/setup processing and rendering measured separately rather than hidden in that scope.
+
+**Rationale**: Owner Q9, 2026-11-28 (ADR-0038), adopts the core L2-HOT-008 rule for tmats' host boundary without introducing a second reader. Applies from 0.1.
+
+**Verification Method**: Test (T)
 
 ---
 

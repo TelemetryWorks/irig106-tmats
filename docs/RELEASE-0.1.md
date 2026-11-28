@@ -317,7 +317,7 @@ An open run may expose PROVISIONAL boundary evidence, never a joining stop.
 Joey signed explicit versioned provisional snapshots with invalidation and
 no automatic governance on 2026-11-28 (INT-034), alongside INT-028/031's
 closure/takeover and per-query ambiguity-only access rules. Cut text stays
-unusable. Remaining independent final checks, source/development/tests and
+unusable. Final rule checks CONCUR at #87 e0a0cce; source/development/tests and
 padding-only/leading-damage precedence are separate gates.
 Per-channel open-run state needs an explicit finite aggregate memory budget
 and typed limit error, never silent dropping; numeric policy, full accounting
@@ -462,8 +462,8 @@ last step. Refusal to stamp ambiguous input is not refusal to allow its repair.
 F7 decides the uncertainty behavior, not the actual event identity. The latter
 still needs verified evidence before the event-presence check is implementable.
 These approvals do not mark requirements implemented or development evidence complete.
-F2/F3 are owner-signed (Joey, 2026-11-28); remaining independent final
-checks and development/source/tests still gate their implementation.
+F2/F3 are owner-signed (Joey, 2026-11-28); final rule checks CONCUR at #87 e0a0cce; development/source/tests
+still gate implementation.
 
 ## Normalization policy boundary
 
@@ -478,7 +478,7 @@ analysis/review and executable oracles remain implementation prerequisites.
 INT-061/062/063 A and INT-022–029/031–034 sign-offs are recorded in the
 [verbatim owner record](research/2026-11-28-interpretation-owner-signoffs.md).
 INT-034 padding-only/leading-damage precedence and report formats stay open.
-Owner approval alone is not remaining independent review or passing tests.
+Final rule checks CONCUR at #87 e0a0cce; analysis review and tests remain.
 
 ## Decomposition/readiness audit
 
@@ -492,7 +492,8 @@ policy or source gates remain explicit; no scope is silently removed.
 Documentation linkage and green prototype CI are not implementation evidence.
 The owner extract decisions are already made and are recorded in
 [ADR-0037](adr/0037-extract-destination-and-findings-policy.md), not a new
-owner-decision gate; strict on unlisted findings remains pending.
+owner-decision gate; owner Q18 now selects strict refusal for listed
+bad-data kinds/class, not informational notes (ADR-0038).
 
 ## Delivery and release gates
 
@@ -519,3 +520,18 @@ publisher-registration verification and release execution are later work.
 Every PR is handed to the independent reviewer with its exact commit head
 before the owner merges. Changed heads require fresh review; no admin bypass,
 force push or tool-attribution trailers.
+
+## Remaining owner policy decisions — 2026-11-28
+
+ADR-0038 records one-whole-part/index wildcard syntax and registry-only
+pattern scope with ANY-name raw exact lookup; zero per-packet steady-state
+non-setup host allocation; first-fragment order; original bbaggerman reference
+at the [recorded exact pin](research/2026-11-28-owner-policy-signoffs.md#flex-qualification-pin);
+archived L1 channel wording and Complete-only mixture; strict bad-data-class
+refusal; capped retained pool credits with typed run failure/reader progress;
+explicit '-' stdin only; and dropping Criterion for ignored CI benchmarks.
+These choices unblock dependent fixture expectations, not source/API proof,
+reference vectors, development analyses/reviews or executable acceptance.
+Std A is owner-decided and recorded separately through #59/ADR-0015.
+Only INT-034 padding-only/leading-damage precedence and report formats
+remain owner-open; no release, dependency install or publication occurs here.
