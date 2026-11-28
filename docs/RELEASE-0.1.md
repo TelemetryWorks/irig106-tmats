@@ -477,7 +477,8 @@ analysis/review and executable oracles remain implementation prerequisites.
 
 INT-061/062/063 A and INT-022–029/031–034 sign-offs are recorded in the
 [verbatim owner record](research/2026-11-28-interpretation-owner-signoffs.md).
-INT-034 padding-only/leading-damage precedence and report formats stay open.
+Q25 A precedence is recorded separately under INT-034; Q26 A report/show
+policy is owner-signed in ADR-0039, with implementation/evidence still required.
 Final rule checks CONCUR at #87 e0a0cce; analysis review and tests remain.
 
 ## Decomposition/readiness audit
@@ -487,8 +488,8 @@ rechecks the scoped primary links and remaining partial contracts. The
 identified unheld decomposition queue is exhausted; family two is still
 incomplete and family three is not authorized. The [earlier audit](research/2026-11-27-family2-coverage-audit.md)
 is a dated snapshot; its missing lookup-state finding and batch estimate are
-historical. Held build/report work and normalization/flex/assembly/resource
-policy or source gates remain explicit; no scope is silently removed.
+historical. Build/report implementation and normalization/flex/assembly/resource
+design or source gates remain explicit; no scope is silently removed.
 Documentation linkage and green prototype CI are not implementation evidence.
 The owner extract decisions are already made and are recorded in
 [ADR-0037](adr/0037-extract-destination-and-findings-policy.md), not a new
@@ -533,8 +534,8 @@ explicit '-' stdin only; and dropping Criterion for ignored CI benchmarks.
 These choices unblock dependent fixture expectations, not source/API proof,
 reference vectors, development analyses/reviews or executable acceptance.
 Std A is owner-decided and recorded separately through #59/ADR-0015.
-Only INT-034 padding-only/leading-damage precedence and report formats
-remain owner-open; no release, dependency install or publication occurs here.
+Q25 A precedence is recorded separately, and Q26 A selects report/show
+policy through ADR-0039; no release, dependency install or publication occurs here.
 
 ## std feature decision — 2026-11-28
 
@@ -545,3 +546,15 @@ L3-REL-002–008 require separate actual MSRV/WASM/platform/consumer evidence;
 std-disabled is not a supported build. No manifest/workflow or release action
 is performed here. Published types/core 0.2 APIs and crates.io-only release
 evidence remain prerequisites; a prepublication CI override does not satisfy them.
+
+## Q26 A report/show decision — 2026-11-28
+
+ADR-0039 records Joey's choice verbatim and pins irigtime's --format text|json
+spelling. CLI-002/006 and 0.1 raw/tree/R-channel show are unblocked for reviewed
+development: text default; JSON on request; result stdout/operational stderr;
+minimum versioned schema preserving finding identity, availability, qualifiers,
+assumption/default/fallback, caller level and Quiet's suppression count (zero
+included); additive minor/breaking major; exit 0–4 and complete JSON on 0/1,
+with discarded output on 4. No new threshold, alias, wire artifact or expanded
+0.2 resolved view is introduced by recording the policy. Schema/renderers,
+source/analysis review and executable acceptance remain implementation work.

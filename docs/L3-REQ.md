@@ -2847,7 +2847,7 @@ Equal source/vendor labels do not erase their contributing occurrences.
 Joey selected INT-063 A on 2026-11-28: observed namespaces remain, with
 unconfirmed attribution unless one usable VN agrees. B/C remain unselected
 alternatives. All original field/record evidence stays; final rule check CONCURS at #87 e0a0cce; development gates and the
-report-format hold are not waived.
+Q26 report/schema implementation gates are not waived.
 
 **L3-EXT-015** · Parent: L2-EXT-003 · Verification: T
 *Unknown private V suffix/value content SHALL remain attached to its observed raw namespace without synthesized members, inferred counters/defaults, value repair or source rewriting; successful grouping SHALL NOT claim the private meaning was decoded, while unavailable structural decomposition SHALL remain observable with raw evidence retained.*
@@ -3089,7 +3089,7 @@ Existing library contracts provide digest/exclusion/transaction semantics;
 these command children preserve them without a second implementation.
 Owner-signed INT-031 gates incomplete/ambiguous record access. Tests of refused
 outcomes may inject library results; they do not bypass the access gate.
-Public report formats, exit mappings and selection defaults remain held.
+Owner Q26/ADR-0039 now supplies report formats and exit mapping; selection defaults and implementation readiness remain separate.
 
 **L3-CLI-045** · Parent: L2-CLI-012 · Verification: T
 *Checksum/verify command computation SHALL use the explicitly supplied scoped document/revision and operation, preserving their association with the library result and findings; a different record, earlier revision or concatenation of records SHALL not silently replace that input.*
@@ -3347,7 +3347,7 @@ A separately observed format conflict does not erase or repair core findings.
 Tests may supply already evaluated triggers/context; that does not qualify a
 missing aggregation or prior-ordering rule. Keep F7 identification, source
 freshness, development analysis and executable verification gates explicit.
-No public report format, severity mapping or output schema is selected.
+Owner Q26/ADR-0039 supplies report policy; this parser slice adds no new severity/check threshold or concrete schema artifact.
 
 
 ## Argument-parser mechanism acceptance (family 2, batch 39)
@@ -3432,7 +3432,7 @@ This is extraction-only raw delivery, not a positive checksum, semantic
 access or governing verdict. No second reader, guessed byte extent, data
 repair, UTF conversion or source-byte fabrication is authorized. Absent selection or an unavailable raw extent (not a retained cut prefix)
 and sink/limit failures remain operational failures rather
-than findings-based always-refuse exceptions. No report format is selected.
+than findings-based always-refuse exceptions. Report formatting follows owner Q26/ADR-0039; this extraction rule adds no new representation.
 
 Remaining design/review work: Q18's class has no defined members beyond the
 six listed kinds yet. Add an explicit reviewed membership mapping and named
@@ -3505,7 +3505,8 @@ association_evidenced nor a positive SHA/packet-integrity/governing verdict.
 Actual Table 9-4 field fixtures keep their citations and reviewed definitions.
 Synthetic damaged/availability cases assert evidence boundaries, not invented
 conforming codes. Tests use internal states and supplied condition evidence;
-public query syntax, report rendering and stable Rust symbols remain held.
+Q26 now selects report policy; reviewed query request tables, concrete
+renderers and stable Rust symbols remain development work.
 
 
 ## Normalization transform acceptance (family 2, batch 41)
@@ -3729,5 +3730,90 @@ predicate or extend extract's policy to stamp.
 Bounded synthetic composition fixtures test boundary mechanics. Actual text
 and core-backed recording command paths need their own executable evidence
 once implemented, using existing source-cited fixtures. Flex qualification,
-std/consumer checks, report formats, strict scope and general record access
-retain their gates. No new dependency or local heavy check is authorized.
+std/consumer checks, concrete report/schema acceptance, reviewed strict
+class membership and general record access retain their development gates;
+Q26 removes the report-format owner hold. No new dependency or local heavy check is authorized.
+
+## Owner Q26 report/show acceptance — 2026-11-28
+
+These derive CLI-002/006 through L2-CLI-018–021 from owner Q26/ADR-0039.
+The format-choice hold is removed; schema/model/renderer implementations,
+source/analysis readiness and executable verification remain work to do.
+No wire schema, flag alias, threshold or new relationship is fabricated here.
+
+**L3-CLI-068** · Parent: L2-CLI-018 · Verification: T
+*Raw show SHALL deliver the selected source bytes unchanged, including controls, high bytes, BOMs, unknown/malformed/duplicate content and source layout, without writing semantic projections or report labels into that payload; raw/extract byte contracts SHALL not be silently replaced with a JSON/text encoding by a report-format option.*
+
+A raw result is not a clean interpreted record. Return its findings and
+qualifications through the existing computation/observation contract; review
+mode/format applicability explicitly, never ignore a conflicting request.
+
+**L3-CLI-069** · Parent: L2-CLI-018 · Verification: T
+*Tree show SHALL use reviewed structural group/path/occurrence metadata and source item identities, retain every occurrence and unknown/opaque content, and expose unavailable grouping/links without inventing private grammar, zero indices, missing originals or a resolved cross-group relationship; rendering SHALL not change raw replay or coalesce equal nodes.*
+
+Grouping is not the deferred resolved-link graph. Source/candidate ordering
+and evidence remain independently traceable; an unavailable binding is not
+an empty conforming tree or permission to discard a branch.
+
+**L3-CLI-070** · Parent: L2-CLI-018 · Verification: T
+*Channel-summary show SHALL retain each reviewed R-entry identity and available ID/CDT/CHE/DSI/time-view states with raw locations and qualifications, keep missing/Invalid/Ambiguous/unavailable distinct and show disabled TIMEIN as context rather than silently filter it; DSI/TSRC/order/sole-candidate observations SHALL NOT become a clock association, and rendering SHALL NOT upgrade record or field usability.*
+
+Existing INT-031/048 and time-view access/assumption rules remain. A rendered
+record can be diagnostic inventory without authority to use/govern; the later
+resolved relationships and full configuration timeline are not brought forward.
+
+**L3-CLI-071** · Parent: L2-CLI-019 · Verification: T
+*The report request table SHALL select text when format is omitted, JSON for --format json and text for --format text, preserving irigtime's existing spelling and values; unsupported format requests SHALL follow the reviewed usage-refusal path before execution rather than invent --json, silently ignore the request or reinterpret a byte-exact mode.*
+
+ADR-0039 pins the actual peer parser. This chooses no additional command,
+selector, escaping or repetition grammar beyond the owner-approved spelling.
+
+**L3-CLI-072** · Parent: L2-CLI-019 · Verification: T
+*Text and JSON SHALL render the same supplied command results, findings, locations and qualifications without rerunning parsing/interpretation or selecting different candidates; results SHALL be written only to the selected result sink/stdout, and operational diagnostics to stderr, without plaintext/progress/diagnostic interleaving corrupting JSON or raw payload bytes.*
+
+Text needs readable evidence/labels; JSON needs the schema's machine facts.
+This is representation parity, not identical layout. Existing -o and writer
+contracts still apply; renderer success is not source conformance or delivery.
+
+**L3-CLI-073** · Parent: L2-CLI-020 · Verification: T
+*The published schema SHALL identify its schema_version and define field types/meaning for stable finding code, severity and source location, explicit unavailable reasons and record qualification including retained cut; output SHALL preserve applicable existing machine obligations such as ambiguous_g106 and numeric candidates rather than serialize Rust Debug strings, fabricate a known location/code or replace unavailable data with zero/false/empty success.*
+
+The schema is CLI-owned and independently versioned. Concrete artifact and
+catalogue definitions need review; source definitions and library result
+shapes are not automatically a wire schema. Unassigned membership/codes must
+remain a readiness gap, not a fabricated catalogue identity.
+
+**L3-CLI-074** · Parent: L2-CLI-020 · Verification: T
+*Both representations SHALL distinguish caller assumption, explicit value, cited default and labelled fallback/basis, retain the caller-choice level, and carry every Quiet result's suppressed: N bad-data findings marker including N=0; Quiet SHALL suppress exactly the bad-data findings Warn would attach at any severity while leaving target field states/source diagnostics readable and never making suppressed or assumed data look clean/declared.*
+
+INT-056's exact suppression semantics are already signed. Machine output
+must carry the count/choice/assumption facts; readable text must show the
+required marker. Neither representation supplies an implicit next-query choice.
+
+**L3-CLI-075** · Parent: L2-CLI-020 · Verification: T
+*Schema acceptance SHALL compare each candidate contract with its reviewed predecessor: additive compatible changes SHALL increment the minor version and incompatible shape/type/meaning changes the major; producer output and published schema/version SHALL agree, and a crate version or the peer's schema_revision alone SHALL NOT substitute for TMATS' major/minor policy.*
+
+Keep earlier schema identities/content available and document compatibility.
+The existing breaking-release/lockstep policy is not weakened. This plans no
+tag, publication, initial wire-version encoding or unreviewed schema artifact.
+
+**L3-CLI-076** · Parent: L2-CLI-021 · Verification: T
+*Runner and direct command/render paths SHALL preserve the reviewed outcome and return 0 success, 1 failed check, 2 usage, 3 input or 4 output as applicable, with main alone translating the returned class to process exit; switching text/JSON SHALL NOT change the command's check criterion or make the mounted host terminate.*
+
+Use the supplied typed command outcome, not a new severity/default-threshold
+rule. Usage/input/output classes remain distinct; no --fail-on spelling or
+new simultaneous-failure precedence is selected by this format decision.
+
+**L3-CLI-077** · Parent: L2-CLI-021 · Verification: T
+*JSON delivered with exit class 0 or 1 SHALL be a complete schema-conforming report, retaining findings/qualifications even on a failed check; writer/flush failure SHALL produce class 4 and make the output unusable/discarded, even if the bytes look complete, without claiming completed delivery or rolling back an arbitrary sink.*
+
+Caller/consumer documentation must say to discard output on 4. This does not
+promise atomic stdout, force a temp-file policy or authorize buffering outside
+existing resource bounds. The report choice adds no whole-file retention rule.
+
+**L3-CLI-078** · Parent: L2-CLI-020 · Verification: T
+*Acceptance SHALL use independently specified source/model facts, exact raw-byte oracles, text expectations, parsed JSON/schema validation and invalid-version/field mutations to verify raw/tree/channel views, unavailable/qualified data, every caller level/Quiet count, all five exit classes and writer failures; two renderers agreeing with each other or a production-generated golden SHALL NOT supply their own oracle.*
+
+Fixtures stay synthetic/bounded in CI; no new project dependency is approved.
+A schema artefact/golden alone is not executed acceptance or a claim that
+unimplemented report/show behavior exists. Preserve source IDs and byte spans.

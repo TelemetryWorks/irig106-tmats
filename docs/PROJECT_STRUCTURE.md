@@ -35,7 +35,7 @@ irig106-tmats/
 │   ├── RELEASE-0.1.md         Full 0.1 scope, bounded time-view/API contract, uncertainty and review gates
 │   ├── ROADMAP.md             Forward-looking plan, decisions to record, releases, deferred features
 │   ├── USE-CASES.md           Actors, library boundary, use cases UC-01..UC-17 (design draft)
-│   ├── CLI.md                 `tmats` command design: commands, decided behaviour, open decisions (draft)
+│   ├── CLI.md                 `tmats` command design; Q26 text/JSON contract in ADR-0039
 │   ├── TEST-DATA.md           Real data and test oracles (local-only policy); reference-tool defects
 │   ├── TMATS-IN-CHAPTER-10.md What TMATS gives Chapter 10 processing and each consumer (follow-up F4;
 │                              written a section at a time)
