@@ -654,7 +654,7 @@ so checksum verification is indeterminate rather than guessing the exclusion.
 
 **Test**: `g_sha_code_name_in_any_case_and_not_in_values`, `projected_sha_name_excludes_raw_span`, `missing_previous_semicolon_does_not_create_sha`, `x_and_comment_sha_text_is_not_item`, `leading_bom_blocks_sha_verification` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Reconfirmation and AI-check reference**: [combined owner approval record](research/2026-11-23-int021-int030-owner-signoff.md); the register review at main `30e42a3eac791f2f794e5fe239c59590eb6682b8` is the AI-check reference. Analysis and executable tests remain outstanding.
 
@@ -692,7 +692,7 @@ one to report successful verification. Suggested repairs remain unapplied.
 
 **Test**: `unterminated_g_sha_is_malformed`, `eof_sha_refuses_authoritative_compute`, `mid_document_missing_terminator_fails_value_shape`, `truncated_setup_is_not_authoritative_checksum`, `malformed_sha_keeps_duplicate_finding`, `complete_bad_digest_value_allows_compute`, `defined_exclusion_with_unusable_value_still_computes` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Reconfirmation and AI-check reference**: [combined owner approval record](research/2026-11-23-int021-int030-owner-signoff.md); the register review at main `30e42a3eac791f2f794e5fe239c59590eb6682b8` is the AI-check reference. Analysis and executable tests remain outstanding.
 
@@ -731,7 +731,7 @@ reviewer. No claim of reproducing that printed digest is made here.
 
 **Test**: `upper_case_g_sha_matches_with_warning`, `checksum_value_controls_keep_omission_information`, `checksum_value_blanks_are_unavailable`, `sha_zero_placeholder_is_unverified`, `checksum_fixture_uses_independent_digest` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Reconfirmation and AI-check reference**: [combined owner approval record](research/2026-11-23-int021-int030-owner-signoff.md); the register review at main `30e42a3eac791f2f794e5fe239c59590eb6682b8` is the AI-check reference. Analysis and executable tests remain outstanding.
 
@@ -768,7 +768,7 @@ last step of that transaction, never run over the still-ambiguous input.
 
 **Test**: `duplicate_g_sha_items`, `damaged_sha_name_is_indeterminate`, `exact_duplicate_removal_precedes_stamping` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Sign-off and AI-check reference**: [owner approval record](research/2026-11-23-int021-int030-owner-signoff.md); independent AI concurrence is tied to PR #30 head `13173b04faac989fa581b8e9ebbd0df6c80d6b98`, not claimed for later amended wording. Approval is not implementation or completed development evidence.
 
@@ -1807,7 +1807,7 @@ verification status (L3-SUM-002). No source bytes are repaired or dropped.
 
 **Test**: `zero_padded_sha_algorithm_requires_decision`, `sha_designator_edge_classification`, `sha_stamp_uses_canonical_designator`, `sha_algorithm_identity_uses_canonical_string`, `noncanonical_sha_designator_always_warns`, `other_numeric_sha_designators_stay_unsupported`, `noncanonical_designator_warns_when_verification_blocked` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 **Draft analysis**: [source, alternatives and independent fixture oracle](research/2026-11-23-checksum-followups-draft.md)
 

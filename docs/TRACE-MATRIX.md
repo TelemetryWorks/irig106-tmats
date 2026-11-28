@@ -446,10 +446,10 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-015 | `G\106` year-format wording appears by 106-15 | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-016 | What the setup record's version byte declares, and when it did not exist | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-017 | The fallback edition taken from RCCVER | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
-| INT-018 | `G\SHA` is recognised in any letter case, and never inside a value | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26) | not yet written | _(none)_ |
-| INT-019 | A `G\SHA` item with no following semicolon | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26) | not yet written | _(none)_ |
-| INT-020 | Upper-case hexadecimal in a `G\SHA` value | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26) | not yet written | _(none)_ |
-| INT-021 | Two or more `G\SHA` items in one document | approved (Joey, owner sign-off, 2026-11-23; F1 originally coordinator-decided 2026-11-21) | not yet written | _(none)_ |
+| INT-018 | `G\SHA` is recognised in any letter case, and never inside a value | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26) | [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-019 | A `G\SHA` item with no following semicolon | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26) | [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-020 | Upper-case hexadecimal in a `G\SHA` value | approved (Joey, reconfirmed 2026-11-23; originally owner-accepted 2026-09-26) | [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-021 | Two or more `G\SHA` items in one document | approved (Joey, owner sign-off, 2026-11-23; F1 originally coordinator-decided 2026-11-21) | [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-022 | Removing an attribute that X extensions point to | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
 | INT-023 | `=` typed where `:` belongs, as in Chapter 6's own example | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
 | INT-024 | Which packet data types a channel may carry | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
@@ -470,7 +470,7 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-040 | Count structurally identified entries independently of value validity | approved (Joey, owner sign-off, 2026-11-22) | [written development analysis](research/2026-11-28-index-duplicate-counter-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-041 | Unavailable interpretation is not proof of missing or invalid field data | approved (Joey, owner sign-off, 2026-11-23) | [written development analysis](research/2026-11-28-effective-presence-basis-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-042 | A reviewed is-specified predicate tests actual presence, not value usability | approved (Joey, owner sign-off, 2026-11-23) | [written development analysis](research/2026-11-28-effective-presence-basis-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
-| INT-043 | Leading-zero algorithm 2 designators are accepted with a warning | approved (Joey, Option B, 2026-11-23) | not yet written | _(none)_ |
+| INT-043 | Leading-zero algorithm 2 designators are accepted with a warning | approved (Joey, Option B, 2026-11-23) | [written development analysis](research/2026-11-28-checksum-domain-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-044 | Duplicate G\106 retains ambiguity with an explicitly labelled fallback basis | approved (Joey, Option B, 2026-11-23) | [written development analysis](research/2026-11-28-effective-presence-basis-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-045 | Layered time-packet closure for initial setup and SRCC=1 updates | approved (Joey, initial A and guarded mid-session extension, 2026-11-23) | not yet written | _(none)_ |
 | INT-046 | Bounded byte-identity exception retains the premature-seal finding (QI) | approved (Joey, owner sign-off 2026-11-25; independent AI CONCUR at 73396bc) | not yet written | _(none)_ |
@@ -495,7 +495,7 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-065 | Scope of line-ending normalization | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
 | INT-066 | Preconditions for explicit counter recomputation | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
 
-* Entries without a written analysis: **57** of 66
+* Entries without a written analysis: **52** of 66
 * Entries without a test: **66** of 66
 * Entries missing the development mark: **0**
 

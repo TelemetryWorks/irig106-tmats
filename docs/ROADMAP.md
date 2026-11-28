@@ -95,10 +95,12 @@ Verify source freshness and independent interpretation review, actual borrowed
 ownership/dependency APIs and development evidence where required. Component
 contracts or synthetic adapters do not prove real text/recording integration,
 a complete accounting model, qualified flex vectors or release compatibility.
-The maintainer must do the historical Chapter 10/11 CSDW-layout source review,
-approved-INT development analyses and Appendix 9-C vocabulary inventory after
-the reassessment PR merges, one PR per item. The reviewer owns outstanding
-legacy independent checks; the normalization-order recheck CONCUR is
+Historical Chapter 10/11 CSDW layout and Appendix 9-C vocabulary research
+notes are now present; retain their source/coverage limits. Continue approved-INT
+development analyses in related groups with independent exact-head review.
+The [checksum-domain analysis](research/2026-11-28-checksum-domain-development-analysis.md)
+adds the next group without completing other analyses or executable evidence.
+Legacy independent checks are recorded; the normalization-order recheck CONCUR is
 recorded with the 2026-11-28 owner A+D choice;
 the coordinator and core maintainer own types/core publication with owner
 go-ahead. The owner decides decision items only; source/analysis work must
@@ -268,8 +270,9 @@ membership. This is unfinished derivation, not a new owner-choice hold.
 
 Review executable byte, qualification, identity/race and destination tests
 before implementation; owner policy is not completed evidence. --force and
---strict spellings are decided; the rest of argument grammar and report
-format remain held. Raw extraction is not semantic or governing use and does
+--strict spellings are decided; remaining argument forms need their reviewed
+request table. Q26/ADR-0039 supplies report policy; concrete schema/rendering
+work and the encoding addendum’s provenance label remain separate. Raw extraction is not semantic or governing use and does
 not settle owner-signed INT-031. Other commands' destination policy is not
 silently approved. No new atomic replacement/durability promise is made.
 
