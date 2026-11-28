@@ -442,7 +442,8 @@ required. Input owners keep borrowed blocks alive through use.
   other-channel packets provenance/information only, never a stop condition;
   a same-channel intervening packet stops that channel's joining. Retain
   each run's START reason alongside its stop evidence for leading-truncation
-  review. Channel-0 conformance from 106-17 is separate from joining. Each
+  review. Core-owned channel-0 conformance (setup only on 0 from 106-11, with
+  later channel-0 content restrictions) is separate from joining; owner Q16. Each
   joined run is then **complete**, **incomplete**, or **ambiguous**, with the
   evidence that decided it — the body's final byte, gaps, CSDW changes,
   repeated single-entry attributes (ADR-0031, INT-034). Only complete records

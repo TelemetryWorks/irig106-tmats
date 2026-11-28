@@ -492,7 +492,8 @@ policy or source gates remain explicit; no scope is silently removed.
 Documentation linkage and green prototype CI are not implementation evidence.
 The owner extract decisions are already made and are recorded in
 [ADR-0037](adr/0037-extract-destination-and-findings-policy.md), not a new
-owner-decision gate; strict on unlisted findings remains pending.
+owner-decision gate; owner Q18 now selects strict refusal for listed
+bad-data kinds/class, not informational notes (ADR-0038).
 
 ## Delivery and release gates
 
@@ -519,3 +520,18 @@ publisher-registration verification and release execution are later work.
 Every PR is handed to the independent reviewer with its exact commit head
 before the owner merges. Changed heads require fresh review; no admin bypass,
 force push or tool-attribution trailers.
+
+## Remaining owner policy decisions — 2026-11-28
+
+ADR-0038 records one-whole-part/index wildcard syntax and registry-only
+pattern scope with ANY-name raw exact lookup; zero per-packet steady-state
+non-setup host allocation; first-fragment order; original bbaggerman reference
+at the [recorded exact pin](research/2026-11-28-owner-policy-signoffs.md#flex-qualification-pin);
+archived L1 channel wording and Complete-only mixture; strict bad-data-class
+refusal; capped retained pool credits with typed run failure/reader progress;
+explicit '-' stdin only; and dropping Criterion for ignored CI benchmarks.
+These choices unblock dependent fixture expectations, not source/API proof,
+reference vectors, development analyses/reviews or executable acceptance.
+Std A is owner-decided and recorded separately through #59/ADR-0015.
+Only INT-034 padding-only/leading-damage precedence and report formats
+remain owner-open; no release, dependency install or publication occurs here.

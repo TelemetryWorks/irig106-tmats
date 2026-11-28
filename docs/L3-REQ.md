@@ -2290,7 +2290,7 @@ mechanical byte extraction from pending record-selection and output policies.
 unrelated files and unproven regular-file identity unless --force; stdout and
 pipes are allowed. Findings do not block byte-exact extraction by default,
 with every finding reported. --strict refuses the listed bad-data kinds;
-listed-kinds-only versus any-finding scope is now PENDING OWNER. This does not
+scope is owner Q18: listed bad-data kinds/class, not informational notes. This does not
 reopen overwrite/identity policy or default byte preservation. These remove the
 three #57 owner holds, not source/development/test or independent review.
 Other argument grammar stays on hold. L3-CLI-052–057 came from merged #72;
@@ -2310,8 +2310,8 @@ packet boundaries or repeat CSDW removal once per physical span.
 ADR-0002/0003 and L3-WRT-004–010 govern replay. ADR-0037 permits default
 raw extraction under findings, including cut/ambiguous/marker/Invalid cases;
 this is not semantic or governing usability. Report every finding without
-changing bytes; --strict's additional-finding scope remains PENDING OWNER.
-The listed bad-data refusal cases are common to both options. Controls omitted from views,
+changing bytes; owner Q18 limits strict refusal to the listed bad-data
+kinds/class, never informational notes alone. Controls omitted from views,
 numeric Invalid verdicts and a detected BOM never authorize source changes.
 
 **L3-CLI-032** · Parent: L2-CLI-008 · Verification: T
@@ -2384,9 +2384,9 @@ pattern and explicit bound/unbound index positions. The [batch note](research/20
 separates this semantic contract from query spelling, interpretation review
 and unavailable/related-damage evidence. All new cases are planned.
 
-**Owner decisions PENDING; implementation blocked**: the 0.1 pattern scope
-(reviewed registry patterns only is a proposal, not an approved restriction)
-and public query syntax, including wildcards/escaping.
+Owner Q4/5 (2026-11-28, ADR-0038) selects one-whole-part/index * and
+reviewed-registry-only wildcard scope; exact literal raw lookup supports
+ANY name including vendor/unknown. No partial wildcard or regex in 0.1.
 
 **L3-VIEW-058** · Parent: L2-VIEW-015 · Verification: T
 *Pattern lookup SHALL require a complete match of the supplied reviewed pattern's group, literal path components and number/positions of indices; literal path parts SHALL compare ASCII case-insensitively under Chapter 9 section 9.4.2 p. 9-2, without locale/Unicode folding or high-byte folding; unbound index positions SHALL range over present complete keys, not arbitrary path suffixes, value text, another group or another literal component.*
@@ -2453,6 +2453,15 @@ Vary supplied bindings, source order, duplicates, spelling and fragment
 partitions in bounded CI. Assert source bytes unchanged. Expected sets/order
 must come from the fixture's independently listed items, not reusing query
 code or guessing standard definitions from the prototype.
+
+
+**L3-VIEW-071** · Parent: L2-VIEW-015 · Verification: T
+*In 0.1, each pattern '*' SHALL occupy and match exactly one whole name part or index, as in R-*\TK1-*, with no partial wildcard or regex; wildcard matching SHALL use only reviewed registry patterns, while exact literal raw lookup SHALL remain available for any retained name including vendor/unknown names without requiring a registry value definition or guessing private index grammar.*
+
+Owner Q4/5, 2026-11-28 (ADR-0038), not an IRIG wildcard rule. Pattern
+matching keeps the existing case/projection/index and record-access gates;
+raw access is not semantic availability. No other query/CLI escape syntax
+or private-code interpretation is implied.
 
 
 ## Library lint and line-coverage acceptance (family 2, batch 28)
@@ -2527,10 +2536,9 @@ These are future inspection obligations. No Evidence line or executable
 benchmark coverage is claimed. See the [batch note](research/2026-11-27-performance-evidence-requirements.md)
 for source inspection, independent expected-work oracles and pending budgets.
 
-**PENDING OWNER**: whether the tmats host must also perform zero per-packet
-allocation in steady state for non-setup packets, analogous to core
-L2-HOT-008. No such host allocation threshold is approved here. Retaining
-the prototype Criterion dev dependency also requires owner approval.
+Owner Q9/24 (2026-11-28, ADR-0038) requires zero per-packet steady-state
+non-setup host allocation and drops Criterion. Informational ignored tests
+run in CI with no new dependency; prototype removal is restructure work.
 
 **L3-PERF-001** · Parent: L2-PERF-001 · Verification: I
 *Before accepting a benchmark result, verification SHALL compare its consumed source extent and applicable item/fragment/run/record inventory with independently specified fixture expectations, preserving source bytes and qualification evidence rather than accepting timing alone or deriving the oracle through the production parser/assembler.*
@@ -2598,6 +2606,15 @@ L1-PERF-001 mentions the retired ecosystem draft's 100 Mbps sustained figure
 for first-measurement comparison; it is not a newly approved floor here.
 ADR-0021's overall proposal remains proposed. Held std, pattern, extraction,
 record-access/governance and report-format decisions remain unresolved.
+
+
+**L3-PERF-009** · Parent: L2-PERF-003 · Verification: T
+*Steady-state standalone and mounted non-setup host tests SHALL use an untimed allocation counter after initialization/warm-up, independently count all consumed packets/observations and assert zero per-packet allocations across a bounded sustained run including pool/refill/bookkeeping paths; setup and rendering measurements SHALL remain separately identified, not excluded selectively to hide steady-state work.*
+
+Owner Q9 (ADR-0038); core stays the sole reader/host dispatcher seam.
+Run instrumentation outside benchmark timing. A synthetic adapter alone or
+zero allocations in only the parser is not host-path acceptance. Criterion
+is dropped; use informational ignored CI benchmark tests, no new dependency.
 
 
 ## X attachment and evidence boundaries (family 2, batch 30)
@@ -2809,8 +2826,8 @@ No exception, licence list or registry allowance is added here.
 
 The current deny.toml comments explicitly require removing those ignores
 with the retired code. This is future restructure acceptance, not an edit
-of the policy file now. Criterion retention and any dev dependency still
-need owner approval under the carried instructions.
+of the policy file now. Criterion retention is rejected by owner Q24; no new dev dependency
+is approved.
 
 **L3-REL-012** · Parent: L2-REL-006 · Verification: I
 *Release-artifact acceptance SHALL identify the reviewed source/tag/version and actual bytes/digests of every .crate, binary archive and SBOM; one SHA256SUMS and one irig106-tmats-<version>.intoto.jsonl bundle SHALL cover the signed files in the single GitHub release, with target/build identity for binaries and no substitution by filename or another build's evidence.*
@@ -3202,7 +3219,7 @@ are not read merely to obtain metadata. See the [source/gap note](research/2026-
 Final admission, access and governing qualifications remain unchanged.
 
 **L3-CH10-022** · Parent: L2-CH10-008 · Verification: T
-*Session-format checking SHALL retain each supplied readable FRMT observation with its setup/candidate qualification, fragment, source position and explicit session scope/provenance; formal coexistence-finding eligibility SHALL remain BLOCKED on the owner scope decision, recommended Complete-only A versus broader non-Complete B, with neither silently selected.*
+*Session-format checking SHALL retain each supplied readable FRMT observation with its setup/candidate qualification, fragment, source position and explicit session scope/provenance; formal coexistence findings SHALL use only Complete records, keeping non-Complete FRMT as qualified evidence without that finding (owner Q17, 2026-11-28).*
 
 Source: Figure 11-34, 106-24R1 section 11.2.7.2 p. 11-50. Preserve all
 contributing occurrences; multiple fragments are not silently summarized
@@ -3210,14 +3227,14 @@ as one chosen format. Caller-asserted session labels retain that basis and
 never become evidence that recorder control commands were observed. Treating an
 entire recording as one session requires explicit labelled caller assertion
 or supplied session evidence; without either, report unavailable scope,
-not no mixture. Recommended A keeps non-Complete FRMT as qualified evidence
-without a formal finding; B broadens eligibility and remains unapproved.
+not no mixture. Owner-selected A keeps non-Complete FRMT as qualified evidence
+without a formal finding; broader B is not selected.
 
 **L3-CH10-023** · Parent: L2-CH10-008 · Verification: T
 *Format-check results SHALL distinguish established coexistence, no observed coexistence within the supplied known extent and unavailable scope/format evidence, retaining incomplete coverage and all supplied trust/record qualifications; XML unsupported for text parsing SHALL not erase its decoded FRMT evidence or make the whole check pass.*
 
 Observed format coexistence and eligibility to issue the formal finding are
-separate; the owner-pending scope gate is not bypassed by this result contract.
+separate; owner-selected Complete-only eligibility is not bypassed by this contract.
 No observed mixture is not proof about unvisited input, and an unknown FRMT
 is not ASCII by default. FRMT disagreements within a candidate remain located
 evidence; this check never resolves its boundary or promotes its completeness.
@@ -3245,8 +3262,9 @@ bytes; approved retransmission rules still apply in their separate scope.
 
 Packet-level channel policy, including legacy_setup_any_channel, remains in
 core / existing L3-CH10 integration. No new 106-11/106-17 transition is encoded
-here. The source evidence is re-verified in the batch-39 note; changing the
-parent is recommended A, PENDING OWNER, not approved or applied here.
+here. The source evidence is re-verified in the batch-39 note; owner Q16
+(2026-11-28) corrects the parent to the archived edition wording; core still
+owns the edition rule, and no local reader/routing threshold is added.
 A separately observed format conflict does not erase or repair core findings.
 
 **L3-CH10-027** · Parent: L2-CH10-008 · Verification: T
@@ -3287,7 +3305,7 @@ TMATS INT-055 field-value grammar does not automatically apply to CLI numbers.
 
 An input path token is not TMATS text. A parsed command request is not proof
 that the file exists or that its contents select a valid recording/text route.
-Record numbering/defaults and file-order owner confirmation remain separate;
+Record numbering/defaults remain separate; Q14 confirms first-fragment order;
 no fabricated record identity is produced to complete an incomplete request.
 
 **L3-CLI-055** · Parent: L2-CLI-015 · Verification: T
@@ -3333,7 +3351,7 @@ replacement protocol, implicit force default or invented destination grammar.
 Shell redirection remains outside the tool-opened acquisition guarantee.
 
 **L3-CLI-060** · Parent: L2-CLI-008 · Verification: T
-*Extract SHALL deliver the selected supplied original bytes despite findings by default, reporting every finding; --strict SHALL refuse for data-checksum mismatch, secondary-header failure, INT-045 cut, INT-048 ambiguity, INT-037 marker and INT-055 invalidity. Whether --strict also refuses on every other finding is PENDING OWNER, with neither option silently selected. There SHALL be no default always-refuse finding class.*
+*Extract SHALL deliver the selected supplied original bytes despite findings by default, reporting every finding; --strict SHALL refuse for data-checksum mismatch, secondary-header failure, INT-045 cut, INT-048 ambiguity, INT-037 marker and INT-055 invalidity. Owner Q18 (2026-11-28) also covers that bad-data class, but informational notes alone SHALL NOT refuse; class membership SHALL be explicit/reviewed, not inferred from severity/message text. There SHALL be no default always-refuse finding class.*
 
 The findings/qualifications and core integrity states remain unchanged.
 This is extraction-only raw delivery, not a positive checksum, semantic
@@ -3503,13 +3521,17 @@ Selected policies must cover their claimed domain, including metadata-only
 streams, backing retention and failure/snapshot state. This does not decide
 allocator overhead or shared/caller charging. An unavailable required quantity
 is a readiness limitation, not zero charge or a fabricated successful proof.
-The owner-held zero-allocation non-setup host rule is not selected here.
+Owner Q9 selects the zero-allocation steady-state non-setup host rule;
+L1-PERF-002/L2-PERF-003 carry its separate measured acceptance.
 
-Retained pool credits stay inside this domain, not an exclusion for borrowed
-or caller-owned bytes. PENDING OWNER: how the assembler keeps the reader
-progressing while it retains spans (cap retained pool credits, early copy,
-or typed failure). No policy, threshold or copy trigger is selected; the
-open-run reader-stall fixture is BLOCKED on that decision.
+Retained pool credits stay inside this domain. Owner Q22 (2026-11-28)
+requires a verified cap/reserve that leaves the core reader able to progress.
+An over-cap run SHALL fail/report a typed assembly budget exhausted error;
+reader traversal SHALL continue without a silent eviction, synthetic EOF,
+Complete result, intact-run retry or required early copy. Record/release
+failed-run ownership truthfully; caller-held references/core admission credit
+needs must enter the reserve proof. No arbitrary cap, one-block reserve or
+numeric default is invented; actual core APIs/accounting require evidence.
 
 **L3-ROB-017** · Parent: L2-ROB-007 · Verification: T
 *An admission/limit calculation SHALL compare the configured finite limit, charged state and proposed charge under the selected model without wrapping arithmetic; a full proposed operation whose charge exceeds the remaining limit or arithmetic domain SHALL not be reported as fully admitted within budget, and its actual accepted/rejected extent SHALL remain explicit.*
@@ -3556,13 +3578,13 @@ records; raw extract remains separately authorized by ADR-0037.
 
 Assert the selected binding through routing/enumeration and command handoff,
 not only identical final values. This chooses no public numbering/default,
-file-order interpretation, live publication policy or filesystem snapshot
+live publication policy or filesystem snapshot
 atomicity. Stamp's explicit new output revision and required verification
 are not forbidden; distinguish them from the selected input revision.
 
-Acquire only explicitly supplied input sources. Stdin as an input source
-(a '-' operand or stdin when no path is given) stays PENDING OWNER; never
-fall back to stdin on an absent path or acquisition failure.
+Acquire only explicitly supplied sources. Owner Q23 (2026-11-28) selects
+stdin only for an explicit '-' operand. No operand or acquisition failure
+SHALL fall back to stdin; remaining grammar/usage rendering is not selected.
 
 When mounted, consume only packets and observations the host routed to this
 adapter, preserving the non-fragment observation path under L3-CLI-028.
@@ -3597,7 +3619,8 @@ without --force; known input alias ALWAYS, even with --force. Apply the
 open-without-truncation, identity check, same-handle truncate/write sequence
 of L3-CLI-034, never truncate/write first and refuse afterward. Stdout/pipes
 remain allowed as destinations under ADR-0037; that does not approve stdin
-as an input source. --strict on unlisted findings remains PENDING OWNER.
+as an input source except via owner-approved explicit -. Strict refusal uses
+owner Q18 bad-data kinds/class; informational notes alone do not refuse.
 
 **L3-CLI-065** · Parent: L2-CLI-017 · Verification: T
 *Integration tests SHALL distinguish acquisition/routing, traversal/assembly, selection/access, computation and delivery outcomes under their reviewed contracts; an earlier failure SHALL NOT become a successful empty command result, and successful computation SHALL NOT be reported as successful delivery when the supplied sink fails.*

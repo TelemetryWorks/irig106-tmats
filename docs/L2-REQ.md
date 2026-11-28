@@ -948,7 +948,7 @@ facts remain reference evidence. No report/rendered format is selected.
 
 **Statement**: Over core's borrowed DATA spans, TMATS SHALL read the first four logical bytes as the setup CSDW and retain the remaining logical bytes as borrowed text fragments, accepting block-split CSDWs/text directly without coalescing or extra payload copy; it SHALL preserve source mappings and core integrity evidence unchanged, including data checksum NotChecked, and SHALL NOT verify packet data checksums locally.
 
-**Rationale**: Chapter 11 section 11.2.7.2/Figure 11-34 p. 11-50 defines each packet's CSDW before text; sections 11.2.1.1 d and 11.2.1.4 define DATA excluding filler/checksum. Core supplies those DATA spans; tmats must not reconstruct them from raw headers. ADR-0036 records direct non-contiguous input and core-owned verification. Library assembly stays per-channel under INT-011/045, independent of physical block boundaries. The coordinator's data-checksum feature request is for core; owner scheduling is pending.
+**Rationale**: Chapter 11 section 11.2.7.2/Figure 11-34 p. 11-50 defines each packet's CSDW before text; sections 11.2.1.1 d and 11.2.1.4 define DATA excluding filler/checksum. Core supplies those DATA spans; tmats must not reconstruct them from raw headers. ADR-0036 records direct non-contiguous input and core-owned verification. Library assembly stays per-channel under INT-011/045, independent of physical block boundaries. Owner Q7 selects data-checksum verification on by default in core, with opt-out (core #29); tmats passes core evidence through and adds no checksum implementation.
 
 **Verification Method**: Test (T)
 
@@ -1011,14 +1011,14 @@ The [decision follow-up](research/2026-11-27-extract-owner-policy.md) records
 scope and planned checks. Source/development/test gates and independent
 review remain; no extraction implementation or other argument grammar is
 approved by recording the decision. Owner clarification after #73: the
---strict predicate is PENDING OWNER (listed bad-data kinds versus any finding).
-Neither broader refusal nor narrower acceptance is silently selected.
+--strict predicate is owner Q18: listed bad-data kinds/class, not informational notes (2026-11-28, ADR-0038).
+This selects the bad-data-class predicate, not all findings or severity alone.
 
 #### L2-CLI-008
 
 **Parent**: L1-CLI-004
 
-**Statement**: For an explicitly selected setup record/candidate with supplied original text bytes, extract SHALL proceed byte-exact by default despite findings, reporting every finding; --strict SHALL refuse for the listed bad-data kinds, while its behavior on other findings SHALL remain PENDING OWNER. It SHALL extract exactly that selection's original text bytes to the requested output, using core-backed fragment extents and the byte-faithful writer contract without packet framing, decoding/re-encoding, normalization or implicit edits.
+**Statement**: For an explicitly selected setup record/candidate with supplied original text bytes, extract SHALL proceed byte-exact by default despite findings, reporting every finding; --strict SHALL refuse for the listed bad-data kinds and that bad-data class, but SHALL NOT refuse merely on informational notes or infer bad-data membership from severity alone. It SHALL extract exactly that selection's original text bytes to the requested output, using core-backed fragment extents and the byte-faithful writer contract without packet framing, decoding/re-encoding, normalization or implicit edits.
 
 **Rationale**: UC-17, CLI command table and L1-CLI-004 require extracting TMATS bytes, not rendering a typed view. ADR-0002/0003 preserve source bytes; ADR-0010 leaves destination acquisition to the CLI/caller; ADR-0036 supplies borrowed DATA. Chapter 11 (106-24R1) section 11.2.7.2/Figure 11-34 p. 11-50 places a CSDW before each fragment's text. ADR-0037 allows raw extraction despite the listed integrity, cut, ambiguity, encoding and invalid-value findings, with no always-refuse finding class. This does not adopt a qualified setup for semantic/governing use, choose a default record, combine records or invent bytes/packet extents not supplied by core. Owner-signed INT-031's general semantic-access gate is not silently approved by this extraction-only owner direction.
 
@@ -1042,10 +1042,10 @@ with definition-bound code-name patterns, using approved name/key policies
 rather than a new glob/regex language. See the [source and scope note](research/2026-11-26-pattern-lookup-requirements.md).
 No value resolution, link inference, rendering or full registry rollout is
 selected; unknown/private grammar is not guessed.
-Owner decisions are PENDING and block implementation: 0.1 pattern scope
-(reviewed registry patterns only is a proposal, not an approved restriction)
-and public query syntax, including wildcards/escaping. The conditional
-reviewed-pattern contract below does not settle either item.
+Owner Q4/5, 2026-11-28 (ADR-0038): exact literal lookup supports ANY name
+including vendor/unknown raw text; wildcard patterns use only reviewed
+registry vocabulary. Each * matches one whole name part or index, never a
+partial wildcard or regex. Other argument forms are not selected here.
 
 #### L2-VIEW-015
 
@@ -1093,11 +1093,10 @@ These derive L1-PERF-001, not approval of the whole proposed single-pass
 scanner in ADR-0021 or a guessed throughput budget. The [measurement and
 source note](research/2026-11-27-performance-evidence-requirements.md) separates
 benchmark scope, correctness, reference limitations and permitted compute.
-No benchmark is run or new dependency selected in this docs batch. Retaining
-the prototype Criterion dev dependency requires owner approval.
-**PENDING OWNER**: whether the tmats host must also have zero per-packet
-allocation in steady state for non-setup packets (core L2-HOT-008 analogy);
-this slice does not approve that host allocation threshold.
+No benchmark is run. Joey selected zero per-packet steady-state non-setup
+host allocation and dropping Criterion (Q9/24, ADR-0038, 2026-11-28).
+Future benchmarks are informational ignored CI tests, no new dependency;
+prototype manifest/benchmark removal belongs to the restructure.
 
 #### L2-PERF-001
 
@@ -1118,6 +1117,17 @@ this slice does not approve that host allocation threshold.
 **Rationale**: L1-PERF-001 requires same-file comparison and defers a numeric budget until the first measurement. TEST-DATA documents reference-tool defects including first-packet-only reading and nontermination. ADR-0021 remains proposed; its scanner algorithm is not selected by this measurement contract. CI-heavy/light-local compute rules and no-new-dependency-without-owner-approval remain in force.
 
 **Verification Method**: Inspection (I)
+
+
+#### L2-PERF-003
+
+**Parent**: L1-PERF-002
+
+**Statement**: The standalone and mounted tmats host non-setup paths SHALL consume host/core-routed packets and observations without per-packet allocation in steady state; acceptance SHALL use allocation instrumentation with independently specified consumed work, isolating initialization/setup/rendering without hiding steady-state bookkeeping or pool-refill allocations.
+
+**Rationale**: Owner Q9/ADR-0038 adopts core L2-HOT-008 at the tmats host boundary, not just the parser. Core remains the sole reader; no numeric throughput threshold or claimed prototype evidence follows.
+
+**Verification Method**: Test (T)
 
 
 ## X-extension association (family 2, batch 30)
@@ -1314,13 +1324,13 @@ no command below implicitly approves its labelled ambiguous-split option.
 
 These derive L1-SUM-003's accepted ADR-0014 compatibility decision, not an
 IRIG algorithm or public output format. The [source/gap note](research/2026-11-27-flex-compatibility-acceptance.md)
-uses the repository's existing reference-tool investigation. No external
-repository or reference executable is accessed in this batch. Exact reference
+uses the repository's existing reference-tool investigation. The original batch used only existing source records; this follow-up pins
+public upstream source metadata/bytes without running a reference executable. Exact reference
 source qualification and complete arithmetic/byte-rule derivation remain
 implementation gates; these children do not claim that work complete.
 The [ROADMAP flex gate](ROADMAP.md#remaining-flex-source-qualification-and-acceptance)
-also requires the owner's reference/revision choice (bbaggerman/irig106lib
-versus the atac fork). Coordinator constraints: bounded GitHub-CI-only
+now uses owner Q15: original bbaggerman/irig106lib at the exact qualification
+pin in the 2026-11-28 record; divergent forks/revisions are known differences. Coordinator constraints: bounded GitHub-CI-only
 reference runs, synthetic inputs, no new project dependency; retain output
 values/revision/hashes, never copy reference source into this repository.
 
@@ -1388,7 +1398,7 @@ policy is approved, while its evidence and development gates remain.
 
 **Parent**: L1-CH10-005
 
-**Statement**: Within an explicitly supplied session scope, the library SHALL retain setup FRMT observations with source locations and qualifications; formal coexistence-finding eligibility SHALL remain gated on the pending owner scope decision, with Complete-record-only Option A recommended and broader non-Complete-candidate Option B unapproved. Unsupported XML SHALL not be parsed as ASCII, and unavailable scope/format evidence SHALL not become a clean no-mixture conclusion.
+**Statement**: Within an explicitly supplied session scope, the library SHALL retain setup FRMT observations with source locations and qualifications; formal coexistence findings SHALL use only Complete records under owner Q17 (2026-11-28), retaining non-Complete FRMT as qualified evidence without that finding. Unsupported XML SHALL not be parsed as ASCII, and unavailable scope/format evidence SHALL not become a clean no-mixture conclusion.
 
 **Rationale**: 106-24R1 Chapter 11 section 11.2.7.2 Figure 11-34 p. 11-50 prohibits both formats in the same session. Format observation is CSDW evidence, not XML-body interpretation, successful assembly or governing use. The source defines a recording session as .RECORD to .STOP; existing INT-045 caller assertions remain labelled provenance, not inferred sessions from gaps/time/channel changes. This child approves no guessed boundary or per-fragment FRMT conflict summary. A whole recording is one session only under explicit labelled caller assertion or actual supplied session evidence, never by inference. The standard's format prohibition does not silently broaden L1's Complete-record scope; A retains non-Complete FRMT as qualified evidence without the formal finding, B broadens it and needs owner approval.
 
@@ -1400,7 +1410,7 @@ policy is approved, while its evidence and development gates remain.
 
 **Statement**: For a supplied established configuration-change trigger, the library SHALL preserve record/fragment SRCC observations, session context and candidate-event provenance while reporting the required-event check indeterminate until verified event identity and its separately reviewed prior-ordering scope are available; it SHALL never choose a nearby generic event as proof, infer agreement among fragment bits or make the uncertainty imply a positive/negative event-presence verdict.
 
-**Rationale**: Chapter 11 section 11.2.7.2 pp. 11-50–51 requires a configuration-change event before the new setup. Approved INT-030/F7 requires verified identification and indeterminate meanwhile; its analysis notes keep first-record SRCC=1, fragment disagreement and prior-ordering open. Core owns packet admission and edition-dependent channel rules under ADR-0036; this does not derive or duplicate a channel-0 threshold in tmats. The archived per-edition header text is re-verified in the batch-39 source note. L1-CH10-005 wording change remains PENDING OWNER: recommended A aligns the setup-channel obligation with the verified 106-11 onset while consuming core's evidence; B defers the wording change and leaves the acceptance gap explicit. Neither is approved here; the normative L1 text is unchanged.
+**Rationale**: Chapter 11 section 11.2.7.2 pp. 11-50–51 requires a configuration-change event before the new setup. Approved INT-030/F7 requires verified identification and indeterminate meanwhile; its analysis notes keep first-record SRCC=1, fragment disagreement and prior-ordering open. Core owns packet admission and edition-dependent channel rules under ADR-0036; this does not derive or duplicate a channel-0 threshold in tmats. The archived per-edition header text is re-verified in the batch-39 source note. Owner Q16 (2026-11-28) aligns L1-CH10-005 with the verified 106-11 setup-channel onset and 106-13/15 versus 106-17+ channel-0 content rules. Core evidence still owns the packet rule; no tmats router is added.
 
 **Verification Method**: Test (T)
 
@@ -1508,7 +1518,7 @@ required; synthetic policy inputs do not certify a hard memory bound.
 
 **Statement**: The assembler SHALL retain a testable inventory of its in-scope retained text/owners, span/fragment/run metadata, provenance, retained snapshots and error-path state across all open channels, identifying shared ownership and known size/capacity or unavailable quantity, with core BlockPool credits held by retained DATA spans inside the budget domain; it SHALL bind accounting claims to the declared budget domain and selected reviewed model rather than infer memory use from logical text length or zero payload copies.
 
-**Rationale**: ADR-0036 requires borrowed blocks to stay alive and accounts for retained block owners/span metadata; L3-ROB-004 already covers aggregate text/metadata/snapshots with no hard-bound claim from an incomplete model. Owner identity/reference facts are distinct from the still-open charging/overhead and caller-owned accounting choices. This adds no packet metadata field, numeric limit or allocation threshold. Retained pool credits are not excluded as caller-owned storage. Reader progress while spans retain those credits is PENDING OWNER: a retained-credit cap, an early copy, or typed failure; none is selected here.
+**Rationale**: ADR-0036 requires borrowed blocks to stay alive and accounts for retained block owners/span metadata; L3-ROB-004 already covers aggregate text/metadata/snapshots with no hard-bound claim from an incomplete model. Owner identity/reference facts are distinct from the still-open charging/overhead and caller-owned accounting choices. This adds no packet metadata field, numeric limit or allocation threshold. Retained pool credits are not excluded as caller-owned storage. Owner Q22 (ADR-0038, 2026-11-28) requires a retained-credit cap that leaves the reader able to progress; an over-cap run fails/reports a typed assembly budget exhausted error and the reader continues. Verified reserve/accounting/API evidence is still required, not a guessed cap or early-copy policy.
 
 **Verification Method**: Test (T)
 
@@ -1535,7 +1545,7 @@ syntax or public default selection. See the [integration/gate note](research/202
 
 **Statement**: For an explicitly supplied reviewed command request, reusable CLI orchestration SHALL bind acquisition/routing, selected source/document/revision and command computation to that invocation, preserving supplied provenance, qualifications and independent core evidence through the existing command boundary; it SHALL NOT replace an explicit selection with an inferred record, repaired source or remembered caller choice.
 
-**Rationale**: ADR-0010/0034 W3 require thin I/O glue over reusable computation, and ADR-0036 keeps packet traversal in core. Existing routing, enumeration and checksum/extract contracts establish the component rules; this derives their composition rather than another implementation or public request schema. Approved INT-060 requires an explicit choice per query. Reviewed access/selection rules remain prerequisites, not defaults filled by orchestration. Input sources must be explicitly supplied; stdin via a '-' operand or an omitted path remains owner-held, with no stdin fallback. Mounted packet orchestration consumes only the host-routed packets/observations through the existing adapter, not a second dispatch loop. Extract carries the supplied --force/--strict flags into ADR-0037 policy; its destination refusals precede destructive access, and --strict on unlisted findings remains pending.
+**Rationale**: ADR-0010/0034 W3 require thin I/O glue over reusable computation, and ADR-0036 keeps packet traversal in core. Existing routing, enumeration and checksum/extract contracts establish the component rules; this derives their composition rather than another implementation or public request schema. Approved INT-060 requires an explicit choice per query. Reviewed access/selection rules remain prerequisites, not defaults filled by orchestration. Owner Q23 (2026-11-28) allows stdin only through an explicit '-' operand, never an omitted-path or error fallback. Mounted packet orchestration consumes only the host-routed packets/observations through the existing adapter, not a second dispatch loop. Extract carries the supplied --force/--strict flags into ADR-0037 policy; its destination refusals precede destructive access, and --strict uses the owner-approved bad-data class, never an informational-note/all-findings predicate.
 
 **Verification Method**: Test (T)
 

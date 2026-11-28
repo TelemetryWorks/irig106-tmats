@@ -869,7 +869,7 @@ The documentation expander checks only the artifact.
 Sources: 106-24R1 Ch11 §11.2.7.2 p. 11-50 SRCC; Ch6 §6.2.3.11 f pp. 6-22–23
 and Ch9 Table 9-2 p. 9-13 checksum; INT-011/018–021/034/039/043/045 and owner-signed INT-046–053.
 
-| Named planned test | Fixture / explicit matrix member | Owner-signed assertions / pending independent AI check | Requirements |
+| Named planned test | Fixture / explicit matrix member | Owner-signed assertions / recorded independent AI check | Requirements |
 | --- | --- | --- | --- |
 | `retransmission_matrix_exhaustive_coverage` | Every tuple in the versioned domains, including inconsistent observations and every class member; 139,968 currently | Independently exercise all observable output columns; no sampled substitute, missing case, silent owner choice or generator-as-oracle. Count realizable byte fixtures separately from observation consistency/rejection checks | L3-REG-014 |
 | `srcc0_different_is_reported_change` | `0.D.NN.C.SS.T.T.I`: bounded following text changes `G\PN:one;` to `G\PN:two;` despite SRCC=0 | Changed claim discrepancy; sealed Ambiguous under existing premature-seal guard; both readings retained, no rejoin. No automatic governing switch (QG) | L3-REG-015 |
@@ -896,7 +896,7 @@ Python hashlib for independent digests. An added/removed checksum belongs to
 R, not H (H changes only existing value bytes). Proper tuple constraints found
 during witness construction must be reported, reviewed and tested, not skipped.
 
-### Planned QM sequences (INT-053 owner-signed, independent AI pending)
+### Planned QM sequences (INT-053 owner-signed, independent AI CONCUR at #45 73396bc)
 
 Joey's QM decision, 2026-11-25, compares each copy with the CURRENTLY
 GOVERNING setup; an unresolved takeover leaves later comparison targets
@@ -1312,8 +1312,8 @@ These are planned acceptance cases for L2-CLI-008/009, not executable tests.
 Extraction receives one explicitly selected record/candidate and available
 raw text extent. ADR-0037 records the owner's 2026-11-27 policy, removing
 #57's three owner holds: raw extract under findings by default, every finding
-reported; --strict refuses the listed bad-data kinds. Its listed-kinds-only
-versus any-finding scope is PENDING OWNER. Known cut prefixes are valid raw
+reported; --strict refuses the listed bad-data kinds/class, not informational
+notes (owner Q18, ADR-0038). Known cut prefixes are valid raw
 extraction inputs, not missing whole-document failures. Stdout/pipes are
 allowed; unproven regular identity and existing unrelated -o files require
 --force; same-handle writes, no temp-file+rename. Known input aliases refuse.
@@ -1328,11 +1328,11 @@ cover tool-opened destinations, not shell redirection.
 | `extract_csdw_split_is_removed_once` | Synthetic arbitrary-span partition: four logical CSDW bytes straddle spans; expected text excludes four bytes total, not four per span. With core 0.2 default 512 KiB blocks the CSDW is always in the first block; this is not a production-layout claim | L3-CLI-030, L3-CLI-037 |
 | `extract_text_split_does_not_change_bytes` | A text fragment crosses several span boundaries including inside a name/value; compare to the same independent literal | L3-CLI-030, L3-CLI-037 |
 | `extract_layout_and_case_survive` | Mixed case, leading/inter-item layout and CR/LF are replayed exactly; no canonical case, order or newline conversion | L3-CLI-031 |
-| `extract_comment_control_is_view_only` | Mechanical source `COMMENT:a\tb;` with a real TAB: INT-036 interpreted value is `ab` but extraction keeps `a\tb` byte-for-byte; the same applies to an omitted CR/LF/control; default extract allowed with all findings; strict arm for this unlisted information-only case is BLOCKED PENDING OWNER | L3-CLI-031 |
+| `extract_comment_control_is_view_only` | Mechanical source `COMMENT:a\tb;` with a real TAB: INT-036 interpreted value is `ab` but extraction keeps `a\tb` byte-for-byte; the same applies to an omitted CR/LF/control; default extract allowed with all findings; strict allows this information-only case and reports the note, with bytes unchanged (owner Q18) | L3-CLI-031 |
 | `extract_numeric_control_invalid_keeps_raw` | Mechanical source `R-1\NSB:0\r\n4;` with real CR/LF: INT-055 raw-byte numeric check returns Invalid, never repaired to 4; extraction keeps every control/raw byte; default extract allowed with all findings, --strict refuses when findings exist | L3-CLI-031 |
 | `extract_assembled_leading_bom_is_not_stripped` | Same-channel +1 fragments with matching FRMT/RCCVER: first text starts EF, following text starts BB BF then `COMMENT:a;` (after each packet CSDW); leading assembled EF BB BF is detected under INT-037 at text offset zero, never stripped from extraction; default extract allowed with all findings, --strict refuses when findings exist | L3-CLI-030, L3-CLI-031 |
 | `extract_raw_unknown_vendor_extension_survive` | Supplied raw text contains unknown, V and X items; none is dropped or rendered from a typed model | L3-CLI-031 |
-| `extract_raw_damage_is_not_repaired` | Mechanical sink input contains duplicate/malformed items, high bytes and an unterminated suffix; default exact replay with all findings; strict refuses listed bad-data kinds, with other-finding scope pending owner | L3-CLI-031 |
+| `extract_raw_damage_is_not_repaired` | Mechanical sink input contains duplicate/malformed items, high bytes and an unterminated suffix; default exact replay with all findings; strict refuses listed bad-data kinds, with other findings follow owner Q18: bad-data class, not informational notes | L3-CLI-031 |
 | `extract_raw_padding_is_not_packet_fill` | Record text contains trailing preserved NUL/space bytes; replay them, while packet filler remains excluded by core DATA extents | L3-CLI-030, L3-CLI-031 |
 | `extract_read_only_views_do_not_stamp` | Read-only views/findings/checksum verification precede extraction; original text, including original checksum spelling/value, stays unchanged | L3-CLI-031 |
 | `extract_selected_identity_never_substituted` | Two distinct supplied records have different literal texts; the explicit eligible selection alone supplies output and provenance | L3-CLI-032 |
@@ -1368,9 +1368,9 @@ syntax: use the cited R-x\TK1-n pattern from 106-24R1 Ch9 Table 9-4
 TRACK NUMBER/CHANNEL ID p. 9-48. Named items A/B/C are independent fixture
 identities with explicit literal source ranges. Values are raw candidates,
 not interpreted TK1 verdicts. Existing findings remain located/observable.
-Owner decisions on 0.1 pattern scope (reviewed registry patterns only) and
-public query syntax (wildcards/escaping) are PENDING; implementation is
-blocked. Diagnostic candidate fixtures do not approve incomplete/ambiguous
+Owner Q4/5 selects reviewed-registry-only whole-part/index * in 0.1,
+with ANY-name raw exact lookup (2026-11-28, ADR-0038). Owner-choice holds
+are removed; source/design review and executable checks still gate code. Diagnostic candidate fixtures do not approve incomplete/ambiguous
 access: see the [open item](ROADMAP.md#streaming-setup-record-follow-ups)
 and [owner-signed INT-031](INTERPRETATIONS.md#int-031). Any supplied record
 qualification, including Ambiguous, cut facets and Incomplete, stays attached
@@ -1453,8 +1453,9 @@ benchmarks or new numeric gates. Fixtures need independent expected-work
 inventories under reviewed semantics. Heavy synthesized runs belong in
 bounded GitHub CI; local/sample work requires the existing authorization
 and data/compute plan. No reference tool or recording is accessed here.
-Retaining the prototype Criterion dev dependency requires owner approval.
-PENDING OWNER: zero per-packet steady-state allocation by the tmats host for
+Owner Q24 drops Criterion in the restructure; informational ignored CI
+benchmarks use no new dependency. Q9 requires zero per-packet steady-state
+allocation by the tmats host for
 non-setup packets (core L2-HOT-008 analogy); no such threshold is set here.
 
 | Planned acceptance case | Independent evidence or rejection condition | Requirements |
@@ -1610,7 +1611,7 @@ error is not proof that policy/artifact enforcement worked.
 | `dep_internal_path_is_not_external_exception` | Accepted exact-version workspace path does not become an unlisted external path/git/registry-source allowance | L3-REL-010 |
 | `dep_exception_reason_is_scoped` | Listed exception is matched to identifier/dependency/context/reason; unrelated replacement dependency cannot inherit its prototype rationale | L3-REL-011 |
 | `dep_prototype_xml_ignore_retirement_is_checked` | Prototype XML code is removed in future restructure: review/removal of its prototype-only advisory ignores accompanies that change, not blanket retention | L3-REL-011 |
-| `dep_past_pass_does_not_approve_new_dependency` | Old policy pass or existing Criterion entry cannot approve retention/new dev dependency without required owner approval | L3-REL-009, L3-REL-011 |
+| `dep_past_pass_does_not_approve_new_dependency` | Old pass or existing Criterion entry cannot approve retention: owner Q24 drops Criterion; new dependencies still need approval | L3-REL-009, L3-REL-011 |
 | `artifact_binary_digest_matches_released_bytes` | Actual downloaded binary bytes/digest match its intended source/version/target and checksum/provenance association | L3-REL-012, L3-REL-014 |
 | `artifact_same_filename_stale_digest_is_rejected` | Rebuilt/different bytes retain filename but stale evidence: acceptance fails rather than trusting the name | L3-REL-012 |
 | `artifact_sbom_is_per_binary_build_context` | Matching target/features/resolved build identity associates CycloneDX SBOM with intended binary; library-only requirements list is insufficient | L3-REL-013 |
@@ -1710,8 +1711,8 @@ Source: 106-24R1 Ch11 section 11.2.7.2 p. 11-50; ADR-0025/0036.
 | `records_complete_is_not_governing_or_integrity_pass` | Evaluated Complete A with integrity findings/unresolved governing effect: those facts stay attached; no checksum match or adoption inferred | L3-CLI-041, L3-CLI-043 |
 | `records_oracle_uses_independent_candidate_sets` | Expected set/order/membership listed independently from supplied facts; production enumeration or a local replacement packet reader is not an oracle | L3-CLI-044 |
 
-Pending owner choices for access/governance, public selection policy and
-report rendering remain pending. No executable tests or packet reader are
+Owner-signed INT-028/031 governs access and Q14 fixes first-fragment order;
+report rendering and other unselected public forms remain held. No executable tests or packet reader are
 added by these specifications.
 
 ## Planned checksum command computation batch 35
@@ -1751,10 +1752,11 @@ remove their owner gates; new tests are planned, not executed coverage.
 ## Planned flex compatibility acceptance batch 36
 
 These are source-qualification/acceptance obligations, not executed vectors.
-All flex expected numeric values are **BLOCKED on the owner's reference/revision
-choice**, then pinned-reference analysis and independent oracle qualification.
-ADR-0014 already chose bit-for-bit compatibility including D7; it does not
-choose bbaggerman/irig106lib versus the atac fork or a revision. Reference runs
+Owner Q15 selects original bbaggerman/irig106lib; the [exact qualification
+pin/hashes](research/2026-11-28-owner-policy-signoffs.md#flex-qualification-pin)
+removes the reference-choice hold. Numerical values remain UNQUALIFIED pending
+CI reference outputs, pinned-source/API analysis and independent arithmetic.
+ADR-0014 still requires bit-for-bit compatibility including D7. Reference runs
 are bounded, GitHub CI only, synthetic inputs only, no new project dependency.
 Record outputs/revision/hashes, never paste reference source into this repo.
 References: L1-SUM-003, ADR-0014/0018 and the 2026-09-25 tool investigation.
@@ -1838,14 +1840,13 @@ identity or body access. Sources: 106-24R1 Ch11 section 11.2.7.2 Figure
 11-34 pp. 11-50–51 and approved INT-030/F7. Core routing/channel checks and
 owner-signed INT-031 access gates remain independent.
 
-Mixture-scope Option A (Complete records only) is RECOMMENDED, PENDING OWNER;
-B broadens finding eligibility to non-Complete candidates. Scope-sensitive
-finding expectations are BLOCKED on that decision; evidence-only cases do
-not approve either branch. L1 wording Option A is also recommended-pending.
+Owner Q16/17 (2026-11-28, ADR-0038) selects archived L1 edition wording
+and Complete-only mixture finding. Non-Complete FRMT remains qualified
+evidence without the formal finding; source/executable gates remain.
 
 | Planned test | Independent input and expected result | Requirements |
 |---|---|---|
-| `session_ascii_xml_same_scope_reports_mixture` | Given Complete ASCII and Complete XML records in supplied S: retain source/qualification/scope evidence; formal-finding eligibility follows the owner-pending scope decision, never approval of broader candidate scope | L3-CH10-022 |
+| `session_ascii_xml_same_scope_reports_mixture` | Given Complete ASCII and Complete XML records in supplied S: retain source/qualification/scope evidence; Complete ASCII plus Complete XML produces the mixture finding; broader candidate scope is not selected | L3-CH10-022 |
 | `session_formats_in_separate_scopes_not_mixture` | ASCII in supplied S1, XML in S2: no cross-scope mixture; scopes/provenance retained, not merged by file proximity | L3-CH10-022 |
 | `session_caller_scope_keeps_assertion_label` | S is caller asserted rather than observed control commands: check retains that basis, never certifies .RECORD/.STOP was seen | L3-CH10-022 |
 | `session_xml_observation_does_not_parse_body` | Readable XML FRMT with unsupported body: retain format evidence without ASCII/XML body parsing or eligibility upgrade | L3-CH10-022, L3-CH10-023 |
@@ -1867,13 +1868,13 @@ reviewed prior-ordering, source freshness, analysis and executable tests.
 Per-edition parent/channel wording needs source reconciliation; these cases
 do not select a packet routing rule or authorize new access/governing policy.
 
-## Session-scope follow-ups after #71 (owner decisions pending)
+## Session-scope follow-ups after #71 (Q16/17 signed 2026-11-28)
 
 | Planned test | Independent input and expected result | Requirements |
 |---|---|---|
-| `session_complete_ascii_incomplete_xml_scope_pending` | Complete ASCII plus Incomplete XML candidate in explicit S: **BLOCKED PENDING OWNER**. Recommended A retains qualified XML evidence without formal mixture finding; B would broaden eligibility. No qualification upgrade under either | L3-CH10-022, L3-CH10-023 |
+| `session_complete_ascii_incomplete_xml_scope_pending` | Complete ASCII plus Incomplete XML candidate in explicit S: Owner-selected A retains qualified XML evidence without formal mixture finding; no qualification upgrade | L3-CH10-022, L3-CH10-023 |
 | `session_same_bytes_without_session_assertion` | Same supplied recording bytes/facts contain ASCII/XML observations, no actual session evidence and no caller assertion: unavailable scope, never inferred one-session or no-mixture | L3-CH10-022, L3-CH10-023 |
-| `session_same_bytes_with_labelled_whole_recording_assertion` | Exact same bytes/facts plus explicit caller assertion that this recording is one session: scope available with asserted basis retained; formal finding still follows the pending eligibility gate, not inferred command observations | L3-CH10-022, L3-CH10-023 |
+| `session_same_bytes_with_labelled_whole_recording_assertion` | Exact same bytes/facts plus explicit caller assertion that this recording is one session: scope available with asserted basis retained; formal mixture finding applies only to Complete ASCII/XML in that asserted scope, not inferred command observations | L3-CH10-022, L3-CH10-023 |
 
 ## Planned argument-parser mechanism batch 39
 
@@ -1907,10 +1908,10 @@ is selected; no dependency or executable parser is added by these cases.
 
 ## Planned extract owner-policy cases (ADR-0037, 2026-11-27)
 
-**Owner clarification after #73:** --strict's scope (listed bad-data kinds
-versus any finding) is PENDING OWNER. Listed-kind/default/no-finding cases
-below are common to both options; other-finding strict cases remain blocked.
-The verbatim ADR-0037 owner text is unchanged, not reinterpreted as an answer.
+**Owner Q18, 2026-11-28:** strict refuses the listed bad-data kinds/class,
+not informational notes. Owner-choice holds are removed; selected expected
+results remain PLANNED, not executed coverage. ADR-0037's original text is
+history, refined by ADR-0038; no severity-derived class predicate.
 
 Extract row spellings --force and --strict are owner-approved (2026-11-27);
 the rest of argument grammar remains on hold.
@@ -1928,7 +1929,7 @@ and unchanged core/record evidence; no repaired/guessed byte ranges.
 | `extract_findings_strict_each_kind` | Same six variants with --strict: observable refusal, all findings retained, no successful byte-delivery claim | L3-CLI-060, L3-CLI-061 |
 | `extract_all_findings_default_and_strict` | All six kinds combined: default extracts exact bytes and reports all; strict refuses, no always-refuse kind fabricated | L3-CLI-060, L3-CLI-061 |
 | `extract_cut_prefix_is_available_raw_data` | Supplied original cut prefix under Incomplete or Ambiguous-with-cut: default extracts the retained prefix, never demands an invented complete suffix; strict refuses on its findings | L3-CLI-030, L3-CLI-060 |
-| `extract_strict_unlisted_information_scope_pending` | Only an information finding outside the six listed bad-data kinds: **BLOCKED PENDING OWNER**. Listed-only option permits byte-exact strict extraction with the finding; any-finding option refuses. Neither expectation activated | L3-CLI-060, L3-CLI-061 |
+| `extract_strict_unlisted_information_scope_pending` | Only an information finding outside the six listed bad-data kinds: Owner-selected Q18 permits byte-exact strict extraction and reports the informational note; no all-findings refusal | L3-CLI-060, L3-CLI-061 |
 | `extract_strict_without_findings_is_allowed` | Explicit selected synthetic input has no findings: --strict does not itself refuse; exact bytes, normal destination policy | L3-CLI-060 |
 | `extract_findings_never_enter_raw_stream` | Default emits exact bytes on selected sink and retains every diagnostic separately; no labels/diagnostic text inserted into extracted bytes, no layout/stream mapping pinned | L3-CLI-031, L3-CLI-060 |
 | `extract_existing_unrelated_refuses_without_force` | Existing unrelated regular destination: observable default refusal without truncation/write/rename | L3-CLI-034, L3-CLI-058 |
@@ -2022,7 +2023,7 @@ claimed complete merely by adding gated children.
 Internal evidence tests use bounded synthetic ownership/span descriptors and
 explicit fixture-model charges. They do not choose production charging,
 allocator overhead, numeric defaults, failure atomicity, resume API or the
-owner-held non-setup host allocation rule. Source: L2-ROB-003/L3-ROB-004–006,
+owner-signed non-setup host allocation rule (Q9). Source: L2-ROB-003/L3-ROB-004–006,
 ADR-0036 and existing per-channel/provenance contracts.
 
 | Planned test | Independent fixture and expected evidence | Requirements |
@@ -2047,7 +2048,7 @@ ADR-0036 and existing per-channel/provenance contracts.
 | `retention_fixture_model_is_not_production_evidence` | Synthetic charge totals pass but real ownership/allocation model is unverified: implementation hard-bound readiness still unsatisfied | L3-ROB-016, L3-ROB-019 |
 | `retention_core_refusals_and_drains_stay_core_owned` | Supplied core HardLimit / BudgetTooSmall / TargetLimit refusals and drain reports retain identity, extent and context unchanged; distinct from injected tmats assembler-retention failure, never reclassified | L3-CLI-042, L3-ROB-018 |
 | `retention_pool_credits_are_in_domain_not_counted_twice` | Retained DATA spans hold supplied core BlockPool credits: inventory includes them inside the budget domain, not a borrowed/caller exclusion; overlapping core/assembler byte totals are not added twice | L3-ROB-014, L3-ROB-016, L3-ROB-018 |
-| `retention_open_run_holds_pool_to_b_reader_stall` | **BLOCKED, PENDING OWNER reader-progress policy:** synthetic pool budget B; an open run retains DATA spans holding credits up to B and the reader needs another block. Preserve the credit inventory and core evidence; expected cap/early-copy/typed-failure behavior awaits owner choice, no assumed progress or silent eviction | L3-ROB-016, L3-ROB-019 |
+| `retention_open_run_holds_pool_to_b_reader_stall` | Owner Q22: synthetic B credits with independently supplied verified progress reserve R; open run attempts retaining beyond B-R. Refuse/fail/report run with typed assembly budget exhausted error before consuming reserve, preserve truthful ownership/disposition and core evidence, reader continues; no silent eviction, early copy or invented EOF. Actual API reserve proof remains required | L3-ROB-016, L3-ROB-019 |
 
 Operational failure is not a new always-refuse extraction finding. Raw
 extract still requires an available selected extent; no guessed byte ranges,
@@ -2082,9 +2083,9 @@ arms remain gated, not silently enabled by a successful injected adapter.
 | `command_chain_runner_matches_direct_computation` | Same explicit request/source/context through runner handoff and direct command path: equivalent pre-render semantic data/qualifications and host stays alive | L3-CLI-066 |
 | `command_chain_failure_returns_to_host` | Shared command returns injected failure through both paths; host can perform next explicit call, no process exit or silent success | L3-CLI-066 |
 | `command_chain_mock_is_not_product_acceptance` | Synthetic adapters pass but real core/text paths or command policies unverified: full product acceptance remains unproven, missing paths visible | L3-CLI-067 |
-| `command_chain_never_falls_back_to_stdin` | Absent explicitly supplied source or acquisition failure never reads stdin or chooses it as fallback; '-' and omitted-path stdin grammar arms stay BLOCKED PENDING OWNER, no error spelling/exit chosen | L3-CLI-062, L3-CLI-065 |
+| `command_chain_never_falls_back_to_stdin` | Absent explicitly supplied source or acquisition failure never reads stdin or chooses it as fallback; explicit '-' selects stdin; omitted operand/acquisition failure never does, no new error spelling/exit chosen | L3-CLI-062, L3-CLI-065 |
 | `command_chain_mounted_consumes_host_routes_only` | Host supplies a routed Format-1 fragment and required non-fragment observations while another consumer gets other DATA: adapter consumes only supplied routes, no own dispatch/header reconstruction/claim on other packets; standalone host dispatch reaches same adapter with typed wrong-kind guard | L3-CLI-062, L3-CLI-026, L3-CLI-027, L3-CLI-028 |
-| `command_chain_extract_flags_match_direct_policy` | Runner and direct extract receive identical --force/--strict settings plus destination/identity evidence. Existing unrelated file and unproven regular identity refuse without --force; known alias refuses with or without it; each refusal happens before truncate/write. Authorized unrelated/unproven --force arms follow the same-handle sequence. Strict listed-kind/no-finding arms use the common approved rule; unlisted-finding strict arms remain BLOCKED PENDING OWNER. Outcomes/forwarded flags match before rendering | L3-CLI-064, L3-CLI-066, L3-CLI-034 |
+| `command_chain_extract_flags_match_direct_policy` | Runner and direct extract receive identical --force/--strict settings plus destination/identity evidence. Existing unrelated file and unproven regular identity refuse without --force; known alias refuses with or without it; each refusal happens before truncate/write. Authorized unrelated/unproven --force arms follow the same-handle sequence. Strict listed-kind/no-finding arms use the common approved rule; strict allows informational notes alone and refuses typed bad-data class; all findings/flags retained. Outcomes/forwarded flags match before rendering | L3-CLI-064, L3-CLI-066, L3-CLI-034 |
 
 No record-order default, strict predicate, stamp destination exception or
 flex oracle is chosen. Extraction keeps ADR-0037's separate permission;
@@ -2262,6 +2263,31 @@ INT-034 padding-only/leading-damage precedence.
 | `owner_boundary_padding_preserves_raw_bytes` | Otherwise complete substantive text ending ';' followed by each SP/00–1F/7F suffix remains terminated, bytes retained; high bytes are not layout; padding-only/leading-damage precedence arm stays BLOCKED OWNER | INT-034 |
 | `owner_sequence_rollover_is_continuity` | Same channel FF -> 00 with matching FRMT/RCCVER and no layered closure joins; missing/other sequence not repaired and other-channel traffic never breaks continuity | INT-011, INT-034 |
 | `owner_available_integrity_failure_is_not_cut` | Admitted available DATA with core Mismatch/NotChecked/secondary readings remains available text, findings unchanged; independently missing required run bytes add incomplete-source facet, operational refusal alone does not invent a cut | INT-034, INT-051 |
+
+## ADR-0038 selected policy acceptance — 2026-11-28
+
+Owner-choice holds below are removed. All cases are PLANNED, not measured
+or executed; [policy/pin record](research/2026-11-28-owner-policy-signoffs.md).
+Report rendering and INT-034 padding-only/leading-damage precedence stay open.
+
+| Planned test | Independent expected result / boundary | Requirements |
+|---|---|---|
+| `pattern_star_is_one_whole_part_or_index` | Reviewed R-*\TK1-* matches complete recorder/channel indices only; R-1\*-3 matches one reviewed literal part, never a multi-part EV/PM path, value text or arbitrary suffix | L3-VIEW-058, L3-VIEW-071 |
+| `pattern_partial_star_and_regex_not_supported` | R-1\T*-3 and regex-like index expressions never execute partial/regex matching; unsupported patterns visibly refuse/unavailable, no guessed glob expansion | L3-VIEW-071 |
+| `exact_unknown_vendor_raw_lookup_is_not_registry_limited` | Retained private/unknown literal name returns all raw occurrences and locations by exact lookup; wildcard scope cannot remove raw access or invent a typed value/private index grammar | L3-VIEW-071, L3-VIEW-001 |
+| `pattern_private_vocabulary_remains_unavailable` | Missing reviewed pattern metadata cannot be supplied by private source presence; unavailable matching stays distinct from a reviewed empty candidate collection | L3-VIEW-062, L3-VIEW-071 |
+| `host_non_setup_steady_state_zero_allocations` | Warm both standalone and mounted paths, then count a bounded sustained non-setup packet stream including pool/refill/bookkeeping outside timer: every expected observation consumed, zero host per-packet allocations; setup/rendering measured separately | L3-PERF-009 |
+| `host_allocation_counter_detects_bookkeeping_regression` | Inject one real allocation in steady-state non-setup host bookkeeping: acceptance fails even if parser allocations remain zero and output bytes agree | L3-PERF-009 |
+| `file_order_interleaved_finalization_is_first_fragment` | Supplied A-first/B-second independent runs finish B then A: inventory A,B; closure/takeover separately evaluated, no channel sort or backdating | L3-CLI-040 |
+| `flex_exact_original_pin_and_hashes` | Qualification evidence matches original repository, exact revision and inspected source hashes; wrong revision/fork is a known difference, never silently substituted or accepted as the pinned vector oracle | L3-SUM-014, L3-SUM-015 |
+| `channel_rule_edition_evidence_is_passed_through` | Supplied core evidence for 106-11 nonzero setup, 106-13/15 channel-0 non-Format-1 and 106-17+ channel-0 other than Format-1/4 remains unchanged in tmats; no second classifier or threshold inferred from G106 | L3-CH10-026 |
+| `mixture_only_complete_records_contribute` | Complete ASCII plus Incomplete XML in explicit S: qualified XML evidence without mixture finding; changing only XML qualification to Complete produces finding, no XML body parsing | L3-CH10-022, L3-CH10-023 |
+| `extract_strict_bad_data_not_severity_inference` | Each listed bad-data category/class refuses strict and default extracts exactly with findings; unrelated informational note alone permits strict extraction. Message text/severity alone never establishes class membership | L3-CLI-060, L3-CLI-061 |
+| `retention_cap_leaves_verified_reader_reserve` | Independently supplied B/R progress evidence: retain at most B-R distinct pool credits; shared references never double-count bytes or falsely free an owned credit; next core admission retains its verified reserve | L3-ROB-016, L3-ROB-019 |
+| `retention_over_cap_fails_run_reader_continues` | One additional retained credit exceeds cap: typed assembly-budget error with run/channel/spans, truthful release/disposition and retained diagnostic source; next core-routed observations still consumed, no silent eviction, fake Complete/EOF or intact-run retry | L3-ROB-016, L3-ROB-018, L3-CLI-042 |
+| `retention_unverified_reserve_is_not_progress_proof` | Unknown required core credit/caller-held ownership prevents an unconditional progress claim; supplied synthetic reserve alone is not actual API proof or permission to exclude those owners | L3-ROB-016, L3-ROB-019 |
+| `stdin_explicit_dash_only` | Explicit '-' selects supplied stdin source; no operands, failed path acquisition or absence of a filesystem path never reads stdin automatically; runner/direct paths agree before rendering | L3-CLI-062, L3-CLI-065 |
+| `benchmark_uses_ignored_ci_without_criterion` | Restructured manifest has no Criterion; bounded informational ignored-test benchmark job records workload/toolchain/timing plus untimed allocation/copy evidence, not a new throughput acceptance gate or dependency | L3-PERF-003, L3-PERF-005, L3-PERF-009 |
 
 ## Real Chapter 10 recordings (local use only)
 
