@@ -2116,6 +2116,43 @@ extract still requires an available selected extent; no guessed byte ranges,
 silent eviction, local spill, partial-acceptance policy or source truncation
 is authorized. Tests are planned, not executed memory/performance evidence.
 
+## Planned checksum-domain analysis cases — 2026-11-28
+
+[Written analysis](research/2026-11-28-checksum-domain-development-analysis.md)
+for approved INT-018/019/020/021/043. These are PLANNED cases, not passing
+implementation/reference tests. Source fingerprints, historical applicability
+limits, independently fixed preimages/digests and raw exclusion [3,78) are
+in the note. The empty-preimage digest is not a padding-only eligibility rule.
+Owner/independent analysis review and intensive executable tests remain.
+
+| Planned case | Independent expected evidence | Requirements / interpretations |
+|---|---|---|
+| `sum_analysis_name_case_all_variants` | All ASCII letter-case combinations identify one complete G/SHA name; raw spelling/locations retained; only canonical spelling lacks its spelling finding. | L3-SUM-001; INT-018 |
+| `sum_analysis_projected_name_raw_span` | The specified [3,78) raw exclusion preserves leading layout in the preimage and internal CR/LF within exclusion; no source rewrite. | L3-SUM-001; INT-018 |
+| `sum_analysis_value_and_x_are_not_sha` | COMMENT value text and X-carried G/SHA path do not create checksum items or exclusions. | L3-SUM-001; INT-018 |
+| `sum_analysis_missing_previous_semicolon` | Later apparent SHA remains previous value; no inserted boundary; recognizer-based suggestion only where reviewed vocabulary is present. | L3-SUM-001; INT-018 |
+| `sum_analysis_damaged_name_keeps_all_blockers` | Exact SHA plus compatible damaged name prevents unique exclusion/positive verification; raw candidate evidence and warnings retained. | L3-SUM-003; INT-018/021 |
+| `sum_analysis_bom_diagnostic_does_not_admit` | Blocking BOM plus located 02 token keeps warning but never restores lookup/exclusion/positive verification. | L3-SUM-003; INT-018/043 |
+| `sum_analysis_bad_value_defined_exclusion` | Separate complete 2-ABC and 63-digit items: VERIFY malformed, authoritative COMPUTE allowed for established document/exclusion. | L3-SUM-002; INT-019 |
+| `sum_analysis_unknown_or_unavailable_value_compute` | Defined complete exclusion permits COMPUTE despite unsupported token or unavailable value; no positive VERIFY inferred. | L3-SUM-002; INT-019/020/043 |
+| `sum_analysis_unterminated_and_cut_refuse` | Exact EOF suffix or independently known truncation blocks authoritative checksum; later semicolon/equality cannot erase leading cut. | L3-SUM-002; INT-019 |
+| `sum_analysis_swallowed_attribute_is_not_length_guess` | Evidence of enlarged value swallowing a following item blocks authoritative domain; malformed length alone does not infer loss. | L3-SUM-002; INT-019 |
+| `sum_analysis_no_sha_hashes_complete_raw_document` | Complete known source with no exact/compatible SHA evidence hashes its complete raw bytes; no implicit placeholder insertion. | L3-SUM-002; INT-018/019 |
+| `sum_analysis_uppercase_hex_warns_on_match` | Matching uppercase digest receives lower-case warning with raw bytes intact. | L3-SUM-004; INT-020 |
+| `sum_analysis_controls_are_value_projection_only` | Real CR/LF in digest disappear only from the interpreted value; omission information remains and outside-exclusion controls remain hashed. | L3-SUM-004; INT-020 |
+| `sum_analysis_blank_is_not_numeric_repair` | Checksum value blank stays unavailable; neither trimming nor INT-055 decimal rejection is used for this excluded hex field. | L3-SUM-004; INT-020/043 |
+| `sum_analysis_placeholder_compute_without_verify` | Complete G/SHA:0 has placeholder status and defined exclusion; COMPUTE allowed, no match/mismatch; explicit final-byte stamp separate. | L3-SUM-005; INT-020 |
+| `sum_analysis_duplicate_equal_or_different` | Every exact/projected scalar occurrence survives, whether equal or different; VERIFY indeterminate and stamp refuses. | L3-SUM-003; INT-021 |
+| `sum_analysis_duplicate_cut_is_still_blocking` | Assembly Ambiguous retains cut; no equality, checksum or caller ambiguity opt-in grants usability. | L3-SUM-003; INT-019/021 |
+| `sum_analysis_duplicates_cross_fragments_not_records` | Same channel/+1 modulo 256/same FRMT-RCCVER establishes one record and duplicate scope; independently assembled records do not share scalar slots. | L3-SUM-003; INT-021 |
+| `sum_analysis_exact_removal_then_requalify` | Exact revision-bound duplicate removal is allowed; rebuild before stamp and retain original-revision findings separately. | L3-WRT-002, L3-WRT-003, L3-SUM-006; INT-021 |
+| `sum_analysis_zero_padded_algorithm_matches` | 2/02/002 identify 2 by canonical string; every noncanonical token warns even on mismatch or blocked verification. | L3-SUM-004; INT-043 |
+| `sum_analysis_long_algorithm_no_integer_conversion` | A long zero-prefix ending 2 follows canonical string identity within resource bounds, not u32 overflow or an unrelated decimal-field limit. | L3-SUM-004; INT-043 |
+| `sum_analysis_algorithm_shape_distinctions` | 0-/00-/3- unsupported; no-hyphen 0 placeholder; +2-/2.0- malformed; leading blank unavailable; non-ASCII dash Invalid. | L3-SUM-004; INT-020/043 |
+| `sum_analysis_multiple_warnings_never_short_circuit` | Two located noncanonical-2 items each keep warning plus F1/assembly ambiguity; uppercase hex warning remains distinct. | L3-SUM-004; INT-020/021/043 |
+| `sum_analysis_stamp_is_canonical_not_flex` | Stamp output algorithm is 2 with lower-case hex; noncanonical name finding remains; flex never occupies G/SHA; core integrity unchanged. | L3-SUM-005; INT-018/020/043 |
+| `sum_analysis_edition_evidence_is_not_aliasing` | Baseline rule/basis and source coverage remain labelled; 106-13 deferred algorithm is not treated as a historical SHA-256 definition. | L3-SUM-004; INT-018/019/020/043 |
+
 ## Planned owner Q26 report/show acceptance — 2026-11-28
 
 Owner Q26 A/ADR-0039 removes the report-format hold for CLI-002/006 and

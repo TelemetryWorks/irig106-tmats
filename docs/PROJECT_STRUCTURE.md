@@ -97,6 +97,7 @@ irig106-tmats/
 │   │                          2026-11-25-retained-cut-and-qm-review-followups.md records the independent review and narrow blocking/test amendments;
 │   │                          2026-11-25-time-view-metadata-requirements.md derives bounded channel/time-field requirements and acceptance scope;
 │   │                          2026-11-25-source-bit-requirements.md derives explicit NSB splitting and records DSI/CHE remaining boundaries;
+│   │                          2026-11-28-checksum-domain-development-analysis.md analyzes five approved checksum interpretations with archived source limits, independent digests and planned cases; analysis review/tests pending;
 │   │                          2026-11-28-effective-presence-basis-development-analysis.md analyzes approved availability/presence/basis rules with historical source limits and planned oracles; review/tests pending;
 │   │                          2026-11-28-owner-policy-signoffs.md records ADR-0038 policy boundaries and exact flex qualification pin/file hashes;
 │   │                          2026-11-28-int022-066-final-concurrences.md records exact-head independent final checks and the narrow F2/precedence-marker follow-ups;
