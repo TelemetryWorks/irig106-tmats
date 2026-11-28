@@ -195,7 +195,7 @@ Keep registry basis beside INT-044 labels; no renamed-code alias or heuristic
 split. Vendor attribution needs exactly one usable VN agreeing with the path
 acronym: INT-036 projection, INT-041 availability, three characters under
 section 9.5.13, ASCII case comparison. Otherwise attribution is unconfirmed,
-with all evidence/raw bytes. Complete remaining independent rule checks and
+with all evidence/raw bytes. Final rule checks CONCUR at #87 e0a0cce; complete
 source/development analysis/review/tests before implementation; unique-path C
 and hybrid vocabulary are not selected.
 
@@ -1182,8 +1182,8 @@ owner decides; the decision is then recorded in
 | # | Question | Why it is open | Where it lands |
 |---|----------|----------------|----------------|
 | F1 | **Owner-approved, 2026-11-23, under ADR-0033; AI CONCUR at #30 head 13173b0.** Duplicate SHA items are indeterminate. | List every occurrence, preserve every byte, never claim positive verification, and refuse stamping until fixed. Review and test evidence still required. | INT-021; ADR-0034 |
-| F2 | **Owner-signed A, Joey, 2026-11-28:** refuse deletion while extensions attach; cascade is a separate explicit edit (0.5). | Remaining independent final check and source/development/test evidence; never guess attachment. | INT-022; L1-WRT-003; ADR-0029 |
-| F3 | **Owner-signed A, Joey, 2026-11-28:** suggest-only `=` to `:` when the complete code name is recognized and no colon occurs; never automatic. | Remaining independent final check and source/development/test evidence; raw reading/finding stays. | INT-023; `docs/TEST-DATA.md` E3 |
+| F2 | **Owner-signed A, Joey, 2026-11-28:** refuse deletion while extensions attach; cascade is a separate explicit edit (0.5). | Final rule CONCUR at #87 e0a0cce; source/development/test evidence still needed; never guess attachment. | INT-022; L1-WRT-003; ADR-0029 |
+| F3 | **Owner-signed A, Joey, 2026-11-28:** suggest-only `=` to `:` when the complete code name is recognized and no colon occurs; never automatic. | Final rule CONCUR at #87 e0a0cce; source/development/test evidence still needed; raw reading/finding stays. | INT-023; `docs/TEST-DATA.md` E3 |
 | F5 | **Decided 2026-09-26: A**, with C possible later (ADR-0030). Does `irig106-core` depend on `irig106-tmats`, or do the tools join them? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 1.6; proposal in section 2.4 (core stays structural and independent; checking packets against TMATS belongs to the layer holding both) awaits the owner. | `docs/TMATS-IN-CHAPTER-10.md` section 2.4; ROADMAP X3 |
 | F6 | **Decided 2026-09-26: yes** — L1-REL-003, a CI check added with the first new library code. Must the library build for WebAssembly (a CI check that the plain library compiles for a `wasm32` target), so studio's browser build can use it? | Raised by `docs/TMATS-IN-CHAPTER-10.md` section 4.8. ADR-0015 moved WASM *bindings* out of the library; building the plain library for WebAssembly is a separate question. The library already performs no I/O (L1-IO-001), which is the main condition. | ADR-0015; a possible L1 requirement and CI job |
 | F7 | **Owner-approved, 2026-11-23, under ADR-0033; AI CONCUR at #30 head 13173b0.** Require verified identification; report indeterminate meanwhile. | Never guess a packet type. The event identity still needs evidence; the decision does not supply it. | INT-030; L1-CH10-005; ADR-0034 |

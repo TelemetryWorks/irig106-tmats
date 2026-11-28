@@ -317,7 +317,7 @@ An open run may expose PROVISIONAL boundary evidence, never a joining stop.
 Joey signed explicit versioned provisional snapshots with invalidation and
 no automatic governance on 2026-11-28 (INT-034), alongside INT-028/031's
 closure/takeover and per-query ambiguity-only access rules. Cut text stays
-unusable. Remaining independent final checks, source/development/tests and
+unusable. Final rule checks CONCUR at #87 e0a0cce; source/development/tests and
 padding-only/leading-damage precedence are separate gates.
 Per-channel open-run state needs an explicit finite aggregate memory budget
 and typed limit error, never silent dropping; numeric policy, full accounting
@@ -462,8 +462,8 @@ last step. Refusal to stamp ambiguous input is not refusal to allow its repair.
 F7 decides the uncertainty behavior, not the actual event identity. The latter
 still needs verified evidence before the event-presence check is implementable.
 These approvals do not mark requirements implemented or development evidence complete.
-F2/F3 are owner-signed (Joey, 2026-11-28); remaining independent final
-checks and development/source/tests still gate their implementation.
+F2/F3 are owner-signed (Joey, 2026-11-28); final rule checks CONCUR at #87 e0a0cce; development/source/tests
+still gate implementation.
 
 ## Normalization policy boundary
 
@@ -478,7 +478,7 @@ analysis/review and executable oracles remain implementation prerequisites.
 INT-061/062/063 A and INT-022–029/031–034 sign-offs are recorded in the
 [verbatim owner record](research/2026-11-28-interpretation-owner-signoffs.md).
 INT-034 padding-only/leading-damage precedence and report formats stay open.
-Owner approval alone is not remaining independent review or passing tests.
+Final rule checks CONCUR at #87 e0a0cce; analysis review and tests remain.
 
 ## Decomposition/readiness audit
 

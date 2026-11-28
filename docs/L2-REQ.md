@@ -1128,7 +1128,7 @@ the baseline. The [source/gap note](research/2026-11-27-x-association-requiremen
 records the earlier options. Joey signed INT-061/062 A on 2026-11-28:
 unindexed-original mapping is cannot-evaluate, and decomposition uses only
 reviewed registry vocabulary. Private/non-registry originals remain unavailable;
-the document-defined hybrid is not selected. Remaining independent checks,
+the document-defined hybrid is not selected. Final rule checks CONCUR at #87 e0a0cce;
 source freshness, development analysis/review and tests still gate implementation.
 The catalog is 106-24R1 until deltas exist, with INT-044-compatible labels
 kept separate from the document declaration. Older renamed originals are
@@ -1141,7 +1141,7 @@ is selected here.
 
 **Statement**: Given X-name decomposition by matching reviewed registry code names, made unambiguous by EXTENSION_CODE uniqueness, and original-code index metadata (under owner-signed INT-062 A), the library SHALL associate an X item with every source occurrence matching its original group/code path, occurrence and carried leading indices in the same document, using ASCII case comparison and INT-038 identity; it SHALL retain resolved/unresolved/ambiguous candidate evidence without selecting a duplicate winner or inferring association from extension values.
 
-**Rationale**: 106-24R1 Chapter 9 section 9.5.14 p. 9-172 defines ORIGCODE, occurrence/leading-index agreement and extension-private remaining indices. ADR-0008 makes X first-class, ADR-0026 lists link candidates without arbitrary selection, and approved INT-038 explicitly applies canonical identity to X/original indices. Association is structural attachment, not evidence that an original value or setup is valid, complete or governing. Section 9.5.14's matching-existing-code and EXTENSION_CODE uniqueness sentences supply decomposition, not a missing grammar convention. Unknown registry metadata/arity/uniqueness must remain unavailable rather than be guessed; INT-062 A is owner-signed; its remaining independent rule check and development gates remain.
+**Rationale**: 106-24R1 Chapter 9 section 9.5.14 p. 9-172 defines ORIGCODE, occurrence/leading-index agreement and extension-private remaining indices. ADR-0008 makes X first-class, ADR-0026 lists link candidates without arbitrary selection, and approved INT-038 explicitly applies canonical identity to X/original indices. Association is structural attachment, not evidence that an original value or setup is valid, complete or governing. Section 9.5.14's matching-existing-code and EXTENSION_CODE uniqueness sentences supply decomposition, not a missing grammar convention. Unknown registry metadata/arity/uniqueness must remain unavailable rather than be guessed; INT-062 A is owner-signed; its final rule check CONCURS at #87 e0a0cce; development gates remain.
 
 **Verification Method**: Test (T)
 
@@ -1162,7 +1162,7 @@ This derives the V portion of L1-EXT-003 alongside the X children, without
 claiming the parent implemented or approving pending interpretation choices.
 The [source/follow-up note](research/2026-11-27-v-group-and-int062-followup.md)
 records section 9.5.13 and the INT-062 amendments. Joey signed INT-063 A
-on 2026-11-28; remaining independent check/development evidence still gate implementation; raw inventory must never
+on 2026-11-28; final rule check CONCURS at #87 e0a0cce; development evidence still gates implementation; raw inventory must never
 be mistaken for confirmed vendor attribution or a private-value decoder.
 
 #### L2-EXT-003
