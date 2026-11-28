@@ -9,7 +9,6 @@ edition = "2024"
 rust-version = "1.85"
 license = "Apache-2.0"
 repository = "https://github.com/TelemetryWorks/irig106-tmats"
-homepage = "https://github.com/TelemetryWorks/irig106-tmats"
 
 [workspace.dependencies]
 irig106-tmats = { path = "crates/irig106-tmats", version = "=0.1.0" }

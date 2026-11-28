@@ -44,6 +44,15 @@ interpretation-review rule; ADR-0035 records the owner's W1 override.
 ADR-0034's W2/W3 remain coordinator-decided. Joey approved F1/F7 under ADR-0033,
 2026-11-23 (INT-021/030); development evidence remains outstanding. No implementation is claimed.
 
+### Release-pipeline scheduling gate
+
+Family 12 must adopt the organization TRUSTED-PUBLISHING.md binary variant
+before any 0.1 tag/publish: trusted-publishing.yml with reusable binary builder,
+crate/binary/SBOM checksums and attestations, draft-release asset verification
+and served-crate verification. Schedule this after component/evidence work
+and before release approval; tmats currently has no trusted-publishing.yml.
+The existing paired publish dry run is not pipeline adoption or publishing.
+
 ### Published dependency prerequisites for tmats 0.1
 
 Publish `irig106-types` 0.2 and `irig106-core` 0.2 BEFORE tmats 0.1.
