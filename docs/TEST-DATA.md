@@ -2452,6 +2452,51 @@ unchanged integrity evidence and explicitly per-query caller assumptions.
 | `assembly_governing_analysis_continuation_digest_diagnostic_only` | Digest in continuation that matches hypothetical joined bytes is diagnostic only: no adopted join, authoritative joined verification, waived cut or takeover. | L3-CH10-018; INT-045 |
 | `assembly_governing_analysis_no_time_no_manufactured_end` | No eligible time: live run remains bounded/provisional; actual EOF uses labelled INT-034. Input pause, source NONE, rejected marker or resource exhaustion is never EOF. | L3-CH10-020; INT-034/045 |
 
+## Planned final interpretation development-analysis cases — 2026-11-28
+
+[Written analysis](research/2026-11-28-final-interpretation-development-analysis.md)
+for approved INT-022–027/033. These 31 cases are PLANNED, not executed
+editor/mapper/resolver/reconstruction tests. Later L1 references keep their
+release scope; documenting an approved rule does not bring general edits,
+registry validation or measurement reconstruction into 0.1. Supply actual
+reviewed definitions/edition, complete-name, attachment, scope and condition
+bindings; source examples and reserved type rows are not conformance fixtures.
+Keep every raw byte, revision, occurrence and independent finding.
+
+| Planned case | Independent expected evidence | Requirements / interpretations |
+|---|---|---|
+| `final_int_analysis_attached_original_refuses` | Reviewed resolved attachment blocks default removal of the exact original; list all attached X items and preserve the revision/output. | L1-WRT-003; INT-022 |
+| `final_int_analysis_possible_attachment_refuses` | Unresolved/Ambiguous/cannot-evaluate attachment, including index-less G-PN, blocks by default with every possibly attached X; never claim none or guess a cascade. | L1-WRT-003; INT-022 |
+| `final_int_analysis_explicit_cascade_is_separate` | A separately reviewed explicit cascade lists exact revision-bound original/X deletion targets; unselected orphan-preserving B is not the default and unknown targets never enter deletion set. | L1-WRT-007; INT-022 |
+| `final_int_analysis_stale_or_cross_document_target` | A stale exact-item ID or X from another document cannot select an original/cascade; do not carry old positional identity into a new revision. | L1-WRT-007; INT-022 |
+| `final_int_analysis_equals_source_oracle` | G-DSI-N source spelling with raw backslashes is 11 bytes; no colon => no explicit value, retained missing-delimiter finding, suggestion only for complete recognized name at [7,8). | L1-READ-003; INT-023 |
+| `final_int_analysis_equals_guard_not_substring` | COMMENT:a=b; already has colon: no suggestion. Partial/unknown/private or damaged unrecognized name before equals cannot satisfy whole-name guard. | L1-READ-003; INT-023 |
+| `final_int_analysis_equals_preserves_raw_and_digest` | An unapplied proposal never changes source, framed items, raw checksum domain or field availability; applying an explicit future edit makes a new revision. | L1-READ-001; INT-023 |
+| `final_int_analysis_equals_no_global_replacement` | An equals inside an ordinary value or expression is not a delimiter recovery; do not confuse this guard with INT-010 spaced equality or INT-013 colon lookahead. | L1-READ-006; INT-023 |
+| `final_int_analysis_equals_historical_source_not_grammar` | An example hit supplies a citation, not a conforming fixture, scanner exception or proof that all older editions define the same name/guard. | L1-READ-003; INT-023 |
+| `final_int_analysis_packet_map_irregular` | Source table labels Analog Format2 as 23 reserved, not arithmetic 20+2=22; CAN single78 and Fibre Channel0/1 at79/7A remain literal reviewed facts, not permission to use a reserved format. | L1-CH10-007; INT-024 |
+| `final_int_analysis_packet_map_unusable_inputs` | Missing/Invalid/Ambiguous/unavailable CDT or format yields cannot-evaluate with all occurrences; no guessed mismatch, even equal duplicates or a sole candidate. | L1-CH10-007; INT-024 |
+| `final_int_analysis_packet_map_edition_limit` | Unreviewed old/renamed/undefined format mapping gives cannot-evaluate with intended/applied vocabulary basis; baseline coverage cannot claim historical conformance. | L1-CH10-007; INT-024 |
+| `final_int_analysis_packet_map_tmout_and_unknown` | Usable TMOUT has no expected recorded packet type; unknown CDT is not an empty clean mapping; no data-to-clock association follows. | L1-CH10-007; INT-024 |
+| `final_int_analysis_packet_map_numeric_and_core` | Use reviewed numeric-code rule for applicable decimal formats, including 02 warning; core supplies observed codes/trust unchanged, validator owns recording cross-check, no second reader/checksum. | L1-CH10-007; INT-024 |
+| `final_int_analysis_tspi_condition_only` | Printed condition TSPIN reads as same-channel TSPIIN; user CDT=TSPIN stays unknown, and other channels cannot supply the operand. | L1-REG-004; INT-025 |
+| `final_int_analysis_tspi_unknown_not_false` | Missing/Invalid/duplicate/unavailable CDT keeps condition cannot-evaluate, not false; all source evidence is retained. | L1-REG-004; INT-025 |
+| `final_int_analysis_tspi_projection_and_numeric_prereqs` | Supplied reviewed CDT/condition or raw evaluation of R-N follows INT-036/037/041/055; no implicit repair or bypass from a truthy string. | L1-REG-004; INT-025 |
+| `final_int_analysis_tspi_no_global_alias` | A literal TSPIN in unrelated values/definitions is not replaced; absent historical condition metadata stays unavailable rather than borrowing the modern alias. | L1-REG-004; INT-025 |
+| `final_int_analysis_polarity_local_scopes` | RPS binds (recorder,channel); MFF-RPS binds same (recorder,channel), retaining own m. A PCMIN on another channel/recorder is not substituted. | L1-REG-004; INT-026 |
+| `final_int_analysis_polarity_no_p_attribute` | No P-CDT document field or cross-link traversal is manufactured; the printed bad reference and doubled When remain source provenance. | L1-REG-004; INT-026 |
+| `final_int_analysis_polarity_uncertainty` | Missing/Invalid/Ambiguous/unavailable same-channel CDT keeps both conditions cannot-evaluate; duplicates never first/last-win. | L1-REG-004; INT-026 |
+| `final_int_analysis_polarity_not_value_or_numeric_repair` | Usable PCMIN permits the reviewed condition only, not every polarity value, clip/normalization, inferred default or valid whole-document verdict. | L1-REG-004; INT-026 |
+| `final_int_analysis_conversion_graph_only` | Repeated AMN in the definition creates one relationship edge with duplicate source citation retained; two document AMN items remain two occurrences/findings. | L1-REG-005; INT-027 |
+| `final_int_analysis_conversion_no_missing_edge_guess` | Only reviewed AMN/DMN Links-to plus incoming/prose sources form the graph; EV-MN/IPMN/BME/SMF lookalikes do not invent C-DCN edges. | L1-REG-005; INT-027 |
+| `final_int_analysis_conversion_scope_and_candidates` | Preserve recorder/channel/member and C target scopes, canonical index identity, all equal target candidates and occurrence IDs; graph dedup is not value-based target dedup. | L1-REG-005; INT-027 |
+| `final_int_analysis_conversion_historical_difference` | A different old reference list is retained with coverage limits and re-review; modern no-op treatment does not certify unchanged historical graph. | L1-REG-005; INT-027 |
+| `final_int_analysis_positions_default_collision` | Source-shaped D3 two fragments and no WFP: given established applicable default binding, both Defaulted1 with citation, collision and ambiguous order; example is not conforming. | L1-VIEW-008; INT-033 |
+| `final_int_analysis_positions_no_index_or_word_inference` | Swap e indices, source order, WP113/121 positions or explanatory M/L prose: no inferred reconstruction order; canonical index duplicates still retain every occurrence. | L1-VIEW-008; INT-033 |
+| `final_int_analysis_positions_absence_vs_unusable` | Only established actual absence and verified own MNF>1 allow default1; present Invalid/Ambiguous/unavailable WFP or unknown applicability never becomes default. | L1-VIEW-004; INT-033 |
+| `final_int_analysis_positions_scope_and_uniqueness` | Position uniqueness is per location tuple, not global across D group; count/structural membership INT-040 is separate from duplicate WFP values. | L1-VAL-002; INT-033 |
+| `final_int_analysis_positions_caller_order_per_query` | Explicit labelled per-query caller order preserves Defaulted collision and record qualifications, changes no raw bytes and never becomes an ambient next-query order or automatic governing proof. | L1-VIEW-008; INT-033 |
+
 ## Planned owner Q26 report/show acceptance — 2026-11-28
 
 Owner Q26 A/ADR-0039 removes the report-format hold for CLI-002/006 and

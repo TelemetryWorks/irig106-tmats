@@ -59,10 +59,11 @@ authorised/performed by this documentation change.
 
 Use the [post-integration reassessment](research/2026-11-27-family2-unheld-queue-reassessment.md)
 for the remaining owner/source gates and the [owner-item/blocker table](research/2026-11-27-family2-coverage-audit.md#owner-items-and-the-work-they-block)
-for decision routing. The previously identified unheld decomposition queue
-has no further scoped batch; reassess new review findings rather than assume
-complete design from child links. Family two remains incomplete. Do not start
-family three/parser code or claim readiness from prototype CI.
+for decision routing. Use the [current completion audit](research/2026-11-28-family2-completion-audit.md)
+for the documentary closure recommendation and remaining component gates.
+Close family two only after exact-head and owner review plus accepted phase
+handoff; then proceed to mechanical ADR-0035 layout work. No family-three or
+parser work is started by the audit, and prototype CI is not readiness evidence.
 
 Joey accepted the outstanding recommendations on 2026-11-28: see ADR-0038
 and the current decision table below, plus the INT sign-off/final-check
@@ -96,8 +97,11 @@ ownership/dependency APIs and development evidence where required. Component
 contracts or synthetic adapters do not prove real text/recording integration,
 a complete accounting model, qualified flex vectors or release compatibility.
 Historical Chapter 10/11 CSDW layout and Appendix 9-C vocabulary research
-notes are now present; retain their source/coverage limits. Continue approved-INT
-development analyses in related groups with independent exact-head review.
+notes are now present; retain their source/coverage limits. Review the linked
+approved-INT analyses at exact heads before their corresponding code; add
+source/delta follow-ups only when new evidence requires them. The
+[final edit/mapping/default analysis](research/2026-11-28-final-interpretation-development-analysis.md)
+keeps later release scopes and uncertainty intact.
 The [checksum-domain analysis](research/2026-11-28-checksum-domain-development-analysis.md)
 records checksum-domain work; the [retransmission development analysis](research/2026-11-28-retransmission-development-analysis.md)
 adds the next related approved group, preserving QD/QI precedence, raw/integrity

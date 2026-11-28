@@ -485,8 +485,11 @@ Final rule checks CONCUR at #87 e0a0cce; analysis review and tests remain.
 
 The [post-#79 reassessment](research/2026-11-27-family2-unheld-queue-reassessment.md)
 rechecks the scoped primary links and remaining partial contracts. The
-identified unheld decomposition queue is exhausted; family two is still
-incomplete and family three is not authorized. The [earlier audit](research/2026-11-27-family2-coverage-audit.md)
+identified unheld decomposition queue is exhausted. The
+[current completion audit](research/2026-11-28-family2-completion-audit.md)
+recommends documentary closure subject to exact-head and owner review plus
+accepted handoff; it separates mechanical family-three work from component/
+release readiness and starts neither restructure nor parser code here. The [earlier audit](research/2026-11-27-family2-coverage-audit.md)
 is a dated snapshot; its missing lookup-state finding and batch estimate are
 historical. Build/report implementation and normalization/flex/assembly/resource
 design or source gates remain explicit; no scope is silently removed.
