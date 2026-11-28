@@ -808,7 +808,7 @@ C keeps output internally consistent at the cost of explicitly deleting X.
 
 **Test**: `removing_an_extended_attribute` (planned; refusal and separately explicit cascade are now owner-decided)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-final-interpretation-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-023
 
@@ -834,7 +834,7 @@ rule above is independent of this choice. Source: Chapter 6 p. 6-22.
 
 **Test**: `chapter_6_example_equals_sign_is_missing_delimiter`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-final-interpretation-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ## Channels and packets
 
@@ -874,7 +874,7 @@ code families or turn uncertainty into a mismatch.
 
 **Test**: `channel_data_type_maps_to_packet_data_types`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-final-interpretation-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-025
 
@@ -900,7 +900,7 @@ applicability decision. Neither repairs the document.
 
 **Test**: `tspi_data_type_format_allowed_for_tspiin`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-final-interpretation-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-026
 
@@ -930,7 +930,7 @@ those determinate applicability answers. Never borrow another channel.
 
 **Test**: `recorder_polarity_allowed_for_pcm_channels`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-final-interpretation-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-027
 
@@ -961,7 +961,7 @@ additional R source is inferred from a similar measurement name.
 
 **Test**: `measurement_name_sources_for_conversions`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-final-interpretation-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ## Configuration over a recording
 
@@ -1260,7 +1260,7 @@ and never infer order from index, word order or explanatory prose.
 
 **Test**: `defaulted_fragment_positions_are_ambiguous`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-final-interpretation-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 
 ## Scanner recovery
