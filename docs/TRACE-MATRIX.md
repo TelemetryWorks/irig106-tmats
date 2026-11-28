@@ -428,14 +428,14 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 
 | Entry | Title | Design | Analysis | Tests |
 |-------|-------|--------|----------|-------|
-| INT-001 | The R group's data-link names reach the Q group, although R's "Links to:" omits Q | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
-| INT-002 | Sub-channel and network names tie to B, S, and Q, although no "Links" field says so | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
-| INT-003 | "All valid paths are documented" in the Links fields — they are not | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
-| INT-004 | Index letters in code-name references are placeholders | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
-| INT-005 | The channel data type selects among overlapping link targets | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
-| INT-006 | `H\TA` ties the H group to the G group by test item | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
-| INT-007 | The Q group's condition names `FBCIN`, which is not a channel type | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
-| INT-008 | `C-d\DPNO`'s condition names `C\DCT` without an index | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
+| INT-001 | The R group's data-link names reach the Q group, although R's "Links to:" omits Q | accepted (owner, 2026-09-26) | [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-002 | Sub-channel and network names tie to B, S, and Q, although no "Links" field says so | accepted (owner, 2026-09-26) | [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-003 | "All valid paths are documented" in the Links fields — they are not | accepted (owner, 2026-09-26) | [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-004 | Index letters in code-name references are placeholders | accepted (owner, 2026-09-26) | [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-005 | The channel data type selects among overlapping link targets | accepted (owner, 2026-09-26) | [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-006 | `H\TA` ties the H group to the G group by test item | accepted (owner, 2026-09-26) | [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-007 | The Q group's condition names `FBCIN`, which is not a channel type | accepted (owner, 2026-09-26) | [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-008 | `C-d\DPNO`'s condition names `C\DCT` without an index | accepted (owner, 2026-09-26) | [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-009 | Counters named without indices in conditions | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-010 | Equality is `==`, although Table E-6 prints `= =` | accepted (owner, 2026-09-26) | not yet written | _(none)_ |
 | INT-011 | Per-channel joining of multi-packet setup-record fragments | approved (Joey, owner reconfirmation, 2026-11-23) | not yet written | _(none)_ |
@@ -495,7 +495,7 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-065 | Scope of line-ending normalization | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
 | INT-066 | Preconditions for explicit counter recomputation | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
 
-* Entries without a written analysis: **44** of 66
+* Entries without a written analysis: **36** of 66
 * Entries without a test: **66** of 66
 * Entries missing the development mark: **0**
 

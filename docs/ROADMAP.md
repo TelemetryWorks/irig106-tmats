@@ -103,6 +103,9 @@ records checksum-domain work; the [retransmission development analysis](research
 adds the next related approved group, preserving QD/QI precedence, raw/integrity
 evidence and governing-target history without changing matrix policy or
 completing other analyses/executable evidence.
+Read the [link/condition analysis](research/2026-11-28-link-condition-development-analysis.md)
+before its implementation; historical H/PDLN differences are not approved
+aliases, and general cross-group resolution keeps its later release scope.
 Legacy independent checks are recorded; the normalization-order recheck CONCUR is
 recorded with the 2026-11-28 owner A+D choice;
 the coordinator and core maintainer own types/core publication with owner

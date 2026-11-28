@@ -2197,6 +2197,53 @@ control inputs never establish a new governing rule or independent recovery.
 | `retx_analysis_pending_extent_cannot_publish_identity` | Open follower lacks bounded whole identity; candidate revision and premature-seal evidence stay observable without an invented timeout, EOF or automatic governing use. | L3-REG-015; INT-046/050 |
 | `retx_analysis_all_guard_findings_survive` | Combine located 02/uppercase/name spelling, F1 and cut/BOM blockers: no early return drops warnings, chooses an exclusion or upgrades core integrity. | L3-REG-015; INT-046/048/051 |
 
+## Planned link/condition development-analysis cases — 2026-11-28
+
+[Written analysis](research/2026-11-28-link-condition-development-analysis.md)
+for approved INT-001–008. All 34 cases are PLANNED. General cross-group link
+resolution remains 0.2 scope; no time association or full link graph is
+brought into 0.1. Source/edition/applicability bindings and independent
+raw/candidate/provenance oracles must be supplied when implemented. Minimal
+snippets test scoped mechanisms, not whole-file conformance. Source history
+is not an executable alias map or evidence that older editions are supported.
+
+| Planned case | Independent expected evidence | Requirements / interpretations |
+|---|---|---|
+| `link_analysis_q_edge_from_incoming_and_prose` | R outgoing P/B/S plus Q incoming/prose retains the approved Q edge and every source disagreement; no R-only graph loses Q. | L1-REG-005; INT-001 |
+| `link_analysis_q_is_candidate_not_automatic_target` | Declared Q edge does not choose Q without reviewed source scope/selector/cardinality; P/B/S candidates stay available. | L1-VIEW-006; INT-001/005 |
+| `link_analysis_event_scope_not_channel_by_suffix` | EV DLN gets its approved Q relation; CDLN channel selection is not copied to an event merely because its index has the same spelling. | L1-REG-005; INT-001 |
+| `link_analysis_recorder_document_separation` | Equal DLNs in a different recorder/document never lend the source channel or unrelated scope operand. | L1-REG-005; INT-001/005 |
+| `link_analysis_subchannel_target_groups` | Handwritten ANM->B, UCNM->S, MCNM/ENAM->S/Q expectations retain all source IDs and applicable bindings. | L1-REG-005; INT-002 |
+| `link_analysis_s_q_equal_names_stay_ambiguous` | Eligible S and Q matching the source value remain multiple candidates even if every value is identical; no group/order winner. | L1-VIEW-006; INT-002 |
+| `link_analysis_can_has_no_invented_link` | Baseline CBM/CANIN keeps raw name and unrelated findings but does not emit unresolved for a nonexistent B/S/Q relation. | L1-REG-005; INT-002 |
+| `link_analysis_subchannel_no_generic_suffix_join` | Unknown vendor path ending NM/DLN does not acquire the registered subchannel relation or a guessed bus-instance selector. | L1-REG-005; INT-002 |
+| `link_analysis_unregistered_one_sided_edge_fails` | Supplied one-sided relationship with no applicable interpretation fails generation/readiness; another edge being approved is insufficient. | L1-REG-006; INT-003 |
+| `link_analysis_three_source_provenance` | Outgoing/incoming/prose memberships and each missing applicable statement survive generation; no repaired source column. | L1-REG-005; INT-003 |
+| `link_analysis_prose_only_h_is_not_missing_table_repair` | H/G tie uses its registered prose evidence without inventing an H table or Links column. | L1-REG-006; INT-003/006 |
+| `link_analysis_metadata_edges_not_document_dedup` | Consolidating reviewed metadata evidence never coalesces equal raw TMATS scalar occurrences or removes their ambiguity. | L1-REG-006; INT-003 |
+| `link_analysis_definition_placeholder_equal_arity` | B-d DLN reference matches B-x DLN definition shape with equal group/path/arity, preserving source spellings. | L1-REG-005; INT-004 |
+| `link_analysis_placeholder_wrong_arity_or_path` | Extra/missing index position, different literal path or group prevents definition-shape equivalence. | L1-REG-005; INT-004 |
+| `link_analysis_document_indices_not_placeholders` | Occurrence 1 and 2 stay different; 01/1 follows INT-038 with raw/collision evidence, not definition-letter substitution. | L1-REG-005; INT-004 |
+| `link_analysis_link_values_are_not_numeric_indices` | DLN values 01 and 1 are not made equal by the code-name index rule; historical H-x versus index-less H is not arity-equivalent. | L1-REG-005; INT-004 |
+| `link_analysis_pcm_embedded_bus_uses_p` | Independent R-2/channel-7 PCMIN context plus P-9/B-4 equal BUS values selects P-9 namespace candidate, never B-4 or P-7 by index. | L1-VIEW-006; INT-005 |
+| `link_analysis_all_reviewed_cdt_routes` | Handwritten PCMIN/1553IN/429IN/UARTIN/MSGIN/ETHIN/FBCHIN/1394IN route table excludes unrelated groups without changing raw items. | L1-REG-005; INT-005/007 |
+| `link_analysis_missing_cdt_cannot_select` | Missing same-channel CDT retains every candidate group and cannot-evaluate, not resolved/empty or borrowed CDT. | L1-REG-005; INT-005 |
+| `link_analysis_invalid_unavailable_cdt_cannot_select` | Independently Invalid versus unavailable CDT each prevents filtering while retaining operand reasons, candidates and findings. | L1-REG-005; INT-005 |
+| `link_analysis_equal_duplicate_cdt_cannot_select` | Two scalar CDT occurrences with equal PCMIN are Ambiguous and cannot select P as if one operand existed. | L1-REG-005; INT-005 |
+| `link_analysis_valid_no_target_not_unknown_selector` | A reviewed usable type with no link target differs visibly from missing/invalid/unsupported selector metadata. | L1-REG-005; INT-005 |
+| `link_analysis_h_g_ascii_match_keeps_spans` | TaNK/tank values match with the fixed 20-byte source spans, unchanged bytes and the declared H/G namespace. | L1-VIEW-006; INT-006 |
+| `link_analysis_h_g_blank_and_high_byte_guards` | Leading blank unavailable, other unreviewed blanks untrimmed, and high-byte text not Unicode/locale folded into a usable match; all evidence retained. | L3-VIEW-005; INT-006 |
+| `link_analysis_h_g_duplicates_no_winner` | Repeated equal H TA or G TA remain Ambiguous with every occurrence; B/S TA never substitutes. | L3-VIEW-003; INT-006 |
+| `link_analysis_h_unknown_fields_preserved` | Unreviewed private H fields remain raw/unknown without invented cardinality/default/link semantics; record/cut qualification stays attached. | L1-REG-006; INT-006 |
+| `link_analysis_fbcin_is_source_condition_only` | Reviewed Q condition is interpreted FBCHIN while its original FBCIN source text remains; document CDT=FBCIN still has unknown-keyword/unusable-operand evidence. | L1-REG-005; INT-007 |
+| `link_analysis_fbcin_scope_no_global_replace` | COMMENT/private values containing FBCIN stay exact; no blanket replacement or repair into a keyword. | L1-REG-006; INT-007 |
+| `link_analysis_q_profile_unavailable_not_backported` | Unavailable historical Q binding or unsupported edition cannot acquire a baseline Q target or an invented alias from the typo interpretation. | L1-REG-005; INT-007 |
+| `link_analysis_dpno_same_c_prose_default` | C-1 DER/C-2 NON, absent DPNO: default applies only to the supplied applicable same-C binding and retains Definition-prose provenance, not inserted source. | L3-REG-003; INT-008 |
+| `link_analysis_dpno_operand_unusable_no_borrow` | Missing/Invalid/Ambiguous/unavailable same-C DCT prevents default; another occurrence DER never supplies it. | L3-REG-004; INT-008 |
+| `link_analysis_dpno_present_or_damaged_blocks_absence` | Present invalid/empty/duplicate DPNO or compatible damaged presence never becomes a defaulted absence; keep original field/record evidence. | L3-VIEW-005; INT-008 |
+| `link_analysis_dpno_canonical_scope_collision` | C-01/C-1 DCT occurrences use canonical index identity with collision/duplicate evidence, not an operand/default winner. | L3-REG-004; INT-008 |
+| `link_analysis_historical_prose_not_usage_column` | Archived DPNO prose default remains distinguishable from modern Default usage fields; missing historical applicability metadata stays unavailable. | L3-REG-003; INT-008 |
+
 ## Planned owner Q26 report/show acceptance — 2026-11-28
 
 Owner Q26 A/ADR-0039 removes the report-format hold for CLI-002/006 and

@@ -83,7 +83,7 @@ listed here.
 
 **Test**: `r_channel_data_link_name_resolves_to_q_group`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-002
 
@@ -106,7 +106,7 @@ listed here.
 
 **Test**: `sub_channel_and_network_names_resolve_to_their_groups`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-003
 
@@ -124,7 +124,7 @@ listed here.
 
 **Test**: `one_sided_relationship_without_register_entry_fails_generation`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-004
 
@@ -147,7 +147,7 @@ make different document occurrences equal or discard their raw spelling.
 
 **Test**: `pcm_data_link_name_links_to_bus_data_link_name`, `definition_placeholder_arity_must_match`, `definition_placeholders_do_not_equal_document_indices` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-005
 
@@ -175,7 +175,7 @@ a document spelling CDT=FBCIN is still an unknown keyword, not repaired.
 
 **Test**: `pcm_channel_carrying_bus_data_resolves_to_p_group`, `link_target_unusable_cdt_keeps_all_groups`, `link_target_fibre_channel_uses_int007` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-006
 
@@ -203,7 +203,7 @@ never upgrades record qualifications or approves semantic access.
 
 **Test**: `h_group_test_item_ties_to_g_group`, `h_test_item_ascii_match_keeps_raw`, `h_test_item_leading_blank_is_unavailable`, `h_test_item_duplicate_occurrences_are_ambiguous` (planned; not yet written)
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ## Conditions and keywords
 
@@ -224,7 +224,7 @@ never upgrades record qualifications or approves semantic access.
 
 **Test**: `q_group_allowed_for_fibre_channel`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-008
 
@@ -241,7 +241,7 @@ never upgrades record qualifications or approves semantic access.
 
 **Test**: `derived_occurrences_default_to_one_in_same_occurrence`
 
-**Development**: intensive testing and deep analysis required · **Analysis**: not yet written
+**Development**: intensive testing and deep analysis required · **Analysis**: [written development analysis](research/2026-11-28-link-condition-development-analysis.md) (owner/independent analysis review and intensive tests pending)
 
 ### INT-009
 
