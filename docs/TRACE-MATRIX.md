@@ -456,9 +456,9 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-035 | Recover malformed framing only at an actual semicolon | approved (Joey, owner sign-off, 2026-11-21) | [written development analysis](research/2026-11-28-framing-character-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-036 | Omit ASCII nonprintables only from semantic projections | approved (Joey, owner sign-off, 2026-11-22) | [written development analysis](research/2026-11-28-framing-character-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-037 | Diagnose Unicode markers without automatic transcoding | approved (Joey, owner sign-off, 2026-11-22) | [written development analysis](research/2026-11-28-framing-character-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
-| INT-038 | Decimal index identity without source normalization or machine-word limits | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
-| INT-039 | Repeated scalar slots remain ambiguous even when values agree | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
-| INT-040 | Count structurally identified entries independently of value validity | approved (Joey, owner sign-off, 2026-11-22) | not yet written | _(none)_ |
+| INT-038 | Decimal index identity without source normalization or machine-word limits | approved (Joey, owner sign-off, 2026-11-22) | [written development analysis](research/2026-11-28-index-duplicate-counter-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-039 | Repeated scalar slots remain ambiguous even when values agree | approved (Joey, owner sign-off, 2026-11-22) | [written development analysis](research/2026-11-28-index-duplicate-counter-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-040 | Count structurally identified entries independently of value validity | approved (Joey, owner sign-off, 2026-11-22) | [written development analysis](research/2026-11-28-index-duplicate-counter-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-041 | Unavailable interpretation is not proof of missing or invalid field data | approved (Joey, owner sign-off, 2026-11-23) | not yet written | _(none)_ |
 | INT-042 | A reviewed is-specified predicate tests actual presence, not value usability | approved (Joey, owner sign-off, 2026-11-23) | not yet written | _(none)_ |
 | INT-043 | Leading-zero algorithm 2 designators are accepted with a warning | approved (Joey, Option B, 2026-11-23) | not yet written | _(none)_ |
@@ -486,7 +486,7 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-065 | Scope of line-ending normalization | proposed (2026-11-27; A recommended) | not yet written | _(none)_ |
 | INT-066 | Preconditions for explicit counter recomputation | proposed (2026-11-27; A recommended) | not yet written | _(none)_ |
 
-* Entries without a written analysis: **63** of 66
+* Entries without a written analysis: **60** of 66
 * Entries without a test: **66** of 66
 * Entries missing the development mark: **0**
 

@@ -2196,6 +2196,40 @@ source-qualified fixture for EACH of 106-04/05/07/09/11/13/15/17/19/20/22/23/
 24/24R1. Shared test bodies cannot erase edition evidence. No real recording
 was accessed; local-only sample checks are still outstanding where available.
 
+## INT-038/039/040 development-analysis edge oracles
+
+Source: [written analysis](research/2026-11-28-index-duplicate-counter-development-analysis.md).
+PLANNED only; written analysis owner/independent review and intensive
+executable tests remain pending. These independently specified boundaries
+supplement the existing approved-interpretation cases, not executed coverage.
+
+| Planned case | Independent input/expected boundary | Interpretation |
+|---|---|---|
+| `index_identity_40_digit_pair` | 01234567890123456789012345678901234567890 and its 40-digit nonzero suffix have equal canonical identity/hash input, original spellings retained; no integer conversion | INT-038 |
+| `index_zero_is_not_field_value_zero` | Arbitrarily long all-zero INDEX -> identity 0; an eleven-digit numeric FIELD VALUE is Invalid under INT-055; neither grants range validity | INT-038 |
+| `index_collision_lists_every_occurrence` | D-1\MN-1-2, D-01\MN-01-02, D-1\MN-1-2: one collision group listing all three, not just two distinct spellings | INT-038 |
+| `index_case_only_has_no_spelling_collision` | Case-only key variants with the same digit tuples: no INT-038 collision finding, scalar duplicate still Ambiguous | INT-038 |
+| `index_internal_control_keeps_raw_tuple` | R-1 CR LF 0\TK1-1 and R-10\TK1-1: projected identity 10, internal-omission evidence and distinct raw-token collision retained, no projection-based loss of witnesses | INT-038 |
+| `scalar_valid_invalid_candidates_stay_ambiguous` | Known scalar with one usable and one Invalid/empty occurrence: both kept, no winner/default | INT-039 |
+| `scalar_comment_and_group_com_differ` | Repeated standalone COMMENT is collection; repeated G/R COM same slot is Ambiguous even when equal; raw all retained | INT-039 |
+| `scalar_fragment_scope_is_one_document` | Explicit same-channel +1 modulo 256, same FRMT/RCCVER and no closure: cross-fragment G PN duplicates; separate records do not | INT-039 |
+| `counter_invalid_payload_is_member_evidence` | N=2 with WP identities 1/2 and first payload FF: structural set {1,2}, Invalid value remains; counter [0,18), value [16,17), bad payload [33,34) | INT-040 |
+| `counter_duplicate_properties_count_once` | WP/WI properties and exact/01 member repeats contribute one e identity; field ambiguity and collision findings still retained | INT-040 |
+| `counter_malformed_parent_blocks_compatible_scopes` | D-1\WP-1-1-x-2 blocks all compatible (1,1,1,m), even known set {1,2} already matches N=2; x=2 parent scope unaffected by this evidence | INT-040 |
+| `counter_wrong_arity_never_guesses_alignment` | Matching literal family with wrong index arity stays rule-level unassigned; only unambiguous readable positions constrain compatible scopes | INT-040 |
+| `counter_unrelated_damage_is_not_member` | Unrelated literal family, code-like value text, unframed suffix and X original-path text are not D-member evidence; other findings remain | INT-040 |
+| `counter_bad_parent_does_not_hide_child` | m=0/00 is one scope; parent-domain violation/unusable MML does not suppress a child with explicit indices and independently usable MNF | INT-040 |
+| `counter_range_is_not_mfs` | Older printed MFS 1 is not baseline MNF range 1–8; applied baseline versus intended historical basis is labelled, unsupported edition mappings stay unavailable | INT-040 |
+| `counter_cardinality_is_not_contiguity` | N=2 set {1,3} and N=3 set {1,3} both fail their respective checks; no max/count substitution, no eager array allocation | INT-040 |
+
+The invalid-payload oracle uses the existing corrected byte sequence:
+`D-1\MNF\N-1-1-1:2;D-1\WP-1-1-1-1:<FF>;D-1\WP-1-1-1-2:4;`
+(`<FF>` is one raw byte). Counter [0,18), counter value [16,17), invalid
+payload [33,34). Future implementations must assert these independent spans.
+Each historical fixture uses its own cited table metadata; early maximum
+field sizes are not modern ranges. Canonical identity, duplicate ambiguity,
+structural membership and all record qualifications remain separate results.
+
 ## Real Chapter 10 recordings (local use only)
 
 Order of work (owner decision, 2026-09-25): the irig106.org vendor sample
