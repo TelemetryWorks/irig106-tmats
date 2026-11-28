@@ -2810,10 +2810,11 @@ case.
 ## V namespace inventory and attribution (family 2, batch 31)
 
 Source: section 9.5.13 p. 9-171 and Table 9-2 DATA SOURCE ID p. 9-11
-(106-24R1). These are draft contracts; [INT-063](INTERPRETATIONS.md#int-063)
-remains proposed. Header-local validity can be supplied by reviewed field
-results; this slice does not invent blank, required-presence or private-code
-rules. See the [source/owner-options note](research/2026-11-27-v-group-and-int062-followup.md).
+(106-24R1). [INT-063](INTERPRETATIONS.md#int-063) A is owner-signed
+(Joey, 2026-11-28), with final independent CONCUR at #87 e0a0cce;
+analysis review and executable tests remain required. Header-local validity
+can be supplied by reviewed field results; this slice does not invent blank,
+required-presence or private-code rules. See the [source/owner-options note](research/2026-11-27-v-group-and-int062-followup.md).
 
 **L3-EXT-009** · Parent: L2-EXT-003 · Verification: T
 *V inventory SHALL distinguish standard V-x\ID and V-x\VN headers from private V-x\acr\attribute-string items, retaining the occurrence and observed three-character acronym prefix when structurally readable and preserving the complete remaining private suffix/value as raw content without inventing its grammar.*

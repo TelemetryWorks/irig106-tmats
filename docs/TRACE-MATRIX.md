@@ -488,14 +488,14 @@ Every entry of `docs/INTERPRETATIONS.md` with its written analysis and the tests
 | INT-058 | Only an individually approved evidence rule can contradict a caller choice | approved (Joey, 2026-11-26; independent AI final CONCUR at 3fcbd2cb0e911d1bc23e4cc3a5b53d503e5d7e23) | [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-059 | Unproven multiplicity is unestablished, conflicting requires evidence | approved (Joey, 2026-11-26; independent AI final CONCUR at 3fcbd2cb0e911d1bc23e4cc3a5b53d503e5d7e23) | [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 | INT-060 | Each query supplies its caller choice explicitly | approved (Joey, 2026-11-26; independent AI final CONCUR at 3fcbd2cb0e911d1bc23e4cc3a5b53d503e5d7e23) | [written development analysis](research/2026-11-28-time-choice-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
-| INT-061 | X occurrence mapping when the original has no numeric index | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
-| INT-062 | Meaning of existing TMATS code in X decomposition | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
-| INT-063 | Vendor attribution when V header and private path evidence are incomplete or inconsistent | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
-| INT-064 | Ordering policy for explicitly requested normalization | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
-| INT-065 | Scope of line-ending normalization | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
-| INT-066 | Preconditions for explicit counter recomputation | approved by owner (Joey, 2026-11-28) | not yet written | _(none)_ |
+| INT-061 | X occurrence mapping when the original has no numeric index | approved by owner (Joey, 2026-11-28) | [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-062 | Meaning of existing TMATS code in X decomposition | approved by owner (Joey, 2026-11-28) | [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-063 | Vendor attribution when V header and private path evidence are incomplete or inconsistent | approved by owner (Joey, 2026-11-28) | [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-064 | Ordering policy for explicitly requested normalization | approved by owner (Joey, 2026-11-28) | [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-065 | Scope of line-ending normalization | approved by owner (Joey, 2026-11-28) | [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
+| INT-066 | Preconditions for explicit counter recomputation | approved by owner (Joey, 2026-11-28) | [written development analysis](research/2026-11-28-extension-transform-development-analysis.md) (owner/independent analysis review and intensive tests pending) | _(none)_ |
 
-* Entries without a written analysis: **29** of 66
+* Entries without a written analysis: **23** of 66
 * Entries without a test: **66** of 66
 * Entries missing the development mark: **0**
 
